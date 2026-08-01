@@ -1,16 +1,16 @@
 flowchart TD
     subgraph INPUT["📥 Entrada"]
-        A1["KDDTrain+.txt\n~125,973 instancias\n41 características + etiqueta"]
+        A1["KDDTrain+.txt\n~125,973 instancias\n41 características + attack + level"]
         A2["KDDTest+.txt\n~22,544 instancias"]
     end
 
     subgraph PREP["🔧 program.py — NSLKDDPreprocessor"]
         direction TB
-        B["load_dataset()\nAsigna 41 nombres de columna\nDetecta .txt o .csv automáticamente"]
+        B["load_dataset()\nAsigna 43 nombres de columna\n(41 características + attack + level)\nDetecta .txt o .csv automáticamente"]
 
-        C["exploratory_data_analysis()\n• Estadísticas descriptivas\n• Distribución de ataques\n• Ataques nuevos en test\n• 9 visualizaciones matplotlib"]
+        C["exploratory_data_analysis()\n• Estadísticas descriptivas\n• Distribución de ataques\n• Ataques nuevos en test\n• 1 figura eda_distribuciones_divisiones.png\n  con 9 subplots (el 8º, condicional)"]
 
-        D["create_specialized_data_splits()\nMapeo de 51 ataques → 5 categorías"]
+        D["create_specialized_data_splits()\nMapeo de 40 etiquetas (normal + 39 ataques)\n→ 5 categorías"]
 
         subgraph SPLITS["Divisiones Especializadas"]
             D1["🟢 D1 — Solo Normal\nEntrenamiento modelo anomalías\n(tráfico legítimo únicamente)"]
@@ -18,24 +18,28 @@ flowchart TD
             D3["🔴 D3 — Solo Ataques\nExtracción de firmas\n(ataques conocidos del train)"]
         end
 
-        E["preprocess_specialized_splits()"]
+        E["preprocess_specialized_splits()\nPASO 4 de main()"]
 
-        subgraph PREPROC["Pasos de Preprocesamiento"]
-            E1["Paso 1 — One-Hot Encoding\nprotocol_type · service · flag"]
-            E2["Paso 2 — Alineación de columnas\n(referencia: schema de D1)"]
-            E3["Paso 3 — Fit Scaler en D1 + D3\nMinMaxScaler / StandardScaler\n⚠️ Ajustado en TODO el entrenamiento"]
-            E4["Paso 4 — Transform D1, D2, D3\ncon el mismo scaler"]
-            E5["Paso 5 — LabelEncoder\n40 tipos de ataque · 5 categorías"]
+        subgraph PREPROC["Sub-pasos internos del PASO 4"]
+            E1["Paso 4.1 — One-Hot Encoding\nprotocol_type · service · flag"]
+            E2["Paso 4.2 — Alineación de columnas\nUNIÓN del train D1 + D3 (orden sorted)\nLas categorías exclusivas de D2 se descartan"]
+            E3["Paso 4.3 — Fit Scaler en D1 + D3\nEl default de la firma es scaler_type='standard',\npero main() lo llama con 'minmax'\n→ MinMaxScaler es el que se ejecuta\n⚠️ Ajustado en TODO el entrenamiento"]
+            E4["Paso 4.4 — LabelEncoder + CategoryEncoder\n40 etiquetas (normal + 39 ataques)\n5 categorías"]
+            E5["Paso 4.5 — Transform D1, D2, D3\ncon el mismo scaler"]
         end
 
-        F["save_specialized_splits()\nGuarda CSVs + metadatos"]
+        SEL["select_features() — Paso 4b de main() (4.3.5)\nVarianza ≈0 + correlación >0.95 sobre D1+D3\n+ importancias RF (top-99.9%)\n122 → 54 características\n--sin-seleccion lo omite (se quedan 122)"]
+
+        F["save_specialized_splits()\nGuarda CSVs + transformadores + metadatos"]
     end
 
-    subgraph FILES["📁 Resultados/specialized_nsl_kdd_*"]
+    subgraph FILES["📁 Resultados/ — prefijo base specialized_nsl_kdd (54 feat.) · prefijo base specialized_nsl_kdd_sin_seleccion (122 feat.)"]
         direction LR
         F1["_processed_X_D1_*.csv\n_processed_y_*_D1_*.csv"]
         F2["_processed_X_D2_*.csv\n_processed_y_*_D2_*.csv"]
         F3["_processed_X_D3_*.csv\n_processed_y_*_D3_*.csv"]
+        F5["_original_D1_*.csv\n_original_D2_*.csv\n_original_D3_*.csv\n(sin procesar)"]
+        F6["_transformers.joblib\nscaler · label_encoder · category_encoder\nfeature_columns (+ pre_seleccion)"]
         F4["_mappings_and_info.txt\n_usage_guide.txt"]
     end
 
@@ -44,9 +48,9 @@ flowchart TD
         G["load_all_data()\nCarga D1 / D2 / D3"]
 
         subgraph CHECKS["Validaciones"]
-            V1["validate_data_integrity()\n• Dimensiones X/y\n• Columnas alineadas\n• Nulos e infinitos\n• Pureza D1 (100% normal)\n• Pureza D3 (0% normal)\n• Rangos de escalado"]
+            V1["validate_data_integrity()\n• Dimensiones X/y\n• Columnas alineadas\n• Columnas = feature_columns del joblib\n• Nulos e infinitos\n• Pureza D1 (100% normal)\n• Pureza D3 (0% normal)\n• Rangos de escalado"]
             V2["analyze_class_distribution()\n• Distribución D2 y D3\n• Ratio de desbalance D3\n• Ataques nuevos en D2 no vistos en D3"]
-            V3["analyze_feature_distributions()\n• Baja varianza en D1\n• Alta correlación (>0.95) en D1\n• Top características discriminantes\n  D1 Normal vs D3 Ataques"]
+            V3["analyze_feature_distributions()\n• Baja varianza sobre D1+D3\n• Alta correlación (>0.95) sobre D1+D3\n• Top características discriminantes\n  D1 Normal vs D3 Ataques"]
             V4["detect_data_drift()\n• KS test por característica\n• D1 (normal train) vs D2 (test)\n• p < 0.01 = drift significativo"]
             V5["analyze_outliers()\n• IQR por característica\n• Por división D1 / D2 / D3"]
         end
@@ -54,12 +58,16 @@ flowchart TD
         H["generate_validation_report()\n→ _validation_report.txt"]
     end
 
-    subgraph FUTURE["🚀 Próximos Pasos — Modelos (no implementado)"]
+    subgraph MODELOS["🤖 Capa de modelos — anomalias.py · firmas.py · baseline.py · hibrido.py"]
         direction LR
-        M1["Modelo de Anomalías\nEntrenado en D1\nIsolationForest · OneClassSVM\nAutoencoder"]
-        M2["Modelo de Firmas\nEntrenado en D3\nRandomForest · DecisionTree\nReglas por categoría"]
-        M3["Sistema Híbrido H-NIDS\nEvaluado en D2\nCombinación de decisiones"]
-        M4["Métricas Finales\nPrecisión · Recall · F1\npor categoría de ataque\nMatriz de confusión"]
+        M1["anomalias.py — NSLKDDAnomalyTrainer\nEntrenado en D1 (semisupervisado, one-class)\nIsolationForest · OneClassSVM\nLocalOutlierFactor · Autoencoder (MLPRegressor)\nUmbral = percentil 95 del score sobre D1_val"]
+        M2["firmas.py — NSLKDDSignatureTrainer\nEntrenado en D3 (multiclase, 4 categorías)\nDecisionTree · RandomForest\nKNN · HistGradientBoosting\nGridSearchCV con f1_macro\nMini-experimento 4.3.4 por algoritmo:\nSMOTE dentro del fold vs class_weight / nada\nReglas legibles con export_text"]
+        M3["hibrido.py — NSLKDDHybridEvaluator\nCascada anomalías → firmas\nUMBRAL_CONF calibrado con proba OOF de D3\nmax(proba) < UMBRAL_CONF → unknown (0-day)"]
+        M5["baseline.py — NSLKDDBaselineTrainer\nBaseline de control (no es parte del híbrido)\nRandomForest MONOLÍTICO sobre D1 + D3\n5 clases"]
+    end
+
+    subgraph EVALMOD["🧰 evaluacion.py — módulo transversal (librería, sin __main__)"]
+        M4["Métricas y figuras comunes\nPrecisión · Recall · F1 por categoría\nMatriz de confusión · curvas ROC/PR\nRecall 0-day por tipo de ataque"]
     end
 
     A1 --> B
@@ -69,25 +77,41 @@ flowchart TD
     D --> D1 & D2 & D3
     D1 & D2 & D3 --> E
     E --> E1 --> E2 --> E3 --> E4 --> E5
-    E5 --> F
-    F --> F1 & F2 & F3 & F4
+    E5 --> SEL
+    SEL --> F
+    F --> F1 & F2 & F3 & F4 & F5 & F6
 
     F1 & F2 & F3 --> G
+    F6 --> G
     G --> V1 & V2 & V3 & V4 & V5
     V1 & V2 & V3 & V4 & V5 --> H
 
-    F1 --> M1
-    F3 --> M2
-    M1 & M2 --> M3
-    F2 --> M3
-    M3 --> M4
+    F1 -- "train (80%) + D1_val (20%)" --> M1
+    F3 -- "muestra de 5.000 → val. etiquetada" --> M1
+    F3 -- "train firmas" --> M2
+    F3 -- "calibra UMBRAL_CONF (proba OOF)" --> M3
+    M1 & M2 -- "modelos .joblib" --> M3
+    F1 -- "train baseline" --> M5
+    F3 -- "train baseline" --> M5
+
+    F2 -- "evaluación (D2 no ajusta nada)" --> M1
+    F2 -- "evaluación (tipos conocidos)" --> M2
+    F2 -- "evaluación (D2 no ajusta nada)" --> M3
+    F2 -- "evaluación (D2 no ajusta nada)" --> M5
+
+    M4 -. "importado por" .-> M1
+    M4 -. "importado por" .-> M2
+    M4 -. "importado por" .-> M3
+    M4 -. "importado por" .-> M5
 
     style D1 fill:#90EE90,stroke:#2d8a2d,color:#000
     style D2 fill:#87CEEB,stroke:#2d6ea0,color:#000
     style D3 fill:#FFB6C1,stroke:#c0392b,color:#000
-    style FUTURE fill:#fffbe6,stroke:#f0ad4e,stroke-dasharray:5 5
-    style M1 fill:#fffbe6,stroke:#e0a800
-    style M2 fill:#fffbe6,stroke:#e0a800
-    style M3 fill:#fffbe6,stroke:#e0a800
-    style M4 fill:#fffbe6,stroke:#e0a800
+    style MODELOS fill:#e8f0fe,stroke:#3367d6
+    style M1 fill:#e8f0fe,stroke:#3367d6,color:#000
+    style M2 fill:#e8f0fe,stroke:#3367d6,color:#000
+    style M3 fill:#d6e4ff,stroke:#1a4fb4,color:#000
+    style M4 fill:#fff3cd,stroke:#b8860b,color:#000
+    style M5 fill:#ececec,stroke:#6c757d,color:#000
     style E3 fill:#ffe4b5,stroke:#d2691e
+    style SEL fill:#ffe4b5,stroke:#d2691e,color:#000

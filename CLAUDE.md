@@ -106,7 +106,7 @@ Dataset descargable de: https://github.com/Jehuty4949/NSL_KDD
 - [x] Carga y EDA del dataset NSL-KDD
 - [x] Preprocesamiento (One-Hot Encoding, MinMaxScaler/StandardScaler, LabelEncoder)
 - [x] Validación de datos procesados
-- [x] Balanceo (4.3.4, SMOTE vs class_weight) y selección de características (4.3.5, 122→54) en `program.py`
+- [x] Selección de características (4.3.5, 122→54) en `program.py` (`select_features()`); mini-experimento de balanceo (4.3.4, SMOTE vs class_weight/nada, decidido por algoritmo) en `firmas.py`
 - [x] Entrenamiento del modelo de anomalías (`anomalias.py`: IsolationForest, OneClassSVM, LocalOutlierFactor, Autoencoder-MLP; umbral p95)
 - [x] Entrenamiento del modelo de firmas y extracción de reglas desde D3 (`firmas.py`: DecisionTree, RandomForest, KNN, HistGradientBoosting)
 - [x] Baseline RF monolítico de control (`baseline.py`)
