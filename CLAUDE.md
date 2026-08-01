@@ -26,6 +26,8 @@ Working_Directory/            ← raíz del repositorio git (rama de trabajo: de
 │   │                           baseline · hibrido · config · evaluacion
 │   ├── Imp/                  ← entorno virtual Python 3.11 (no versionado)
 │   ├── diagramas/
+│   ├── PIPELINE.md           ← diagrama del pipeline de preprocesado
+│   ├── .gitignore            ← plantilla Python; manda sobre el raíz aquí dentro
 │   ├── requirements.txt
 │   └── readme.md
 └── Obsidian_TFG_Vault/       ← la memoria en Markdown (Obsidian)
@@ -55,8 +57,27 @@ pip install -r requirements.txt
 
 | Archivo | Clase | Función |
 |---|---|---|
-| `app/program.py` | `NSLKDDPreprocessor` | Carga el dataset, EDA, preprocesamiento y generación de splits D1/D2/D3 |
-| `app/validacion.py` | `NSLKDDValidator` | Valida los datos procesados: integridad, distribuciones, drift, outliers |
+| `app/program.py` | `NSLKDDPreprocessor` | Carga el dataset, EDA, preprocesamiento y generación de splits D1/D2/D3; expone `load_specialized_splits()`, que usan todos los scripts de modelos |
+| `app/validacion.py` | `NSLKDDValidator` | Valida los splits D1/D2/D3 ya generados: integridad, distribuciones, drift y outliers |
+| `app/config.py` | — | Módulo de configuración central: semilla 42, rutas de salida, `base_path()` para elegir el set de 54 o 122 features y las convenciones de clase (0=normal, 1=ataque, orden de categorías) |
+| `app/evaluacion.py` | — | Módulo común de métricas y figuras: `evaluar_binario`, `evaluar_multiclase`, `evaluar_0day_por_tipo`, matrices de confusión, curvas ROC/PR y `guardar_metricas` (CSV acumulado) |
+| `app/anomalias.py` | `NSLKDDAnomalyTrainer` | Etapa 1: entrena sobre D1 y compara IsolationForest, OneClassSVM, LocalOutlierFactor y Autoencoder-MLP con score unificado y umbral percentil 95 sobre D1_val |
+| `app/firmas.py` | `NSLKDDSignatureTrainer` | Etapa 2: clasificador multiclase de ataques conocidos sobre D3 (DecisionTree, RandomForest, KNN, HistGradientBoosting) con GridSearchCV `f1_macro`, balanceo intra-fold y extracción de reglas legibles. El eje de balanceo depende del algoritmo (`firmas.py:91-96`): SMOTE vs `class_weight` en DecisionTree y RandomForest; SMOTE vs nada en KNN e HistGradientBoosting, que no admiten `class_weight` en sklearn |
+| `app/baseline.py` | `NSLKDDBaselineTrainer` | Baseline de control ajeno al híbrido: un único RandomForest monolítico de 5 clases entrenado sobre todo el train y evaluado en D2, con recall 0-day por tipo como métrica de contraste |
+| `app/hibrido.py` | `NSLKDDHybridEvaluator` | Sistema híbrido en cascada anomalías→firmas: carga los `.joblib` de ambas etapas sin re-entrenarlas y evalúa de extremo a extremo sobre D2 (incluida la clase `unknown`). Única excepción a "no re-entrena" (`hibrido.py:6-9`, `184-192`): para calibrar el umbral de confianza reconstruye el estimador de firmas desde su config guardada y lo reajusta una vez por fold vía `cross_val_predict`, obteniendo probabilidades out-of-fold sobre D3. La calibración no ve D2, así que no hay leakage |
+
+> Orden de ejecución según las dependencias del código: `program.py` → `anomalias.py` /
+> `firmas.py` (independientes entre sí) → `hibrido.py`, que consume los `.joblib` de ambas
+> etapas. `validacion.py` es una **puerta de calidad**, no un eslabón del pipeline: lee los
+> CSV que deja `program.py` y escribe su informe y sus figuras, pero ningún script de modelos
+> lo importa ni consume su salida; se pasa tras `program.py` para confirmar que los splits
+> están sanos. `baseline.py` va aparte **del híbrido**, no del preprocesado: es el control
+> monolítico, pero depende igual del pipeline (`baseline.py:46` hace
+> `from program import load_specialized_splits`). `config.py` y `evaluacion.py` no se ejecutan
+> (no tienen `__main__`): son librerías internas que importan **solo los cuatro scripts de
+> modelos** —`anomalias.py`, `firmas.py`, `baseline.py` e `hibrido.py`—; `program.py` y
+> `validacion.py` NO dependen de ellas, como dice `config.py:9-10`. El pipeline de preprocesado
+> está diagramado en `Implementacion/PIPELINE.md`.
 
 ### Dataset y rutas
 
@@ -164,6 +185,18 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
   los `.doc/.docx` — todo reproducible o descargable, y suman 1,1 GB.
 - Un **commit por tarea cerrada**, mensaje en español con prefijo `codigo:` / `informe:` /
   `harness:`.
+- **`Implementacion/` NO tiene repositorio git propio y no debe recrearse**: el repo anidado que
+  había ahí se absorbió en el repo padre (commit `fb920b8`, 2026-08-01), así que su contenido se
+  versiona como el resto del árbol. Nada de `git init` dentro de `Implementacion/`.
+- `Implementacion/.gitignore` es la plantilla Python de GitHub (heredada de aquel repo) **más dos
+  líneas locales**: `Imp/` —redundante con el `Implementacion/Imp/` del raíz— y
+  `virtualEnvPRECLAIMS/`. Convive con el `.gitignore` de la raíz: ambos se aplican.
+- **Precedencia:** el de la raíz aplica a todo el árbol, pero **en caso de conflicto manda
+  `Implementacion/.gitignore` dentro de `Implementacion/`** — en git, el `.gitignore` de nivel
+  inferior anula al superior dentro de su subárbol. Importa porque ese fichero anidado ignora
+  `*.log`, `lib/`, `build/`, `dist/`, `docs/_build/`, `.env` y bastantes más: una re-inclusión
+  `!…` escrita en el `.gitignore` raíz **no** rescataría un artefacto que caiga dentro de
+  `Implementacion/`. Si hay que versionar algo así, la excepción se escribe en el anidado.
 
 ## Normas de trabajo
 

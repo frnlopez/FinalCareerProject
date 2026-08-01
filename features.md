@@ -25,6 +25,14 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
   prensa sectorial. Completar datos de cita y marcar lo que no llegue a nivel 1-2. **Sin
   borrar nada**: las bajas las decide Francisco.
 
+- [ ] **Actualizar el diagrama `01_pipeline_completo.mmd`** · Código · `ml-implementador`
+  Detectado el 2026-08-01 al documentar `Implementacion/` en `CLAUDE.md`. Dos rótulos obsoletos:
+  la capa de modelos es `"🚀 Próximos Pasos — Modelos (no implementado)"` (línea 57) cuando el
+  track Código está completo desde el 2026-07-16, y el nodo `D` dice `"Mapeo de 51 ataques"`
+  (línea 13), cifra ya corregida a **40 etiquetas** — el propio diagrama se contradice en la
+  línea 28, que sí rotula `"40 tipos de ataque · 5 categorías"`. Ahora queda a un clic desde
+  `CLAUDE.md`, así que se ve más. **La acepta o la retira Francisco.**
+
 - [ ] **Resumen y Abstract** · Informe · `redactor-tfg`
   Se redactan **al final**, cuando el resto de capítulos esté cerrado.
   Notas: `00 Preliminares/Resumen.md` y `00 Preliminares/Abstract.md`.
@@ -45,6 +53,7 @@ No se despachan a ningún agente. El `leader` no debe crear tareas para esto.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-01 | Código | `CLAUDE.md` al día tras la absorción de `Implementacion/`: tabla de scripts de 2 a 8 (6 clases reales + `config.py` y `evaluacion.py` como módulos-librería), orden de ejecución y dependencias entre scripts, y en `## Git` que `Implementacion/` ya no lleva `.git` propio y la precedencia de su `.gitignore` anidado | — |
 | 2026-08-01 | Código | Absorción del repo git anidado `Implementacion/`: retirado el gitlink huérfano y versionados los 22 ficheros de código (8 scripts de `app/`, 10 diagramas, `requirements.txt`, `PIPELINE.md`, `readme.md`, `.gitignore`) | `fb920b8` |
 | 2026-08-01 | — | Arquitectura de agentes: `leader`, `researcher`, hook de entrada, skill `cierre`, `features.md`, git y README | `791a698` |
 | 2026-07-16 | Informe | Apéndice A.2 — fórmulas de las métricas (borrador) | — |
