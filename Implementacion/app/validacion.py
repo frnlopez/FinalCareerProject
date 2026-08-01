@@ -1,0 +1,698 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy import stats
+import argparse
+import warnings
+import os
+import sys
+import joblib
+
+warnings.filterwarnings('ignore')
+
+# Forzar salida UTF-8 en consolas Windows: sin esto, los prints con emojis
+# cascan con el códec cp1252 salvo que exista PYTHONIOENCODING=utf-8.
+if sys.stdout.encoding and sys.stdout.encoding.lower().replace('-', '') != 'utf8':
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+        sys.stderr.reconfigure(encoding='utf-8')
+    except (AttributeError, ValueError):
+        # stdout no reconfigurable (p. ej. redirigido a un objeto sin reconfigure):
+        # se continúa sin forzar el encoding
+        pass
+
+plt.style.use('default')
+sns.set_palette("husl")
+plt.rcParams['figure.figsize'] = (12, 8)
+
+
+class NSLKDDValidator:
+    """
+    Valida las divisiones D1/D2/D3 generadas por NSLKDDPreprocessor (program.py).
+
+    Espera los archivos con el prefijo devuelto por save_specialized_splits(), p.ej.:
+        <base_path>_processed_X_D1_normal_for_anomaly.csv
+        <base_path>_processed_X_D2_complete_test.csv
+        <base_path>_processed_X_D3_known_attacks_for_signatures.csv
+        ... (y sus correspondientes y_attack / y_category)
+    """
+
+    def __init__(self, base_path=r'C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Resultados\specialized_nsl_kdd'):
+        self.base_path = base_path
+
+        # Directorio de figuras: Resultados\figuras (mismo patrón que program.py).
+        # Las figuras se guardan a disco en lugar de mostrarse (no bloquean la
+        # ejecución y quedan listas para la memoria del TFG).
+        self.figures_dir = os.path.join(os.path.dirname(base_path) or '.', 'figuras')
+
+        # Sufijo de variante (H3): si se valida la variante sin selección
+        # (base_path acabado en '_sin_seleccion'), las figuras llevan el mismo
+        # sufijo para no pisar las de la variante por defecto.
+        self.variant_suffix = ('_sin_seleccion'
+                               if os.path.basename(base_path).endswith('_sin_seleccion')
+                               else '')
+
+        # D1: solo tráfico normal (entrenamiento anomalías)
+        self.D1_X = None
+        self.D1_y_category_original = None
+
+        # D2: set de test completo (evaluación)
+        self.D2_X = None
+        self.D2_y_attack_original = None
+        self.D2_y_category_original = None
+
+        # D3: ataques conocidos (entrenamiento firmas)
+        self.D3_X = None
+        self.D3_y_attack_original = None
+        self.D3_y_category_original = None
+
+        self.feature_names = None
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Utilidades
+    # ─────────────────────────────────────────────────────────────────────────
+
+    def _save_figure(self, filename):
+        """
+        Guarda la figura matplotlib actual en Resultados/figuras y la cierra.
+        Sustituye a plt.show() para que la validación no bloquee la ejecución.
+        """
+        os.makedirs(self.figures_dir, exist_ok=True)
+        if self.variant_suffix:
+            raiz, ext = os.path.splitext(filename)
+            filename = f"{raiz}{self.variant_suffix}{ext}"
+        figure_path = os.path.join(self.figures_dir, filename)
+        plt.savefig(figure_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"   ✓ Figura guardada en: {figure_path}")
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Carga de datos
+    # ─────────────────────────────────────────────────────────────────────────
+
+    def load_all_data(self):
+        """Carga las tres divisiones procesadas generadas por program.py."""
+        print("🔄 CARGANDO DIVISIONES D1 / D2 / D3...")
+        print("=" * 60)
+        try:
+            bp = self.base_path
+
+            # D1
+            self.D1_X = pd.read_csv(f'{bp}_processed_X_D1_normal_for_anomaly.csv')
+            D1_y_cat = pd.read_csv(f'{bp}_processed_y_category_D1_normal_for_anomaly.csv')
+            self.D1_y_category_original = D1_y_cat['category_original'].values
+
+            # D2
+            self.D2_X = pd.read_csv(f'{bp}_processed_X_D2_complete_test.csv')
+            D2_y_att = pd.read_csv(f'{bp}_processed_y_attack_D2_complete_test.csv')
+            D2_y_cat = pd.read_csv(f'{bp}_processed_y_category_D2_complete_test.csv')
+            self.D2_y_attack_original = D2_y_att['attack_original'].values
+            self.D2_y_category_original = D2_y_cat['category_original'].values
+
+            # D3
+            self.D3_X = pd.read_csv(f'{bp}_processed_X_D3_known_attacks_for_signatures.csv')
+            D3_y_att = pd.read_csv(f'{bp}_processed_y_attack_D3_known_attacks_for_signatures.csv')
+            D3_y_cat = pd.read_csv(f'{bp}_processed_y_category_D3_known_attacks_for_signatures.csv')
+            self.D3_y_attack_original = D3_y_att['attack_original'].values
+            self.D3_y_category_original = D3_y_cat['category_original'].values
+
+            self.feature_names = self.D1_X.columns.tolist()
+
+            print(f"   ✓ D1 (Normal):   {self.D1_X.shape[0]:>7,} × {self.D1_X.shape[1]}")
+            print(f"   ✓ D2 (Test):     {self.D2_X.shape[0]:>7,} × {self.D2_X.shape[1]}")
+            print(f"   ✓ D3 (Ataques):  {self.D3_X.shape[0]:>7,} × {self.D3_X.shape[1]}")
+            print(f"\n✅ {len(self.feature_names)} características cargadas correctamente")
+            return True
+
+        except FileNotFoundError as e:
+            print(f"❌ Archivo no encontrado: {e}")
+            print("   Ejecuta program.py primero para generar las divisiones procesadas.")
+            return False
+        except Exception as e:
+            print(f"❌ Error al cargar datos: {e}")
+            return False
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # 1. Integridad
+    # ─────────────────────────────────────────────────────────────────────────
+
+    def validate_data_integrity(self):
+        """
+        Comprueba:
+          - Dimensiones X/y consistentes en D2 y D3
+          - Columnas alineadas entre D1, D2 y D3
+          - Ausencia de nulos e infinitos
+          - Pureza de D1 (solo 'normal') y D3 (sin 'normal')
+          - Rangos de escalado razonables
+        """
+        print("\n🔍 VALIDACIÓN DE INTEGRIDAD")
+        print("=" * 60)
+        issues = []
+
+        # 1. Dimensiones
+        print("1. Dimensiones X / y:")
+        for name, X, y in [
+            ('D2', self.D2_X, self.D2_y_category_original),
+            ('D3', self.D3_X, self.D3_y_category_original),
+        ]:
+            if len(X) != len(y):
+                issues.append(f"{name}: X({len(X)}) ≠ y({len(y)})")
+                print(f"   ❌ {name}: X({len(X):,}) ≠ y({len(y):,})")
+            else:
+                print(f"   ✓ {name}: {len(X):,} muestras consistentes")
+
+        # 2. Alineación de columnas
+        print("\n2. Alineación de columnas entre divisiones:")
+        cols_d1 = set(self.D1_X.columns)
+        cols_d2 = set(self.D2_X.columns)
+        cols_d3 = set(self.D3_X.columns)
+        if cols_d1 == cols_d2 == cols_d3:
+            print(f"   ✓ {len(self.feature_names)} columnas alineadas en D1 / D2 / D3")
+        else:
+            diff_d2 = cols_d1.symmetric_difference(cols_d2)
+            diff_d3 = cols_d1.symmetric_difference(cols_d3)
+            if diff_d2:
+                issues.append(f"Columnas D1 ≠ D2: {diff_d2}")
+                print(f"   ❌ Diferencias D1 ↔ D2: {diff_d2}")
+            if diff_d3:
+                issues.append(f"Columnas D1 ≠ D3: {diff_d3}")
+                print(f"   ❌ Diferencias D1 ↔ D3: {diff_d3}")
+
+        # 2b. Consistencia con los transformadores persistidos: las columnas de
+        # los CSVs deben coincidir con 'feature_columns' del transformers.joblib
+        # (tras la selección de características 4.3.5, esa clave contiene la
+        # lista FINAL de features; no se asume ningún número fijo de columnas).
+        transformers_path = f'{self.base_path}_transformers.joblib'
+        if os.path.exists(transformers_path):
+            try:
+                transformers = joblib.load(transformers_path)
+                expected_cols = transformers.get('feature_columns')
+                if expected_cols is None:
+                    print("   ℹ️  transformers.joblib sin clave 'feature_columns' — chequeo omitido")
+                elif list(self.D1_X.columns) == list(expected_cols):
+                    print(f"   ✓ Columnas de los CSVs coinciden con transformers.joblib ({len(expected_cols)} features)")
+                else:
+                    issues.append("Columnas de los CSVs ≠ 'feature_columns' de transformers.joblib")
+                    print(f"   ❌ Columnas de los CSVs ({len(self.D1_X.columns)}) ≠ "
+                          f"'feature_columns' de transformers.joblib ({len(expected_cols)})")
+            except Exception as e:
+                print(f"   ℹ️  No se pudo leer transformers.joblib ({e}) — chequeo omitido")
+        else:
+            print("   ℹ️  transformers.joblib no encontrado — chequeo de consistencia omitido")
+
+        # 3. Nulos e infinitos
+        print("\n3. Nulos e infinitos:")
+        for name, X in [('D1', self.D1_X), ('D2', self.D2_X), ('D3', self.D3_X)]:
+            nulls = X.isnull().sum().sum()
+            infs = np.isinf(X.select_dtypes(include=[np.number])).sum().sum()
+            if nulls > 0 or infs > 0:
+                issues.append(f"{name}: {nulls} nulos, {infs} infinitos")
+                print(f"   ❌ {name}: {nulls} nulos, {infs} infinitos")
+            else:
+                print(f"   ✓ {name}: sin nulos ni infinitos")
+
+        # 4. Pureza de D1 (solo tráfico normal)
+        print("\n4. Pureza de D1 (debe ser 100 % normal):")
+        n_non_normal_d1 = np.sum(self.D1_y_category_original != 'normal')
+        if n_non_normal_d1 > 0:
+            issues.append(f"D1 contiene {n_non_normal_d1} instancias no-normales")
+            print(f"   ❌ D1 contiene {n_non_normal_d1} instancias no-normales")
+        else:
+            print(f"   ✓ D1 = 100 % normal ({len(self.D1_X):,} instancias)")
+
+        # 5. Pureza de D3 (solo ataques, sin normal)
+        print("\n5. Pureza de D3 (debe ser 100 % ataques):")
+        n_normal_d3 = np.sum(self.D3_y_category_original == 'normal')
+        if n_normal_d3 > 0:
+            issues.append(f"D3 contiene {n_normal_d3} instancias normales")
+            print(f"   ❌ D3 contiene {n_normal_d3} instancias normales")
+        else:
+            print(f"   ✓ D3 = 100 % ataques ({len(self.D3_X):,} instancias)")
+
+        # 6. Rangos de escalado
+        print("\n6. Rangos de escalado:")
+        for name, X in [('D1', self.D1_X), ('D2', self.D2_X), ('D3', self.D3_X)]:
+            x_min = X.min().min()
+            x_max = X.max().max()
+            print(f"   {name}: [{x_min:.4f}, {x_max:.4f}]")
+
+        # Resumen
+        print("\n" + "=" * 60)
+        if not issues:
+            print("🎉 INTEGRIDAD APROBADA — sin problemas detectados")
+        else:
+            print(f"⚠️  {len(issues)} problema(s) encontrado(s):")
+            for issue in issues:
+                print(f"   ❌ {issue}")
+
+        return len(issues) == 0, issues
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # 2. Distribución de clases
+    # ─────────────────────────────────────────────────────────────────────────
+
+    def analyze_class_distribution(self):
+        """
+        Analiza la distribución de categorías de ataque en D2 y D3,
+        y detecta ataques presentes en el test (D2) pero no vistos en entrenamiento (D3).
+        """
+        print("\n📊 ANÁLISIS DE DISTRIBUCIÓN DE CLASES")
+        print("=" * 60)
+
+        d2_cat = pd.Series(self.D2_y_category_original).value_counts()
+        d3_cat = pd.Series(self.D3_y_category_original).value_counts()
+        d3_att = pd.Series(self.D3_y_attack_original)
+        d2_att = pd.Series(self.D2_y_attack_original)
+
+        print("\n1. D2 — Set de Test Completo (categorías):")
+        for cat, count in d2_cat.items():
+            pct = count / len(self.D2_y_category_original) * 100
+            print(f"   {cat.upper():<12}: {count:>6,}  ({pct:.2f}%)")
+
+        print("\n2. D3 — Ataques Conocidos (categorías):")
+        for cat, count in d3_cat.items():
+            pct = count / len(self.D3_y_category_original) * 100
+            print(f"   {cat.upper():<12}: {count:>6,}  ({pct:.2f}%)")
+
+        d3_min = d3_cat.min()
+        d3_max = d3_cat.max()
+        ratio = d3_max / d3_min if d3_min > 0 else float('inf')
+        print(f"\n   Ratio de desbalance en D3: {ratio:.1f}:1")
+        if ratio > 100:
+            print("   ⚠️  Alto desbalance — considera class_weight='balanced' en el modelo de firmas")
+
+        # Ataques nuevos en D2 no vistos en D3
+        new_in_test = set(d2_att.unique()) - {'normal'} - set(d3_att.unique())
+        if new_in_test:
+            print(f"\n   ⚠️  {len(new_in_test)} tipo(s) de ataque NUEVOS en D2 (no vistos en D3):")
+            for a in sorted(new_in_test):
+                print(f"      → {a}  (solo detectable por el modelo de anomalías)")
+        else:
+            print("\n   ✓ Todos los ataques de D2 están representados en D3")
+
+        self._plot_class_distributions(d2_cat, d3_cat)
+        return d2_cat, d3_cat
+
+    def _plot_class_distributions(self, d2_counts, d3_counts):
+        fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+
+        axes[0].bar(['normal'], [len(self.D1_X)], color='lightgreen', alpha=0.85, edgecolor='darkgreen')
+        axes[0].set_title('D1 — Tráfico Normal\n(Entrenamiento Anomalías)')
+        axes[0].set_ylabel('Instancias')
+
+        colors_d2 = ['lightgreen' if c == 'normal' else 'lightcoral' for c in d2_counts.index]
+        axes[1].bar(d2_counts.index, d2_counts.values, color=colors_d2, alpha=0.85, edgecolor='grey')
+        axes[1].set_title('D2 — Test Completo\n(Evaluación H-NIDS)')
+        axes[1].set_ylabel('Instancias')
+        axes[1].tick_params(axis='x', rotation=30)
+
+        axes[2].bar(d3_counts.index, d3_counts.values, color='lightcoral', alpha=0.85, edgecolor='grey')
+        axes[2].set_title('D3 — Ataques Conocidos\n(Entrenamiento Firmas)')
+        axes[2].set_ylabel('Instancias')
+        axes[2].tick_params(axis='x', rotation=30)
+
+        plt.tight_layout()
+        self._save_figure('validacion_distribucion_clases.png')
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # 3. Distribuciones de características
+    # ─────────────────────────────────────────────────────────────────────────
+
+    def analyze_feature_distributions(self):
+        """
+        Detecta características con varianza baja y alta correlación sobre el
+        train completo (D1+D3) y compara distribuciones D1 (normal) vs D3
+        (ataques) para identificar las más discriminantes para el modelo
+        de firmas.
+        """
+        print("\n📈 ANÁLISIS DE DISTRIBUCIONES DE CARACTERÍSTICAS")
+        print("=" * 60)
+
+        # ⚠️ Varianza y correlación se calculan sobre el TRAIN COMPLETO (D1+D3),
+        # NUNCA solo sobre D1: los dummies de service/flag exclusivos de tráfico
+        # de ataque son todo-cero en D1 (solo normal) y aparecerían falsamente
+        # como "varianza nula" (trampa documentada en next-steps.md §6.2).
+        X_train_completo = pd.concat([self.D1_X, self.D3_X], axis=0)
+
+        train_var = X_train_completo.var()
+        low_var = train_var[train_var < 1e-8].index.tolist()
+        if low_var:
+            print(f"   ⚠️  {len(low_var)} características con varianza casi nula sobre D1+D3:")
+            for f in low_var[:10]:
+                print(f"      - {f}")
+        else:
+            print("   ✓ Todas las características tienen varianza suficiente sobre D1+D3")
+
+        # Pares con alta correlación sobre D1+D3 (train completo)
+        print("\n   Correlaciones altas (> 0.95) sobre D1+D3:")
+        corr = X_train_completo.corr()
+        high_corr = []
+        for i in range(len(corr.columns)):
+            for j in range(i + 1, len(corr.columns)):
+                val = abs(corr.iloc[i, j])
+                if val > 0.95:
+                    high_corr.append((corr.columns[i], corr.columns[j], corr.iloc[i, j]))
+        if high_corr:
+            print(f"   ⚠️  {len(high_corr)} pares — top 5:")
+            for f1, f2, v in sorted(high_corr, key=lambda x: abs(x[2]), reverse=True)[:5]:
+                print(f"      {f1} ↔ {f2}: {v:.3f}")
+        else:
+            print("   ✓ Sin correlaciones extremas")
+
+        # Características más discriminantes: mayor diferencia de medias D1 vs D3
+        print("\n   Top 10 características más discriminantes (D1 Normal vs D3 Ataques):")
+        mean_diff = (self.D3_X.mean() - self.D1_X.mean()).abs().sort_values(ascending=False)
+        for feat, diff in mean_diff.head(10).items():
+            mu_d1 = self.D1_X[feat].mean()
+            mu_d3 = self.D3_X[feat].mean()
+            print(f"      {feat:<40}  μ_D1={mu_d1:.3f}  μ_D3={mu_d3:.3f}  Δ={diff:.3f}")
+
+        self._plot_feature_distributions(mean_diff)
+        return {'low_variance': low_var, 'high_correlation': high_corr}
+
+    def _plot_feature_distributions(self, mean_diff):
+        top_feats = mean_diff.head(12).index.tolist()
+        n_cols, n_rows = 4, 3
+        fig, axes = plt.subplots(n_rows, n_cols, figsize=(20, 12))
+        axes = axes.flatten()
+
+        for i, feat in enumerate(top_feats):
+            axes[i].hist(self.D1_X[feat], bins=40, alpha=0.6, label='D1 Normal', density=True, color='green')
+            axes[i].hist(self.D3_X[feat], bins=40, alpha=0.6, label='D3 Ataques', density=True, color='red')
+            axes[i].set_title(feat, fontsize=9)
+            axes[i].legend(fontsize=7)
+
+        for i in range(len(top_feats), len(axes)):
+            axes[i].set_visible(False)
+
+        plt.suptitle('D1 (Normal) vs D3 (Ataques) — Top características discriminantes', fontsize=12)
+        plt.tight_layout()
+        self._save_figure('validacion_discriminantes_d1_vs_d3.png')
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # 4. Data drift D1 → D2
+    # ─────────────────────────────────────────────────────────────────────────
+
+    def detect_data_drift(self):
+        """
+        Compara distribuciones D1 (normal de entrenamiento) vs D2 (test completo)
+        usando el test de Kolmogorov-Smirnov.
+        Drift alto indica que el test tiene perfiles muy distintos al baseline normal,
+        lo que es esperable si contiene ataques.
+        """
+        print("\n🌊 DETECCIÓN DE DRIFT — D1 (Normal train) vs D2 (Test completo)")
+        print("=" * 60)
+
+        results = []
+        for feat in self.feature_names:
+            ks_stat, ks_p = stats.ks_2samp(
+                self.D1_X[feat].values, self.D2_X[feat].values
+            )
+            results.append({
+                'feature': feat,
+                'ks_statistic': ks_stat,
+                'ks_p_value': ks_p,
+                'mean_d1': self.D1_X[feat].mean(),
+                'mean_d2': self.D2_X[feat].mean(),
+                'has_drift': ks_p < 0.01,
+            })
+
+        drift_df = pd.DataFrame(results)
+        n_drift = drift_df['has_drift'].sum()
+        total = len(drift_df)
+
+        print(f"\n   Drift significativo (KS p < 0.01): {n_drift}/{total} características ({n_drift/total*100:.1f}%)")
+        if n_drift > 0:
+            print(f"\n   Top 10 por KS statistic:")
+            top = drift_df.nlargest(10, 'ks_statistic')[['feature', 'ks_statistic', 'ks_p_value']]
+            print(top.to_string(index=False, float_format='%.4f'))
+
+        self._plot_drift(drift_df)
+        return drift_df
+
+    def _plot_drift(self, drift_df):
+        fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+
+        top20 = drift_df.nlargest(20, 'ks_statistic')
+        colors = ['red' if d else 'steelblue' for d in top20['has_drift']]
+        axes[0].barh(range(len(top20)), top20['ks_statistic'], color=colors)
+        axes[0].set_yticks(range(len(top20)))
+        axes[0].set_yticklabels([f[:25] for f in top20['feature']], fontsize=8)
+        axes[0].invert_yaxis()
+        axes[0].set_title('Top 20 KS Statistic — D1 vs D2\n(rojo = drift significativo)')
+        axes[0].set_xlabel('KS Statistic')
+
+        axes[1].hist(drift_df['ks_p_value'], bins=30, alpha=0.75, edgecolor='black')
+        axes[1].axvline(x=0.01, color='red', linestyle='--', label='p=0.01')
+        axes[1].set_title('Distribución de p-values (KS test)')
+        axes[1].set_xlabel('p-value')
+        axes[1].set_ylabel('Frecuencia')
+        axes[1].legend()
+
+        plt.tight_layout()
+        self._save_figure('validacion_drift_ks.png')
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # 5. Outliers
+    # ─────────────────────────────────────────────────────────────────────────
+
+    def analyze_outliers(self):
+        """
+        Detecta outliers por IQR en cada característica para las tres divisiones.
+        Un alto porcentaje de outliers en D3 respecto a D1 es indicativo de
+        características con buen poder discriminante.
+        """
+        print("\n🎯 ANÁLISIS DE OUTLIERS (IQR)")
+        print("=" * 60)
+
+        def iqr_outlier_pct(X):
+            Q1 = X.quantile(0.25)
+            Q3 = X.quantile(0.75)
+            IQR = Q3 - Q1
+            return ((X < Q1 - 1.5 * IQR) | (X > Q3 + 1.5 * IQR)).sum() / len(X) * 100
+
+        summaries = {}
+        for name, X in [('D1', self.D1_X), ('D2', self.D2_X), ('D3', self.D3_X)]:
+            pct = iqr_outlier_pct(X)
+            summaries[name] = pct
+            worst_feat = pct.idxmax()
+            print(f"   {name}: outliers promedio = {pct.mean():.2f}%  |  "
+                  f"máximo en '{worst_feat}' ({pct.max():.1f}%)")
+
+        self._plot_outliers(summaries)
+        return summaries
+
+    def _plot_outliers(self, summaries):
+        top_feats = summaries['D1'].nlargest(15).index.tolist()
+        fig, ax = plt.subplots(figsize=(14, 6))
+
+        x = np.arange(len(top_feats))
+        w = 0.25
+        ax.bar(x - w, summaries['D1'][top_feats], w, label='D1 Normal', color='lightgreen', alpha=0.85)
+        ax.bar(x,     summaries['D2'][top_feats], w, label='D2 Test',   color='steelblue',  alpha=0.85)
+        ax.bar(x + w, summaries['D3'][top_feats], w, label='D3 Ataques', color='lightcoral', alpha=0.85)
+        ax.set_xticks(x)
+        ax.set_xticklabels([f[:18] for f in top_feats], rotation=45, ha='right', fontsize=8)
+        ax.set_ylabel('% Outliers (IQR)')
+        ax.set_title('Outliers por característica — Top 15 en D1')
+        ax.legend()
+        plt.tight_layout()
+        self._save_figure('validacion_outliers_iqr.png')
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # 6. Rango de escalado en D2 (informativo)
+    # ─────────────────────────────────────────────────────────────────────────
+
+    def check_d2_scaling_range(self):
+        """
+        Chequeo INFORMATIVO (no bloqueante): lista las características de D2
+        con valores fuera de [0, 1] tras el escalado.
+
+        Es ESPERABLE por diseño: el MinMaxScaler se ajusta solo sobre el train
+        (D1+D3) y no se re-ajusta con D2 (hacerlo sería leakage), por lo que el
+        test puede contener valores mayores que el máximo (o menores que el
+        mínimo) visto en entrenamiento. Se reporta para vigilar su efecto en
+        los modelos (p. ej. el FPR del autoencoder), no como error.
+
+        Returns:
+        --------
+        pandas.DataFrame
+            Columnas: feature, min_d2, max_d2 — solo las que salen de [0, 1],
+            ordenadas por max_d2 descendente. Vacío si todas están en rango.
+        """
+        print("\n📏 RANGO DE D2 TRAS EL ESCALADO (chequeo informativo, no bloqueante)")
+        print("=" * 60)
+
+        maximos = self.D2_X.max()
+        minimos = self.D2_X.min()
+        fuera = self.D2_X.columns[(maximos > 1.0) | (minimos < 0.0)].tolist()
+
+        resumen = pd.DataFrame({
+            'feature': fuera,
+            'min_d2': minimos[fuera].values,
+            'max_d2': maximos[fuera].values,
+        }).sort_values('max_d2', ascending=False).reset_index(drop=True)
+
+        if fuera:
+            print(f"   ℹ️  {len(fuera)} características de D2 fuera de [0, 1].")
+            print("      Esperable por diseño: el scaler se ajustó en train (D1+D3)")
+            print("      y no se re-ajusta con el test. Top 15 por valor máximo:")
+            for _, row in resumen.head(15).iterrows():
+                print(f"      - {row['feature']:<40} min={row['min_d2']:.4f}  max={row['max_d2']:.4f}")
+            if len(resumen) > 15:
+                print(f"      ... y {len(resumen) - 15} más (lista completa en el reporte de texto)")
+        else:
+            print("   ✓ Todas las características de D2 están dentro de [0, 1]")
+
+        return resumen
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Reporte completo
+    # ─────────────────────────────────────────────────────────────────────────
+
+    def generate_validation_report(self):
+        """Ejecuta toda la validación y guarda un reporte en texto."""
+        print("\n📋 REPORTE COMPLETO DE VALIDACIÓN")
+        print("=" * 60)
+
+        integrity_ok, issues = self.validate_data_integrity()
+        d2_dist, d3_dist = self.analyze_class_distribution()
+        feat_analysis = self.analyze_feature_distributions()
+        drift_df = self.detect_data_drift()
+        outlier_summaries = self.analyze_outliers()
+        d2_range_df = self.check_d2_scaling_range()
+
+        report = {
+            'integrity_ok': integrity_ok,
+            'issues': issues,
+            'D1_size': len(self.D1_X),
+            'D2_size': len(self.D2_X),
+            'D3_size': len(self.D3_X),
+            'n_features': len(self.feature_names),
+            'features_with_drift': int(drift_df['has_drift'].sum()),
+            'avg_outlier_pct_D1': float(outlier_summaries['D1'].mean()),
+            'low_variance_features': len(feat_analysis['low_variance']),
+            'high_corr_pairs': len(feat_analysis['high_correlation']),
+            'd2_features_fuera_rango': len(d2_range_df),
+        }
+
+        report_path = f'{self.base_path}_validation_report.txt'
+        self._save_report(report, drift_df, d2_range_df, report_path)
+
+        print(f"\n{'✅' if integrity_ok else '❌'} Integridad: {'APROBADA' if integrity_ok else 'FALLA'}")
+        print(f"🌊 Drift detectado: {report['features_with_drift']}/{report['n_features']} características")
+        print(f"⚠️  Pares alta correlación: {report['high_corr_pairs']}")
+        print(f"📄 Reporte guardado en: {report_path}")
+
+        return report
+
+    def _save_report(self, report, drift_df, d2_range_df, path):
+        with open(path, 'w', encoding='utf-8') as f:
+            f.write("REPORTE DE VALIDACIÓN — DIVISIONES D1/D2/D3 NSL-KDD\n")
+            f.write("=" * 60 + "\n\n")
+            f.write(f"Integridad:       {'APROBADA' if report['integrity_ok'] else 'FALLA'}\n")
+            f.write(f"D1 (Normal):      {report['D1_size']:,} instancias\n")
+            f.write(f"D2 (Test):        {report['D2_size']:,} instancias\n")
+            f.write(f"D3 (Ataques):     {report['D3_size']:,} instancias\n")
+            f.write(f"Características:  {report['n_features']}\n")
+            f.write(f"Drift D1→D2:      {report['features_with_drift']} características\n")
+            f.write(f"Outliers med. D1: {report['avg_outlier_pct_D1']:.2f}%\n")
+            f.write(f"Baja varianza (sobre D1+D3):    {report['low_variance_features']} características\n")
+            f.write(f"Alta correlación (sobre D1+D3): {report['high_corr_pairs']} pares\n")
+            f.write(f"D2 fuera de [0,1]: {report['d2_features_fuera_rango']} características (informativo)\n")
+
+            if report['issues']:
+                f.write("\nProblemas detectados:\n")
+                for issue in report['issues']:
+                    f.write(f"  ❌ {issue}\n")
+
+            f.write("\nRecomendaciones:\n")
+            if not report['integrity_ok']:
+                f.write("  ❌ CRÍTICO: resolver problemas de integridad antes de entrenar\n")
+            if report['high_corr_pairs'] > 0:
+                f.write("  💡 Considera eliminar características con correlación > 0.95\n")
+            if report['low_variance_features'] > 0:
+                f.write("  💡 Considera eliminar características con varianza casi nula\n")
+            if report['avg_outlier_pct_D1'] > 15:
+                f.write("  ⚠️  Alto porcentaje de outliers en D1 — revisar preprocesamiento\n")
+
+            f.write("\nTop 15 características con mayor drift (D1 vs D2):\n")
+            top = drift_df.nlargest(15, 'ks_statistic')[
+                ['feature', 'ks_statistic', 'ks_p_value', 'has_drift']
+            ]
+            f.write(top.to_string(index=False) + "\n")
+
+            # Chequeo informativo (no bloqueante) del rango de D2 tras el escalado
+            f.write("\nCaracterísticas de D2 fuera de [0, 1] tras el escalado (INFORMATIVO):\n")
+            f.write("Esperable por diseño: el scaler se ajusta solo en train (D1+D3) y no se\n")
+            f.write("re-ajusta con el test (sería leakage). Vigilar su efecto en los modelos.\n")
+            if d2_range_df.empty:
+                f.write("  (ninguna — todo D2 dentro de [0, 1])\n")
+            else:
+                f.write(d2_range_df.to_string(index=False, float_format='%.4f') + "\n")
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Funciones de uso directo
+# ─────────────────────────────────────────────────────────────────────────────
+
+def main(base_path=None):
+    """
+    Ejecuta la validación completa de las tres divisiones.
+
+    Parameters:
+    -----------
+    base_path : str or None
+        Prefijo de los archivos a validar. None → variante por defecto
+        (con selección de características 4.3.5).
+    """
+    print("🔍 VALIDACIÓN D1/D2/D3 — NSL-KDD")
+    print("=" * 60)
+
+    if base_path is None:
+        base_path = r"C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Resultados\specialized_nsl_kdd"
+    validator = NSLKDDValidator(base_path)
+
+    if validator.load_all_data():
+        report = validator.generate_validation_report()
+        status = '✅ DATOS LISTOS para entrenamiento' if report['integrity_ok'] else '❌ REVISAR problemas antes de continuar'
+        print(f"\n🏁 {status}")
+        return validator, report
+    else:
+        print("❌ No se pudieron cargar los datos. Ejecuta program.py primero.")
+        return None, None
+
+
+def quick_validation(base_path=None):
+    """Validación rápida: solo integridad. Devuelve True si todo está bien."""
+    if base_path is None:
+        base_path = r"C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Resultados\specialized_nsl_kdd"
+    validator = NSLKDDValidator(base_path)
+    if validator.load_all_data():
+        ok, _ = validator.validate_data_integrity()
+        print(f"{'✅ Validación rápida exitosa' if ok else '❌ Problemas detectados — ejecuta generate_validation_report()'}")
+        return ok
+    return False
+
+
+if __name__ == "__main__":
+    # CLI (H3): con --sin-seleccion se valida la variante generada por
+    # `program.py --sin-seleccion` (artefactos con sufijo '_sin_seleccion');
+    # las figuras de esa variante llevan también el sufijo y no pisan las
+    # de la variante por defecto.
+    parser = argparse.ArgumentParser(
+        description="Validación de las divisiones D1/D2/D3 generadas por program.py"
+    )
+    parser.add_argument(
+        '--sin-seleccion', action='store_true',
+        help="Valida la variante sin selección de características "
+             "(artefactos con sufijo '_sin_seleccion')"
+    )
+    args = parser.parse_args()
+
+    base = r"C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Resultados\specialized_nsl_kdd"
+    if args.sin_seleccion:
+        base += '_sin_seleccion'
+
+    validator, report = main(base)

@@ -1,0 +1,93 @@
+flowchart TD
+    subgraph INPUT["📥 Entrada"]
+        A1["KDDTrain+.txt\n~125,973 instancias\n41 características + etiqueta"]
+        A2["KDDTest+.txt\n~22,544 instancias"]
+    end
+
+    subgraph PREP["🔧 program.py — NSLKDDPreprocessor"]
+        direction TB
+        B["load_dataset()\nAsigna 41 nombres de columna\nDetecta .txt o .csv automáticamente"]
+
+        C["exploratory_data_analysis()\n• Estadísticas descriptivas\n• Distribución de ataques\n• Ataques nuevos en test\n• 9 visualizaciones matplotlib"]
+
+        D["create_specialized_data_splits()\nMapeo de 51 ataques → 5 categorías"]
+
+        subgraph SPLITS["Divisiones Especializadas"]
+            D1["🟢 D1 — Solo Normal\nEntrenamiento modelo anomalías\n(tráfico legítimo únicamente)"]
+            D2["🔵 D2 — Test Completo\nEvaluación del H-NIDS\n(normal + todos los ataques)"]
+            D3["🔴 D3 — Solo Ataques\nExtracción de firmas\n(ataques conocidos del train)"]
+        end
+
+        E["preprocess_specialized_splits()"]
+
+        subgraph PREPROC["Pasos de Preprocesamiento"]
+            E1["Paso 1 — One-Hot Encoding\nprotocol_type · service · flag"]
+            E2["Paso 2 — Alineación de columnas\n(referencia: schema de D1)"]
+            E3["Paso 3 — Fit Scaler en D1 + D3\nMinMaxScaler / StandardScaler\n⚠️ Ajustado en TODO el entrenamiento"]
+            E4["Paso 4 — Transform D1, D2, D3\ncon el mismo scaler"]
+            E5["Paso 5 — LabelEncoder\n40 tipos de ataque · 5 categorías"]
+        end
+
+        F["save_specialized_splits()\nGuarda CSVs + metadatos"]
+    end
+
+    subgraph FILES["📁 Resultados/specialized_nsl_kdd_*"]
+        direction LR
+        F1["_processed_X_D1_*.csv\n_processed_y_*_D1_*.csv"]
+        F2["_processed_X_D2_*.csv\n_processed_y_*_D2_*.csv"]
+        F3["_processed_X_D3_*.csv\n_processed_y_*_D3_*.csv"]
+        F4["_mappings_and_info.txt\n_usage_guide.txt"]
+    end
+
+    subgraph VAL["✅ validacion.py — NSLKDDValidator"]
+        direction TB
+        G["load_all_data()\nCarga D1 / D2 / D3"]
+
+        subgraph CHECKS["Validaciones"]
+            V1["validate_data_integrity()\n• Dimensiones X/y\n• Columnas alineadas\n• Nulos e infinitos\n• Pureza D1 (100% normal)\n• Pureza D3 (0% normal)\n• Rangos de escalado"]
+            V2["analyze_class_distribution()\n• Distribución D2 y D3\n• Ratio de desbalance D3\n• Ataques nuevos en D2 no vistos en D3"]
+            V3["analyze_feature_distributions()\n• Baja varianza en D1\n• Alta correlación (>0.95) en D1\n• Top características discriminantes\n  D1 Normal vs D3 Ataques"]
+            V4["detect_data_drift()\n• KS test por característica\n• D1 (normal train) vs D2 (test)\n• p < 0.01 = drift significativo"]
+            V5["analyze_outliers()\n• IQR por característica\n• Por división D1 / D2 / D3"]
+        end
+
+        H["generate_validation_report()\n→ _validation_report.txt"]
+    end
+
+    subgraph FUTURE["🚀 Próximos Pasos — Modelos (no implementado)"]
+        direction LR
+        M1["Modelo de Anomalías\nEntrenado en D1\nIsolationForest · OneClassSVM\nAutoencoder"]
+        M2["Modelo de Firmas\nEntrenado en D3\nRandomForest · DecisionTree\nReglas por categoría"]
+        M3["Sistema Híbrido H-NIDS\nEvaluado en D2\nCombinación de decisiones"]
+        M4["Métricas Finales\nPrecisión · Recall · F1\npor categoría de ataque\nMatriz de confusión"]
+    end
+
+    A1 --> B
+    A2 --> B
+    B --> C
+    C --> D
+    D --> D1 & D2 & D3
+    D1 & D2 & D3 --> E
+    E --> E1 --> E2 --> E3 --> E4 --> E5
+    E5 --> F
+    F --> F1 & F2 & F3 & F4
+
+    F1 & F2 & F3 --> G
+    G --> V1 & V2 & V3 & V4 & V5
+    V1 & V2 & V3 & V4 & V5 --> H
+
+    F1 --> M1
+    F3 --> M2
+    M1 & M2 --> M3
+    F2 --> M3
+    M3 --> M4
+
+    style D1 fill:#90EE90,stroke:#2d8a2d,color:#000
+    style D2 fill:#87CEEB,stroke:#2d6ea0,color:#000
+    style D3 fill:#FFB6C1,stroke:#c0392b,color:#000
+    style FUTURE fill:#fffbe6,stroke:#f0ad4e,stroke-dasharray:5 5
+    style M1 fill:#fffbe6,stroke:#e0a800
+    style M2 fill:#fffbe6,stroke:#e0a800
+    style M3 fill:#fffbe6,stroke:#e0a800
+    style M4 fill:#fffbe6,stroke:#e0a800
+    style E3 fill:#ffe4b5,stroke:#d2691e

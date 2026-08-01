@@ -1,0 +1,54 @@
+flowchart TB
+    U["👤 Usuario\nElige UNA tarea del roadmap\n(regla 6.7 de next-steps.md)"]
+
+    ORQ["🎯 Sesión principal de Claude — ORQUESTADOR\nDescompone la tarea · delega en subagentes\nresume al usuario: qué se hizo, números clave, qué queda"]
+
+    NS[("📋 next-steps.md\nRoadmap vivo · estado compartido\nSpecs (sección 6) · decisiones · bitácora")]
+
+    subgraph COD["⚙️ Track CÓDIGO"]
+        direction TB
+        IMP["🔨 ml-implementador\nEscribe Python según spec\nsklearn · random_state=42\ncomentarios en español"]
+
+        subgraph VERIF["Verificación en paralelo"]
+            direction LR
+            AUD["🔍 auditor-ml (solo lectura)\nLeakage · protocolo · métricas\nVeredicto APTO / NO APTO"]
+            EJE["▶️ ejecutor-experimentos\nvenv Imp → python app\\*.py\nAPROBADA / FALLA · métricas clave"]
+        end
+
+        IMP -->|"3 · diff"| AUD
+        IMP -->|"3 · scripts"| EJE
+        AUD -.->|"NO APTO 🔴🟠\ncorregir hallazgos"| IMP
+        EJE -.->|"FALLA\ndiagnóstico"| IMP
+    end
+
+    R1["📁 Resultados/\nmodelos/*.joblib · metricas_*.csv\nfiguras/*.png · firmas_reglas.txt"]
+
+    subgraph INF["✍️ Track INFORME"]
+        RED["redactor-tfg\nObsidian_TFG_Vault/\nRegistro académico en español\nMapa artefacto → sección (6.6)"]
+    end
+
+    CRO["📝 cronista\nCasillas ☐ → ☑ · bitácora AAAA-MM-DD\nAvisa de incoherencias código ↔ roadmap"]
+
+    %% Ciclo principal (1→6)
+    U <-->|"1 · petición\n6 · resumen final"| ORQ
+    ORQ -.->|"0 · lee specs\ny decisiones"| NS
+    ORQ -->|"2a · tarea de código"| IMP
+    ORQ -->|"2b · tarea de informe"| RED
+
+    EJE -->|"APROBADA"| R1
+    R1 -.->|"artefactos con datos reales\n(nunca cifras inventadas)"| RED
+
+    AUD -->|"4 · APTO"| CRO
+    RED -->|"4 · notas escritas"| CRO
+    CRO -->|"5 · edición quirúrgica\n☑ + entrada en bitácora"| NS
+
+    %% Estilos
+    style U fill:#e8d5f0,stroke:#8e44ad,color:#000
+    style ORQ fill:#d6eaf8,stroke:#2d6ea0,color:#000
+    style NS fill:#fffbe6,stroke:#e0a800,color:#000
+    style IMP fill:#90EE90,stroke:#2d8a2d,color:#000
+    style AUD fill:#FFB6C1,stroke:#c0392b,color:#000
+    style EJE fill:#87CEEB,stroke:#2d6ea0,color:#000
+    style RED fill:#ffe4b5,stroke:#d2691e,color:#000
+    style CRO fill:#d5f5e3,stroke:#1e8449,color:#000
+    style VERIF fill:#fdf2f2,stroke:#c0392b,stroke-dasharray:5 5

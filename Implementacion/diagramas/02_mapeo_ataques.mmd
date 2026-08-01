@@ -1,0 +1,30 @@
+graph LR
+    subgraph NORMAL["NORMAL"]
+        n[normal]
+    end
+
+    subgraph DOS["DOS — 10 tipos"]
+        d1[back] & d2[land] & d3[neptune] & d4[pod] & d5[smurf]
+        d6[teardrop] & d7[mailbomb] & d8[apache2] & d9[processtable] & d10[udpstorm]
+    end
+
+    subgraph PROBE["PROBE — 6 tipos"]
+        p1[ipsweep] & p2[nmap] & p3[portsweep] & p4[satan] & p5[mscan] & p6[saint]
+    end
+
+    subgraph R2L["R2L — 15 tipos"]
+        r1[ftp_write] & r2[guess_passwd] & r3[imap] & r4[multihop] & r5[phf]
+        r6[spy] & r7[warezclient] & r8[warezmaster] & r9[sendmail] & r10[named]
+        r11[snmpgetattack] & r12[snmpguess] & r13[xlock] & r14[xsnoop] & r15[worm]
+    end
+
+    subgraph U2R["U2R — 8 tipos"]
+        u1[buffer_overflow] & u2[loadmodule] & u3[perl] & u4[rootkit]
+        u5[httptunnel] & u6[ps] & u7[sqlattack] & u8[xterm]
+    end
+
+    style DOS fill:#FFB6C1,stroke:#c0392b
+    style PROBE fill:#FFD580,stroke:#b8860b
+    style R2L fill:#ADD8E6,stroke:#4682b4
+    style U2R fill:#DDA0DD,stroke:#8b008b
+    style NORMAL fill:#90EE90,stroke:#2d8a2d
