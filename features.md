@@ -45,7 +45,7 @@ No se despachan a ningún agente. El `leader` no debe crear tareas para esto.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
-| 2026-08-01 | — | Arquitectura de agentes: `leader`, `researcher`, hook de entrada, skill `cierre`, `features.md`, git y README | *(este commit)* |
+| 2026-08-01 | — | Arquitectura de agentes: `leader`, `researcher`, hook de entrada, skill `cierre`, `features.md`, git y README | `791a698` |
 | 2026-07-16 | Informe | Apéndice A.2 — fórmulas de las métricas (borrador) | — |
 | 2026-07-16 | Informe | 4.1 Tecnologías utilizadas (borrador) | — |
 | 2026-07-16 | Informe | 6.1 Conclusiones (borrador) | — |
