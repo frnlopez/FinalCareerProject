@@ -112,7 +112,9 @@ Dataset descargable de: https://github.com/Jehuty4949/NSL_KDD
 - [x] Baseline RF monolítico de control (`baseline.py`)
 - [x] Sistema híbrido (cascada anomalía→firmas) y evaluación conjunta sobre D2 (`hibrido.py`)
 
-> **Estado a 2026-07-16:** el track de CÓDIGO está COMPLETO (todos los scripts implementados, auditados y ejecutados en 54 y 122 features). El trabajo restante del TFG es la redacción de la memoria (track INFORME). Ver `next-steps.md` (roadmap vivo) y `resumen-de-decisiones.md`.
+> **Estado a 2026-07-16:** el track de CÓDIGO está COMPLETO (todos los scripts implementados, auditados y ejecutados en 54 y 122 features). El trabajo restante del TFG es la redacción de la memoria (track INFORME).
+
+**Reparto de roles entre ficheros de seguimiento (desde el 2026-08-01):** el registro operativo vivo (tareas abiertas y cerradas) es `features.md`; `next-steps.md` está congelado en cuanto a casillas (§1-§5 historial y bitácora, §6 vigente como especificación técnica de cada script, salvo §6.5 (`hibrido.py`), superada por el grill H-1…H-7 de `resumen-de-decisiones.md`) y las decisiones de diseño están en `resumen-de-decisiones.md`.
 
 ### Dependencias principales
 

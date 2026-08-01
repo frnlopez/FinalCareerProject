@@ -5,8 +5,9 @@
 > forma que los dos hablemos el mismo idioma cuando ejecutemos los experimentos.
 >
 > Ancla el marco teórico ya redactado (notas `2.1.x` del vault) a las decisiones
-> reales que están tomadas en el código (`resumen-de-decisiones.md`) y en el
-> roadmap (`next-steps.md`).
+> reales que están tomadas en el código (`resumen-de-decisiones.md`) y en las
+> especificaciones por script de `next-steps.md §6` (congelado; su §6.5 está
+> superada por el grill H-1…H-7 de `resumen-de-decisiones.md`).
 
 ---
 

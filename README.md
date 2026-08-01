@@ -23,8 +23,9 @@ Working_Directory/
 ├── Obsidian_TFG_Vault/        La memoria del TFG en Markdown (vault de Obsidian)
 ├── Resultados/                Métricas, figuras y reglas extraídas
 ├── Guia_ML/                   Notas de referencia de ML usadas durante el desarrollo
-├── features.md                Tareas abiertas y cerradas
-├── next-steps.md              Roadmap e historial. §6 = especificación de cada script
+├── features.md                Registro vivo: tareas abiertas y cerradas
+├── next-steps.md              Congelado. §1-§5 historial · §6 = especificación de cada
+│                              script, salvo §6.5 (ver grill H-1…H-7 en decisiones)
 ├── resumen-de-decisiones.md   Registro de decisiones de diseño
 ├── EL_FUTURO.md               Líneas futuras respaldadas con datos
 └── .claude/                   Arquitectura de agentes (ver más abajo)

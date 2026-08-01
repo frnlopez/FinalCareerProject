@@ -5,8 +5,9 @@
 > mensaje.
 >
 > - `next-steps.md` queda **congelado en cuanto a casillas**: su §1-§5 es historial y su §6 es
->   la especificación técnica de cada script, que sigue vigente como referencia. Ya no se
->   marcan tareas allí.
+>   la especificación técnica de cada script, que sigue vigente como referencia **salvo §6.5
+>   (`hibrido.py`), superada por el grill H-1…H-7 de `resumen-de-decisiones.md`** — no calibrar
+>   `UMBRAL_CONF` con el método de §6.5. Ya no se marcan tareas allí.
 > - `resumen-de-decisiones.md` sigue siendo el registro de **decisiones de diseño**.
 > - Lo mantiene el agente `cronista`, disparado por el skill `cierre`. **Estar en Abiertas
 >   significa estar abierto**: una tarea aceptada la borra el usuario, nadie más.
@@ -40,6 +41,15 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
   `next-steps.md` está congelado: el roadmap vivo es `features.md`. Regenerar `.png` y `.svg` si
   se toca el `.mmd`. **La acepta o la retira Francisco.**
 
+- [ ] **La línea de `4.2` en «lo escribe Francisco» quedó desfasada** · Informe · decide Francisco
+  Detectado el 2026-08-01. `features.md:53` reserva a Francisco la prosa teórica de `4.2` completa
+  (origen, las 41 características, por qué NSL-KDD), pero la decisión del 2026-07-21
+  (`resumen-de-decisiones.md:430-438`) cedió «Origen» y «Las 41 características» a borrador de
+  Claude y dejó solo el «por qué NSL-KDD» a revisión de Francisco — y ese borrador **ya existe** en
+  `Obsidian_TFG_Vault\04 Implementación del sistema\4.2 Base de datos utilizada.md:8`. Tal como está
+  la línea, se puede reescribir desde cero algo ya redactado. **No la toca ningún agente: esa línea
+  define lo que escribe Francisco. La acepta o la retira Francisco.**
+
 - [ ] **Resumen y Abstract** · Informe · `redactor-tfg`
   Se redactan **al final**, cuando el resto de capítulos esté cerrado.
   Notas: `00 Preliminares/Resumen.md` y `00 Preliminares/Abstract.md`.
@@ -60,6 +70,7 @@ No se despachan a ningún agente. El `leader` no debe crear tareas para esto.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-01 | Código | Fin del «roadmap vivo»: `next-steps.md` ya no se anuncia como tal en ningún fichero. La frase de reparto sale del callout «Estado a 2026-07-16» de `CLAUDE.md:115-117` a párrafo propio fechado el 2026-08-01 (datar el congelado tres semanas antes era falso), mismo arreglo en `resumen-de-decisiones.md:4` + inciso de fecha sobre la casilla del 2026-07-21 (`:440-443`, registro original íntegro) + entrada de bitácora nueva (`:533-542`), y «Roadmap» → congelado en `README.md:26-28` y `Guia_ML\README.md:7-9`. El auditor corrige además el fondo: «§6 vigente como especificación técnica» era falso sin matiz — `next-steps.md:591-597` declara §6.5 (`hibrido.py`) superada por el grill H-1…H-7, y sin la salvedad un implementador podía calibrar `UMBRAL_CONF` con el método viejo y saltarse una decisión anti-leakage cerrada; la salvedad va en los cuatro ficheros. Dos pasadas de `auditor-ml` (la primera APTO CON CAMBIOS, 4 puntos aplicados), árbol ASCII de `README.md` intacto | — |
 | 2026-08-01 | Código | Diagrama `01_pipeline_completo.mmd` al día: 15 correcciones verificadas contra `fichero:línea` — capa de modelos ya no es «no implementado», «51 ataques» → 40 etiquetas, la alineación one-hot es la **unión D1+D3** (y no «schema de D1», que documentaba el bug cerrado el 2026-07-05), alta del paso `select_features()` 122→54 y de las 4 aristas del protocolo anti-leakage (calibración OOF de `UMBRAL_CONF` con D3, D2 no ajusta nada). `.png` y `.svg` regenerados con `mermaid-cli` 11.16.0 `-s 3`; segunda auditoría sin rojos ni naranjas. Incluye `diagramas/README.md` y, en `CLAUDE.md`, la atribución del balanceo 4.3.4 a `firmas.py` (por algoritmo), no a `program.py` | `d88dada` |
 | 2026-08-01 | Código | `CLAUDE.md` al día tras la absorción de `Implementacion/`: tabla de scripts de 2 a 8 (6 clases reales + `config.py` y `evaluacion.py` como módulos-librería), orden de ejecución y dependencias entre scripts, y en `## Git` que `Implementacion/` ya no lleva `.git` propio y la precedencia de su `.gitignore` anidado | `e3548ca` |
 | 2026-08-01 | Código | Absorción del repo git anidado `Implementacion/`: retirado el gitlink huérfano y versionados los 22 ficheros de código (8 scripts de `app/`, 10 diagramas, `requirements.txt`, `PIPELINE.md`, `readme.md`, `.gitignore`) | `fb920b8` |

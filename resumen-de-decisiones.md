@@ -1,7 +1,7 @@
 # Resumen de decisiones — TFG H-NIDS
 
 > Registro **conciso** de las decisiones de diseño ya cerradas, para no re-litigarlas.
-> Complementa a `next-steps.md` (roadmap vivo) y a la bitácora (§5 de ese doc).
+> Complementa a `features.md` (registro operativo vivo de tareas abiertas y cerradas) y a `next-steps.md`, congelado en cuanto a casillas: su §1-§5 es historial y bitácora, y su §6 sigue vigente como especificación técnica de cada script, salvo §6.5 (`hibrido.py`), superada por el grill H-1…H-7 de este mismo fichero.
 > Regla: toda decisión de diseño del proyecto se registra aquí en el momento de tomarse.
 > Regla: si este fichero y el código divergen, **el código/disco es la fuente de verdad**.
 
@@ -439,6 +439,8 @@ su redacción como **borrador factual** con marcadores `[CITA:...]` pendientes. 
 
 La casilla §2.2 «Teoría del dataset NSL-KDD» de `next-steps.md` pasa de `☐` (Francisco) a `◐`
 (borrador Claude 2026-07-21): no se cierra hasta resolver citas y la revisión del bloque «por qué».
+(Registro del 2026-07-21, anterior al congelado de `next-steps.md` del 2026-08-01; el estado vivo
+está en `features.md`.)
 
 ### Convención de código incrustado en la memoria
 
@@ -528,3 +530,12 @@ unificado. Aplicada en 4.3.1-4.3.5, 4.4 y 4.5 (7 fragmentos).
   convención de código incrustado inline verbatim recortado (comentarios que contradigan la prosa
   se recortan); terminología canónica del detector = "semisupervisado (one-class)", "no supervisado"
   como sinónimo declarado una vez. Todo verificado en disco; sin cambios de código ni cifras.
+- `2026-08-01` — **Reparto documental entre los tres ficheros de seguimiento.** `features.md` es el
+  registro operativo vivo (tareas abiertas y cerradas); `next-steps.md` queda **congelado en cuanto
+  a casillas** (su §1-§5 es historial y bitácora, y su §6 sigue vigente como especificación técnica
+  de cada script); `resumen-de-decisiones.md` es el registro de decisiones de diseño. **Salvedad:**
+  §6.5 (`hibrido.py`) está superada por el grill H-1…H-7 de este mismo fichero, como ya declara
+  `next-steps.md:592-597`. Propagado a `CLAUDE.md:117`, `resumen-de-decisiones.md:4`,
+  `README.md:26-28` y `Guia_ML\README.md:7-9`. **Deuda conocida, no resuelta:**
+  `Implementacion\diagramas\README.md:10` conserva la redacción antigua; tiene ficha abierta en
+  `features.md`.
