@@ -1,0 +1,42 @@
+REPORTE DE VALIDACIÓN — DIVISIONES D1/D2/D3 NSL-KDD
+============================================================
+
+Integridad:       APROBADA
+D1 (Normal):      67,343 instancias
+D2 (Test):        22,544 instancias
+D3 (Ataques):     58,630 instancias
+Características:  54
+Drift D1→D2:      37 características
+Outliers med. D1: 4.78%
+Baja varianza (sobre D1+D3):    0 características
+Alta correlación (sobre D1+D3): 0 pares
+D2 fuera de [0,1]: 4 características (informativo)
+
+Recomendaciones:
+
+Top 15 características con mayor drift (D1 vs D2):
+                    feature  ks_statistic  ks_p_value  has_drift
+                  src_bytes      0.346462         0.0       True
+                  dst_bytes      0.317124         0.0       True
+       dst_host_rerror_rate      0.297958         0.0       True
+                    flag_SF      0.281524         0.0       True
+                  logged_in      0.268444         0.0       True
+             dst_host_count      0.265660         0.0       True
+              diff_srv_rate      0.246386         0.0       True
+              same_srv_rate      0.246361         0.0       True
+     dst_host_same_srv_rate      0.231824         0.0       True
+dst_host_same_src_port_rate      0.228276         0.0       True
+                      count      0.227310         0.0       True
+         dst_host_srv_count      0.226683         0.0       True
+dst_host_srv_diff_host_rate      0.223121         0.0       True
+     dst_host_diff_srv_rate      0.221338         0.0       True
+               service_http      0.216662         0.0       True
+
+Características de D2 fuera de [0, 1] tras el escalado (INFORMATIVO):
+Esperable por diseño: el scaler se ajusta solo en train (D1+D3) y no se
+re-ajusta con el test (sería leakage). Vigilar su efecto en los modelos.
+           feature  min_d2  max_d2
+        num_shells  0.0000  2.5000
+num_file_creations  0.0000  2.3256
+          duration  0.0000  1.3451
+               hot  0.0000  1.3117

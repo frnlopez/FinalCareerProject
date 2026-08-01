@@ -1,0 +1,17 @@
+algoritmo,balanceo,f1_macro_cv,f1_macro_cv_std,set_features,sin_seleccion,n_features,fecha
+DecisionTree,SMOTE,0.935022,0.0165,54,False,54,2026-07-11T11:47:09
+DecisionTree,class_weight,0.953018,0.008681,54,False,54,2026-07-11T11:47:09
+RandomForest,SMOTE,0.9736,0.007892,54,False,54,2026-07-11T11:47:09
+RandomForest,class_weight,0.971484,0.014673,54,False,54,2026-07-11T11:47:09
+KNN,SMOTE,0.945349,0.005846,54,False,54,2026-07-11T11:47:09
+KNN,nada,0.918701,0.025188,54,False,54,2026-07-11T11:47:09
+HistGradientBoosting,SMOTE,0.969377,0.015293,54,False,54,2026-07-11T11:47:09
+HistGradientBoosting,nada,0.832673,0.065671,54,False,54,2026-07-11T11:47:09
+DecisionTree,SMOTE,0.951343,0.018436,122_sin_seleccion,True,122,2026-07-11T11:54:33
+DecisionTree,class_weight,0.956835,0.011815,122_sin_seleccion,True,122,2026-07-11T11:54:33
+RandomForest,SMOTE,0.979508,0.009875,122_sin_seleccion,True,122,2026-07-11T11:54:33
+RandomForest,class_weight,0.97511,0.018586,122_sin_seleccion,True,122,2026-07-11T11:54:33
+KNN,SMOTE,0.952282,0.009577,122_sin_seleccion,True,122,2026-07-11T11:54:33
+KNN,nada,0.917212,0.02525,122_sin_seleccion,True,122,2026-07-11T11:54:33
+HistGradientBoosting,SMOTE,0.972429,0.014809,122_sin_seleccion,True,122,2026-07-11T11:54:33
+HistGradientBoosting,nada,0.804427,0.082367,122_sin_seleccion,True,122,2026-07-11T11:54:33

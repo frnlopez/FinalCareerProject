@@ -1,0 +1,530 @@
+# Resumen de decisiones — TFG H-NIDS
+
+> Registro **conciso** de las decisiones de diseño ya cerradas, para no re-litigarlas.
+> Complementa a `next-steps.md` (roadmap vivo) y a la bitácora (§5 de ese doc).
+> Regla: toda decisión de diseño del proyecto se registra aquí en el momento de tomarse.
+> Regla: si este fichero y el código divergen, **el código/disco es la fuente de verdad**.
+
+---
+
+## Decisiones cerradas el 2026-07-02 (entrevista de grill)
+
+Detalle completo en `next-steps.md §5`. Resumen:
+
+1. Cap. 5 de la memoria gana sección **5.3 Resultados del sistema híbrido** (+5.4 conclusiones).
+2. **Anomalías**: comparar 4 algoritmos — IsolationForest, OneClassSVM, LocalOutlierFactor, Autoencoder (vía `MLPRegressor`, sin TF/Keras).
+3. **Firmas**: comparar 4 algoritmos — DecisionTree, RandomForest, KNN, HistGradientBoosting (todo sklearn).
+4. **Balanceo (4.3.4)**: mini-experimento SMOTE vs `class_weight='balanced'`, SMOTE **dentro de cada fold** del CV (nunca antes del split), `imbalanced-learn`.
+5. **Selección (4.3.5)**: filtro varianza/correlación sobre **D1+D3** + importancias RF (top-N ~importancia acumulada), evaluado con/sin.
+6. **Umbral de anomalías**: percentil (p95) sobre el 20% de D1 reservado como validación, **igual para los 4** algoritmos. Nunca ajustar mirando D2.
+7. **Híbrido**: cascada **anomalía → firmas**, con clase "desconocido/0-day" por baja confianza (`predict_proba` < umbral).
+8. **Bug one-hot** (vocabulario = unión D1+D3): arreglar antes de entrenar (Paso 0). → hecho 2026-07-05.
+9. **Código**: 3 scripts nuevos (`anomalias.py`, `firmas.py`, `hibrido.py`) + `evaluacion.py` común; grids pequeños + CV; `random_state=42` en todo. `evaluacion.py` se implementa **antes** que `anomalias.py`.
+10. **Memoria**: Word + Zotero (IEEE); teoría NSL-KDD va a 4.2; orden de trabajo: **código primero, informe detrás**.
+
+---
+
+## Estado real reconciliado (verificado en código/disco 2026-07-06)
+
+La prosa de `next-steps.md §3.1-E/§3.2/§5` iba por detrás del código. Estado real:
+
+- **Selección de características: 122 → 54 features** (no 40). El default en `program.py`
+  es `importancia_acumulada=0.999` (99.9%), no 99%. CSVs D1/D2/D3 regenerados a 54
+  columnas (`selected_features.txt` con fecha 2026-07-05 19:53).
+- **H1 (auditoría 4.3.5)**: la **Opción 1 ya está ejecutada** (umbral 99.9% → 54 features,
+  recupera indicadores 0-day: `num_failed_logins`, `flag_REJ`, `flag_SH`, `num_shells`…).
+  Falta solo la **validación con datos** (ver decisión del 2026-07-06 abajo).
+- **H2**: resuelto — `program.py::_resolver_representante_conservado()` sigue la cadena
+  greedy de correlación; el reporte ya no afirma en falso qué feature "se conservó".
+- **H3**: resuelto — CLI `argparse` con `--sin-seleccion` + sufijo `_sin_seleccion` en
+  todos los artefactos; las variantes con y sin selección coexisten sin pisarse.
+
+> Bookkeeping cerrado (2026-07-14): la prosa de `next-steps.md` ya está reconciliada
+> (H1-Opción1/H2/H3 marcados ☑ en §3.2, 40→54 propagado en todo el documento).
+
+---
+
+## Decisión del 2026-07-06
+
+### Q1 — ¿mismo set de features para anomalías y firmas? → **Opción C**
+
+**Contexto.** La selección de 54 features es **supervisada** (importancias de RF sobre
+D1+D3 con `y_category`, 5 clases). Está alineada con **firmas** (clasificador multiclase
+supervisado), pero el detector de **anomalías** se entrena **no supervisado y solo con D1
+(normal)**. Un ranking supervisado D1+D3 favorece las features que separan normal-vs-ataque
+y puede descartar features casi constantes en tráfico normal que serían la única señal de
+un **0-day**. Forzar las mismas 54 al detector de anomalías puede degradar su recall 0-day
+— precisamente el riesgo que señaló H1.
+
+**Decisión: C — no fijar el set a ciegas; parametrizar y dejar que el experimento H1 lo resuelva con datos.**
+
+- `anomalias.py`, `firmas.py` e `hibrido.py` **cargan el set de features vía parámetro/ruta**,
+  no hardcodeado. Deben poder correr sobre la variante de 54 (`specialized_nsl_kdd_*`) y
+  sobre la de 122 (`specialized_nsl_kdd_sin_seleccion_*`, ya generable con `--sin-seleccion`).
+- El **experimento con/sin selección** (que ya se debe a la memoria para cerrar 4.3.5) **ES**
+  la decisión. Métrica de decisión: **recall 0-day por tipo de ataque** (los ~17 tipos de D2
+  ausentes del train) + **F1 macro**, no solo F1 global.
+- Se ejecuta cuando existan los baselines mínimos (IsolationForest para anomalías, RandomForest
+  para firmas). Comparar **54 vs 122** (40 queda descartado: ya no existe en disco).
+
+**Resultados esperables y qué implican:**
+- Si 54 no daña el recall 0-day → **A** de facto (mismo set 54 para ambos): simple y comparable.
+- Si 54 daña el recall 0-day del detector de anomalías → **B**: firmas sobre 54, anomalías
+  sobre 122 (o filtro no supervisado varianza/correlación sobre D1). Es el resultado probable.
+
+**Consecuencia inmediata para la implementación:** los scripts deben aceptar el `base_path`
+de los CSVs como argumento, de modo que cambiar 54↔122 sea un flag, no una reescritura.
+
+### Q2 — rutas y configuración → **`config.py` compartido (acotado)**
+
+- Se crea `Implementacion/app/config.py` con: `RANDOM_STATE=42`, `RESULTADOS_DIR`,
+  `FIGURAS_DIR`, `MODELOS_DIR`, los dos `base_path` (54 = `specialized_nsl_kdd`,
+  122 = `specialized_nsl_kdd_sin_seleccion`) y las convenciones de clase (ver Q3).
+- Lo consumen los **scripts nuevos** (`evaluacion.py`, `anomalias.py`, `firmas.py`,
+  `hibrido.py`). `program.py`/`validacion.py` **no se refactorizan ahora** (funcionan y
+  están APROBADOS); solo migran sus rutas a `config.py` si en algún momento se tocan.
+- Cierra la deuda 3.2 🟠 de rutas hardcodeadas para el código nuevo.
+
+### Q3 — superficie de `evaluacion.py` → **§6.5b + `evaluar_0day_por_tipo` + convenciones**
+
+- Funciones de §6.5b (`evaluar_binario`, `evaluar_multiclase`, `plot_matriz_confusion`,
+  `plot_roc_pr`, `guardar_metricas`) **+ `evaluar_0day_por_tipo(y_tipo_real, es_sospechoso,
+  tipos_0day) → {tipo: recall}`** (la usan el experimento H1 y `hibrido.py`; evita duplicar).
+- Convenciones fijadas en `config.py`: **positivo = ataque = 1**, `normal = 0`; orden
+  multiclase `['normal','dos','probe','r2l','u2r','unknown']` (unknown solo en híbrido).
+- Fuera de alcance (evitar sobre-ingeniería): intervalos de confianza por bootstrap,
+  calibración de probabilidades más allá del umbral del híbrido, logging estructurado.
+
+### Q4 — calibración de `UMBRAL_CONF` del híbrido → **`cross_val_predict` OOF, sin leakage**
+
+- El `UMBRAL_CONF` (marca "unknown/0-day" si `predict_proba` máx < umbral) se calibra sobre
+  probabilidades **out-of-fold** del mismo `StratifiedKFold(5)` de `firmas.py`
+  (`cross_val_predict`), NO sobre el D3 con el que se entrenó (sería in-sample → leakage) ni
+  sobre un holdout (sacrificaría las ~52 muestras de u2r). El modelo final se re-entrena en
+  todo D3 tras calibrar.
+- Explorar `UMBRAL_CONF ∈ {0.4, 0.5, 0.6}`; elegir el que preserve el recall macro de las
+  clases conocidas. Los 0-day no están en D3: su detección se **mide** en D2 (etapa 1
+  anomalías), no se optimiza aquí.
+
+### Q5 — `imbalanced-learn` y pinning → **instalar compatible con sklearn 1.7.1, con regla de parada**
+
+- `requirements.txt` **ya está pinneado** (sklearn==1.7.1, numpy==2.3.2…): la parte de
+  pinning de la deuda 3.3 está hecha.
+- Instalar `imbalanced-learn` en una versión **compatible con sklearn 1.7.1 sin mover
+  sklearn** y añadirlo a `requirements.txt`. **Regla de parada:** si el resolvedor de pip
+  exige cambiar sklearn, NO instalar y consultar — cambiar sklearn invalidaría la
+  reproducibilidad de las 54 features (importancias RF sensibles a versión).
+
+### Q6 — ejes experimentales → **no cruzar**
+
+- **Balanceo** (SMOTE vs class_weight, 4 algoritmos) se corre solo sobre el set **54**.
+- **Selección** (54 vs 122, H1) se corre una vez con el baseline de cada modelo
+  (IsolationForest / RandomForest) y el balanceo ya fijado, midiendo recall 0-day por tipo
+  + F1 macro.
+- Comparativa principal de los 4 algoritmos (5.1/5.2): sobre **54 + mejor balanceo por
+  algoritmo**. Cada experimento aísla una variable (defendible en la memoria).
+
+---
+
+## Decisión del 2026-07-11
+
+### 3.1-F — Baseline RF monolítico → **APROBADO. Ubicación: `baseline.py` aparte**
+
+**Contexto.** El profesor de seguimiento observó que "todo el mundo acaba en un Random
+Forest para este dataset". El patrón dominante en la literatura NSL-KDD (~99% en el split
+de train) es un **único clasificador supervisado sobre TODO el train** (normal + 4 ataques),
+evaluado sobre todo el test. Ese RF monolítico **no existía**: el RF del proyecto vive como
+clasificador de firmas (entrenado solo con D3, 4 clases de ataque) y como motor de la
+selección 4.3.5, nunca como clasificador global de las 5 clases.
+
+**Decisión: SÍ añadirlo como baseline de control** (no como arquitectura del sistema). Es el
+número que el tribunal espera y la única forma de responder "¿para qué el híbrido si un RF da
+~99%?". La respuesta —y la tesis del TFG— es el **0-day**: un RF supervisado no puede detectar
+los ~17 tipos de ataque ausentes del train; la etapa de anomalías sí. Ese contraste **es** la
+justificación del híbrido.
+
+**Ubicación: `baseline.py` aparte** (no un modo de `firmas.py`). Razón: es un experimento
+distinto en las tres dimensiones —train = **D1+D3** (5 clases, incluye `normal`) vs D3 (4
+clases de ataque) de firmas; evaluación = **D2 completo** vs D2 filtrado a tipos conocidos de
+firmas—. Meterlo como flag en `firmas.py` mezclaría dos conjuntos de entrenamiento, dos sets
+de etiquetas y dos sets de evaluación en un script cuya responsabilidad hoy es única. Un
+script propio respeta la estructura D') "un-concern-por-script" y reutiliza `evaluacion.py` /
+`config.py` sin tocar lo aprobado.
+
+**Especificación de `baseline.py`:**
+- Train: `X = concat(D1.X, D3.X)`, `y = category` (5 clases: `normal`+dos/probe/r2l/u2r).
+- Modelo: `RandomForestClassifier(class_weight='balanced', random_state=42)` con
+  `GridSearchCV(StratifiedKFold(5), f1_macro)` sobre el mismo grid RF pequeño de firmas
+  (`n_estimators∈{100,300}` × `max_depth∈{10,None}`). No se cruza con el eje de balanceo
+  (Q6): `class_weight='balanced'` fijo, como en la selección 4.3.5.
+- Evaluación sobre **D2 completo**: multiclase 5 clases (`evaluar_multiclase`), binaria
+  normal-vs-ataque (`evaluar_binario` con `y_score = 1 − P(normal)` para AUC), y **recall
+  0-day por tipo** (`evaluar_0day_por_tipo`, `es_sospechoso = pred != 'normal'`).
+- Parametrizable 54↔122 (Q1/C, flag `--sin-seleccion`).
+- Artefactos: `Resultados\metricas_baseline.csv`, `Resultados\metricas_baseline_0day.csv`,
+  `modelos\baseline_rf_<set>.joblib`, `figuras\baseline_cm_<set>.png`. Idempotencia por
+  variante (misma lógica `_limpiar_variante_csv` que anomalias/firmas).
+
+**Métrica de decisión frente al híbrido:** **recall 0-day por tipo** (misma tabla que el
+experimento H1). La hipótesis a contrastar con datos: el recall 0-day del RF monolítico es
+sensiblemente inferior al de la etapa de anomalías del híbrido.
+
+---
+
+## Decisiones del 2026-07-14 — hibrido.py (grill previo a implementar)
+
+### H-1 — Origen de los modelos de las dos etapas → **A: cargar joblib + reconstruir solo para OOF**
+
+**Contexto.** `hibrido.py` necesita el mejor detector de anomalías (etapa 1) y el mejor
+clasificador de firmas (etapa 2). Ambos ya existen persistidos y auditados
+(`anomalia_*_<set>.joblib`, `firma_*_<set>.joblib`, con modelo + umbral/config). Además,
+calibrar `UMBRAL_CONF` exige probabilidades **out-of-fold** de firmas (Q4, sin leakage), que
+NO se pueden obtener del modelo ya re-ajustado en todo D3.
+
+**Decisión: A.**
+- **Cascada final sobre D2:** cargar los `.joblib` persistidos (no re-entrenar). Una sola
+  fuente de verdad; las métricas del híbrido cuadran con las de 5.1/5.2 ya reportadas.
+- **Calibración de `UMBRAL_CONF`:** reconstruir el estimador de firmas desde su config
+  guardada (`algoritmo` + `balanceo` + `config_ganadora`) y correr
+  `cross_val_predict(method='predict_proba')` sobre D3 con el mismo `StratifiedKFold(5)`
+  de `firmas.py`. El umbral se elige sobre esas probas OOF, **nunca sobre D2** (Q4).
+- **Descartada C** (calibrar sobre probas in-sample del modelo refit): es leakage, viola Q4.
+- **Descartada B** (re-entrenar todo en `hibrido.py`): duplica trabajo auditado y arriesga
+  divergencia con los modelos que ya alimentan la memoria.
+
+**Consecuencia de implementación:** para reconstruir el estimador de firmas idéntico,
+`hibrido.py` reutiliza los builders de `firmas.NSLKDDSignatureTrainer` (`_estimador_para` +
+`set_params`), no reimplementa la lógica de balanceo/pipeline.
+
+### H-2 — Detector de la etapa 1 y reconciliación de Q6 (H1) → **Autoencoder por defecto + tabla 0-day de los 4**
+
+**Contexto.** Tensión entre dos decisiones ya tomadas: 5.3 pide el **mejor** detector (por
+AUC-ROC/F1 en 54 y 122 gana el **Autoencoder**, IsolationForest pegado detrás), mientras que
+Q6 fijó el experimento **H1** (54 vs 122) sobre el **baseline IsolationForest**. Dato que
+resuelve la tensión: el **recall 0-day por tipo depende SOLO del detector y su umbral**
+(`es_sospechoso = score > umbral`), no de la etapa de firmas.
+
+**Decisión:**
+- **Cascada (5.3):** detector **seleccionable** por flag `--detector` (IF/OCSVM/LOF/Autoencoder),
+  **por defecto Autoencoder** (el mejor; el que va a 5.3).
+- **Detector FIJO entre 54 y 122** al comparar H1: no puede variar por variante o confunde el
+  efecto del set de features.
+- **Reconciliación de Q6:** `hibrido.py` calcula `evaluar_0day_por_tipo` **para los 4
+  detectores** (carga cada `anomalia_*_<set>.joblib`, aplica su umbral guardado a las filas
+  0-day de D2). Coste casi nulo y H1 deja de depender de elegir IF vs AE: se ve el recall
+  0-day de los 4 en ambas variantes. **Q6 queda matizada**: H1 ya no es "solo IsolationForest"
+  sino los 4 detectores, con el AE conduciendo la cascada.
+
+### H-3 — Clasificador de la etapa 2 (firmas) → **RandomForest, seleccionable, fijo entre variantes**
+
+**Contexto.** La etapa 2 asigna categoría y de su `predict_proba` sale la señal que dispara
+`UMBRAL_CONF`. En 54 gana **RandomForest** (f1_macro D2 = 0.822, el sistema elegido); en 122
+gana KNN (0.753, RF cae a 0.696).
+
+**Decisión: RandomForest**, seleccionable por flag `--firma`, **fijo entre 54 y 122** (misma
+razón que H-2: no confundir el efecto del set de features en H1). Doble justificación:
+1. Es el mejor en el set primario (54), que es el sistema del TFG.
+2. Su `predict_proba` es **suave** (media sobre 100-300 árboles) → una `UMBRAL_CONF` sobre él
+   discrimina confianza de forma fina. KNN (k=3/5) y DecisionTree dan probabilidades
+   **escalonadas** (pocos valores distintos), lo que haría que 0.4/0.5/0.6 se comporten de
+   forma tosca. Para el mecanismo "unknown por baja confianza", RF es el técnicamente
+   apropiado, no solo el más preciso.
+
+**Nota sobre el comentario del profesor** ("todo el mundo cae en RF"): el RF monolítico que
+usa la literatura ES `baseline.py`, y ya se demostró que colapsa (recall 0-day 0.15). El RF de
+firmas es una pieza de la etapa 2; la aportación del TFG es la **cascada + detección 0-day**,
+no el algoritmo. Las vías para diferenciarse más se acumulan en `EL_FUTURO.md` (creado hoy).
+
+### H-4 — Criterio de calibración de `UMBRAL_CONF` → **presupuesto τ=2pp sobre OOF + tabla de sensibilidad en D2**
+
+**Contexto.** Q4 fijó los datos (probas OOF de D3 vía `cross_val_predict`, nunca D2) y el rango
+(`UMBRAL_CONF ∈ {0.4, 0.5, 0.6}`), pero dejó abierto el criterio ("preservar el recall macro de
+las clases conocidas"). Al implementarlo aparece una trampa: **en D3 no hay 0-day** (todos los
+ataques son conocidos), así que subir el umbral solo puede **bajar** el recall macro OOF de forma
+monótona (muestras conocidas de baja confianza pasan a `unknown`). "Maximizar recall macro OOF"
+elegiría trivialmente 0.4. El umbral **no se puede optimizar en D3**; el beneficio real (cazar
+0-day) solo se **mide** en D2.
+
+**Decisión:**
+1. **Regla de selección (criterio de presupuesto):** elegir el `UMBRAL_CONF` **más alto** de
+   `{0.4, 0.5, 0.6}` cuyo recall macro OOF de las 4 clases conocidas **no caiga más de τ = 2 pp**
+   respecto al baseline sin umbral. Coge el umbral más agresivo que apenas cuesta recall en
+   conocidas; el pago en 0-day se mide luego en D2 (Q4). `τ` queda como **constante configurable**
+   en el script (reproducible, ajustable sin reescribir). No hay τ "óptimo" objetivo: es un juicio
+   de valor (cuánto recall conocido se sacrifica por sensibilidad 0-day); 2 pp = sacrificio pequeño.
+2. **Reporte (análisis de sensibilidad):** persistir una tabla con los **tres** umbrales, cada uno
+   con sus métricas **OOF** (recall_macro conocidas, tasa de falsos-unknown) **y** sus métricas
+   **D2** (f1_macro multiclase, recall 0-day…). El elegido por τ=2pp va marcado. Coste casi nulo
+   (3 evaluaciones) y muestra si el sistema es robusto o frágil al umbral. Con esta tabla el valor
+   exacto de τ deja de ser crítico.
+3. **Línea roja (invalida el TFG si se cruza):** el umbral se **selecciona** por la regla de
+   presupuesto sobre OOF de D3; D2 se usa **solo para reportar**, jamás para elegir el umbral.
+   Escoger el umbral por su resultado en D2 sería leakage y rompería Q4.
+4. `predict_proba` = del estimador RF reconstruido (H-1); confianza = `max` sobre las 4 clases.
+
+### H-5 — Evaluación binaria del híbrido → **idéntica a la etapa 1 por construcción; la tesis se juega vs baseline monolítico**
+
+**Contexto.** `§6.5` pide comparar la binaria (normal vs ataque) del sistema completo contra el
+detector de anomalías solo ("¿aporta la cascada?"). En una cascada **pura** anomalía→firmas la
+respuesta es trivial y hay que asumirla: la binaria del híbrido **coincide exactamente** con la
+de la etapa 1. Razón: la etapa 1 decide sospechoso vs normal; la etapa 2 solo **sub-clasifica**
+los sospechosos en dos/probe/r2l/u2r/**unknown** (todas "ataque"), se entrena solo con D3 y **no
+tiene clase 'normal'**, así que nunca devuelve un sospechoso a normal. El `unknown` sigue siendo
+positivo. ⇒ La decisión binaria la toma entera la etapa 1; la cascada no aporta nada binario.
+
+**Decisión (presentación de 5.3 e implementación):**
+1. Reportar la binaria del híbrido **declarando explícitamente** que coincide con la etapa 1 por
+   construcción (con la justificación de arriba). No duplicar una "tabla binaria del híbrido" con
+   números iguales sin explicarlo: parecería datos duplicados ante el tribunal.
+2. La aportación real de la cascada se sitúa donde está: **(a)** convertir "sospechoso" en una
+   **categoría accionable**, y **(b)** separar ataques de categoría conocida de los **unknown/0-day**.
+3. **La comparación central de 5.3 NO es "cascada vs anomalía-sola binaria"** (empate por
+   construcción), sino **híbrido vs RF monolítico (`baseline.py`)**: ahí el híbrido gana en 0-day
+   y en no ahogar r2l/u2r. Esa es la tesis.
+4. **Implementación:** la "binaria del híbrido" reutiliza directamente el `es_sospechoso` de la
+   etapa 1 (no se recalcula por otra vía).
+
+### H-6 — Scoring de la evaluación multiclase del híbrido → **matriz 5×6 + métricas por alcance, sin número único**
+
+**Contexto.** El híbrido evalúa **todo D2** (22.544). Etiquetas reales = 5 (normal, dos, probe,
+r2l, u2r); predicciones posibles = **6** (las 5 + `unknown`). Un 0-day (p. ej. `apache2`) tiene
+categoría real = dos, pero lo **deseable** es que el sistema lo marque `unknown`, no que le aplique
+la firma de dos. Cualquier "accuracy/f1 a 5 clases" único miente: si `unknown` cuenta como fallo,
+castiga el enrutado correcto de un 0-day; si se mapea `unknown` a su categoría real, premia
+mal-etiquetar un ataque nuevo como firma conocida.
+
+**Decisión:**
+1. **Artefacto primario:** matriz de confusión filas = {normal, dos, probe, r2l, u2r} × columnas =
+   {normal, dos, probe, r2l, u2r, **unknown**}, sobre todo D2. Descriptiva, sin ambigüedad.
+2. **Métricas resumen, cada una con su alcance declarado** (no un número global engañoso):
+   - **Binaria** (etapa 1, ver H-5).
+   - **Por categoría conocida:** recall/precision de la cascada end-to-end sobre ataques de tipo
+     conocido (mide el coste de añadir el filtro de anomalías frente a firmas-solo de 5.2).
+   - **0-day (titular):** (i) recall de "marcado sospechoso" por tipo (`evaluar_0day_por_tipo`);
+     (ii) de los detectados, % enrutados a `unknown` vs mal-etiquetados como categoría conocida.
+3. **Comparación vs `baseline.py` (la tesis):** sobre la métrica comparable y para la que se diseñó
+   el híbrido: **recall 0-day por tipo** (baseline: `pred≠normal`; híbrido: sospechoso en etapa 1).
+   Además, f1_macro a 5 clases de ambos **con la advertencia** de que en el híbrido los `unknown`
+   cuentan como error (conservador: infravalora al híbrido y aun así la tesis se sostiene por el 0-day).
+4. **Evitar explícitamente** un "f1_macro global a 5 clases" como titular del híbrido, justificando
+   en la memoria por qué (castigaría el enrutado correcto a `unknown` o premiaría el mal-etiquetado).
+
+### H-7 — Artefactos, CLI e idempotencia de `hibrido.py` → **mismo patrón auditado que anomalias/firmas/baseline**
+
+**Decisión: replicar el patrón "un concern por script" ya auditado.**
+- **CLI:** `--sin-seleccion` (54↔122, Q1/C) · `--detector {IsolationForest,OneClassSVM,
+  LocalOutlierFactor,Autoencoder}` (default Autoencoder, H-2) · `--firma {DecisionTree,
+  RandomForest,KNN,HistGradientBoosting}` (default RandomForest, H-3). `τ` = constante del
+  módulo (H-4).
+- **Idempotencia por variante:** mismo `_limpiar_variante_csv` (borra las filas de `set_features`
+  de esta corrida, conserva la otra).
+- **Artefactos en `Resultados\`:**
+  - `metricas_hibrido.csv` — una fila por corrida (set, detector, firma, `umbral_conf` elegido,
+    binaria, por-categoría-conocida, f1_macro-5clases-conservador).
+  - `metricas_hibrido_0day.csv` — recall 0-day **por tipo** del detector de la cascada **+ de los
+    4 detectores** (H-2), para cerrar H1.
+  - `metricas_hibrido_calibracion.csv` — tabla de sensibilidad de los 3 umbrales (OOF + D2, H-4).
+  - `figuras\hibrido_cm_<set>.png` — matriz 5×6 (H-6).
+  - `modelos\hibrido_<set>.joblib` — **descriptor** reproducible: qué joblibs de detector/firma
+    usa + `umbral_conf` elegido + τ + rutas. NO re-serializa los modelos (ya existen); guarda las
+    referencias y la decisión.
+
+---
+
+## Pendientes de diseño de `hibrido.py` — RATIFICADOS 2026-07-14 (antes de escribir código)
+
+Los cinco puntos que quedaron abiertos al cerrar el grill (los 3 menores + las 2 preguntas
+de implementación) se ratifican así antes de teclear. Todos son consistentes con decisiones
+previas; ninguno cambia H-1…H-7, solo los concreta.
+
+- **P-1 · Alcance de H1 (54 vs 122) → una variante por invocación.** `hibrido.py` corre **una
+  variante por invocación** (`--sin-seleccion` o no), como anomalias/firmas/baseline. El
+  experimento H1 = correrlo dos veces; la comparación 54-vs-122 se **lee** de
+  `metricas_hibrido_0day.csv` (acumula ambas variantes por idempotencia `_limpiar_variante_csv`),
+  sin script aparte. Mantiene "un concern por script".
+- **P-2 · Caveat de FPR en la comparación 0-day → reportar FPR junto al recall 0-day.** El recall
+  0-day del híbrido y el del baseline se miden a **FPR distinto** (etapa 1 ≈ 8-10% FPR por el
+  umbral p95 + drift; baseline RF ≈ 2.7%). Parte de la ventaja 0-day del híbrido es que alarma
+  más. **Cada fila de `metricas_hibrido_0day.csv` lleva el FPR binario del detector** junto al
+  recall por tipo; no se vende el recall 0-day aislado.
+- **P-3 · Datos que carga → solo D2 y D3.** D2 (evaluación) y D3 (OOF de calibración). **D1 NO se
+  carga**: el modelo de anomalías y su umbral llegan ya entrenados desde el joblib (confirmado
+  contra `anomalias.py::_persistir` — el joblib guarda modelo + umbral + config).
+- **P-4 · Línea roja anti-leakage de H-4 → separación estructural, no disciplina.** La función de
+  calibración de `UMBRAL_CONF` recibe **solo D3** (X, y) y el estimador reconstruido; **NO recibe
+  D2 en su firma**. La evaluación sobre D2 es una fase posterior e independiente, invocada
+  después de fijar el umbral. Así el leakage del criterio de selección (elegir umbral mirando D2)
+  es estructuralmente imposible, no depende de recordar la regla.
+- **P-5 · Binaria del híbrido (H-5) → reutilizar `es_sospechoso`, sin veto de la etapa 2.** La
+  binaria del híbrido **es** `es_sospechoso` de la etapa 1, reutilizado tal cual (no se recalcula
+  por otra vía). La etapa 2 solo sub-clasifica sospechosos; al no tener clase `normal` no puede
+  devolver un sospechoso a normal ⇒ no veta a la etapa 1. Se reporta declarando la igualdad por
+  construcción (H-5).
+
+**Consecuencia de implementación (reconstrucción fiel):** `hibrido.py` NO reimplementa scoring ni
+builders. Reutiliza `NSLKDDAnomalyTrainer._score(algo, model, X)` para el anomaly score de la
+etapa 1 y `NSLKDDSignatureTrainer._estimador_para(algo, balanceo) + set_params(**config_ganadora)`
+para reconstruir el estimador de firmas del OOF. Verificado contra el código: `config_ganadora`
+persistido por `firmas.py` ya lleva el prefijo `clf__` cuando el balanceo ganador es SMOTE, de modo
+que `set_params` sobre el `ImbPipeline` funciona sin traducción.
+
+---
+
+## Decisión del 2026-07-15 — Q1/C resuelta por el experimento H1 → **54 features (opción A)**
+
+**Contexto.** Q1/C dejó el set de features (54 vs 122) parametrizable y delegó la decisión al
+experimento H1, con métrica **recall 0-day por tipo + f1_macro**. `hibrido.py` ejecutado en ambas
+variantes (2026-07-15) produce por fin los dos lados de la tabla.
+
+**Datos (cascada Autoencoder→RandomForest, `UMBRAL_CONF=0.5`):**
+
+| Métrica | 54 | 122 |
+|---|---|---|
+| Recall 0-day global (detector) | 0.771 | 0.785 |
+| FPR binaria | 0.102 | 0.085 |
+| Detector AUC-ROC | 0.929 | 0.947 |
+| **`conocida f1_macro` (end-to-end, n=9083)** | **0.748** | 0.655 |
+| f1_macro 5 clases (conservador) | 0.641 | 0.583 |
+
+**Decisión: A — 54 features para AMBAS etapas.** Confirmada por el desglose por tipo (no solo el
+global). **[FE DE ERRATAS 2026-07-16, detectada por auditoría del volcado a la memoria]** La
+redacción original de este párrafo afirmaba que "las 122 no recuperan ningún tipo que las 54
+pongan a cero" y que "`mailbomb` lo fallan ambos"; `metricas_hibrido_0day.csv` la desmiente.
+Lectura correcta del CSV (Autoencoder, cascada): el delta global es **+55 detecciones**
+(2.890 → 2.945 de 3.750), del que **36 provienen de `mailbomb`** — las 122 SÍ lo sacan de cero
+(recall 0.00 → 0.123), aunque sigue esencialmente fallado (36/293) — y **20 de `mscan`**
+(0.98 → 1.00, ya casi saturado); el resto neto ≈ 0 (retrocesos en `sendmail` y `snmpguess`).
+**La decisión NO cambia**: se sostiene en la etapa 2, no en el 0-day. La diferencia decisiva es
+que las 122 degradan la firma ~9 pp (`conocida f1_macro` 0.655 vs 0.748) por sobreajuste de RF a
+los dummies extra de D3, y la tesis ya está ganada ~5× sobre el baseline a 54 (0.771 vs 0.150).
+El matiz de `mailbomb` refuerza además la opción B (sets por etapa) como línea futura y la
+complementariedad de detectores (LOF lo caza a 0.82 sobre 54). **Cierra la casilla 4.3.5.**
+
+**A reportar en la memoria (honestidad, no esconder):** las 122 dan un detector marginalmente
+mejor en la tarea pura de anomalías (Pareto en recall/FPR, +AUC), confirmando el riesgo que motivó
+Q1/C —la selección supervisada ciega un poco al detector no supervisado—, pero el efecto es pequeño
+y 54 gana el sistema. La **opción B** (122 anomalías / 54 firmas) queda como línea futura en
+`EL_FUTURO.md §3`.
+
+**Hallazgos colaterales del experimento (más relevantes que 54-vs-122; a 5.3 + `EL_FUTURO.md`):**
+1. **Complementariedad de detectores:** ningún detector domina por tipo. Sobre 54, el AE (elegido)
+   es ciego a `mailbomb` (0.00, que LOF caza a 0.82) y a `snmpguess` (0.02, que IF caza a 0.74).
+   → ensemble de detectores = línea futura nº1.
+2. **`snmpgetattack` (n=178):** punto ciego de los 4 detectores en ambos sets → límite de las
+   features por-flujo de NSL-KDD, no de los modelos.
+3. **`UMBRAL_CONF`:** solo el 13.4% de los 0-day cazados se enrutan a `unknown` (RF sobre-confiado
+   OOD) → open-set recognition, línea futura.
+
+**Aclaración (nivel de firmas):** en 54 la firma NO "funciona mal" — RF solo da f1_macro **0.822**
+(5.2). El punto débil real es **u2r** (37 muestras en D2, f1 0.17–0.45) y algo r2l; `dos`/`probe`
+van muy bien. La caída 0.822→0.748 al entrar en la cascada es el **coste del filtro de anomalías**
+(ataques conocidos marcados normal o enrutados a unknown), no un fallo del clasificador.
+
+---
+
+## Decisiones del 2026-07-21 (grill de redacción del vault)
+
+Decisiones tomadas durante la sesión de redacción del 2026-07-21. Ninguna afecta al código
+ni a las cifras; fijan convenciones de redacción y un ajuste del reparto de teoría.
+
+### Reparto de 4.2 (opción 1) → la teoría del dataset la redacta Claude como borrador factual
+
+La teoría del apartado **4.2** (origen del dataset, las 41 features, por qué NSL-KDD), antes
+reservada a Francisco en el reparto de redacción (acuerdo 2026-07-15), se **cede a Claude** para
+su redacción como **borrador factual** con marcadores `[CITA:...]` pendientes. Reparto resultante:
+- «Origen» y «Las 41 características y sus 3 grupos» → borrador de Claude (hechos verificables).
+- «Por qué se eligió NSL-KDD» → borrador provisional que **Francisco revisa** (refleja el criterio
+  del autor).
+- Las citas `[CITA:...]` las **resuelve Francisco en Zotero**.
+
+La casilla §2.2 «Teoría del dataset NSL-KDD» de `next-steps.md` pasa de `☐` (Francisco) a `◐`
+(borrador Claude 2026-07-21): no se cierra hasta resolver citas y la revisión del bloque «por qué».
+
+### Convención de código incrustado en la memoria
+
+Se incrustan **fragmentos de código inline**, en la sección que ilustran, **verbatim recortado**:
+código real con elisiones `# ...`, **no pseudocódigo**. Regla asociada: los **comentarios del
+código fuente que contradigan la prosa** (p. ej. "no supervisado" en `anomalias.py`) se **recortan**
+del fragmento mostrado, para no reintroducir por la puerta de atrás terminología que la memoria ha
+unificado. Aplicada en 4.3.1-4.3.5, 4.4 y 4.5 (7 fragmentos).
+
+### Terminología del detector de anomalías → "semisupervisado (one-class)" como término canónico
+
+- Término **canónico** del detector de anomalías = **"semisupervisado (one-class)"**.
+- "No supervisado" se admite como **sinónimo declarado una sola vez** (en 3.4.1), reconociendo que
+  la literatura y `scikit-learn` lo usan indistintamente.
+- **Consecuencia pendiente (no resuelta, territorio de Francisco):** `2.2.4` del Marco Teórico aún
+  dice "detectores no supervisados" → queda como divergencia a corregir por Francisco al redactar
+  la teoría en prosa.
+
+---
+
+## Bitácora de este fichero
+
+- `2026-07-06` — Creado. Reconciliado el estado real (54 features, H1-Opción1/H2/H3 hechos
+  en código pese a la prosa de `next-steps.md`). Decidida Q1 → Opción C (set de features
+  parametrizable por modelo; el experimento H1 con recall 0-day por tipo lo resuelve).
+- `2026-07-06` — **Grill previo a la implementación completado.** Cerradas Q2 (config.py
+  compartido acotado), Q3 (superficie de evaluacion.py + evaluar_0day_por_tipo + convenciones
+  de clase), Q4 (UMBRAL_CONF vía cross_val_predict OOF, sin leakage), Q5 (imbalanced-learn
+  compatible con sklearn 1.7.1 + regla de parada; requirements ya pinneado), Q6 (no cruzar
+  balanceo × selección). Listo para empezar por `config.py` + `evaluacion.py`.
+- `2026-07-06` — **`config.py` + `evaluacion.py` implementados y verificados** (smoke test en
+  el venv: métricas binarias/multiclase/0-day correctas, figuras y CSV acumulado). No se tocó
+  `program.py`/`validacion.py`.
+- `2026-07-06` — **Q5 ejecutada, regla de parada NO disparada.** `imbalanced-learn==0.14.2`
+  (acepta sklearn>=1.4.2,<2) instalado sin mover sklearn 1.7.1 / numpy 2.3.2 / scipy 1.16.0;
+  añade `sklearn-compat==0.1.6`. Ambos pinneados en `requirements.txt`. Entorno congelado y
+  coherente para todos los modelos.
+- `2026-07-11` — **3.1-F resuelta: baseline RF monolítico APROBADO, ubicación `baseline.py`
+  aparte** (elegida por el autor frente a "modo en firmas.py"). Registrada la especificación
+  completa arriba. Métrica de decisión vs híbrido: recall 0-day por tipo. En la misma sesión
+  se lanzó la ejecución pendiente de `firmas.py` (54 → 122).
+- `2026-07-14` — **Arranque del grill de `hibrido.py`.** Cerradas H-1 (origen de modelos →
+  cargar joblib persistidos + reconstruir el estimador de firmas solo para el OOF de
+  `UMBRAL_CONF`) y H-2 (detector etapa 1 = Autoencoder por defecto seleccionable; tabla 0-day
+  por tipo de los 4 detectores; Q6 matizada) y H-3 (etapa 2 = RandomForest seleccionable, fijo
+  entre variantes). Creado `EL_FUTURO.md` (vías de diferenciación, a raíz del comentario del
+  profesor sobre el RF). Cerrada H-4 (calibración de `UMBRAL_CONF`: presupuesto τ=2pp sobre OOF
+  + tabla de sensibilidad de los 3 umbrales en D2; D2 solo para reportar) y H-5 (binaria del
+  híbrido idéntica a la etapa 1 por construcción; la tesis se juega vs baseline monolítico) y H-6
+  (scoring multiclase: matriz 5×6 + métricas por alcance, sin número único; comparación vs baseline
+  por recall 0-day) y H-7 (artefactos/CLI/idempotencia = patrón auditado; descriptor joblib).
+  **Grill de `hibrido.py` cerrado (H-1…H-7).** Registrados los pendientes de diseño menores
+  (alcance H1, caveat FPR, datos cargados). `hibrido.py` aún NO implementado: es el siguiente paso.
+- `2026-07-14` — **Pendientes de diseño RATIFICADOS (P-1…P-5) y arranque de la implementación de
+  `hibrido.py`.** Verificadas en disco las interfaces reales (`config.py`, `evaluacion.py`,
+  `anomalias.py`, `firmas.py`, `program.load_specialized_splits`) antes de tocar código (regla §6).
+  Cerrados los 5 puntos abiertos: P-1 una variante por invocación · P-2 FPR junto al recall 0-day ·
+  P-3 solo D2+D3 · P-4 calibración con separación estructural anti-leakage (no ve D2) · P-5 binaria
+  = `es_sospechoso` sin veto de etapa 2. Bookkeeping de `next-steps.md` (40→54, H1/H2/H3) cerrado.
+  Implementado `hibrido.py` siguiendo H-1…H-7 + P-1…P-5. **Auditado por `auditor-ml`: veredicto
+  APTO** (sin bloqueantes ni importantes; verificados uno a uno los 7 riesgos críticos: anti-leakage
+  estructural de la calibración, orden de clases OOF↔cascada, reensamblado booleano, reconstrucción
+  fiel de la firma con prefijo `clf__` de SMOTE, regla τ=2pp, reutilización de `_score`/umbral,
+  máscaras 0-day y matriz 5×6). 3 hallazgos MENOR: **M1 aplicado** (el bucle de 4 detectores ahora
+  captura también `RuntimeError` de variante mal etiquetada → degrada con aviso en vez de abortar);
+  **M2/M3 = notas para la memoria 5.3** (no código): `metricas_hibrido_0day.csv` incluye filas
+  `tipo='__global__'` a filtrar al agregar; `d2_recall_0day_global` es idéntico en los 3 umbrales por
+  construcción (recall 0-day = etapa 1, independiente de `UMBRAL_CONF`) — explicarlo para que no se
+  lea como error. **Ejecutado (54 y 122)** sin errores.
+- `2026-07-15` — **`hibrido.py` ejecutado (54 y 122) → Q1/C resuelta: 54 features (opción A).**
+  `UMBRAL_CONF=0.5` en ambas (regla τ=2pp). Cascada AE→RF: binaria recall 0.832 / FPR 0.102 (54);
+  recall 0-day global 0.771 (54) vs 0.150 del baseline monolítico → tesis del híbrido confirmada
+  ~5×. Decisión Q1/C y hallazgos colaterales (complementariedad de detectores, `snmpgetattack`
+  ciego, 13.4% de routing a unknown) registrados arriba (§ Decisión del 2026-07-15) y en
+  `EL_FUTURO.md`. **Casilla 4.3.5 cerrada.** Siguiente: volcado a la memoria caps. 4-5.
+- `2026-07-16` — **Volcado a la memoria de caps. 4.3-4.5 y 5.1-5.3 completado y AUDITADO** (dos
+  auditorías adversariales de cifras: cap. 5 APTO CON CAMBIOS —3 menores, aplicados—; cap. 4 APTO
+  CON CAMBIOS —4 aplicados + 1 opcional aplicado—). **Fe de erratas registrada arriba** en la
+  decisión del 2026-07-15: el argumento de descarte de la ventaja 0-day de las 122 contradecía a
+  `metricas_hibrido_0day.csv` (`mailbomb` 0.00→0.123 con 122, 65% del delta); la decisión A (54)
+  no cambia — se sostiene en la degradación ~9 pp de la etapa de firmas. Corregido también en la
+  memoria (4.3.5). `GUIA_RESULTADOS.md` reconciliada con el estado real (54 features, drift 37,
+  4 features de D2 fuera de [0,1], inventario de artefactos de modelos).
+- `2026-07-21` — *(registrado 2026-07-22)* — **Grill de redacción del vault.** Registradas 3
+  decisiones (§ Decisiones del 2026-07-21): reparto de 4.2 opción 1 (teoría del dataset cedida a
+  Claude como borrador factual con `[CITA:]` pendientes; «por qué» a revisión de Francisco);
+  convención de código incrustado inline verbatim recortado (comentarios que contradigan la prosa
+  se recortan); terminología canónica del detector = "semisupervisado (one-class)", "no supervisado"
+  como sinónimo declarado una vez. Todo verificado en disco; sin cambios de código ni cifras.

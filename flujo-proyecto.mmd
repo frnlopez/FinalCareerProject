@@ -1,0 +1,6 @@
+flowchart TD
+    F["Flujo de red<br/>preprocesado"] --> E1{"Etapa 1<br/>Detección de anomalías"}
+    E1 -->|"score ≤ umbral"| N[NORMAL]
+    E1 -->|"score > umbral<br/>sospechoso"| E2{"Etapa 2<br/>Clasificación por firmas"}
+    E2 -->|"confianza ≥ UMBRAL_CONF"| C["Categoría:<br/>dos / probe / r2l / u2r"]
+    E2 -->|"confianza < UMBRAL_CONF"| U["DESCONOCIDO<br/>candidato 0-day"]

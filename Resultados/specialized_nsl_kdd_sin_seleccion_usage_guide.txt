@@ -1,0 +1,94 @@
+GUÍA DE USO - DIVISIONES ESPECIALIZADAS NSL-KDD
+============================================================
+
+📋 ARCHIVOS GENERADOS:
+--------------------
+DATOS ORIGINALES:
+   - *_original_D1_normal_for_anomaly.csv
+   - *_original_D2_complete_test.csv
+   - *_original_D3_known_attacks_for_signatures.csv
+
+DATOS PROCESADOS:
+   - *_processed_X_[división].csv (características)
+   - *_processed_y_attack_[división].csv (etiquetas específicas)
+   - *_processed_y_category_[división].csv (categorías)
+
+INFORMACIÓN Y MAPEOS:
+   - *_mappings_and_info.txt (este archivo)
+   - *_usage_guide.txt (guía de uso)
+
+🎯 CÓMO USAR CADA DIVISIÓN:
+------------------------------
+1. MODELO DE ANOMALÍAS (D1):
+   import pandas as pd
+   X_normal = pd.read_csv('C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Resultados/specialized_nsl_kdd_sin_seleccion_processed_X_D1_normal_for_anomaly.csv')
+   # Entrenar modelo solo con datos normales
+   # Ejemplo: IsolationForest, OneClassSVM, Autoencoder
+
+2. EVALUACIÓN GENERAL (D2):
+   X_test = pd.read_csv('C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Resultados/specialized_nsl_kdd_sin_seleccion_processed_X_D2_complete_test.csv')
+   y_test = pd.read_csv('C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Resultados/specialized_nsl_kdd_sin_seleccion_processed_y_category_D2_complete_test.csv')
+   # Evaluar ambos modelos (anomalías + firmas)
+   # Métricas: precisión, recall, F1-score por categoría
+
+3. EXTRACCIÓN DE FIRMAS (D3):
+   X_attacks = pd.read_csv('C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Resultados/specialized_nsl_kdd_sin_seleccion_processed_X_D3_known_attacks_for_signatures.csv')
+   y_attacks = pd.read_csv('C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Resultados/specialized_nsl_kdd_sin_seleccion_processed_y_category_D3_known_attacks_for_signatures.csv')
+   # Analizar patrones por categoría de ataque
+   # Crear reglas/firmas basadas en características distintivas
+
+💡 EJEMPLO DE IMPLEMENTACIÓN COMPLETA:
+----------------------------------------
+```python
+# 1. Cargar divisiones
+import pandas as pd
+from sklearn.ensemble import IsolationForest
+from sklearn.metrics import classification_report
+
+# Datos para modelo de anomalías
+X_normal = pd.read_csv('C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Resultados/specialized_nsl_kdd_sin_seleccion_processed_X_D1_normal_for_anomaly.csv')
+
+# Datos para evaluación
+X_test = pd.read_csv('C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Resultados/specialized_nsl_kdd_sin_seleccion_processed_X_D2_complete_test.csv')
+y_test = pd.read_csv('C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Resultados/specialized_nsl_kdd_sin_seleccion_processed_y_category_D2_complete_test.csv')
+
+# Datos para firmas
+X_attacks = pd.read_csv('C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Resultados/specialized_nsl_kdd_sin_seleccion_processed_X_D3_known_attacks_for_signatures.csv')
+y_attacks = pd.read_csv('C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Resultados/specialized_nsl_kdd_sin_seleccion_processed_y_category_D3_known_attacks_for_signatures.csv')
+
+# 2. Entrenar modelo de anomalías
+anomaly_model = IsolationForest(contamination=0.1, random_state=42)
+anomaly_model.fit(X_normal)  # Solo con datos normales
+
+# 3. Extraer firmas de ataques
+# Análisis estadístico por categoría
+for category in y_attacks['category_original'].unique():
+    mask = y_attacks['category_original'] == category
+    category_data = X_attacks[mask]
+    # Análizar características distintivas
+    print(f'Patrones para {category}: {category_data.describe()}')
+
+# 4. Evaluar en datos de prueba
+anomaly_predictions = anomaly_model.predict(X_test)
+# -1 = anomalía, 1 = normal
+print('Evaluación del modelo de anomalías:')
+# Convertir a binario para evaluación
+y_binary = (y_test['category_original'] != 'normal').astype(int)
+anomaly_binary = (anomaly_predictions == -1).astype(int)
+print(classification_report(y_binary, anomaly_binary))
+```
+
+🔧 CONSIDERACIONES TÉCNICAS:
+------------------------------
+- D1 está balanceado (solo 'normal') para entrenar detección de anomalías
+- D2 mantiene la distribución original para evaluación realista
+- D3 permite análisis detallado de patrones de ataque
+- Los encoders están ajustados consistentemente en todas las divisiones
+- Las características están escaladas uniformemente
+
+⚠️  IMPORTANTES:
+---------------
+- Siempre usar D1 SOLO para entrenar modelos de anomalías
+- D2 es para evaluación final de ambos sistemas
+- D3 permite crear reglas complementarias al modelo de anomalías
+- Los índices originales se mantienen para trazabilidad

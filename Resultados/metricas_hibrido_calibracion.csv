@@ -1,0 +1,7 @@
+set_features,detector,firma,umbral_conf,elegido,oof_recall_macro_conocidas,oof_recall_macro_baseline,oof_tasa_falsos_unknown,d2_f1_macro_5_conservador,d2_recall_0day_global,d2_pct_unknown_entre_0day_det,fecha
+54,Autoencoder,RandomForest,0.4,False,0.975084,0.979897,3.4e-05,0.642884,0.770667,0.018339,2026-07-15T18:22:49
+54,Autoencoder,RandomForest,0.5,True,0.964645,0.979897,0.000307,0.640607,0.770667,0.133564,2026-07-15T18:22:49
+54,Autoencoder,RandomForest,0.6,False,0.943766,0.979897,0.000887,0.592419,0.770667,0.339792,2026-07-15T18:22:49
+122_sin_seleccion,Autoencoder,RandomForest,0.4,False,0.9754,0.9754,0.0,0.591204,0.785333,0.007131,2026-07-15T18:23:47
+122_sin_seleccion,Autoencoder,RandomForest,0.5,True,0.965031,0.9754,0.000171,0.583421,0.785333,0.085908,2026-07-15T18:23:47
+122_sin_seleccion,Autoencoder,RandomForest,0.6,False,0.944244,0.9754,0.000443,0.582266,0.785333,0.381324,2026-07-15T18:23:47

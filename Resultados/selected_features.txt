@@ -1,0 +1,151 @@
+SELECCIÓN DE CARACTERÍSTICAS — 4.3.5 (NSL-KDD)
+================================================================================
+
+Fecha de creación: 2026-07-05 19:53:58.689768
+Base de cálculo: D1+D3 (train completo) tras el escalado.
+Ranking: RandomForestClassifier(n_estimators=100, random_state=42, class_weight='balanced') con y_category (5 clases).
+
+Características de partida:  122
+Eliminadas por varianza ~0 (< 1e-08): 1
+Eliminadas por correlación (> 0.95): 7
+Eliminadas por importancia (fuera del top-99.9%): 60
+Características finales:     54
+
+1. CARACTERÍSTICAS CONSERVADAS (54) — ordenadas por importancia RF:
+--------------------------------------------------------------------------------
+   #   importancia   acumulada  feature
+   1      0.091198      0.0912  src_bytes
+   2      0.075398      0.1666  dst_host_srv_count
+   3      0.065696      0.2323  dst_bytes
+   4      0.046772      0.2791  dst_host_diff_srv_rate
+   5      0.045034      0.3241  flag_S0
+   6      0.042748      0.3668  diff_srv_rate
+   7      0.042497      0.4093  count
+   8      0.041279      0.4506  srv_count
+   9      0.037191      0.4878  dst_host_same_src_port_rate
+  10      0.037175      0.5250  logged_in
+  11      0.035745      0.5607  dst_host_same_srv_rate
+  12      0.034936      0.5957  service_ftp_data
+  13      0.032642      0.6283  service_telnet
+  14      0.031679      0.6600  dst_host_count
+  15      0.029764      0.6898  duration
+  16      0.028064      0.7178  flag_SF
+  17      0.025064      0.7429  dst_host_srv_diff_host_rate
+  18      0.023169      0.7661  same_srv_rate
+  19      0.021654      0.7877  service_http
+  20      0.021181      0.8089  hot
+  21      0.019669      0.8286  dst_host_rerror_rate
+  22      0.018668      0.8472  root_shell
+  23      0.018596      0.8658  protocol_type_icmp
+  24      0.016583      0.8824  is_guest_login
+  25      0.014983      0.8974  protocol_type_tcp
+  26      0.011925      0.9093  service_eco_i
+  27      0.010643      0.9200  service_ftp
+  28      0.009079      0.9290  srv_rerror_rate
+  29      0.008951      0.9380  service_private
+  30      0.008869      0.9469  srv_diff_host_rate
+  31      0.008489      0.9553  num_file_creations
+  32      0.006337      0.9617  protocol_type_udp
+  33      0.005089      0.9668  service_other
+  34      0.004784      0.9716  service_ecr_i
+  35      0.004589      0.9761  num_root
+  36      0.004371      0.9805  service_smtp
+  37      0.003485      0.9840  flag_RSTR
+  38      0.003346      0.9873  service_domain_u
+  39      0.002476      0.9898  wrong_fragment
+  40      0.001790      0.9916  flag_RSTO
+  41      0.001515      0.9931  num_failed_logins
+  42      0.001444      0.9946  flag_REJ
+  43      0.001130      0.9957  num_shells
+  44      0.000656      0.9964  service_imap4
+  45      0.000510      0.9969  flag_SH
+  46      0.000499      0.9974  num_access_files
+  47      0.000414      0.9978  service_urp_i
+  48      0.000385      0.9982  service_finger
+  49      0.000234      0.9984  urgent
+  50      0.000158      0.9986  flag_S1
+  51      0.000144      0.9987  service_login
+  52      0.000141      0.9988  flag_RSTOS0
+  53      0.000132      0.9990  su_attempted
+  54      0.000118      0.9991  service_auth
+
+2. ELIMINADAS POR VARIANZA ~0 sobre D1+D3 (1):
+--------------------------------------------------------------------------------
+   - num_outbound_cmds (varianza=0.00e+00)
+
+3. ELIMINADAS POR CORRELACIÓN > 0.95 (7):
+--------------------------------------------------------------------------------
+   De cada par se conservó la característica de mayor varianza.
+   Si la pareja de referencia fue eliminada a su vez más adelante en el
+   barrido greedy (cadena A→B→C...), se indica el representante que
+   realmente sobrevivió al filtro de correlación.
+   - dst_host_serror_rate (|corr|=0.9851 con 'dst_host_srv_serror_rate' (eliminada a su vez por correlación; representante final que superó este filtro: 'flag_S0'))
+   - dst_host_srv_rerror_rate (|corr|=0.9644 con 'rerror_rate' (eliminada a su vez por correlación; representante final que superó este filtro: 'srv_rerror_rate'))
+   - dst_host_srv_serror_rate (|corr|=0.9812 con 'flag_S0', que superó este filtro)
+   - num_compromised (|corr|=0.9988 con 'num_root', que superó este filtro)
+   - rerror_rate (|corr|=0.9890 con 'srv_rerror_rate', que superó este filtro)
+   - serror_rate (|corr|=0.9792 con 'flag_S0', que superó este filtro)
+   - srv_serror_rate (|corr|=0.9827 con 'flag_S0', que superó este filtro)
+
+4. ELIMINADAS POR IMPORTANCIA — fuera del top que acumula ~99.9% (60):
+--------------------------------------------------------------------------------
+   - flag_S3 (importancia=0.000082)
+   - service_time (importancia=0.000078)
+   - service_IRC (importancia=0.000075)
+   - service_pop_3 (importancia=0.000066)
+   - service_uucp (importancia=0.000044)
+   - service_X11 (importancia=0.000042)
+   - service_Z39_50 (importancia=0.000041)
+   - service_ntp_u (importancia=0.000037)
+   - service_nnsp (importancia=0.000035)
+   - service_ssh (importancia=0.000031)
+   - flag_S2 (importancia=0.000030)
+   - service_domain (importancia=0.000028)
+   - land (importancia=0.000024)
+   - service_whois (importancia=0.000023)
+   - service_pm_dump (importancia=0.000023)
+   - service_bgp (importancia=0.000019)
+   - flag_OTH (importancia=0.000016)
+   - service_gopher (importancia=0.000015)
+   - service_courier (importancia=0.000015)
+   - service_tim_i (importancia=0.000012)
+   - service_pop_2 (importancia=0.000010)
+   - service_supdup (importancia=0.000010)
+   - service_nntp (importancia=0.000009)
+   - service_netbios_dgm (importancia=0.000008)
+   - service_http_443 (importancia=0.000008)
+   - service_csnet_ns (importancia=0.000008)
+   - service_vmnet (importancia=0.000007)
+   - service_echo (importancia=0.000007)
+   - service_red_i (importancia=0.000006)
+   - service_efs (importancia=0.000006)
+   - service_sunrpc (importancia=0.000006)
+   - service_link (importancia=0.000006)
+   - service_ctf (importancia=0.000006)
+   - service_remote_job (importancia=0.000005)
+   - service_netbios_ssn (importancia=0.000005)
+   - service_uucp_path (importancia=0.000005)
+   - service_ldap (importancia=0.000005)
+   - service_tftp_u (importancia=0.000004)
+   - service_urh_i (importancia=0.000004)
+   - service_iso_tsap (importancia=0.000004)
+   - service_discard (importancia=0.000004)
+   - service_klogin (importancia=0.000004)
+   - service_netstat (importancia=0.000004)
+   - service_mtp (importancia=0.000004)
+   - service_rje (importancia=0.000003)
+   - service_hostnames (importancia=0.000003)
+   - service_systat (importancia=0.000003)
+   - service_daytime (importancia=0.000003)
+   - service_netbios_ns (importancia=0.000003)
+   - service_shell (importancia=0.000002)
+   - service_name (importancia=0.000002)
+   - service_http_8001 (importancia=0.000002)
+   - service_printer (importancia=0.000002)
+   - service_exec (importancia=0.000002)
+   - service_harvest (importancia=0.000001)
+   - service_sql_net (importancia=0.000001)
+   - service_kshell (importancia=0.000000)
+   - is_host_login (importancia=0.000000)
+   - service_aol (importancia=0.000000)
+   - service_http_2784 (importancia=0.000000)

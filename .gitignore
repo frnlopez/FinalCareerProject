@@ -1,0 +1,58 @@
+# ---------------------------------------------------------------------------
+# .gitignore — TFG H-NIDS con ML
+#
+# Criterio: se versiona el texto plano (código, notas, métricas, figuras).
+# Queda fuera todo artefacto binario pesado que sea reproducible a partir
+# de lo que sí está versionado. Sin estas exclusiones el repo pesa 1,1 GB
+# y GitHub rechaza el push (límite duro de 100 MB por fichero).
+# ---------------------------------------------------------------------------
+
+# --- Entorno virtual (423 MB) -----------------------------------------------
+# Se reconstruye con: python -m venv Imp && pip install -r requirements.txt
+Implementacion/Imp/
+
+# --- Python -----------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+
+# --- Modelos entrenados (482 MB) --------------------------------------------
+# Regenerables y deterministas (random_state=42). El mayor, firma_KNN_122,
+# pesa 173 MB: por sí solo hace que GitHub rechace el push.
+Resultados/modelos/
+
+# --- Splits y transformadores (~170 MB) -------------------------------------
+# Derivados de "Archivos dataset" vía program.py. Se regeneran en minutos.
+Resultados/*_processed_*.csv
+Resultados/*_original_*.csv
+Resultados/*_transformers.joblib
+
+# --- Dataset crudo (22 MB) --------------------------------------------------
+# Descargable de https://github.com/Jehuty4949/NSL_KDD
+Archivos dataset/
+
+# --- Memoria en binario -----------------------------------------------------
+# La fuente de verdad de la memoria es Obsidian_TFG_Vault/ (Markdown).
+# Los .doc/.docx son el volcado final: no diffean y pesan 10 MB.
+*.doc
+*.docx
+~$*
+
+# --- Obsidian ---------------------------------------------------------------
+# Se versiona la configuración del vault, no el estado local ni los plugins.
+Obsidian_TFG_Vault/.obsidian/workspace.json
+Obsidian_TFG_Vault/.obsidian/workspace-mobile.json
+Obsidian_TFG_Vault/.obsidian/plugins/
+Obsidian_TFG_Vault/.obsidian/themes/
+Obsidian_TFG_Vault/.trash/
+
+# --- Claude Code ------------------------------------------------------------
+# settings.json (arquitectura de agentes) SÍ se versiona.
+# settings.local.json son permisos concedidos en esta máquina: no.
+.claude/settings.local.json
+
+# --- Sistema ----------------------------------------------------------------
+Thumbs.db
+desktop.ini
+.DS_Store

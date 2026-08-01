@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-/c/Users/francisco.lopez/KIKO_TFG/Working_Directory}/.claude/hooks/leader-gate.sh\"",
+            "shell": "bash",
+            "timeout": 15,
+            "statusMessage": "Enrutando al leader..."
+          }
+        ]
+      }
+    ]
+  }
+}

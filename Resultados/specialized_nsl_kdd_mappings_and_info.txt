@@ -1,0 +1,137 @@
+MAPEOS Y TRANSFORMACIONES - DIVISIONES ESPECIALIZADAS NSL-KDD
+================================================================================
+
+Fecha de creación: 2026-07-05 19:54:05.897388
+
+1. MAPEO DE ATAQUES ESPECÍFICOS (LABEL ENCODING):
+--------------------------------------------------
+    0 → apache2
+    1 → back
+    2 → buffer_overflow
+    3 → ftp_write
+    4 → guess_passwd
+    5 → httptunnel
+    6 → imap
+    7 → ipsweep
+    8 → land
+    9 → loadmodule
+   10 → mailbomb
+   11 → mscan
+   12 → multihop
+   13 → named
+   14 → neptune
+   15 → nmap
+   16 → normal
+   17 → perl
+   18 → phf
+   19 → pod
+   20 → portsweep
+   21 → processtable
+   22 → ps
+   23 → rootkit
+   24 → saint
+   25 → satan
+   26 → sendmail
+   27 → smurf
+   28 → snmpgetattack
+   29 → snmpguess
+   30 → spy
+   31 → sqlattack
+   32 → teardrop
+   33 → udpstorm
+   34 → warezclient
+   35 → warezmaster
+   36 → worm
+   37 → xlock
+   38 → xsnoop
+   39 → xterm
+
+Total de ataques específicos: 40
+
+2. MAPEO DE CATEGORÍAS DE ATAQUES:
+----------------------------------------
+   0 → DOS
+   1 → NORMAL
+   2 → PROBE
+   3 → R2L
+   4 → U2R
+
+Total de categorías: 5
+
+3. MAPEO ATAQUE ESPECÍFICO → CATEGORÍA:
+---------------------------------------------
+
+   DOS:
+      - back
+      - land
+      - neptune
+      - pod
+      - smurf
+      - teardrop
+      - mailbomb
+      - apache2
+      - processtable
+      - udpstorm
+
+   NORMAL:
+      - normal
+
+   PROBE:
+      - ipsweep
+      - nmap
+      - portsweep
+      - satan
+      - mscan
+      - saint
+
+   R2L:
+      - ftp_write
+      - guess_passwd
+      - imap
+      - multihop
+      - phf
+      - spy
+      - warezclient
+      - warezmaster
+      - sendmail
+      - named
+      - snmpgetattack
+      - snmpguess
+      - xlock
+      - xsnoop
+      - worm
+
+   U2R:
+      - buffer_overflow
+      - loadmodule
+      - perl
+      - rootkit
+      - httptunnel
+      - ps
+      - sqlattack
+      - xterm
+
+4. INFORMACIÓN DEL ESCALADOR:
+------------------------------
+   Tipo: MinMaxScaler
+   Rango: (0, 1)
+   Características tras one-hot: 122
+   Características tras selección (4.3.5): 54
+   Detalle de la selección: selected_features.txt
+
+5. DESCRIPCIÓN DE DIVISIONES:
+------------------------------
+   D1 (normal_for_anomaly):
+      - Solo instancias 'normal' del entrenamiento
+      - Para entrenar modelos de detección de anomalías
+      - El modelo aprende qué es comportamiento legítimo
+
+   D2 (complete_test):
+      - Dataset completo de prueba (normal + ataques)
+      - Para evaluación general de ambos modelos
+      - Permite medir rendimiento real
+
+   D3 (known_attacks_for_signatures):
+      - Solo ataques del dataset de entrenamiento
+      - Para extraer patrones/firmas de ataques conocidos
+      - Base para sistema de detección basado en reglas
