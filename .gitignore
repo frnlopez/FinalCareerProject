@@ -58,6 +58,11 @@ Obsidian_TFG_Vault/.trash/
 # settings.local.json son permisos concedidos en esta máquina: no.
 .claude/settings.local.json
 
+# --- MCP de Playwright ------------------------------------------------------
+# Volcados de consola y snapshots de página que deja el MCP cuando lo usa el
+# researcher. Son scratch de una sesión, no un resultado del TFG.
+.playwright-mcp/
+
 # --- Sistema ----------------------------------------------------------------
 Thumbs.db
 desktop.ini
