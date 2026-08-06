@@ -95,7 +95,8 @@ class NSLKDDBaselineTrainer:
         self.metricas_mc = None      # multiclase 5 clases
         self.metricas_bin = None     # binaria normal vs ataque
         self.metricas_0day = None    # recall 0-day por tipo
-        self.tiempo_s = None
+        self.tiempo_s = None             # = tiempo de entrenamiento (GridSearchCV)
+        self.tiempo_inferencia_s = None  # predict sobre D2 completo (T1)
 
     # ------------------------------------------------------------------
     # 1. Carga: train = D1+D3 (5 clases), evaluación = D2 completo
@@ -189,7 +190,14 @@ class NSLKDDBaselineTrainer:
         print("EVALUACIÓN SOBRE D2 COMPLETO")
         print("=" * 70)
 
+        # El predict sobre D2 completo se cronometra aparte del entrenamiento
+        # (T1): es la inferencia del baseline y de ella salen latencia por flujo
+        # y flujos/segundo, comparables con las del híbrido.
+        t_inf = time.time()
         y_pred = self.modelo.predict(self.X_D2)
+        self.tiempo_inferencia_s = time.time() - t_inf
+        print("   Inferencia sobre D2: {:.2f}s ({} flujos)".format(
+            self.tiempo_inferencia_s, len(self.X_D2)))
 
         # (a) Multiclase 5 clases (→ comparativa con el híbrido en 5.3). labels FIJOS.
         self.metricas_mc = evaluacion.evaluar_multiclase(
@@ -234,26 +242,70 @@ class NSLKDDBaselineTrainer:
     # ------------------------------------------------------------------
     # 4. Persistencia (modelo, métricas, tabla 0-day por tipo)
     # ------------------------------------------------------------------
-    def _limpiar_variante_csv(self, csv_path):
+    def _fila_metricas(self):
         """
-        Deja el CSV acumulado idempotente por variante: elimina las filas cuyo
-        'set_features' coincida con el de esta corrida antes de reescribirlas. La
-        otra variante (54 o 122) se conserva sin tocar. (Misma lógica que anomalias/firmas.)
+        Fila única de la tabla del baseline. Empieza por el conjunto mínimo
+        obligatorio (T1): 'algoritmo' + 'alcance' — aquí, 5 clases sobre D2
+        COMPLETO, que es lo que distingue este `accuracy_D2` del homónimo de
+        metricas_firmas.csv (4 clases sobre los ataques de tipo conocido). Los
+        bloques prefijados siguen la convención de config.ALCANCE_PREFIJOS:
+        'bin_' = binario normal-vs-ataque sobre D2 completo, 'recall_0day' =
+        ataques de D2 de tipo ausente del train.
+
+        OJO con 'f1_macro_cv': NO es de D2. Es el f1_macro medio en CV sobre el
+        train D1+D3 con el que se eligió la configuración (sufijo '_cv' →
+        config.ALCANCE_SELECCION). La brecha es enorme —0,9094 en CV frente a
+        0,4721 de 'f1_macro' sobre D2 en la variante de 54— y ahí está justamente
+        la tesis del TFG: el RF monolítico brilla en lo que ya vio. Citarla como
+        rendimiento del baseline sería citar 44 pp de más bajo una fila cuyo
+        'alcance' declara "sobre D2 completo".
         """
-        import os
-        if not os.path.exists(csv_path):
-            return
-        try:
-            df = pd.read_csv(csv_path)
-        except Exception:
-            return
-        if "set_features" not in df.columns:
-            return
-        df = df[df["set_features"].astype(str) != str(self.set_features)]
-        if len(df) == 0:
-            os.remove(csv_path)
-        else:
-            df.to_csv(csv_path, index=False)
+        m = self.metricas_mc
+        b = self.metricas_bin
+        fila = {
+            "algoritmo": "RandomForest_monolitico",
+            "alcance": config.ALCANCE_BASELINE,
+            "set_features": self.set_features,
+            "sin_seleccion": bool(self.sin_seleccion),
+            "n_features": self.n_features,
+            "config_ganadora": str(self.config_ganadora),
+            "f1_macro_cv": round(self.f1_macro_cv, 6),
+            # Multiclase (5 clases) sobre D2 completo.
+            "accuracy_D2": round(m["accuracy"], 6),
+            "precision_macro": round(m["precision_macro"], 6),
+            "recall_macro": round(m["recall_macro"], 6),
+            "f1_macro": round(m["f1_macro"], 6),
+            "f1_weighted": round(m["f1_weighted"], 6),
+            # Binaria normal vs ataque. 'bin_accuracy' es la cifra con la que la
+            # literatura NSL-KDD compara (los baselines canónicos de Tavallaee et
+            # al. y el 0,8605 del híbrido): sin ella esta tabla no era comparable.
+            "bin_accuracy": round(b["accuracy"], 6),
+            "bin_precision": round(b["precision"], 6),
+            "bin_recall": round(b["recall"], 6),
+            "bin_f1": round(b["f1"], 6),
+            "bin_fpr": round(b["fpr"], 6),
+            "bin_roc_auc": round(b.get("roc_auc", float("nan")), 6),
+            "bin_pr_auc": round(b.get("pr_auc", float("nan")), 6),
+            "bin_tn": b["tn"], "bin_fp": b["fp"], "bin_fn": b["fn"], "bin_tp": b["tp"],
+            # Recall 0-day global (métrica de decisión vs híbrido).
+            "recall_0day_global": round(self.metricas_0day["__global__"]["recall"], 6),
+            "n_0day": int(self.metricas_0day["__global__"]["n"]),
+            "n_test": int(len(self.y_D2_cat)),
+            "tiempo_s": round(self.tiempo_s, 2),
+        }
+        # Tiempos separados (T1): entrenamiento = GridSearchCV + refit sobre
+        # D1+D3; inferencia = predict sobre D2 completo.
+        fila.update(evaluacion.metricas_tiempo(
+            self.tiempo_s, self.tiempo_inferencia_s, len(self.X_D2)
+        ))
+        # Métricas por categoría (5 clases) para el detalle del capítulo 5.
+        for clase in config.CATEGORIAS_MULTICLASE:
+            pc = m["por_clase"].get(clase, {})
+            fila["precision_" + clase] = round(pc.get("precision", float("nan")), 6)
+            fila["recall_" + clase] = round(pc.get("recall", float("nan")), 6)
+            fila["f1_" + clase] = round(pc.get("f1", float("nan")), 6)
+            fila["soporte_" + clase] = int(pc.get("soporte", 0))
+        return fila
 
     def _persistir(self):
         """Guarda el modelo, la fila de métricas y la tabla 0-day por tipo."""
@@ -273,6 +325,8 @@ class NSLKDDBaselineTrainer:
                 "clases": config.CATEGORIAS_MULTICLASE,
                 "tipos_conocidos": sorted(self.tipos_conocidos),
                 "tipos_0day": self.tipos_0day,
+                "semilla": config.RANDOM_STATE,
+                "commit": config.commit_actual(),
             },
             ruta_modelo,
         )
@@ -280,70 +334,41 @@ class NSLKDDBaselineTrainer:
 
         # --- Tabla de métricas (una fila; → capítulo 5, comparativa con el híbrido). ---
         csv_path = config.RESULTADOS_DIR + r"\metricas_baseline.csv"
-        self._limpiar_variante_csv(csv_path)
-        m = self.metricas_mc
-        b = self.metricas_bin
-        fila = {
-            "algoritmo": "RandomForest_monolitico",
-            "set_features": self.set_features,
-            "sin_seleccion": bool(self.sin_seleccion),
-            "n_features": self.n_features,
-            "config_ganadora": str(self.config_ganadora),
-            "f1_macro_cv": round(self.f1_macro_cv, 6),
-            # Multiclase (5 clases) sobre D2 completo.
-            "accuracy_D2": round(m["accuracy"], 6),
-            "precision_macro": round(m["precision_macro"], 6),
-            "recall_macro": round(m["recall_macro"], 6),
-            "f1_macro": round(m["f1_macro"], 6),
-            "f1_weighted": round(m["f1_weighted"], 6),
-            # Binaria normal vs ataque.
-            "bin_precision": round(b["precision"], 6),
-            "bin_recall": round(b["recall"], 6),
-            "bin_f1": round(b["f1"], 6),
-            "bin_fpr": round(b["fpr"], 6),
-            "bin_roc_auc": round(b.get("roc_auc", float("nan")), 6),
-            "bin_pr_auc": round(b.get("pr_auc", float("nan")), 6),
-            # Recall 0-day global (métrica de decisión vs híbrido).
-            "recall_0day_global": round(self.metricas_0day["__global__"]["recall"], 6),
-            "n_0day": int(self.metricas_0day["__global__"]["n"]),
-            "n_test": int(len(self.y_D2_cat)),
-            "tiempo_s": round(self.tiempo_s, 2),
-        }
-        # Métricas por categoría (5 clases) para el detalle del capítulo 5.
-        for clase in config.CATEGORIAS_MULTICLASE:
-            pc = m["por_clase"].get(clase, {})
-            fila["precision_" + clase] = round(pc.get("precision", float("nan")), 6)
-            fila["recall_" + clase] = round(pc.get("recall", float("nan")), 6)
-            fila["f1_" + clase] = round(pc.get("f1", float("nan")), 6)
-            fila["soporte_" + clase] = int(pc.get("soporte", 0))
+        fila = self._fila_metricas()
+        evaluacion.limpiar_variante_csv(
+            csv_path, self.set_features, evaluacion.cabecera_esperada(fila)
+        )
         evaluacion.guardar_metricas(fila, csv_path)
+        evaluacion.comprobar_unicidad(csv_path)
+        evaluacion.comprobar_recuento(csv_path, self.set_features)
         print("   Tabla de métricas (baseline): {}".format(csv_path))
 
         # --- Tabla 0-day por tipo (misma forma que el experimento H1; → 5.3). ---
+        # Tabla AUXILIAR (fila = tipo de ataque): fuera del conjunto mínimo de las
+        # principales, cumple evaluacion.COLUMNAS_MINIMAS_AUXILIARES, con
+        # 'alcance' explícito porque su columna 'recall' se refiere a una
+        # partición distinta de la de la tabla principal.
         csv_0day = config.RESULTADOS_DIR + r"\metricas_baseline_0day.csv"
-        self._limpiar_variante_csv(csv_0day)
-        for tipo in self.tipos_0day:
+        filas_0day = []
+        for tipo in list(self.tipos_0day) + ["__global__"]:
             d = self.metricas_0day[tipo]
-            evaluacion.guardar_metricas({
+            filas_0day.append({
                 "algoritmo": "RandomForest_monolitico",
+                "alcance": config.ALCANCE_0DAY,
                 "set_features": self.set_features,
                 "sin_seleccion": bool(self.sin_seleccion),
+                "n_features": self.n_features,
                 "tipo_0day": tipo,
                 "n": d["n"],
                 "detectados": d["detectados"],
                 "recall": round(d["recall"], 6) if d["n"] > 0 else float("nan"),
-            }, csv_0day)
-        # Fila agregada global.
-        g = self.metricas_0day["__global__"]
-        evaluacion.guardar_metricas({
-            "algoritmo": "RandomForest_monolitico",
-            "set_features": self.set_features,
-            "sin_seleccion": bool(self.sin_seleccion),
-            "tipo_0day": "__global__",
-            "n": g["n"],
-            "detectados": g["detectados"],
-            "recall": round(g["recall"], 6) if g["n"] > 0 else float("nan"),
-        }, csv_0day)
+            })
+        evaluacion.limpiar_variante_csv(
+            csv_0day, self.set_features,
+            evaluacion.cabecera_esperada(filas_0day[0]) if filas_0day else None,
+        )
+        for fila_0day in filas_0day:
+            evaluacion.guardar_metricas(fila_0day, csv_0day)
         print("   Tabla 0-day por tipo (baseline): {}".format(csv_0day))
 
     # ------------------------------------------------------------------

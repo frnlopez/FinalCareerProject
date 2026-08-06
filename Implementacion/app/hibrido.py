@@ -26,6 +26,22 @@ Reglas de protocolo (invalidan el TFG si se rompen):
 
 Decisiones: resumen-de-decisiones.md § 2026-07-14 (H-1…H-7 + P-1…P-5).
 """
+# --- Qué significa 'tiempo_entrenamiento_s' EN ESTA TABLA (T1) -----------------
+# Fuente inequívoca para la memoria (5.0 / A.3): el nombre de la columna se
+# CONSERVA porque el conjunto mínimo homogéneo entre las cuatro tablas es un
+# requisito de T1 y renombrarlo lo rompería; pero aquí no mide lo mismo que en las
+# otras tres.
+SIGNIFICADO_TIEMPO_ENTRENAMIENTO = (
+    "En metricas_hibrido.csv 'tiempo_entrenamiento_s' NO es tiempo de ajuste de "
+    "la cascada: el híbrido carga los .joblib de las dos etapas y no las "
+    "re-entrena (H-1; CLAUDE.md, tabla de scripts). Ese tiempo es EXCLUSIVAMENTE "
+    "la calibración de UMBRAL_CONF por cross_val_predict sobre D3 "
+    "(probabilidades out-of-fold): cero ajuste del detector de anomalías, cero "
+    "ajuste del clasificador de firmas y cero uso de D2. Es la única excepción a "
+    "«el híbrido no re-entrena», y ni siquiera altera los modelos persistidos: "
+    "reconstruye una copia del estimador de firmas desde su config guardada."
+)
+
 import argparse
 import time
 
@@ -37,7 +53,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 import numpy as np
-import pandas as pd
 import joblib
 
 from sklearn.model_selection import StratifiedKFold, cross_val_predict
@@ -108,6 +123,11 @@ class NSLKDDHybridEvaluator:
         self.tabla_calibracion = []  # filas OOF+D2 de los 3 umbrales
         self.tabla_0day = []        # recall 0-day por tipo de los 4 detectores
         self.metricas_run = None    # fila resumen de la corrida
+        # Tiempos separados (T1). Aquí "entrenamiento" es SOLO la calibración OOF
+        # sobre D3: ver SIGNIFICADO_TIEMPO_ENTRENAMIENTO (módulo) para el texto
+        # inequívoco que va a la memoria.
+        self.tiempo_calibracion_s = None
+        self.tiempo_inferencia_s = None
 
     # ------------------------------------------------------------------
     # 1. Carga (P-3: solo D2 y D3; D1 no hace falta)
@@ -238,7 +258,13 @@ class NSLKDDHybridEvaluator:
     # ------------------------------------------------------------------
     def _preparar_cascada(self, joblib_det, joblib_firma):
         """Calcula el score de la etapa 1 y la proba de firma sobre los sospechosos.
-        Ambos son independientes de UMBRAL_CONF, así que se computan una única vez."""
+        Ambos son independientes de UMBRAL_CONF, así que se computan una única vez.
+
+        Este bloque ES la inferencia de extremo a extremo del híbrido sobre D2
+        (etapa 1 + etapa 2 sobre los sospechosos), así que se cronometra aparte
+        para reportar latencia por flujo y flujos/segundo (T1)."""
+        t_inf = time.time()
+
         # Etapa 1: anomaly score y sospechosos (reutiliza _score de anomalias.py, H-1).
         model_det = joblib_det["modelo"]
         umbral_det = joblib_det["umbral"]
@@ -253,9 +279,13 @@ class NSLKDDHybridEvaluator:
             self.proba_susp = model_firma.predict_proba(Xs)
         else:
             self.proba_susp = np.empty((0, len(self.clases_firma)))
+
+        self.tiempo_inferencia_s = time.time() - t_inf
         print("   Etapa 1: {} sospechosos / {} ({} normales dejados pasar)".format(
             int(self.es_sospechoso.sum()), len(self.X_D2),
             int((~self.es_sospechoso).sum())))
+        print("   Inferencia cascada completa sobre D2: {:.2f}s".format(
+            self.tiempo_inferencia_s))
 
     def _ensamblar_prediccion(self, umbral_conf):
         """Construye la predicción final sobre TODO D2 para un UMBRAL_CONF dado.
@@ -347,7 +377,13 @@ class NSLKDDHybridEvaluator:
                 "  ← detector de la cascada" if es_cascada else ""))
             for tipo, d in r0.items():
                 self.tabla_0day.append({
+                    "alcance": config.ALCANCE_0DAY,
                     "set_features": self.set_features,
+                    # sin_seleccion y n_features faltaban aquí: son las dos únicas
+                    # auxiliares que no permitían filtrar por variante sin parsear
+                    # texto (coherencia de procedencia entre las cuatro, T1).
+                    "sin_seleccion": bool(self.sin_seleccion),
+                    "n_features": self.n_features,
                     "detector": det,
                     "es_cascada": bool(es_cascada),
                     "fpr_detector": round(fpr, 6),
@@ -387,42 +423,40 @@ class NSLKDDHybridEvaluator:
     # ------------------------------------------------------------------
     # 7. Persistencia (H-7): 3 CSV idempotentes + figura + descriptor joblib
     # ------------------------------------------------------------------
-    def _limpiar_variante_csv(self, csv_path):
-        """Idempotencia por variante (misma lógica auditada que anomalias/firmas)."""
-        import os
-        if not os.path.exists(csv_path):
-            return
-        try:
-            df = pd.read_csv(csv_path)
-        except Exception:
-            return
-        if "set_features" not in df.columns:
-            return
-        df = df[df["set_features"].astype(str) != str(self.set_features)]
-        if len(df) == 0:
-            os.remove(csv_path)
-        else:
-            df.to_csv(csv_path, index=False)
-
     def _persistir(self, ruta_det, ruta_firma):
+        # Idempotencia por variante con la función única de evaluacion.py (T1:
+        # antes había una copia de esta lógica en cada uno de los 4 scripts).
         # (1) Tabla de calibración: sensibilidad de los 3 umbrales (OOF + D2, H-4).
         csv_cal = config.RESULTADOS_DIR + r"\metricas_hibrido_calibracion.csv"
-        self._limpiar_variante_csv(csv_cal)
+        evaluacion.limpiar_variante_csv(
+            csv_cal, self.set_features,
+            evaluacion.cabecera_esperada(self.tabla_calibracion[0])
+            if self.tabla_calibracion else None,
+        )
         for fila in self.tabla_calibracion:
             evaluacion.guardar_metricas(fila, csv_cal)
         print("   Tabla de calibración: {}".format(csv_cal))
 
         # (2) Tabla 0-day por tipo de los 4 detectores (cierra H1, con FPR).
         csv_0day = config.RESULTADOS_DIR + r"\metricas_hibrido_0day.csv"
-        self._limpiar_variante_csv(csv_0day)
+        evaluacion.limpiar_variante_csv(
+            csv_0day, self.set_features,
+            evaluacion.cabecera_esperada(self.tabla_0day[0])
+            if self.tabla_0day else None,
+        )
         for fila in self.tabla_0day:
             evaluacion.guardar_metricas(fila, csv_0day)
         print("   Tabla 0-day (4 detectores): {}".format(csv_0day))
 
         # (3) Fila resumen de la corrida (métricas por alcance con el umbral elegido).
         csv_res = config.RESULTADOS_DIR + r"\metricas_hibrido.csv"
-        self._limpiar_variante_csv(csv_res)
+        evaluacion.limpiar_variante_csv(
+            csv_res, self.set_features,
+            evaluacion.cabecera_esperada(self.metricas_run),
+        )
         evaluacion.guardar_metricas(self.metricas_run, csv_res)
+        evaluacion.comprobar_unicidad(csv_res)
+        evaluacion.comprobar_recuento(csv_res, self.set_features)
         print("   Tabla resumen: {}".format(csv_res))
 
         # (4) Descriptor reproducible (H-7): referencias + umbral + τ. NO re-serializa
@@ -442,6 +476,8 @@ class NSLKDDHybridEvaluator:
             "tau": self.TAU,
             "tipos_0day": self.tipos_0day,
             "base_path_usado": self.base_path,
+            "semilla": config.RANDOM_STATE,
+            "commit": config.commit_actual(),
         }, ruta_desc)
         print("   Descriptor del híbrido: {}".format(ruta_desc))
 
@@ -458,8 +494,12 @@ class NSLKDDHybridEvaluator:
         joblib_det, ruta_det = self._cargar_joblib("anomalia", self.detector)
         joblib_firma, ruta_firma = self._cargar_joblib("firma", self.firma)
 
-        # Calibración SOLO con D3 (P-4: la función no recibe D2).
+        # Calibración SOLO con D3 (P-4: la función no recibe D2). Es el único
+        # ajuste que hace el híbrido, así que su tiempo es el que se reporta como
+        # "entrenamiento" (T1); la cascada en sí no entrena nada.
+        t_cal = time.time()
         self.umbral_conf, oof_por_umbral = self._calibrar_umbral_conf(joblib_firma)
+        self.tiempo_calibracion_s = time.time() - t_cal
 
         # Preparar cascada sobre D2 (score etapa 1 + proba etapa 2), una sola vez.
         print("-" * 70)
@@ -473,7 +513,13 @@ class NSLKDDHybridEvaluator:
             m = self._metricas_d2(pred_u)
             oof = oof_por_umbral[u]
             self.tabla_calibracion.append({
+                # Fila MIXTA por diseño: 'oof_*' es D3 out-of-fold (de ahí sale la
+                # decisión) y 'd2_*' es D2 completo (solo reporte, P-4). El
+                # 'alcance' lo dice para que no se lea como una sola medida.
+                "alcance": config.ALCANCE_HIBRIDO_CALIBRACION,
                 "set_features": self.set_features,
+                "sin_seleccion": bool(self.sin_seleccion),
+                "n_features": self.n_features,
                 "detector": self.detector,
                 "firma": self.firma,
                 "umbral_conf": u,
@@ -506,7 +552,26 @@ class NSLKDDHybridEvaluator:
         print("   Recall 0-day global (etapa 1): {:.4f} (n={})".format(
             r0g["recall"], r0g["n"]))
 
+        # Fila resumen. Empieza por el conjunto mínimo obligatorio (T1):
+        # 'algoritmo' identifica la cascada concreta (detector->firma) y 'alcance'
+        # dice que es la evaluación extremo a extremo sobre D2 completo y advierte
+        # de que 'tiempo_entrenamiento_s' aquí es solo la calibración OOF (así el
+        # aviso de SIGNIFICADO_TIEMPO_ENTRENAMIENTO viaja también en el DATO, no
+        # solo en el código; la columna NO se renombra: T1 exige el conjunto
+        # mínimo homogéneo entre las cuatro tablas). Los
+        # bloques prefijados siguen config.ALCANCE_PREFIJOS: 'bin_' = binario
+        # normal-vs-ataque sobre D2 completo (= etapa 1, H-5), 'conocida_' =
+        # config.ALCANCE_HIBRIDO_CONOCIDA y 'recall_0day' = ataques de tipo
+        # ausente del train.
+        #
+        # 'conocida_*' NO es lo mismo que las columnas homónimas de firmas: se
+        # mide de extremo a extremo, así que los ataques que la etapa 1 no marcó
+        # entran como 'normal' y la cifra baja (conocida_recall_macro 0,6709
+        # frente al recall_macro 0,8496 de firmas-solo en 54). De ahí que tenga
+        # alcance propio desde T1 en lugar de reutilizar el de firmas.
         self.metricas_run = {
+            "algoritmo": "{}->{}".format(self.detector, self.firma),
+            "alcance": config.ALCANCE_HIBRIDO,
             "set_features": self.set_features,
             "sin_seleccion": bool(self.sin_seleccion),
             "n_features": self.n_features,
@@ -537,6 +602,13 @@ class NSLKDDHybridEvaluator:
             "fpr_cascada": round(b["fpr"], 6),
             "tiempo_s": round(time.time() - t0, 2),
         }
+        # Tiempos separados (T1): "entrenamiento" = calibración OOF sobre D3 (el
+        # híbrido no re-entrena la cascada; ver la constante del módulo
+        # SIGNIFICADO_TIEMPO_ENTRENAMIENTO); inferencia = cascada completa sobre
+        # los flujos de D2.
+        self.metricas_run.update(evaluacion.metricas_tiempo(
+            self.tiempo_calibracion_s, self.tiempo_inferencia_s, len(self.X_D2)
+        ))
 
         # Figura 5×6 y tabla 0-day de los 4 detectores.
         self._plot_matriz_5x6(pred_final)

@@ -28,6 +28,12 @@ Resultados/*_processed_*.csv
 Resultados/*_original_*.csv
 Resultados/*_transformers.joblib
 
+# --- Respaldos de tablas con el esquema anterior -----------------------------
+# Los genera evaluacion.limpiar_variante_csv() al apartar un CSV de métricas de
+# otro esquema (en lugar de borrarlo). Son un estado intermedio de una corrida,
+# no un resultado: no se versionan ni se citan.
+*.esquema-anterior.bak
+
 # --- Dataset crudo (22 MB) --------------------------------------------------
 # Descargable de https://github.com/Jehuty4949/NSL_KDD
 Archivos dataset/

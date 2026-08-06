@@ -225,21 +225,26 @@ class NSLKDDAnomalyTrainer:
         """
         Entrena cada configuración del grid sobre D1_train y elige la de mejor
         AUC-ROC sobre el set etiquetado (D1_val + muestra D3). Devuelve el modelo
-        ganador (ya entrenado sobre D1_train), su config y su AUC de validación.
+        ganador (ya entrenado sobre D1_train), su config, su AUC de validación y
+        el tiempo de ENTRENAMIENTO acumulado (solo los fit del grid, sin contar
+        el scoring: T1 separa entrenamiento e inferencia).
         """
         X_fit = self._datos_entrenamiento(algo, self.X_D1_train)
         mejor = {"auc": -np.inf, "cfg": None, "model": None}
+        t_fit_total = 0.0
 
         for cfg in self.GRIDS[algo]:
             model = self._construir(algo, cfg)
+            t_fit = time.time()
             self._ajustar(algo, model, X_fit)
+            t_fit_total += time.time() - t_fit
             scores = self._score(algo, model, self.X_val_lab)
             auc = roc_auc_score(self.y_val_lab, scores)
             print("      cfg={} → AUC-ROC(val)={:.4f}".format(cfg, auc))
             if auc > mejor["auc"]:
                 mejor = {"auc": auc, "cfg": cfg, "model": model}
 
-        return mejor["model"], mejor["cfg"], mejor["auc"]
+        return mejor["model"], mejor["cfg"], mejor["auc"], t_fit_total
 
     # ------------------------------------------------------------------
     # 3-6. Entrenamiento, umbral y evaluación de un algoritmo
@@ -251,7 +256,7 @@ class NSLKDDAnomalyTrainer:
         print("-" * 70)
         t0 = time.time()
 
-        model, cfg, auc_val = self._seleccionar_config(algo)
+        model, cfg, auc_val, t_entrenamiento = self._seleccionar_config(algo)
         print("   Config ganadora: {} (AUC-ROC val={:.4f})".format(cfg, auc_val))
 
         # 5. Umbral = percentil 95 del score sobre D1_val (solo normal). Igual para
@@ -261,7 +266,11 @@ class NSLKDDAnomalyTrainer:
         print("   Umbral (p{} sobre D1_val) = {:.6f}".format(self.PERCENTIL_UMBRAL, umbral))
 
         # 6. Evaluación sobre D2 (binaria). y_pred = score > umbral.
+        # El scoring de D2 es la INFERENCIA del detector: se cronometra aparte
+        # del entrenamiento (T1) para poder reportar latencia por flujo.
+        t_inf = time.time()
         score_D2 = self._score(algo, model, self.X_D2)
+        t_inferencia = time.time() - t_inf
         y_pred = (score_D2 > umbral).astype(int)
         metricas = evaluacion.evaluar_binario(self.y_bin, y_pred, score_D2)
 
@@ -287,44 +296,75 @@ class NSLKDDAnomalyTrainer:
             "score_D2": score_D2,
             "metricas": metricas,
             "tiempo_s": time.time() - t0,
+            "tiempo_entrenamiento_s": t_entrenamiento,
+            "tiempo_inferencia_s": t_inferencia,
         }
-        print("   Tiempo: {:.1f}s".format(self.resultados[algo]["tiempo_s"]))
+        print("   Tiempo: {:.1f}s total (entrenamiento {:.1f}s · inferencia D2 "
+              "{:.2f}s)".format(self.resultados[algo]["tiempo_s"],
+                                t_entrenamiento, t_inferencia))
 
     # ------------------------------------------------------------------
     # 7. Persistencia (modelos joblib, CSV de métricas, figuras ROC/PR)
     # ------------------------------------------------------------------
-    def _limpiar_variante_csv(self, csv_path):
+    def _fila_metricas(self, algo, r):
         """
-        Deja el CSV acumulado idempotente por variante: elimina las filas cuyo
-        'set_features' coincida con el de esta corrida antes de reescribirlas.
-        La otra variante (54 o 122) se conserva sin tocar.
+        Fila de la tabla de métricas para un algoritmo. Empieza por el conjunto
+        mínimo obligatorio (T1): 'algoritmo' + 'alcance' (aquí, binario
+        normal-vs-ataque sobre D2 completo) + variante + nº de features. La
+        procedencia (semilla, commit, fecha) la inyecta guardar_metricas.
+
+        OJO con las dos columnas que NO son de D2 (T1, config.ALCANCE_SELECCION):
+          - 'auc_val': AUC-ROC sobre D1_val + muestra de D3, la cifra con la que
+            se ELIGIÓ la configuración. Es sistemáticamente más alta que el
+            'roc_auc' de D2 (IsolationForest 54: 0,9918 frente a 0,9229), así que
+            citarla como "AUC del detector" sería citar un número del train.
+          - 'umbral': percentil 95 del score sobre D1_val, también del train.
+        El sufijo '_val' y la columna 'umbral' están declarados en
+        config.ALCANCE_SUFIJOS / ALCANCE_COLUMNAS con ese alcance propio.
         """
-        import os
-        if not os.path.exists(csv_path):
-            return
-        try:
-            df = pd.read_csv(csv_path)
-        except Exception:
-            # CSV corrupto o vacío: se sobrescribirá con las filas nuevas.
-            return
-        if "set_features" not in df.columns:
-            return
-        df = df[df["set_features"].astype(str) != str(self.set_features)]
-        # Sin filas de otras variantes → se elimina el fichero para que
-        # guardar_metricas lo recree con cabecera fresca (evita cabeceras rancias).
-        if len(df) == 0:
-            os.remove(csv_path)
-        else:
-            df.to_csv(csv_path, index=False)
+        m = r["metricas"]
+        fila = {
+            "algoritmo": algo,
+            "alcance": config.ALCANCE_ANOMALIAS,
+            "set_features": self.set_features,
+            "sin_seleccion": bool(self.sin_seleccion),
+            "n_features": self.n_features,
+            "config_ganadora": str(r["config_ganadora"]),
+            "auc_val": round(r["auc_val"], 6),
+            "umbral": round(r["umbral"], 6),
+            "roc_auc": round(m.get("roc_auc", float("nan")), 6),
+            "pr_auc": round(m.get("pr_auc", float("nan")), 6),
+            "precision": round(m["precision"], 6),
+            "recall": round(m["recall"], 6),
+            "f1": round(m["f1"], 6),
+            "accuracy": round(m["accuracy"], 6),
+            "fpr": round(m["fpr"], 6),
+            "tn": m["tn"], "fp": m["fp"], "fn": m["fn"], "tp": m["tp"],
+            "tiempo_s": round(r["tiempo_s"], 2),
+        }
+        # Tiempos separados (T1): entrenamiento = fits del grid; inferencia =
+        # scoring de D2 completo, que es lo que mide latencia y caudal.
+        fila.update(evaluacion.metricas_tiempo(
+            r["tiempo_entrenamiento_s"], r["tiempo_inferencia_s"], len(self.X_D2)
+        ))
+        return fila
 
     def _persistir(self):
         """Guarda modelos, la tabla de métricas y las curvas ROC/PR superpuestas."""
         csv_path = config.RESULTADOS_DIR + r"\metricas_anomalias.csv"
 
-        # Idempotencia por variante (H3): el CSV es único y acumulado, pero al
-        # re-ejecutar una variante (54 o 122) se borran primero sus filas previas
-        # para no acumular duplicados. La otra variante se conserva intacta.
-        self._limpiar_variante_csv(csv_path)
+        filas = {algo: self._fila_metricas(algo, r)
+                 for algo, r in self.resultados.items()}
+
+        # Idempotencia por variante (H3), ahora con la función única de
+        # evaluacion.py: el CSV es único y acumulado, pero al re-ejecutar una
+        # variante (54 o 122) se borran primero sus filas previas para no
+        # acumular duplicados. La otra variante se conserva intacta.
+        evaluacion.limpiar_variante_csv(
+            csv_path, self.set_features,
+            evaluacion.cabecera_esperada(next(iter(filas.values())))
+            if filas else None,
+        )
 
         for algo, r in self.resultados.items():
             # Un joblib por algoritmo, sufijado por variante de features (H3) para
@@ -341,32 +381,21 @@ class NSLKDDAnomalyTrainer:
                     "set_features": self.set_features,
                     "n_features": self.n_features,
                     "percentil_umbral": self.PERCENTIL_UMBRAL,
+                    "semilla": config.RANDOM_STATE,
+                    "commit": config.commit_actual(),
                 },
                 ruta_modelo,
             )
 
             # Una fila por algoritmo en la tabla acumulada (→ tabla 5.1.2).
-            m = r["metricas"]
-            fila = {
-                "algoritmo": algo,
-                "set_features": self.set_features,
-                "sin_seleccion": bool(self.sin_seleccion),
-                "n_features": self.n_features,
-                "config_ganadora": str(r["config_ganadora"]),
-                "auc_val": round(r["auc_val"], 6),
-                "umbral": round(r["umbral"], 6),
-                "roc_auc": round(m.get("roc_auc", float("nan")), 6),
-                "pr_auc": round(m.get("pr_auc", float("nan")), 6),
-                "precision": round(m["precision"], 6),
-                "recall": round(m["recall"], 6),
-                "f1": round(m["f1"], 6),
-                "accuracy": round(m["accuracy"], 6),
-                "fpr": round(m["fpr"], 6),
-                "tn": m["tn"], "fp": m["fp"], "fn": m["fn"], "tp": m["tp"],
-                "tiempo_s": round(r["tiempo_s"], 2),
-            }
-            evaluacion.guardar_metricas(fila, csv_path)
+            evaluacion.guardar_metricas(filas[algo], csv_path)
             print("   Guardado modelo: {}".format(ruta_modelo))
+
+        # La clave de unicidad (variante × algoritmo × alcance) y el recuento de
+        # filas de la variante (4 detectores → 8 con las dos variantes) se
+        # verifican, no se suponen.
+        evaluacion.comprobar_unicidad(csv_path)
+        evaluacion.comprobar_recuento(csv_path, self.set_features)
 
         # Figura estrella de 5.1: ROC/PR de los 4 algoritmos superpuestas.
         scores_por_algo = {algo: r["score_D2"] for algo, r in self.resultados.items()}

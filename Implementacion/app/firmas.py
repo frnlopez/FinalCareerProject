@@ -38,7 +38,6 @@ import matplotlib
 matplotlib.use("Agg")
 
 import numpy as np
-import pandas as pd
 import joblib
 
 from sklearn.model_selection import StratifiedKFold, GridSearchCV, cross_val_score
@@ -251,6 +250,10 @@ class NSLKDDSignatureTrainer:
                 print("      balanceo={:<12} → f1_macro(CV)={:.4f}".format(balanceo, f1m))
                 self.filas_balanceo.append({
                     "algoritmo": algo,
+                    # Toda esta tabla es de SELECCIÓN (CV sobre D3), no de D2:
+                    # sus f1_macro_cv no son comparables con los de la tabla
+                    # principal ni citables como resultado (T1).
+                    "alcance": config.ALCANCE_SELECCION,
                     "balanceo": balanceo,
                     "f1_macro_cv": round(f1m, 6),
                     "f1_macro_cv_std": round(float(scores.std()), 6),
@@ -298,12 +301,17 @@ class NSLKDDSignatureTrainer:
             refit=True,
         )
         busqueda.fit(self.X_D3, self.y_D3)
+        t_entrenamiento = time.time() - t0  # GridSearchCV + refit en todo D3
         modelo = busqueda.best_estimator_  # refit en todo D3 (pipeline si SMOTE)
         print("   Balanceo: {} · mejor config: {} · f1_macro(CV)={:.4f}".format(
             balanceo, busqueda.best_params_, busqueda.best_score_))
 
         # 6. Evaluación sobre D2 filtrado (multiclase, para 5.2). labels FIJOS.
+        # El predict se cronometra aparte del entrenamiento (T1): es la
+        # inferencia de la etapa 2 y de ella salen latencia y caudal.
+        t_inf = time.time()
         y_pred = modelo.predict(self.X_D2_eval)
+        t_inferencia = time.time() - t_inf
         metricas = evaluacion.evaluar_multiclase(
             self.y_D2_eval, y_pred, labels=config.CATEGORIAS_ATAQUE
         )
@@ -324,8 +332,12 @@ class NSLKDDSignatureTrainer:
             "f1_macro_cv": float(busqueda.best_score_),
             "metricas": metricas,
             "tiempo_s": time.time() - t0,
+            "tiempo_entrenamiento_s": t_entrenamiento,
+            "tiempo_inferencia_s": t_inferencia,
         }
-        print("   Tiempo: {:.1f}s".format(self.resultados[algo]["tiempo_s"]))
+        print("   Tiempo: {:.1f}s total (entrenamiento {:.1f}s · inferencia D2 "
+              "{:.2f}s)".format(self.resultados[algo]["tiempo_s"],
+                                t_entrenamiento, t_inferencia))
 
     # ------------------------------------------------------------------
     # 7. Extracción de firmas legibles desde el mejor DecisionTree (parte IDS 4.5)
@@ -369,39 +381,81 @@ class NSLKDDSignatureTrainer:
     # ------------------------------------------------------------------
     # Persistencia (modelos joblib, CSV de métricas, CSV de balanceo)
     # ------------------------------------------------------------------
-    def _limpiar_variante_csv(self, csv_path):
-        """
-        Deja el CSV acumulado idempotente por variante: elimina las filas cuyo
-        'set_features' coincida con el de esta corrida antes de reescribirlas. La
-        otra variante (54 o 122) se conserva sin tocar. (Misma lógica que anomalias.py.)
-        """
-        import os
-        if not os.path.exists(csv_path):
-            return
-        try:
-            df = pd.read_csv(csv_path)
-        except Exception:
-            return
-        if "set_features" not in df.columns:
-            return
-        df = df[df["set_features"].astype(str) != str(self.set_features)]
-        if len(df) == 0:
-            os.remove(csv_path)
-        else:
-            df.to_csv(csv_path, index=False)
-
     def _persistir_balanceo(self):
-        """Guarda la tabla 4.3.4 (SMOTE vs class_weight/nada) idempotente por variante."""
+        """Guarda la tabla 4.3.4 (SMOTE vs class_weight/nada) idempotente por variante.
+
+        Tabla AUXILIAR: su fila es algoritmo × balanceo, así que queda fuera del
+        conjunto mínimo de las tablas principales; cumple en su lugar
+        evaluacion.COLUMNAS_MINIMAS_AUXILIARES, que incluye 'alcance' (aquí, CV
+        sobre D3: config.ALCANCE_SELECCION) y la procedencia.
+        """
         csv_path = config.RESULTADOS_DIR + r"\metricas_balanceo.csv"
-        self._limpiar_variante_csv(csv_path)
+        evaluacion.limpiar_variante_csv(
+            csv_path, self.set_features,
+            evaluacion.cabecera_esperada(self.filas_balanceo[0])
+            if self.filas_balanceo else None,
+        )
         for fila in self.filas_balanceo:
             evaluacion.guardar_metricas(fila, csv_path)
         print("   Tabla de balanceo (4.3.4): {}".format(csv_path))
 
+    def _fila_metricas(self, algo, r):
+        """
+        Fila de la tabla de firmas. Empieza por el conjunto mínimo obligatorio
+        (T1): 'algoritmo' + 'alcance' — aquí, 4 categorías de ataque sobre los
+        ataques de D2 de tipo conocido, que es lo que distingue este
+        `accuracy_D2` del homónimo de metricas_baseline.csv (5 clases sobre D2
+        entero). La procedencia la inyecta guardar_metricas.
+
+        OJO: 'f1_macro_cv' NO es de D2 — es el f1_macro medio en CV sobre D3 con
+        el que se eligieron los hiperparámetros (config.ALCANCE_SELECCION, sufijo
+        '_cv' del vocabulario declarado). Es optimista respecto al 'f1_macro' de
+        la misma fila y no se puede citar como resultado del clasificador.
+        """
+        m = r["metricas"]
+        fila = {
+            "algoritmo": algo,
+            "alcance": config.ALCANCE_FIRMAS,
+            "set_features": self.set_features,
+            "sin_seleccion": bool(self.sin_seleccion),
+            "n_features": self.n_features,
+            "balanceo": r["balanceo"],
+            "config_ganadora": str(r["config_ganadora"]),
+            "f1_macro_cv": round(r["f1_macro_cv"], 6),
+            "accuracy_D2": round(m["accuracy"], 6),
+            "precision_macro": round(m["precision_macro"], 6),
+            "recall_macro": round(m["recall_macro"], 6),
+            "f1_macro": round(m["f1_macro"], 6),
+            "f1_weighted": round(m["f1_weighted"], 6),
+            "n_test": int(len(self.y_D2_eval)),
+            "tiempo_s": round(r["tiempo_s"], 2),
+        }
+        # Tiempos separados (T1): entrenamiento = GridSearchCV + refit sobre D3;
+        # inferencia = predict sobre las filas de D2 evaluadas.
+        fila.update(evaluacion.metricas_tiempo(
+            r["tiempo_entrenamiento_s"], r["tiempo_inferencia_s"],
+            len(self.y_D2_eval),
+        ))
+        # Métricas por categoría (→ 5.2.2): precision/recall/f1 y soporte de cada clase.
+        for clase in config.CATEGORIAS_ATAQUE:
+            pc = m["por_clase"].get(clase, {})
+            fila["precision_" + clase] = round(pc.get("precision", float("nan")), 6)
+            fila["recall_" + clase] = round(pc.get("recall", float("nan")), 6)
+            fila["f1_" + clase] = round(pc.get("f1", float("nan")), 6)
+            fila["soporte_" + clase] = int(pc.get("soporte", 0))
+        return fila
+
     def _persistir(self):
         """Guarda modelos, la tabla de métricas de firmas y (fuera) la de balanceo."""
         csv_path = config.RESULTADOS_DIR + r"\metricas_firmas.csv"
-        self._limpiar_variante_csv(csv_path)
+
+        filas = {algo: self._fila_metricas(algo, r)
+                 for algo, r in self.resultados.items()}
+        evaluacion.limpiar_variante_csv(
+            csv_path, self.set_features,
+            evaluacion.cabecera_esperada(next(iter(filas.values())))
+            if filas else None,
+        )
 
         for algo, r in self.resultados.items():
             # Un joblib por algoritmo, sufijado por variante (H3) para que 54 y 122
@@ -423,38 +477,20 @@ class NSLKDDSignatureTrainer:
                     "feature_names": list(self.X_D3.columns),
                     "clases": config.CATEGORIAS_ATAQUE,
                     "tipos_conocidos": sorted(self.tipos_conocidos),
+                    "semilla": config.RANDOM_STATE,
+                    "commit": config.commit_actual(),
                 },
                 ruta_modelo,
             )
 
             # Una fila por algoritmo en la tabla acumulada (→ 5.2.2 / 5.2.3).
-            m = r["metricas"]
-            fila = {
-                "algoritmo": algo,
-                "set_features": self.set_features,
-                "sin_seleccion": bool(self.sin_seleccion),
-                "n_features": self.n_features,
-                "balanceo": r["balanceo"],
-                "config_ganadora": str(r["config_ganadora"]),
-                "f1_macro_cv": round(r["f1_macro_cv"], 6),
-                "accuracy_D2": round(m["accuracy"], 6),
-                "precision_macro": round(m["precision_macro"], 6),
-                "recall_macro": round(m["recall_macro"], 6),
-                "f1_macro": round(m["f1_macro"], 6),
-                "f1_weighted": round(m["f1_weighted"], 6),
-                "n_test": int(len(self.y_D2_eval)),
-                "tiempo_s": round(r["tiempo_s"], 2),
-            }
-            # Métricas por categoría (→ 5.2.2): precision/recall/f1 y soporte de cada clase.
-            for clase in config.CATEGORIAS_ATAQUE:
-                pc = m["por_clase"].get(clase, {})
-                fila["precision_" + clase] = round(pc.get("precision", float("nan")), 6)
-                fila["recall_" + clase] = round(pc.get("recall", float("nan")), 6)
-                fila["f1_" + clase] = round(pc.get("f1", float("nan")), 6)
-                fila["soporte_" + clase] = int(pc.get("soporte", 0))
-            evaluacion.guardar_metricas(fila, csv_path)
+            evaluacion.guardar_metricas(filas[algo], csv_path)
             print("   Guardado modelo: {}".format(ruta_modelo))
 
+        # Clave de unicidad (variante × algoritmo × alcance) y recuento de filas
+        # de la variante (4 clasificadores → 8 con las dos variantes) verificados.
+        evaluacion.comprobar_unicidad(csv_path)
+        evaluacion.comprobar_recuento(csv_path, self.set_features)
         print("   Tabla de métricas de firmas (5.2): {}".format(csv_path))
 
     # ------------------------------------------------------------------

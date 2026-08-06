@@ -14,6 +14,14 @@ Contrato (Q3):
   - plot_matriz_confusion(y_true, y_pred, labels, ...) -> ruta PNG
   - plot_roc_pr(scores_por_algo, y_true, ...)          -> dict de AUCs
   - guardar_metricas(fila, csv_path)                   -> None (append)
+
+Ampliación T1 (esquema de métricas; no cambia ningún número, solo columnas):
+  - COLUMNAS_MINIMAS / CLAVE_UNICIDAD / TABLAS_PRINCIPALES  (esquema declarado)
+  - COLUMNAS_MINIMAS_AUXILIARES / TABLAS_AUXILIARES         (idem auxiliares)
+  - metricas_tiempo(t_entrenamiento_s, t_inferencia_s, n)   -> dict de 5 columnas
+  - limpiar_variante_csv(csv_path, set_features, ...)       -> None (idempotencia)
+  - comprobar_unicidad(csv_path, clave=None)                -> None (verifica)
+  - comprobar_recuento(csv_path, set_features)              -> None (verifica)
 """
 import os
 from datetime import datetime
@@ -38,6 +46,186 @@ from sklearn.metrics import (
 )
 
 import config
+
+
+# ---------------------------------------------------------------------------
+# ESQUEMA DE MÉTRICAS (tarea T1) — declarado aquí, comprobado en ejecución
+# ---------------------------------------------------------------------------
+# Conjunto MÍNIMO OBLIGATORIO de columnas, común a las cuatro tablas de métricas
+# de los modelos. No es un comentario de buena voluntad: guardar_metricas()
+# valida su presencia y aborta si falta alguna, así que una tabla sin ellas no
+# puede llegar a existir.
+#
+#   algoritmo      qué se midió (nombre del modelo o de la cascada)
+#   alcance        QUÉ CLASES y sobre QUÉ PARTICIÓN se calcula la fila
+#                  (valores fijos en config.ALCANCE_*; cierra el problema de las
+#                  columnas homónimas con alcances distintos entre tablas)
+#   set_features   variante de características: '54' o '122_sin_seleccion'
+#   sin_seleccion  bandera booleana equivalente, para filtrar sin parsear texto
+#   n_features     nº real de columnas de entrada usadas
+#   semilla        config.RANDOM_STATE con el que se produjo la fila (procedencia:
+#                  antes vivía solo en config.py y no viajaba con el dato)
+#   commit         hash corto del repo (+ '-sucio' si había cambios sin commitear
+#                  EN 'Implementacion/' —solo el código, no todo el árbol: los
+#                  scripts escriben en 'Resultados/' durante la corrida y eso
+#                  marcaría '-sucio' siempre; ver config._RUTA_SUCIEDAD—. Tres
+#                  valores posibles: '<hash>', '<hash>-sucio' y
+#                  '<hash>-suciedad_desconocida' (el `git status` falló; el hash
+#                  es válido y la suciedad, indeterminada)
+#   fecha          instante de la corrida (ISO-8601, segundos)
+COLUMNAS_MINIMAS = (
+    "algoritmo", "alcance", "set_features", "sin_seleccion", "n_features",
+    "semilla", "commit", "fecha",
+)
+
+# CLAVE DE UNICIDAD de las tablas de métricas: una fila por combinación de
+# variante de características × algoritmo × alcance. Es la clave que
+# comprobar_unicidad() verifica al terminar.
+#
+# SUSTITUCIÓN DELIBERADA (documentada porque no es lo que la clave sugiere): el
+# borrado de limpiar_variante_csv() NO es por clave completa, es por VARIANTE —
+# borra todas las filas de la variante en curso, no solo la de la clave que se va
+# a escribir. Consecuencia real: correr `hibrido.py --detector IsolationForest`
+# después del pase por defecto NO añade una fila junto a 'Autoencoder->
+# RandomForest'; la sustituye. Se elige así a propósito: cada tabla publicada
+# refleja EL ÚLTIMO PASE COMPLETO de cada variante, con un único commit y una
+# única fecha por variante. Borrar por clave completa permitiría un CSV con filas
+# de corridas distintas —y de commits distintos— mezcladas dentro de la misma
+# variante, que es peor para citar la tabla. Si algún día se quisieran comparar
+# cascadas alternativas, van a una tabla propia, no a esta.
+CLAVE_UNICIDAD = ("set_features", "algoritmo", "alcance")
+
+# Las cuatro tablas de métricas de los modelos: sobre ellas se exige el conjunto
+# mínimo de columnas.
+TABLAS_PRINCIPALES = frozenset({
+    "metricas_anomalias.csv",
+    "metricas_firmas.csv",
+    "metricas_baseline.csv",
+    "metricas_hibrido.csv",
+})
+
+# Tablas AUXILIARES: su fila tiene otra granularidad (algoritmo × balanceo, tipo
+# de ataque, umbral candidato) y por eso no llevan 'algoritmo' ni la clave de
+# unicidad. Pero sí llevan PROCEDENCIA Y ALCANCE: sin 'alcance' la columna
+# 'recall' de metricas_baseline_0day.csv o el 'f1_macro_cv' de
+# metricas_balanceo.csv se leerían como métricas sobre D2 y no lo son. Se exigen
+# las cuatro por igual. Precisión sobre el estado de partida: NINGUNA de las
+# cuatro auxiliares PUBLICADAS en Resultados/ tiene columna `alcance` —se
+# generaron antes de T1—; que solo las dos de 0-day la declarasen fue un estado
+# intermedio de la primera pasada de T1, ya superado. Las cuatro la tendrán al
+# regenerarlas con el runbook de PIPELINE.md.
+COLUMNAS_MINIMAS_AUXILIARES = (
+    "alcance", "set_features", "sin_seleccion", "n_features",
+    "semilla", "commit", "fecha",
+)
+
+TABLAS_AUXILIARES = frozenset({
+    "metricas_balanceo.csv",
+    "metricas_baseline_0day.csv",
+    "metricas_hibrido_0day.csv",
+    "metricas_hibrido_calibracion.csv",
+})
+
+# Nº de filas que cada tabla principal debe tener POR VARIANTE de características
+# (54 y 122_sin_seleccion), y por tanto el total con las dos variantes corridas:
+#   metricas_anomalias.csv  4 por variante → 8   (4 detectores)
+#   metricas_firmas.csv     4 por variante → 8   (4 clasificadores)
+#   metricas_baseline.csv   1 por variante → 2   (un RF monolítico)
+#   metricas_hibrido.csv    1 por variante → 2   (una cascada)
+# comprobar_recuento() lo verifica al final de cada corrida: el recuento del
+# runbook (PIPELINE.md, "Runbook de reconstrucción") deja de depender del ojo.
+FILAS_ESPERADAS_POR_VARIANTE = {
+    "metricas_anomalias.csv": 4,
+    "metricas_firmas.csv": 4,
+    "metricas_baseline.csv": 1,
+    "metricas_hibrido.csv": 1,
+}
+
+# Columnas de tiempo (T1): el tiempo de ENTRENAMIENTO y el de INFERENCIA no son
+# la misma magnitud ni responden a la misma pregunta. El de inferencia es el que
+# habla de despliegue, y se reporta además normalizado por flujo.
+COLUMNAS_TIEMPO = (
+    "tiempo_entrenamiento_s", "tiempo_inferencia_s", "n_inferencia",
+    "latencia_ms_por_flujo", "flujos_por_segundo",
+)
+
+
+def metricas_tiempo(t_entrenamiento_s, t_inferencia_s, n_inferencia):
+    """
+    Bloque de columnas de tiempo, idéntico en las cuatro tablas.
+
+    Parameters
+    ----------
+    t_entrenamiento_s : float
+        Segundos de AJUSTE del modelo (fit / GridSearchCV / calibración). Cada
+        script documenta en su llamada qué incluye exactamente.
+    t_inferencia_s : float
+        Segundos de PREDICCIÓN sobre la partición evaluada, medidos aparte del
+        entrenamiento. Es la mitad viable del pitfall P9 (Lab-Only Evaluation).
+    n_inferencia : int
+        Nº de flujos puntuados en ese tiempo (el denominador de la latencia).
+
+    Returns
+    -------
+    dict con COLUMNAS_TIEMPO. latencia_ms_por_flujo y flujos_por_segundo se
+    derivan; si n_inferencia o t_inferencia_s son 0 quedan como NaN en lugar de
+    inventar un número.
+    """
+    t_ent = float(t_entrenamiento_s)
+    t_inf = float(t_inferencia_s)
+    n = int(n_inferencia)
+    latencia = (t_inf / n) * 1000.0 if n > 0 else float("nan")
+    caudal = n / t_inf if t_inf > 0 else float("nan")
+    return {
+        "tiempo_entrenamiento_s": round(t_ent, 3),
+        "tiempo_inferencia_s": round(t_inf, 3),
+        "n_inferencia": n,
+        "latencia_ms_por_flujo": round(latencia, 6),
+        "flujos_por_segundo": round(caudal, 1),
+    }
+
+
+def validar_esquema_minimo(fila, csv_path="", columnas=None, auxiliar=False):
+    """
+    Comprueba que la fila trae con valor el conjunto mínimo obligatorio (por
+    defecto COLUMNAS_MINIMAS; las auxiliares pasan COLUMNAS_MINIMAS_AUXILIARES).
+    Aborta si no: una tabla de resultados sin alcance ni procedencia no debe
+    poder escribirse.
+
+    Avisa además (sin abortar) de columnas cuyo nombre empieza por un marcador de
+    config.PREFIJOS_SIN_DECLARAR ('oof_', 'd2_', 'cv_', 'val_', 'train_', 'd1_',
+    'd3_') y que el vocabulario aplicable no sabe resolver: es una columna de otro
+    alcance colada sin declarar.
+
+    `auxiliar` decide QUÉ vocabulario aplica, y es la razón de que el parámetro
+    exista: 'oof_' y 'd2_' solo tienen sentido en la tabla de calibración del
+    híbrido, así que se resuelven (vía config.ALCANCE_PREFIJOS_AUXILIARES) SOLO
+    con auxiliar=True. En una tabla PRINCIPAL avisan, que es lo que se quiere: un
+    'oof_recall_macro' en metricas_firmas.csv sería una columna del train dentro
+    de una fila cuyo `alcance` dice "sobre los ataques de D2".
+    """
+    columnas = tuple(columnas) if columnas is not None else COLUMNAS_MINIMAS
+    faltan = [c for c in columnas
+              if c not in fila or fila[c] is None or fila[c] == ""]
+    if faltan:
+        raise ValueError(
+            "Fila de métricas incompleta para {}: faltan las columnas mínimas "
+            "{} (conjunto obligatorio: {})".format(
+                os.path.basename(csv_path) or "<csv>", faltan, list(columnas))
+        )
+
+    sospechosas = [
+        c for c in fila
+        if c.startswith(config.PREFIJOS_SIN_DECLARAR)
+        and config.alcance_de_columna(c, incluir_auxiliares=auxiliar) is None
+    ]
+    if sospechosas:
+        print("   [aviso] {}: las columnas {} llevan un marcador de alcance no "
+              "declarado para una tabla {} (config.ALCANCE_PREFIJOS{}). "
+              "Decláralo o renómbralas.".format(
+                  os.path.basename(csv_path) or "<csv>", sospechosas,
+                  "auxiliar" if auxiliar else "principal",
+                  "_AUXILIARES/SUFIJOS" if auxiliar else "/SUFIJOS"))
 
 
 # ---------------------------------------------------------------------------
@@ -293,21 +481,233 @@ def plot_roc_pr(scores_por_algo, y_true, nombre_fig, titulo=""):
 # ---------------------------------------------------------------------------
 # Tabla única acumulada de experimentos (roadmap 3.1-D)
 # ---------------------------------------------------------------------------
+def cabecera_esperada(fila):
+    """
+    Cabecera que escribirá guardar_metricas() para una fila dada, incluidas las
+    columnas de procedencia que inyecta ella misma. Sirve para pasarla a
+    limpiar_variante_csv() y detectar un CSV con esquema anterior.
+    """
+    columnas = list(fila.keys())
+    for c in ("semilla", "commit", "fecha"):
+        if c not in columnas:
+            columnas.append(c)
+    return columnas
+
+
+SUFIJO_RESPALDO = ".esquema-anterior.bak"
+
+
+def _respaldar_csv(csv_path):
+    """
+    Aparta un CSV de esquema anterior renombrándolo a
+    '<nombre>.esquema-anterior.bak' en lugar de borrarlo.
+
+    Motivo: con el esquema nuevo en disco, las OCHO tablas entran por esa rama y
+    el primer pase de cada script se llevaría por delante las filas de la otra
+    variante. Están versionadas, así que no sería irrecuperable, pero el estado
+    intermedio es silencioso y committeable. Con el respaldo queda a la vista.
+    os.replace (no os.rename) porque en Windows rename falla si el destino existe.
+    """
+    destino = csv_path + SUFIJO_RESPALDO
+    os.replace(csv_path, destino)
+    return destino
+
+
+def limpiar_variante_csv(csv_path, set_features, columnas_esperadas=None):
+    """
+    Idempotencia por variante de características (H3), única para los cuatro
+    scripts de modelos (antes estaba copiada cuatro veces, una por script).
+
+    El CSV es único y acumulado: contiene las filas de las dos variantes (54 y
+    122). Al re-ejecutar UNA variante se borran primero SUS filas para no
+    acumular duplicados; las de la otra variante se conservan intactas.
+
+    OJO (ver la nota de CLAVE_UNICIDAD): el borrado es por VARIANTE, no por clave
+    completa. Una corrida reescribe TODAS las filas de su variante, así que no
+    puede duplicar ninguna clave, pero tampoco conviven dos cascadas o dos
+    subconjuntos de algoritmos de la misma variante: la tabla refleja el último
+    pase completo.
+
+    Parameters
+    ----------
+    csv_path : str
+    set_features : str
+        Variante de esta corrida ('54' o '122_sin_seleccion').
+    columnas_esperadas : iterable, opcional
+        Cabecera que va a escribir la corrida. Se compara como CONJUNTO contra la
+        del fichero ANTES de tocar nada: si difiere en cualquier sentido (falta
+        una columna nueva o sobra una retirada) el fichero es de otro esquema, se
+        aparta con _respaldar_csv() y se regenera al correr las dos variantes.
+        Comparar conjuntos y hacerlo antes de mutar evita el fallo anterior: con
+        el chequeo de solo-faltantes y después del filtrado, retirar una columna
+        no se detectaba, el CSV se reescribía ya sin las filas de la variante en
+        curso y luego guardar_metricas abortaba — excepción tras minutos de
+        entrenamiento y un CSV que había perdido una variante sin ganar nada.
+    """
+    if not os.path.exists(csv_path):
+        return
+    try:
+        df = pd.read_csv(csv_path)
+    except Exception:
+        # CSV ilegible (corrupto, vacío, sin cabecera): NO se puede "sobrescribir
+        # con las filas nuevas" —guardar_metricas() lo encuentra existente y hace
+        # pd.read_csv(nrows=0), que vuelve a lanzar EmptyDataError sin capturar y
+        # revienta con traza cruda al final del entrenamiento—. Se aparta, que es
+        # lo que ya se hace con un esquema incompatible.
+        destino = _respaldar_csv(csv_path)
+        print("   [aviso] {} no se puede leer como CSV (vacío o corrupto); se "
+              "aparta como {} y se regenerará.".format(
+                  os.path.basename(csv_path), os.path.basename(destino)))
+        return
+
+    # (1) Compatibilidad de esquema ANTES de mutar el fichero y ANTES del guarda
+    # de 'set_features': un CSV sin esa columna es, por definición, de otro
+    # esquema, y salir aquí sin apartarlo dejaba a guardar_metricas() abortando
+    # por cabecera incompatible tras minutos de GridSearch. Por eso este bloque
+    # va primero.
+    if columnas_esperadas is not None:
+        esperadas = set(columnas_esperadas)
+        actuales = set(df.columns)
+        if esperadas != actuales:
+            destino = _respaldar_csv(csv_path)
+            print("   [aviso] {} tenía otro esquema (faltaban {} · sobraban {}); "
+                  "se aparta como {} y se regenerará al correr también la otra "
+                  "variante.".format(
+                      os.path.basename(csv_path),
+                      sorted(esperadas - actuales), sorted(actuales - esperadas),
+                      os.path.basename(destino)))
+            return
+
+    # (2) Sin 'set_features' no hay variante que filtrar. Solo se llega aquí con
+    # columnas_esperadas=None (si venían, el bloque (1) ya habría apartado el
+    # fichero: 'set_features' está en COLUMNAS_MINIMAS y en las AUXILIARES).
+    if "set_features" not in df.columns:
+        return
+
+    # (3) Filtrado de las filas de ESTA variante.
+    df = df[df["set_features"].astype(str) != str(set_features)]
+
+    # Sin filas de otras variantes → se elimina el fichero para que
+    # guardar_metricas lo recree con cabecera fresca (evita cabeceras rancias).
+    # Aquí no hay nada que respaldar: todas las filas eran de la variante en
+    # curso y esta misma corrida las reescribe acto seguido.
+    if len(df) == 0:
+        os.remove(csv_path)
+        return
+
+    df.to_csv(csv_path, index=False)
+
+
+def comprobar_unicidad(csv_path, clave=None):
+    """
+    Verifica que el CSV no tiene filas duplicadas según la CLAVE_UNICIDAD
+    (variante × algoritmo × alcance). Aborta si las hay: una tabla de resultados
+    con dos filas para la misma clave es una tabla que no se puede citar.
+
+    Si al CSV le falta alguna columna de la clave, no se comprueba nada (tablas
+    auxiliares con otra granularidad de fila).
+    """
+    clave = tuple(clave) if clave is not None else CLAVE_UNICIDAD
+    if not os.path.exists(csv_path):
+        return
+    df = pd.read_csv(csv_path)
+    if any(c not in df.columns for c in clave):
+        return
+    duplicadas = df[df.duplicated(subset=list(clave), keep=False)]
+    if len(duplicadas) > 0:
+        raise ValueError(
+            "{} tiene {} filas duplicadas para la clave de unicidad {}".format(
+                os.path.basename(csv_path), len(duplicadas), list(clave))
+        )
+
+
+def comprobar_recuento(csv_path, set_features):
+    """
+    Verifica el nº de filas de una tabla PRINCIPAL para la variante que se acaba
+    de correr, contra FILAS_ESPERADAS_POR_VARIANTE, e imprime el total del
+    fichero. Hace comprobable por código el recuento del runbook (8/8/2/2 con las
+    dos variantes corridas) en lugar de dejarlo a ojo.
+
+    Aborta si la variante en curso no tiene exactamente las filas esperadas (una
+    corrida parcial, un algoritmo caído en silencio o un borrado incompleto).
+    Tablas no declaradas o sin la columna: no se comprueba nada.
+
+    LÍMITE DECLARADO (lo que encontrará T4, dispersión entre semillas): las cuatro
+    tablas PRINCIPALES son de PASE ÚNICO con la semilla 42, y este abort lo da por
+    supuesto. La dispersión de las 10 semillas de T4 va a TABLA PROPIA, con clave
+    de unicidad que incluya `semilla`; NO se añaden 10 filas por algoritmo aquí.
+    Motivo, por escrito para que no se descubra en ejecución: hoy T4 choca con
+    tres muros a la vez —(a) limpiar_variante_csv() borra por VARIANTE, así que
+    10 semillas colapsarían a la última; (b) CLAVE_UNICIDAD no incluye `semilla`,
+    así que dos semillas de la misma variante son duplicado y comprobar_unicidad()
+    aborta; (c) FILAS_ESPERADAS_POR_VARIANTE es fijo 4/4/1/1, así que 40 filas
+    abortan aquí—. El abort se conserva a propósito: ninguna invocación legítima
+    de la CLI actual lo dispara y es lo que hace comprobable el recuento.
+    """
+    nombre = os.path.basename(csv_path)
+    esperadas = FILAS_ESPERADAS_POR_VARIANTE.get(nombre)
+    if esperadas is None or not os.path.exists(csv_path):
+        return
+    df = pd.read_csv(csv_path)
+    if "set_features" not in df.columns:
+        return
+    n_variante = int((df["set_features"].astype(str) == str(set_features)).sum())
+    if n_variante != esperadas:
+        raise ValueError(
+            "{}: la variante '{}' tiene {} filas y debería tener {}. Regenera la "
+            "tabla con un pase completo del script para esa variante.".format(
+                nombre, set_features, n_variante, esperadas)
+        )
+    total_esperado = esperadas * 2  # dos variantes: 54 y 122_sin_seleccion
+    print("   Recuento {}: {} filas en la variante '{}' (total en fichero: {} "
+          "de {} esperadas con las dos variantes corridas)".format(
+              nombre, n_variante, set_features, len(df), total_esperado))
+
+
 def guardar_metricas(fila, csv_path):
     """
-    Añade una fila (dict) a un CSV acumulado, una fila por experimento. Se
-    inserta una columna 'fecha' automáticamente. Ese CSV es la "tabla única"
-    de la que salen las comparativas del capítulo de Resultados.
+    Añade una fila (dict) a un CSV acumulado, una fila por experimento. Ese CSV
+    es la "tabla única" de la que salen las comparativas del capítulo de
+    Resultados.
 
-    Nota: para columnas consistentes, pasar siempre el mismo conjunto de claves
-    por CSV (algoritmo, params, métricas). Si el fichero no existe, se crea con
-    cabecera; si existe, se hace append sin cabecera.
+    Inyecta automáticamente la PROCEDENCIA de la fila (T1): 'semilla' (la de
+    config, para que no viva solo en el código), 'commit' (hash corto del repo,
+    con '-sucio' si el código tenía cambios) y 'fecha'. Si el CSV es una de las
+    TABLAS_PRINCIPALES valida COLUMNAS_MINIMAS y si es una de las
+    TABLAS_AUXILIARES valida COLUMNAS_MINIMAS_AUXILIARES; aborta si falta alguna.
+
+    Todas las filas de un mismo CSV deben traer el MISMO conjunto de claves: al
+    hacer append se comprueba contra la cabecera existente y se reordena la fila
+    para que encaje; si los conjuntos difieren, se aborta en lugar de escribir
+    columnas desalineadas en silencio.
     """
     fila = dict(fila)
+    fila.setdefault("semilla", config.RANDOM_STATE)
+    fila.setdefault("commit", config.commit_actual())
     fila.setdefault("fecha", datetime.now().isoformat(timespec="seconds"))
+
+    nombre = os.path.basename(csv_path)
+    if nombre in TABLAS_PRINCIPALES:
+        validar_esquema_minimo(fila, csv_path)
+    elif nombre in TABLAS_AUXILIARES:
+        # Las auxiliares no tienen 'algoritmo' ni clave de unicidad, pero sí
+        # alcance y procedencia: las cuatro por igual (coherencia de procedencia).
+        validar_esquema_minimo(fila, csv_path,
+                               columnas=COLUMNAS_MINIMAS_AUXILIARES,
+                               auxiliar=True)
+
     os.makedirs(os.path.dirname(csv_path) or ".", exist_ok=True)
     df_fila = pd.DataFrame([fila])
     if os.path.exists(csv_path):
+        cabecera = list(pd.read_csv(csv_path, nrows=0).columns)
+        if set(cabecera) != set(fila.keys()):
+            raise ValueError(
+                "Esquema incompatible al añadir una fila a {}: la cabecera del "
+                "fichero es {} y la fila trae {}. Regenera el CSV completo (las "
+                "dos variantes) en lugar de mezclar esquemas.".format(
+                    os.path.basename(csv_path), cabecera, sorted(fila.keys()))
+            )
+        df_fila = df_fila[cabecera]
         df_fila.to_csv(csv_path, mode="a", header=False, index=False)
     else:
         df_fila.to_csv(csv_path, index=False)
