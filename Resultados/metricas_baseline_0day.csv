@@ -1,37 +1,37 @@
-algoritmo,set_features,sin_seleccion,tipo_0day,n,detectados,recall,fecha
-RandomForest_monolitico,54,False,apache2,737,89,0.12076,2026-07-11T12:25:34
-RandomForest_monolitico,54,False,httptunnel,133,1,0.007519,2026-07-11T12:25:34
-RandomForest_monolitico,54,False,mailbomb,293,0,0.0,2026-07-11T12:25:34
-RandomForest_monolitico,54,False,mscan,996,150,0.150602,2026-07-11T12:25:34
-RandomForest_monolitico,54,False,named,17,1,0.058824,2026-07-11T12:25:34
-RandomForest_monolitico,54,False,processtable,685,0,0.0,2026-07-11T12:25:34
-RandomForest_monolitico,54,False,ps,15,1,0.066667,2026-07-11T12:25:34
-RandomForest_monolitico,54,False,saint,319,315,0.987461,2026-07-11T12:25:34
-RandomForest_monolitico,54,False,sendmail,14,0,0.0,2026-07-11T12:25:34
-RandomForest_monolitico,54,False,snmpgetattack,178,0,0.0,2026-07-11T12:25:34
-RandomForest_monolitico,54,False,snmpguess,331,0,0.0,2026-07-11T12:25:34
-RandomForest_monolitico,54,False,sqlattack,2,0,0.0,2026-07-11T12:25:34
-RandomForest_monolitico,54,False,udpstorm,2,2,1.0,2026-07-11T12:25:34
-RandomForest_monolitico,54,False,worm,2,0,0.0,2026-07-11T12:25:34
-RandomForest_monolitico,54,False,xlock,9,0,0.0,2026-07-11T12:25:34
-RandomForest_monolitico,54,False,xsnoop,4,1,0.25,2026-07-11T12:25:34
-RandomForest_monolitico,54,False,xterm,13,1,0.076923,2026-07-11T12:25:34
-RandomForest_monolitico,54,False,__global__,3750,561,0.1496,2026-07-11T12:25:34
-RandomForest_monolitico,122_sin_seleccion,True,apache2,737,54,0.07327,2026-07-11T12:26:12
-RandomForest_monolitico,122_sin_seleccion,True,httptunnel,133,1,0.007519,2026-07-11T12:26:12
-RandomForest_monolitico,122_sin_seleccion,True,mailbomb,293,0,0.0,2026-07-11T12:26:12
-RandomForest_monolitico,122_sin_seleccion,True,mscan,996,178,0.178715,2026-07-11T12:26:12
-RandomForest_monolitico,122_sin_seleccion,True,named,17,2,0.117647,2026-07-11T12:26:12
-RandomForest_monolitico,122_sin_seleccion,True,processtable,685,0,0.0,2026-07-11T12:26:12
-RandomForest_monolitico,122_sin_seleccion,True,ps,15,2,0.133333,2026-07-11T12:26:12
-RandomForest_monolitico,122_sin_seleccion,True,saint,319,314,0.984326,2026-07-11T12:26:12
-RandomForest_monolitico,122_sin_seleccion,True,sendmail,14,0,0.0,2026-07-11T12:26:12
-RandomForest_monolitico,122_sin_seleccion,True,snmpgetattack,178,0,0.0,2026-07-11T12:26:12
-RandomForest_monolitico,122_sin_seleccion,True,snmpguess,331,0,0.0,2026-07-11T12:26:12
-RandomForest_monolitico,122_sin_seleccion,True,sqlattack,2,0,0.0,2026-07-11T12:26:12
-RandomForest_monolitico,122_sin_seleccion,True,udpstorm,2,2,1.0,2026-07-11T12:26:12
-RandomForest_monolitico,122_sin_seleccion,True,worm,2,0,0.0,2026-07-11T12:26:12
-RandomForest_monolitico,122_sin_seleccion,True,xlock,9,0,0.0,2026-07-11T12:26:12
-RandomForest_monolitico,122_sin_seleccion,True,xsnoop,4,1,0.25,2026-07-11T12:26:12
-RandomForest_monolitico,122_sin_seleccion,True,xterm,13,1,0.076923,2026-07-11T12:26:12
-RandomForest_monolitico,122_sin_seleccion,True,__global__,3750,555,0.148,2026-07-11T12:26:12
+algoritmo,alcance,set_features,sin_seleccion,n_features,tipo_0day,n,detectados,recall,semilla,commit,fecha
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,54,False,54,apache2,737,89,0.12076,42,c7cf319,2026-08-06T18:50:15
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,54,False,54,httptunnel,133,1,0.007519,42,c7cf319,2026-08-06T18:50:15
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,54,False,54,mailbomb,293,0,0.0,42,c7cf319,2026-08-06T18:50:15
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,54,False,54,mscan,996,150,0.150602,42,c7cf319,2026-08-06T18:50:15
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,54,False,54,named,17,1,0.058824,42,c7cf319,2026-08-06T18:50:15
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,54,False,54,processtable,685,0,0.0,42,c7cf319,2026-08-06T18:50:15
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,54,False,54,ps,15,1,0.066667,42,c7cf319,2026-08-06T18:50:15
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,54,False,54,saint,319,315,0.987461,42,c7cf319,2026-08-06T18:50:15
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,54,False,54,sendmail,14,0,0.0,42,c7cf319,2026-08-06T18:50:15
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,54,False,54,snmpgetattack,178,0,0.0,42,c7cf319,2026-08-06T18:50:15
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,54,False,54,snmpguess,331,0,0.0,42,c7cf319,2026-08-06T18:50:15
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,54,False,54,sqlattack,2,0,0.0,42,c7cf319,2026-08-06T18:50:15
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,54,False,54,udpstorm,2,2,1.0,42,c7cf319,2026-08-06T18:50:15
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,54,False,54,worm,2,0,0.0,42,c7cf319,2026-08-06T18:50:15
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,54,False,54,xlock,9,0,0.0,42,c7cf319,2026-08-06T18:50:15
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,54,False,54,xsnoop,4,1,0.25,42,c7cf319,2026-08-06T18:50:15
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,54,False,54,xterm,13,1,0.076923,42,c7cf319,2026-08-06T18:50:15
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,54,False,54,__global__,3750,561,0.1496,42,c7cf319,2026-08-06T18:50:15
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,122_sin_seleccion,True,122,apache2,737,54,0.07327,42,c7cf319,2026-08-06T19:14:08
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,122_sin_seleccion,True,122,httptunnel,133,1,0.007519,42,c7cf319,2026-08-06T19:14:08
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,122_sin_seleccion,True,122,mailbomb,293,0,0.0,42,c7cf319,2026-08-06T19:14:08
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,122_sin_seleccion,True,122,mscan,996,178,0.178715,42,c7cf319,2026-08-06T19:14:08
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,122_sin_seleccion,True,122,named,17,2,0.117647,42,c7cf319,2026-08-06T19:14:08
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,122_sin_seleccion,True,122,processtable,685,0,0.0,42,c7cf319,2026-08-06T19:14:08
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,122_sin_seleccion,True,122,ps,15,2,0.133333,42,c7cf319,2026-08-06T19:14:08
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,122_sin_seleccion,True,122,saint,319,314,0.984326,42,c7cf319,2026-08-06T19:14:08
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,122_sin_seleccion,True,122,sendmail,14,0,0.0,42,c7cf319,2026-08-06T19:14:08
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,122_sin_seleccion,True,122,snmpgetattack,178,0,0.0,42,c7cf319,2026-08-06T19:14:08
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,122_sin_seleccion,True,122,snmpguess,331,0,0.0,42,c7cf319,2026-08-06T19:14:08
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,122_sin_seleccion,True,122,sqlattack,2,0,0.0,42,c7cf319,2026-08-06T19:14:08
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,122_sin_seleccion,True,122,udpstorm,2,2,1.0,42,c7cf319,2026-08-06T19:14:08
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,122_sin_seleccion,True,122,worm,2,0,0.0,42,c7cf319,2026-08-06T19:14:08
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,122_sin_seleccion,True,122,xlock,9,0,0.0,42,c7cf319,2026-08-06T19:14:08
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,122_sin_seleccion,True,122,xsnoop,4,1,0.25,42,c7cf319,2026-08-06T19:14:08
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,122_sin_seleccion,True,122,xterm,13,1,0.076923,42,c7cf319,2026-08-06T19:14:08
+RandomForest_monolitico,recall de marcado como ataque sobre los ataques de D2 de tipo ausente del train,122_sin_seleccion,True,122,__global__,3750,555,0.148,42,c7cf319,2026-08-06T19:14:08
