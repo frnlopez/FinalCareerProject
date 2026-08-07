@@ -132,10 +132,16 @@ ALCANCE_D2_REPORTE = ("sobre D2 completo y SOLO como reporte: ninguna decisión 
                       "toma con estas columnas (P-4)")
 
 # ---------------------------------------------------------------------------
-# La columna 'tiempo_s': tres significados, uno por tabla — declarados en el dato
+# La columna 'tiempo_s': tres cálculos y cuatro declaraciones — en el dato
 # ---------------------------------------------------------------------------
 # 'tiempo_s' era el último superviviente del defecto que T1 vino a cerrar: mismo
 # nombre en tres tablas y tres magnitudes distintas, sin que el dato lo dijese.
+# Los CÁLCULOS siguen siendo tres (bloque completo del algoritmo · solo
+# entrenamiento · tramo carga→cierre de fila), pero los TEXTOS son cuatro:
+# anomalias.py y firmas.py comparten cálculo y NO comparten composición —en
+# firmas el ajuste + la inferencia son el 99 % del total y en anomalías bajan al
+# 51-73 % en tres de los cuatro detectores—
+# así que un texto único no dejaba reconstruir ninguno de los dos.
 # NO se homogeneiza el cálculo y NO se renombra la columna. Las razones (las de
 # verdad; la que se alegaba antes —"movería los 5,0/28,3/16,4/40,6 s que cita la
 # tabla de 4.4"— era falsa: metricas_anomalias.csv ya publica 5.51/26.17/20.85/
@@ -150,6 +156,10 @@ ALCANCE_D2_REPORTE = ("sobre D2 completo y SOLO como reporte: ninguna decisión 
 #     evaluación y generación de figuras), no solo el ajuste" es literalmente lo
 #     que 4.4 dice que mide su columna Tiempo. Unificar los tres convertiría
 #     medidas descritas en el texto en una cuarta que no describe nadie.
+#     (Matiz al redactar: ese "generación de figuras" en PLURAL es del capítulo y
+#     no del código. Dentro del cronómetro cae UNA sola figura —la matriz de
+#     confusión— y cuesta décimas; la de curvas ROC/PR se dibuja al final del
+#     script y queda fuera. Los alcances de aquí abajo dicen "UNA figura".)
 # Se hace, pues, lo que T1 hace con todo lo demás: que el dato publicado declare
 # su alcance. Cada fila de las cuatro tablas principales lleva una columna
 # hermana 'alcance_tiempo_s' con uno de estos textos.
@@ -157,38 +167,147 @@ ALCANCE_D2_REPORTE = ("sobre D2 completo y SOLO como reporte: ninguna decisión 
 # Por eso 'tiempo_s' NO está en ALCANCE_COLUMNAS: ese diccionario da UN alcance
 # por nombre de columna y aquí el alcance depende de la tabla. Va en el dato.
 #
-# LO QUE ESTA DECLARACIÓN NO ARREGLA (léase antes de comparar dos tiempos):
-# desde la corrección de T1 la medida se toma con time.perf_counter(), así que la
-# RESOLUCIÓN deja de ser el reloj de ~15,6 ms de Windows. La VARIANZA sigue ahí:
-# es wall-clock en una máquina no dedicada y entre dos corridas del mismo día se
-# observaron factores de hasta 4,4× (OneClassSVM 122: 163,26 s → 37,13 s; KNN 122
-# en firmas: 90,22 s → 207,81 s). Las cifras DE PARTIDA de esos dos pares (163,26
-# y 90,22) son del esquema de tablas anterior, que ya no está en el árbol de
-# trabajo: se recuperan de los CSV versionados en el commit 8b07319 (y
+# POR QUÉ perf_counter Y CON QUÉ PRUEBA (corregido: la que se citaba era falsa).
+# Los cuatro scripts miden con time.perf_counter() y no con time.time(), que en
+# Windows tiene una resolución de ~15,6 ms. La prueba DEMOSTRABLE del artefacto de
+# reloj es el predict del DecisionTree en metricas_firmas.csv: daba t_inf = 0,0 s
+# en las DOS variantes y publicaba una fila que se contradecía a sí misma
+# ('latencia_ms_por_flujo' = 0,0 —cero milisegundos por flujo, un imposible— junto
+# a un 'flujos_por_segundo' vacío). Con perf_counter ese mismo predict mide 0,002 s
+# (54) y 0,004 s (122): estaba un orden de magnitud por debajo del tick.
+# LO QUE NO ERA PRUEBA: los 758.824 flujos/s del Autoencoder, que este mismo
+# comentario citaba como "caudal artefacto del reloj". No lo era. Despejando,
+# t_inf = 22.544 / 758.824,7 = 0,029709 s, que no es múltiplo de 15,6 ms; y la
+# corrida nueva —ya con perf_counter— da 0,053 s para ese mismo par. Era varianza
+# de máquina (1,8×), no resolución. La afirmación se retira.
+#
+# LO QUE perf_counter NO ARREGLA (léase antes de comparar dos tiempos): la
+# VARIANZA. Es wall-clock en una máquina no dedicada y entre dos corridas del mismo
+# día se observaron factores de hasta 4,4× (OneClassSVM 122: 163,26 s → 37,13 s;
+# KNN 122 en firmas: 90,22 s → 207,81 s). Las cifras DE PARTIDA de esos dos pares
+# (163,26 y 90,22) son del esquema de tablas anterior, que ya no está en el árbol
+# de trabajo: se recuperan de los CSV versionados en el commit 8b07319 (y
 # anteriores). Las de llegada (37,13 y 207,81) están versionadas en 077119e;
 # producidas con el código c7cf319, que es lo que declara la columna 'commit' de
 # sus filas (metricas_anomalias.csv:7 y metricas_firmas.csv:8) y la referencia
-# inequívoca para reproducirlas. Ninguna columna de tiempo es reproducible: son
-# comparación relativa de coste y de orden de magnitud, nada más.
+# inequívoca para reproducirlas.
+# Y LO QUE NO ESTABA DICHO EN NINGÚN SITIO: la dispersión NO se limita a los
+# tiempos largos. Una medida de INFERENCIA de 30-50 ms varía hasta ±80 % entre
+# corridas: Autoencoder 54, 472.834 → 729.199 flujos/s (1,54×); Autoencoder 122,
+# 758.825 → 421.427 flujos/s (0,56×). O sea que 'tiempo_inferencia_s' y sus dos
+# derivadas son tan poco reproducibles como 'tiempo_s', y una diferencia de menos
+# de 2× entre dos filas de inferencia no significa nada. Ninguna columna de tiempo
+# es reproducible: son comparación relativa de coste y de orden de magnitud.
 # Sin comas (como el resto de ALCANCE_*): estos textos viajan como valor de CSV.
 _AVISO_TIEMPO_VARIANZA = (" · wall-clock de pase único en máquina no dedicada: "
-                          "varía hasta 4x entre corridas — es orden de magnitud "
-                          "y no cifra reproducible")
+                          "varía hasta 4x entre corridas (y hasta ±80 % en las "
+                          "medidas de inferencia de pocas decenas de ms) — es "
+                          "orden de magnitud y no cifra reproducible")
 
-# anomalias.py y firmas.py: bloque completo del algoritmo.
-ALCANCE_TIEMPO_S_BLOQUE_ALGORITMO = (
-    "'tiempo_s' = el proceso completo por algoritmo (selección de "
-    "hiperparámetros + ajuste + inferencia sobre D2 + figuras) y no solo el "
-    "ajuste; para el ajuste solo está 'tiempo_entrenamiento_s' de esta misma "
-    "fila" + _AVISO_TIEMPO_VARIANZA
+# Lo que NO entra en la inferencia medida. Va pegado a los cuatro alcances de
+# tiempo porque acompaña al par (latencia, caudal) que publica cada fila: sin esta
+# frase, citar los 4,4 millones de flujos/s del DecisionTree como capacidad
+# operativa sería exactamente la Lab-Only Evaluation que denuncia el pitfall P9.
+_AVISO_LATENCIA_SOLO_PREDICT = (
+    " · 'latencia_ms_por_flujo' y 'flujos_por_segundo' miden SOLO el predict/score "
+    "sobre características ya calculadas y ya en memoria: NO incluyen captura de "
+    "tráfico · ensamblado del flujo · extracción de las 41 características "
+    "—donde vive el coste real de un despliegue— así que no son capacidad "
+    "operativa del sistema"
+)
+
+# anomalias.py: bloque completo del algoritmo. El tramo que no es ajuste ni
+# inferencia sobre D2 llega al 49 % de 'tiempo_s' y lo domina el SCORING del set de
+# validación etiquetado repetido una vez por configuración del grid (18.469 filas ×
+# 6/9/4/2 configs frente a las 22.544 de D2): por eso el texto lo nombra el primero
+# de los tres y no habla de "figuras" —dentro del cronómetro solo cae UNA—.
+#
+# ESE REPARTO SE MIDE, NO SE ESTIMA (corrección: la versión anterior de este texto
+# publicaba "el (2) es el 75-86 % y el (3) el 5-15 %" y "9.5 s frente a 9.4 s" sin
+# decir con qué modelo de coste se habían calculado. Con un escalado plano por
+# filas puntuadas el tramo (2) de OneClassSVM 54 daba 17,8 s dentro de un residual
+# medido de 11,497 s —imposible—, y el 86 % de IsolationForest solo salía
+# ponderando el grid por 'n_estimators'; con escalado plano habría sido el 43 %. Un
+# supuesto que mueve el resultado de 43 % a 86 % no puede quedar implícito). Desde
+# esta versión anomalias.py cronometra los dos tramos y los publica como columnas:
+# 'tiempo_score_seleccion_s' (el tramo 2) y 'tiempo_score_umbral_s' (el tramo 3).
+# El texto ya no da porcentajes de ese reparto: el lector los saca de las columnas.
+ALCANCE_TIEMPO_S_BLOQUE_ANOMALIAS = (
+    "'tiempo_s' = el bloque completo del algoritmo. Sus cinco tramos principales "
+    "en orden de ejecución: (1) los fit del grid — y solo ellos son "
+    "'tiempo_entrenamiento_s' — (2) puntuar el set de validación etiquetado "
+    "(D1_val + 5000 ataques de D3 = 18469 filas) UNA VEZ POR CONFIGURACIÓN del "
+    "grid (6 en IsolationForest · 9 en OneClassSVM · 4 en LocalOutlierFactor · 2 "
+    "en Autoencoder) = 'tiempo_score_seleccion_s' (3) puntuar D1_val para fijar el "
+    "umbral p95 = 'tiempo_score_umbral_s' (4) la inferencia sobre D2 = "
+    "'tiempo_inferencia_s' y (5) la cola de evaluar_binario + UNA figura —la "
+    "matriz de confusión; la de curvas ROC/PR se dibuja al final del script y "
+    "queda fuera—. 'Principales' es literal: dentro de la misma ventana caen "
+    "también el submuestreo a 20000 filas de OneClassSVM · la construcción del "
+    "estimador en cada iteración del grid y un roc_auc_score por configuración "
+    "— despreciables pero no nulos — así que el tramo (5) no se declara con una "
+    "cifra propia sino como lo que queda al restar de 'tiempo_s' las cuatro "
+    "columnas de tiempo anteriores. Lo que no es ajuste ni inferencia sobre D2 "
+    "—los tramos (2)+(3)+(5)— pesó del 27 % al 49 % de 'tiempo_s' en "
+    "IsolationForest / OneClassSVM / LocalOutlierFactor (máximo: OneClassSVM 54 "
+    "con 11.50 s de 23.28 s) y el 0.3-0.5 % en el Autoencoder EN LA CORRIDA DE "
+    "REFERENCIA 38fdd4b — orden de magnitud de otra corrida y no una predicción "
+    "sobre esta fila: el reparto que vale es el que sale de las cinco columnas de "
+    "tiempo de la propia fila. Su reparto interno NO se estima aquí: está MEDIDO "
+    "en 'tiempo_score_seleccion_s' y 'tiempo_score_umbral_s' de esta misma fila"
+    + _AVISO_TIEMPO_VARIANZA + _AVISO_LATENCIA_SOLO_PREDICT
+)
+
+# firmas.py: mismo cálculo que el de anomalías y otra composición. Aquí el
+# GridSearchCV se come el total y el residual es la cola de métricas + figura
+# (0,258-0,314 s en 54 y 0,466-0,502 s en 122 medidos en la corrida de referencia
+# 38fdd4b): invisible salvo en el DecisionTree porque su bloque entero dura 2-4 s.
+# La selección de balanceo (4.3.4) NO está dentro.
+#
+# POR QUÉ AQUÍ NO SE INSTRUMENTA (a diferencia de anomalías, donde el residual sí
+# se cronometra en dos columnas nuevas): en firmas el residual es UN SOLO tramo
+# con coste apreciable —la cola de métricas + figura; lo demás que cae dentro de
+# la ventana (firmas.py:310-353) es leer busqueda.best_estimator_ y dos print—,
+# así que ya se obtiene EXACTAMENTE por resta de
+# las tres columnas publicadas ('tiempo_s' − 'tiempo_entrenamiento_s' −
+# 'tiempo_inferencia_s') sin ningún modelo de coste de por medio. Una columna extra
+# no añadiría información: solo repetiría una resta, y a cambio cambiaría el
+# esquema del CSV. En anomalías no valía la resta porque el residual mezcla TRES
+# tramos y repartirlos exigía suponer cómo escala el scoring con el grid.
+ALCANCE_TIEMPO_S_BLOQUE_FIRMAS = (
+    "'tiempo_s' = el bloque completo del algoritmo. Sus tres tramos en orden de "
+    "ejecución: (1) el GridSearchCV con el balanceo ganador + el refit sobre todo "
+    "D3 = 'tiempo_entrenamiento_s' y el 95.7-99.7 % del total en la corrida de "
+    "referencia 38fdd4b (allí el 87-89 % en DecisionTree) (2) el predict sobre "
+    "los 9083 flujos de D2 de tipo conocido = "
+    "'tiempo_inferencia_s' y (3) la cola de evaluar_multiclase + UNA figura —la "
+    "matriz de confusión 4x4— que en esa misma corrida costó 0.258-0.314 s en la "
+    "variante de 54 y 0.466-0.502 s en la de 122. Lo que no es ajuste ni "
+    "inferencia —el tramo (3)— fue allí el 0.2-0.7 % de 'tiempo_s' salvo en "
+    "DecisionTree (10.7-12.8 %: la cola no baja y su bloque entero dura 2-4 s); "
+    "los tres porcentajes son orden de magnitud de otra corrida y el de ESTA fila "
+    "sale de sus propias columnas. No necesita columna propia: el residual sale "
+    "exacto restando de 'tiempo_s' las otras dos columnas de tiempo y es esa cola "
+    "salvo dos menudencias que caen en la misma ventana —leer "
+    "busqueda.best_estimator_ y dos print—. NO incluye el mini-experimento de "
+    "balanceo de 4.3.4 que "
+    "corre antes y se publica en metricas_balanceo.csv"
+    + _AVISO_TIEMPO_VARIANZA + _AVISO_LATENCIA_SOLO_PREDICT
 )
 
 # baseline.py: SOLO el GridSearchCV. Es el que rompe la comparación entre tablas.
+# Revisado con el mismo criterio que los otros tres: dentro de la ventana del
+# cronómetro (baseline.py:165-186) solo hay la construcción del estimador y el
+# GridSearchCV.fit, así que el residual 'tiempo_s' − 'tiempo_entrenamiento_s' es
+# CERO por construcción (28,31 vs 28,308 y 61,98 vs 61,983: solo redondeo). Aquí
+# no había nada sin declarar; el texto ya era exacto y solo se le añade el aviso
+# de qué mide —y qué no— la latencia.
 ALCANCE_TIEMPO_S_SOLO_ENTRENAMIENTO = (
     "'tiempo_s' = SOLO el entrenamiento (GridSearchCV + refit sobre D1+D3): "
-    "coincide con 'tiempo_entrenamiento_s' de esta misma fila y NO incluye "
-    "inferencia ni figuras — no comparable con el 'tiempo_s' de "
-    "metricas_anomalias.csv ni de metricas_firmas.csv" + _AVISO_TIEMPO_VARIANZA
+    "coincide con 'tiempo_entrenamiento_s' de esta misma fila —el residual entre "
+    "las dos columnas es cero salvo redondeo— y NO incluye inferencia ni figuras "
+    "— no comparable con el 'tiempo_s' de metricas_anomalias.csv ni de "
+    "metricas_firmas.csv" + _AVISO_TIEMPO_VARIANZA + _AVISO_LATENCIA_SOLO_PREDICT
 )
 
 # hibrido.py: el tramo de la corrida que va de la carga de datos al cierre de la
@@ -201,6 +320,16 @@ ALCANCE_TIEMPO_S_SOLO_ENTRENAMIENTO = (
 # lea la discrepancia como un error. El cronómetro NO se mueve: reordenar la
 # persistencia para que la fila se escriba con su propio tiempo dentro es un
 # cambio de código que no aporta nada al dato.
+# Revisado también por el residual: 'tiempo_s' − 'tiempo_entrenamiento_s' (la
+# calibración OOF) − 'tiempo_inferencia_s' (la cascada) es 1,8 s de 22,2 s (8 %) y
+# 3,0 s de 22,6 s (13 %). Ese resto YA está enumerado en el texto —carga de los
+# splits + carga de los dos .joblib + las tres pasadas de métricas de la tabla de
+# sensibilidad—: no hay componente sin declarar. Se añade solo el orden de magnitud
+# (el 8-13 %, que sale de las tres columnas de la propia fila) para que el lector
+# lo reconstruya. Los "0,44 s" que este texto atribuía a la carga de los splits se
+# RETIRAN: eran la única cifra del híbrido sin artefacto que la respalde —no la
+# publica ninguna columna ni la imprime el script— y el desglose fino de ese 8-13 %
+# no vale una columna nueva en una tabla de una fila por variante.
 ALCANCE_TIEMPO_S_CARGA_A_CIERRE_FILA = (
     "'tiempo_s' = el tramo de la corrida que va desde la carga de los splits "
     "hasta el cierre de esta fila (carga de D1/D2/D3 + carga de los .joblib de "
@@ -209,8 +338,14 @@ ALCANCE_TIEMPO_S_CARGA_A_CIERRE_FILA = (
     "tomar la medida: la figura 5x6 · la tabla 0-day de los cuatro detectores · "
     "la escritura de los CSV — de ahí que el log del script imprima una cifra "
     "mayor que esta; no es tiempo de ajuste —el híbrido no re-entrena— ni "
-    "comparable con el 'tiempo_s' de las otras tres tablas"
-    + _AVISO_TIEMPO_VARIANZA
+    "comparable con el 'tiempo_s' de las otras tres tablas. Reparto observado en "
+    "la corrida de referencia 38fdd4b —orden de magnitud: el de ESTA fila sale de "
+    "sus tres columnas de tiempo—: la "
+    "calibración OOF es 'tiempo_entrenamiento_s' (86-91 %) · la cascada sobre D2 es "
+    "'tiempo_inferencia_s' (~0.5 %) · el 8-13 % restante son la carga de los "
+    "splits los dos .joblib y las 3 pasadas de métricas de la tabla de "
+    "sensibilidad — sin desglosar: ninguna columna los mide por separado"
+    + _AVISO_TIEMPO_VARIANZA + _AVISO_LATENCIA_SOLO_PREDICT
 )
 
 # Convención de PREFIJOS y SUFIJOS de columna, complementaria a `alcance`. Una

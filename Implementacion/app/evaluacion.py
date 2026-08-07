@@ -156,21 +156,42 @@ FILAS_ESPERADAS_POR_VARIANTE = {
 #
 # CÓMO SE MIDEN Y QUÉ VALEN (corrección de T1). Los cuatro scripts cronometran con
 # time.perf_counter(), no con time.time(): en Windows time.time() tiene una
-# resolución de ~15,6 ms, y con ella un predict rápido caía a 0,0 s o a un múltiplo
-# exacto del tick, publicando caudales que eran artefacto del reloj (los 758.824
-# flujos/s del Autoencoder) en lugar de medida. perf_counter es monótono y de alta
-# resolución, pero NO tiene época: solo sirve para diferencias, nunca para la
-# columna 'fecha' (esa la da datetime.now()).
+# resolución de ~15,6 ms. La PRUEBA de que eso rompía el dato es el predict del
+# DecisionTree en metricas_firmas.csv: daba t_inf = 0,0 s en las DOS variantes y de
+# ahí salía una fila que se contradecía —'latencia_ms_por_flujo' = 0,0 junto a un
+# 'flujos_por_segundo' vacío—. Con perf_counter ese predict mide 0,002 s (54) y
+# 0,004 s (122): un orden de magnitud POR DEBAJO del tick, así que time.time() no
+# podía verlo. perf_counter es monótono y de alta resolución, pero NO tiene época:
+# solo sirve para diferencias, nunca para la columna 'fecha' (esa la da
+# datetime.now()).
+#
+# LO QUE NO ERA UNA PRUEBA, y aquí se citaba como tal: los 758.824 flujos/s del
+# Autoencoder. No eran artefacto del reloj. Despejando, t_inf = 22.544 /
+# 758.824,7 = 0,029709 s, que NO es múltiplo de 15,6 ms; y la corrida nueva —ya con
+# perf_counter— da 0,053 s para ese mismo par. Era varianza de máquina (1,8x). La
+# afirmación se retira.
 #
 # LO QUE perf_counter NO ARREGLA: la varianza. Es wall-clock en una máquina no
 # dedicada y compartida, así que la misma corrida con la misma semilla da tiempos
 # muy distintos — entre dos pases del mismo día se observaron factores de hasta
 # 4,4x (OneClassSVM 122: 163,26 s → 37,13 s; KNN 122 en firmas: 90,22 s →
-# 207,81 s). Consecuencia práctica, y hay que decirla al citar: NINGUNA columna de
-# tiempo es reproducible ni sirve para afirmar que un algoritmo es "un 20 % más
-# rápido" que otro. Son comparación relativa de coste y de orden de magnitud. Lo
-# demás de la tabla sí es reproducible (semilla 42); estas cinco columnas y
-# 'tiempo_s', no.
+# 207,81 s). Y no solo en los tiempos largos: una medida de INFERENCIA de 30-50 ms
+# varía hasta ±80 % entre corridas (Autoencoder 54: 472.834 → 729.199 flujos/s
+# = 1,54x; Autoencoder 122: 758.825 → 421.427 = 0,56x), de modo que dos filas de
+# inferencia que difieran menos de 2x no dicen nada. Consecuencia práctica, y hay
+# que decirla al citar: NINGUNA columna de tiempo es reproducible ni sirve para
+# afirmar que un algoritmo es "un 20 % más rápido" que otro. Son comparación
+# relativa de coste y de orden de magnitud. Lo demás de la tabla sí es reproducible
+# (semilla 42); estas cinco columnas y 'tiempo_s', no.
+#
+# QUÉ HAY DENTRO DE LA INFERENCIA MEDIDA (declaración obligatoria antes de citar
+# cualquiera de las dos derivadas): SOLO el predict/score sobre características ya
+# calculadas y ya cargadas en memoria como DataFrame. NO incluye captura de
+# tráfico, ensamblado del flujo ni extracción de las 41 características del
+# registro NSL-KDD —que es donde vive el coste real de un despliegue—. Por eso los
+# 4,4 millones de flujos/s del DecisionTree NO son capacidad operativa: presentarlos
+# como tal sería la Lab-Only Evaluation que denuncia el pitfall P9. Cada fila lo
+# lleva escrito en 'alcance_tiempo_s' (config._AVISO_LATENCIA_SOLO_PREDICT).
 COLUMNAS_TIEMPO = (
     "tiempo_entrenamiento_s", "tiempo_inferencia_s", "n_inferencia",
     "latencia_ms_por_flujo", "flujos_por_segundo",
@@ -188,7 +209,11 @@ def metricas_tiempo(t_entrenamiento_s, t_inferencia_s, n_inferencia):
         script documenta en su llamada qué incluye exactamente.
     t_inferencia_s : float
         Segundos de PREDICCIÓN sobre la partición evaluada, medidos aparte del
-        entrenamiento. Es la mitad viable del pitfall P9 (Lab-Only Evaluation).
+        entrenamiento. Es la mitad viable del pitfall P9 (Lab-Only Evaluation):
+        viable porque mide el predict, y solo la mitad porque el predict opera
+        sobre características YA calculadas y YA en memoria — la captura, el
+        ensamblado del flujo y la extracción de las 41 características quedan
+        fuera, así que ni esta columna ni sus derivadas son capacidad operativa.
     n_inferencia : int
         Nº de flujos puntuados en ese tiempo (el denominador de la latencia).
 

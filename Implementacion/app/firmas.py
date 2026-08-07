@@ -338,8 +338,18 @@ class NSLKDDSignatureTrainer:
             "f1_macro_cv": float(busqueda.best_score_),
             "metricas": metricas,
             # OJO: 'tiempo_s' es el bloque COMPLETO del algoritmo (GridSearchCV +
-            # refit + inferencia + figura), no el ajuste. Se declara en el dato con
-            # config.ALCANCE_TIEMPO_S_BLOQUE_ALGORITMO.
+            # refit + inferencia + UNA figura), no el ajuste. Aquí el reparto es
+            # muy distinto al de anomalias.py: el GridSearchCV se lleva el
+            # 95,7-99,7 % (87-89 % en DecisionTree) y lo único no declarado en las
+            # otras dos columnas es la cola de evaluar_multiclase + la matriz de
+            # confusión (0,258-0,314 s en 54 y 0,466-0,502 s en 122 → el 0,2-0,7 %
+            # del total salvo en DecisionTree, 10,7-12,8 %, cuyo bloque entero dura
+            # 2-4 s). Aquí NO se cronometra esa cola aparte —como sí se hace en
+            # anomalias.py con los tramos (2) y (3)— porque al ser el ÚNICO
+            # componente del residual ya sale exacta restando 'tiempo_s' −
+            # 'tiempo_entrenamiento_s' − 'tiempo_inferencia_s': una columna más
+            # solo repetiría esa resta. Por eso tiene texto propio:
+            # config.ALCANCE_TIEMPO_S_BLOQUE_FIRMAS.
             "tiempo_s": time.perf_counter() - t0,
             "tiempo_entrenamiento_s": t_entrenamiento,
             "tiempo_inferencia_s": t_inferencia,
@@ -441,7 +451,7 @@ class NSLKDDSignatureTrainer:
             "tiempo_s": round(r["tiempo_s"], 2),
             # 'tiempo_s' mide aquí el bloque completo del algoritmo; en
             # metricas_baseline.csv la columna homónima es solo el GridSearchCV.
-            "alcance_tiempo_s": config.ALCANCE_TIEMPO_S_BLOQUE_ALGORITMO,
+            "alcance_tiempo_s": config.ALCANCE_TIEMPO_S_BLOQUE_FIRMAS,
         }
         # Tiempos separados (T1): entrenamiento = GridSearchCV + refit sobre D3;
         # inferencia = predict sobre las filas de D2 evaluadas.

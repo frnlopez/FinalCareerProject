@@ -79,7 +79,11 @@ declaración. **Las columnas de tiempo sí cambian**, y era el objetivo: `tiempo
 `tiempo_entrenamiento_s`, `tiempo_inferencia_s`, `latencia_ms_por_flujo` y
 `flujos_por_segundo` se miden ahora con `perf_counter` (otra resolución) y arrastran además la
 varianza de máquina descrita más abajo. Cambia también el valor de `alcance` en las 16 filas de
-`metricas_balanceo.csv`.
+`metricas_balanceo.csv`. Y `metricas_anomalias.csv` estrena dos columnas medidas —
+`tiempo_score_seleccion_s` y `tiempo_score_umbral_s` —, así que el CSV anterior tiene otro
+esquema: al re-ejecutar, `limpiar_variante_csv()` lo apartará como
+`metricas_anomalias.csv.esquema-anterior.bak` y hay que correr **las dos variantes** (54 y 122)
+para regenerarlo completo.
 
 ### Recuento esperado (comprobado por código, no a ojo)
 
@@ -105,10 +109,20 @@ pero sí `alcance` y procedencia (`evaluacion.COLUMNAS_MINIMAS_AUXILIARES`).
 ### Las columnas de tiempo: qué miden y hasta dónde valen
 
 Se miden con **`time.perf_counter()`**, no con `time.time()`. Motivo: en Windows `time.time()`
-tiene una resolución de unos **15,6 ms**, y con ella una inferencia rápida caía a `0,0 s` o a un
-múltiplo exacto del tick, publicando caudales que eran artefacto del reloj (los 758.824 flujos/s
-del autoencoder) en vez de medida. `perf_counter` es monótono y de alta resolución, pero **no
-tiene época**: solo sirve para diferencias. La columna `fecha` la sigue dando `datetime.now()`.
+tiene una resolución de unos **15,6 ms**. La prueba de que eso rompía el dato es el `predict` del
+**DecisionTree** en `metricas_firmas.csv`: daba `t_inf = 0,0 s` en las **dos** variantes, y de ahí
+una fila que se contradecía sola —`latencia_ms_por_flujo = 0,0` (cero milisegundos por flujo, un
+imposible) junto a un `flujos_por_segundo` vacío—. Con `perf_counter` ese mismo `predict` mide
+`0,002 s` (54) y `0,004 s` (122): estaba un orden de magnitud **por debajo del tick**, así que
+`time.time()` no podía verlo. `perf_counter` es monótono y de alta resolución, pero **no tiene
+época**: solo sirve para diferencias. La columna `fecha` la sigue dando `datetime.now()`.
+
+> [!caution] Lo que **no** era una prueba (corregido)
+> Aquí se afirmaba que los **758.824 flujos/s** del autoencoder eran artefacto del reloj. **No lo
+> eran.** Despejando, `t_inf = 22.544 / 758.824,7 = 0,029709 s`, que no es múltiplo de 15,6 ms; y
+> la corrida nueva —ya con `perf_counter`— da `0,053 s` para ese mismo par. Era **varianza de
+> máquina** (1,8×), no resolución. La afirmación se retira; la que se cita arriba (el `0,0 s` del
+> DecisionTree) sí es demostrable.
 
 `latencia_ms_por_flujo` y `flujos_por_segundo` se derivan del mismo par (tiempo de inferencia,
 nº de flujos) y comparten **una sola guarda**: o se publican las dos, o ninguna (celda vacía).
@@ -127,9 +141,21 @@ no se dispara.
 > **`8b07319`** (y anteriores); las de llegada están versionadas en **`077119e`** y fueron
 > producidas con el código **`c7cf319`**, que es lo que declara la columna `commit` de sus filas
 > (`metricas_anomalias.csv:7`, `metricas_firmas.csv:8`) y la referencia inequívoca.
+> Y no es cosa solo de los tiempos largos: **una medida de inferencia de 30-50 ms varía hasta
+> ±80 % entre corridas** (autoencoder 54: 472.834 → 729.199 flujos/s, ×1,54; autoencoder 122:
+> 758.825 → 421.427, ×0,56). Dos filas de inferencia que difieran menos de **2×** no dicen nada.
 > **Ninguna columna de tiempo es reproducible.** Sirven como
 > comparación relativa de coste y de orden de magnitud; no para afirmar que un algoritmo es «un
 > 20 % más rápido» que otro. El resto de la tabla sí es reproducible (semilla 42).
+
+> [!danger] Qué mide la latencia — y qué no (declaración exigida por P9)
+> `latencia_ms_por_flujo` y `flujos_por_segundo` miden **solo el `predict`/`score` sobre
+> características ya calculadas y ya cargadas en memoria**. **No** incluyen la captura del
+> tráfico, el ensamblado del flujo ni la extracción de las 41 características del registro
+> NSL-KDD, que es donde vive el coste real de un despliegue. Por eso los **4,4 millones de
+> flujos/s** del DecisionTree **no son capacidad operativa**: citarlos como tal sería exactamente
+> la *Lab-Only Evaluation* que denuncia el pitfall **P9**. La frase viaja en cada fila dentro de
+> `alcance_tiempo_s` (`config._AVISO_LATENCIA_SOLO_PREDICT`).
 
 #### `tiempo_s`: tres significados, uno por tabla
 
@@ -149,11 +175,28 @@ refrescarla al redactar; no protegía nada.)
 
 | Tabla | Qué mide su `tiempo_s` | Constante |
 |---|---|---|
-| `metricas_anomalias.csv` · `metricas_firmas.csv` | El **bloque completo del algoritmo**: selección de hiperparámetros + ajuste + inferencia sobre D2 + figuras. No solo el ajuste (para eso está `tiempo_entrenamiento_s`). | `config.ALCANCE_TIEMPO_S_BLOQUE_ALGORITMO` |
-| `metricas_baseline.csv` | **Solo el entrenamiento** (GridSearchCV + refit). Coincide con `tiempo_entrenamiento_s` de la misma fila. | `config.ALCANCE_TIEMPO_S_SOLO_ENTRENAMIENTO` |
-| `metricas_hibrido.csv` | El tramo que va de la **carga de los splits** al **cierre de la fila**: D1/D2/D3 + carga de los `.joblib` + calibración OOF + cascada sobre D2 + tabla de sensibilidad de los 3 umbrales. **No** incluye la figura 5×6, la tabla 0-day de los cuatro detectores ni la escritura de los CSV. No es tiempo de ajuste: el híbrido no re-entrena. | `config.ALCANCE_TIEMPO_S_CARGA_A_CIERRE_FILA` |
+| `metricas_anomalias.csv` | El **bloque completo del algoritmo**, en orden de ejecución (cinco tramos **principales**: dentro de la misma ventana caen además el submuestreo a 20.000 filas de `OneClassSVM`, la construcción del estimador en cada iteración y un `roc_auc_score` por configuración): (1) los `fit` del grid (= `tiempo_entrenamiento_s`) · (2) **puntuar el set de validación etiquetado —D1_val + 5.000 de D3 = 18.469 filas— una vez por cada configuración del grid** (6/9/4/2 configs) = `tiempo_score_seleccion_s` · (3) puntuar D1_val para el umbral p95 = `tiempo_score_umbral_s` · (4) la inferencia sobre D2 (= `tiempo_inferencia_s`) · (5) `evaluar_binario` + **una** figura, que es lo que queda al restar las cuatro columnas anteriores. | `config.ALCANCE_TIEMPO_S_BLOQUE_ANOMALIAS` |
+| `metricas_firmas.csv` | El **bloque completo del algoritmo**, con otra composición: (1) `GridSearchCV` + refit sobre D3 (= `tiempo_entrenamiento_s`, el 95,7-99,7 % del total) · (2) el `predict` sobre los 9.083 flujos conocidos de D2 (= `tiempo_inferencia_s`) · (3) `evaluar_multiclase` + **una** figura (0,258-0,314 s en 54 y 0,466-0,502 s en 122). **No** incluye el mini-experimento de balanceo de 4.3.4. | `config.ALCANCE_TIEMPO_S_BLOQUE_FIRMAS` |
+| `metricas_baseline.csv` | **Solo el entrenamiento** (GridSearchCV + refit). Coincide con `tiempo_entrenamiento_s` de la misma fila: residual **cero** salvo redondeo. | `config.ALCANCE_TIEMPO_S_SOLO_ENTRENAMIENTO` |
+| `metricas_hibrido.csv` | El tramo que va de la **carga de los splits** al **cierre de la fila**: D1/D2/D3 + carga de los `.joblib` + calibración OOF (= `tiempo_entrenamiento_s`, 86-91 %) + cascada sobre D2 (= `tiempo_inferencia_s`, ~0,5 %) + tabla de sensibilidad de los 3 umbrales. **No** incluye la figura 5×6, la tabla 0-day de los cuatro detectores ni la escritura de los CSV. No es tiempo de ajuste: el híbrido no re-entrena. | `config.ALCANCE_TIEMPO_S_CARGA_A_CIERRE_FILA` |
 
-Los tres `tiempo_s` **no son comparables entre sí**.
+Los tres `tiempo_s` **no son comparables entre sí** (tres cálculos, cuatro declaraciones: anomalías
+y firmas comparten cálculo y no composición).
+
+> [!warning] `tiempo_s` **no** es `tiempo_entrenamiento_s + tiempo_inferencia_s`
+> El residual entre las tres columnas es la razón de ser de `alcance_tiempo_s`, y en anomalías es
+> enorme: **27-49 % de `tiempo_s`** (máximo `OneClassSVM` 54: 11,50 s de 23,28 s; luego OCSVM 122
+> 39,6 %, IF 54 35,1 %, IF 122 28,9 %, LOF 27,3 % y 27,2 %), y solo el 0,3-0,5 % en el
+> autoencoder. Ese residual **ya no se reparte por estimación**: `anomalias.py` cronometra sus
+> dos tramos grandes y los publica como `tiempo_score_seleccion_s` (el scoring del set etiquetado
+> repetido por configuración del grid) y `tiempo_score_umbral_s` (el scoring de D1_val), de modo
+> que la cola de métricas + figura sale por resta desde el propio CSV. El reparto que este
+> documento daba antes —«75-86 % / 5-15 %», y un scoring de selección de ≈9,5 s que igualaba al
+> ajuste en `OneClassSVM` 54— procedía de un modelo de coste no declarado y **se retira**: con
+> escalado plano por filas ese mismo tramo salía en 17,8 s dentro de un residual medido de
+> 11,497 s, un imposible. En firmas el mismo residual es `<1 %` salvo en `DecisionTree`
+> (10,7-12,8 %, porque su bloque entero dura 2-4 s), y ahí **no** hace falta columna nueva: al
+> ser un único tramo se obtiene exacto restando las otras dos columnas de tiempo.
 
 > [!warning] El log del híbrido imprime otra cifra
 > `hibrido.py` congela `tiempo_s` al construir la fila resumen, pero su línea final

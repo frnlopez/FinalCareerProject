@@ -225,26 +225,37 @@ class NSLKDDAnomalyTrainer:
         """
         Entrena cada configuración del grid sobre D1_train y elige la de mejor
         AUC-ROC sobre el set etiquetado (D1_val + muestra D3). Devuelve el modelo
-        ganador (ya entrenado sobre D1_train), su config, su AUC de validación y
+        ganador (ya entrenado sobre D1_train), su config, su AUC de validación,
         el tiempo de ENTRENAMIENTO acumulado (solo los fit del grid, sin contar
-        el scoring: T1 separa entrenamiento e inferencia).
+        el scoring: T1 separa entrenamiento e inferencia) y el tiempo de SCORING
+        del set etiquetado acumulado sobre todas las configuraciones del grid.
+
+        Ese segundo cronómetro es el tramo (2) del bloque: se MIDE en lugar de
+        estimarse porque es el componente grande de la parte de 'tiempo_s' que no
+        es ni ajuste ni inferencia sobre D2 (hasta el 49 % del total en OCSVM) y
+        cualquier reparto calculado a mano —por filas puntuadas o ponderando el
+        grid— depende de un modelo de coste que el dato publicado no declara. Se
+        publica como columna 'tiempo_score_seleccion_s'.
         """
         X_fit = self._datos_entrenamiento(algo, self.X_D1_train)
         mejor = {"auc": -np.inf, "cfg": None, "model": None}
         t_fit_total = 0.0
+        t_score_total = 0.0
 
         for cfg in self.GRIDS[algo]:
             model = self._construir(algo, cfg)
             t_fit = time.perf_counter()
             self._ajustar(algo, model, X_fit)
             t_fit_total += time.perf_counter() - t_fit
+            t_score = time.perf_counter()
             scores = self._score(algo, model, self.X_val_lab)
+            t_score_total += time.perf_counter() - t_score
             auc = roc_auc_score(self.y_val_lab, scores)
             print("      cfg={} → AUC-ROC(val)={:.4f}".format(cfg, auc))
             if auc > mejor["auc"]:
                 mejor = {"auc": auc, "cfg": cfg, "model": model}
 
-        return mejor["model"], mejor["cfg"], mejor["auc"], t_fit_total
+        return mejor["model"], mejor["cfg"], mejor["auc"], t_fit_total, t_score_total
 
     # ------------------------------------------------------------------
     # 3-6. Entrenamiento, umbral y evaluación de un algoritmo
@@ -260,12 +271,17 @@ class NSLKDDAnomalyTrainer:
         # la sigue dando datetime.now() dentro de guardar_metricas).
         t0 = time.perf_counter()
 
-        model, cfg, auc_val, t_entrenamiento = self._seleccionar_config(algo)
+        model, cfg, auc_val, t_entrenamiento, t_score_seleccion = \
+            self._seleccionar_config(algo)
         print("   Config ganadora: {} (AUC-ROC val={:.4f})".format(cfg, auc_val))
 
         # 5. Umbral = percentil 95 del score sobre D1_val (solo normal). Igual para
         # los 4 algoritmos. Nunca se mira D2 para esto.
+        # Este scoring es el tramo (3) del bloque y se cronometra aparte: junto con
+        # 'tiempo_score_seleccion_s' cierra POR MEDIDA el residual de 'tiempo_s'.
+        t_score_umbral = time.perf_counter()
         scores_val = self._score(algo, model, self.X_D1_val)
+        t_score_umbral = time.perf_counter() - t_score_umbral
         umbral = float(np.percentile(scores_val, self.PERCENTIL_UMBRAL))
         print("   Umbral (p{} sobre D1_val) = {:.6f}".format(self.PERCENTIL_UMBRAL, umbral))
 
@@ -299,16 +315,27 @@ class NSLKDDAnomalyTrainer:
             "umbral": umbral,
             "score_D2": score_D2,
             "metricas": metricas,
-            # OJO: 'tiempo_s' es el bloque COMPLETO del algoritmo (grid + umbral +
-            # inferencia + figura), no el ajuste. Va declarado en el dato con
-            # config.ALCANCE_TIEMPO_S_BLOQUE_ALGORITMO.
+            # OJO: 'tiempo_s' es el bloque COMPLETO del algoritmo, no el ajuste.
+            # Dentro del cronómetro (t0 arriba) caen, por orden: los fit del grid
+            # (= t_entrenamiento) · el scoring del set etiquetado UNA VEZ POR
+            # CONFIGURACIÓN (18.469 filas × 6/9/4/2 configs = t_score_seleccion) ·
+            # el scoring de D1_val del umbral (= t_score_umbral) · la inferencia
+            # sobre D2 (= t_inferencia) · y la cola de evaluar_binario + UNA
+            # figura. Entre el 27 % y el 49 % de 'tiempo_s' no es ni ajuste ni
+            # inferencia en IF/OCSVM/LOF, y ese resto ya NO se estima: los dos
+            # tramos grandes se publican medidos y la cola sale por resta. Va
+            # declarado en el dato con config.ALCANCE_TIEMPO_S_BLOQUE_ANOMALIAS.
             "tiempo_s": time.perf_counter() - t0,
             "tiempo_entrenamiento_s": t_entrenamiento,
+            "tiempo_score_seleccion_s": t_score_seleccion,
+            "tiempo_score_umbral_s": t_score_umbral,
             "tiempo_inferencia_s": t_inferencia,
         }
-        print("   Tiempo: {:.1f}s total (entrenamiento {:.1f}s · inferencia D2 "
+        print("   Tiempo: {:.1f}s total (entrenamiento {:.1f}s · scoring de la "
+              "selección {:.2f}s · scoring del umbral {:.2f}s · inferencia D2 "
               "{:.2f}s)".format(self.resultados[algo]["tiempo_s"],
-                                t_entrenamiento, t_inferencia))
+                                t_entrenamiento, t_score_seleccion,
+                                t_score_umbral, t_inferencia))
 
     # ------------------------------------------------------------------
     # 7. Persistencia (modelos joblib, CSV de métricas, figuras ROC/PR)
@@ -329,12 +356,19 @@ class NSLKDDAnomalyTrainer:
         El sufijo '_val' y la columna 'umbral' están declarados en
         config.ALCANCE_SUFIJOS / ALCANCE_COLUMNAS con ese alcance propio.
 
-        Y con 'tiempo_s': aquí mide el BLOQUE COMPLETO del algoritmo (grid +
-        umbral + inferencia sobre D2 + figura), que es lo que cita la tabla de 4.4
-        del vault; en metricas_baseline.csv la columna homónima es solo el
-        GridSearchCV y en metricas_hibrido.csv es el tramo de la carga de los
-        splits al cierre de la fila. Por eso cada fila lleva 'alcance_tiempo_s':
-        el dato dice qué mide.
+        Y con 'tiempo_s': aquí mide el BLOQUE COMPLETO del algoritmo —los fit del
+        grid + el scoring del set etiquetado en CADA config + el scoring de D1_val
+        del umbral + la inferencia sobre D2 + una figura—, que es lo que cita la
+        tabla de 4.4 del vault. No es una suma de dos columnas: entre el 27 % y el
+        49 % de este número no aparece ni en 'tiempo_entrenamiento_s' ni en
+        'tiempo_inferencia_s' (IF/OCSVM/LOF). Ese resto ya no hay que estimarlo:
+        sus dos tramos grandes se publican MEDIDOS en 'tiempo_score_seleccion_s'
+        (el scoring repetido de la selección) y 'tiempo_score_umbral_s' (el
+        scoring de D1_val), y la cola de métricas + figura es lo que queda al
+        restar las cuatro columnas de tiempo. En metricas_baseline.csv la
+        columna homónima es solo el GridSearchCV y en metricas_hibrido.csv es el
+        tramo de la carga de los splits al cierre de la fila. Por eso cada fila
+        lleva 'alcance_tiempo_s': el dato dice qué mide.
         """
         m = r["metricas"]
         fila = {
@@ -355,7 +389,12 @@ class NSLKDDAnomalyTrainer:
             "fpr": round(m["fpr"], 6),
             "tn": m["tn"], "fp": m["fp"], "fn": m["fn"], "tp": m["tp"],
             "tiempo_s": round(r["tiempo_s"], 2),
-            "alcance_tiempo_s": config.ALCANCE_TIEMPO_S_BLOQUE_ALGORITMO,
+            # Tramos (2) y (3) del bloque, MEDIDOS (no estimados): con ellos y con
+            # 'tiempo_entrenamiento_s'/'tiempo_inferencia_s' el residual de
+            # 'tiempo_s' queda cerrado por resta desde el propio CSV.
+            "tiempo_score_seleccion_s": round(r["tiempo_score_seleccion_s"], 3),
+            "tiempo_score_umbral_s": round(r["tiempo_score_umbral_s"], 3),
+            "alcance_tiempo_s": config.ALCANCE_TIEMPO_S_BLOQUE_ANOMALIAS,
         }
         # Tiempos separados (T1): entrenamiento = fits del grid; inferencia =
         # scoring de D2 completo, que es lo que mide latencia y caudal.
