@@ -73,9 +73,18 @@ import config
 #                  '<hash>-suciedad_desconocida' (el `git status` falló; el hash
 #                  es válido y la suciedad, indeterminada)
 #   fecha          instante de la corrida (ISO-8601, segundos)
+#   alcance_tiempo_s  QUÉ mide exactamente la columna 'tiempo_s' de ESTA tabla
+#                  (valores fijos en config.ALCANCE_TIEMPO_S_*). Es obligatoria
+#                  porque 'tiempo_s' era el último caso vivo del defecto que T1
+#                  cierra: mismo nombre de columna, tres magnitudes distintas
+#                  —bloque completo del algoritmo en anomalías y firmas, SOLO el
+#                  GridSearchCV en baseline, el tramo de la carga de los splits
+#                  al cierre de la fila en el híbrido—. Ni se homogeneiza el
+#                  cálculo ni se renombra la columna (hay cifras del vault
+#                  citando ambos); se declara.
 COLUMNAS_MINIMAS = (
     "algoritmo", "alcance", "set_features", "sin_seleccion", "n_features",
-    "semilla", "commit", "fecha",
+    "semilla", "commit", "fecha", "alcance_tiempo_s",
 )
 
 # CLAVE DE UNICIDAD de las tablas de métricas: una fila por combinación de
@@ -144,6 +153,24 @@ FILAS_ESPERADAS_POR_VARIANTE = {
 # Columnas de tiempo (T1): el tiempo de ENTRENAMIENTO y el de INFERENCIA no son
 # la misma magnitud ni responden a la misma pregunta. El de inferencia es el que
 # habla de despliegue, y se reporta además normalizado por flujo.
+#
+# CÓMO SE MIDEN Y QUÉ VALEN (corrección de T1). Los cuatro scripts cronometran con
+# time.perf_counter(), no con time.time(): en Windows time.time() tiene una
+# resolución de ~15,6 ms, y con ella un predict rápido caía a 0,0 s o a un múltiplo
+# exacto del tick, publicando caudales que eran artefacto del reloj (los 758.824
+# flujos/s del Autoencoder) en lugar de medida. perf_counter es monótono y de alta
+# resolución, pero NO tiene época: solo sirve para diferencias, nunca para la
+# columna 'fecha' (esa la da datetime.now()).
+#
+# LO QUE perf_counter NO ARREGLA: la varianza. Es wall-clock en una máquina no
+# dedicada y compartida, así que la misma corrida con la misma semilla da tiempos
+# muy distintos — entre dos pases del mismo día se observaron factores de hasta
+# 4,4x (OneClassSVM 122: 163,26 s → 37,13 s; KNN 122 en firmas: 90,22 s →
+# 207,81 s). Consecuencia práctica, y hay que decirla al citar: NINGUNA columna de
+# tiempo es reproducible ni sirve para afirmar que un algoritmo es "un 20 % más
+# rápido" que otro. Son comparación relativa de coste y de orden de magnitud. Lo
+# demás de la tabla sí es reproducible (semilla 42); estas cinco columnas y
+# 'tiempo_s', no.
 COLUMNAS_TIEMPO = (
     "tiempo_entrenamiento_s", "tiempo_inferencia_s", "n_inferencia",
     "latencia_ms_por_flujo", "flujos_por_segundo",
@@ -167,15 +194,25 @@ def metricas_tiempo(t_entrenamiento_s, t_inferencia_s, n_inferencia):
 
     Returns
     -------
-    dict con COLUMNAS_TIEMPO. latencia_ms_por_flujo y flujos_por_segundo se
-    derivan; si n_inferencia o t_inferencia_s son 0 quedan como NaN en lugar de
-    inventar un número.
+    dict con COLUMNAS_TIEMPO. latencia_ms_por_flujo y flujos_por_segundo son
+    DERIVADAS del mismo par (t_inf, n), así que comparten GUARDA: o se publican
+    las dos, o ninguna (NaN → celda vacía en el CSV).
+
+    Que la guarda sea única no es cosmética. Antes la latencia se calculaba con
+    `n > 0` y el caudal con `t_inf > 0`, de modo que un t_inf de 0,0 publicaba
+    `latencia_ms_por_flujo = 0.0` junto a un `flujos_por_segundo` vacío: dos
+    celdas de la misma fila contradiciéndose, y la latencia afirmando un imposible
+    (0 ms por flujo) en vez de reconocer que no se midió. Ocurría de verdad — el
+    DecisionTree de metricas_firmas.csv, en las dos variantes—. Con perf_counter
+    un t_inf de exactamente 0,0 es ya prácticamente imposible, pero la guarda se
+    corrige igual: un tiempo no medible debe dar celda vacía, nunca 0,0.
     """
     t_ent = float(t_entrenamiento_s)
     t_inf = float(t_inferencia_s)
     n = int(n_inferencia)
-    latencia = (t_inf / n) * 1000.0 if n > 0 else float("nan")
-    caudal = n / t_inf if t_inf > 0 else float("nan")
+    medible = n > 0 and t_inf > 0
+    latencia = (t_inf / n) * 1000.0 if medible else float("nan")
+    caudal = n / t_inf if medible else float("nan")
     return {
         "tiempo_entrenamiento_s": round(t_ent, 3),
         "tiempo_inferencia_s": round(t_inf, 3),
@@ -248,6 +285,8 @@ def evaluar_binario(y_true, y_pred, y_score=None):
     -------
     dict con precision/recall/f1 de la clase ataque, accuracy, FPR real,
     la matriz de confusión 2x2 (tn, fp, fn, tp) y, si hay y_score, roc_auc/pr_auc.
+    El FPR es NaN (no 0,0) si en y_true no hay ningún flujo normal: sin
+    negativos la tasa de falsas alarmas no está definida, no vale cero.
     """
     y_true = np.asarray(y_true).ravel()
     y_pred = np.asarray(y_pred).ravel()
@@ -259,7 +298,15 @@ def evaluar_binario(y_true, y_pred, y_score=None):
     )
     cm = confusion_matrix(y_true, y_pred, labels=[config.CLASE_NORMAL, config.CLASE_ATAQUE])
     tn, fp, fn, tp = cm.ravel()
-    fpr = fp / (fp + tn) if (fp + tn) > 0 else 0.0
+    # Guarda simétrica a la de metricas_tiempo(): si no hay NINGÚN flujo normal
+    # (fp + tn == 0), la tasa de falsas alarmas NO ES 0,0 — es no medible. Un
+    # 0,0 aquí publicaría "cero falsas alarmas" (el mejor resultado posible) en
+    # una fila donde no había nada que poder equivocar. NaN → celda vacía en el
+    # CSV, igual que la latencia. Propaga a 'fpr' de anomalias, a 'bin_fpr' de
+    # baseline e hibrido y a 'fpr_cascada'/'fpr_detector' del híbrido, que solo
+    # redondean este valor. Con D2 real (9.711 normales) no se dispara nunca;
+    # se corrige porque el imposible no debe ser representable.
+    fpr = fp / (fp + tn) if (fp + tn) > 0 else float("nan")
 
     resultado = {
         "precision": float(p),

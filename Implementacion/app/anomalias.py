@@ -235,9 +235,9 @@ class NSLKDDAnomalyTrainer:
 
         for cfg in self.GRIDS[algo]:
             model = self._construir(algo, cfg)
-            t_fit = time.time()
+            t_fit = time.perf_counter()
             self._ajustar(algo, model, X_fit)
-            t_fit_total += time.time() - t_fit
+            t_fit_total += time.perf_counter() - t_fit
             scores = self._score(algo, model, self.X_val_lab)
             auc = roc_auc_score(self.y_val_lab, scores)
             print("      cfg={} → AUC-ROC(val)={:.4f}".format(cfg, auc))
@@ -254,7 +254,11 @@ class NSLKDDAnomalyTrainer:
         print("-" * 70)
         print("ALGORITMO: {}".format(algo))
         print("-" * 70)
-        t0 = time.time()
+        # perf_counter (no time.time) en TODAS las medidas de duración: en Windows
+        # time.time() tiene ~15,6 ms de resolución y cuantizaba los tiempos cortos.
+        # Es monótono y sin época: solo vale para diferencias (la columna 'fecha'
+        # la sigue dando datetime.now() dentro de guardar_metricas).
+        t0 = time.perf_counter()
 
         model, cfg, auc_val, t_entrenamiento = self._seleccionar_config(algo)
         print("   Config ganadora: {} (AUC-ROC val={:.4f})".format(cfg, auc_val))
@@ -268,9 +272,9 @@ class NSLKDDAnomalyTrainer:
         # 6. Evaluación sobre D2 (binaria). y_pred = score > umbral.
         # El scoring de D2 es la INFERENCIA del detector: se cronometra aparte
         # del entrenamiento (T1) para poder reportar latencia por flujo.
-        t_inf = time.time()
+        t_inf = time.perf_counter()
         score_D2 = self._score(algo, model, self.X_D2)
-        t_inferencia = time.time() - t_inf
+        t_inferencia = time.perf_counter() - t_inf
         y_pred = (score_D2 > umbral).astype(int)
         metricas = evaluacion.evaluar_binario(self.y_bin, y_pred, score_D2)
 
@@ -295,7 +299,10 @@ class NSLKDDAnomalyTrainer:
             "umbral": umbral,
             "score_D2": score_D2,
             "metricas": metricas,
-            "tiempo_s": time.time() - t0,
+            # OJO: 'tiempo_s' es el bloque COMPLETO del algoritmo (grid + umbral +
+            # inferencia + figura), no el ajuste. Va declarado en el dato con
+            # config.ALCANCE_TIEMPO_S_BLOQUE_ALGORITMO.
+            "tiempo_s": time.perf_counter() - t0,
             "tiempo_entrenamiento_s": t_entrenamiento,
             "tiempo_inferencia_s": t_inferencia,
         }
@@ -321,6 +328,13 @@ class NSLKDDAnomalyTrainer:
           - 'umbral': percentil 95 del score sobre D1_val, también del train.
         El sufijo '_val' y la columna 'umbral' están declarados en
         config.ALCANCE_SUFIJOS / ALCANCE_COLUMNAS con ese alcance propio.
+
+        Y con 'tiempo_s': aquí mide el BLOQUE COMPLETO del algoritmo (grid +
+        umbral + inferencia sobre D2 + figura), que es lo que cita la tabla de 4.4
+        del vault; en metricas_baseline.csv la columna homónima es solo el
+        GridSearchCV y en metricas_hibrido.csv es el tramo de la carga de los
+        splits al cierre de la fila. Por eso cada fila lleva 'alcance_tiempo_s':
+        el dato dice qué mide.
         """
         m = r["metricas"]
         fila = {
@@ -341,6 +355,7 @@ class NSLKDDAnomalyTrainer:
             "fpr": round(m["fpr"], 6),
             "tn": m["tn"], "fp": m["fp"], "fn": m["fn"], "tp": m["tp"],
             "tiempo_s": round(r["tiempo_s"], 2),
+            "alcance_tiempo_s": config.ALCANCE_TIEMPO_S_BLOQUE_ALGORITMO,
         }
         # Tiempos separados (T1): entrenamiento = fits del grid; inferencia =
         # scoring de D2 completo, que es lo que mide latencia y caudal.

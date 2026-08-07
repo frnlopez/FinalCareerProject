@@ -263,7 +263,10 @@ class NSLKDDHybridEvaluator:
         Este bloque ES la inferencia de extremo a extremo del híbrido sobre D2
         (etapa 1 + etapa 2 sobre los sospechosos), así que se cronometra aparte
         para reportar latencia por flujo y flujos/segundo (T1)."""
-        t_inf = time.time()
+        # perf_counter (no time.time) en TODAS las medidas de duración: en Windows
+        # time.time() tiene ~15,6 ms de resolución y cuantizaba los tiempos cortos.
+        # Monótono y sin época: solo para diferencias; 'fecha' la da datetime.now().
+        t_inf = time.perf_counter()
 
         # Etapa 1: anomaly score y sospechosos (reutiliza _score de anomalias.py, H-1).
         model_det = joblib_det["modelo"]
@@ -280,7 +283,7 @@ class NSLKDDHybridEvaluator:
         else:
             self.proba_susp = np.empty((0, len(self.clases_firma)))
 
-        self.tiempo_inferencia_s = time.time() - t_inf
+        self.tiempo_inferencia_s = time.perf_counter() - t_inf
         print("   Etapa 1: {} sospechosos / {} ({} normales dejados pasar)".format(
             int(self.es_sospechoso.sum()), len(self.X_D2),
             int((~self.es_sospechoso).sum())))
@@ -487,7 +490,13 @@ class NSLKDDHybridEvaluator:
     def evaluar_todo(self):
         config.setup_utf8()
         config.ensure_dirs()
-        t0 = time.time()
+        # t0 arranca ANTES de cargar datos y joblibs: la carga de los splits SÍ
+        # entra en el 'tiempo_s' de esta tabla. El cronómetro se LEE más abajo al
+        # construir metricas_run, así que lo posterior (figura 5x6, tabla 0-day de
+        # los cuatro detectores y escritura de CSV) queda FUERA: es lo que declara
+        # config.ALCANCE_TIEMPO_S_CARGA_A_CIERRE_FILA, y no es un tiempo de ajuste.
+        # perf_counter por resolución (ver los otros scripts).
+        t0 = time.perf_counter()
         self.cargar_datos()
 
         # Cargar los joblibs de la cascada (H-1).
@@ -497,9 +506,9 @@ class NSLKDDHybridEvaluator:
         # Calibración SOLO con D3 (P-4: la función no recibe D2). Es el único
         # ajuste que hace el híbrido, así que su tiempo es el que se reporta como
         # "entrenamiento" (T1); la cascada en sí no entrena nada.
-        t_cal = time.time()
+        t_cal = time.perf_counter()
         self.umbral_conf, oof_por_umbral = self._calibrar_umbral_conf(joblib_firma)
-        self.tiempo_calibracion_s = time.time() - t_cal
+        self.tiempo_calibracion_s = time.perf_counter() - t_cal
 
         # Preparar cascada sobre D2 (score etapa 1 + proba etapa 2), una sola vez.
         print("-" * 70)
@@ -600,7 +609,15 @@ class NSLKDDHybridEvaluator:
             "recall_0day_global": round(r0g["recall"], 6),
             "n_0day": r0g["n"],
             "fpr_cascada": round(b["fpr"], 6),
-            "tiempo_s": round(time.time() - t0, 2),
+            "tiempo_s": round(time.perf_counter() - t0, 2),
+            # Tercer significado de la columna homónima: aquí es el tramo de
+            # hibrido.py que va de la carga de los splits al cierre de ESTA fila
+            # (carga de D1/D2/D3 + joblibs + calibración OOF + cascada + tabla de
+            # sensibilidad). Las figuras, la tabla 0-day de los cuatro detectores
+            # y la escritura de los CSV van después y NO cuentan. Ni bloque de
+            # algoritmo (anomalias/firmas) ni entrenamiento (baseline). El dato lo
+            # declara.
+            "alcance_tiempo_s": config.ALCANCE_TIEMPO_S_CARGA_A_CIERRE_FILA,
         }
         # Tiempos separados (T1): "entrenamiento" = calibración OOF sobre D3 (el
         # híbrido no re-entrena la cascada; ver la constante del módulo
@@ -616,9 +633,16 @@ class NSLKDDHybridEvaluator:
 
         # Persistir todo.
         self._persistir(ruta_det, ruta_firma)
+        # Este total NO es el 'tiempo_s' de la fila: se lee aquí, con las figuras,
+        # la tabla 0-day y los CSV ya escritos, mientras que la columna se congeló
+        # antes de todo eso. Son dos medidas distintas a propósito y se etiquetan
+        # como tales para que nadie coteje log y CSV y crea que hay un error.
         print("=" * 70)
-        print("HÍBRIDO COMPLETADO ({} features) en {:.1f}s".format(
-            self.set_features, time.time() - t0))
+        print("HÍBRIDO COMPLETADO ({} features) en {:.1f}s de pared".format(
+            self.set_features, time.perf_counter() - t0))
+        print("   (incluye figuras y escritura de CSV; la columna 'tiempo_s' del "
+              "CSV vale {:.2f}s y se cierra ANTES de eso)".format(
+                  self.metricas_run["tiempo_s"]))
         print("=" * 70)
         return self.metricas_run
 

@@ -158,7 +158,11 @@ class NSLKDDBaselineTrainer:
         print("=" * 70)
         print("GRIDSEARCH RF MONOLÍTICO — f1_macro en CV sobre el train (D1+D3)")
         print("=" * 70)
-        t0 = time.time()
+        # perf_counter (no time.time) en TODAS las medidas de duración: en Windows
+        # time.time() tiene ~15,6 ms de resolución y cuantizaba los tiempos cortos.
+        # Monótono y sin época: solo para diferencias; la columna 'fecha' la sigue
+        # dando datetime.now() dentro de guardar_metricas.
+        t0 = time.perf_counter()
 
         estimador = RandomForestClassifier(
             random_state=config.RANDOM_STATE, n_jobs=-1, class_weight="balanced",
@@ -176,7 +180,10 @@ class NSLKDDBaselineTrainer:
         self.modelo = busqueda.best_estimator_
         self.config_ganadora = busqueda.best_params_
         self.f1_macro_cv = float(busqueda.best_score_)
-        self.tiempo_s = time.time() - t0
+        # 'tiempo_s' de esta tabla = SOLO el entrenamiento (a diferencia del de
+        # anomalias/firmas, que es el bloque completo). Declarado en el dato con
+        # config.ALCANCE_TIEMPO_S_SOLO_ENTRENAMIENTO.
+        self.tiempo_s = time.perf_counter() - t0
         print("   Mejor config: {} · f1_macro(CV)={:.4f}".format(
             self.config_ganadora, self.f1_macro_cv))
         print("   Tiempo entrenamiento: {:.1f}s".format(self.tiempo_s))
@@ -193,9 +200,9 @@ class NSLKDDBaselineTrainer:
         # El predict sobre D2 completo se cronometra aparte del entrenamiento
         # (T1): es la inferencia del baseline y de ella salen latencia por flujo
         # y flujos/segundo, comparables con las del híbrido.
-        t_inf = time.time()
+        t_inf = time.perf_counter()
         y_pred = self.modelo.predict(self.X_D2)
-        self.tiempo_inferencia_s = time.time() - t_inf
+        self.tiempo_inferencia_s = time.perf_counter() - t_inf
         print("   Inferencia sobre D2: {:.2f}s ({} flujos)".format(
             self.tiempo_inferencia_s, len(self.X_D2)))
 
@@ -292,6 +299,11 @@ class NSLKDDBaselineTrainer:
             "n_0day": int(self.metricas_0day["__global__"]["n"]),
             "n_test": int(len(self.y_D2_cat)),
             "tiempo_s": round(self.tiempo_s, 2),
+            # Esta tabla es la excepción: su 'tiempo_s' NO es el bloque completo
+            # como en anomalias/firmas, sino solo el GridSearchCV — de hecho
+            # coincide con 'tiempo_entrenamiento_s' de la misma fila. El dato lo
+            # declara para que nadie lo compare con las otras tablas.
+            "alcance_tiempo_s": config.ALCANCE_TIEMPO_S_SOLO_ENTRENAMIENTO,
         }
         # Tiempos separados (T1): entrenamiento = GridSearchCV + refit sobre
         # D1+D3; inferencia = predict sobre D2 completo.

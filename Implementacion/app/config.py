@@ -108,6 +108,17 @@ ALCANCE_SELECCION = (
     "solo — NUNCA D2"
 )
 
+# Alcance de la tabla auxiliar de BALANCEO (4.3.4). ALCANCE_SELECCION no le vale:
+# su texto habla de 'auc_val' y de 'umbral', dos columnas que metricas_balanceo.csv
+# NO tiene (su fila es algoritmo × balanceo y solo trae f1_macro_cv/_cv_std), así
+# que describía media tabla ajena y ninguna de las suyas. Este sí dice lo que hay:
+# de dónde sale el f1_macro_cv y por qué el SMOTE de esas filas no es leakage.
+ALCANCE_BALANCEO = (
+    "selección del esquema de balanceo (4.3.4): f1_macro medio en CV sobre D3 "
+    "(StratifiedKFold 5 · semilla 42) con SMOTE aplicado SOLO dentro de cada fold "
+    "vía imblearn.Pipeline — nunca D2 y nunca citable como resultado"
+)
+
 ALCANCE_HIBRIDO_CALIBRACION = (
     "sensibilidad de UMBRAL_CONF: las columnas 'oof_' son out-of-fold sobre D3 "
     "y de ellas SALE la decisión; las columnas 'd2_' son sobre D2 completo y "
@@ -119,6 +130,88 @@ ALCANCE_OOF_D3 = ("out-of-fold sobre D3 (StratifiedKFold 5 · semilla 42): de aq
                   "SALE la decisión de UMBRAL_CONF — nunca D2")
 ALCANCE_D2_REPORTE = ("sobre D2 completo y SOLO como reporte: ninguna decisión se "
                       "toma con estas columnas (P-4)")
+
+# ---------------------------------------------------------------------------
+# La columna 'tiempo_s': tres significados, uno por tabla — declarados en el dato
+# ---------------------------------------------------------------------------
+# 'tiempo_s' era el último superviviente del defecto que T1 vino a cerrar: mismo
+# nombre en tres tablas y tres magnitudes distintas, sin que el dato lo dijese.
+# NO se homogeneiza el cálculo y NO se renombra la columna. Las razones (las de
+# verdad; la que se alegaba antes —"movería los 5,0/28,3/16,4/40,6 s que cita la
+# tabla de 4.4"— era falsa: metricas_anomalias.csv ya publica 5.51/26.17/20.85/
+# 52.43 para esas cuatro filas, así que la cita del vault está rota de todos
+# modos y no había nada que proteger):
+#   - No se RENOMBRA porque el nombre 'tiempo_s' está citado literalmente en la
+#     nota de trazabilidad de 4.4 (la lista de columnas de metricas_anomalias.
+#     csv), y renombrarlo rompería esa referencia sin ganar nada que el alcance
+#     declarado no dé ya.
+#   - No se HOMOGENEIZA porque cada cálculo es el que su capítulo describe: el
+#     "proceso completo por algoritmo (búsqueda en rejilla, fijación del umbral,
+#     evaluación y generación de figuras), no solo el ajuste" es literalmente lo
+#     que 4.4 dice que mide su columna Tiempo. Unificar los tres convertiría
+#     medidas descritas en el texto en una cuarta que no describe nadie.
+# Se hace, pues, lo que T1 hace con todo lo demás: que el dato publicado declare
+# su alcance. Cada fila de las cuatro tablas principales lleva una columna
+# hermana 'alcance_tiempo_s' con uno de estos textos.
+#
+# Por eso 'tiempo_s' NO está en ALCANCE_COLUMNAS: ese diccionario da UN alcance
+# por nombre de columna y aquí el alcance depende de la tabla. Va en el dato.
+#
+# LO QUE ESTA DECLARACIÓN NO ARREGLA (léase antes de comparar dos tiempos):
+# desde la corrección de T1 la medida se toma con time.perf_counter(), así que la
+# RESOLUCIÓN deja de ser el reloj de ~15,6 ms de Windows. La VARIANZA sigue ahí:
+# es wall-clock en una máquina no dedicada y entre dos corridas del mismo día se
+# observaron factores de hasta 4,4× (OneClassSVM 122: 163,26 s → 37,13 s; KNN 122
+# en firmas: 90,22 s → 207,81 s). Las cifras DE PARTIDA de esos dos pares (163,26
+# y 90,22) son del esquema de tablas anterior, que ya no está en el árbol de
+# trabajo: se recuperan de los CSV versionados en el commit 8b07319 (y
+# anteriores). Las de llegada (37,13 y 207,81) están versionadas en 077119e;
+# producidas con el código c7cf319, que es lo que declara la columna 'commit' de
+# sus filas (metricas_anomalias.csv:7 y metricas_firmas.csv:8) y la referencia
+# inequívoca para reproducirlas. Ninguna columna de tiempo es reproducible: son
+# comparación relativa de coste y de orden de magnitud, nada más.
+# Sin comas (como el resto de ALCANCE_*): estos textos viajan como valor de CSV.
+_AVISO_TIEMPO_VARIANZA = (" · wall-clock de pase único en máquina no dedicada: "
+                          "varía hasta 4x entre corridas — es orden de magnitud "
+                          "y no cifra reproducible")
+
+# anomalias.py y firmas.py: bloque completo del algoritmo.
+ALCANCE_TIEMPO_S_BLOQUE_ALGORITMO = (
+    "'tiempo_s' = el proceso completo por algoritmo (selección de "
+    "hiperparámetros + ajuste + inferencia sobre D2 + figuras) y no solo el "
+    "ajuste; para el ajuste solo está 'tiempo_entrenamiento_s' de esta misma "
+    "fila" + _AVISO_TIEMPO_VARIANZA
+)
+
+# baseline.py: SOLO el GridSearchCV. Es el que rompe la comparación entre tablas.
+ALCANCE_TIEMPO_S_SOLO_ENTRENAMIENTO = (
+    "'tiempo_s' = SOLO el entrenamiento (GridSearchCV + refit sobre D1+D3): "
+    "coincide con 'tiempo_entrenamiento_s' de esta misma fila y NO incluye "
+    "inferencia ni figuras — no comparable con el 'tiempo_s' de "
+    "metricas_anomalias.csv ni de metricas_firmas.csv" + _AVISO_TIEMPO_VARIANZA
+)
+
+# hibrido.py: el tramo de la corrida que va de la carga de datos al cierre de la
+# fila resumen. NO es "el script entero": el cronómetro se lee al construir el
+# dict metricas_run (hibrido.py:612) y después aún quedan la figura 5x6 la tabla
+# 0-day de los cuatro detectores —que vuelve a puntuar D2 con IF + OCSVM + LOF +
+# AE y cuesta unos 4-5 s de los ~27 s de la variante de 54— y la escritura de los
+# CSV. Por eso el log final del script (hibrido.py:641) imprime una cifra MAYOR
+# que esta columna: son dos medidas distintas y el texto lo dice para que nadie
+# lea la discrepancia como un error. El cronómetro NO se mueve: reordenar la
+# persistencia para que la fila se escriba con su propio tiempo dentro es un
+# cambio de código que no aporta nada al dato.
+ALCANCE_TIEMPO_S_CARGA_A_CIERRE_FILA = (
+    "'tiempo_s' = el tramo de la corrida que va desde la carga de los splits "
+    "hasta el cierre de esta fila (carga de D1/D2/D3 + carga de los .joblib de "
+    "las dos etapas + calibración OOF sobre D3 + cascada sobre D2 + tabla de "
+    "sensibilidad de los 3 umbrales); NO incluye lo que se hace DESPUÉS de "
+    "tomar la medida: la figura 5x6 · la tabla 0-day de los cuatro detectores · "
+    "la escritura de los CSV — de ahí que el log del script imprima una cifra "
+    "mayor que esta; no es tiempo de ajuste —el híbrido no re-entrena— ni "
+    "comparable con el 'tiempo_s' de las otras tres tablas"
+    + _AVISO_TIEMPO_VARIANZA
+)
 
 # Convención de PREFIJOS y SUFIJOS de columna, complementaria a `alcance`. Una
 # fila puede llevar más de un bloque de métricas; `alcance` describe el bloque
@@ -158,6 +251,9 @@ ALCANCE_SUFIJOS = {
 }
 
 # Columnas concretas con alcance propio que no encajan en prefijo ni sufijo.
+# 'tiempo_s' NO entra aquí a propósito: su alcance depende de la TABLA (tres
+# significados; ver el bloque ALCANCE_TIEMPO_S_*) y este diccionario solo sabe dar
+# uno por nombre de columna. Se declara en el dato, con 'alcance_tiempo_s'.
 ALCANCE_COLUMNAS = {
     "umbral": ALCANCE_SELECCION,
 }

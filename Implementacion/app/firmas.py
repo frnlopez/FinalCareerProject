@@ -252,8 +252,10 @@ class NSLKDDSignatureTrainer:
                     "algoritmo": algo,
                     # Toda esta tabla es de SELECCIÓN (CV sobre D3), no de D2:
                     # sus f1_macro_cv no son comparables con los de la tabla
-                    # principal ni citables como resultado (T1).
-                    "alcance": config.ALCANCE_SELECCION,
+                    # principal ni citables como resultado (T1). Alcance PROPIO,
+                    # no ALCANCE_SELECCION: aquel habla de 'auc_val' y de
+                    # 'umbral', dos columnas que esta tabla no tiene.
+                    "alcance": config.ALCANCE_BALANCEO,
                     "balanceo": balanceo,
                     "f1_macro_cv": round(f1m, 6),
                     "f1_macro_cv_std": round(float(scores.std()), 6),
@@ -286,7 +288,11 @@ class NSLKDDSignatureTrainer:
         print("-" * 70)
         print("GRIDSEARCH FINAL: {}".format(algo))
         print("-" * 70)
-        t0 = time.time()
+        # perf_counter (no time.time) en TODAS las medidas de duración: en Windows
+        # time.time() tiene ~15,6 ms de resolución y publicaba tiempos cuantizados
+        # (el predict del DecisionTree salía 0,0 s). Monótono y sin época: solo
+        # para diferencias; la columna 'fecha' la sigue dando datetime.now().
+        t0 = time.perf_counter()
 
         balanceo = self.balanceo_ganador[algo]
         estimador = self._estimador_para(algo, balanceo)
@@ -301,7 +307,7 @@ class NSLKDDSignatureTrainer:
             refit=True,
         )
         busqueda.fit(self.X_D3, self.y_D3)
-        t_entrenamiento = time.time() - t0  # GridSearchCV + refit en todo D3
+        t_entrenamiento = time.perf_counter() - t0  # GridSearchCV + refit en todo D3
         modelo = busqueda.best_estimator_  # refit en todo D3 (pipeline si SMOTE)
         print("   Balanceo: {} · mejor config: {} · f1_macro(CV)={:.4f}".format(
             balanceo, busqueda.best_params_, busqueda.best_score_))
@@ -309,9 +315,9 @@ class NSLKDDSignatureTrainer:
         # 6. Evaluación sobre D2 filtrado (multiclase, para 5.2). labels FIJOS.
         # El predict se cronometra aparte del entrenamiento (T1): es la
         # inferencia de la etapa 2 y de ella salen latencia y caudal.
-        t_inf = time.time()
+        t_inf = time.perf_counter()
         y_pred = modelo.predict(self.X_D2_eval)
-        t_inferencia = time.time() - t_inf
+        t_inferencia = time.perf_counter() - t_inf
         metricas = evaluacion.evaluar_multiclase(
             self.y_D2_eval, y_pred, labels=config.CATEGORIAS_ATAQUE
         )
@@ -331,7 +337,10 @@ class NSLKDDSignatureTrainer:
             "config_ganadora": busqueda.best_params_,
             "f1_macro_cv": float(busqueda.best_score_),
             "metricas": metricas,
-            "tiempo_s": time.time() - t0,
+            # OJO: 'tiempo_s' es el bloque COMPLETO del algoritmo (GridSearchCV +
+            # refit + inferencia + figura), no el ajuste. Se declara en el dato con
+            # config.ALCANCE_TIEMPO_S_BLOQUE_ALGORITMO.
+            "tiempo_s": time.perf_counter() - t0,
             "tiempo_entrenamiento_s": t_entrenamiento,
             "tiempo_inferencia_s": t_inferencia,
         }
@@ -386,8 +395,9 @@ class NSLKDDSignatureTrainer:
 
         Tabla AUXILIAR: su fila es algoritmo × balanceo, así que queda fuera del
         conjunto mínimo de las tablas principales; cumple en su lugar
-        evaluacion.COLUMNAS_MINIMAS_AUXILIARES, que incluye 'alcance' (aquí, CV
-        sobre D3: config.ALCANCE_SELECCION) y la procedencia.
+        evaluacion.COLUMNAS_MINIMAS_AUXILIARES, que incluye 'alcance' (aquí,
+        config.ALCANCE_BALANCEO: CV sobre D3 con SMOTE intra-fold) y la
+        procedencia.
         """
         csv_path = config.RESULTADOS_DIR + r"\metricas_balanceo.csv"
         evaluacion.limpiar_variante_csv(
@@ -429,6 +439,9 @@ class NSLKDDSignatureTrainer:
             "f1_weighted": round(m["f1_weighted"], 6),
             "n_test": int(len(self.y_D2_eval)),
             "tiempo_s": round(r["tiempo_s"], 2),
+            # 'tiempo_s' mide aquí el bloque completo del algoritmo; en
+            # metricas_baseline.csv la columna homónima es solo el GridSearchCV.
+            "alcance_tiempo_s": config.ALCANCE_TIEMPO_S_BLOQUE_ALGORITMO,
         }
         # Tiempos separados (T1): entrenamiento = GridSearchCV + refit sobre D3;
         # inferencia = predict sobre las filas de D2 evaluadas.
