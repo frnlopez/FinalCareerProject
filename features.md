@@ -87,52 +87,6 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
   cargo de Francisco» en 9 notas: `2.1.6`, `2.2.1`, `2.2.2`, `2.2.3`, `2.2.4`, `2.2.5`, `2.3.1`,
   `2.3.2`, `2.3.3`.
 
-- [~] **T1 · Nivel 1: esquema de métricas** · Código · `ml-implementador` → `auditor-ml`
-  > **Estado 2026-08-06: CÓDIGO IMPLEMENTADO Y APTO**, tres pasadas de `auditor-ml`
-  > (APTO CON CAMBIOS 12 puntos → corrección → APTO CON CAMBIOS 5 puntos → corrección → APTO).
-  > Verificado en las tres: sin fuga, semilla 42 intacta, calibración OOF de `hibrido.py` sin tocar,
-  > CSV publicados sin editar a mano. Ficheros tocados:
-  > `Implementacion\app\{config,evaluacion,anomalias,firmas,baseline,hibrido}.py`,
-  > `Implementacion\PIPELINE.md`, `.gitignore` raíz. **NO COMMITEADO.**
-  >
-  > **Falta para cerrarla:** regenerar las 8 tablas de `Resultados\`, que siguen con el esquema
-  > anterior. Runbook de 8 invocaciones escrito en `PIPELINE.md` (4 scripts × 2 variantes, `hibrido`
-  > al final, ≈16 min). Los CSV viejos se apartan como `.esquema-anterior.bak`, no se borran.
-  > **Correrlo entero de una vez:** el estado intermedio es committeable y dejaría tablas a medias.
-  >
-  > **Decisiones de diseño tomadas dentro de T1 → van a T17:** (1) el problema de la columna homónima
-  > era **más amplio** que el `accuracy_D2` de la ficha — `f1_macro_cv` 0,9094 convivía con
-  > `f1_macro` 0,4721 (**44 pp**) y `auc_val` 0,9918 con `roc_auc` 0,9229, todas leídas igual;
-  > corregido. (2) `alcance` es campo único más convención de prefijos/sufijos, con
-  > `ALCANCE_SELECCION`, `ALCANCE_HIBRIDO_CONOCIDA`, `ALCANCE_HIBRIDO_CALIBRACION`,
-  > `ALCANCE_OOF_D3`, `ALCANCE_D2_REPORTE`. (3) Las **cuatro tablas auxiliares** también llevan
-  > procedencia (la ficha no lo pedía). (4) `commit` = hash corto con tres valores posibles
-  > (`-sucio` acotado a `git status --porcelain -- Implementacion`, y `-suciedad_desconocida`);
-  > `5.0`/`A.3` van a citar esa columna. (5) En el híbrido, `tiempo_entrenamiento_s` = calibración OOF
-  > sobre D3, **cero ajuste de la cascada** — frase para `5.0`/`A.3` en la ficha del `redactor-tfg`.
-  > (6) `metricas_hibrido.csv` gana `algoritmo` (`"<detector>-><firma>"`); ninguna de las 5 citas del
-  > vault se rompe. (7) `baseline.py` añade `bin_tn/bin_fp/bin_fn/bin_tp`.
-  >
-  > **Aviso para quien implemente T4:** no puede escribir en las cuatro tablas principales — choca
-  > contra el borrado por variante, la `CLAVE_UNICIDAD` sin `semilla` y el recuento fijo 4/4/1/1. Es
-  > coherente con la ficha (la dispersión va a tabla nueva en `A.3`) y ya está escrito en
-  > `PIPELINE.md` y en el docstring de `comprobar_recuento()`.
-
-  **Ningún resultado publicado cambia (semilla 42): solo cambia el esquema de columnas.**
-  - `bin_accuracy` en la fila de `metricas_baseline.csv`. Hoy falta y **es la cifra que la literatura
-    usa para comparar** (0,8605 del híbrido frente a los baselines canónicos de Tavallaee et al.).
-  - **Campo `alcance` por fila** en las cuatro tablas. Motivo verificado en disco y **peor de lo que
-    decía el informe**: `accuracy_D2` existe con el mismo nombre en `metricas_firmas.csv` (0,9683,
-    4 clases sobre conocidos de D2) y en `metricas_baseline.csv` (0,7395, 5 clases sobre D2 entero).
-    Columna homónima, dos alcances. Cierra C3 y C6.
-  - Columnas `semilla` y `commit` (procedencia por fila; hoy la semilla vive en `config.py` y no
-    viaja con el dato).
-  - **Conjunto mínimo obligatorio de columnas** común a las cuatro tablas, declarado.
-  - `_limpiar_variante_csv` (hoy repetido 4 veces) sube a `evaluacion.py` con la **clave de unicidad
-    declarada** (variante × algoritmo × alcance).
-  - **Separar el tiempo de inferencia** del de entrenamiento y reportar **latencia por flujo y
-    flujos/segundo**. Es la mitad viable de P9 (*Lab-Only Evaluation*).
-
 - [ ] **T2 · KS de D1 contra los normales de D2** · Código · `ml-implementador` → `auditor-ml`
   `validacion.py:394-431` ya calcula KS D1→D2 y reporta **37 de 54 características con drift** (top:
   `src_bytes` 0,346, `dst_bytes` 0,317). **Ese 37 no sirve para explicar el FPR**: compara D1 (todo
@@ -161,6 +115,14 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
     RandomForest 0,822 vs HistGradientBoosting 0,804 (firmas) y Autoencoder 0,8605 vs
     IsolationForest 0,8257 (anomalías). Si los intervalos se solapan, **decirlo y no establecer el
     orden**. Eso es un hallazgo para `5.4`, no un desastre.
+  - **Aviso heredado de T1 (cerrada el 2026-08-08):** T4 **no puede escribir en las cuatro tablas
+    principales** — choca contra el borrado por variante, la `CLAVE_UNICIDAD` sin `semilla` y el
+    recuento fijo 4/4/1/1. Es coherente con esta ficha (la dispersión va a tabla nueva en `A.3`) y ya
+    está escrito en `PIPELINE.md` y en el docstring de `comprobar_recuento()`.
+  - **Dato de T1 para dimensionar la corrida:** el wall-clock dispersa hasta **4,8× entre corridas en
+    máquina no dedicada** con calidad idéntica al bit (Autoencoder-54: 37,71 → 181,91 s). La
+    estimación de ≈160 min es orientativa, y las columnas de tiempo de las 10 semillas **no** se
+    pueden leer como propiedad del algoritmo sin declarar esa dispersión.
 
 - [ ] **T5 · `5.0 Protocolo de evaluación`** · Informe · `redactor-tfg`
   Nota nueva, antes de `5.1`. Recoge junto lo que hoy está disperso en Q4, Q6, H-1…H-7 y P-1…P-5 de
@@ -249,6 +211,9 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
     frente a 54,8 s — si el GBDT de la propia sklearn no despega, el argumento se sostiene solo) y
     **TabPFN v2 de *Nature* admite 10.000 muestras y D3 tiene 58.630**. Usar la formulación C.1 del
     informe tabular.
+    → **El par `68,7 s / 54,8 s` de esta ficha NO existe en ningún artefacto** (detectado el
+    2026-08-08 al cerrar T1). **No usarlo.** La reformulación defendible está en **T20**; esta
+    viñeta no se reescribe hasta que T20 se resuelva.
 
 - [ ] **T10 · Capítulo 4** · Informe · `redactor-tfg`
   - `4.2`: definición correcta de las tres particiones (KDDTrain+ 125.973 · KDDTest+ 22.544 ·
@@ -386,6 +351,66 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
   - **Cerradas por escrito** (5): Arp Fig. 1 · Shyaa et al. texto completo · MDPI *Algorithms*
     18(12):749 · columnas de tiempo de UNSW-NB15 · la CV de Shone et al.
 
+### Residuos de T1 — altas del 2026-08-08
+
+> T1 se cerró en su objetivo (ver `## Cerradas`, `5f98d88`). Estas cinco fichas son lo que **quedó
+> fuera** de ese cierre, anotado con el detalle necesario para retomarlo en frío.
+>
+> **Dato transversal que no debe perderse:** las corridas anteriores **están en git**
+> (`077119e` guarda la del código `c7cf319`; `34bee30` la de `38fdd4b`), así que los
+> `.esquema-anterior.bak` son **prescindibles** y **cualquier cita a una corrida vieja debe apuntar
+> al commit, nunca al `.bak`**.
+
+- [ ] **T18 · Rediseñar qué se publica en `alcance_tiempo_s`** · Código · `ml-implementador` → `auditor-ml`
+  Trabajo ya hecho en el commit `0595a15`, etiquetado **`[PENDIENTE, NO APTO]`**: no está aplicado a
+  ninguna tabla publicada. **Diagnóstico:** publicar *interpretación* (porcentajes, factores de
+  dispersión) dentro del dato crea un bucle — el dato no se edita sin re-correr, y cada corrida falsa
+  la cifra anterior. La celda va ya por **≈3,2 kB × 8 filas en un CSV de 9 líneas**.
+  **Propuesta:** en el CSV solo lo **estable** (qué tramos entran y cuáles no, y el aviso de P9);
+  **todos los números a `PIPELINE.md`**, anclados a commits de git — durables y editables sin
+  re-correr.
+  Al hacerlo se arreglan de paso los **cuatro defectos** que dejaron `0595a15` en NO APTO:
+  - el par `8b07319`→`077119e` **mal atribuido**: los 729.199 flujos/s son de la corrida de
+    `38fdd4b`; en `077119e` la cifra es **472.834**;
+  - `n_iter_ganador` son las épocas de **UNA** config, frente a `tiempo_entrenamiento_s`, que suma
+    **las DOS** del grid;
+  - el aviso de caché de LOF **afirma causalidad dentro del ruido**;
+  - las **tres cotas sin anclar** de `anomalias.py:266,364,409` («27-49 %»), **ya falsada**: IF-122 da
+    **26,7 %**.
+  **Exige una corrida más del runbook completo.**
+
+- [ ] **T19 · Cifras de tiempo del vault sin respaldo en ningún artefacto** · Informe · `redactor-tfg`
+  Detectado dentro de T1 (2026-08-06 a 2026-08-08). **Ninguna de estas cifras sale de una corrida que exista:**
+  la **columna Tiempo entera** de la tabla de `5.1 …anomalías.md:44-47` (5,04 · 28,34 · 16,42 ·
+  40,56); la frase de `5.1:58` («5 s frente a los 40,6 s del Autoencoder»); la de
+  `5.2 …firmas.md:59` («DecisionTree, el más rápido, 1,8 s»); y la tabla de
+  `4.4 …anomalías.md:56-61`. Hay que **regenerarlas desde `Resultados/`**.
+  **Advertencia dura, no opcional:** el wall-clock **dispersa hasta 4,8× entre corridas en máquina no
+  dedicada** (Autoencoder-54: 37,71 → 181,91 s, con **calidad idéntica al bit**). Estas cifras **no
+  deben citarse como propiedad del algoritmo** sin declarar la dispersión.
+
+- [ ] **T20 · Reformular el argumento de T9 («HistGB tarda más que RF»)** · Informe · `redactor-tfg`
+  El par **`68,7 / 54,8`** de la viñeta `3.5` de **T9** y del informe tabular **no existe en ningún
+  artefacto**. La **dirección sí es robusta**: 4 de 4 pares intra-corrida en el mismo sentido, con
+  grids de igual cardinalidad, entre **1,31× y 4,40×**. Pero es **coste de entrenamiento**, y **en
+  inferencia a 54 características el orden se invierte** (HistGB **0,0035 ms/flujo** frente a RF
+  **0,0069**).
+  **Formulación defendible, sin cifras absolutas:** «más caro de entrenar en las dos variantes y las
+  dos corridas, entre 1,3× y 4,4×, sin ganar `f1_macro` (0,804 vs 0,822)».
+
+- [ ] **T21 · Declarar la mitad de P9 que T1 no cubre** · Informe · `redactor-tfg`
+  `latencia_ms_por_flujo` mide **solo `predict`/`score`** sobre características ya calculadas y en
+  memoria. El **coste real de despliegue** —captura, ensamblado de flujo, extracción de las 41
+  características— **no está medido**. Citar «4,4 millones de flujos/s» como capacidad operativa sin
+  esa salvedad **sería el propio pitfall P9** (*Lab-Only Evaluation*) que se dice estar cubriendo.
+  Encaja en `5.4` y en el inventario de límites de **T6**.
+
+- [ ] **T22 · `n_iter_` del Autoencoder no se registra en ningún artefacto** · Código · `ml-implementador` → `auditor-ml`
+  Sin ese dato **hoy no se puede decidir** si los **181,91 s frente a 48,08 s** del AE son **épocas** o
+  **carga de máquina**. Afecta a **cualquier frase que compare tiempos del AE entre variantes**
+  (T19 incluida). Registrar `n_iter_` por fila y, hasta entonces, no atribuir esas diferencias al
+  algoritmo.
+
 ### Descartado — no reabrir
 
 > Descartes **cerrados en el `grill-me` del 2026-08-06**. No son tareas pendientes ni pospuestas:
@@ -413,6 +438,11 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > **En este ciclo solo se arrancan `T0` y `T1`.** El resto queda dado de alta y en espera. En
 > particular **`T4` espera a que `T1` esté auditado**, porque corre sobre el esquema nuevo de CSV.
 
+> **Actualización 2026-08-08:** `T1` **cerrada** (`5f98d88`, 8 tablas publicadas sobre el esquema
+> nuevo, cuatro pasadas de `auditor-ml`), así que **`T4` queda desbloqueada**. De T1 salen cinco
+> residuos, dados de alta como `T18`-`T22`. `T18` **también exige una corrida del runbook**: si se va
+> a correr `T4`, conviene decidir antes el orden para no repetir cómputo.
+
 > **T0 va a reescribir la sección de abajo** (retirada de la regla «lo escribe Francisco» en dos
 > velocidades). Hasta que T0 se cierre, la sección sigue vigente tal como está.
 
@@ -432,6 +462,7 @@ No se despachan a ningún agente. El `leader` no debe crear tareas para esto.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-08 | Código | **T1 · Nivel 1: esquema de métricas.** Cerrada en su objetivo, con residuos anotados (`T18`-`T22`). Las **8 tablas regeneradas**, tres corridas del runbook completo; las publicadas son las de `5f98d88`, producidas por el código `5516b60`: `commit` limpio y `semilla = 42` en las **216 filas**, recuentos 8/8/2/2 y 16/36/144/6, **cero deriva en métricas de calidad**, sin leakage y sin valores imposibles. Esquema nuevo: `bin_accuracy` en `metricas_baseline.csv`, campo **`alcance` por fila** en las cuatro tablas (cierra C3 y C6 — `accuracy_D2` era columna homónima con dos alcances: 0,9683 en firmas, 0,7395 en baseline), columnas `semilla` y `commit`, conjunto mínimo obligatorio de columnas, `_limpiar_variante_csv` subido a `evaluacion.py` con `CLAVE_UNICIDAD` declarada (variante × algoritmo × alcance), y **tiempo de inferencia separado del de entrenamiento** con latencia por flujo y flujos/s. Además, no previsto en la ficha: **todos los cronómetros pasados de `time.time()` a `perf_counter`** (`time.time()` tiene ≈15,6 ms de resolución en Windows y publicaba `latencia_ms_por_flujo = 0.0` con caudal vacío en DecisionTree); **guarda única** para latencia, caudal y FPR — un valor no medible da **celda vacía, nunca `0.0`**; y `tiempo_s`, que significaba **tres cosas distintas según la tabla** sin que el dato lo dijera, ahora declara su `alcance_tiempo_s` por fila. **Hallazgo mayor:** el residual `tiempo_s − entrenamiento − inferencia` llegaba al **49 % en OneClassSVM-54** y estaba sin declarar; la etiqueta lo llamaba «figuras», que son décimas de segundo. Medido y cerrado con dos columnas nuevas en `metricas_anomalias.csv` (`tiempo_score_seleccion_s`, `tiempo_score_umbral_s`): el grueso es **el scoring repetido dentro de la selección de hiperparámetros** —el script pasa por el scorer 5-7× más filas eligiendo config que evaluando— y en OCSVM-54 ese tramo **iguala al propio ajuste**; no entraba en `tiempo_entrenamiento_s` porque no es `fit`. Declarado que **`latencia_ms_por_flujo` mide solo `predict`/`score`** sobre características ya calculadas y en memoria, sin captura ni extracción de features: sin esa frase, citar el caudal como capacidad operativa sería la *Lab-Only Evaluation* que denuncia P9 (la mitad que falta → `T21`). **Corrección de lo que esta ficha afirmaba mientras estuvo abierta:** era **falso** que «ningún resultado publicado cambia: solo cambia el esquema de columnas» — no cambia **ninguna métrica de calidad** (semilla 42, modelos y calibración OOF intactos), pero **las columnas de tiempo sí cambian de valor**, por el paso a `perf_counter` y por la varianza de máquina, y cambia el `alcance` de las 16 filas de `metricas_balanceo.csv`. Decisiones de diseño internas → `T17`. **Cuatro pasadas de `auditor-ml`**; dictamen sobre las tablas publicadas: T1 puede cerrarse en track Código. Commits: `077119e`, `38fdd4b`, `34bee30`, `5516b60`, `5f98d88` | `5f98d88` |
 | 2026-08-01 | Código | Fin del «roadmap vivo»: `next-steps.md` ya no se anuncia como tal en ningún fichero. La frase de reparto sale del callout «Estado a 2026-07-16» de `CLAUDE.md:115-117` a párrafo propio fechado el 2026-08-01 (datar el congelado tres semanas antes era falso), mismo arreglo en `resumen-de-decisiones.md:4` + inciso de fecha sobre la casilla del 2026-07-21 (`:440-443`, registro original íntegro) + entrada de bitácora nueva (`:533-542`), y «Roadmap» → congelado en `README.md:26-28` y `Guia_ML\README.md:7-9`. El auditor corrige además el fondo: «§6 vigente como especificación técnica» era falso sin matiz — `next-steps.md:591-597` declara §6.5 (`hibrido.py`) superada por el grill H-1…H-7, y sin la salvedad un implementador podía calibrar `UMBRAL_CONF` con el método viejo y saltarse una decisión anti-leakage cerrada; la salvedad va en los cuatro ficheros. Dos pasadas de `auditor-ml` (la primera APTO CON CAMBIOS, 4 puntos aplicados), árbol ASCII de `README.md` intacto | `b5aec20` |
 | 2026-08-01 | Código | Diagrama `01_pipeline_completo.mmd` al día: 15 correcciones verificadas contra `fichero:línea` — capa de modelos ya no es «no implementado», «51 ataques» → 40 etiquetas, la alineación one-hot es la **unión D1+D3** (y no «schema de D1», que documentaba el bug cerrado el 2026-07-05), alta del paso `select_features()` 122→54 y de las 4 aristas del protocolo anti-leakage (calibración OOF de `UMBRAL_CONF` con D3, D2 no ajusta nada). `.png` y `.svg` regenerados con `mermaid-cli` 11.16.0 `-s 3`; segunda auditoría sin rojos ni naranjas. Incluye `diagramas/README.md` y, en `CLAUDE.md`, la atribución del balanceo 4.3.4 a `firmas.py` (por algoritmo), no a `program.py` | `d88dada` |
 | 2026-08-01 | Código | `CLAUDE.md` al día tras la absorción de `Implementacion/`: tabla de scripts de 2 a 8 (6 clases reales + `config.py` y `evaluacion.py` como módulos-librería), orden de ejecución y dependencias entre scripts, y en `## Git` que `Implementacion/` ya no lleva `.git` propio y la precedencia de su `.gitignore` anidado | `e3548ca` |
