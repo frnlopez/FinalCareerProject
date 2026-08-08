@@ -608,6 +608,16 @@ class NSLKDDHybridEvaluator:
             # 0-day (titular) + FPR de la cascada (P-2)
             "recall_0day_global": round(r0g["recall"], 6),
             "n_0day": r0g["n"],
+            # MISMO número que 'bin_fpr' de esta misma fila y no por descuido: la
+            # etapa 2 solo reclasifica lo que la etapa 1 marcó y nunca devuelve un
+            # flujo a 'normal', así que la cascada no puede tener otro FPR que el
+            # de su etapa 1. Las dos columnas se conservan porque responden a dos
+            # requisitos distintos (H-5 el bloque binario · P-2 el FPR junto al
+            # titular de 0-day) y la coincidencia queda DECLARADA en el dato, en
+            # config.ALCANCE_HIBRIDO: T1 no admite dos nombres para una magnitud
+            # sin decirlo. Si algún día la etapa 2 pudiera absolver un flujo
+            # (devolverlo a 'normal'), este round dejaría de ser b["fpr"] y habría
+            # que recalcularlo desde las predicciones finales de la cascada.
             "fpr_cascada": round(b["fpr"], 6),
             "tiempo_s": round(time.perf_counter() - t0, 2),
             # Tercer significado de la columna homónima: aquí es el tramo de

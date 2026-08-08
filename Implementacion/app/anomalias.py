@@ -184,6 +184,36 @@ class NSLKDDAnomalyTrainer:
             )
         raise ValueError("Algoritmo desconocido: " + algo)
 
+    @staticmethod
+    def _iteraciones_ajuste(algo, model):
+        """
+        Épocas que consumió el ajuste del modelo ganador — SOLO para el
+        Autoencoder; None para los otros tres.
+
+        POR QUÉ EXISTE (T1, punto 5 de la auditoría): el Autoencoder es
+        MLPRegressor con early_stopping=True y max_iter=300, así que su
+        'tiempo_entrenamiento_s' depende de DOS cosas que el CSV no distinguía —
+        cuántas épocas necesitó y cómo de cargada estaba la máquina—. Sin este
+        dato, los 180,965 s de la variante de 54 frente a los 47,826 s de la de
+        122 en la corrida 5516b60 no son interpretables (y en la 38fdd4b la
+        relación era la inversa: 37,492 s y 121,059 s). Con 'n_iter_ganador' en
+        la fila se puede dividir: segundos por época frente a varianza de máquina.
+        Un n_iter_ igual a max_iter (300) además avisa de que el ajuste se cortó
+        por el tope y no por convergencia.
+
+        POR QUÉ SOLO EL AUTOENCODER y no un getattr genérico: en sklearn moderno
+        OneClassSVM también expone 'n_iter_', pero como ndarray de libsvm —una
+        celda con un array dentro del CSV— y no significa lo mismo. IsolationForest
+        y LocalOutlierFactor no ajustan iterativamente y no tienen el atributo.
+        Las tres filas quedan con la celda VACÍA, que es la convención ya usada en
+        el resto de columnas no aplicables (nunca un 0 que se pueda leer como
+        medida).
+        """
+        if algo != "Autoencoder":
+            return None
+        n_iter = getattr(model, "n_iter_", None)
+        return int(n_iter) if n_iter is not None else None
+
     def _datos_entrenamiento(self, algo, X_train):
         """
         Datos con los que se entrena cada algoritmo. OneClassSVM usa una submuestra
@@ -308,9 +338,19 @@ class NSLKDDAnomalyTrainer:
             filename="anomalias_cm_{}_{}.png".format(algo, self.set_features),
         )
 
+        # Épocas del ajuste ganador (solo Autoencoder; None en los otros tres).
+        # Se lee del modelo YA ajustado y va tanto a la fila del CSV como al
+        # .joblib: sin ella no se puede decidir si un 'tiempo_entrenamiento_s'
+        # grande son épocas o carga de máquina.
+        n_iter_ganador = self._iteraciones_ajuste(algo, model)
+        if n_iter_ganador is not None:
+            print("   Épocas del ajuste ganador: {} (max_iter=300 · "
+                  "early_stopping=True)".format(n_iter_ganador))
+
         self.resultados[algo] = {
             "modelo": model,
             "config_ganadora": cfg,
+            "n_iter_ganador": n_iter_ganador,
             "auc_val": auc_val,
             "umbral": umbral,
             "score_D2": score_D2,
@@ -356,6 +396,12 @@ class NSLKDDAnomalyTrainer:
         El sufijo '_val' y la columna 'umbral' están declarados en
         config.ALCANCE_SUFIJOS / ALCANCE_COLUMNAS con ese alcance propio.
 
+        'n_iter_ganador' tampoco es una métrica de D2: son las ÉPOCAS que consumió
+        el ajuste del modelo ganador y solo la rellena el Autoencoder (celda vacía
+        en los otros tres; ver _iteraciones_ajuste). Está para que
+        'tiempo_entrenamiento_s' sea interpretable —épocas frente a carga de
+        máquina— y no para comparar algoritmos entre sí.
+
         Y con 'tiempo_s': aquí mide el BLOQUE COMPLETO del algoritmo —los fit del
         grid + el scoring del set etiquetado en CADA config + el scoring de D1_val
         del umbral + la inferencia sobre D2 + una figura—, que es lo que cita la
@@ -378,6 +424,13 @@ class NSLKDDAnomalyTrainer:
             "sin_seleccion": bool(self.sin_seleccion),
             "n_features": self.n_features,
             "config_ganadora": str(r["config_ganadora"]),
+            # Épocas que consumió el ajuste ganador. Solo la rellena el
+            # Autoencoder (MLPRegressor con early_stopping=True y max_iter=300);
+            # en IsolationForest / OneClassSVM / LocalOutlierFactor la celda va
+            # VACÍA porque el atributo no aplica —ver _iteraciones_ajuste()—, y
+            # nunca a 0: un 0 se leería como "cero iteraciones".
+            "n_iter_ganador": (float("nan") if r["n_iter_ganador"] is None
+                               else r["n_iter_ganador"]),
             "auc_val": round(r["auc_val"], 6),
             "umbral": round(r["umbral"], 6),
             "roc_auc": round(m.get("roc_auc", float("nan")), 6),
@@ -431,6 +484,14 @@ class NSLKDDAnomalyTrainer:
                     "modelo": r["modelo"],
                     "umbral": r["umbral"],
                     "config_ganadora": r["config_ganadora"],
+                    # Épocas del ajuste (Autoencoder; None en los otros tres) y
+                    # score de la validación interna del early_stopping si el
+                    # estimador lo expone. En el CSV solo viaja n_iter_ganador:
+                    # aquí se guarda además el score porque el .joblib no tiene
+                    # esquema fijo y no ensucia ninguna tabla.
+                    "n_iter_ganador": r["n_iter_ganador"],
+                    "best_validation_score": getattr(
+                        r["modelo"], "best_validation_score_", None),
                     "base_path_usado": self.base_path,
                     "set_features": self.set_features,
                     "n_features": self.n_features,

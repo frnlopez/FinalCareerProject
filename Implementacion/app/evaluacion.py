@@ -173,16 +173,26 @@ FILAS_ESPERADAS_POR_VARIANTE = {
 #
 # LO QUE perf_counter NO ARREGLA: la varianza. Es wall-clock en una máquina no
 # dedicada y compartida, así que la misma corrida con la misma semilla da tiempos
-# muy distintos — entre dos pases del mismo día se observaron factores de hasta
-# 4,4x (OneClassSVM 122: 163,26 s → 37,13 s; KNN 122 en firmas: 90,22 s →
-# 207,81 s). Y no solo en los tiempos largos: una medida de INFERENCIA de 30-50 ms
-# varía hasta ±80 % entre corridas (Autoencoder 54: 472.834 → 729.199 flujos/s
-# = 1,54x; Autoencoder 122: 758.825 → 421.427 = 0,56x), de modo que dos filas de
-# inferencia que difieran menos de 2x no dicen nada. Consecuencia práctica, y hay
-# que decirla al citar: NINGUNA columna de tiempo es reproducible ni sirve para
-# afirmar que un algoritmo es "un 20 % más rápido" que otro. Son comparación
-# relativa de coste y de orden de magnitud. Lo demás de la tabla sí es reproducible
-# (semilla 42); estas cinco columnas y 'tiempo_s', no.
+# muy distintos. NO se declara una cota ("varía hasta 4x") porque no la hay: cada
+# corrida nueva desmiente la cifra de la anterior —le pasó a la redacción previa de
+# este bloque— y lo único que no caduca es la DISPERSIÓN OBSERVADA entre dos
+# corridas nombradas:
+#   - Entre 38fdd4b y 5516b60 (las dos corridas de anomalías que hay en el árbol:
+#     metricas_anomalias.csv.esquema-anterior.bak y el CSV vigente), Autoencoder de
+#     54: 'tiempo_s' 37,71 s → 181,91 s = 4,83x, y 'tiempo_entrenamiento_s'
+#     37,492 s → 180,965 s = el mismo 4,83x.
+#   - Ese mismo par en INFERENCIA, que es lo que demuestra que la dispersión no es
+#     cosa de los tiempos largos: 0,031 s → 0,147 s = 4,7x (729.199 → 153.510
+#     flujos/s). Una medida de decenas de ms se mueve tanto como una de minutos.
+#   - Entre 8b07319 y 077119e se observó 4,4x en sentido contrario (OneClassSVM
+#     122: 163,26 s → 37,13 s; KNN 122 en firmas: 90,22 s → 207,81 s) y en
+#     inferencia 1,54x / 0,56x (Autoencoder 54: 472.834 → 729.199 flujos/s;
+#     Autoencoder 122: 758.825 → 421.427).
+# Ninguno de esos factores acota nada: la corrida siguiente puede superarlos.
+# Consecuencia práctica, y hay que decirla al citar: NINGUNA columna de tiempo es
+# reproducible ni sirve para afirmar que un algoritmo es "un 20 % más rápido" que
+# otro. Son comparación relativa de coste y de orden de magnitud. Lo demás de la
+# tabla sí es reproducible (semilla 42); estas cinco columnas y 'tiempo_s', no.
 #
 # QUÉ HAY DENTRO DE LA INFERENCIA MEDIDA (declaración obligatoria antes de citar
 # cualquiera de las dos derivadas): SOLO el predict/score sobre características ya

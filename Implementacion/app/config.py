@@ -75,10 +75,24 @@ ALCANCE_BASELINE = "multiclase 5 clases (normal + 4 ataques) sobre D2 completo"
 # hibrido.SIGNIFICADO_TIEMPO_ENTRENAMIENTO). La columna NO se renombra: el
 # conjunto mínimo homogéneo entre las cuatro tablas es requisito de T1. Así, quien
 # lea la fila suelta sin abrir el código ya sabe qué tiene delante.
+#
+# Segundo aviso que viaja en el dato: 'fpr_cascada' y 'bin_fpr' son literalmente
+# el mismo número en la misma fila (hibrido.py los redondea del mismo b["fpr"]).
+# No es un fallo: la etapa 2 solo reclasifica lo que la etapa 1 marcó y NUNCA
+# devuelve un flujo a 'normal' así que la cascada no puede tener otro FPR que el
+# de su etapa 1. Se conservan las DOS columnas —'bin_fpr' cierra el bloque binario
+# que pide H-5 y 'fpr_cascada' es el FPR que P-2 exige junto al titular de 0-day—
+# pero T1 no admite dos nombres para una magnitud sin declararlo. Se declara aquí.
 ALCANCE_HIBRIDO = ("cascada extremo a extremo (5 clases + unknown) sobre D2 "
                    "completo; ojo: 'tiempo_entrenamiento_s' aquí es SOLO la "
                    "calibración de UMBRAL_CONF por OOF sobre D3 — el híbrido no "
-                   "re-entrena las dos etapas")
+                   "re-entrena las dos etapas. Y ojo también: 'fpr_cascada' y "
+                   "'bin_fpr' son EL MISMO NÚMERO por construcción y no dos "
+                   "medidas — la etapa 2 solo reclasifica los flujos que la etapa "
+                   "1 marcó como sospechosos y nunca devuelve uno a 'normal' así "
+                   "que el FPR de la cascada es por fuerza el de la etapa 1; se "
+                   "publican las dos porque P-2 pide el FPR junto al titular de "
+                   "0-day y H-5 pide el bloque binario completo")
 ALCANCE_0DAY = ("recall de marcado como ataque sobre los ataques de D2 de tipo "
                 "ausente del train")
 
@@ -144,9 +158,16 @@ ALCANCE_D2_REPORTE = ("sobre D2 completo y SOLO como reporte: ninguna decisión 
 # así que un texto único no dejaba reconstruir ninguno de los dos.
 # NO se homogeneiza el cálculo y NO se renombra la columna. Las razones (las de
 # verdad; la que se alegaba antes —"movería los 5,0/28,3/16,4/40,6 s que cita la
-# tabla de 4.4"— era falsa: metricas_anomalias.csv ya publica 5.51/26.17/20.85/
-# 52.43 para esas cuatro filas, así que la cita del vault está rota de todos
-# modos y no había nada que proteger):
+# tabla de 4.4"— era falsa, y la refutación que se escribió aquí TAMBIÉN lo era:
+# esos "5,51/26,17/20,85/52,43 que publica hoy" no son de ninguna corrida del
+# árbol. Lo verificable, y anclado: metricas_anomalias.csv dio
+# 4,01/23,28/13,28/37,71 para esas cuatro filas en la corrida 38fdd4b —hoy en el
+# .bak de esquema anterior— y 5,14/28,10/22,77/181,91 en la corrida 5516b60 —el
+# CSV vigente—. Ninguna de las dos coincide con la tabla de 4.4 ni entre sí, que
+# es lo único que hacía falta demostrar: la cita del vault está desactualizada
+# por su cuenta y hay que refrescarla al redactar, así que no protegía nada. Los
+# valores van anclados a su corrida a propósito: la siguiente los vuelve a
+# mover):
 #   - No se RENOMBRA porque el nombre 'tiempo_s' está citado literalmente en la
 #     nota de trazabilidad de 4.4 (la lista de columnas de metricas_anomalias.
 #     csv), y renombrarlo rompería esa referencia sin ganar nada que el alcance
@@ -182,27 +203,46 @@ ALCANCE_D2_REPORTE = ("sobre D2 completo y SOLO como reporte: ninguna decisión 
 # de máquina (1,8×), no resolución. La afirmación se retira.
 #
 # LO QUE perf_counter NO ARREGLA (léase antes de comparar dos tiempos): la
-# VARIANZA. Es wall-clock en una máquina no dedicada y entre dos corridas del mismo
-# día se observaron factores de hasta 4,4× (OneClassSVM 122: 163,26 s → 37,13 s;
-# KNN 122 en firmas: 90,22 s → 207,81 s). Las cifras DE PARTIDA de esos dos pares
-# (163,26 y 90,22) son del esquema de tablas anterior, que ya no está en el árbol
-# de trabajo: se recuperan de los CSV versionados en el commit 8b07319 (y
-# anteriores). Las de llegada (37,13 y 207,81) están versionadas en 077119e;
-# producidas con el código c7cf319, que es lo que declara la columna 'commit' de
-# sus filas (metricas_anomalias.csv:7 y metricas_firmas.csv:8) y la referencia
-# inequívoca para reproducirlas.
-# Y LO QUE NO ESTABA DICHO EN NINGÚN SITIO: la dispersión NO se limita a los
-# tiempos largos. Una medida de INFERENCIA de 30-50 ms varía hasta ±80 % entre
-# corridas: Autoencoder 54, 472.834 → 729.199 flujos/s (1,54×); Autoencoder 122,
-# 758.825 → 421.427 flujos/s (0,56×). O sea que 'tiempo_inferencia_s' y sus dos
-# derivadas son tan poco reproducibles como 'tiempo_s', y una diferencia de menos
-# de 2× entre dos filas de inferencia no significa nada. Ninguna columna de tiempo
-# es reproducible: son comparación relativa de coste y de orden de magnitud.
+# VARIANZA. Es wall-clock en una máquina no dedicada. Y una advertencia sobre CÓMO
+# se declara: aquí NO se escriben cotas ("varía hasta 4x") porque no las hay —cada
+# corrida nueva desmiente la de la anterior, que es exactamente lo que le pasó a la
+# redacción previa de este bloque—. Lo que se escribe es DISPERSIÓN OBSERVADA entre
+# dos corridas nombradas, que ninguna corrida futura puede desmentir:
+#   - Entre 38fdd4b y 5516b60 (las dos corridas de anomalías que hay en el árbol:
+#     la primera en metricas_anomalias.csv.esquema-anterior.bak y la segunda en el
+#     CSV vigente) el Autoencoder de 54 pasó de 37,71 s a 181,91 s de 'tiempo_s'
+#     = 4,83× — y su 'tiempo_entrenamiento_s' de 37,492 s a 180,965 s = el mismo
+#     4,83×. Ese par tira por tierra la cota de "4x" que este comentario declaraba.
+#   - Ese mismo par muestra que la dispersión NO se limita a los tiempos largos: la
+#     INFERENCIA de ese Autoencoder pasó de 0,031 s a 0,147 s = 4,7× (caudal
+#     729.199 → 153.510 flujos/s). Una medida de decenas de milisegundos se mueve
+#     tanto como una de minutos.
+#   - Entre 8b07319 y 077119e se observó 4,4× en sentido contrario (OneClassSVM
+#     122: 163,26 s → 37,13 s; KNN 122 en firmas: 90,22 s → 207,81 s). Las cifras
+#     DE PARTIDA de ese par (163,26 y 90,22) son del esquema de tablas anterior,
+#     que ya no está en el árbol de trabajo: se recuperan de los CSV versionados en
+#     el commit 8b07319 (y anteriores). Las de llegada (37,13 y 207,81) están
+#     versionadas en 077119e; producidas con el código c7cf319, que es lo que
+#     declaraba la columna 'commit' de sus filas y la referencia para reproducirlas.
+#   - Y en inferencia, entre ese mismo par: Autoencoder 54, 472.834 → 729.199
+#     flujos/s (1,54×); Autoencoder 122, 758.825 → 421.427 flujos/s (0,56×).
+# NINGUNO de estos factores es una cota superior: son lo medido entre dos
+# artefactos concretos y la corrida siguiente puede superarlos. Consecuencia
+# práctica: ninguna columna de tiempo es reproducible —ni 'tiempo_s' ni
+# 'tiempo_inferencia_s' ni sus dos derivadas—, sirven como comparación relativa de
+# coste y de orden de magnitud, y una diferencia entre dos filas menor que los
+# factores ya observados no significa nada.
 # Sin comas (como el resto de ALCANCE_*): estos textos viajan como valor de CSV.
-_AVISO_TIEMPO_VARIANZA = (" · wall-clock de pase único en máquina no dedicada: "
-                          "varía hasta 4x entre corridas (y hasta ±80 % en las "
-                          "medidas de inferencia de pocas decenas de ms) — es "
-                          "orden de magnitud y no cifra reproducible")
+_AVISO_TIEMPO_VARIANZA = (" · wall-clock de pase único en máquina no dedicada y "
+                          "NO reproducible: dispersión observada entre las "
+                          "corridas de referencia 38fdd4b y 5516b60 de hasta "
+                          "4.83x en 'tiempo_s' (Autoencoder 54: 37.71 s → "
+                          "181.91 s) y de 4.7x en 'tiempo_inferencia_s' (el mismo "
+                          "par: 0.031 s → 0.147 s = 729199 → 153510 flujos/s) — "
+                          "las medidas de pocas decenas de ms dispersan tanto "
+                          "como las de minutos y esos factores son lo OBSERVADO "
+                          "entre esas dos corridas y no una cota: es orden de "
+                          "magnitud y no cifra reproducible")
 
 # Lo que NO entra en la inferencia medida. Va pegado a los cuatro alcances de
 # tiempo porque acompaña al par (latencia, caudal) que publica cada fila: sin esta
@@ -254,14 +294,33 @@ ALCANCE_TIEMPO_S_BLOQUE_ANOMALIAS = (
     "REFERENCIA 38fdd4b — orden de magnitud de otra corrida y no una predicción "
     "sobre esta fila: el reparto que vale es el que sale de las cinco columnas de "
     "tiempo de la propia fila. Su reparto interno NO se estima aquí: está MEDIDO "
-    "en 'tiempo_score_seleccion_s' y 'tiempo_score_umbral_s' de esta misma fila"
+    "en 'tiempo_score_seleccion_s' y 'tiempo_score_umbral_s' de esta misma fila. "
+    "AVISO al reconstruir el reparto: los tres tramos de scoring —(2) (3) y (4)— "
+    "miden la MISMA operación pero NO son comparables por flujo entre sí porque "
+    "cada uno cae en un estado de caché distinto: en el grid cada modelo se puntúa "
+    "justo después de su propio fit (caliente) · el pase del umbral reutiliza el "
+    "ganador ajustado 2-3 iteraciones antes (frío) · y la inferencia sobre D2 "
+    "reutiliza el que el pase del umbral acaba de calentar. Lo enseña "
+    "LocalOutlierFactor en la corrida de referencia 5516b60: "
+    "'tiempo_score_umbral_s' / 'tiempo_inferencia_s' dio 0.703 (54) y 0.889 (122) "
+    "cuando la razón de filas puntuadas impone 13469/22544 = 0.597. NO es error de "
+    "medida y no autoriza a decir que el scoring del umbral cuesta más por flujo "
+    "que el de D2: es el único de los cuatro detectores que lo enseña porque "
+    "sklearn le asigna algorithm='brute' por encima de 15 features y su scoring "
+    "recorre las 53874 filas de D1_train mientras IsolationForest OneClassSVM y "
+    "Autoencoder puntúan contra un modelo compacto"
     + _AVISO_TIEMPO_VARIANZA + _AVISO_LATENCIA_SOLO_PREDICT
 )
 
 # firmas.py: mismo cálculo que el de anomalías y otra composición. Aquí el
-# GridSearchCV se come el total y el residual es la cola de métricas + figura
-# (0,258-0,314 s en 54 y 0,466-0,502 s en 122 medidos en la corrida de referencia
-# 38fdd4b): invisible salvo en el DecisionTree porque su bloque entero dura 2-4 s.
+# GridSearchCV se come el total y el residual es la cola de métricas + figura: un
+# tramo de coste casi FIJO que no escala con el modelo e invisible salvo en el
+# DecisionTree porque su bloque entero dura pocos segundos. La banda en segundos
+# que este comentario publicaba (0,258-0,314 s en 54 y 0,466-0,502 s en 122 de la
+# corrida 38fdd4b) SE RETIRA del texto del alcance: aunque estaba anclada, ya no
+# orienta —la corrida 5516b60 dio 1,052 s y el 14,3 % en DecisionTree 54, fuera de
+# esa banda y del 10,7-12,8 % que la acompañaba—, y el residual de firmas es el
+# único que sale EXACTO por resta desde el propio CSV. Se remite a las columnas.
 # La selección de balanceo (4.3.4) NO está dentro.
 #
 # POR QUÉ AQUÍ NO SE INSTRUMENTA (a diferencia de anomalías, donde el residual sí
@@ -281,12 +340,14 @@ ALCANCE_TIEMPO_S_BLOQUE_FIRMAS = (
     "referencia 38fdd4b (allí el 87-89 % en DecisionTree) (2) el predict sobre "
     "los 9083 flujos de D2 de tipo conocido = "
     "'tiempo_inferencia_s' y (3) la cola de evaluar_multiclase + UNA figura —la "
-    "matriz de confusión 4x4— que en esa misma corrida costó 0.258-0.314 s en la "
-    "variante de 54 y 0.466-0.502 s en la de 122. Lo que no es ajuste ni "
-    "inferencia —el tramo (3)— fue allí el 0.2-0.7 % de 'tiempo_s' salvo en "
-    "DecisionTree (10.7-12.8 %: la cola no baja y su bloque entero dura 2-4 s); "
-    "los tres porcentajes son orden de magnitud de otra corrida y el de ESTA fila "
-    "sale de sus propias columnas. No necesita columna propia: el residual sale "
+    "matriz de confusión 4x4—: un tramo de coste casi FIJO que no escala con el "
+    "modelo y por eso solo pesa en DecisionTree cuyo bloque entero dura pocos "
+    "segundos. "
+    "Aquí NO se da su banda: las dos corridas de referencia no se solapan "
+    "(38fdd4b dio 0.258-0.314 s en la variante de 54 y el 10.7-12.8 % en "
+    "DecisionTree · 5516b60 dio 1.052 s y el 14.3 % en DecisionTree 54) así que "
+    "ninguna orienta sobre ESTA fila y el valor exacto sale de sus propias "
+    "columnas. No necesita columna propia: el residual sale "
     "exacto restando de 'tiempo_s' las otras dos columnas de tiempo y es esa cola "
     "salvo dos menudencias que caen en la misma ventana —leer "
     "busqueda.best_estimator_ y dos print—. NO incluye el mini-experimento de "
@@ -389,8 +450,22 @@ ALCANCE_SUFIJOS = {
 # 'tiempo_s' NO entra aquí a propósito: su alcance depende de la TABLA (tres
 # significados; ver el bloque ALCANCE_TIEMPO_S_*) y este diccionario solo sabe dar
 # uno por nombre de columna. Se declara en el dato, con 'alcance_tiempo_s'.
+#
+# 'n_iter_ganador' (metricas_anomalias.csv) tampoco es una métrica sobre D2 y sin
+# alcance propio se leería como una: son las ÉPOCAS del ajuste del ganador.
+ALCANCE_N_ITER = (
+    "épocas consumidas por el ajuste del modelo ganador sobre D1_train "
+    "(Autoencoder = MLPRegressor con early_stopping=True y max_iter=300) — NO es "
+    "una métrica sobre D2: está para que 'tiempo_entrenamiento_s' sea "
+    "interpretable (épocas frente a carga de máquina) y un valor igual a 300 "
+    "avisa de que el ajuste se cortó por el tope y no por convergencia. Celda "
+    "VACÍA en IsolationForest OneClassSVM y LocalOutlierFactor: no ajustan por "
+    "iteraciones comparables y un 0 se leería como medida"
+)
+
 ALCANCE_COLUMNAS = {
     "umbral": ALCANCE_SELECCION,
+    "n_iter_ganador": ALCANCE_N_ITER,
 }
 
 # Marcadores que PARECEN de alcance y se vigilan: si una columna empieza por uno

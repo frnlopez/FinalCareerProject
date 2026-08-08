@@ -79,8 +79,10 @@ declaración. **Las columnas de tiempo sí cambian**, y era el objetivo: `tiempo
 `tiempo_entrenamiento_s`, `tiempo_inferencia_s`, `latencia_ms_por_flujo` y
 `flujos_por_segundo` se miden ahora con `perf_counter` (otra resolución) y arrastran además la
 varianza de máquina descrita más abajo. Cambia también el valor de `alcance` en las 16 filas de
-`metricas_balanceo.csv`. Y `metricas_anomalias.csv` estrena dos columnas medidas —
-`tiempo_score_seleccion_s` y `tiempo_score_umbral_s` —, así que el CSV anterior tiene otro
+`metricas_balanceo.csv`. Y `metricas_anomalias.csv` estrena **tres** columnas —las dos medidas
+`tiempo_score_seleccion_s` y `tiempo_score_umbral_s`, más `n_iter_ganador` (épocas del ajuste;
+**solo la rellena el autoencoder**, celda vacía en los otros tres detectores)—, así que el CSV
+anterior tiene otro
 esquema: al re-ejecutar, `limpiar_variante_csv()` lo apartará como
 `metricas_anomalias.csv.esquema-anterior.bak` y hay que correr **las dos variantes** (54 y 122)
 para regenerarlo completo.
@@ -132,21 +134,35 @@ normal, porque sin negativos la tasa de falsas alarmas no está definida y un `0
 «cero falsas alarmas». Afecta a `fpr`, `bin_fpr`, `fpr_cascada` y `fpr_detector`; con D2 real
 no se dispara.
 
+> [!note] `fpr_cascada` **es** `bin_fpr` en `metricas_hibrido.csv`
+> Mismo número y misma fila (0,101740 en la variante de 54 de la corrida `5516b60`), y es
+> **correcto por construcción**: la etapa 2 solo reclasifica los flujos que la etapa 1 marcó como
+> sospechosos y **nunca devuelve uno a `normal`**, así que la cascada no puede tener otro FPR que
+> el de su etapa 1. Se conservan las dos columnas porque responden a dos requisitos distintos
+> —`bin_fpr` cierra el bloque binario que pide **H-5** y `fpr_cascada` es el FPR que **P-2** exige
+> junto al titular de 0-day—, pero T1 no admite dos nombres para una magnitud sin declararlo: la
+> coincidencia va escrita en el dato, dentro de `config.ALCANCE_HIBRIDO`.
+
 > [!warning] Lo que `perf_counter` NO arregla: la varianza
 > Arregla la resolución, no la dispersión. Es *wall-clock* en una máquina no dedicada, así que
-> la misma corrida con la misma semilla da tiempos muy distintos: entre dos pases del mismo día
-> se observaron factores de hasta **4,4×** (OneClassSVM 122: 163,26 s → 37,13 s; KNN 122 en
-> firmas: 90,22 s → 207,81 s). Las cifras de partida (163,26 y 90,22) son del esquema de tablas
-> anterior y ya no están en el árbol: se recuperan de los CSV versionados en el commit
-> **`8b07319`** (y anteriores); las de llegada están versionadas en **`077119e`** y fueron
-> producidas con el código **`c7cf319`**, que es lo que declara la columna `commit` de sus filas
-> (`metricas_anomalias.csv:7`, `metricas_firmas.csv:8`) y la referencia inequívoca.
-> Y no es cosa solo de los tiempos largos: **una medida de inferencia de 30-50 ms varía hasta
-> ±80 % entre corridas** (autoencoder 54: 472.834 → 729.199 flujos/s, ×1,54; autoencoder 122:
-> 758.825 → 421.427, ×0,56). Dos filas de inferencia que difieran menos de **2×** no dicen nada.
-> **Ninguna columna de tiempo es reproducible.** Sirven como
-> comparación relativa de coste y de orden de magnitud; no para afirmar que un algoritmo es «un
-> 20 % más rápido» que otro. El resto de la tabla sí es reproducible (semilla 42).
+> la misma corrida con la misma semilla da tiempos muy distintos.
+>
+> **Aquí no se escriben cotas** («varía hasta 4×»): no las hay, y cada corrida nueva desmiente la
+> cifra que dejó la anterior —le pasó a la redacción previa de este aviso—. Lo que se escribe es
+> **dispersión observada entre dos corridas nombradas**, que ninguna corrida futura puede
+> desmentir:
+>
+> | Par de corridas | Dónde están | Dispersión observada |
+> |---|---|---|
+> | `38fdd4b` → `5516b60` | `metricas_anomalias.csv.esquema-anterior.bak` y el CSV vigente | Autoencoder 54: `tiempo_s` 37,71 s → 181,91 s = **4,83×**; `tiempo_entrenamiento_s` 37,492 s → 180,965 s = 4,83×; `tiempo_inferencia_s` 0,031 s → 0,147 s = **4,7×** (729.199 → 153.510 flujos/s) |
+> | `8b07319` → `077119e` | CSV versionados en esos commits (código `c7cf319` en el segundo) | OneClassSVM 122: 163,26 s → 37,13 s y KNN 122 en firmas: 90,22 s → 207,81 s = **4,4×** en sentido contrario; en inferencia, autoencoder 54: 472.834 → 729.199 flujos/s (×1,54) y autoencoder 122: 758.825 → 421.427 (×0,56) |
+>
+> El primer par enseña además que **la dispersión no es cosa solo de los tiempos largos**: una
+> medida de inferencia de decenas de milisegundos se mueve tanto como una de minutos.
+> **Ninguno de esos factores es una cota superior** y **ninguna columna de tiempo es
+> reproducible.** Sirven como comparación relativa de coste y de orden de magnitud; no para
+> afirmar que un algoritmo es «un 20 % más rápido» que otro. El resto de la tabla sí es
+> reproducible (semilla 42).
 
 > [!danger] Qué mide la latencia — y qué no (declaración exigida por P9)
 > `latencia_ms_por_flujo` y `flujos_por_segundo` miden **solo el `predict`/`score` sobre
@@ -168,15 +184,28 @@ Por qué declarar y no unificar: la nota de trazabilidad de `4.4` cita la column
 (`tiempo_s`), así que renombrarla rompería la referencia; y el texto de `4.4` describe su
 cálculo actual —«el proceso completo por algoritmo […] no solo el ajuste»—, de modo que
 unificar los tres convertiría medidas ya descritas en una cuarta que no describe ningún
-capítulo. (El argumento que se alegaba antes —que unificar movería los 5,0/28,3/16,4/40,6 s de
-la tabla de `4.4`— **no era cierto**: `metricas_anomalias.csv` publica hoy 5,51/26,17/20,85/
-52,43 para esas cuatro filas. Esa cita del vault ya está desactualizada por su cuenta y hay que
-refrescarla al redactar; no protegía nada.)
+capítulo.
+
+> [!note] El argumento que se alegaba antes, y su refutación —también fallida— corregidos
+> Se decía que unificar «movería los 5,0/28,3/16,4/40,6 s de la tabla de `4.4`». **No era
+> cierto.** Pero la refutación que se escribió aquí tampoco: aquellos «5,51/26,17/20,85/52,43 que
+> publica **hoy** `metricas_anomalias.csv`» no son de ninguna corrida del árbol. Lo verificable,
+> anclado a su artefacto:
+>
+> | Corrida | `tiempo_s` de IF / OCSVM / LOF / AE (54) | Dónde |
+> |---|---|---|
+> | `38fdd4b` | 4,01 / 23,28 / 13,28 / 37,71 | `metricas_anomalias.csv.esquema-anterior.bak` |
+> | `5516b60` | 5,14 / 28,10 / 22,77 / 181,91 | `metricas_anomalias.csv` vigente |
+>
+> Ninguna de las dos coincide con la tabla de `4.4` **ni entre sí**, que es lo único que hacía
+> falta: la cita del vault está desactualizada por su cuenta y hay que refrescarla al redactar,
+> así que no protegía nada. Los valores van **anclados a su corrida** a propósito; la siguiente
+> los vuelve a mover.
 
 | Tabla | Qué mide su `tiempo_s` | Constante |
 |---|---|---|
 | `metricas_anomalias.csv` | El **bloque completo del algoritmo**, en orden de ejecución (cinco tramos **principales**: dentro de la misma ventana caen además el submuestreo a 20.000 filas de `OneClassSVM`, la construcción del estimador en cada iteración y un `roc_auc_score` por configuración): (1) los `fit` del grid (= `tiempo_entrenamiento_s`) · (2) **puntuar el set de validación etiquetado —D1_val + 5.000 de D3 = 18.469 filas— una vez por cada configuración del grid** (6/9/4/2 configs) = `tiempo_score_seleccion_s` · (3) puntuar D1_val para el umbral p95 = `tiempo_score_umbral_s` · (4) la inferencia sobre D2 (= `tiempo_inferencia_s`) · (5) `evaluar_binario` + **una** figura, que es lo que queda al restar las cuatro columnas anteriores. | `config.ALCANCE_TIEMPO_S_BLOQUE_ANOMALIAS` |
-| `metricas_firmas.csv` | El **bloque completo del algoritmo**, con otra composición: (1) `GridSearchCV` + refit sobre D3 (= `tiempo_entrenamiento_s`, el 95,7-99,7 % del total) · (2) el `predict` sobre los 9.083 flujos conocidos de D2 (= `tiempo_inferencia_s`) · (3) `evaluar_multiclase` + **una** figura (0,258-0,314 s en 54 y 0,466-0,502 s en 122). **No** incluye el mini-experimento de balanceo de 4.3.4. | `config.ALCANCE_TIEMPO_S_BLOQUE_FIRMAS` |
+| `metricas_firmas.csv` | El **bloque completo del algoritmo**, con otra composición: (1) `GridSearchCV` + refit sobre D3 (= `tiempo_entrenamiento_s`, el 95,7-99,7 % del total **en la corrida `38fdd4b`**) · (2) el `predict` sobre los 9.083 flujos conocidos de D2 (= `tiempo_inferencia_s`) · (3) `evaluar_multiclase` + **una** figura: coste casi fijo, sin banda publicada (ver el aviso del residual). **No** incluye el mini-experimento de balanceo de 4.3.4. | `config.ALCANCE_TIEMPO_S_BLOQUE_FIRMAS` |
 | `metricas_baseline.csv` | **Solo el entrenamiento** (GridSearchCV + refit). Coincide con `tiempo_entrenamiento_s` de la misma fila: residual **cero** salvo redondeo. | `config.ALCANCE_TIEMPO_S_SOLO_ENTRENAMIENTO` |
 | `metricas_hibrido.csv` | El tramo que va de la **carga de los splits** al **cierre de la fila**: D1/D2/D3 + carga de los `.joblib` + calibración OOF (= `tiempo_entrenamiento_s`, 86-91 %) + cascada sobre D2 (= `tiempo_inferencia_s`, ~0,5 %) + tabla de sensibilidad de los 3 umbrales. **No** incluye la figura 5×6, la tabla 0-day de los cuatro detectores ni la escritura de los CSV. No es tiempo de ajuste: el híbrido no re-entrena. | `config.ALCANCE_TIEMPO_S_CARGA_A_CIERRE_FILA` |
 
@@ -185,18 +214,53 @@ y firmas comparten cálculo y no composición).
 
 > [!warning] `tiempo_s` **no** es `tiempo_entrenamiento_s + tiempo_inferencia_s`
 > El residual entre las tres columnas es la razón de ser de `alcance_tiempo_s`, y en anomalías es
-> enorme: **27-49 % de `tiempo_s`** (máximo `OneClassSVM` 54: 11,50 s de 23,28 s; luego OCSVM 122
-> 39,6 %, IF 54 35,1 %, IF 122 28,9 %, LOF 27,3 % y 27,2 %), y solo el 0,3-0,5 % en el
-> autoencoder. Ese residual **ya no se reparte por estimación**: `anomalias.py` cronometra sus
+> enorme: **27-49 % de `tiempo_s` en la corrida de referencia `38fdd4b`** (allí el máximo fue
+> `OneClassSVM` 54 con 11,50 s de 23,28 s; luego OCSVM 122 39,6 %, IF 54 35,1 %, IF 122 28,9 %,
+> LOF 27,3 % y 27,2 %), y solo el 0,3-0,5 % en el autoencoder. **Esos seis porcentajes son de esa
+> corrida y de ninguna otra**: no predicen la fila que tengas delante —el reparto que vale es el
+> que sale de las cinco columnas de tiempo de la propia fila—, igual que declara el
+> `alcance_tiempo_s` que viaja en el CSV. Ese residual **ya no se reparte por estimación**: `anomalias.py` cronometra sus
 > dos tramos grandes y los publica como `tiempo_score_seleccion_s` (el scoring del set etiquetado
 > repetido por configuración del grid) y `tiempo_score_umbral_s` (el scoring de D1_val), de modo
 > que la cola de métricas + figura sale por resta desde el propio CSV. El reparto que este
 > documento daba antes —«75-86 % / 5-15 %», y un scoring de selección de ≈9,5 s que igualaba al
 > ajuste en `OneClassSVM` 54— procedía de un modelo de coste no declarado y **se retira**: con
 > escalado plano por filas ese mismo tramo salía en 17,8 s dentro de un residual medido de
-> 11,497 s, un imposible. En firmas el mismo residual es `<1 %` salvo en `DecisionTree`
-> (10,7-12,8 %, porque su bloque entero dura 2-4 s), y ahí **no** hace falta columna nueva: al
-> ser un único tramo se obtiene exacto restando las otras dos columnas de tiempo.
+> 11,497 s, un imposible. En firmas el mismo residual es la cola de métricas + figura —un tramo de
+> coste casi fijo que no escala con el modelo—, y ahí **no** hace falta columna nueva: al ser un único
+> tramo se obtiene exacto restando las otras dos columnas de tiempo. Tampoco se le pone banda:
+> las dos corridas de referencia no se solapan (`38fdd4b`, 0,258-0,314 s y 10,7-12,8 % en
+> `DecisionTree`; `5516b60`, 1,052 s y 14,3 % en `DecisionTree` 54), así que **el número que vale
+> es el de la resta**.
+
+> [!warning] Los tres tiempos de *scoring* de anomalías no son comparables por flujo
+> `tiempo_score_seleccion_s`, `tiempo_score_umbral_s` y `tiempo_inferencia_s` miden **la misma
+> operación** (puntuar filas con el modelo ya ajustado) sobre tres conjuntos de tamaño distinto,
+> y aun así **no se pueden normalizar por número de filas y comparar entre sí**: cada uno cae en
+> un **estado de caché** diferente. En el grid, cada modelo se puntúa justo después de su propio
+> `fit` (caliente); el pase del umbral reutiliza el ganador, ajustado 2-3 iteraciones antes
+> (frío); y la inferencia sobre D2 reutiliza el que el pase del umbral acaba de calentar.
+>
+> El único que lo enseña es **`LocalOutlierFactor`**: en la corrida `5516b60`,
+> `tiempo_score_umbral_s / tiempo_inferencia_s` da **0,703** (54) y **0,889** (122), cuando la
+> razón de filas puntuadas impone 13.469/22.544 = **0,597**. **No es error de medida.** LOF es el
+> único porque `sklearn` le asigna `algorithm='brute'` por encima de 15 features y su *scoring*
+> recorre las 53.874 filas de `D1_train`, mientras IF, OCSVM y el autoencoder puntúan contra un
+> modelo compacto. De ahí que **no** se pueda concluir «el *scoring* del umbral de LOF cuesta más
+> por flujo que la inferencia sobre D2»: es la misma operación con el mismo modelo. El aviso
+> viaja también en el dato (`config.ALCANCE_TIEMPO_S_BLOQUE_ANOMALIAS`).
+
+> [!note] `n_iter_ganador`: sin ella, el `tiempo_entrenamiento_s` del autoencoder no se puede leer
+> El autoencoder es un `MLPRegressor` con `early_stopping=True` y `max_iter=300`, así que su
+> tiempo de ajuste depende de **dos** cosas que el CSV no separaba: cuántas épocas necesitó y
+> cómo de cargada estaba la máquina. Con `38fdd4b` dando 37,492 s (54) y 121,059 s (122), y
+> `5516b60` dando 180,965 s (54) y 47,826 s (122) —**relación invertida**—, no había forma de
+> decidir. Desde ahora `metricas_anomalias.csv` publica `n_iter_ganador`: épocas del ajuste del
+> modelo ganador, **solo para el autoencoder** (celda vacía en IF, OCSVM y LOF, que no ajustan
+> por iteraciones comparables; nunca un `0`, que se leería como medida). Un valor igual a **300**
+> avisa además de que el ajuste se cortó por el tope y no por convergencia. El `.joblib` guarda
+> lo mismo más `best_validation_score` cuando el estimador lo expone. Alcance declarado en
+> `config.ALCANCE_N_ITER` (entra en `config.ALCANCE_COLUMNAS`: no es una métrica sobre D2).
 
 > [!warning] El log del híbrido imprime otra cifra
 > `hibrido.py` congela `tiempo_s` al construir la fila resumen, pero su línea final
