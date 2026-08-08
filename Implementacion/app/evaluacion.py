@@ -154,54 +154,39 @@ FILAS_ESPERADAS_POR_VARIANTE = {
 # la misma magnitud ni responden a la misma pregunta. El de inferencia es el que
 # habla de despliegue, y se reporta además normalizado por flujo.
 #
-# CÓMO SE MIDEN Y QUÉ VALEN (corrección de T1). Los cuatro scripts cronometran con
-# time.perf_counter(), no con time.time(): en Windows time.time() tiene una
-# resolución de ~15,6 ms. La PRUEBA de que eso rompía el dato es el predict del
-# DecisionTree en metricas_firmas.csv: daba t_inf = 0,0 s en las DOS variantes y de
-# ahí salía una fila que se contradecía —'latencia_ms_por_flujo' = 0,0 junto a un
-# 'flujos_por_segundo' vacío—. Con perf_counter ese predict mide 0,002 s (54) y
-# 0,004 s (122): un orden de magnitud POR DEBAJO del tick, así que time.time() no
-# podía verlo. perf_counter es monótono y de alta resolución, pero NO tiene época:
-# solo sirve para diferencias, nunca para la columna 'fecha' (esa la da
-# datetime.now()).
-#
-# LO QUE NO ERA UNA PRUEBA, y aquí se citaba como tal: los 758.824 flujos/s del
-# Autoencoder. No eran artefacto del reloj. Despejando, t_inf = 22.544 /
-# 758.824,7 = 0,029709 s, que NO es múltiplo de 15,6 ms; y la corrida nueva —ya con
-# perf_counter— da 0,053 s para ese mismo par. Era varianza de máquina (1,8x). La
-# afirmación se retira.
+# CÓMO SE MIDEN. Los cuatro scripts cronometran con time.perf_counter(), no con
+# time.time(): en Windows time.time() tiene una resolución de ~15,6 ms, por debajo
+# de la cual quedaban los predict más baratos —y publicaban un
+# 'latencia_ms_por_flujo' = 0,0, un imposible—. perf_counter es monótono y de alta
+# resolución, pero NO tiene época: solo sirve para diferencias, nunca para la
+# columna 'fecha' (esa la da datetime.now()). La prueba de ese artefacto de reloj,
+# con sus cifras y su corrida, está en Implementacion/PIPELINE.md.
 #
 # LO QUE perf_counter NO ARREGLA: la varianza. Es wall-clock en una máquina no
 # dedicada y compartida, así que la misma corrida con la misma semilla da tiempos
-# muy distintos. NO se declara una cota ("varía hasta 4x") porque no la hay: cada
-# corrida nueva desmiente la cifra de la anterior —le pasó a la redacción previa de
-# este bloque— y lo único que no caduca es la DISPERSIÓN OBSERVADA entre dos
-# corridas nombradas:
-#   - Entre 38fdd4b y 5516b60 (las dos corridas de anomalías que hay en el árbol:
-#     metricas_anomalias.csv.esquema-anterior.bak y el CSV vigente), Autoencoder de
-#     54: 'tiempo_s' 37,71 s → 181,91 s = 4,83x, y 'tiempo_entrenamiento_s'
-#     37,492 s → 180,965 s = el mismo 4,83x.
-#   - Ese mismo par en INFERENCIA, que es lo que demuestra que la dispersión no es
-#     cosa de los tiempos largos: 0,031 s → 0,147 s = 4,7x (729.199 → 153.510
-#     flujos/s). Una medida de decenas de ms se mueve tanto como una de minutos.
-#   - Entre 8b07319 y 077119e se observó 4,4x en sentido contrario (OneClassSVM
-#     122: 163,26 s → 37,13 s; KNN 122 en firmas: 90,22 s → 207,81 s) y en
-#     inferencia 1,54x / 0,56x (Autoencoder 54: 472.834 → 729.199 flujos/s;
-#     Autoencoder 122: 758.825 → 421.427).
-# Ninguno de esos factores acota nada: la corrida siguiente puede superarlos.
+# muy distintos.
+#
+# DÓNDE VIVEN LOS NÚMEROS (regla de T18, ver config.py): aquí NO se escribe ninguna
+# cota ("varía hasta 4x") ni ningún factor de dispersión ni ninguna cifra de
+# ninguna corrida. Ese material se falsa con cada corrida nueva y en el código —o
+# peor, dentro del CSV— no se puede corregir sin re-correr. La dispersión medida
+# entre las corridas que hay en git está TABULADA en Implementacion/PIPELINE.md,
+# sección "Las columnas de tiempo: qué miden y hasta dónde valen", cada cifra
+# anclada al commit del que sale.
 # Consecuencia práctica, y hay que decirla al citar: NINGUNA columna de tiempo es
 # reproducible ni sirve para afirmar que un algoritmo es "un 20 % más rápido" que
-# otro. Son comparación relativa de coste y de orden de magnitud. Lo demás de la
-# tabla sí es reproducible (semilla 42); estas cinco columnas y 'tiempo_s', no.
+# otro. Son comparación relativa de coste y de orden de magnitud, y solo dentro de
+# la misma corrida. Lo demás de la tabla sí es reproducible (semilla 42); estas
+# cinco columnas y 'tiempo_s', no.
 #
 # QUÉ HAY DENTRO DE LA INFERENCIA MEDIDA (declaración obligatoria antes de citar
 # cualquiera de las dos derivadas): SOLO el predict/score sobre características ya
 # calculadas y ya cargadas en memoria como DataFrame. NO incluye captura de
 # tráfico, ensamblado del flujo ni extracción de las 41 características del
-# registro NSL-KDD —que es donde vive el coste real de un despliegue—. Por eso los
-# 4,4 millones de flujos/s del DecisionTree NO son capacidad operativa: presentarlos
-# como tal sería la Lab-Only Evaluation que denuncia el pitfall P9. Cada fila lo
-# lleva escrito en 'alcance_tiempo_s' (config._AVISO_LATENCIA_SOLO_PREDICT).
+# registro NSL-KDD —que es donde vive el coste real de un despliegue—. Por eso el
+# caudal del DecisionTree NO es capacidad operativa: presentarlo como tal sería la
+# Lab-Only Evaluation que denuncia el pitfall P9. Cada fila lo lleva escrito en
+# 'alcance_tiempo_s' (config._AVISO_LATENCIA_SOLO_PREDICT).
 COLUMNAS_TIEMPO = (
     "tiempo_entrenamiento_s", "tiempo_inferencia_s", "n_inferencia",
     "latencia_ms_por_flujo", "flujos_por_segundo",

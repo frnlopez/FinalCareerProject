@@ -150,104 +150,62 @@ ALCANCE_D2_REPORTE = ("sobre D2 completo y SOLO como reporte: ninguna decisión 
 # ---------------------------------------------------------------------------
 # 'tiempo_s' era el último superviviente del defecto que T1 vino a cerrar: mismo
 # nombre en tres tablas y tres magnitudes distintas, sin que el dato lo dijese.
-# Los CÁLCULOS siguen siendo tres (bloque completo del algoritmo · solo
-# entrenamiento · tramo carga→cierre de fila), pero los TEXTOS son cuatro:
-# anomalias.py y firmas.py comparten cálculo y NO comparten composición —en
-# firmas el ajuste + la inferencia son el 99 % del total y en anomalías bajan al
-# 51-73 % en tres de los cuatro detectores—
-# así que un texto único no dejaba reconstruir ninguno de los dos.
-# NO se homogeneiza el cálculo y NO se renombra la columna. Las razones (las de
-# verdad; la que se alegaba antes —"movería los 5,0/28,3/16,4/40,6 s que cita la
-# tabla de 4.4"— era falsa, y la refutación que se escribió aquí TAMBIÉN lo era:
-# esos "5,51/26,17/20,85/52,43 que publica hoy" no son de ninguna corrida del
-# árbol. Lo verificable, y anclado: metricas_anomalias.csv dio
-# 4,01/23,28/13,28/37,71 para esas cuatro filas en la corrida 38fdd4b —hoy en el
-# .bak de esquema anterior— y 5,14/28,10/22,77/181,91 en la corrida 5516b60 —el
-# CSV vigente—. Ninguna de las dos coincide con la tabla de 4.4 ni entre sí, que
-# es lo único que hacía falta demostrar: la cita del vault está desactualizada
-# por su cuenta y hay que refrescarla al redactar, así que no protegía nada. Los
-# valores van anclados a su corrida a propósito: la siguiente los vuelve a
-# mover):
-#   - No se RENOMBRA porque el nombre 'tiempo_s' está citado literalmente en la
-#     nota de trazabilidad de 4.4 (la lista de columnas de metricas_anomalias.
-#     csv), y renombrarlo rompería esa referencia sin ganar nada que el alcance
-#     declarado no dé ya.
-#   - No se HOMOGENEIZA porque cada cálculo es el que su capítulo describe: el
-#     "proceso completo por algoritmo (búsqueda en rejilla, fijación del umbral,
-#     evaluación y generación de figuras), no solo el ajuste" es literalmente lo
-#     que 4.4 dice que mide su columna Tiempo. Unificar los tres convertiría
-#     medidas descritas en el texto en una cuarta que no describe nadie.
-#     (Matiz al redactar: ese "generación de figuras" en PLURAL es del capítulo y
-#     no del código. Dentro del cronómetro cae UNA sola figura —la matriz de
-#     confusión— y cuesta décimas; la de curvas ROC/PR se dibuja al final del
-#     script y queda fuera. Los alcances de aquí abajo dicen "UNA figura".)
-# Se hace, pues, lo que T1 hace con todo lo demás: que el dato publicado declare
-# su alcance. Cada fila de las cuatro tablas principales lleva una columna
-# hermana 'alcance_tiempo_s' con uno de estos textos.
+# Los CÁLCULOS son tres (bloque completo del algoritmo · solo entrenamiento ·
+# tramo carga→cierre de fila) y los TEXTOS cuatro: anomalias.py y firmas.py
+# comparten cálculo y NO comparten composición, así que un texto único no dejaba
+# reconstruir ninguno de los dos. Cada fila de las cuatro tablas principales lleva
+# una columna hermana 'alcance_tiempo_s' con uno de estos textos.
 #
+# NO se renombra la columna (la nota de trazabilidad de 4.4 la cita por su nombre)
+# y NO se homogeneiza el cálculo (cada uno es el que describe su capítulo).
 # Por eso 'tiempo_s' NO está en ALCANCE_COLUMNAS: ese diccionario da UN alcance
 # por nombre de columna y aquí el alcance depende de la tabla. Va en el dato.
 #
-# POR QUÉ perf_counter Y CON QUÉ PRUEBA (corregido: la que se citaba era falsa).
-# Los cuatro scripts miden con time.perf_counter() y no con time.time(), que en
-# Windows tiene una resolución de ~15,6 ms. La prueba DEMOSTRABLE del artefacto de
-# reloj es el predict del DecisionTree en metricas_firmas.csv: daba t_inf = 0,0 s
-# en las DOS variantes y publicaba una fila que se contradecía a sí misma
-# ('latencia_ms_por_flujo' = 0,0 —cero milisegundos por flujo, un imposible— junto
-# a un 'flujos_por_segundo' vacío). Con perf_counter ese mismo predict mide 0,002 s
-# (54) y 0,004 s (122): estaba un orden de magnitud por debajo del tick.
-# LO QUE NO ERA PRUEBA: los 758.824 flujos/s del Autoencoder, que este mismo
-# comentario citaba como "caudal artefacto del reloj". No lo era. Despejando,
-# t_inf = 22.544 / 758.824,7 = 0,029709 s, que no es múltiplo de 15,6 ms; y la
-# corrida nueva —ya con perf_counter— da 0,053 s para ese mismo par. Era varianza
-# de máquina (1,8×), no resolución. La afirmación se retira.
+# ---------------------------------------------------------------------------
+# REGLA DE T18 — QUÉ PUEDE ESCRIBIRSE EN ESTOS CUATRO TEXTOS
+# ---------------------------------------------------------------------------
+# Solo lo ESTABLE, es decir lo que se deduce del código y no de ninguna corrida:
+#   - qué tramos entran en 'tiempo_s' y cuáles quedan fuera;
+#   - qué columna mide cada tramo y cuál sale por resta;
+#   - el aviso de P9 sobre qué mide (y qué NO) la latencia.
+# PROHIBIDO en estos textos: porcentajes, bandas, factores de dispersión, cifras
+# de ninguna corrida y cualquier atribución causal. Motivo (T18): publicar
+# interpretación DENTRO del dato crea un bucle — el dato no se puede editar sin
+# re-correr y cada corrida nueva falsa la cifra que dejó la anterior, que es
+# exactamente lo que le pasó a las tres redacciones anteriores de este bloque
+# (las cotas "27-49 %" y "varía hasta 4x" nacieron falsables y se falsaron). Y de
+# paso la celda 'alcance_tiempo_s' llegó a ~3,2 kB por fila en un CSV de 9 líneas.
+# TODOS los números interpretativos viven ahora en Implementacion/PIPELINE.md,
+# sección "Las columnas de tiempo: qué miden y hasta dónde valen", anclados al
+# commit de la corrida de la que salen: allí son editables sin re-correr nada.
+# ---------------------------------------------------------------------------
 #
-# LO QUE perf_counter NO ARREGLA (léase antes de comparar dos tiempos): la
-# VARIANZA. Es wall-clock en una máquina no dedicada. Y una advertencia sobre CÓMO
-# se declara: aquí NO se escriben cotas ("varía hasta 4x") porque no las hay —cada
-# corrida nueva desmiente la de la anterior, que es exactamente lo que le pasó a la
-# redacción previa de este bloque—. Lo que se escribe es DISPERSIÓN OBSERVADA entre
-# dos corridas nombradas, que ninguna corrida futura puede desmentir:
-#   - Entre 38fdd4b y 5516b60 (las dos corridas de anomalías que hay en el árbol:
-#     la primera en metricas_anomalias.csv.esquema-anterior.bak y la segunda en el
-#     CSV vigente) el Autoencoder de 54 pasó de 37,71 s a 181,91 s de 'tiempo_s'
-#     = 4,83× — y su 'tiempo_entrenamiento_s' de 37,492 s a 180,965 s = el mismo
-#     4,83×. Ese par tira por tierra la cota de "4x" que este comentario declaraba.
-#   - Ese mismo par muestra que la dispersión NO se limita a los tiempos largos: la
-#     INFERENCIA de ese Autoencoder pasó de 0,031 s a 0,147 s = 4,7× (caudal
-#     729.199 → 153.510 flujos/s). Una medida de decenas de milisegundos se mueve
-#     tanto como una de minutos.
-#   - Entre 8b07319 y 077119e se observó 4,4× en sentido contrario (OneClassSVM
-#     122: 163,26 s → 37,13 s; KNN 122 en firmas: 90,22 s → 207,81 s). Las cifras
-#     DE PARTIDA de ese par (163,26 y 90,22) son del esquema de tablas anterior,
-#     que ya no está en el árbol de trabajo: se recuperan de los CSV versionados en
-#     el commit 8b07319 (y anteriores). Las de llegada (37,13 y 207,81) están
-#     versionadas en 077119e; producidas con el código c7cf319, que es lo que
-#     declaraba la columna 'commit' de sus filas y la referencia para reproducirlas.
-#   - Y en inferencia, entre ese mismo par: Autoencoder 54, 472.834 → 729.199
-#     flujos/s (1,54×); Autoencoder 122, 758.825 → 421.427 flujos/s (0,56×).
-# NINGUNO de estos factores es una cota superior: son lo medido entre dos
-# artefactos concretos y la corrida siguiente puede superarlos. Consecuencia
-# práctica: ninguna columna de tiempo es reproducible —ni 'tiempo_s' ni
-# 'tiempo_inferencia_s' ni sus dos derivadas—, sirven como comparación relativa de
-# coste y de orden de magnitud, y una diferencia entre dos filas menor que los
-# factores ya observados no significa nada.
-# Sin comas (como el resto de ALCANCE_*): estos textos viajan como valor de CSV.
-_AVISO_TIEMPO_VARIANZA = (" · wall-clock de pase único en máquina no dedicada y "
-                          "NO reproducible: dispersión observada entre las "
-                          "corridas de referencia 38fdd4b y 5516b60 de hasta "
-                          "4.83x en 'tiempo_s' (Autoencoder 54: 37.71 s → "
-                          "181.91 s) y de 4.7x en 'tiempo_inferencia_s' (el mismo "
-                          "par: 0.031 s → 0.147 s = 729199 → 153510 flujos/s) — "
-                          "las medidas de pocas decenas de ms dispersan tanto "
-                          "como las de minutos y esos factores son lo OBSERVADO "
-                          "entre esas dos corridas y no una cota: es orden de "
-                          "magnitud y no cifra reproducible")
+# POR QUÉ perf_counter. Los cuatro scripts miden con time.perf_counter() y no con
+# time.time(), que en Windows tiene una resolución de ~15,6 ms — suficiente para
+# publicar un 'latencia_ms_por_flujo' = 0,0 en el predict del DecisionTree. La
+# prueba, con sus cifras y su corrida, está en PIPELINE.md. perf_counter es
+# monótono y NO tiene época: solo sirve para diferencias (la columna 'fecha' la
+# sigue dando datetime.now()).
+#
+# LO QUE perf_counter NO ARREGLA: la varianza. Es wall-clock en una máquina no
+# dedicada. Aquí NO se declara ninguna cota ni ningún factor; la dispersión medida
+# entre las corridas que hay en git está tabulada en PIPELINE.md.
+# Sin comas: estos textos viajan como valor dentro de un CSV.
+_AVISO_TIEMPO_VARIANZA = (
+    " · wall-clock de un pase único en máquina no dedicada: NO es reproducible ni "
+    "comparable entre corridas y NO es una propiedad del algoritmo — vale como "
+    "orden de magnitud y como comparación relativa DENTRO de esta misma corrida. "
+    "La dispersión medida entre corridas y el umbral por debajo del cual una "
+    "diferencia entre dos filas no significa nada están tabulados en "
+    "Implementacion/PIPELINE.md sección 'Las columnas de tiempo: qué miden y "
+    "hasta dónde valen' — anclados al commit de cada corrida y NO aquí a "
+    "propósito: una cifra dentro del dato no se puede corregir sin re-correr"
+)
 
 # Lo que NO entra en la inferencia medida. Va pegado a los cuatro alcances de
 # tiempo porque acompaña al par (latencia, caudal) que publica cada fila: sin esta
-# frase, citar los 4,4 millones de flujos/s del DecisionTree como capacidad
-# operativa sería exactamente la Lab-Only Evaluation que denuncia el pitfall P9.
+# frase, citar el caudal del DecisionTree como capacidad operativa sería
+# exactamente la Lab-Only Evaluation que denuncia el pitfall P9.
 _AVISO_LATENCIA_SOLO_PREDICT = (
     " · 'latencia_ms_por_flujo' y 'flujos_por_segundo' miden SOLO el predict/score "
     "sobre características ya calculadas y ya en memoria: NO incluyen captura de "
@@ -257,112 +215,54 @@ _AVISO_LATENCIA_SOLO_PREDICT = (
 )
 
 # anomalias.py: bloque completo del algoritmo. El tramo que no es ajuste ni
-# inferencia sobre D2 llega al 49 % de 'tiempo_s' y lo domina el SCORING del set de
-# validación etiquetado repetido una vez por configuración del grid (18.469 filas ×
-# 6/9/4/2 configs frente a las 22.544 de D2): por eso el texto lo nombra el primero
-# de los tres y no habla de "figuras" —dentro del cronómetro solo cae UNA—.
-#
-# ESE REPARTO SE MIDE, NO SE ESTIMA (corrección: la versión anterior de este texto
-# publicaba "el (2) es el 75-86 % y el (3) el 5-15 %" y "9.5 s frente a 9.4 s" sin
-# decir con qué modelo de coste se habían calculado. Con un escalado plano por
-# filas puntuadas el tramo (2) de OneClassSVM 54 daba 17,8 s dentro de un residual
-# medido de 11,497 s —imposible—, y el 86 % de IsolationForest solo salía
-# ponderando el grid por 'n_estimators'; con escalado plano habría sido el 43 %. Un
-# supuesto que mueve el resultado de 43 % a 86 % no puede quedar implícito). Desde
-# esta versión anomalias.py cronometra los dos tramos y los publica como columnas:
-# 'tiempo_score_seleccion_s' (el tramo 2) y 'tiempo_score_umbral_s' (el tramo 3).
-# El texto ya no da porcentajes de ese reparto: el lector los saca de las columnas.
+# inferencia sobre D2 es grande y estaba sin declarar; desde T1 sus dos
+# componentes principales se MIDEN y se publican como columnas propias
+# ('tiempo_score_seleccion_s' y 'tiempo_score_umbral_s'), de modo que el reparto
+# se lee de la propia fila y no hace falta estimarlo ni publicarlo aquí.
 ALCANCE_TIEMPO_S_BLOQUE_ANOMALIAS = (
     "'tiempo_s' = el bloque completo del algoritmo. Sus cinco tramos principales "
     "en orden de ejecución: (1) los fit del grid — y solo ellos son "
     "'tiempo_entrenamiento_s' — (2) puntuar el set de validación etiquetado "
-    "(D1_val + 5000 ataques de D3 = 18469 filas) UNA VEZ POR CONFIGURACIÓN del "
-    "grid (6 en IsolationForest · 9 en OneClassSVM · 4 en LocalOutlierFactor · 2 "
-    "en Autoencoder) = 'tiempo_score_seleccion_s' (3) puntuar D1_val para fijar el "
-    "umbral p95 = 'tiempo_score_umbral_s' (4) la inferencia sobre D2 = "
-    "'tiempo_inferencia_s' y (5) la cola de evaluar_binario + UNA figura —la "
-    "matriz de confusión; la de curvas ROC/PR se dibuja al final del script y "
-    "queda fuera—. 'Principales' es literal: dentro de la misma ventana caen "
-    "también el submuestreo a 20000 filas de OneClassSVM · la construcción del "
-    "estimador en cada iteración del grid y un roc_auc_score por configuración "
-    "— despreciables pero no nulos — así que el tramo (5) no se declara con una "
-    "cifra propia sino como lo que queda al restar de 'tiempo_s' las cuatro "
-    "columnas de tiempo anteriores. Lo que no es ajuste ni inferencia sobre D2 "
-    "—los tramos (2)+(3)+(5)— pesó del 27 % al 49 % de 'tiempo_s' en "
-    "IsolationForest / OneClassSVM / LocalOutlierFactor (máximo: OneClassSVM 54 "
-    "con 11.50 s de 23.28 s) y el 0.3-0.5 % en el Autoencoder EN LA CORRIDA DE "
-    "REFERENCIA 38fdd4b — orden de magnitud de otra corrida y no una predicción "
-    "sobre esta fila: el reparto que vale es el que sale de las cinco columnas de "
-    "tiempo de la propia fila. Su reparto interno NO se estima aquí: está MEDIDO "
-    "en 'tiempo_score_seleccion_s' y 'tiempo_score_umbral_s' de esta misma fila. "
-    "AVISO al reconstruir el reparto: los tres tramos de scoring —(2) (3) y (4)— "
-    "miden la MISMA operación pero NO son comparables por flujo entre sí porque "
-    "cada uno cae en un estado de caché distinto: en el grid cada modelo se puntúa "
-    "justo después de su propio fit (caliente) · el pase del umbral reutiliza el "
-    "ganador ajustado 2-3 iteraciones antes (frío) · y la inferencia sobre D2 "
-    "reutiliza el que el pase del umbral acaba de calentar. Lo enseña "
-    "LocalOutlierFactor en la corrida de referencia 5516b60: "
-    "'tiempo_score_umbral_s' / 'tiempo_inferencia_s' dio 0.703 (54) y 0.889 (122) "
-    "cuando la razón de filas puntuadas impone 13469/22544 = 0.597. NO es error de "
-    "medida y no autoriza a decir que el scoring del umbral cuesta más por flujo "
-    "que el de D2: es el único de los cuatro detectores que lo enseña porque "
-    "sklearn le asigna algorithm='brute' por encima de 15 features y su scoring "
-    "recorre las 53874 filas de D1_train mientras IsolationForest OneClassSVM y "
-    "Autoencoder puntúan contra un modelo compacto"
+    "(D1_val + la muestra de D3) UNA VEZ POR CONFIGURACIÓN del grid = "
+    "'tiempo_score_seleccion_s' (3) puntuar D1_val para fijar el umbral p95 = "
+    "'tiempo_score_umbral_s' (4) la inferencia sobre D2 = 'tiempo_inferencia_s' y "
+    "(5) la cola de evaluar_binario + UNA figura —la matriz de confusión; la de "
+    "curvas ROC/PR se dibuja al final del script y queda fuera—. 'Principales' es "
+    "literal: dentro de la misma ventana caen también el submuestreo de "
+    "OneClassSVM · la construcción del estimador en cada iteración del grid y un "
+    "roc_auc_score por configuración — despreciables pero no nulos — así que el "
+    "tramo (5) no tiene columna propia: es lo que queda al restar de 'tiempo_s' "
+    "las cuatro columnas de tiempo anteriores. El reparto entre tramos se LEE de "
+    "las columnas de esta misma fila y no se estima. AVISO al reconstruirlo: los "
+    "tramos (2) (3) y (4) miden la MISMA operación sobre conjuntos de tamaño "
+    "distinto pero NO se normalizan por número de filas para compararlos entre sí "
+    "— la corrida no controla ni el estado de caché ni la carga de la máquina y "
+    "las desviaciones observadas caben dentro de la dispersión entre corridas"
     + _AVISO_TIEMPO_VARIANZA + _AVISO_LATENCIA_SOLO_PREDICT
 )
 
 # firmas.py: mismo cálculo que el de anomalías y otra composición. Aquí el
-# GridSearchCV se come el total y el residual es la cola de métricas + figura: un
-# tramo de coste casi FIJO que no escala con el modelo e invisible salvo en el
-# DecisionTree porque su bloque entero dura pocos segundos. La banda en segundos
-# que este comentario publicaba (0,258-0,314 s en 54 y 0,466-0,502 s en 122 de la
-# corrida 38fdd4b) SE RETIRA del texto del alcance: aunque estaba anclada, ya no
-# orienta —la corrida 5516b60 dio 1,052 s y el 14,3 % en DecisionTree 54, fuera de
-# esa banda y del 10,7-12,8 % que la acompañaba—, y el residual de firmas es el
-# único que sale EXACTO por resta desde el propio CSV. Se remite a las columnas.
-# La selección de balanceo (4.3.4) NO está dentro.
-#
-# POR QUÉ AQUÍ NO SE INSTRUMENTA (a diferencia de anomalías, donde el residual sí
-# se cronometra en dos columnas nuevas): en firmas el residual es UN SOLO tramo
-# con coste apreciable —la cola de métricas + figura; lo demás que cae dentro de
-# la ventana (firmas.py:310-353) es leer busqueda.best_estimator_ y dos print—,
-# así que ya se obtiene EXACTAMENTE por resta de
-# las tres columnas publicadas ('tiempo_s' − 'tiempo_entrenamiento_s' −
-# 'tiempo_inferencia_s') sin ningún modelo de coste de por medio. Una columna extra
-# no añadiría información: solo repetiría una resta, y a cambio cambiaría el
-# esquema del CSV. En anomalías no valía la resta porque el residual mezcla TRES
-# tramos y repartirlos exigía suponer cómo escala el scoring con el grid.
+# residual es UN SOLO tramo con coste apreciable —la cola de métricas + figura—
+# así que sale EXACTO por resta de las tres columnas publicadas y no necesita
+# columna propia. La selección de balanceo (4.3.4) NO está dentro.
 ALCANCE_TIEMPO_S_BLOQUE_FIRMAS = (
     "'tiempo_s' = el bloque completo del algoritmo. Sus tres tramos en orden de "
     "ejecución: (1) el GridSearchCV con el balanceo ganador + el refit sobre todo "
-    "D3 = 'tiempo_entrenamiento_s' y el 95.7-99.7 % del total en la corrida de "
-    "referencia 38fdd4b (allí el 87-89 % en DecisionTree) (2) el predict sobre "
-    "los 9083 flujos de D2 de tipo conocido = "
-    "'tiempo_inferencia_s' y (3) la cola de evaluar_multiclase + UNA figura —la "
-    "matriz de confusión 4x4—: un tramo de coste casi FIJO que no escala con el "
-    "modelo y por eso solo pesa en DecisionTree cuyo bloque entero dura pocos "
-    "segundos. "
-    "Aquí NO se da su banda: las dos corridas de referencia no se solapan "
-    "(38fdd4b dio 0.258-0.314 s en la variante de 54 y el 10.7-12.8 % en "
-    "DecisionTree · 5516b60 dio 1.052 s y el 14.3 % en DecisionTree 54) así que "
-    "ninguna orienta sobre ESTA fila y el valor exacto sale de sus propias "
-    "columnas. No necesita columna propia: el residual sale "
-    "exacto restando de 'tiempo_s' las otras dos columnas de tiempo y es esa cola "
-    "salvo dos menudencias que caen en la misma ventana —leer "
-    "busqueda.best_estimator_ y dos print—. NO incluye el mini-experimento de "
-    "balanceo de 4.3.4 que "
-    "corre antes y se publica en metricas_balanceo.csv"
+    "D3 = 'tiempo_entrenamiento_s' (2) el predict sobre los flujos de D2 de tipo "
+    "conocido = 'tiempo_inferencia_s' y (3) la cola de evaluar_multiclase + UNA "
+    "figura —la matriz de confusión 4x4—: un tramo de coste casi FIJO que no "
+    "escala con el modelo. El (3) no lleva columna propia porque sale EXACTO "
+    "restando de 'tiempo_s' las otras dos columnas de tiempo —salvo dos "
+    "menudencias que caen en la misma ventana: leer busqueda.best_estimator_ y "
+    "dos print—. NO incluye el mini-experimento de balanceo de 4.3.4 que corre "
+    "antes y se publica en metricas_balanceo.csv"
     + _AVISO_TIEMPO_VARIANZA + _AVISO_LATENCIA_SOLO_PREDICT
 )
 
 # baseline.py: SOLO el GridSearchCV. Es el que rompe la comparación entre tablas.
-# Revisado con el mismo criterio que los otros tres: dentro de la ventana del
-# cronómetro (baseline.py:165-186) solo hay la construcción del estimador y el
+# Dentro de la ventana del cronómetro solo hay la construcción del estimador y el
 # GridSearchCV.fit, así que el residual 'tiempo_s' − 'tiempo_entrenamiento_s' es
-# CERO por construcción (28,31 vs 28,308 y 61,98 vs 61,983: solo redondeo). Aquí
-# no había nada sin declarar; el texto ya era exacto y solo se le añade el aviso
-# de qué mide —y qué no— la latencia.
+# cero por construcción (salvo redondeo).
 ALCANCE_TIEMPO_S_SOLO_ENTRENAMIENTO = (
     "'tiempo_s' = SOLO el entrenamiento (GridSearchCV + refit sobre D1+D3): "
     "coincide con 'tiempo_entrenamiento_s' de esta misma fila —el residual entre "
@@ -373,39 +273,24 @@ ALCANCE_TIEMPO_S_SOLO_ENTRENAMIENTO = (
 
 # hibrido.py: el tramo de la corrida que va de la carga de datos al cierre de la
 # fila resumen. NO es "el script entero": el cronómetro se lee al construir el
-# dict metricas_run (hibrido.py:612) y después aún quedan la figura 5x6 la tabla
-# 0-day de los cuatro detectores —que vuelve a puntuar D2 con IF + OCSVM + LOF +
-# AE y cuesta unos 4-5 s de los ~27 s de la variante de 54— y la escritura de los
-# CSV. Por eso el log final del script (hibrido.py:641) imprime una cifra MAYOR
-# que esta columna: son dos medidas distintas y el texto lo dice para que nadie
-# lea la discrepancia como un error. El cronómetro NO se mueve: reordenar la
-# persistencia para que la fila se escriba con su propio tiempo dentro es un
-# cambio de código que no aporta nada al dato.
-# Revisado también por el residual: 'tiempo_s' − 'tiempo_entrenamiento_s' (la
-# calibración OOF) − 'tiempo_inferencia_s' (la cascada) es 1,8 s de 22,2 s (8 %) y
-# 3,0 s de 22,6 s (13 %). Ese resto YA está enumerado en el texto —carga de los
-# splits + carga de los dos .joblib + las tres pasadas de métricas de la tabla de
-# sensibilidad—: no hay componente sin declarar. Se añade solo el orden de magnitud
-# (el 8-13 %, que sale de las tres columnas de la propia fila) para que el lector
-# lo reconstruya. Los "0,44 s" que este texto atribuía a la carga de los splits se
-# RETIRAN: eran la única cifra del híbrido sin artefacto que la respalde —no la
-# publica ninguna columna ni la imprime el script— y el desglose fino de ese 8-13 %
-# no vale una columna nueva en una tabla de una fila por variante.
+# dict metricas_run y después aún quedan la figura 5x6 la tabla 0-day de los
+# cuatro detectores y la escritura de los CSV. Por eso el log final del script
+# imprime una cifra MAYOR que esta columna: son dos medidas distintas y el texto
+# lo dice para que nadie lea la discrepancia como un error. El cronómetro NO se
+# mueve: reordenar la persistencia para que la fila se escriba con su propio
+# tiempo dentro es un cambio de código que no aporta nada al dato.
 ALCANCE_TIEMPO_S_CARGA_A_CIERRE_FILA = (
     "'tiempo_s' = el tramo de la corrida que va desde la carga de los splits "
     "hasta el cierre de esta fila (carga de D1/D2/D3 + carga de los .joblib de "
-    "las dos etapas + calibración OOF sobre D3 + cascada sobre D2 + tabla de "
-    "sensibilidad de los 3 umbrales); NO incluye lo que se hace DESPUÉS de "
-    "tomar la medida: la figura 5x6 · la tabla 0-day de los cuatro detectores · "
-    "la escritura de los CSV — de ahí que el log del script imprima una cifra "
+    "las dos etapas + calibración OOF sobre D3 = 'tiempo_entrenamiento_s' + "
+    "cascada sobre D2 = 'tiempo_inferencia_s' + tabla de sensibilidad de los 3 "
+    "umbrales); lo que queda al restar esas dos columnas son la carga de los "
+    "splits los dos .joblib y las pasadas de métricas de la tabla de sensibilidad "
+    "— ninguna columna los mide por separado. NO incluye lo que se hace DESPUÉS "
+    "de tomar la medida: la figura 5x6 · la tabla 0-day de los cuatro detectores "
+    "· la escritura de los CSV — de ahí que el log del script imprima una cifra "
     "mayor que esta; no es tiempo de ajuste —el híbrido no re-entrena— ni "
-    "comparable con el 'tiempo_s' de las otras tres tablas. Reparto observado en "
-    "la corrida de referencia 38fdd4b —orden de magnitud: el de ESTA fila sale de "
-    "sus tres columnas de tiempo—: la "
-    "calibración OOF es 'tiempo_entrenamiento_s' (86-91 %) · la cascada sobre D2 es "
-    "'tiempo_inferencia_s' (~0.5 %) · el 8-13 % restante son la carga de los "
-    "splits los dos .joblib y las 3 pasadas de métricas de la tabla de "
-    "sensibilidad — sin desglosar: ninguna columna los mide por separado"
+    "comparable con el 'tiempo_s' de las otras tres tablas"
     + _AVISO_TIEMPO_VARIANZA + _AVISO_LATENCIA_SOLO_PREDICT
 )
 
@@ -451,21 +336,46 @@ ALCANCE_SUFIJOS = {
 # significados; ver el bloque ALCANCE_TIEMPO_S_*) y este diccionario solo sabe dar
 # uno por nombre de columna. Se declara en el dato, con 'alcance_tiempo_s'.
 #
-# 'n_iter_ganador' (metricas_anomalias.csv) tampoco es una métrica sobre D2 y sin
-# alcance propio se leería como una: son las ÉPOCAS del ajuste del ganador.
+# 'n_iter_ganador' y 'n_iter_total_grid' (metricas_anomalias.csv) tampoco son
+# métricas sobre D2 y sin alcance propio se leerían como tales: son ÉPOCAS.
+#
+# POR QUÉ SON DOS COLUMNAS Y NO UNA (corrección de la versión anterior, que era la
+# cuarta objeción del dictamen NO APTO de 0595a15): 'n_iter_ganador' son las
+# épocas de UNA configuración —la ganadora— mientras que 'tiempo_entrenamiento_s'
+# suma los fit de TODAS las del grid. Dividir la una por la otra no da segundos
+# por época: da un número sin significado. El texto anterior invitaba justo a esa
+# división. Se publica por eso 'n_iter_total_grid' —la suma de las épocas de todas
+# las configuraciones del grid, exactamente el mismo conjunto de fit que
+# 'tiempo_entrenamiento_s' cronometra—, que es el único denominador con el que esa
+# división es válida. 'n_iter_ganador' se conserva porque responde a otra
+# pregunta: si el ajuste del modelo que se publica se cortó por max_iter o por
+# convergencia.
 ALCANCE_N_ITER = (
-    "épocas consumidas por el ajuste del modelo ganador sobre D1_train "
+    "épocas consumidas por el ajuste del modelo GANADOR sobre D1_train "
     "(Autoencoder = MLPRegressor con early_stopping=True y max_iter=300) — NO es "
-    "una métrica sobre D2: está para que 'tiempo_entrenamiento_s' sea "
-    "interpretable (épocas frente a carga de máquina) y un valor igual a 300 "
-    "avisa de que el ajuste se cortó por el tope y no por convergencia. Celda "
-    "VACÍA en IsolationForest OneClassSVM y LocalOutlierFactor: no ajustan por "
-    "iteraciones comparables y un 0 se leería como medida"
+    "una métrica sobre D2 y NO es el denominador de 'tiempo_entrenamiento_s': "
+    "esta columna cuenta UNA configuración y ese tiempo suma los fit de TODAS las "
+    "del grid (para eso está 'n_iter_total_grid'). Sirve para saber si el ajuste "
+    "que se publica se cortó por el tope —un valor igual a max_iter=300— o por "
+    "convergencia. Celda VACÍA en IsolationForest OneClassSVM y "
+    "LocalOutlierFactor: no ajustan por iteraciones comparables y un 0 se leería "
+    "como medida"
+)
+
+ALCANCE_N_ITER_TOTAL = (
+    "suma de las épocas de TODAS las configuraciones del grid sobre D1_train "
+    "(Autoencoder = MLPRegressor con early_stopping=True y max_iter=300) — NO es "
+    "una métrica sobre D2. Cubre exactamente el mismo conjunto de fit que "
+    "cronometra 'tiempo_entrenamiento_s' así que es el ÚNICO denominador válido "
+    "para leer ese tiempo en segundos por época y decidir si una diferencia entre "
+    "dos filas es de épocas o de carga de máquina. Celda VACÍA en IsolationForest "
+    "OneClassSVM y LocalOutlierFactor por el mismo motivo que 'n_iter_ganador'"
 )
 
 ALCANCE_COLUMNAS = {
     "umbral": ALCANCE_SELECCION,
     "n_iter_ganador": ALCANCE_N_ITER,
+    "n_iter_total_grid": ALCANCE_N_ITER_TOTAL,
 }
 
 # Marcadores que PARECEN de alcance y se vigilan: si una columna empieza por uno

@@ -187,19 +187,27 @@ class NSLKDDAnomalyTrainer:
     @staticmethod
     def _iteraciones_ajuste(algo, model):
         """
-        Épocas que consumió el ajuste del modelo ganador — SOLO para el
+        Épocas que consumió el ajuste de UN modelo ya entrenado — SOLO para el
         Autoencoder; None para los otros tres.
 
-        POR QUÉ EXISTE (T1, punto 5 de la auditoría): el Autoencoder es
-        MLPRegressor con early_stopping=True y max_iter=300, así que su
-        'tiempo_entrenamiento_s' depende de DOS cosas que el CSV no distinguía —
-        cuántas épocas necesitó y cómo de cargada estaba la máquina—. Sin este
-        dato, los 180,965 s de la variante de 54 frente a los 47,826 s de la de
-        122 en la corrida 5516b60 no son interpretables (y en la 38fdd4b la
-        relación era la inversa: 37,492 s y 121,059 s). Con 'n_iter_ganador' en
-        la fila se puede dividir: segundos por época frente a varianza de máquina.
-        Un n_iter_ igual a max_iter (300) además avisa de que el ajuste se cortó
-        por el tope y no por convergencia.
+        POR QUÉ EXISTE (T22): el Autoencoder es MLPRegressor con
+        early_stopping=True y max_iter=300, así que su 'tiempo_entrenamiento_s'
+        depende de DOS cosas que el CSV no distinguía —cuántas épocas necesitó y
+        cómo de cargada estaba la máquina—. Sin este dato, dos filas del
+        Autoencoder con tiempos de ajuste muy distintos no se pueden interpretar.
+
+        CUIDADO CON EL DENOMINADOR (defecto 2 del dictamen NO APTO de 0595a15):
+        esta función devuelve las épocas de UNA configuración. La fila publica DOS
+        columnas a partir de ella y no son intercambiables:
+          - 'n_iter_ganador'    = épocas del modelo GANADOR. Dice si el ajuste que
+                                  se publica se cortó por max_iter o convergió.
+                                  NO es el denominador de 'tiempo_entrenamiento_s'.
+          - 'n_iter_total_grid' = suma de las épocas de TODAS las configuraciones
+                                  del grid, que es exactamente el conjunto de fit
+                                  que 'tiempo_entrenamiento_s' cronometra. Ese sí
+                                  es el denominador válido para segundos por época.
+        Se acumula en _seleccionar_config(), dentro del mismo bucle que suma los
+        fit, para que ambos cubran el mismo conjunto por construcción.
 
         POR QUÉ SOLO EL AUTOENCODER y no un getattr genérico: en sklearn moderno
         OneClassSVM también expone 'n_iter_', pero como ndarray de libsvm —una
@@ -257,26 +265,41 @@ class NSLKDDAnomalyTrainer:
         AUC-ROC sobre el set etiquetado (D1_val + muestra D3). Devuelve el modelo
         ganador (ya entrenado sobre D1_train), su config, su AUC de validación,
         el tiempo de ENTRENAMIENTO acumulado (solo los fit del grid, sin contar
-        el scoring: T1 separa entrenamiento e inferencia) y el tiempo de SCORING
-        del set etiquetado acumulado sobre todas las configuraciones del grid.
+        el scoring: T1 separa entrenamiento e inferencia), el tiempo de SCORING
+        del set etiquetado acumulado sobre todas las configuraciones del grid y
+        las ÉPOCAS acumuladas sobre esas mismas configuraciones (None salvo en el
+        Autoencoder).
 
-        Ese segundo cronómetro es el tramo (2) del bloque: se MIDE en lugar de
+        El segundo cronómetro es el tramo (2) del bloque: se MIDE en lugar de
         estimarse porque es el componente grande de la parte de 'tiempo_s' que no
-        es ni ajuste ni inferencia sobre D2 (hasta el 49 % del total en OCSVM) y
-        cualquier reparto calculado a mano —por filas puntuadas o ponderando el
-        grid— depende de un modelo de coste que el dato publicado no declara. Se
-        publica como columna 'tiempo_score_seleccion_s'.
+        es ni ajuste ni inferencia sobre D2, y cualquier reparto calculado a mano
+        —por filas puntuadas o ponderando el grid— depende de un modelo de coste
+        que el dato publicado no declara. Se publica como columna
+        'tiempo_score_seleccion_s'. (Cuánto pesa ese tramo en cada corrida NO se
+        escribe aquí ni en el CSV: es interpretación y vive en PIPELINE.md,
+        anclada a su commit. Regla de T18.)
+
+        Las épocas acumuladas se suman DENTRO de este mismo bucle, y ese es el
+        punto: 't_n_iter_total' cubre exactamente los mismos fit que
+        't_fit_total', así que su cociente sí son segundos por época. Las épocas
+        del ganador solo (n_iter_ del modelo devuelto) NO sirven para esa
+        división — ver _iteraciones_ajuste().
         """
         X_fit = self._datos_entrenamiento(algo, self.X_D1_train)
         mejor = {"auc": -np.inf, "cfg": None, "model": None}
         t_fit_total = 0.0
         t_score_total = 0.0
+        n_iter_total = None   # se queda en None salvo en el Autoencoder
 
         for cfg in self.GRIDS[algo]:
             model = self._construir(algo, cfg)
             t_fit = time.perf_counter()
             self._ajustar(algo, model, X_fit)
             t_fit_total += time.perf_counter() - t_fit
+            n_iter_cfg = self._iteraciones_ajuste(algo, model)
+            if n_iter_cfg is not None:
+                n_iter_total = (n_iter_cfg if n_iter_total is None
+                                else n_iter_total + n_iter_cfg)
             t_score = time.perf_counter()
             scores = self._score(algo, model, self.X_val_lab)
             t_score_total += time.perf_counter() - t_score
@@ -285,7 +308,8 @@ class NSLKDDAnomalyTrainer:
             if auc > mejor["auc"]:
                 mejor = {"auc": auc, "cfg": cfg, "model": model}
 
-        return mejor["model"], mejor["cfg"], mejor["auc"], t_fit_total, t_score_total
+        return (mejor["model"], mejor["cfg"], mejor["auc"], t_fit_total,
+                t_score_total, n_iter_total)
 
     # ------------------------------------------------------------------
     # 3-6. Entrenamiento, umbral y evaluación de un algoritmo
@@ -301,7 +325,7 @@ class NSLKDDAnomalyTrainer:
         # la sigue dando datetime.now() dentro de guardar_metricas).
         t0 = time.perf_counter()
 
-        model, cfg, auc_val, t_entrenamiento, t_score_seleccion = \
+        model, cfg, auc_val, t_entrenamiento, t_score_seleccion, n_iter_total = \
             self._seleccionar_config(algo)
         print("   Config ganadora: {} (AUC-ROC val={:.4f})".format(cfg, auc_val))
 
@@ -338,19 +362,22 @@ class NSLKDDAnomalyTrainer:
             filename="anomalias_cm_{}_{}.png".format(algo, self.set_features),
         )
 
-        # Épocas del ajuste ganador (solo Autoencoder; None en los otros tres).
-        # Se lee del modelo YA ajustado y va tanto a la fila del CSV como al
-        # .joblib: sin ella no se puede decidir si un 'tiempo_entrenamiento_s'
-        # grande son épocas o carga de máquina.
+        # Épocas (solo Autoencoder; None en los otros tres). DOS cifras y no una:
+        # las del ganador dicen si ESE ajuste se cortó por max_iter, y las del
+        # grid entero son el único denominador con el que 'tiempo_entrenamiento_s'
+        # —que suma los fit de TODAS las configuraciones— da segundos por época.
         n_iter_ganador = self._iteraciones_ajuste(algo, model)
         if n_iter_ganador is not None:
-            print("   Épocas del ajuste ganador: {} (max_iter=300 · "
-                  "early_stopping=True)".format(n_iter_ganador))
+            print("   Épocas: {} el ajuste ganador · {} todo el grid (max_iter="
+                  "300 · early_stopping=True). 'tiempo_entrenamiento_s' cubre el "
+                  "grid entero: dividir por la segunda cifra, no por la "
+                  "primera".format(n_iter_ganador, n_iter_total))
 
         self.resultados[algo] = {
             "modelo": model,
             "config_ganadora": cfg,
             "n_iter_ganador": n_iter_ganador,
+            "n_iter_total_grid": n_iter_total,
             "auc_val": auc_val,
             "umbral": umbral,
             "score_D2": score_D2,
@@ -361,10 +388,12 @@ class NSLKDDAnomalyTrainer:
             # CONFIGURACIÓN (18.469 filas × 6/9/4/2 configs = t_score_seleccion) ·
             # el scoring de D1_val del umbral (= t_score_umbral) · la inferencia
             # sobre D2 (= t_inferencia) · y la cola de evaluar_binario + UNA
-            # figura. Entre el 27 % y el 49 % de 'tiempo_s' no es ni ajuste ni
-            # inferencia en IF/OCSVM/LOF, y ese resto ya NO se estima: los dos
-            # tramos grandes se publican medidos y la cola sale por resta. Va
-            # declarado en el dato con config.ALCANCE_TIEMPO_S_BLOQUE_ANOMALIAS.
+            # figura. Una parte apreciable de 'tiempo_s' no es ni ajuste ni
+            # inferencia, y ese resto ya NO se estima: los dos tramos grandes se
+            # publican medidos y la cola sale por resta. Va declarado en el dato
+            # con config.ALCANCE_TIEMPO_S_BLOQUE_ANOMALIAS. Cuánto pesa en cada
+            # corrida es interpretación y vive en PIPELINE.md anclada a su
+            # commit — aquí no, que se falsa con la corrida siguiente (T18).
             "tiempo_s": time.perf_counter() - t0,
             "tiempo_entrenamiento_s": t_entrenamiento,
             "tiempo_score_seleccion_s": t_score_seleccion,
@@ -396,18 +425,20 @@ class NSLKDDAnomalyTrainer:
         El sufijo '_val' y la columna 'umbral' están declarados en
         config.ALCANCE_SUFIJOS / ALCANCE_COLUMNAS con ese alcance propio.
 
-        'n_iter_ganador' tampoco es una métrica de D2: son las ÉPOCAS que consumió
-        el ajuste del modelo ganador y solo la rellena el Autoencoder (celda vacía
-        en los otros tres; ver _iteraciones_ajuste). Está para que
-        'tiempo_entrenamiento_s' sea interpretable —épocas frente a carga de
-        máquina— y no para comparar algoritmos entre sí.
+        'n_iter_ganador' y 'n_iter_total_grid' tampoco son métricas de D2: son
+        ÉPOCAS, y solo las rellena el Autoencoder (celda vacía en los otros tres;
+        ver _iteraciones_ajuste). No son la misma cifra ni son intercambiables: la
+        primera cuenta el ajuste GANADOR —dice si se cortó por max_iter— y la
+        segunda suma TODO el grid, que es el conjunto de fit que cronometra
+        'tiempo_entrenamiento_s' y por tanto el único denominador con el que ese
+        tiempo se lee en segundos por época.
 
         Y con 'tiempo_s': aquí mide el BLOQUE COMPLETO del algoritmo —los fit del
         grid + el scoring del set etiquetado en CADA config + el scoring de D1_val
         del umbral + la inferencia sobre D2 + una figura—, que es lo que cita la
-        tabla de 4.4 del vault. No es una suma de dos columnas: entre el 27 % y el
-        49 % de este número no aparece ni en 'tiempo_entrenamiento_s' ni en
-        'tiempo_inferencia_s' (IF/OCSVM/LOF). Ese resto ya no hay que estimarlo:
+        tabla de 4.4 del vault. No es una suma de dos columnas: una parte
+        apreciable de este número no aparece ni en 'tiempo_entrenamiento_s' ni en
+        'tiempo_inferencia_s'. Ese resto ya no hay que estimarlo:
         sus dos tramos grandes se publican MEDIDOS en 'tiempo_score_seleccion_s'
         (el scoring repetido de la selección) y 'tiempo_score_umbral_s' (el
         scoring de D1_val), y la cola de métricas + figura es lo que queda al
@@ -424,13 +455,19 @@ class NSLKDDAnomalyTrainer:
             "sin_seleccion": bool(self.sin_seleccion),
             "n_features": self.n_features,
             "config_ganadora": str(r["config_ganadora"]),
-            # Épocas que consumió el ajuste ganador. Solo la rellena el
-            # Autoencoder (MLPRegressor con early_stopping=True y max_iter=300);
-            # en IsolationForest / OneClassSVM / LocalOutlierFactor la celda va
-            # VACÍA porque el atributo no aplica —ver _iteraciones_ajuste()—, y
-            # nunca a 0: un 0 se leería como "cero iteraciones".
+            # Épocas del ajuste. Solo las rellena el Autoencoder (MLPRegressor
+            # con early_stopping=True y max_iter=300); en IsolationForest /
+            # OneClassSVM / LocalOutlierFactor las celdas van VACÍAS porque el
+            # atributo no aplica —ver _iteraciones_ajuste()—, y nunca a 0: un 0
+            # se leería como "cero iteraciones".
+            # Las DOS columnas son necesarias: 'n_iter_ganador' es de UNA config
+            # y 'n_iter_total_grid' de todas, que es lo que cronometra
+            # 'tiempo_entrenamiento_s'. Dividir ese tiempo por la primera daría
+            # un número sin significado.
             "n_iter_ganador": (float("nan") if r["n_iter_ganador"] is None
                                else r["n_iter_ganador"]),
+            "n_iter_total_grid": (float("nan") if r["n_iter_total_grid"] is None
+                                  else r["n_iter_total_grid"]),
             "auc_val": round(r["auc_val"], 6),
             "umbral": round(r["umbral"], 6),
             "roc_auc": round(m.get("roc_auc", float("nan")), 6),
@@ -484,12 +521,13 @@ class NSLKDDAnomalyTrainer:
                     "modelo": r["modelo"],
                     "umbral": r["umbral"],
                     "config_ganadora": r["config_ganadora"],
-                    # Épocas del ajuste (Autoencoder; None en los otros tres) y
-                    # score de la validación interna del early_stopping si el
-                    # estimador lo expone. En el CSV solo viaja n_iter_ganador:
-                    # aquí se guarda además el score porque el .joblib no tiene
+                    # Épocas del ajuste (Autoencoder; None en los otros tres):
+                    # las del ganador y las del grid entero, más el score de la
+                    # validación interna del early_stopping si el estimador lo
+                    # expone. Ese último no viaja al CSV: el .joblib no tiene
                     # esquema fijo y no ensucia ninguna tabla.
                     "n_iter_ganador": r["n_iter_ganador"],
+                    "n_iter_total_grid": r["n_iter_total_grid"],
                     "best_validation_score": getattr(
                         r["modelo"], "best_validation_score_", None),
                     "base_path_usado": self.base_path,

@@ -339,12 +339,14 @@ class NSLKDDSignatureTrainer:
             "metricas": metricas,
             # OJO: 'tiempo_s' es el bloque COMPLETO del algoritmo (GridSearchCV +
             # refit + inferencia + UNA figura), no el ajuste. Aquí el reparto es
-            # muy distinto al de anomalias.py: el GridSearchCV se lleva el
-            # 95,7-99,7 % (87-89 % en DecisionTree) y lo único no declarado en las
-            # otras dos columnas es la cola de evaluar_multiclase + la matriz de
-            # confusión (0,258-0,314 s en 54 y 0,466-0,502 s en 122 → el 0,2-0,7 %
-            # del total salvo en DecisionTree, 10,7-12,8 %, cuyo bloque entero dura
-            # 2-4 s). Aquí NO se cronometra esa cola aparte —como sí se hace en
+            # muy distinto al de anomalias.py: el GridSearchCV se lleva casi todo
+            # y lo único no declarado en las otras dos columnas es la cola de
+            # evaluar_multiclase + la matriz de confusión, un coste casi fijo que
+            # solo se nota en el modelo cuyo bloque entero dura pocos segundos.
+            # (Cuánto pesa en cada corrida NO se escribe aquí: es interpretación,
+            # se falsa con la corrida siguiente y vive en PIPELINE.md anclada a su
+            # commit — regla de T18.)
+            # Aquí NO se cronometra esa cola aparte —como sí se hace en
             # anomalias.py con los tramos (2) y (3)— porque al ser el ÚNICO
             # componente del residual ya sale exacta restando 'tiempo_s' −
             # 'tiempo_entrenamiento_s' − 'tiempo_inferencia_s': una columna más
