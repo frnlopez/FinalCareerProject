@@ -97,17 +97,24 @@ documento, anclados al commit de su corrida. **Ninguna métrica de calidad se ve
 > [!warning] Hueco de trazabilidad de la corrida publicada
 > El runbook son **8 invocaciones**: `program.py` y `validacion.py` **NO se re-corrieron**, así que
 > sus **5** figuras (`eda_distribuciones_divisiones.png` y las cuatro `validacion_*.png`) siguen
-> ancladas a la corrida del **05/07/2026** y no a `ac496cb`. Los splits que consumen las 8
+> ancladas a la corrida del **05/07/2026** y no a `1163c90`. Los splits que consumen las 8
 > invocaciones son los CSV procesados que dejó aquella corrida, idénticos (semilla 42); lo que no
 > está anclado al commit publicado son esas cinco figuras.
 
-> [!note] El texto de `alcance_tiempo_s` publicado es el de `ac496cb`, no el de `config.py` de hoy
-> Los arreglos de redacción de `config.ALCANCE_TIEMPO_S_BLOQUE_ANOMALIAS` y
-> `..._BLOQUE_FIRMAS` que exigió la auditoría de T18 (sacar de ellos las dos afirmaciones
-> empíricas) son **posteriores** a la corrida publicada. La columna `commit` de cada fila declara
-> con qué código se produjo —`ac496cb`—, así que el dato es autoconsistente; el texto corregido
-> aparecerá en el CSV la próxima vez que se corra el runbook. **No se re-corre por esto**: cambia
-> la redacción de una celda declarativa, ninguna medida.
+> [!note] El texto de `alcance_tiempo_s` publicado **sí** es el de `config.py` de hoy
+> En la corrida `ac496cb` no lo era: los arreglos de redacción de
+> `config.ALCANCE_TIEMPO_S_BLOQUE_ANOMALIAS` y `..._BLOQUE_FIRMAS` que exigió la auditoría de T18
+> eran posteriores a aquella corrida. La re-corrida `1163c90` los incorpora: las cuatro celdas
+> `alcance_tiempo_s` publicadas coinciden **carácter a carácter** con las cuatro constantes
+> `config.ALCANCE_TIEMPO_S_*` del código de hoy (2.367 · 1.536 · 1.196 · 1.676 caracteres).
+>
+> La única divergencia viva entre `config.py` y lo publicado es el texto de
+> `config.ALCANCE_N_ITER_TOTAL`, reformulado **después** de `1163c90` (recuadro de las dos
+> columnas de épocas del autoencoder, más abajo). **No obliga a re-correr y no toca el
+> dato**: ese texto **no viaja a ninguna columna** de ningún CSV —`ALCANCE_COLUMNAS` solo lo
+> consulta `config.alcance_de_columna()`, y a esa función solo llega `validar_esquema_minimo()`
+> para columnas que casan con `PREFIJOS_SIN_DECLARAR`, filtro con el que `n_iter_total_grid` no
+> casa—. Es documentación en el código, no celda.
 
 ### Recuento esperado (comprobado por código, no a ojo)
 
@@ -159,7 +166,8 @@ casi siempre posterior. Las corridas que existen en git:
 | `c7cf319` | `077119e` (y `38fdd4b`, idénticos) | Primera con `tiempo_entrenamiento_s` / `tiempo_inferencia_s`. Aún con `time.time()`. |
 | `38fdd4b` | `34bee30` (y `5516b60`, idénticos) | Primera con `perf_counter`. |
 | `5516b60` | `5f98d88` | Añade `tiempo_score_seleccion_s` y `tiempo_score_umbral_s`. |
-| `ac496cb` | *(aún en el árbol de trabajo, pendiente del commit de cierre de T18)* | **La publicada hoy.** Añade `n_iter_ganador` y `n_iter_total_grid`. 8 invocaciones, 222 filas, todas con `semilla = 42` y `commit = ac496cb` limpio. |
+| `ac496cb` | *(nunca versionados: los sustituyó la re-corrida `1163c90` antes del commit de cierre de T18)* | Primera con `n_iter_ganador` y `n_iter_total_grid`. **Corrida histórica**: sus cifras solo sobreviven citadas en este documento, no hay CSV suyo en git. |
+| `1163c90` | *(aún en el árbol de trabajo, pendiente del commit de cierre de T18)* | **La publicada hoy.** Mismo esquema que `ac496cb`. 8 invocaciones, 222 filas, todas con `semilla = 42` y `commit = 1163c90` limpio. |
 
 Cualquier cita a una corrida anterior apunta a **su commit**, nunca a un fichero
 `*.esquema-anterior.bak`: los `.bak` son prescindibles —lo que contienen está en git— y no se
@@ -193,7 +201,7 @@ normal, porque sin negativos la tasa de falsas alarmas no está definida y un `0
 no se dispara.
 
 > [!note] `fpr_cascada` **es** `bin_fpr` en `metricas_hibrido.csv`
-> Mismo número y misma fila (0,101740 en la variante de 54 de la corrida `ac496cb`), y es
+> Mismo número y misma fila (0,101740 en la variante de 54 de la corrida `1163c90`), y es
 > **correcto por construcción**: la etapa 2 solo reclasifica los flujos que la etapa 1 marcó como
 > sospechosos y **nunca devuelve uno a `normal`**, así que la cascada no puede tener otro FPR que
 > el de su etapa 1. Se conservan las dos columnas porque responden a dos requisitos distintos
@@ -205,31 +213,49 @@ no se dispara.
 
 Es *wall-clock* en una **máquina no dedicada**. Con la misma semilla, el mismo código y una
 **calidad idéntica al bit**, los tiempos se mueven mucho. Lo que sigue **no es una cota** —la
-corrida siguiente puede superarla—: es lo **medido** entre las cuatro corridas que llevan columna
-`commit`, `c7cf319` · `38fdd4b` · `5516b60` · `ac496cb`, celda a celda.
+corrida siguiente puede superarla—: es lo **medido** entre las cinco corridas que llevan columna
+`commit`, `c7cf319` · `38fdd4b` · `5516b60` · `ac496cb` · `1163c90`, celda a celda.
 
-| Tabla | Columna | Peor caso observado entre las cuatro corridas | Valores (`c7cf319` / `38fdd4b` / `5516b60` / `ac496cb`) |
+> [!warning] `ac496cb` **no es reproducible desde git**
+> Todas las cifras de la columna `ac496cb` que aparecen en este documento —aquí y en el resto de
+> secciones— proceden de una corrida cuyos **CSV nunca se commitearon** y que además **fueron
+> sobrescritos por la re-corrida `1163c90`**. No se pueden recuperar ni por hash ni por fichero:
+> sobreviven **solo citadas aquí**. Cualquier frase de la memoria que se apoye en ellas tiene que
+> arrastrar esta salvedad; no valen como evidencia verificable por un tercero. Las cifras de las
+> otras cuatro corridas (`c7cf319`, `38fdd4b`, `5516b60`, `1163c90`) sí están en git.
+
+| Tabla | Columna | Peor caso observado entre las cinco corridas | Valores (`c7cf319` / `38fdd4b` / `5516b60` / **`ac496cb` ⚠ no verificable** / `1163c90`) |
 |---|---|---|---|
-| `metricas_anomalias.csv` | `tiempo_s` | **Autoencoder 54: 4,82×** | 52,43 / 37,71 / 181,91 / 38,20 s |
-| `metricas_anomalias.csv` | `tiempo_inferencia_s` | **Autoencoder 54: 5,07×** | 0,048 / 0,031 / 0,147 / 0,029 s |
-| `metricas_firmas.csv` | `tiempo_s` | **DecisionTree 54: 4,30×** | 2,35 / 2,01 / 7,35 / 1,71 s |
-| `metricas_firmas.csv` | `tiempo_inferencia_s` | **DecisionTree 54: 3,5×** (entre las tres medidas con `perf_counter`) | *(0,0 = artefacto)* / 0,002 / 0,007 / 0,002 s |
-| `metricas_baseline.csv` | `tiempo_s` | RF monolítico 54: 2,10× | 34,13 / 28,31 / 39,17 / 59,44 s |
-| `metricas_hibrido.csv` | `tiempo_s` | La cascada 54: 1,90× | 24,80 / 22,17 / 27,71 / 42,02 s |
+| `metricas_anomalias.csv` | `tiempo_s` | **Autoencoder 54: 4,82×** | 52,43 / 37,71 / 181,91 / 38,20 / 49,20 s |
+| `metricas_anomalias.csv` | `tiempo_inferencia_s` | **Autoencoder 54: 5,07×** | 0,048 / 0,031 / 0,147 / 0,029 / 0,041 s |
+| `metricas_firmas.csv` | `tiempo_s` | **DecisionTree 54: 4,30×** | 2,35 / 2,01 / 7,35 / 1,71 / 2,07 s |
+| `metricas_firmas.csv` | `tiempo_inferencia_s` | **DecisionTree 54: 3,5×** (entre las cuatro medidas con `perf_counter`) | *(0,0 = artefacto)* / 0,002 / 0,007 / 0,002 / 0,002 s |
+| `metricas_baseline.csv` | `tiempo_s` | RF monolítico 54: **2,43×** | 34,13 / 28,31 / 39,17 / 59,44 / 24,48 s |
+| `metricas_hibrido.csv` | `tiempo_s` | La cascada 54: 1,90× | 24,80 / 22,17 / 27,71 / 42,02 / 25,40 s |
 
 Dos lecturas que hay que arrastrar a cualquier frase de la memoria que compare tiempos:
 
 1. **La dispersión no es cosa solo de los tiempos largos.** El autoencoder de 54 mueve su
    `tiempo_s` (decenas de segundos a minutos) y su `tiempo_inferencia_s` (decenas de
    milisegundos) prácticamente en el mismo factor, 4,8× y 5,1×.
-2. **Ni la celda más estable baja de ≈1,2×.** El mínimo observado en las 8 filas de anomalías es
-   `OneClassSVM` 54 con 1,23× (26,17 / 23,28 / 28,10 / 22,89 s). **Una diferencia menor que eso
-   entre dos filas no significa nada**, y ninguna cifra de tiempo puede presentarse como propiedad
-   del algoritmo sin declarar esta dispersión.
+2. **Ni la celda más estable baja de ≈1,2×.** El mínimo observado en las 8 filas de anomalías
+   sigue siendo `OneClassSVM` 54, con 1,23× (26,17 / 23,28 / 28,10 / **22,89 ⚠ no verificable** /
+   25,58 s). **Una diferencia menor que eso entre dos filas no significa nada**, y ninguna cifra de
+   tiempo puede presentarse como propiedad del algoritmo sin declarar esta dispersión. El suelo
+   depende de `ac496cb`, que aporta el mínimo de la serie y no es reproducible desde git; **sin esa
+   columna el suelo sería 28,10/23,28 = 1,21×**, prácticamente el mismo, así que el argumento se
+   sostiene solo con las cuatro corridas versionadas.
 3. **Añadir una corrida solo ha empeorado la dispersión, nunca la ha estrechado.** De las seis
-   celdas de la tabla, `ac496cb` empeora el factor en cuatro (`tiempo_inferencia_s` del
-   autoencoder, `tiempo_s` del DecisionTree, del baseline y del híbrido) y no mejora ninguna. Es
-   la razón de que la banda se declare **medida y no cota**.
+   celdas de la tabla, `ac496cb` empeoró el factor en cuatro (`tiempo_inferencia_s` del
+   autoencoder, `tiempo_s` del DecisionTree, del baseline y del híbrido) y `1163c90` lo empeora en
+   una más —el baseline de 54 pasa de 2,10× a **2,43×**, porque esta corrida da el mínimo de la
+   serie, 24,48 s—. **Ninguna de las dos ha mejorado ninguna celda**, que es exactamente lo que
+   cabe esperar de un máximo sobre un mínimo al añadir muestras: la banda solo puede ensancharse.
+   Es la razón de que se declare **medida y no cota**. **Salvedad:** la aportación de `ac496cb` a
+   esas cuatro celdas **no es verificable desde git** (sus CSV nunca se commitearon y los
+   sobrescribió `1163c90`); el argumento de que la banda solo se ensancha se sostiene igual con
+   las cuatro corridas que sí están versionadas, pero los factores concretos que cita esta tabla
+   dependen de una columna no recuperable.
 
 **Ninguna columna de tiempo es reproducible.** Valen como comparación relativa de coste **dentro
 de la misma corrida** y como orden de magnitud. El resto de la tabla sí es reproducible
@@ -237,23 +263,40 @@ de la misma corrida** y como orden de magnitud. El resto de la tabla sí es repr
 
 > [!caution] Ni siquiera la **dirección** de una comparación de tiempos aguanta sola
 > Comparar dos algoritmos por su tiempo **dentro de la misma corrida** parece más seguro que
-> comparar dos corridas, pero tampoco basta. Contraejemplo medido: `HistGradientBoosting` es más
-> caro de entrenar que `RandomForest` en **7 de los 8** pares disponibles, con una banda de
-> **1,32× a 4,41×** y grids de igual cardinalidad — y el octavo **se invierte**: en `5516b60`,
-> variante de 54, RF 108,152 s frente a HistGB 83,315 s (**0,77×**).
+> comparar dos corridas, pero tampoco basta. Es lo que mide **T20** sobre el par
+> `RandomForest` / `HistGradientBoosting` de `metricas_firmas.csv`, con grids de igual
+> cardinalidad:
 >
 > | Corrida | 54 (`tiempo_entrenamiento_s` RF → HistGB) | 122 |
 > |---|---|---|
 > | `c7cf319` | 65,876 → 128,204 (**1,95×**) | 60,887 → 268,642 (**4,41×**) |
 > | `38fdd4b` | 47,429 → 62,404 (**1,32×**) | 95,487 → 237,743 (**2,49×**) |
 > | `5516b60` | 108,152 → 83,315 (**0,77×**) | 68,698 → 194,108 (**2,83×**) |
-> | `ac496cb` | 48,943 → 64,997 (**1,33×**) | 52,609 → 181,346 (**3,45×**) |
+> | `ac496cb` ⚠ **no verificable** | 48,943 → 64,997 (**1,33×**) | 52,609 → 181,346 (**3,45×**) |
+> | `1163c90` **(publicada)** | 61,444 → 60,745 (**0,99×**) | 51,097 → 122,820 (**2,40×**) |
 >
-> La corrida publicada **reconfirma la dirección en los dos pares** (1,33× y 3,45×), así que
-> **T20 no se toca**; pero la inversión de `5516b60` sigue en la tabla y sigue mandando la regla:
-> una dirección solo es citable si se repite en **todas** las corridas disponibles, y se cita con
-> la banda de factores, nunca con el par de segundos. Aquí no se repite en todas: lo citable es
-> «HistGB sale más caro que RF en 7 de 8 pares medidos», no «HistGB es más caro que RF».
+> ⚠ La fila `ac496cb` **no es reproducible desde git**: sus CSV nunca se commitearon y los
+> sobrescribió `1163c90`. Los pares que aporta al recuento no son verificables por un tercero; el
+> resto de filas de esta tabla sí lo son.
+>
+> **Lo citable, y ni una palabra más:** *`HistGradientBoosting` es más caro de entrenar que
+> `RandomForest` en **8 de los 10** pares intra-corrida registrados —recuento tomado sobre cinco
+> corridas, **una de ellas, `ac496cb`, no reproducible desde git**—, con grids de igual
+> cardinalidad; el par de 54 **se invierte en 2 de las 5 corridas**, así que la afirmación solo es
+> sólida en la variante de 122 —5 de 5, todas por encima de 2,4×—, y en ningún caso HistGB gana en
+> calidad: `f1_macro` **0,804 vs 0,822** en la variante de 54 de `1163c90`.*
+>
+> **La horquilla «1,31×-4,40×» queda retirada**: se quedó sin suelo en cuanto la corrida publicada
+> añadió un segundo contraejemplo. Una banda cuyo extremo inferior cae por debajo de 1,0 en dos de
+> diez pares no es una banda, es un rango con la dirección dentro.
+>
+> Y la inversión **no es solo del entrenamiento**: en inferencia el par de 54 va en sentido
+> contrario y con holgura, `latencia_ms_por_flujo` **0,0032 ms/flujo** en HistGB frente a
+> **0,0072** en RF. Entrenar y predecir son dos costes distintos y no se citan juntos.
+>
+> Regla que queda: una dirección solo es citable si se repite en **todas** las corridas
+> disponibles; si no, se cita con el recuento de pares (**8 de 10**) y con la variante en la que
+> sí aguanta, nunca con un par de segundos ni con una horquilla.
 
 > [!danger] Qué mide la latencia — y qué no (declaración exigida por P9)
 > `latencia_ms_por_flujo` y `flujos_por_segundo` miden **solo el `predict`/`score` sobre
@@ -264,19 +307,34 @@ de la misma corrida** y como orden de magnitud. El resto de la tabla sí es repr
 > frase viaja en cada fila dentro de `alcance_tiempo_s` (`config._AVISO_LATENCIA_SOLO_PREDICT`);
 > el número, solo aquí.
 >
-> **Y el número, con dos cifras significativas y ni una más.** El caudal máximo de `ac496cb` es el
-> del `predict` del DecisionTree: **del orden de 10⁶ flujos/s — ≈4,6·10⁶ a 54 características y
-> ≈2,6·10⁶ a 122**, sobre una medida **única** de ~2 ms y ~4 ms respectivamente. La precisión con
-> la que el CSV lo imprime (`4589459.9` y `2572359.1`) es ruido con formato de exactitud: el
-> `tiempo_inferencia_s` publicado va redondeado a **milisegundos** (0,002 y 0,004 s), así que
-> `9.083 / 0,002` da **4.541.500** —el divisor real, 1,9791 ms, solo se recupera despejando
-> `latencia_ms_por_flujo`— y un margen de ±0,5 ms sobre esos ~2 ms mueve el caudal entre
-> **3,6·10⁶ y 6,1·10⁶** flujos/s. Con dos cifras significativas ya se está siendo generoso.
+> **Y el número, como orden de magnitud y nunca con siete dígitos.** El caudal máximo de
+> `1163c90` es el del `predict` del `DecisionTree`, y así es como se cita:
 >
-> El propio par lo demuestra: es **el mismo DecisionTree**, cuyo coste por muestra en `predict` es
+> > **≈4·10⁶ flujos/s a 54 características y ≈2,6·10⁶ a 122** (n = 9.083), medidos sobre **2,2 ms**
+> > y **3,6 ms** de *wall-clock* en un **pase único**: un orden de magnitud, no una cifra. Y solo
+> > del `predict` sobre características ya en memoria (salvedad **P9** / **T21** de arriba).
+>
+> Los 2,2 y 3,6 ms salen de `latencia_ms_por_flujo × 9.083` (0,000238 y 0,000391 ms/flujo), que es
+> el único sitio donde el tiempo de inferencia del DecisionTree conserva cifras.
+>
+> **La fila es además incoherente consigo misma, y hay que declararlo:** `flujos_por_segundo` se
+> calcula del tiempo **sin redondear**, pero `tiempo_inferencia_s` se publica a **3 decimales**.
+> Quien intente reconstruir el caudal desde las columnas visibles hace `9.083 / 0,002` y obtiene
+> **4.541.500** frente a los `4196350.2` publicados, y `9.083 / 0,004` = **2.270.750** frente a
+> `2556719.0`: un desvío del **8,2 %** (54) y del **12,6 %** (122), tomando en cada caso el menor
+> de los dos valores como base. **La fila invita a una reconstrucción que no cierra**, y por eso el
+> caudal se cita con una cifra significativa y con el aviso al lado.
+>
+> La regla de la base —**el menor de los dos valores**— es uniforme, está declarada y reproduce
+> las dos cifras, pero conviene decir que **el menor no es el mismo tipo de valor en las dos
+> variantes**: en 54 el menor es el caudal **publicado** y en 122 el **reconstruido**. Es la
+> elección que **maximiza** el desvío en ambos casos, o sea **conservadora y a favor del aviso**:
+> con la otra base los porcentajes saldrían menores, nunca mayores.
+>
+> El propio par lo remata: es **el mismo DecisionTree**, cuyo coste por muestra en `predict` es
 > el recorrido de un árbol de `max_depth=10` —idéntico en las dos variantes, porque la profundidad
-> ganadora es la misma— y aun así la horquilla entre ellas es de **1,8×**. **Esa horquilla es
-> *jitter*, no características.**
+> ganadora es la misma— y aun así la horquilla entre ellas es de **1,6×** (2,2 → 3,6 ms). **Esa
+> horquilla es *jitter*, no características.**
 
 #### `tiempo_s`: tres significados, uno por tabla
 
@@ -301,7 +359,12 @@ capítulo.
 > | `c7cf319` | 5,51 / 26,17 / 20,85 / 52,43 |
 > | `38fdd4b` | 4,01 / 23,28 / 13,28 / 37,71 |
 > | `5516b60` | 5,14 / 28,10 / 22,77 / 181,91 |
-> | `ac496cb` **(publicada)** | 3,92 / 22,89 / 12,75 / 38,20 |
+> | `ac496cb` ⚠ **no verificable** | 3,92 / 22,89 / 12,75 / 38,20 |
+> | `1163c90` **(publicada)** | 5,27 / 25,58 / 20,16 / 49,20 |
+>
+> ⚠ La fila `ac496cb` **no es reproducible desde git**: sus CSV nunca se commitearon y los
+> sobrescribió `1163c90`. El argumento —que ninguna corrida reproduce los valores del vault— se
+> sostiene igual con las filas verificables.
 >
 > Ninguna coincide con otra, que es lo único que hacía falta demostrar: la cita del vault hay que
 > refrescarla al redactar (**T19**), así que no protegía nada.
@@ -319,70 +382,130 @@ y firmas comparten cálculo y no composición).
 #### El residual: `tiempo_s` ≠ `tiempo_entrenamiento_s` + `tiempo_inferencia_s`
 
 Ese residual es la razón de ser de `alcance_tiempo_s`. **Todos los porcentajes de abajo son de la
-corrida `ac496cb`** (la publicada) y **de ninguna otra**: no predicen la fila que tengas delante
+corrida `1163c90`** (la publicada) y **de ninguna otra**: no predicen la fila que tengas delante
 —el reparto que vale es el que sale de las columnas de tiempo de la propia fila— y se
 recalculan aquí, sin tocar el CSV, cada vez que se corre el runbook.
 
 > [!note] Por qué **un** decimal y no dos
 > `tiempo_s` se publica redondeado a **dos decimales** mientras que las columnas que se le restan
 > llevan tres, así que el residual arrastra hasta ±0,005 s de puro redondeo. Sobre denominadores
-> de pocos segundos eso es **±0,13 pp** en `IsolationForest` 54 (0,005 / 3,92) y **±0,29 pp** en
-> `DecisionTree` 54 (0,005 / 1,71): el segundo decimal del porcentaje es ruido y no se escribe.
+> de pocos segundos eso es **±0,09 pp** en `IsolationForest` 54 (0,005 / 5,27) y **±0,24 pp** en
+> `DecisionTree` 54 (0,005 / 2,07): el segundo decimal del porcentaje es ruido y no se escribe.
 > Las dos únicas cifras que van con dos decimales son las del híbrido, cuyo denominador es de
 > decenas de segundos.
 
-**Anomalías** (`ac496cb`). Ya no se estima nada: `anomalias.py` cronometra los dos tramos grandes
+**Anomalías** (`1163c90`). Ya no se estima nada: `anomalias.py` cronometra los dos tramos grandes
 y los publica, así que la cola sale exacta por resta. Residual =
-`tiempo_s` − `tiempo_entrenamiento_s` − `tiempo_inferencia_s`.
+`tiempo_s` − `tiempo_entrenamiento_s` − `tiempo_inferencia_s`. **Van las ocho filas**: publicar
+solo cuatro sería escoger.
 
 | Detector | Variante | Residual (= no ajuste ni inferencia) | del cual `tiempo_score_seleccion_s` | `tiempo_score_umbral_s` | cola (métricas + figura) |
 |---|---|---|---|---|---|
-| `IsolationForest` | 54 | **33,3 %** — (3,92 − 2,500 − 0,116) / 3,92 | 26,9 % | 1,8 % | 4,6 % |
-| `OneClassSVM` | 54 | **49,5 %** — (22,89 − 9,083 − 2,479) / 22,89 | 42,3 % | 6,4 % | 0,7 % |
-| `LocalOutlierFactor` | 54 | **27,6 %** — (12,75 − 8,435 − 0,801) / 12,75 | 20,9 % | 5,1 % | 1,5 % |
-| `Autoencoder` | 54 | 0,5 % — (38,20 − 37,977 − 0,029) / 38,20 | 0,1 % | 0,0 % | 0,4 % |
-| `IsolationForest` | 122 | **31,0 %** — (3,99 − 2,650 − 0,104) / 3,99 | 24,8 % | 1,6 % | 4,6 % |
-| `OneClassSVM` | 122 | **38,5 %** — (34,39 − 19,632 − 1,518) / 34,39 | 35,4 % | 2,7 % | 0,5 % |
-| `LocalOutlierFactor` | 122 | **27,7 %** — (20,32 − 13,307 − 1,380) / 20,32 | 21,4 % | 5,3 % | 0,9 % |
-| `Autoencoder` | 122 | 0,7 % — (31,24 − 31,003 − 0,031) / 31,24 | 0,2 % | 0,1 % | 0,4 % |
+| `IsolationForest` | 54 | **30,6 %** — (5,27 − 3,509 − 0,151) / 5,27 | 21,1 % | 2,6 % | 6,9 % |
+| `OneClassSVM` | 54 | **48,4 %** — (25,58 − 10,688 − 2,501) / 25,58 | 41,4 % | 6,1 % | 0,9 % |
+| `LocalOutlierFactor` | 54 | **27,7 %** — (20,16 − 13,288 − 1,288) / 20,16 | 21,4 % | 5,3 % | 1,1 % |
+| `Autoencoder` | 54 | 0,5 % — (49,20 − 48,933 − 0,041) / 49,20 | 0,1 % | 0,1 % | 0,3 % |
+| `IsolationForest` | 122 | **26,5 %** — (5,24 − 3,699 − 0,151) / 5,24 | 21,2 % | 1,4 % | 3,9 % |
+| `OneClassSVM` | 122 | **41,0 %** — (94,01 − 50,652 − 4,764) / 94,01 | 37,5 % | 3,1 % | 0,5 % |
+| `LocalOutlierFactor` | 122 | **28,5 %** — (45,33 − 29,341 − 3,048) / 45,33 | 23,0 % | 4,5 % | 1,1 % |
+| `Autoencoder` | 122 | 0,5 % — (113,18 − 112,535 − 0,083) / 113,18 | 0,1 % | 0,0 % | 0,3 % |
 
 Lo domina el **scoring de la selección**: el script pasa por el scorer bastantes más filas
 eligiendo configuración (18.469 × 6/9/4/2) que evaluando (22.544 una vez). En `OneClassSVM` ese
 tramo se acerca al propio ajuste. No entraba en `tiempo_entrenamiento_s` porque no es `fit`.
 
+> [!tip] **Lo reproducible de este bloque no son los segundos: es el reparto**
+> Es el hallazgo más sólido que ha dado la serie de corridas y **es la afirmación sobre la que
+> debe apoyarse el capítulo**, en lugar de sobre segundos que no se repiten.
+>
+> Entre `ac496cb` y `1163c90` los tiempos absolutos se mueven sin control —el `tiempo_s` del
+> `OneClassSVM` de 122 va de 34,39 s a 94,01 s, **2,73×**—. Y sin embargo el residual **como
+> fracción del bloque** se mueve, en las ocho filas, **como mucho 4,5 pp**:
+>
+> | Detector · variante | Residual en `ac496cb` ⚠ **no verificable** | en `1163c90` | Δ |
+> |---|---|---|---|
+> | `OneClassSVM` 54 | 49,5 % | 48,4 % | −1,1 pp |
+> | `OneClassSVM` 122 | 38,5 % | 41,0 % | +2,5 pp |
+> | `IsolationForest` 54 | 33,3 % | 30,6 % | −2,7 pp |
+> | `IsolationForest` 122 | 31,0 % | 26,5 % | **−4,5 pp** |
+> | `LocalOutlierFactor` 122 | 27,7 % | 28,5 % | +0,8 pp |
+> | `LocalOutlierFactor` 54 | 27,6 % | 27,7 % | +0,1 pp |
+> | `Autoencoder` 122 | 0,7 % | 0,5 % | −0,2 pp |
+> | `Autoencoder` 54 | 0,5 % | 0,5 % | 0,0 pp |
+>
+> ⚠ **Las dos columnas no son simétricas en verificabilidad.** La de `1163c90` sale de CSV que
+> están en el árbol; la de `ac496cb` **no es reproducible desde git** —sus CSV nunca se
+> commitearon y los sobrescribió `1163c90`—, así que sobrevive **solo citada aquí**. Los Δ de esta
+> tabla, y con ellos el hallazgo entero, dependen de una columna que un tercero no puede
+> recalcular.
+>
+> **Y el orden de las ocho filas se conserva casi entero.** Ordenadas de mayor a menor residual,
+> la única que cambia de sitio es `IsolationForest` 122, que baja del 4.º al 6.º puesto
+> adelantada por las dos de `LocalOutlierFactor`; las otras siete conservan su posición relativa,
+> y los dos escalones grandes —OCSVM por encima del 38 %, autoencoder por debajo del 1 %— se
+> repiten idénticos.
+>
+> Formulación citable: *los segundos absolutos de estas tablas no son reproducibles, pero **el
+> reparto interno del bloque sí lo es a unos pocos puntos porcentuales**.* Es coherente con la
+> causa: la carga de máquina reescala el bloque **entero** y por eso se cancela al dividir, mientras
+> que el peso de cada tramo lo fija el diseño del script (cuántas filas puntúa y cuántas veces),
+> que la semilla 42 hace determinista. **Ojo con el alcance: son dos corridas, una de ellas no
+> reproducible desde git, y no una serie.** Que el reparto sea estable no lo convierte en
+> constante del algoritmo, solo en la magnitud **menos frágil** de las que aquí se publican. Y la
+> estabilidad se afirma **contra `ac496cb`**, cuyos CSV nunca se commitearon y fueron sobrescritos
+> por `1163c90`: la comparación no la puede rehacer nadie a partir del repositorio.
+
 > [!caution] Repartos retirados por falsados
 > Este documento publicó antes «el tramo (2) es el 75-86 % y el (3) el 5-15 %» y un scoring de
 > selección de ≈9,5 s: procedían de un **modelo de coste no declarado** —con escalado plano por
-> filas, ese tramo de `OneClassSVM` 54 salía en 17,8 s dentro de un residual **medido** de
-> 11,497 s, un imposible—. Y publicó «**27-49 %**» sin anclar a corrida ni decir de qué filas: en
-> `ac496cb` las dos filas del `Autoencoder` dan **0,5 %** y **0,7 %**, más de un orden de magnitud
+> filas, ese tramo de `OneClassSVM` 54 salía por encima del residual **medido** de la propia fila,
+> un imposible. En `1163c90` esa fila mide 10,688 s de ajuste y **12,391 s** de residual, del que
+> el tramo (2) son 10,597 s: sale del dato, no de un modelo—. Y publicó «**27-49 %**» sin anclar a
+> corrida ni decir de qué filas: en
+> `1163c90` las dos filas del `Autoencoder` dan **0,5 %** y **0,5 %**, más de un orden de magnitud
 > por debajo de esa banda, porque su ajuste se lo come todo. Los dos quedan retirados; la tabla de
 > arriba los sustituye, con corrida declarada y con la resta escrita al lado.
 
-**Firmas** (`ac496cb`). El `GridSearchCV` se lleva entre el **84,7 %** (mínimo: `DecisionTree` 54,
-1,449 / 1,71) y el **99,6 %** (máximo: `HistGradientBoosting` 122, 181,346 / 182,04) del bloque, y
+**Firmas** (`1163c90`). El `GridSearchCV` se lleva del **87,68 %** (mínimo: `DecisionTree` 54,
+1,815 / 2,07) al **99,66 %** (máximo: `HistGradientBoosting` 122, 122,820 / 123,24) del bloque, y
 el residual es un único tramo —la cola de métricas + figura—. **No** lleva columna propia: al ser
 un único componente sale exacto restando las otras dos columnas, y una columna más solo repetiría
 una resta.
 
-Ese residual, en segundos y por orden de tabla —`DecisionTree` · `RandomForest` · `KNN` ·
-`HistGradientBoosting`—, es **0,259 · 0,273 · 0,321 · 0,340 s** a 54 características y
-**0,280 · 0,298 · 0,349 · 0,513 s** a 122. Siete de las ocho filas caben en 0,26-0,35 s, pero la
-octava (`HistGradientBoosting` 122) casi **dobla** el mínimo: la cola **no es un coste fijo**, es
-un coste **poco variable dentro de un factor 2**, y así hay que citarla. Como es pequeño en
-términos absolutos, solo pesa donde el bloque entero dura pocos segundos: **15,1 %** en
-`DecisionTree` 54 y **10,5 %** en `DecisionTree` 122 —(2,67 − 2,386 − 0,004) / 2,67, con el
-`tiempo_entrenamiento_s` a sus tres decimales: redondearlo a 2,39 daría 10,3 % y la fórmula
-dejaría de reproducir su propio resultado—, frente al **0,3-0,7 %** de los otros seis.
+| Clasificador | 54 | 122 |
+|---|---|---|
+| `DecisionTree` | **87,68 %** | **89,19 %** |
+| `RandomForest` | 99,42 % | 99,43 % |
+| `KNN` | 95,73 % | 95,98 % |
+| `HistGradientBoosting` | 99,48 % | **99,66 %** |
 
-**Híbrido** (`ac496cb`). Calibración OOF **92,61 %** (54) y **87,11 %** (122); el resto —**6,53 %**
-y **12,50 %**— son la carga de los splits, la de los dos `.joblib` y las tres pasadas de métricas
-de la tabla de sensibilidad, sin desglosar: ninguna columna los mide por separado. La cascada
-sobre D2 completa el 100 %: **0,86 %** y **0,39 %**. Es decir: **más del 85 % de lo que cuesta el
-híbrido es calibrar un umbral, no detectar**.
+Ese residual, en segundos y por orden de tabla —`DecisionTree` · `RandomForest` · `KNN` ·
+`HistGradientBoosting`—, es **0,253 · 0,290 · 0,337 · 0,286 s** a 54 características y
+**0,275 · 0,262 · 0,345 · 0,322 s** a 122. Las ocho filas caben ahora en **0,25-0,35 s**, un
+factor **1,36×** entre extremos: la cola **no es un coste fijo**, pero tampoco se desmadra. (La
+corrida anterior, `ac496cb`, daba un factor **2**, con `HistGradientBoosting` 122 en 0,513 s; que
+el factor se mueva así entre dos corridas es más motivo para citarla como «poco variable» que
+para ponerle una cota. Ese factor **2** **no es verificable desde git**: los CSV de `ac496cb`
+nunca se commitearon y los sobrescribió `1163c90`.)
+
+Como es pequeño en términos absolutos, solo pesa donde el bloque entero dura pocos segundos:
+**≈12 %** en `DecisionTree` 54 —(2,07 − 1,815 − 0,002) / 2,07 = 12,2 %— y **≈11 %** en
+`DecisionTree` 122 —(2,58 − 2,301 − 0,004) / 2,58 = 10,7 %—, frente al **0,3-0,8 %** de los otros
+seis. Los dos se escriben redondeados a la unidad **a propósito**: el redondeo de `tiempo_s` a dos
+decimales propaga **±0,24 pp** y **±0,19 pp** respectivamente, así que el decimal no es suyo.
+Ojo también con el otro redondeo: el `tiempo_entrenamiento_s` va a sus tres decimales, y truncarlo
+a 1,82 o 2,30 haría que la fórmula dejase de reproducir su propio resultado.
+
+**Híbrido** (`1163c90`). Calibración OOF **92,18 %** (54) y **86,20 %** (122). El resto —**7,82 %**
+y **13,80 %**— **incluye la inferencia**: la cascada sobre D2 son **0,74 %** y **0,63 %**, y lo
+demás (7,08 % y 13,17 %) es la carga de los splits, la de los dos `.joblib` y las tres pasadas de
+métricas de la tabla de sensibilidad, sin desglosar, porque ninguna columna los mide por separado.
+La precisión importa: escribir «el resto» dejando la inferencia fuera daría tres sumandos que no
+llegan al 100 %. Es decir: **más del 85 % de lo que cuesta el híbrido es calibrar un umbral, no
+detectar** —y la detección propiamente dicha no llega al 1 %—.
 
 > [!note] El híbrido de 122 tarda **menos** que el de 54, y no es una paradoja
-> `tiempo_s` da **42,02 s** (54) frente a **18,32 s** (122). Escribirlo como «más características,
+> `tiempo_s` da **25,40 s** (54) frente a **15,83 s** (122). Escribirlo como «más características,
 > menos tiempo» sería falso: la causa es **mecánica y está en el dato**. El grueso del bloque es la
 > calibración OOF, que reajusta el clasificador de firmas una vez por fold —y **la configuración
 > ganadora de firmas no es la misma en las dos variantes**:
@@ -392,11 +515,14 @@ híbrido es calibrar un umbral, no detectar**.
 > | 54 | `{'clf__max_depth': 10, 'clf__n_estimators': 300}` |
 > | 122 | `{'clf__max_depth': None, 'clf__n_estimators': 100}` |
 >
-> **300 árboles contra 100**: el híbrido de 54 hace del orden de 3× el trabajo en la calibración.
-> Lo medido es `tiempo_entrenamiento_s` = **38,914 s** (54) frente a **15,959 s** (122), **2,44×**
-> — del orden esperado, con la profundidad libre del modelo de 122 y la dispersión de máquina
-> explicando el resto de la diferencia. La comparación de tiempos entre las dos variantes del
-> híbrido **no compara dos anchos de entrada: compara dos bosques distintos.**
+> **300 árboles contra 100**: el híbrido de 54 hace más trabajo en la calibración aunque tenga
+> menos columnas. Lo medido en `1163c90` es `tiempo_entrenamiento_s` = **23,414 s** (54) frente a
+> **13,646 s** (122), **1,72×**. Que no llegue al 3× que sugiere el recuento de árboles tiene
+> explicación a mano —el modelo de 122 crece con `max_depth=None`, así que cada uno de sus 100
+> árboles es más caro— pero **no se cuantifica aquí**: el factor cae dentro de la dispersión de
+> máquina de la sección anterior y no hay medida que lo separe. Lo citable es solo la conclusión
+> cualitativa: la comparación de tiempos entre las dos variantes del híbrido **no compara dos
+> anchos de entrada: compara dos bosques distintos.**
 >
 > Y tampoco es cierto que la calidad sea la misma en las dos: `conocida_f1_macro` vale
 > **0,748051** (54) y **0,655441** (122). Son dos sistemas distintos, no el mismo con más
@@ -407,48 +533,64 @@ híbrido es calibrar un umbral, no detectar**.
 > operación** (puntuar filas con el modelo ya ajustado) sobre conjuntos de tamaño distinto, así
 > que el cociente crudo entre dos de ellos **no es un cociente de coste por flujo**: hay que
 > ponerlo siempre **contra la referencia de tamaños**. Para el par umbral/inferencia esa
-> referencia es |D1_val| / |D2| = **13.469 / 22.544 = 0,597**.
+> referencia es |D1_val| / |D2| = **13.469 / 22.544 = 0,5975**.
 >
-> En `ac496cb`, `tiempo_score_umbral_s / tiempo_inferencia_s` va de **0,59**
-> (`OneClassSVM` 54) a **0,81** (`LocalOutlierFactor` 54). Publicar ese rango a secas invita
+> En `1163c90`, `tiempo_score_umbral_s / tiempo_inferencia_s` va de **0,483**
+> (`IsolationForest` 122) a **0,894** (`IsolationForest` 54). Publicar ese rango a secas invita
 > justo a la lectura que el dato prohíbe, así que se publica **normalizado por filas** (cociente
-> dividido por 0,597 = coste por fila del tramo de umbral respecto al de inferencia):
+> dividido por 0,5975 = coste por fila del tramo de umbral respecto al de inferencia):
 >
-> | Detector | 54 | 122 |
+> | Detector | 54 (crudo → normalizado) | 122 (crudo → normalizado) |
 > |---|---|---|
-> | `IsolationForest` | 1,01× | 1,01× |
-> | `OneClassSVM` | 0,99× | 1,01× |
-> | `LocalOutlierFactor` | **1,36×** | **1,32×** |
-> | `Autoencoder` | 1,10× | 1,03× |
+> | `IsolationForest` | 0,894 → **1,50×** | 0,483 → **0,81×** |
+> | `OneClassSVM` | 0,628 → 1,05× | 0,605 → 1,01× |
+> | `LocalOutlierFactor` | 0,824 → **1,38×** | 0,670 → 1,12× |
+> | `Autoencoder` | 0,634 → 1,06× | 0,590 → 0,99× |
 >
-> Leído así: **seis de los ocho detectores puntúan D1_val a 0,99-1,10× el coste por fila de D2**
-> —es decir, a coste por fila prácticamente igual, que es lo que la teoría predice— y las **dos
-> filas de `LocalOutlierFactor`** se salen, a 1,36× (54) y 1,32× (122).
+> Leído así: **cuatro de los ocho detectores puntúan D1_val a 0,99-1,10× el coste por fila de D2**
+> —a coste por fila prácticamente igual, que es lo que la teoría predice— y los otros cuatro se
+> salen: `IsolationForest` 54 (1,50×) y `LocalOutlierFactor` 54 (1,38×) por arriba,
+> `IsolationForest` 122 (0,81×) por abajo, y `LocalOutlierFactor` 122 rozando el borde (1,12×).
 >
-> **La desviación de LOF se describe y no se explica.** La corrida no controla nada de lo que
-> decidiría esa diferencia —estado de caché, carga de la máquina, `n_jobs`—, así que no hay con
-> qué atribuirla. Y no es estable: en `5516b60` el mismo cociente normalizado daba **1,18×** para
-> `LocalOutlierFactor` 54 (0,703 / 0,597) y **1,49×** para el de 122. Es decir, entre las dos
-> corridas el detector que más se sale cambia de variante y cambia de valor. **Descripción, no
-> explicación.**
+> **La banda «0,99-1,10×» es *post hoc*:** no viene de ningún criterio fijado de antemano, se
+> traza sobre los valores ya medidos de modo que caben justo esos cuatro. Vale como descripción
+> —el recuento y los que se salen van nombrados uno a uno—, no como umbral de tolerancia.
 >
-> *(Dos afirmaciones retiradas de este mismo recuadro. **Una:** que el desvío venía del
+> **Ninguna de esas desviaciones se explica, y ahora hay dos razones para no intentarlo.**
+>
+> **Una: el atípico cambia de algoritmo en cada corrida.** El máximo del cociente crudo fue
+> `Autoencoder` 54 en `5516b60` (0,884), `LocalOutlierFactor` 54 en `ac496cb` (0,814) e
+> `IsolationForest` 54 en `1163c90` (0,894). Tres corridas, tres detectores distintos, y siempre
+> rondando 0,81-0,89 en crudo. **Que se mueva la identidad del atípico y no su magnitud es la
+> firma de un sorteo aleatorio**, no de una propiedad del algoritmo: si la causa fuese estructural,
+> el que se sale sería siempre el mismo. **Salvedad de verificabilidad:** uno de los tres puntos
+> —el de `ac496cb`— **no es reproducible desde git**, porque sus CSV nunca se commitearon y los
+> sobrescribió `1163c90`; los de `5516b60` y `1163c90` sí lo son.
+>
+> **Dos, y es el argumento fuerte: a esta escala la magnitud no es medible con este banco.** Los
+> ocho cocientes se construyen con medidas **sub-segundo** de un **pase único** en una máquina no
+> dedicada —el par del `Autoencoder` 54 son **26 ms sobre 41 ms**—. El redondeo a milisegundos por
+> sí solo mueve esos cocientes varios puntos, y la carga de máquina, más. No hay nada que atribuir
+> porque no hay señal por encima del ruido.
+>
+> *(Tres afirmaciones retiradas de este mismo recuadro. **Una:** que el desvío venía del
 > `algorithm='brute'` que `sklearn` asigna a `LocalOutlierFactor` por encima de 15 features — era
 > una atribución causal sobre una medida única. **Dos:** el argumento «LOF no es el único que lo
-> enseña, el `Autoencoder` de 54 da 0,884», que servía para relativizar el primero. Esa premisa
-> **ya no se sostiene**: en `ac496cb` **ningún** detector llega a 0,85 en el cociente crudo —los
-> ocho valen 0,603 · 0,593 · 0,814 · 0,655 · 0,606 · 0,601 · 0,786 · 0,613—, LOF incluido, cuyo
-> máximo es **0,814**. Los dos valores de `5516b60` que estaban por encima de 0,85 se han
-> desplomado: `Autoencoder` 54 de **0,884 a 0,655** y `LocalOutlierFactor` 122 de **0,889 a
-> 0,786**. **Una magnitud que se mueve así entre corridas no sostiene ninguna atribución causal**,
-> ni a favor ni en contra.)*
+> enseña, el `Autoencoder` de 54 da 0,884», que servía para relativizar el primero. **Tres:** el
+> «seis de los ocho a 0,99-1,10×, LOF el que se sale» de la corrida anterior, que `1163c90` deja
+> en cuatro de ocho y con LOF ya sin la exclusiva. **Una magnitud que se mueve así entre corridas
+> no sostiene ninguna atribución causal**, ni a favor ni en contra.)*
 
 > [!note] Las dos columnas de épocas del autoencoder: `n_iter_ganador` y `n_iter_total_grid`
 > El autoencoder es un `MLPRegressor` con `early_stopping=True` y `max_iter=300`, así que su
 > tiempo de ajuste depende de **dos** cosas que el CSV no separaba: cuántas épocas necesitó y cómo
-> de cargada estaba la máquina. Sin ese dato no se puede decidir si los **180,965 s** (54) frente a
+> de cargada estaba la máquina. Sin ese dato no se podía decidir si los **180,965 s** (54) frente a
 > **47,826 s** (122) de `5516b60` —relación **invertida** respecto a `38fdd4b`, que dio 37,492 s y
-> 121,059 s— son épocas o carga. Es lo que pedía **T22**.
+> 121,059 s— eran épocas o carga. Es lo que pedía **T22**.
+>
+> **Ese dato ya existe y sí decide**, pero en un eje distinto del que se pedía: decide **entre
+> corridas** y deja **indecidible** la comparación 54 vs 122. La respuesta va más abajo y es la
+> contraria de la que este documento publicó con `ac496cb`.
 >
 > Se publican **dos** columnas porque **no son intercambiables**, y confundirlas fue el defecto 2
 > del dictamen de `0595a15`:
@@ -456,33 +598,63 @@ híbrido es calibrar un umbral, no detectar**.
 > | Columna | Qué cuenta | Para qué sirve |
 > |---|---|---|
 > | `n_iter_ganador` | Épocas del ajuste **de la configuración ganadora** | Saber si el modelo que se publica se cortó por `max_iter=300` o convergió |
-> | `n_iter_total_grid` | **Suma** de las épocas de **todas** las configuraciones del grid | El denominador **coherente** de `tiempo_entrenamiento_s`, que cronometra exactamente esos mismos `fit` |
+> | `n_iter_total_grid` | **Suma** de las épocas de **todas** las configuraciones del grid | Leer `tiempo_entrenamiento_s` en **segundos por época** con un denominador coherente: cubre exactamente los mismos `fit` que ese tiempo cronometra |
 >
-> **Coherente y no «único válido»:** el grid del autoencoder tiene **dos arquitecturas**,
-> `(64, 32, 64)` y `(32, 16, 32)`, cuyo coste por época no es el mismo, así que el cociente
-> `tiempo_entrenamiento_s / n_iter_total_grid` es una **media ponderada** entre dos costes por
-> época distintos —ponderada por cuántas épocas consumió cada arquitectura, que es justo lo que la
-> columna no desglosa—. Es el denominador que cubre el mismo conjunto de `fit` que el numerador, y
-> por eso el cociente es interpretable; no es una constante física del modelo.
+> **Coherente, y nada más que coherente.** Dos límites, los dos importantes:
 >
-> **Respuesta medida a T22 (corrida `ac496cb`).** Con ese denominador:
+> 1. **No es el «único válido».** El grid del autoencoder tiene **dos arquitecturas**,
+>    `(64, 32, 64)` y `(32, 16, 32)`, cuyo coste por época no es el mismo, así que el cociente
+>    `tiempo_entrenamiento_s / n_iter_total_grid` es una **media ponderada** entre dos costes por
+>    época distintos —ponderada por cuántas épocas consumió cada arquitectura, que es justo lo que
+>    la columna no desglosa—. No es una constante física del modelo.
+> 2. **No separa causas: no decide si una diferencia de tiempo es de épocas o de carga de
+>    máquina.** Este documento y `config.ALCANCE_N_ITER_TOTAL` lo afirmaron y era falso. **Como el
+>    recuento de épocas resultó ser determinista** (mismos 162 y 128 en las dos corridas que lo
+>    registran, ver más abajo), el denominador es constante y el cociente **es el numerador
+>    reescalado**: absorbe íntegramente la carga de máquina y no la distingue de nada. Sirve para
+>    leer el tiempo en s/época **dentro de una corrida**, no para atribuirle causa a una diferencia
+>    entre dos.
 >
-> | Variante | `tiempo_entrenamiento_s` | `n_iter_total_grid` | s/época | `n_iter_ganador` |
-> |---|---|---|---|---|
-> | 54 | 37,977 s | 162 | **0,234** | 117 |
-> | 122 | 31,003 s | 128 | **0,242** | 66 |
+> **Respuesta medida a T22.** El dato que lo zanja es que las dos corridas que registran épocas
+> dan **exactamente los mismos recuentos**:
 >
-> El coste por época difiere un **3,3 %** entre las dos variantes, mientras que el tiempo total
-> difiere un 22 % y el recuento de épocas un 27 % (162 vs 128). Conclusión: **la diferencia de
-> tiempo del autoencoder entre las dos variantes es de épocas, no de carga de máquina** — el ajuste
-> a 122 características no es más barato por época, es que necesitó menos épocas antes de que
-> `early_stopping` lo cortara. Es exactamente la pregunta que T22 dejaba abierta y estas dos
-> columnas son las que permiten responderla; sin ellas la comparación era indecidible.
+> | Variante | `n_iter_total_grid` | `n_iter_ganador` | `tiempo_entrenamiento_s` en `ac496cb` ⚠ **no verificable** | s/época | en `1163c90` | s/época |
+> |---|---|---|---|---|---|---|
+> | 54 | **162** | **117** | 37,977 s | 0,234 | 48,933 s | **0,3021** |
+> | 122 | **128** | **66** | 31,003 s | 0,242 | 112,535 s | **0,8792** |
 >
-> Dos avisos sobre esta respuesta: (a) vale para `ac496cb` y para ninguna otra corrida —el mismo
-> par en `5516b60` no se puede recalcular porque aquel CSV **no tiene** las columnas de épocas—;
-> y (b) ninguno de los dos ajustes ganadores tocó el tope (`max_iter=300`): 117 y 66, así que los
-> dos cortaron por `early_stopping` y la comparación es entre dos ajustes convergidos.
+> ⚠ Las dos columnas de `ac496cb` —tiempo y s/época— **no son reproducibles desde git**: sus CSV
+> nunca se commitearon y los sobrescribió `1163c90`. Tampoco lo son los recuentos de épocas
+> atribuidos a esa corrida, de modo que la afirmación «idénticos en las dos corridas que los
+> registran» —y los factores **1,29×** y **3,63×** que salen de ella— descansa sobre una corrida
+> verificable (`1163c90`) y otra que no lo es.
+>
+> **El recuento de épocas del autoencoder sale determinista en lo medido**: 162 (54) y 128 (122)
+> para el grid completo, 117 y 66 para el ajuste ganador, **idénticos en las dos corridas que los
+> registran, una de ellas (`ac496cb`) no reproducible desde git**;
+> ninguno tocó `max_iter=300`, así que todos cortaron por `early_stopping`. Es lo esperable con
+> semilla 42 y datos idénticos, pero hasta ahora no estaba medido. Con ese recuento congelado,
+> `tiempo_entrenamiento_s` varía entre corridas **1,29×** (54) y **3,63×** (122).
+>
+> > **La variación de tiempo del autoencoder entre corridas es carga de máquina y no épocas: está
+> > medido con el número de épocas fijo en las dos corridas que lo registran, una de ellas
+> > (`ac496cb`) no reproducible desde git.**
+>
+> **Y la comparación 54 vs 122 no es decidible con este diseño.** Cada variante es una invocación
+> distinta del script —dos sesiones, no dos medidas de la misma—; la dirección del par **se
+> invierte dos veces** en las cuatro corridas registradas (122 más lento en `38fdd4b`, 54 más lento
+> en `5516b60` y en `ac496cb`, 122 otra vez en `1163c90`); y el cociente s/época —**0,234 / 0,242**
+> en `ac496cb` frente a **0,3021 / 0,8792** en `1163c90`, sobre **denominadores idénticos**— hereda
+> esa carga por completo, porque con el denominador constante el cociente es el numerador
+> reescalado y nada más. Decidirlo exigiría un **diseño de medidas repetidas** —N repeticiones por
+> variante dentro de la misma sesión, y publicar mediana y dispersión en vez de un valor—, **que no
+> se ha hecho**.
+>
+> **Queda retirada** la conclusión que este documento publicó con `ac496cb` —«la diferencia de
+> tiempo del autoencoder entre las dos variantes es de épocas, no de carga de máquina», apoyada en
+> un 3,3 % de diferencia de coste por época—: `1163c90` la falsa con los mismos denominadores y
+> tiempos que se mueven 1,29× y 3,63×. Aquel 3,3 % era una coincidencia de dos sesiones con carga
+> parecida, no una medida del modelo.
 >
 > `tiempo_entrenamiento_s / n_iter_ganador` **no son** segundos por época: el numerador cubre las
 > dos configuraciones del grid del autoencoder y el denominador solo una. `n_iter_total_grid` se

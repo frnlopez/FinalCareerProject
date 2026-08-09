@@ -364,14 +364,20 @@ class NSLKDDAnomalyTrainer:
 
         # Épocas (solo Autoencoder; None en los otros tres). DOS cifras y no una:
         # las del ganador dicen si ESE ajuste se cortó por max_iter, y las del
-        # grid entero son el único denominador con el que 'tiempo_entrenamiento_s'
-        # —que suma los fit de TODAS las configuraciones— da segundos por época.
+        # grid entero son el denominador COHERENTE con el que
+        # 'tiempo_entrenamiento_s' —que suma los fit de TODAS las
+        # configuraciones— da segundos por época dentro de ESTA corrida. Ese
+        # cociente NO separa causas: el recuento de épocas es determinista con la
+        # semilla 42, así que con denominador constante el cociente es el
+        # numerador reescalado y se lleva la carga de máquina entera.
         n_iter_ganador = self._iteraciones_ajuste(algo, model)
         if n_iter_ganador is not None:
             print("   Épocas: {} el ajuste ganador · {} todo el grid (max_iter="
                   "300 · early_stopping=True). 'tiempo_entrenamiento_s' cubre el "
-                  "grid entero: dividir por la segunda cifra, no por la "
-                  "primera".format(n_iter_ganador, n_iter_total))
+                  "grid entero: dividir por la segunda cifra, no por la primera. "
+                  "El s/época resultante vale DENTRO de esta corrida: no decide "
+                  "si una diferencia de tiempo es de épocas o de carga de "
+                  "máquina".format(n_iter_ganador, n_iter_total))
 
         self.resultados[algo] = {
             "modelo": model,
@@ -430,8 +436,14 @@ class NSLKDDAnomalyTrainer:
         ver _iteraciones_ajuste). No son la misma cifra ni son intercambiables: la
         primera cuenta el ajuste GANADOR —dice si se cortó por max_iter— y la
         segunda suma TODO el grid, que es el conjunto de fit que cronometra
-        'tiempo_entrenamiento_s' y por tanto el único denominador con el que ese
-        tiempo se lee en segundos por época.
+        'tiempo_entrenamiento_s' y por tanto el denominador COHERENTE con el que
+        ese tiempo se lee en segundos por época DENTRO de una corrida. Ojo con lo
+        que ese cociente NO hace: como el recuento de épocas es determinista con
+        la semilla 42 (mismos valores en las corridas que registran la columna),
+        el denominador es constante y el cociente sale ser el numerador
+        reescalado, así que absorbe la carga de máquina entera y NO decide si una
+        diferencia de tiempo entre dos filas es de épocas o de carga. Ver
+        config.ALCANCE_N_ITER_TOTAL.
 
         Y con 'tiempo_s': aquí mide el BLOQUE COMPLETO del algoritmo —los fit del
         grid + el scoring del set etiquetado en CADA config + el scoring de D1_val

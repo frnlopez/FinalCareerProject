@@ -100,7 +100,7 @@ ALCANCE_0DAY = ("recall de marcado como ataque sobre los ataques de D2 de tipo "
 # calcule sobre las mismas filas de D2: en el híbrido la medida es de extremo a
 # extremo y los ataques que la etapa 1 no marcó entran como 'normal', así que
 # baja respecto a firmas-solo. Cuánto baja depende de QUÉ métrica se mire, así que
-# la cifra va con nombre y con corrida: RECALL MACRO, corrida ac496cb, variante de
+# la cifra va con nombre y con corrida: RECALL MACRO, corrida 1163c90, variante de
 # 54: 0,850 (RandomForest en metricas_firmas.csv) -> 0,671 ('conocida_recall_macro'
 # en metricas_hibrido.csv), 17,9 pp. Antes aquí ponía "18 pp" a secas y era
 # indistinguible de un error: con f1_macro la misma caída son 7,4 pp (0,822 ->
@@ -377,13 +377,18 @@ ALCANCE_N_ITER_TOTAL = (
     "(Autoencoder = MLPRegressor con early_stopping=True y max_iter=300) — NO es "
     "una métrica sobre D2. Cubre exactamente el mismo conjunto de fit que "
     "cronometra 'tiempo_entrenamiento_s' así que es el denominador COHERENTE "
-    "para leer ese tiempo en segundos por época y decidir si una diferencia entre "
-    "dos filas es de épocas o de carga de máquina. Coherente y no 'el único "
-    "válido': el grid del autoencoder tiene DOS arquitecturas (64 32 64) y "
-    "(32 16 32) cuyo coste por época no es el mismo así que ese cociente es una "
-    "MEDIA PONDERADA entre dos costes por época distintos — interpretable pero no "
-    "una constante del modelo. Celda VACÍA en IsolationForest "
-    "OneClassSVM y LocalOutlierFactor por el mismo motivo que 'n_iter_ganador'"
+    "para leer ese tiempo en segundos por época DENTRO de una corrida. NO decide "
+    "si una diferencia de tiempo entre dos filas es de épocas o de carga de "
+    "máquina: el recuento de épocas es DETERMINISTA con la semilla 42 —los mismos "
+    "162 (54) y 128 (122) en las dos corridas que registran la columna— así que "
+    "con el denominador constante el cociente es el numerador reescalado y "
+    "absorbe la carga de máquina entera sin separar las dos causas. Coherente y "
+    "no 'el único válido': el grid del autoencoder tiene DOS arquitecturas "
+    "(64 32 64) y (32 16 32) cuyo coste por época no es el mismo así que ese "
+    "cociente es una MEDIA PONDERADA entre dos costes por época distintos — "
+    "interpretable pero no una constante del modelo. Celda VACÍA en "
+    "IsolationForest OneClassSVM y LocalOutlierFactor por el mismo motivo que "
+    "'n_iter_ganador'"
 )
 
 ALCANCE_COLUMNAS = {
