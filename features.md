@@ -312,17 +312,6 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
     sin acceso institucional; no sostiene ninguna afirmación del trabajo». Cerrarlas explícitamente
     vale más que dejarlas como deuda flotante.
 
-- [ ] **T15 · B1: cerrar la auditoría de `Bibliografía.md`** · — · `researcher`
-  Tarea abierta desde el 2026-08-01 (ver la ficha «Auditar la bibliografía» más arriba, que esta
-  continúa). Completar `[2]` (Anderson) y `[8]` (Stallings) con año y editorial; **fundir `[9]` en
-  `[8]`** (copia del mismo libro en dominio de terceros) y retirarla de la numeración;
-  **sustituir `[1]`** (prensa sectorial sosteniendo una cifra de ciberataques) por fuente de nivel
-  1-2: ENISA *Threat Landscape*, INCIBE o CCN-CERT, todas públicas y sin muro. **Bajas autorizadas
-  por Francisco el 2026-08-06.** Cambio de formato: `Bibliografía.md` pasa a **tabla de staging** con
-  cita completa, DOI y **nivel de fiabilidad por entrada** — el pase final en Zotero/IEEE se vuelve
-  mecánico y el nivel a la vista impide colar sin darse cuenta una fuente de nivel 2-3 sosteniendo
-  una afirmación fuerte.
-
 - [ ] **T16 · B2: volcado de fuentes, DESPUÉS de la redacción** · — · `researcher`
   **Va después de la redacción (T8-T13): no se arranca antes.** Regla dura: **ninguna entrada sin
   cita en el texto.** Los cuatro informes aportan ≈40 fuentes con datos completos y nivel asignado;
@@ -361,24 +350,6 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > `.esquema-anterior.bak` son **prescindibles** y **cualquier cita a una corrida vieja debe apuntar
 > al commit, nunca al `.bak`**.
 
-- [ ] **T18 · Rediseñar qué se publica en `alcance_tiempo_s`** · Código · `ml-implementador` → `auditor-ml`
-  Trabajo ya hecho en el commit `0595a15`, etiquetado **`[PENDIENTE, NO APTO]`**: no está aplicado a
-  ninguna tabla publicada. **Diagnóstico:** publicar *interpretación* (porcentajes, factores de
-  dispersión) dentro del dato crea un bucle — el dato no se edita sin re-correr, y cada corrida falsa
-  la cifra anterior. La celda va ya por **≈3,2 kB × 8 filas en un CSV de 9 líneas**.
-  **Propuesta:** en el CSV solo lo **estable** (qué tramos entran y cuáles no, y el aviso de P9);
-  **todos los números a `PIPELINE.md`**, anclados a commits de git — durables y editables sin
-  re-correr.
-  Al hacerlo se arreglan de paso los **cuatro defectos** que dejaron `0595a15` en NO APTO:
-  - el par `8b07319`→`077119e` **mal atribuido**: los 729.199 flujos/s son de la corrida de
-    `38fdd4b`; en `077119e` la cifra es **472.834**;
-  - `n_iter_ganador` son las épocas de **UNA** config, frente a `tiempo_entrenamiento_s`, que suma
-    **las DOS** del grid;
-  - el aviso de caché de LOF **afirma causalidad dentro del ruido**;
-  - las **tres cotas sin anclar** de `anomalias.py:266,364,409` («27-49 %»), **ya falsada**: IF-122 da
-    **26,7 %**.
-  **Exige una corrida más del runbook completo.**
-
 - [ ] **T19 · Cifras de tiempo del vault sin respaldo en ningún artefacto** · Informe · `redactor-tfg`
   Detectado dentro de T1 (2026-08-06 a 2026-08-08). **Ninguna de estas cifras sale de una corrida que exista:**
   la **columna Tiempo entera** de la tabla de `5.1 …anomalías.md:44-47` (5,04 · 28,34 · 16,42 ·
@@ -388,15 +359,26 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
   **Advertencia dura, no opcional:** el wall-clock **dispersa hasta 4,8× entre corridas en máquina no
   dedicada** (Autoencoder-54: 37,71 → 181,91 s, con **calidad idéntica al bit**). Estas cifras **no
   deben citarse como propiedad del algoritmo** sin declarar la dispersión.
+  **Refuerzo del 2026-08-09 (cierres de T18 y T22):** la horquilla 4,8× ya puede enunciarse **«con el
+  recuento de épocas idéntico»** — `n_iter_total_grid` quedó registrado y resultó **determinista**. Y
+  lo que debe sostener el capítulo es el **Hallazgo 7**: los segundos absolutos **no son reproducibles
+  entre corridas**, pero **el reparto interno del bloque se mueve como mucho 4,5 pp y conserva el
+  orden de las ocho filas**. Es una afirmación mucho más defendible que cualquier cifra en segundos.
 
 - [ ] **T20 · Reformular el argumento de T9 («HistGB tarda más que RF»)** · Informe · `redactor-tfg`
   El par **`68,7 / 54,8`** de la viñeta `3.5` de **T9** y del informe tabular **no existe en ningún
-  artefacto**. La **dirección sí es robusta**: 4 de 4 pares intra-corrida en el mismo sentido, con
-  grids de igual cardinalidad, entre **1,31× y 4,40×**. Pero es **coste de entrenamiento**, y **en
-  inferencia a 54 características el orden se invierte** (HistGB **0,0035 ms/flujo** frente a RF
-  **0,0069**).
-  **Formulación defendible, sin cifras absolutas:** «más caro de entrenar en las dos variantes y las
-  dos corridas, entre 1,3× y 4,4×, sin ganar `f1_macro` (0,804 vs 0,822)».
+  artefacto**.
+  **Corregida el 2026-08-09 al cerrar T18: la formulación que traía esta ficha era falsa.** No son
+  4 de 4 pares ni 7 de 8, sino **8 de 10 pares** intra-corrida en el mismo sentido, y los **dos
+  contraejemplos están ambos en la variante de 54** (2 de cada 5 corridas invierten ese par). Por eso
+  **se retira la horquilla «1,31×-4,40×»**: se queda sin cota inferior. La afirmación **solo es sólida
+  en la variante de 122**. Sigue siendo **coste de entrenamiento**, y **en inferencia a 54
+  características el orden se invierte**: HistGB **0,0032 ms/flujo** frente a RF **0,0072** (los
+  `0,0035 / 0,0069` que citaba esta ficha son de otra corrida). Y sigue **sin ganar `f1_macro`**
+  (0,804 vs 0,822).
+  **La dirección aguanta y la prosa del vault no se toca**; lo que era falso es la formulación
+  recomendada aquí. **La formulación correcta y anclada está en `PIPELINE.md:252-256`**, y es la que
+  debe usarse.
 
 - [ ] **T21 · Declarar la mitad de P9 que T1 no cubre** · Informe · `redactor-tfg`
   `latencia_ms_por_flujo` mide **solo `predict`/`score`** sobre características ya calculadas y en
@@ -405,11 +387,28 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
   esa salvedad **sería el propio pitfall P9** (*Lab-Only Evaluation*) que se dice estar cubriendo.
   Encaja en `5.4` y en el inventario de límites de **T6**.
 
-- [ ] **T22 · `n_iter_` del Autoencoder no se registra en ningún artefacto** · Código · `ml-implementador` → `auditor-ml`
-  Sin ese dato **hoy no se puede decidir** si los **181,91 s frente a 48,08 s** del AE son **épocas** o
-  **carga de máquina**. Afecta a **cualquier frase que compare tiempos del AE entre variantes**
-  (T19 incluida). Registrar `n_iter_` por fila y, hasta entonces, no atribuir esas diferencias al
-  algoritmo.
+### Residuos de T15 y T18 — altas del 2026-08-09
+
+> T15 (auditoría de `Bibliografía.md`) y T18 (rediseño de `alcance_tiempo_s`) se cerraron el
+> 2026-08-09 (ver `## Cerradas`). Estas tres fichas son lo que **quedó fuera** de esos cierres.
+
+- [ ] **T23 · Correcciones del texto que la auditoría de bibliografía dejó sin autorizar** · Informe · `redactor-tfg`
+  Salen del informe `Obsidian_TFG_Vault/99 Investigación/Auditoría de Bibliografía.md` (T15). Son las
+  correcciones de texto que **no estaban autorizadas** en aquel encargo y por tanto no se aplicaron.
+  **Fuera de esta ficha, ya ejecutadas:** reformular `1.1:12` al dato agregado de INCIBE, repuntar
+  `2.1.2:30,64` de `[6]` a `[5]`, y `2.2.1:32` de `[9]` a `[8]`.
+
+- [ ] **T24 · `2.1.4 Algoritmos de ML` no tiene bloque de redes neuronales** · Informe · `redactor-tfg`
+  Hueco del marco teórico detectado por el `redactor-tfg` el 2026-08-09, **independiente de la
+  bibliografía**: el apartado enumera algoritmos de ML sin ningún bloque de redes neuronales, cuando
+  la etapa 1 del sistema es un Autoencoder-MLP.
+
+- [ ] **T25 · `[6]` (Goodfellow) se ha quedado sin cita en el texto** · — · `researcher`
+  Choca con la **regla dura de T16** («ninguna entrada sin cita en el texto»): tras repuntar
+  `2.1.2:30,64` a `[5]`, `[6]` no la cita nadie. **Pendiente de decisión de Francisco:** retirarla o
+  darle uso (T24 sería su sitio natural). Además, la columna «Dónde se usa» de `Bibliografía.md:32`
+  está **desactualizada** y el aviso de `:86` puede que ya no proceda. **Solo el `researcher` toca ese
+  fichero.**
 
 ### Descartado — no reabrir
 
@@ -443,6 +442,11 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > residuos, dados de alta como `T18`-`T22`. `T18` **también exige una corrida del runbook**: si se va
 > a correr `T4`, conviene decidir antes el orden para no repetir cómputo.
 
+> **Actualización 2026-08-09:** `T18` y `T22` **cerradas** — su corrida del runbook es `1163c90`—, así
+> que ese condicionante desaparece: **`T4` (10 semillas) es la siguiente tarea de código**, ya sin
+> bloqueo previo. De los residuos de T1 siguen abiertos `T19`, `T20` y `T21`, los tres de track
+> Informe. `T15` cerrada también, con tres residuos nuevos: `T23`-`T25`.
+
 > **T0 va a reescribir la sección de abajo** (retirada de la regla «lo escribe Francisco» en dos
 > velocidades). Hasta que T0 se cierre, la sección sigue vigente tal como está.
 
@@ -462,6 +466,9 @@ No se despachan a ningún agente. El `leader` no debe crear tareas para esto.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-09 | Código | **T18 · Rediseño de qué se publica en `alcance_tiempo_s`.** Los **cuatro defectos** que dejaron `0595a15` en `[PENDIENTE, NO APTO]` quedan resueltos, y con ellos el bucle de fondo: el CSV publica solo lo **estable** (qué tramos entran, cuáles no y el aviso de P9) y **todos los números viven en `PIPELINE.md`**, anclados a commits de git, editables sin re-correr. Las dos frases empíricas prohibidas —«las desviaciones observadas caben dentro de la dispersión entre corridas» y «un tramo de coste casi FIJO que no escala con el modelo»— estaban en **8/8 y 8/8 filas** y ahora salen **0/8 y 0/8**. Corrida final `1163c90`: **222 filas**, `commit` limpio, `semilla = 42`, **deriva de calidad cero** contra nueve anclas externas y sin fuga de datos. `PIPELINE.md` re-anclado a `1163c90` con todas las cifras reproducibles desde los CSV. **Efecto sobre otras fichas:** re-ancla **T20** (era falsa: 8 de 10 pares, no 4 de 4, y horquilla retirada) y refuerza **T19** (Hallazgo 7). Dictamen de `auditor-ml`: APTO. Commits: `ac496cb`, `1163c90` + el de cierre | — |
+| 2026-08-09 | Código | **T22 · `n_iter_` del Autoencoder.** Cerrada **con la conclusión invertida respecto a lo que la ficha traía**: `n_iter_total_grid` queda registrado por fila y resulta **determinista** — **162** a 54 características y **128** a 122, idénticos en las dos corridas que lo registran (una de ellas no reproducible desde git). Con las épocas congeladas, el wall-clock del Autoencoder se mueve **1,29× y 3,63×** entre corridas: esa variación es **carga de máquina, no épocas**, que era justo lo que la ficha no podía decidir. El cociente s/época **no separa nada** al tener denominador fijo. Y el eje **54-vs-122 es indecidible con este diseño** sin medidas repetidas: eso es un **resultado**, no una tarea pendiente. Dictamen de `auditor-ml`: APTO. Sale con T18 (`ac496cb`, `1163c90`) | — |
+| 2026-08-09 | — | **T15 · B1: auditoría de `Bibliografía.md` cerrada.** Las **10 entradas** con cita completa y **nivel declarado** (8 de nivel 1; `[2]` Anderson 1980 queda en **nivel 2** y no hay forma de subirlo). `[9]` **retirada sin renumerar** (copia no autorizada del mismo Stallings de `[8]`, y hoy además exige login); `[1]` **sustituida** por la nota de prensa oficial de INCIBE (**97.348 incidentes en 2024, +16,6 %**), y `[2]` y `[8]` completados con año y editorial. Formato migrado a **tabla de staging**. **0 entradas añadidas**: el volcado de las ≈40 fuentes es **T16** y va después de la redacción. Informe en `Obsidian_TFG_Vault/99 Investigación/Auditoría de Bibliografía.md`. Residuos dados de alta: **T23**, **T24**, **T25** | — |
 | 2026-08-08 | Código | **T1 · Nivel 1: esquema de métricas.** Cerrada en su objetivo, con residuos anotados (`T18`-`T22`). Las **8 tablas regeneradas**, tres corridas del runbook completo; las publicadas son las de `5f98d88`, producidas por el código `5516b60`: `commit` limpio y `semilla = 42` en las **216 filas**, recuentos 8/8/2/2 y 16/36/144/6, **cero deriva en métricas de calidad**, sin leakage y sin valores imposibles. Esquema nuevo: `bin_accuracy` en `metricas_baseline.csv`, campo **`alcance` por fila** en las cuatro tablas (cierra C3 y C6 — `accuracy_D2` era columna homónima con dos alcances: 0,9683 en firmas, 0,7395 en baseline), columnas `semilla` y `commit`, conjunto mínimo obligatorio de columnas, `_limpiar_variante_csv` subido a `evaluacion.py` con `CLAVE_UNICIDAD` declarada (variante × algoritmo × alcance), y **tiempo de inferencia separado del de entrenamiento** con latencia por flujo y flujos/s. Además, no previsto en la ficha: **todos los cronómetros pasados de `time.time()` a `perf_counter`** (`time.time()` tiene ≈15,6 ms de resolución en Windows y publicaba `latencia_ms_por_flujo = 0.0` con caudal vacío en DecisionTree); **guarda única** para latencia, caudal y FPR — un valor no medible da **celda vacía, nunca `0.0`**; y `tiempo_s`, que significaba **tres cosas distintas según la tabla** sin que el dato lo dijera, ahora declara su `alcance_tiempo_s` por fila. **Hallazgo mayor:** el residual `tiempo_s − entrenamiento − inferencia` llegaba al **49 % en OneClassSVM-54** y estaba sin declarar; la etiqueta lo llamaba «figuras», que son décimas de segundo. Medido y cerrado con dos columnas nuevas en `metricas_anomalias.csv` (`tiempo_score_seleccion_s`, `tiempo_score_umbral_s`): el grueso es **el scoring repetido dentro de la selección de hiperparámetros** —el script pasa por el scorer 5-7× más filas eligiendo config que evaluando— y en OCSVM-54 ese tramo **iguala al propio ajuste**; no entraba en `tiempo_entrenamiento_s` porque no es `fit`. Declarado que **`latencia_ms_por_flujo` mide solo `predict`/`score`** sobre características ya calculadas y en memoria, sin captura ni extracción de features: sin esa frase, citar el caudal como capacidad operativa sería la *Lab-Only Evaluation* que denuncia P9 (la mitad que falta → `T21`). **Corrección de lo que esta ficha afirmaba mientras estuvo abierta:** era **falso** que «ningún resultado publicado cambia: solo cambia el esquema de columnas» — no cambia **ninguna métrica de calidad** (semilla 42, modelos y calibración OOF intactos), pero **las columnas de tiempo sí cambian de valor**, por el paso a `perf_counter` y por la varianza de máquina, y cambia el `alcance` de las 16 filas de `metricas_balanceo.csv`. Decisiones de diseño internas → `T17`. **Cuatro pasadas de `auditor-ml`**; dictamen sobre las tablas publicadas: T1 puede cerrarse en track Código. Commits: `077119e`, `38fdd4b`, `34bee30`, `5516b60`, `5f98d88` | `5f98d88` |
 | 2026-08-01 | Código | Fin del «roadmap vivo»: `next-steps.md` ya no se anuncia como tal en ningún fichero. La frase de reparto sale del callout «Estado a 2026-07-16» de `CLAUDE.md:115-117` a párrafo propio fechado el 2026-08-01 (datar el congelado tres semanas antes era falso), mismo arreglo en `resumen-de-decisiones.md:4` + inciso de fecha sobre la casilla del 2026-07-21 (`:440-443`, registro original íntegro) + entrada de bitácora nueva (`:533-542`), y «Roadmap» → congelado en `README.md:26-28` y `Guia_ML\README.md:7-9`. El auditor corrige además el fondo: «§6 vigente como especificación técnica» era falso sin matiz — `next-steps.md:591-597` declara §6.5 (`hibrido.py`) superada por el grill H-1…H-7, y sin la salvedad un implementador podía calibrar `UMBRAL_CONF` con el método viejo y saltarse una decisión anti-leakage cerrada; la salvedad va en los cuatro ficheros. Dos pasadas de `auditor-ml` (la primera APTO CON CAMBIOS, 4 puntos aplicados), árbol ASCII de `README.md` intacto | `b5aec20` |
 | 2026-08-01 | Código | Diagrama `01_pipeline_completo.mmd` al día: 15 correcciones verificadas contra `fichero:línea` — capa de modelos ya no es «no implementado», «51 ataques» → 40 etiquetas, la alineación one-hot es la **unión D1+D3** (y no «schema de D1», que documentaba el bug cerrado el 2026-07-05), alta del paso `select_features()` 122→54 y de las 4 aristas del protocolo anti-leakage (calibración OOF de `UMBRAL_CONF` con D3, D2 no ajusta nada). `.png` y `.svg` regenerados con `mermaid-cli` 11.16.0 `-s 3`; segunda auditoría sin rojos ni naranjas. Incluye `diagramas/README.md` y, en `CLAUDE.md`, la atribución del balanceo 4.3.4 a `firmas.py` (por algoritmo), no a `program.py` | `d88dada` |
