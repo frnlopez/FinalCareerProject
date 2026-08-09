@@ -461,6 +461,108 @@ unificado. Aplicada en 4.3.1-4.3.5, 4.4 y 4.5 (7 fragmentos).
 
 ---
 
+## Decisiones del 2026-08-06 (grill de los cuatro informes del `researcher`)
+
+Cerradas en el `grill-me` de 13 preguntas del **2026-08-06**, que convirtió los cuatro informes de
+`Obsidian_TFG_Vault/99 Investigación/` en las 18 fichas T0-T17 de `features.md`. Registradas aquí el
+**2026-08-09** (volcado parcial de T17: falta el bloque «Decisiones tomadas a partir de este informe»
+en los cuatro informes y la deriva de documentación de `evaluacion.py`).
+
+### Criterio rector del lote → **refinar el proyecto o enseñar el límite; nunca sucedáneos**
+
+Nada que no refine el proyecto o no ayude al lector a ver que **con NSL-KDD se hizo todo lo
+posible**. Las imposibilidades se **declaran con su razón técnica**: no se omiten ni se sustituyen
+por sucedáneos sintéticos. Y el dataset tiene **argumento positivo propio** (Goldschmidt y Chudá:
+solo el 23 % de los datasets NIDS trae partición train/test predefinida, 16 % desde 2020, y su
+ausencia es «*prone to biased evaluations and selective reporting*»; NSL-KDD sí la trae y este TFG la
+respeta). Ese argumento va **antes** de cualquier límite.
+
+### Decisión marco (a) — **se REABRE el track de código**, de forma declarada y acotada
+
+**Contexto.** El track de código se dio por cerrado el **2026-07-16**. Los cuatro informes dejaron
+dos motivos que no se pueden despachar con redacción: (1) la auditoría C1-C7 del protocolo de
+evaluación **no se cumplía en C3 ni en C6** —`accuracy_D2` era una columna homónima con dos alcances
+distintos: 0,9683 en firmas y 0,7395 en baseline—; y (2) **dos decisiones ya cerradas descansaban en
+huecos de 1-2 pp medidos con n=1** (RandomForest 0,822 vs HistGradientBoosting 0,804 en firmas;
+Autoencoder 0,8605 vs IsolationForest 0,8257 en anomalías).
+
+**Decisión: reabrir, con el alcance exacto de la spec y nada más.**
+- **Nivel 1 — esquema de métricas** (T1): **no mueve ningún número publicado** de calidad.
+- **Nivel 2 acotado — 10 semillas** (T4): **los titulares de 5.1-5.3 siguen siendo los de la semilla
+  42**; la dispersión entra como tabla nueva en `A.3` más un párrafo en `5.4`. **No se reescribe el
+  capítulo.**
+- **Dos mediciones baratas**: KS de D1 contra las 9.711 filas normales de D2 (T2) y medición de la
+  cascada invertida sobre modelos ya persistidos (T3).
+- **Todo pasa por `auditor-ml`.** Nada más entra en la reapertura.
+
+### Decisión marco (b) — **se retira la regla «lo escribe Francisco», en dos velocidades**
+
+- **`2.x` — retirada completa:** `redactor-tfg` redacta la prosa desde los guiones ya existentes.
+- **`6.2 Líneas futuras` — borrador de agente con revisión final de Francisco.** Es el sitio natural
+  del material de Nested Learning, y bloqueada dejaba a medias un entregable del encargo.
+- **La bibliografía final en Zotero/IEEE sigue siendo de Francisco** (trabajo mecánico en su máquina).
+
+> **Ejecución pendiente en T0**, con un choque abierto: `2.1.4` no figura en las ubicaciones de T0 ni
+> en la sección «Fuera de la lista operativa» de `features.md`, pero la «Restricción dura» de T25 sí
+> se la reserva a Francisco. **T0 y T25 son la misma pregunta; la decide Francisco al cerrar T0.**
+
+### Renuncia declarada al p-valor sobre las 10 semillas
+
+**Sin p-valor**, con la renuncia **declarada y su razón: 10 puntos sobre un único dataset no
+sostienen un contraste.** Declarar la renuncia **cumple** el ítem *statistics* del checklist de
+Pineau et al.; callarla no. Si los intervalos de RandomForest/HistGradientBoosting o de
+Autoencoder/IsolationForest se solapan, **se dice y no se establece el orden** — eso es un hallazgo
+para `5.4`, no un desastre.
+
+---
+
+## Decisiones del 2026-08-09
+
+### T18 — **el CSV publica solo lo estable; los números viven en `PIPELINE.md` anclados a commits**
+
+Conclusión de diseño del rediseño de `alcance_tiempo_s`. `metricas_*.csv` publica únicamente lo
+**estable** —qué tramos de tiempo entran, cuáles no y el aviso de P9—, y **todos los números** de
+reparto viven en `PIPELINE.md`, **anclados a commits de git** y editables sin re-correr. Las dos
+frases empíricas que el CSV llegó a publicar en 8/8 y 8/8 filas —«las desviaciones observadas caben
+dentro de la dispersión entre corridas» y «un tramo de coste casi FIJO que no escala con el
+modelo»— salen a **0/8 y 0/8**. Corrida final `1163c90`, 222 filas, `semilla = 42`, deriva de calidad
+cero contra nueve anclas externas. Dictamen de `auditor-ml`: APTO.
+
+### T22 — **`n_iter_total_grid` es determinista: la dispersión de wall-clock es carga de máquina**
+
+Cerrada **con la conclusión invertida** respecto a lo que la ficha planteaba. `n_iter_total_grid`
+queda registrado por fila y resulta **determinista**: **162** a 54 características y **128** a 122,
+idénticos entre corridas. Con las épocas congeladas, el wall-clock del Autoencoder se mueve **1,29× y
+3,63×** entre corridas ⇒ esa variación es **carga de máquina, no épocas**. El cociente s/época **no
+separa nada** al tener denominador fijo.
+
+**Consecuencia de diseño:** el eje **54-vs-122 es indecidible con este diseño sin medidas
+repetidas**. Eso es un **resultado**, no una tarea pendiente. Y **T4 no debe diseñar las 10 semillas
+para resolver la duda del número de épocas**: ya está resuelta.
+
+### `[6]` (Goodfellow) — **no se retira; se ancla en `2.1.4 Algoritmos de ML`**
+
+**Contexto.** Tras repuntar `2.1.2:30,64` de `[6]` a `[5]` en la auditoría de bibliografía (T15),
+`[6]` se quedó **sin cita en el texto**, lo que choca con la regla dura de T16 («ninguna entrada sin
+cita en el texto»).
+
+**Decisión de Francisco: `[6]` NO se retira — se ancla en `2.1.4 Algoritmos de ML`**, abriendo allí
+el bloque de redes neuronales que hoy falta (enlaza con T24). El anclaje legítimo es el **error de
+reconstrucción**, que el proyecto usa en `3.4.2` y `4.4`: Goodfellow se cita como referencia canónica
+**del concepto**, **sin afirmar que el modelo del TFG sea profundo**.
+
+**Tres descartes:**
+1. **`2.1.5`/`2.1.6`**: son métricas y metodología, **no arquitecturas**.
+2. **Presentar el autoencoder como red profunda** para colgarle la cita: la memoria afirma lo
+   contrario en `3.1:28`, `3.4:28` y `2.3.1:24` ⇒ crearía una **contradicción entre capítulos**.
+3. **Retirar `[6]`** de la bibliografía: descartado por la propia decisión de anclarla.
+
+> **Salvedad abierta:** la ficha T25 declara `2.1.4` como prosa de Francisco, y la decisión marco (b)
+> retira esa regla de `2.x` por completo. Hasta que T0 se cierre, **T25 no se ejecuta sobre la prosa
+> de `2.1.4`**.
+
+---
+
 ## Bitácora de este fichero
 
 - `2026-07-06` — Creado. Reconciliado el estado real (54 features, H1-Opción1/H2/H3 hechos
@@ -539,3 +641,20 @@ unificado. Aplicada en 4.3.1-4.3.5, 4.4 y 4.5 (7 fragmentos).
   `README.md:26-28` y `Guia_ML\README.md:7-9`. **Deuda conocida, no resuelta:**
   `Implementacion\diagramas\README.md:10` conserva la redacción antigua; tiene ficha abierta en
   `features.md`.
+- `2026-08-06` — *(registrado 2026-08-09)* — **Grill de los cuatro informes del `researcher`
+  (13 preguntas).** Registradas arriba (§ Decisiones del 2026-08-06) el **criterio rector** del lote,
+  la **decisión marco (a)** —reapertura declarada del track de código, cerrado el 2026-07-16, con
+  alcance exacto: Nivel 1 + Nivel 2 acotado a 10 semillas + dos mediciones baratas, todo por
+  `auditor-ml`—, la **decisión marco (b)** —retirada de la regla «lo escribe Francisco» en dos
+  velocidades: `2.x` completa, `6.2` a borrador con revisión final, bibliografía Zotero/IEEE sigue
+  siendo de Francisco— y la **renuncia declarada al p-valor** sobre las 10 semillas. El lote se dio de
+  alta como las fichas T0-T17 de `features.md`; los descartes cerrados están en su tabla «Descartado
+  — no reabrir». Sin cambios de cifras.
+- `2026-08-09` — **Cierre de T18, T22, T15 y la ficha «Auditar la bibliografía».** Registradas arriba
+  (§ Decisiones del 2026-08-09) las conclusiones de diseño de **T18** (el CSV publica solo lo estable;
+  los números viven en `PIPELINE.md` anclados a commits) y de **T22** (`n_iter_total_grid`
+  determinista, 162 a 54 y 128 a 122 ⇒ la dispersión de wall-clock es carga de máquina, no épocas; el
+  eje 54-vs-122 es indecidible con este diseño sin medidas repetidas), y la decisión de Francisco de
+  **no retirar `[6]` (Goodfellow) y anclarla en `2.1.4`** con sus tres descartes. **Volcado parcial de
+  T17**, que sigue abierta: falta el bloque «Decisiones tomadas a partir de este informe» en los
+  cuatro informes de `99 Investigación/` y la deriva de documentación de `evaluacion.py`.

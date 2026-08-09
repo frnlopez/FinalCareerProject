@@ -35,14 +35,15 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
   se toca el `.mmd`. **La acepta o la retira Francisco.**
 
 - [ ] **La línea de `4.2` en «lo escribe Francisco» quedó desfasada** · Informe · decide Francisco
-  Detectado el 2026-08-01. `features.md:53` reserva a Francisco la prosa teórica de `4.2` completa
+  Detectado el 2026-08-01. La sección **«Fuera de la lista operativa — lo escribe Francisco»** de este
+  mismo fichero reserva a Francisco la prosa teórica de `4.2` completa
   (origen, las 41 características, por qué NSL-KDD), pero la decisión del 2026-07-21
   (`resumen-de-decisiones.md:430-438`) cedió «Origen» y «Las 41 características» a borrador de
   Claude y dejó solo el «por qué NSL-KDD» a revisión de Francisco — y ese borrador **ya existe** en
   `Obsidian_TFG_Vault\04 Implementación del sistema\4.2 Base de datos utilizada.md:8`. Tal como está
   la línea, se puede reescribir desde cero algo ya redactado. **No la toca ningún agente: esa línea
   define lo que escribe Francisco. La acepta o la retira Francisco.**
-  → **Queda resuelta por T0** (retirada de la regla «lo escribe Francisco» en las 12 ubicaciones) y
+  → **Queda resuelta por T0** (retirada de la regla «lo escribe Francisco» en las 11 ubicaciones) y
   por **T10** (el contenido de `4.2` pasa a ficha propia del lote 2026-08-06).
   → **Revisada el 2026-08-09 y se decide dejarla tal cual.** No es una incoherencia pendiente: T0 y
   T10 siguen abiertas, así que se resolverá sola al cerrarlas. Editarla ahora sería adelantar una
@@ -74,12 +75,24 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > bloqueada dejaba a medias un entregable del encargo); **la bibliografía final en Zotero/IEEE sigue
 > siendo de Francisco** (trabajo mecánico en su máquina).
 
-- [ ] **T0 · Retirar la regla «lo escribe Francisco» en sus 12 ubicaciones** · — · hilo principal
+- [ ] **T0 · Retirar la regla «lo escribe Francisco» en sus 11 ubicaciones** · — · hilo principal
   Es andamiaje, así que lo hace el hilo principal (excepción única al enrutado de `CLAUDE.md`).
-  Aplicar las dos velocidades de la decisión marco (b). Ubicaciones (12): `CLAUDE.md` («Reglas duras
-  del andamiaje»), `features.md:57-65`, `.claude/agents/redactor-tfg.md`, y el callout «Redacción a
-  cargo de Francisco» en 9 notas: `2.1.6`, `2.2.1`, `2.2.2`, `2.2.3`, `2.2.4`, `2.2.5`, `2.3.1`,
-  `2.3.2`, `2.3.3`.
+  Aplicar las dos velocidades de la decisión marco (b). Ubicaciones (11): `CLAUDE.md` («Reglas duras
+  del andamiaje»), la sección **«Fuera de la lista operativa — lo escribe Francisco»** de este mismo
+  fichero, `.claude/agents/redactor-tfg.md`, y el callout «Redacción a cargo de Francisco» en 8
+  notas: `2.1.6`, `2.2.2`, `2.2.3`, `2.2.4`, `2.2.5`, `2.3.1`, `2.3.2`, `2.3.3`.
+  **Recuento corregido el 2026-08-09:** esta ficha decía «12 ubicaciones» y «9 notas», y ambas cifras
+  eran erróneas. `2.2.1 Introducción a la ciberseguridad` **NO lleva el callout «Redacción a cargo de
+  Francisco»** —su único callout es el de subestructura del 2026-07-15—, así que **no hay que
+  buscarlo ahí**. Las referencias a esta lista por número de línea se han sustituido por el título de
+  la sección, que no se desfasa en el siguiente cierre.
+  **Choque con T25, anotado el 2026-08-09 — no resuelto aquí.** `2.1.4` **no aparece** ni en estas
+  ubicaciones ni en la sección «Fuera de la lista operativa — lo escribe Francisco», que solo nombran
+  `2.1.6`, el bloque `2.2` y el bloque `2.3`; pero la **«Restricción dura» de T25** afirma que la
+  prosa de `2.1.4` la escribe Francisco, mientras la **decisión marco (b)** retira la regla de `2.x`
+  **por completo**. **T0 y T25 son la misma pregunta, no dos reglas independientes.** **Lo decide
+  Francisco al cerrar T0**: si `2.1.4` queda exceptuada o no. Hasta entonces, **T25 no debe
+  ejecutarse sobre la prosa de `2.1.4`**.
 
 - [ ] **T2 · KS de D1 contra los normales de D2** · Código · `ml-implementador` → `auditor-ml`
   `validacion.py:394-431` ya calcula KS D1→D2 y reporta **37 de 54 características con drift** (top:
@@ -302,14 +315,18 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
     de la opción B**.
 
 - [ ] **T14 · Cerrar las verificaciones pendientes** · — · `researcher`
-  Francisco **no tiene acceso institucional**.
-  - `Yin et al. 2017` y `Khraisat et al. 2020`: se citan **sin cifra** (metadatos verificados).
-  - `Kim et al. 2014`: se cita **por su resumen**, y `3.2.2` declara que la comparabilidad exacta de
-    su métrica de desconocidos no se ha podido verificar.
-  - Las otras cinco (Arp Fig. 1, Shyaa et al. texto completo, MDPI *Algorithms* 18(12):749, columnas
-    de tiempo de UNSW-NB15, la CV de Shone et al.) se **cierran por escrito** como «no verificable
-    sin acceso institucional; no sostiene ninguna afirmación del trabajo». Cerrarlas explícitamente
-    vale más que dejarlas como deuda flotante.
+  Francisco **no tiene acceso institucional**. **Esta es la ficha ejecutable y el inventario completo
+  vive solo aquí** (consolidado el 2026-08-09: la ficha de guardia «PDF sin acceso institucional»
+  duplicaba el mismo listado y se ha reducido a su función propia, con puntero a T14).
+  **Las siete verificaciones — 3 degradadas + 5 cerradas por escrito.** Criterio de cierre aplicado
+  a las cinco últimas el 2026-08-06: **«no verificable sin acceso institucional; no sostiene ninguna
+  afirmación del trabajo»**. Cerrarlas explícitamente vale más que dejarlas como deuda flotante.
+  - Citadas **degradadas** (3):
+    - `Yin et al. 2017` y `Khraisat et al. 2020`: se citan **sin cifra** (metadatos verificados).
+    - `Kim et al. 2014`: se cita **por su resumen**, y `3.2.2` declara que la comparabilidad exacta de
+      su métrica de desconocidos no se ha podido verificar.
+  - **Cerradas por escrito** (5): Arp Fig. 1 · Shyaa et al. texto completo · MDPI *Algorithms*
+    18(12):749 · columnas de tiempo de UNSW-NB15 · la CV de Shone et al.
 
 - [ ] **T16 · B2: volcado de fuentes, DESPUÉS de la redacción** · — · `researcher`
   **Va después de la redacción (T8-T13): no se arranca antes.** Regla dura: **ninguna entrada sin
@@ -328,16 +345,23 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
   de `evaluacion.py` cambió con T1 y siguen describiendo la forma anterior `CLAUDE.md:63`,
   `next-steps.md:621`, `resumen-de-decisiones.md:319,343` y `Guia_ML\03_validacion_y_metricas.md:153`.
   Ponerlos al día es parte de T17.
+  **Estado el 2026-08-09 — parcialmente cubierta, sigue abierta.**
+  - **Ya cubierto:** el volcado a `resumen-de-decisiones.md` está hecho (§ Decisiones del 2026-08-06
+    y § Decisiones del 2026-08-09, más sus dos entradas de bitácora): reapertura declarada del track
+    de código con alcance y motivo, retirada de la regla de autoría en dos velocidades, criterio
+    rector del lote, renuncia al p-valor, anclaje de `[6]` en `2.1.4` con sus tres descartes y las
+    conclusiones de diseño de T18 y T22.
+  - **Sigue pendiente:** (1) el bloque «Decisiones tomadas a partir de este informe» en **cada uno de
+    los cuatro informes** de `Obsidian_TFG_Vault/99 Investigación/`, con qué se convirtió en decisión
+    y qué se descartó; (2) la **deriva de documentación de `evaluacion.py`** en los cinco ficheros
+    listados arriba, que no se ha tocado.
 
 - [ ] **PDF sin acceso institucional — reabrir si Francisco consigue acceso** · — · `researcher`
-  Ficha de guardia abierta el 2026-08-06 junto a T14. Criterio de cierre aplicado hoy a las cinco
-  últimas: **«no verificable sin acceso institucional; no sostiene ninguna afirmación del trabajo».**
-  Las siete verificaciones:
-  - Citadas **degradadas** (3): `Yin et al. 2017` y `Khraisat et al. 2020` → **sin cifra** (metadatos
-    verificados); `Kim et al. 2014` → **por su resumen**, con `3.2.2` declarando que la
-    comparabilidad exacta de su métrica de desconocidos no se ha podido verificar.
-  - **Cerradas por escrito** (5): Arp Fig. 1 · Shyaa et al. texto completo · MDPI *Algorithms*
-    18(12):749 · columnas de tiempo de UNSW-NB15 · la CV de Shone et al.
+  Ficha de guardia abierta el 2026-08-06 junto a T14. **Su única función es esa: quedarse de guardia.**
+  Si Francisco consigue acceso institucional, se reabren las verificaciones degradadas o cerradas por
+  escrito y se revisa qué afirmaciones pueden dejar de ir con salvedad.
+  **El inventario de las siete verificaciones (3 degradadas + 5 cerradas) está en T14**, que es la
+  ficha ejecutable. Se retiró de aquí el 2026-08-09 por duplicado; no volver a copiarlo.
 
 ### Residuos de T1 — altas del 2026-08-08
 
@@ -418,6 +442,14 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
     sea profundo**.
   - **Restricción dura:** `2.1.4` es teoría del capítulo 2.x y **la prosa la escribe Francisco**.
     Ningún agente la redacta; como mucho se le propone el guion.
+    → **Choque con T0, anotado el 2026-08-09.** Esta restricción **contradice la decisión marco (b)**
+      del lote 2026-08-06, que retira la regla «lo escribe Francisco» de `2.x` **por completo**; y
+      `2.1.4` **no figura** ni en las ubicaciones de **T0** ni en la sección «Fuera de la lista
+      operativa — lo escribe Francisco», que solo nombran `2.1.6`, el bloque `2.2` y el bloque `2.3`.
+      **T0 y T25 son la misma pregunta, no dos reglas independientes** — la anotación recíproca está
+      en la ficha de **T0**. **Lo decide Francisco al cerrar T0.** Hasta entonces **T25 no se ejecuta
+      sobre la prosa de `2.1.4`**: el anclaje bibliográfico de `[6]` y el guion sí pueden prepararse,
+      la prosa no se toca.
   - **Pendiente para el `researcher`, en ciclo propio:** actualizar la columna «Dónde se usa» de
     `Bibliografía.md:32`, retirar el aviso de `Bibliografía.md:86` si ya no procede, y corregir el
     error de `Obsidian_TFG_Vault/99 Investigación/Auditoría de Bibliografía.md:140`, que afirma que
