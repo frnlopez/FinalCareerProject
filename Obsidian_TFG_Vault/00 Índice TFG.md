@@ -5,14 +5,16 @@ estado: borrador
 
 # Índice TFG — H-NIDS con ML
 
-> [!info] Punto actual (2026-07-16): estructura ✅ · guiones de teoría ✅ · volcado de resultados a caps. 4-5 ✅ · Apéndice A.1 + 4.2.1 ✅ · **cap. 3 Diseño completo (3.1-3.6) ✅** · conclusiones 4.6, 5.4 y **6.1 ✅** · **4.1 Tecnologías ✅** · **A.2 Métricas ✅** (todo borrador) · teoría en prosa: Francisco · **6.2 Líneas futuras: en investigación por Francisco** · pendiente Claude: bibliografía (Zotero → Francisco), Resumen/Abstract (al final)
+> [!info] Punto actual (2026-07-16): estructura ✅ · guiones de teoría ✅ · volcado de resultados a caps. 4-5 ✅ · Apéndice A.1 + 4.2.1 ✅ · **cap. 3 Diseño completo (3.1-3.6) ✅** · conclusiones 4.6, 5.4 y **6.1 ✅** · **4.1 Tecnologías ✅** · **A.2 Métricas ✅** (todo borrador) · **teoría en prosa: `redactor-tfg`** · **6.2 Líneas futuras: borrador del `redactor-tfg` con revisión de Francisco** (respaldo en `EL_FUTURO.md`) · lo único que sigue siendo de Francisco es la **bibliografía final en Zotero/IEEE** · Resumen/Abstract al final
+>
+> **Actualizado el 2026-08-09 (T0):** la regla «la teoría en prosa la escribe Francisco» quedó retirada. Ver «Autoría de la redacción — estado vigente desde T0» en `features.md`.
 
 Mapa de contenido del TFG. Las notas MD son la fuente de verdad; el docx se rellena al final a partir de estas notas (Word + Zotero, estilo IEEE).
 
 **Leyenda de estado:**
 
 - `borrador` — redacción real existente, pendiente de revisión.
-- `✍ teoría (Francisco)` — sección de investigación/teoría; la redacta Francisco.
+- `✍ teoría` — sección de investigación/teoría con guion ya propuesto; la redacta el `redactor-tfg` partiendo de ese guion. **La marca «(Francisco)» que llevaba antes se retiró el 2026-08-09 (T0).**
 - `📊 pendiente de volcado` — esqueleto listo; falta volcar resultados desde `Resultados\` (mapa en `next-steps.md` §6.6).
 - `esqueleto` — estructura creada, redacción pendiente.
 - `pendiente` — sin contenido.
@@ -39,21 +41,21 @@ Mapa de contenido del TFG. Las notas MD son la fuente de verdad; el docx se rell
 - [[2.1.3 Ciclo de vida de un proyecto ML]] — borrador
 - [[2.1.4 Algoritmos de ML]] — borrador
 - [[2.1.5 Métricas de evaluación]] — borrador
-- [[2.1.6 Metodologías y buenas prácticas]] — ✍ teoría (Francisco) — guion propuesto 2026-07-15
+- [[2.1.6 Metodologías y buenas prácticas]] — ✍ teoría — guion propuesto 2026-07-15, redacta el redactor-tfg
 
 ### 2.2 Ciberseguridad
 
 - [[2.2.1 Introducción a la ciberseguridad]] — borrador (subestructura 2.2.2–2.2.5 creada 2026-07-15)
-- [[2.2.2 Sistemas de detección de intrusiones]] — ✍ teoría (Francisco) — guion propuesto 2026-07-15
-- [[2.2.3 Taxonomía de los IDS]] — ✍ teoría (Francisco) — guion propuesto 2026-07-15
-- [[2.2.4 Detección por firmas frente a detección por anomalías]] — ✍ teoría (Francisco) — guion propuesto 2026-07-15
-- [[2.2.5 Taxonomía de ataques y panorama de amenazas]] — ✍ teoría (Francisco) — guion propuesto 2026-07-15
+- [[2.2.2 Sistemas de detección de intrusiones]] — ✍ teoría — guion propuesto 2026-07-15, redacta el redactor-tfg
+- [[2.2.3 Taxonomía de los IDS]] — ✍ teoría — guion propuesto 2026-07-15, redacta el redactor-tfg
+- [[2.2.4 Detección por firmas frente a detección por anomalías]] — ✍ teoría — guion propuesto 2026-07-15, redacta el redactor-tfg
+- [[2.2.5 Taxonomía de ataques y panorama de amenazas]] — ✍ teoría — guion propuesto 2026-07-15, redacta el redactor-tfg
 
 ### 2.3 Inteligencia Artificial
 
-- [[2.3.1 IA, ML y Deep Learning]] — ✍ teoría (Francisco) — guion propuesto 2026-07-15
-- [[2.3.2 La IA en ciberseguridad]] — ✍ teoría (Francisco) — guion propuesto 2026-07-15
-- [[2.3.3 Límites y consideraciones éticas]] — ✍ teoría (Francisco) — guion propuesto 2026-07-15
+- [[2.3.1 IA, ML y Deep Learning]] — ✍ teoría — guion propuesto 2026-07-15, redacta el redactor-tfg
+- [[2.3.2 La IA en ciberseguridad]] — ✍ teoría — guion propuesto 2026-07-15, redacta el redactor-tfg
+- [[2.3.3 Límites y consideraciones éticas]] — ✍ teoría — guion propuesto 2026-07-15, redacta el redactor-tfg
 
 ## 3. Diseño del sistema
 
@@ -67,7 +69,7 @@ Mapa de contenido del TFG. Las notas MD son la fuente de verdad; el docx se rell
 ## 4. Implementación del sistema
 
 - [[4.1 Tecnologías utilizadas]] — borrador (2026-07-16)
-- [[4.2 Base de datos utilizada]] — 📊 4.2.1 análisis previo volcado (borrador) + ✍ parte teórica (Francisco) — guion propuesto 2026-07-15
+- [[4.2 Base de datos utilizada]] — 📊 4.2.1 análisis previo volcado (borrador) + ✍ parte teórica: la redacta el `redactor-tfg` (borrador de «Origen» y «Las 41 características» ya existente); Francisco solo revisa el «por qué NSL-KDD». Contenido: ficha T10
 - [[4.3 Preprocesamiento de los datasets]] — borrador (volcado 2026-07-16)
 - [[4.4 Entrenamiento del modelo de detección de anomalías]] — borrador (volcado 2026-07-16)
 - [[4.5 Entrenamiento del modelo de detección basado en firmas]] — borrador (volcado 2026-07-16)
@@ -83,7 +85,7 @@ Mapa de contenido del TFG. Las notas MD son la fuente de verdad; el docx se rell
 ## 6. Conclusiones
 
 - [[6.1 Conclusiones]] — borrador (2026-07-16): cumplimiento de objetivos + validación de la tesis + limitaciones
-- [[6.2 Líneas futuras]] — ✍ en investigación por Francisco (podría crecer a apartado propio); fuente: `EL_FUTURO.md`
+- [[6.2 Líneas futuras]] — ✍ borrador del `redactor-tfg` con revisión final de Francisco (podría crecer a apartado propio); fuente: `EL_FUTURO.md`
 
 ## Apéndices
 

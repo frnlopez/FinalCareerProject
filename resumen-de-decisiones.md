@@ -557,9 +557,11 @@ reconstrucción**, que el proyecto usa en `3.4.2` y `4.4`: Goodfellow se cita co
    contrario en `3.1:28`, `3.4:28` y `2.3.1:24` ⇒ crearía una **contradicción entre capítulos**.
 3. **Retirar `[6]`** de la bibliografía: descartado por la propia decisión de anclarla.
 
-> **Salvedad abierta:** la ficha T25 declara `2.1.4` como prosa de Francisco, y la decisión marco (b)
-> retira esa regla de `2.x` por completo. Hasta que T0 se cierre, **T25 no se ejecuta sobre la prosa
-> de `2.1.4`**.
+> **Salvedad RESUELTA el 2026-08-09, al cerrar T0.** Era la contradicción entre la ficha T25 —que
+> declaraba `2.1.4` como prosa de Francisco— y la decisión marco (b), que retira esa regla de `2.x`
+> por completo. **Francisco decide no exceptuar `2.1.4`**: exceptuar una sola nota reintroduciría a
+> mano la regla recién retirada del capítulo entero. La prosa de `2.1.4` la redacta el
+> `redactor-tfg`, y con ello **T25 y T24 quedan desbloqueadas**.
 
 ---
 

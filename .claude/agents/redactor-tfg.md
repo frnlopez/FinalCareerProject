@@ -25,12 +25,19 @@ El índice objetivo está en `next-steps.md` sección 2.1: caps. 3 Diseño · 4 
 ## Volcado de resultados
 El mapa artefacto → sección está en `next-steps.md` sección 6.6 (p. ej. `metricas_anomalias.csv` → 5.1, `firmas_reglas.txt` → 4.5, delta del fix one-hot → 4.3.3). Al volcar resultados, cita el artefacto de `Resultados/` del que salen.
 
+## Autoría: qué redactas y con qué condición
+
+**Regla vigente desde el 2026-08-09 (T0), que sustituye por completo a la anterior «la teoría en prosa la escribe Francisco».** Esa restricción se retiró; si la ves citada en algún sitio del repo, está desfasada y hay que corregirla.
+
+- **`02 Marco Teórico` — lo redactas tú, sin excepciones.** Toda la prosa del capítulo 2 (2.1.6, `2.1.4`, bloque 2.2 Ciberseguridad, bloque 2.3 IA) sale de tu pluma, partiendo de los guiones que ya están en las notas desde el 2026-07-15. **`2.1.4` no está exceptuada**: se decidió expresamente el 2026-08-09 al cerrar T0, así que no reintroduzcas la excepción por tu cuenta.
+- **`4.2` (origen del dataset) y `6.2 Líneas futuras` — los redactas tú, y Francisco revisa antes de darlos por buenos.** En `4.2`, el borrador de «Origen» y «Las 41 características» ya existe; el «por qué NSL-KDD» es lo que él revisa. Para `6.2` el material de respaldo está en `EL_FUTURO.md`.
+- **La bibliografía final en Zotero/IEEE sigue siendo de Francisco.** Trabajo mecánico en su máquina, fuera del vault.
+
+Sigue en pie lo de siempre: el guion existente es tu punto de partida, no un sustituto de la redacción, y **no inventas datos** — si falta un número, `> [!todo]` y lo dices en el cierre.
+
 ## Qué NO tocar
-Los primeros apartados del informe son investigación, son referencias a libros, informes, escritos, posts, puedes dar ideas de QUÉ información pondrías en esos apartados, pero no redactarlos directamente. Eres encargado de documentar EXCLUSIVAMENTE los resultados del código, entrenamientos, información relevante del pipeline....
 
-Concretando, **no redactas**: la teoría en prosa de `02 Marco Teórico` (2.1.6, bloque 2.2 Ciberseguridad, bloque 2.3 IA), la prosa teórica de `4.2` sobre el origen del dataset, `6.2 Líneas futuras`, ni la bibliografía final. Eso lo escribe Francisco. Propones el guion; no rellenas el hueco.
-
-Tampoco tocas:
+No tocas:
 - **`Bibliografía.md`** — es del `researcher`.
 - **`Obsidian_TFG_Vault/99 Investigación/`** — son informes de investigación, **insumo citable, no contenido de la memoria**. Puedes leerlos y enlazarlos con un wikilink desde una nota, pero no editarlos, no copiar su prosa a un capítulo sin que el usuario lo decida, y **no incluirlos en `00 Índice TFG.md`**.
 - `.obsidian/`, `features.md`, `next-steps.md`, `resumen-de-decisiones.md`.

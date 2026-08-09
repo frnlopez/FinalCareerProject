@@ -34,21 +34,6 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
   `next-steps.md` está congelado: el roadmap vivo es `features.md`. Regenerar `.png` y `.svg` si
   se toca el `.mmd`. **La acepta o la retira Francisco.**
 
-- [ ] **La línea de `4.2` en «lo escribe Francisco» quedó desfasada** · Informe · decide Francisco
-  Detectado el 2026-08-01. La sección **«Fuera de la lista operativa — lo escribe Francisco»** de este
-  mismo fichero reserva a Francisco la prosa teórica de `4.2` completa
-  (origen, las 41 características, por qué NSL-KDD), pero la decisión del 2026-07-21
-  (`resumen-de-decisiones.md:430-438`) cedió «Origen» y «Las 41 características» a borrador de
-  Claude y dejó solo el «por qué NSL-KDD» a revisión de Francisco — y ese borrador **ya existe** en
-  `Obsidian_TFG_Vault\04 Implementación del sistema\4.2 Base de datos utilizada.md:8`. Tal como está
-  la línea, se puede reescribir desde cero algo ya redactado. **No la toca ningún agente: esa línea
-  define lo que escribe Francisco. La acepta o la retira Francisco.**
-  → **Queda resuelta por T0** (retirada de la regla «lo escribe Francisco» en las 11 ubicaciones) y
-  por **T10** (el contenido de `4.2` pasa a ficha propia del lote 2026-08-06).
-  → **Revisada el 2026-08-09 y se decide dejarla tal cual.** No es una incoherencia pendiente: T0 y
-  T10 siguen abiertas, así que se resolverá sola al cerrarlas. Editarla ahora sería adelantar una
-  decisión sin información. **No volver a levantarla como incoherencia.**
-
 - [ ] **Resumen y Abstract** · Informe · `redactor-tfg`
   Se redactan **al final**, cuando el resto de capítulos esté cerrado.
   Notas: `00 Preliminares/Resumen.md` y `00 Preliminares/Abstract.md`.
@@ -74,25 +59,6 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > **borrador de agente con revisión final de Francisco** (es el sitio natural del material de NL, y
 > bloqueada dejaba a medias un entregable del encargo); **la bibliografía final en Zotero/IEEE sigue
 > siendo de Francisco** (trabajo mecánico en su máquina).
-
-- [ ] **T0 · Retirar la regla «lo escribe Francisco» en sus 11 ubicaciones** · — · hilo principal
-  Es andamiaje, así que lo hace el hilo principal (excepción única al enrutado de `CLAUDE.md`).
-  Aplicar las dos velocidades de la decisión marco (b). Ubicaciones (11): `CLAUDE.md` («Reglas duras
-  del andamiaje»), la sección **«Fuera de la lista operativa — lo escribe Francisco»** de este mismo
-  fichero, `.claude/agents/redactor-tfg.md`, y el callout «Redacción a cargo de Francisco» en 8
-  notas: `2.1.6`, `2.2.2`, `2.2.3`, `2.2.4`, `2.2.5`, `2.3.1`, `2.3.2`, `2.3.3`.
-  **Recuento corregido el 2026-08-09:** esta ficha decía «12 ubicaciones» y «9 notas», y ambas cifras
-  eran erróneas. `2.2.1 Introducción a la ciberseguridad` **NO lleva el callout «Redacción a cargo de
-  Francisco»** —su único callout es el de subestructura del 2026-07-15—, así que **no hay que
-  buscarlo ahí**. Las referencias a esta lista por número de línea se han sustituido por el título de
-  la sección, que no se desfasa en el siguiente cierre.
-  **Choque con T25, anotado el 2026-08-09 — no resuelto aquí.** `2.1.4` **no aparece** ni en estas
-  ubicaciones ni en la sección «Fuera de la lista operativa — lo escribe Francisco», que solo nombran
-  `2.1.6`, el bloque `2.2` y el bloque `2.3`; pero la **«Restricción dura» de T25** afirma que la
-  prosa de `2.1.4` la escribe Francisco, mientras la **decisión marco (b)** retira la regla de `2.x`
-  **por completo**. **T0 y T25 son la misma pregunta, no dos reglas independientes.** **Lo decide
-  Francisco al cerrar T0**: si `2.1.4` queda exceptuada o no. Hasta entonces, **T25 no debe
-  ejecutarse sobre la prosa de `2.1.4`**.
 
 - [ ] **T2 · KS de D1 contra los normales de D2** · Código · `ml-implementador` → `auditor-ml`
   `validacion.py:394-431` ya calcula KS D1→D2 y reporta **37 de 54 características con drift** (top:
@@ -355,6 +321,11 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
     los cuatro informes** de `Obsidian_TFG_Vault/99 Investigación/`, con qué se convirtió en decisión
     y qué se descartó; (2) la **deriva de documentación de `evaluacion.py`** en los cinco ficheros
     listados arriba, que no se ha tocado.
+  - **Anotado el 2026-08-09 al cerrar T0 — es trabajo de T17, no de T0:** dos de esos cuatro informes
+    siguen diciendo que `6.2` la redacta Francisco (`aprendizaje-continuo-nested-learning.md:25` y
+    `clasificadores-tabulares-y-arquitecturas-hibridas.md:30`), cuando la decisión marco (b) la pasó a
+    **borrador del `redactor-tfg` con revisión final de Francisco**. T0 no los tocó a propósito: se
+    corrigen en la misma pasada que les ponga su bloque «Decisiones tomadas a partir de este informe».
 
 - [ ] **PDF sin acceso institucional — reabrir si Francisco consigue acceso** · — · `researcher`
   Ficha de guardia abierta el 2026-08-06 junto a T14. **Su única función es esa: quedarse de guardia.**
@@ -440,16 +411,14 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
   - El anclaje legítimo es el **error de reconstrucción**, que el proyecto usa en `3.4.2` y `4.4`:
     Goodfellow se cita como referencia canónica **del concepto**, **sin afirmar que el modelo del TFG
     sea profundo**.
-  - **Restricción dura:** `2.1.4` es teoría del capítulo 2.x y **la prosa la escribe Francisco**.
-    Ningún agente la redacta; como mucho se le propone el guion.
-    → **Choque con T0, anotado el 2026-08-09.** Esta restricción **contradice la decisión marco (b)**
-      del lote 2026-08-06, que retira la regla «lo escribe Francisco» de `2.x` **por completo**; y
-      `2.1.4` **no figura** ni en las ubicaciones de **T0** ni en la sección «Fuera de la lista
-      operativa — lo escribe Francisco», que solo nombran `2.1.6`, el bloque `2.2` y el bloque `2.3`.
-      **T0 y T25 son la misma pregunta, no dos reglas independientes** — la anotación recíproca está
-      en la ficha de **T0**. **Lo decide Francisco al cerrar T0.** Hasta entonces **T25 no se ejecuta
-      sobre la prosa de `2.1.4`**: el anclaje bibliográfico de `[6]` y el guion sí pueden prepararse,
-      la prosa no se toca.
+  - ~~**Restricción dura:** `2.1.4` es teoría del capítulo 2.x y la prosa la escribe Francisco.~~
+    → **RETIRADA el 2026-08-09 al cerrar T0.** Era la misma pregunta que T0, no una regla
+      independiente, y **Francisco la decidió en el sentido de no exceptuar**: `2.1.4` entra en la
+      retirada completa de `2.x` que ordenaba la decisión marco (b). Exceptuar una sola nota habría
+      reintroducido a mano la regla recién retirada del capítulo entero.
+      **Consecuencia: T25 queda desbloqueada** y la prosa de `2.1.4` —incluido el bloque de redes
+      neuronales que abre **T24**— la redacta el `redactor-tfg`. El anclaje de `[6]` ya no espera a
+      nadie.
   - **Pendiente para el `researcher`, en ciclo propio:** actualizar la columna «Dónde se usa» de
     `Bibliografía.md:32`, retirar el aviso de `Bibliografía.md:86` si ya no procede, y corregir el
     error de `Obsidian_TFG_Vault/99 Investigación/Auditoría de Bibliografía.md:140`, que afirma que
@@ -492,18 +461,33 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > bloqueo previo. De los residuos de T1 siguen abiertos `T19`, `T20` y `T21`, los tres de track
 > Informe. `T15` cerrada también, con tres residuos nuevos: `T23`-`T25`.
 
-> **T0 va a reescribir la sección de abajo** (retirada de la regla «lo escribe Francisco» en dos
-> velocidades). Hasta que T0 se cierre, la sección sigue vigente tal como está.
+> **Sección reescrita por T0 el 2026-08-09**, al aplicar la retirada de la regla «lo escribe
+> Francisco» en sus dos velocidades. Lo que sigue es el estado vigente; la lista anterior —que
+> reservaba a Francisco todo el capítulo 2, la prosa de `4.2` y `6.2`— **ya no está en vigor**.
 
-### Fuera de la lista operativa — lo escribe Francisco
+### Autoría de la redacción — estado vigente desde T0 (2026-08-09)
 
-No se despachan a ningún agente. El `leader` no debe crear tareas para esto.
+Antes había aquí una lista de secciones vedadas a los agentes. Solo **una** sobrevive.
 
-- Teoría en prosa de `02 Marco Teórico` (2.1.6, bloque 2.2 Ciberseguridad, bloque 2.3 IA).
-  Los guiones de temas ya están propuestos en las 9 notas (2026-07-15).
-- Prosa teórica de `4.2` (origen del dataset NSL-KDD, las 41 características, por qué NSL-KDD).
-- `6.2 Líneas futuras` — material de respaldo en `EL_FUTURO.md`.
-- Bibliografía final con Zotero en formato IEEE.
+**Lo que sigue siendo de Francisco, y solo eso:**
+
+- **La bibliografía final con Zotero en formato IEEE.** Trabajo mecánico en su máquina, fuera del
+  vault. No confundir con `Bibliografía.md`, que es del `researcher`.
+
+**Lo que pasó a los agentes:**
+
+| Sección | Quién redacta | Condición |
+|---|---|---|
+| Todo `02 Marco Teórico` — 2.1.6, **`2.1.4`**, bloque 2.2, bloque 2.3 | `redactor-tfg` | Ninguna. Parte de los guiones ya propuestos en las 8 notas (2026-07-15) |
+| `4.2` — origen del dataset, las 41 características | `redactor-tfg` | El borrador **ya existe** en la nota (decisión del 2026-07-21). El «por qué NSL-KDD» lo revisa Francisco. Contenido: **T10** |
+| `6.2 Líneas futuras` | `redactor-tfg` | Revisión final de Francisco. Respaldo en `EL_FUTURO.md` |
+
+> **`2.1.4` no queda exceptuada.** Era la pregunta que T0 y T25 compartían y **la decidió Francisco
+> el 2026-08-09**: exceptuar una sola nota reintroduciría a mano la regla que la decisión marco (b)
+> acababa de retirar del capítulo entero. Con esto **T25 queda desbloqueada**, y con ella **T24**.
+
+> **Recuento:** la lista anterior decía «las 9 notas». Son **8** — `2.2.1` nunca llevó el callout de
+> autoría, como ya corrigió la ficha de T0.
 
 ---
 
@@ -511,6 +495,8 @@ No se despachan a ningún agente. El `leader` no debe crear tareas para esto.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-09 | — | **T0 · Retirada de la regla «lo escribe Francisco».** Aplicadas las dos velocidades de la decisión marco (b) del lote 2026-08-06. **Decisión de Francisco tomada al cerrar: `2.1.4` NO queda exceptuada** — entra en la retirada completa de `2.x`, porque exceptuar una sola nota reintroduciría a mano la regla que la decisión marco acababa de retirar del capítulo entero; **con eso T25 queda desbloqueada, y con ella T24** (el bloque de redes neuronales de `2.1.4` donde se ancla `[6]`). **Recuento real: 15 ficheros tocados (+96 −92), no las 11 ubicaciones que declaraba la ficha.** La ficha **subestimaba el alcance** y por eso hubo que barrer **por contenido, no por la lista**: las ubicaciones que faltaban no llevaban el callout literal, sino la misma regla escrita de otra forma («la redacción corresponde a Francisco», «✍ teoría (Francisco)», «en investigación por Francisco»). Una de ellas es `Obsidian_TFG_Vault/02 Marco Teórico/2.2 Ciberseguridad/2.2.1 Introducción a la ciberseguridad.md:52`: no lleva el callout «Redacción a cargo de Francisco» —eso la ficha lo había corregido bien—, pero dentro del callout de subestructura del 2026-07-15 decía «Cada una contiene un `## Guion propuesto`; la redacción corresponde a Francisco», que es la misma regla escrita de otra forma; corregida. Las otras once: (1) `CLAUDE.md`, donde la viñeta de «Reglas duras del andamiaje» pasa a bloque **«Autoría de la redacción»** con las tres velocidades — `2.x` sin restricción (`2.1.4` incluida), `6.2` borrador de agente con revisión de Francisco, `4.2` ya cedido por la decisión del 2026-07-21, y la bibliografía final en Zotero/IEEE que **sigue siendo de Francisco**; (2) este mismo fichero, cuya sección «Fuera de la lista operativa — lo escribe Francisco» se reescribe como **«Autoría de la redacción — estado vigente desde T0 (2026-08-09)»** con tabla de quién redacta qué —solo sobrevive la bibliografía de Zotero—; (3) `.claude/agents/redactor-tfg.md`, donde «Qué NO tocar» pierde el párrafo que le prohibía redactar teoría y se antepone «Autoría: qué redactas y con qué condición» — **cambio de alcance relevante: se elimina además el párrafo «Los primeros apartados del informe son investigación… Eres encargado de documentar EXCLUSIVAMENTE los resultados del código»**, porque era la misma prohibición en prosa; (4-11) el callout de las **8 notas** (`2.1.6`, `2.2.2`, `2.2.3`, `2.2.4`, `2.2.5`, `2.3.1`, `2.3.2`, `2.3.3`), que pasa de `> [!todo] Redacción a cargo de Francisco` a `> [!info] Redacción a cargo del redactor-tfg` conservando cada coletilla propia (la de `2.2.4` sobre ser la sección-motivación de la tesis, la de `2.1.6` sobre el anclaje a Guia_ML 02-03). **Dos ubicaciones más, aparecidas después de la verificación inicial:** (12) `resumen-de-decisiones.md:560`, cuya «Salvedad abierta» seguía diciendo que el choque T0/T25 sobre `2.1.4` estaba sin resolver — reescrita como **resuelta**, con la decisión de no exceptuar; (13) `Obsidian_TFG_Vault/00 Índice TFG.md`, el **MOC vivo del vault**, en **5 sitios**: el callout «Punto actual» (`:8`), la leyenda `✍ teoría (Francisco)` (`:15`), las **8 líneas de notas** del capítulo 2 (`:44-58`), la línea de `4.2` (`:72`) y la de `6.2` (`:88`) — todas reapuntadas al `redactor-tfg`. **Deliberadamente sin tocar:** `next-steps.md:382,387,421`, que está congelado y es **historial del 2026-07-15**; reescribirlo falsearía lo que se decidió entonces. **No es deuda pendiente.** **Residuo nuevo, sin ficha, señalado y no tocado:** `resumen-de-decisiones.md:459` dice «queda como divergencia a corregir por Francisco al redactar» — roza la regla retirada pero **no es la misma cosa** (habla de corregir una divergencia terminológica concreta en `2.2.4`, «detectores no supervisados», no de la autoría de un capítulo); **si merece ficha propia, lo decide Francisco.** Y las **2 notas de `Obsidian_TFG_Vault/99 Investigación/`** que dicen que `6.2` la redacta Francisco (`aprendizaje-continuo-nested-learning.md:25` y `clasificadores-tabulares-y-arquitecturas-hibridas.md:30`) **no son de T0**: quedan anotadas como trabajo de **T17**, que es quien pasa por los cuatro informes. **Fuera del alcance de T0 pero corregido en el mismo ciclo, con aprobación de Francisco:** `how-to-work.md:32` decía «no te fíes de la prosa de `next-steps.md`/bitácora» cuando desde el 2026-08-01 el registro operativo vivo es `features.md`; reescrito para nombrar los dos ficheros con su papel actual (lo detectó el `cronista` en el cierre anterior) | — |
+| 2026-08-09 | Informe | **La línea de `4.2` en «lo escribe Francisco» quedó desfasada** (ficha abierta el 2026-08-01, marcada «la acepta o la retira Francisco»). Se retira de `## Abiertas` por absorción: **T0 la resolvió** y no le quedaba contenido propio. La prosa de `4.2` la redacta el `redactor-tfg` —el borrador de «Origen» y «Las 41 características» ya existía en la nota desde la decisión del 2026-07-21— y Francisco solo **revisa** el «por qué NSL-KDD». Su contenido restante lo cubre **T10**, que sigue abierta | — |
 | 2026-08-09 | — | **Andamiaje · `how-to-work.md` §6 «How to» pasa a exigir recomendación de paso siguiente.** Dos viñetas nuevas (`:30-31`), justo debajo de «Pideme aprobación para cada step a ejecutar», a petición explícita de Francisco: (1) **nunca cerrar una respuesta con un menú de decisiones abiertas** para que elija a ciegas — se propone **un** paso concreto y se justifica por qué ese y no los otros candidatos; la aprobación por step **sigue siendo obligatoria**, recomendar no es ejecutar; (2) criterio de ordenación por defecto de esa recomendación: **qué desbloquea más por minuto de máquina** — lo barato que destraba varias fichas va antes que lo caro que no destraba nada. Intervención sin ficha previa en `## Abiertas`: un solo fichero tocado, +2 líneas | `e1be742` |
 | 2026-08-09 | Código | **T18 · Rediseño de qué se publica en `alcance_tiempo_s`.** Los **cuatro defectos** que dejaron `0595a15` en `[PENDIENTE, NO APTO]` quedan resueltos, y con ellos el bucle de fondo: el CSV publica solo lo **estable** (qué tramos entran, cuáles no y el aviso de P9) y **todos los números viven en `PIPELINE.md`**, anclados a commits de git, editables sin re-correr. Las dos frases empíricas prohibidas —«las desviaciones observadas caben dentro de la dispersión entre corridas» y «un tramo de coste casi FIJO que no escala con el modelo»— estaban en **8/8 y 8/8 filas** y ahora salen **0/8 y 0/8**. Corrida final `1163c90`: **222 filas**, `commit` limpio, `semilla = 42`, **deriva de calidad cero** contra nueve anclas externas y sin fuga de datos. `PIPELINE.md` re-anclado a `1163c90` con todas las cifras reproducibles desde los CSV. **Efecto sobre otras fichas:** re-ancla **T20** (era falsa: 8 de 10 pares, no 4 de 4, y horquilla retirada) y refuerza **T19** (Hallazgo 7). Dictamen de `auditor-ml`: APTO. Commits previos: `ac496cb`, `1163c90` | `8fdc421` |
 | 2026-08-09 | Código | **T22 · `n_iter_` del Autoencoder.** Cerrada **con la conclusión invertida respecto a lo que la ficha traía**: `n_iter_total_grid` queda registrado por fila y resulta **determinista** — **162** a 54 características y **128** a 122, idénticos en las dos corridas que lo registran (una de ellas no reproducible desde git). Con las épocas congeladas, el wall-clock del Autoencoder se mueve **1,29× y 3,63×** entre corridas: esa variación es **carga de máquina, no épocas**, que era justo lo que la ficha no podía decidir. El cociente s/época **no separa nada** al tener denominador fijo. Y el eje **54-vs-122 es indecidible con este diseño** sin medidas repetidas: eso es un **resultado**, no una tarea pendiente. Dictamen de `auditor-ml`: APTO. Sale con T18 (`ac496cb`, `1163c90`) | `8fdc421` |

@@ -175,8 +175,20 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
 - **Track Código no se cierra sin `auditor-ml`.**
 - **No hay máquina de estados**: lo abierto es lo que está en `features.md`; lo hecho es lo que
   tiene commit.
-- La teoría en prosa de los capítulos 2.x, la 6.2 y la bibliografía final **las escribe
-  Francisco**. Ningún agente las redacta; como mucho se propone el guion.
+- **Autoría de la redacción** (decisión marco (b) del lote 2026-08-06, aplicada en T0 el
+  2026-08-09; sustituye a la regla anterior «la teoría en prosa la escribe Francisco»):
+  - **Capítulos 2.x — sin restricción.** El `redactor-tfg` redacta la prosa a partir de los
+    guiones que ya están en las notas. Aplica a **todo** el capítulo 2, `2.1.4` incluida: no hay
+    ninguna sección exceptuada.
+  - **`6.2 Líneas futuras` — borrador de agente con revisión final de Francisco.** Es el sitio
+    natural del material de líneas futuras; bloqueada dejaba a medias un entregable del encargo.
+    Material de respaldo en `EL_FUTURO.md`.
+  - **`4.2` (prosa teórica del dataset) — ya cedida antes**, por la decisión del 2026-07-21
+    (`resumen-de-decisiones.md:430-438`): «Origen» y «Las 41 características» las redacta el
+    agente —el borrador **ya existe** en la nota—; solo el «por qué NSL-KDD» queda a revisión de
+    Francisco. El contenido lo cierra **T10**.
+  - **La bibliografía final en Zotero/IEEE sigue siendo de Francisco.** Es trabajo mecánico en
+    su máquina. `Bibliografía.md` dentro del vault es del `researcher`, que es otra cosa.
 
 ## Git
 
