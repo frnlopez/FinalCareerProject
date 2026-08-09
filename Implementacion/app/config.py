@@ -99,8 +99,13 @@ ALCANCE_0DAY = ("recall de marcado como ataque sobre los ataques de D2 de tipo "
 # Alcance del bloque `conocida_` del HÍBRIDO. NO es ALCANCE_FIRMAS aunque se
 # calcule sobre las mismas filas de D2: en el híbrido la medida es de extremo a
 # extremo y los ataques que la etapa 1 no marcó entran como 'normal', así que
-# baja respecto a firmas-solo (18 pp en la corrida de 54). Reutilizar el texto
-# de firmas hacía parecer la misma medida a dos cosas distintas.
+# baja respecto a firmas-solo. Cuánto baja depende de QUÉ métrica se mire, así que
+# la cifra va con nombre y con corrida: RECALL MACRO, corrida ac496cb, variante de
+# 54: 0,850 (RandomForest en metricas_firmas.csv) -> 0,671 ('conocida_recall_macro'
+# en metricas_hibrido.csv), 17,9 pp. Antes aquí ponía "18 pp" a secas y era
+# indistinguible de un error: con f1_macro la misma caída son 7,4 pp (0,822 ->
+# 0,748). Reutilizar el texto de firmas hacía parecer la misma medida a dos cosas
+# distintas.
 ALCANCE_HIBRIDO_CONOCIDA = (
     "cascada extremo a extremo restringida a los ataques de D2 de tipo conocido "
     "(4 categorías); los ataques que la etapa 1 no marcó como sospechosos "
@@ -235,9 +240,12 @@ ALCANCE_TIEMPO_S_BLOQUE_ANOMALIAS = (
     "las cuatro columnas de tiempo anteriores. El reparto entre tramos se LEE de "
     "las columnas de esta misma fila y no se estima. AVISO al reconstruirlo: los "
     "tramos (2) (3) y (4) miden la MISMA operación sobre conjuntos de tamaño "
-    "distinto pero NO se normalizan por número de filas para compararlos entre sí "
-    "— la corrida no controla ni el estado de caché ni la carga de la máquina y "
-    "las desviaciones observadas caben dentro de la dispersión entre corridas"
+    "distinto así que un cociente CRUDO entre dos de ellos NO es un cociente de "
+    "coste por flujo: hay que dividirlo por la razón de tamaños de sus conjuntos "
+    "antes de leerlo — y aun normalizado sigue siendo wall-clock de un pase único "
+    "en una corrida que no controla ni el estado de caché ni la carga de la "
+    "máquina ni n_jobs. La comparación normalizada está en PIPELINE.md anclada a "
+    "su corrida"
     + _AVISO_TIEMPO_VARIANZA + _AVISO_LATENCIA_SOLO_PREDICT
 )
 
@@ -250,8 +258,8 @@ ALCANCE_TIEMPO_S_BLOQUE_FIRMAS = (
     "ejecución: (1) el GridSearchCV con el balanceo ganador + el refit sobre todo "
     "D3 = 'tiempo_entrenamiento_s' (2) el predict sobre los flujos de D2 de tipo "
     "conocido = 'tiempo_inferencia_s' y (3) la cola de evaluar_multiclase + UNA "
-    "figura —la matriz de confusión 4x4—: un tramo de coste casi FIJO que no "
-    "escala con el modelo. El (3) no lleva columna propia porque sale EXACTO "
+    "figura —la matriz de confusión 4x4—. El (3) no lleva columna propia porque "
+    "sale EXACTO "
     "restando de 'tiempo_s' las otras dos columnas de tiempo —salvo dos "
     "menudencias que caen en la misma ventana: leer busqueda.best_estimator_ y "
     "dos print—. NO incluye el mini-experimento de balanceo de 4.3.4 que corre "
@@ -346,8 +354,10 @@ ALCANCE_SUFIJOS = {
 # por época: da un número sin significado. El texto anterior invitaba justo a esa
 # división. Se publica por eso 'n_iter_total_grid' —la suma de las épocas de todas
 # las configuraciones del grid, exactamente el mismo conjunto de fit que
-# 'tiempo_entrenamiento_s' cronometra—, que es el único denominador con el que esa
-# división es válida. 'n_iter_ganador' se conserva porque responde a otra
+# 'tiempo_entrenamiento_s' cronometra—, que es el denominador COHERENTE con el que
+# esa división tiene sentido (media ponderada entre las dos arquitecturas del
+# grid, no una constante del modelo: ver ALCANCE_N_ITER_TOTAL).
+# 'n_iter_ganador' se conserva porque responde a otra
 # pregunta: si el ajuste del modelo que se publica se cortó por max_iter o por
 # convergencia.
 ALCANCE_N_ITER = (
@@ -366,9 +376,13 @@ ALCANCE_N_ITER_TOTAL = (
     "suma de las épocas de TODAS las configuraciones del grid sobre D1_train "
     "(Autoencoder = MLPRegressor con early_stopping=True y max_iter=300) — NO es "
     "una métrica sobre D2. Cubre exactamente el mismo conjunto de fit que "
-    "cronometra 'tiempo_entrenamiento_s' así que es el ÚNICO denominador válido "
+    "cronometra 'tiempo_entrenamiento_s' así que es el denominador COHERENTE "
     "para leer ese tiempo en segundos por época y decidir si una diferencia entre "
-    "dos filas es de épocas o de carga de máquina. Celda VACÍA en IsolationForest "
+    "dos filas es de épocas o de carga de máquina. Coherente y no 'el único "
+    "válido': el grid del autoencoder tiene DOS arquitecturas (64 32 64) y "
+    "(32 16 32) cuyo coste por época no es el mismo así que ese cociente es una "
+    "MEDIA PONDERADA entre dos costes por época distintos — interpretable pero no "
+    "una constante del modelo. Celda VACÍA en IsolationForest "
     "OneClassSVM y LocalOutlierFactor por el mismo motivo que 'n_iter_ganador'"
 )
 
