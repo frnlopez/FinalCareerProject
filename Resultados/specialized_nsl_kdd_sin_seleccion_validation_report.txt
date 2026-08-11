@@ -6,15 +6,17 @@ D1 (Normal):      67,343 instancias
 D2 (Test):        22,544 instancias
 D2 solo normales: 9,711 instancias (43.1 % de D2)
 D3 (Ataques):     58,630 instancias
-Características:  54
-Drift (A) D1 vs D2 COMPLETO:      37 características
-Drift (B) D1 vs D2 SOLO NORMALES: 25 características
-Outliers med. D1: 4.78%
-Baja varianza (sobre D1+D3):    0 características
-Alta correlación (sobre D1+D3): 0 pares
+Características:  122
+Drift (A) D1 vs D2 COMPLETO:      44 características
+Drift (B) D1 vs D2 SOLO NORMALES: 31 características
+Outliers med. D1: 2.44%
+Baja varianza (sobre D1+D3):    1 características
+Alta correlación (sobre D1+D3): 14 pares
 D2 fuera de [0,1]: 4 características (informativo)
 
 Recomendaciones:
+  💡 Considera eliminar características con correlación > 0.95
+  💡 Considera eliminar características con varianza casi nula
 
 (A) Top 15 características con mayor drift — D1 vs D2 COMPLETO
     (D2 completo = normales + ataques: parte de este drift es
@@ -29,34 +31,34 @@ Recomendaciones:
               diff_srv_rate      0.246386         0.0       True
               same_srv_rate      0.246361         0.0       True
      dst_host_same_srv_rate      0.231824         0.0       True
+   dst_host_srv_rerror_rate      0.228844         0.0       True
 dst_host_same_src_port_rate      0.228276         0.0       True
                       count      0.227310         0.0       True
          dst_host_srv_count      0.226683         0.0       True
 dst_host_srv_diff_host_rate      0.223121         0.0       True
      dst_host_diff_srv_rate      0.221338         0.0       True
-               service_http      0.216662         0.0       True
 
 (B) Top 15 características con mayor drift — D1 vs D2 SOLO NORMALES
     (tráfico legítimo contra tráfico legítimo: DESPLAZAMIENTO ENTRE
      PARTICIONES, nunca 'deriva temporal' — NSL-KDD no tiene marca de
      tiempo. Es la medición que puede explicar el exceso de FPR sobre
      el ~5 % que promete el umbral p95 ajustado en D1_val)
-               feature  ks_statistic_normales  ks_p_value_normales  has_drift_normales
-dst_host_same_srv_rate               0.159388        8.182853e-189                True
-dst_host_diff_srv_rate               0.158563        7.395508e-187                True
-    dst_host_srv_count               0.151529        1.329187e-170                True
-             srv_count               0.137880        3.345823e-141                True
-          service_http               0.122156        7.935971e-111                True
-                 count               0.109555         3.599866e-89                True
-             dst_bytes               0.106775         1.030709e-84                True
-             src_bytes               0.090935         1.603564e-61                True
-              duration               0.075112         4.343445e-42                True
-       service_private               0.073153         6.089228e-40                True
-        dst_host_count               0.055313         5.206578e-23                True
-    srv_diff_host_rate               0.048933         4.237852e-18                True
-               flag_SF               0.047945         2.153148e-17                True
-             logged_in               0.046228         3.364334e-16                True
-       srv_rerror_rate               0.043039         4.246612e-14                True
+                 feature  ks_statistic_normales  ks_p_value_normales  has_drift_normales
+  dst_host_same_srv_rate               0.159388        8.182853e-189                True
+  dst_host_diff_srv_rate               0.158563        7.395508e-187                True
+      dst_host_srv_count               0.151529        1.329187e-170                True
+               srv_count               0.137880        3.345823e-141                True
+            service_http               0.122156        7.935971e-111                True
+                   count               0.109555         3.599866e-89                True
+               dst_bytes               0.106775         1.030709e-84                True
+               src_bytes               0.090935         1.603564e-61                True
+                duration               0.075112         4.343445e-42                True
+         service_private               0.073153         6.089228e-40                True
+dst_host_srv_rerror_rate               0.060768         1.095937e-27                True
+          dst_host_count               0.055313         5.206578e-23                True
+dst_host_srv_serror_rate               0.050462         3.197881e-19                True
+      srv_diff_host_rate               0.048933         4.237852e-18                True
+                 flag_SF               0.047945         2.153148e-17                True
 
 (A) vs (B) — KS de las mismas características bajo las dos poblaciones
     (top 15 por KS contra D2 completo; delta = (A) - (B))
@@ -75,12 +77,12 @@ dst_host_diff_srv_rate               0.158563        7.395508e-187              
               diff_srv_rate        0.2464                 0.0320 0.2144
               same_srv_rate        0.2464                 0.0245 0.2219
      dst_host_same_srv_rate        0.2318                 0.1594 0.0724
+   dst_host_srv_rerror_rate        0.2288                 0.0608 0.1681
 dst_host_same_src_port_rate        0.2283                 0.0292 0.1991
                       count        0.2273                 0.1096 0.1178
          dst_host_srv_count        0.2267                 0.1515 0.0752
 dst_host_srv_diff_host_rate        0.2231                 0.0403 0.1829
      dst_host_diff_srv_rate        0.2213                 0.1586 0.0628
-               service_http        0.2167                 0.1222 0.0945
 
 Características de D2 fuera de [0, 1] tras el escalado (INFORMATIVO):
 Esperable por diseño: el scaler se ajusta solo en train (D1+D3) y no se

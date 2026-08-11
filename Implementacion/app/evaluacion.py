@@ -2,8 +2,9 @@
 """
 evaluacion.py — Módulo común de evaluación del TFG H-NIDS (decisión Q3).
 
-Funciones reutilizadas por anomalias.py, firmas.py e hibrido.py para no
-triplicar el cálculo de métricas ni el guardado de figuras/tablas. Todas las
+Funciones reutilizadas por anomalias.py, firmas.py, baseline.py, hibrido.py y
+cascada_invertida.py para no repetir en cada uno el cálculo de métricas ni el
+guardado de figuras/tablas. Todas las
 convenciones de clase (positivo = ataque = 1, orden de categorías) viven en
 config.py; aquí solo se consumen.
 
@@ -114,25 +115,41 @@ TABLAS_PRINCIPALES = frozenset({
 })
 
 # Tablas AUXILIARES: su fila tiene otra granularidad (algoritmo × balanceo, tipo
-# de ataque, umbral candidato) y por eso no llevan 'algoritmo' ni la clave de
-# unicidad. Pero sí llevan PROCEDENCIA Y ALCANCE: sin 'alcance' la columna
-# 'recall' de metricas_baseline_0day.csv o el 'f1_macro_cv' de
-# metricas_balanceo.csv se leerían como métricas sobre D2 y no lo son. Se exigen
-# las cuatro por igual. Precisión sobre el estado de partida: NINGUNA de las
-# cuatro auxiliares PUBLICADAS en Resultados/ tiene columna `alcance` —se
-# generaron antes de T1—; que solo las dos de 0-day la declarasen fue un estado
-# intermedio de la primera pasada de T1, ya superado. Las cuatro la tendrán al
-# regenerarlas con el runbook de PIPELINE.md.
+# de ataque, umbral candidato, categoría asignada) y por eso no llevan
+# 'algoritmo' ni la clave de unicidad. Pero sí llevan PROCEDENCIA Y ALCANCE: sin
+# 'alcance' la columna 'recall' de metricas_baseline_0day.csv o el 'f1_macro_cv'
+# de metricas_balanceo.csv se leerían como métricas sobre D2 y no lo son. Se
+# exigen las CINCO por igual.
+#
+# Estado de lo PUBLICADO en Resultados/, verificado a 2026-08-10: las CINCO traen
+# ya la columna `alcance` — las cuatro primeras desde la re-corrida 1163c90 del
+# runbook de PIPELINE.md y la quinta (metricas_cascada_invertida.csv, la de T3)
+# desde su primera corrida. Aquí ponía lo contrario —«NINGUNA de las cuatro
+# auxiliares publicadas tiene columna alcance … las cuatro la tendrán al
+# regenerarlas»— y era un comentario rancio: describía el estado ANTERIOR a esa
+# re-corrida.
 COLUMNAS_MINIMAS_AUXILIARES = (
     "alcance", "set_features", "sin_seleccion", "n_features",
     "semilla", "commit", "fecha",
 )
 
+#
+# 'metricas_cascada_invertida.csv' (tarea T3) entra aquí y NO en las principales,
+# y no por comodidad: su fila es categoría-asignada × variante (no lleva
+# 'algoritmo' ni la clave de unicidad), y sobre todo su contenido es una medida
+# CONTRAFACTUAL sobre las filas NORMALES de D2 —lo que haría la etapa 2 si fuese
+# la primera—, que no es ningún resultado del sistema publicado. Meterla en las
+# principales chocaría además con el recuento fijo de FILAS_ESPERADAS_POR_VARIANTE.
+# Su recuento (5 filas por variante) NO queda por eso sin comprobar: lo verifica
+# el propio script, en NSLKDDInvertedCascadeMeasurer._comprobar_tabla(), releyendo
+# el CSV escrito. Es la comprobación equivalente a comprobar_recuento() +
+# comprobar_unicidad() para una tabla que no puede pasar por ellas.
 TABLAS_AUXILIARES = frozenset({
     "metricas_balanceo.csv",
     "metricas_baseline_0day.csv",
     "metricas_hibrido_0day.csv",
     "metricas_hibrido_calibracion.csv",
+    "metricas_cascada_invertida.csv",
 })
 
 # Nº de filas que cada tabla principal debe tener POR VARIANTE de características
@@ -758,7 +775,7 @@ def guardar_metricas(fila, csv_path):
         validar_esquema_minimo(fila, csv_path)
     elif nombre in TABLAS_AUXILIARES:
         # Las auxiliares no tienen 'algoritmo' ni clave de unicidad, pero sí
-        # alcance y procedencia: las cuatro por igual (coherencia de procedencia).
+        # alcance y procedencia: las cinco por igual (coherencia de procedencia).
         validar_esquema_minimo(fila, csv_path,
                                columnas=COLUMNAS_MINIMAS_AUXILIARES,
                                auxiliar=True)

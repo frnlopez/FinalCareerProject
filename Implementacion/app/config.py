@@ -2,9 +2,10 @@
 """
 config.py — Configuración central de los modelos del TFG H-NIDS (decisión Q2).
 
-Consumido por evaluacion.py, anomalias.py, firmas.py e hibrido.py. Centraliza
-rutas, semilla y convenciones de clase para que sean IDÉNTICAS en los tres
-modelos y no queden hardcodeadas (cierra la deuda 3.2 🟠 para el código nuevo).
+Consumido por evaluacion.py, anomalias.py, firmas.py, baseline.py, hibrido.py y
+cascada_invertida.py. Centraliza rutas, semilla y convenciones de clase para que
+sean IDÉNTICAS en todos ellos y no queden hardcodeadas (cierra la deuda 3.2 🟠
+para el código nuevo).
 
 program.py / validacion.py NO dependen de este módulo: funcionan y están
 APROBADOS; solo migrarán sus rutas aquí si en algún momento se tocan.
@@ -95,6 +96,56 @@ ALCANCE_HIBRIDO = ("cascada extremo a extremo (5 clases + unknown) sobre D2 "
                    "0-day y H-5 pide el bloque binario completo")
 ALCANCE_0DAY = ("recall de marcado como ataque sobre los ataques de D2 de tipo "
                 "ausente del train")
+
+# Alcance de la tabla de la CASCADA INVERTIDA (tarea T3). No es ALCANCE_FIRMAS ni
+# ALCANCE_D2_REPORTE: aquellos describen medidas sobre ATAQUES y esta se calcula
+# justo sobre lo contrario —las filas NORMALES de D2—, que en el sistema real no
+# llegan nunca a la etapa 2. Es una medida CONTRAFACTUAL y así debe leerse: no
+# describe el híbrido publicado sino lo que pasaría con el orden invertido.
+#
+# REGLA DE T18 APLICADA A ESTA CELDA (mismo motivo que en los ALCANCE_TIEMPO_S_*):
+# aquí va SOLO lo estable —el contrafactual, la población, el denominador, la
+# procedencia del umbral y la marca P-4—, porque este texto se repite en las 10
+# filas del CSV y un CSV no se edita sin re-correr. La LECTURA de la medición
+# (cuántos flujos condena cada variante, qué significa el reparto por categoría y
+# cómo se cita) vive en Implementacion/PIPELINE.md, sección "La cascada invertida
+# (T3)", anclada al commit de su corrida.
+#
+# Y por el MISMO motivo la celda tampoco ARGUMENTA el límite, solo lo enuncia en
+# una frase («cota inferior; lo citable es 'n_condenadas'») con el puntero. El
+# porqué —que 'unknown' es alarma y no 'normal'— es la decisión P-5, no una
+# propiedad del código, y estaba copiado literalmente en cinco sitios; si P-5 se
+# revisara, las 10 filas del CSV serían la única copia que no se puede corregir
+# sin re-correr. La exposición vive solo en PIPELINE.md.
+#
+# DOS AFIRMACIONES RETIRADAS de la redacción anterior, las dos falsas (el
+# desarrollo de la primera, en PIPELINE.md sección "La cascada invertida (T3)"):
+#   1. «esa fila ES el FPR que tendría un sistema de firmas-primero». Es una COTA
+#      INFERIOR, por la convención P-5 ('unknown' = alarma).
+#   2. «las cuatro categorías suman EXACTAMENTE la fila '__global__'». Los
+#      RECUENTOS sí; las 'tasa_condena' publicadas no, por el redondeo a 6
+#      decimales (en la variante de 122 suman 0.342808 frente al 0.342807 de
+#      '__global__').
+# Sin comas: estos textos viajan como valor dentro de un CSV.
+ALCANCE_CASCADA_INVERTIDA = (
+    "medida CONTRAFACTUAL de la cascada invertida (T3): predict_proba del "
+    "clasificador de firmas YA ENTRENADO sobre la POBLACIÓN de las filas normales "
+    "de D2 —que en el sistema real NUNCA llegan a la etapa 2— para contar cuántas "
+    "conservarían etiqueta de ataque con confianza >= UMBRAL_CONF. NO describe el "
+    "híbrido publicado y NO es comparable con ninguna columna de "
+    "metricas_firmas.csv ni de metricas_hibrido.csv. La etapa 2 carece de clase "
+    "'normal' (D3 son solo ataques) así que etiqueta como ataque TODA fila: por "
+    "eso 'n_argmax' de '__global__' es el total de normales. DENOMINADOR de "
+    "'tasa_condena': ese total y no el bucket de la fila —así los RECUENTOS de las "
+    "cuatro categorías suman el de '__global__'; las tasas solo hasta el "
+    "redondeo—. LÍMITE: 'tasa_condena' de '__global__' es COTA INFERIOR del FPR de "
+    "un sistema de firmas-primero y lo citable es 'n_condenadas' — el porqué está "
+    "en el puntero y no se replica aquí. UMBRAL_CONF se lee del descriptor del "
+    "híbrido (ver 'origen_umbral_conf') donde lo dejó la calibración out-of-fold "
+    "sobre D3. Cero fit: solo inferencia sobre modelos persistidos y D2 SOLO se "
+    "reporta — ninguna decisión sale de esta tabla (P-4). Lectura cifras y porqué "
+    "del límite: Implementacion/PIPELINE.md sección 'La cascada invertida (T3)'"
+)
 
 # Alcance del bloque `conocida_` del HÍBRIDO. NO es ALCANCE_FIRMAS aunque se
 # calcule sobre las mismas filas de D2: en el híbrido la medida es de extremo a

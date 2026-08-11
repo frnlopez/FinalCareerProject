@@ -23,7 +23,8 @@ Working_Directory/            ← raíz del repositorio git (rama de trabajo: de
 ├── Resultados/               ← métricas y figuras versionadas; modelos y CSV, no
 ├── Implementacion/           ← código Python
 │   ├── app/                  ← program · validacion · anomalias · firmas ·
-│   │                           baseline · hibrido · config · evaluacion
+│   │                           baseline · hibrido · cascada_invertida ·
+│   │                           config · evaluacion
 │   ├── Imp/                  ← entorno virtual Python 3.11 (no versionado)
 │   ├── diagramas/
 │   ├── PIPELINE.md           ← diagrama del pipeline de preprocesado
@@ -58,12 +59,13 @@ pip install -r requirements.txt
 | Archivo | Clase | Función |
 |---|---|---|
 | `app/program.py` | `NSLKDDPreprocessor` | Carga el dataset, EDA, preprocesamiento y generación de splits D1/D2/D3; expone `load_specialized_splits()`, que usan todos los scripts de modelos |
-| `app/validacion.py` | `NSLKDDValidator` | Valida los splits D1/D2/D3 ya generados: integridad, distribuciones, drift y outliers |
+| `app/validacion.py` | `NSLKDDValidator` | Valida los splits D1/D2/D3 ya generados: integridad, distribuciones, drift y outliers. El drift son **dos** mediciones separadas y no intercambiables (T2): (A) D1 vs D2 completo y (B) D1 vs las 9.711 filas normales de D2. El informe publica `delta = (A) − (B)` como **comparación**, nunca como descomposición: el KS no es aditivo sobre una mezcla (`validacion.py`, cabecera de la sección 4) |
 | `app/config.py` | — | Módulo de configuración central: semilla 42, rutas de salida, `base_path()` para elegir el set de 54 o 122 features y las convenciones de clase (0=normal, 1=ataque, orden de categorías) |
 | `app/evaluacion.py` | — | Módulo común de métricas y figuras: `evaluar_binario`, `evaluar_multiclase`, `evaluar_0day_por_tipo`, matrices de confusión, curvas ROC/PR y `guardar_metricas` (CSV acumulado) |
 | `app/anomalias.py` | `NSLKDDAnomalyTrainer` | Etapa 1: entrena sobre D1 y compara IsolationForest, OneClassSVM, LocalOutlierFactor y Autoencoder-MLP con score unificado y umbral percentil 95 sobre D1_val |
 | `app/firmas.py` | `NSLKDDSignatureTrainer` | Etapa 2: clasificador multiclase de ataques conocidos sobre D3 (DecisionTree, RandomForest, KNN, HistGradientBoosting) con GridSearchCV `f1_macro`, balanceo intra-fold y extracción de reglas legibles. El eje de balanceo depende del algoritmo (`firmas.py:91-96`): SMOTE vs `class_weight` en DecisionTree y RandomForest; SMOTE vs nada en KNN e HistGradientBoosting, que no admiten `class_weight` en sklearn |
 | `app/baseline.py` | `NSLKDDBaselineTrainer` | Baseline de control ajeno al híbrido: un único RandomForest monolítico de 5 clases entrenado sobre todo el train y evaluado en D2, con recall 0-day por tipo como métrica de contraste |
+| `app/cascada_invertida.py` | `NSLKDDInvertedCascadeMeasurer` | Medición **contrafactual** de la cascada invertida (T3), fuera del sistema: pasa las 9.711 filas normales de D2 por el clasificador de firmas ya persistido y cuenta cuántas condenaría con confianza ≥ `UMBRAL_CONF` (leído de `hibrido_<set>.joblib`, nunca como literal). **Cero `fit`** y D2 solo se reporta (P-4). Tabla propia (`metricas_cascada_invertida.csv`, 5 filas por variante, recuento verificado por `_comprobar_tabla()`): no escribe en ninguna de las cuatro principales. **Su fila `__global__` es una COTA INFERIOR del FPR de un sistema de firmas-primero, no ese FPR** — `unknown` es alarma (P-5), así que lo que cae bajo umbral no queda exonerado |
 | `app/hibrido.py` | `NSLKDDHybridEvaluator` | Sistema híbrido en cascada anomalías→firmas: carga los `.joblib` de ambas etapas sin re-entrenarlas y evalúa de extremo a extremo sobre D2 (incluida la clase `unknown`). Única excepción a "no re-entrena" (`hibrido.py:6-9`, `184-192`): para calibrar el umbral de confianza reconstruye el estimador de firmas desde su config guardada y lo reajusta una vez por fold vía `cross_val_predict`, obteniendo probabilidades out-of-fold sobre D3. La calibración no ve D2, así que no hay leakage |
 
 > Orden de ejecución según las dependencias del código: `program.py` → `anomalias.py` /
@@ -73,11 +75,16 @@ pip install -r requirements.txt
 > lo importa ni consume su salida; se pasa tras `program.py` para confirmar que los splits
 > están sanos. `baseline.py` va aparte **del híbrido**, no del preprocesado: es el control
 > monolítico, pero depende igual del pipeline (`baseline.py:46` hace
-> `from program import load_specialized_splits`). `config.py` y `evaluacion.py` no se ejecutan
-> (no tienen `__main__`): son librerías internas que importan **solo los cuatro scripts de
-> modelos** —`anomalias.py`, `firmas.py`, `baseline.py` e `hibrido.py`—; `program.py` y
-> `validacion.py` NO dependen de ellas, como dice `config.py:9-10`. El pipeline de preprocesado
-> está diagramado en `Implementacion/PIPELINE.md`.
+> `from program import load_specialized_splits`). `cascada_invertida.py` va **al final de su
+> variante**: necesita el `firma_*.joblib` de `firmas.py` y el `hibrido_*.joblib` de `hibrido.py`
+> (de donde lee el umbral), y aborta si falta alguno; es una medición aparte, no un eslabón del
+> sistema. `config.py` y `evaluacion.py` no se ejecutan
+> (no tienen `__main__`): son librerías internas que importan los cuatro scripts de
+> modelos —`anomalias.py`, `firmas.py`, `baseline.py` e `hibrido.py`— **más
+> `cascada_invertida.py`**; `program.py` y
+> `validacion.py` NO dependen de ellas, como dice el encabezado de `config.py`. El pipeline de
+> preprocesado está diagramado en `Implementacion/PIPELINE.md`, que además guarda el **runbook**
+> de las tablas de métricas y la lectura de la cascada invertida.
 
 ### Dataset y rutas
 
@@ -111,8 +118,11 @@ Dataset descargable de: https://github.com/Jehuty4949/NSL_KDD
 - [x] Entrenamiento del modelo de firmas y extracción de reglas desde D3 (`firmas.py`: DecisionTree, RandomForest, KNN, HistGradientBoosting)
 - [x] Baseline RF monolítico de control (`baseline.py`)
 - [x] Sistema híbrido (cascada anomalía→firmas) y evaluación conjunta sobre D2 (`hibrido.py`)
+- [x] KS de D1 contra los normales de D2 (T2, en `validacion.py`) y medición de la cascada invertida (T3, `cascada_invertida.py`) — las dos del lote de reapertura del 2026-08-06
 
-> **Estado a 2026-07-16:** el track de CÓDIGO está COMPLETO (todos los scripts implementados, auditados y ejecutados en 54 y 122 features). El trabajo restante del TFG es la redacción de la memoria (track INFORME).
+> **Estado a 2026-07-16:** el track de CÓDIGO estaba COMPLETO (todos los scripts implementados, auditados y ejecutados en 54 y 122 features) y el trabajo restante era la redacción (track INFORME).
+>
+> **Reabierto el 2026-08-06** de forma declarada y acotada (decisión marco (a)): esquema de métricas (T1), dispersión entre semillas (T4) y dos mediciones baratas (T2, T3). Todo pasa por `auditor-ml`. El alcance abierto vive en `features.md`, no aquí.
 
 **Reparto de roles entre ficheros de seguimiento (desde el 2026-08-01):** el registro operativo vivo (tareas abiertas y cerradas) es `features.md`; `next-steps.md` está congelado en cuanto a casillas (§1-§5 historial y bitácora, §6 vigente como especificación técnica de cada script, salvo §6.5 (`hibrido.py`), superada por el grill H-1…H-7 de `resumen-de-decisiones.md`) y las decisiones de diseño están en `resumen-de-decisiones.md`.
 

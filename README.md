@@ -16,7 +16,7 @@ baseline de control precisamente para medir esa diferencia.
 ```
 Working_Directory/
 ├── Implementacion/            Código Python del pipeline y los modelos
-│   ├── app/                   Los 8 scripts (ver tabla)
+│   ├── app/                   Los 9 scripts (ver tabla)
 │   ├── diagramas/             Diagramas Mermaid del pipeline (.mmd + .png/.svg)
 │   ├── PIPELINE.md            Documentación del flujo de preprocesamiento
 │   └── requirements.txt       Dependencias con versión fijada
@@ -58,17 +58,19 @@ características del one-hot en lugar de las **54** seleccionadas, que es lo pre
 | # | Script | Qué hace |
 |---|---|---|
 | 1 | `program.py` | Carga NSL-KDD, análisis exploratorio, one-hot de `protocol_type`/`service`/`flag`, escalado, codificación de etiquetas, balanceo y selección de características. Genera los splits **D1/D2/D3** y sus metadatos |
-| 2 | `validacion.py` | Valida lo generado: integridad y alineación de columnas, pureza de D1 y D3, distribuciones, correlaciones, drift KS de D1→D2 y outliers. Emite un informe con veredicto **APROBADA / FALLA** |
+| 2 | `validacion.py` | Valida lo generado: integridad y alineación de columnas, pureza de D1 y D3, distribuciones, correlaciones, outliers y **dos** mediciones de drift KS —D1 contra D2 completo y D1 contra las 9.711 filas normales de D2—, que se publican por separado y no se restan. Emite un informe con veredicto **APROBADA / FALLA** |
 | 3 | `anomalias.py` | **Etapa 1.** Compara cuatro detectores no supervisados entrenados solo con tráfico normal: IsolationForest, OneClassSVM, LocalOutlierFactor (`novelty=True`) y un autoencoder `MLPRegressor`. Score unificado (mayor = más anómalo) y umbral en el percentil 95 |
 | 4 | `firmas.py` | **Etapa 2.** Clasificador multiclase de ataques conocidos sobre D3 (dos/probe/r2l/u2r). Compara DecisionTree, RandomForest, KNN e HistGradientBoosting con `GridSearchCV` y `f1_macro`, e incluye el experimento de balanceo SMOTE frente a `class_weight` |
 | 5 | `baseline.py` | **Control.** Un único RandomForest monolítico de 5 clases sobre todo el train. No forma parte del híbrido: existe para contrastar su recall de día cero con el de la cascada |
 | 6 | `hibrido.py` | **El sistema.** Encadena las dos etapas ya entrenadas y las evalúa de extremo a extremo sobre D2. No reentrena: carga los `.joblib`. Lo sospechoso pasa a firmas; si la confianza máxima queda por debajo del umbral, se etiqueta `unknown` (posible 0-day) |
+| 7 | `cascada_invertida.py` | **Medición aparte, no es parte del sistema.** Pasa las 9.711 filas normales de D2 por el clasificador de firmas ya entrenado para contar cuántas condenaría si las firmas fuesen la primera etapa. Es **contrafactual** y no entrena nada: solo `predict_proba` sobre `.joblib` persistidos, con el umbral leído del descriptor del híbrido. Su titular es una **cota inferior** del FPR de ese sistema hipotético, no ese FPR |
 | — | `config.py` | Configuración central: rutas, semilla y convenciones de clase, compartidas por los scripts de modelos |
 | — | `evaluacion.py` | Módulo común de métricas y figuras: evaluación binaria, multiclase y de 0-day por tipo, matrices de confusión y curvas ROC/PR |
 
 ```powershell
 cd Implementacion
 python app\program.py            # y después validacion, anomalias, firmas, baseline, hibrido
+                                 # y, si se quiere la medición T3, cascada_invertida
 python app\program.py --sin-seleccion
 ```
 

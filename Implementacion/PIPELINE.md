@@ -42,8 +42,19 @@ Resultados/
     │
     ├── mappings_and_info.txt                           ← mapeos LabelEncoder + scaler
     ├── usage_guide.txt                                 ← guía de uso con ejemplos
-    └── validation_report.txt                          ← generado por validacion.py
+    └── validation_report.txt                           ← generado por validacion.py
 ```
+
+> Todo lo de arriba existe **dos veces**, una por variante: con el prefijo
+> `specialized_nsl_kdd_` (54 características) y con `specialized_nsl_kdd_sin_seleccion_`
+> (122). Los informes de validación, por tanto, son **dos**:
+> `specialized_nsl_kdd_validation_report.txt` y
+> `specialized_nsl_kdd_sin_seleccion_validation_report.txt`, y **no comparten ninguna de las
+> cifras que dependen del set de características** (54 vs 122 características, drift (A) 37 vs 44,
+> drift (B) 25 vs 31, mediana de outliers 4,78 % vs 2,44 %). Lo que no depende del set sí es
+> idéntico en los dos: los tamaños D1 67.343 / D2 22.544 / D3 58.630, los 9.711 normales de D2 y
+> las 4 características fuera de [0,1]. Cualquier número tomado de un informe tiene que decir de
+> cuál sale.
 
 ---
 
@@ -73,6 +84,29 @@ python baseline.py  --sin-seleccion
 python hibrido.py   --sin-seleccion
 ```
 
+**Más dos invocaciones que no pertenecen al runbook de T1** y que se listan aquí porque también
+depositan en `Resultados/`: la medición de la **cascada invertida** (**T3**), que escribe su
+propia tabla y no toca ninguna de las ocho. Va **después** de `firmas.py` y de `hibrido.py` de su
+variante: necesita `firma_<algo>_<set>.joblib` (el modelo) y `hibrido_<set>.joblib` (de donde lee
+`umbral_conf_elegido`; si falta, **aborta** en lugar de inventarse un umbral). No entrena nada
+—solo `predict_proba` sobre modelos persistidos—, tarda ≈10 s por variante y **D2 solo se
+reporta** (P-4).
+
+```powershell
+python cascada_invertida.py                 # 54 características
+python cascada_invertida.py --sin-seleccion # 122 características
+```
+
+Salidas: `Resultados/metricas_cascada_invertida.csv` (**5 filas por variante**, 10 en total) y
+`Resultados/figuras/cascada_invertida_54.png` / `..._122_sin_seleccion.png`.
+
+> [!note] `validacion.py` estrena dos figuras con **T2**
+> El KS de D1 contra **solo las filas normales de D2** —medición (B)— añade
+> `validacion_drift_ks_d2_normales.png` y `validacion_drift_ks_comparativa.png` (más sus gemelas
+> `_sin_seleccion`), y dos líneas al `..._validation_report.txt`. No sustituye a la medición (A):
+> `validacion.py` sigue siendo la puerta de calidad de `program.py` y **no** forma parte del
+> runbook de las tablas de métricas.
+
 **Ninguna métrica de calidad cambia** respecto a lo publicado: la semilla es 42 en todo, los
 modelos, los grids y la calibración OOF están intactos, y T1 solo añade columnas de
 declaración. **Las columnas de tiempo sí cambian**, y era el objetivo: `tiempo_s`,
@@ -95,11 +129,42 @@ anteriores) y se queda solo lo estable. Los números viven ahora en la sección
 documento, anclados al commit de su corrida. **Ninguna métrica de calidad se ve afectada.**
 
 > [!warning] Hueco de trazabilidad de la corrida publicada
-> El runbook son **8 invocaciones**: `program.py` y `validacion.py` **NO se re-corrieron**, así que
-> sus **5** figuras (`eda_distribuciones_divisiones.png` y las cuatro `validacion_*.png`) siguen
-> ancladas a la corrida del **05/07/2026** y no a `1163c90`. Los splits que consumen las 8
-> invocaciones son los CSV procesados que dejó aquella corrida, idénticos (semilla 42); lo que no
-> está anclado al commit publicado son esas cinco figuras.
+> El runbook son **8 invocaciones**: **`program.py` NO se re-corrió**. Todo lo que deposita
+> —los CSV originales y procesados de las dos variantes, `_mappings_and_info.txt`,
+> `_usage_guide.txt`, `selected_features.txt`, `_transformers.joblib` y su única figura,
+> `eda_distribuciones_divisiones.png`— sigue anclado a la corrida del **05/07/2026** y no a
+> `1163c90`. Los splits que consumen las 8 invocaciones son esos CSV, idénticos (semilla 42);
+> lo que no está anclado al commit publicado es esa figura del EDA.
+>
+> **`validacion.py` sí se re-corrió**, en las dos variantes, el **2026-08-10** (corrida
+> `274923d-sucio`, tarea **T2**). Sus salidas ya **no** son las cuatro figuras de 2026-07-05: son
+> **12 figuras** `validacion_*.png` —las **6 por variante** de la tabla de abajo— y **2**
+> informes `..._validation_report.txt` (54 y `_sin_seleccion`), todos con marca de tiempo de esa
+> re-corrida. Ninguna cifra de calidad cambia por ello: `validacion.py` no entrena nada y solo
+> lee los CSV de `program.py`.
+>
+> **Esa marca de tiempo es del sistema de ficheros (mtime), y git no la versiona.** Tras un
+> `clone`, los artefactos llevan la fecha de la copia, no la de la corrida. Los informes
+> `..._validation_report.txt` **no imprimen fecha ni commit en su cabecera** —a diferencia de los
+> `metricas_*.csv`, que sí traen columna `commit`—, así que **un tercero no puede verificar desde
+> git que salieron de `274923d`**: hay que creerse este recuadro. Misma clase de limitación que la
+> del recuadro de `ac496cb` más abajo, aunque más leve: aquí los artefactos sí están commiteados y
+> son reproducibles re-ejecutando `validacion.py` sobre los CSV de `program.py`; lo no verificable
+> es solo **de qué corrida** proceden los que hay en disco.
+>
+> | Figura (× 2 variantes: sin sufijo = 54, `_sin_seleccion` = 122) | Origen |
+> |---|---|
+> | `validacion_distribucion_clases.png` | de siempre |
+> | `validacion_discriminantes_d1_vs_d3.png` | de siempre |
+> | `validacion_drift_ks.png` | de siempre |
+> | `validacion_outliers_iqr.png` | de siempre |
+> | `validacion_drift_ks_d2_normales.png` | **T2** |
+> | `validacion_drift_ks_comparativa.png` | **T2** |
+>
+> Lo que la re-corrida **no** arregla: al no tocar `program.py`, el hueco de
+> `eda_distribuciones_divisiones.png` sigue abierto. Y como la variante de 122 se validó por
+> primera vez, sus cifras **son nuevas** y no coinciden con las de 54 (ver el recuadro del árbol
+> de `Resultados/`, más arriba).
 
 > [!note] El texto de `alcance_tiempo_s` publicado **sí** es el de `config.py` de hoy
 > En la corrida `ac496cb` no lo era: los arreglos de redacción de
@@ -128,14 +193,36 @@ documento, anclados al commit de su corrida. **Ninguna métrica de calidad se ve
 Lo verifica `evaluacion.comprobar_recuento()` al final de cada corrida (contra
 `evaluacion.FILAS_ESPERADAS_POR_VARIANTE`): si la variante que se acaba de correr no tiene
 exactamente esas filas, **aborta**. Junto a ella, `evaluacion.comprobar_unicidad()` verifica la
-clave `set_features × algoritmo × alcance`. Las cuatro tablas auxiliares
-(`metricas_balanceo.csv`, `metricas_baseline_0day.csv`, `metricas_hibrido_0day.csv`,
-`metricas_hibrido_calibracion.csv`) tienen otra granularidad de fila y no llevan recuento fijo,
-pero sí `alcance` y procedencia (`evaluacion.COLUMNAS_MINIMAS_AUXILIARES`).
+clave `set_features × algoritmo × alcance`.
+
+Las **cinco** tablas auxiliares (`evaluacion.TABLAS_AUXILIARES`) tienen otra granularidad de fila
+—algoritmo × balanceo, tipo de ataque, umbral candidato, categoría asignada— y por eso no llevan
+`algoritmo` ni la clave de unicidad, pero sí `alcance` y procedencia
+(`evaluacion.COLUMNAS_MINIMAS_AUXILIARES`), y las cinco publicadas ya la traen:
+
+| Tabla auxiliar | Filas | Granularidad de fila | Recuento comprobado por |
+|---|---|---|---|
+| `metricas_balanceo.csv` | 16 | algoritmo × esquema de balanceo × variante | — |
+| `metricas_baseline_0day.csv` | 36 | tipo de ataque 0-day × variante | — |
+| `metricas_hibrido_0day.csv` | 144 | tipo × detector × variante | — |
+| `metricas_hibrido_calibracion.csv` | 6 | `UMBRAL_CONF` candidato × variante | — |
+| `metricas_cascada_invertida.csv` | 10 | categoría asignada × variante (**5 por variante**) | `cascada_invertida.NSLKDDInvertedCascadeMeasurer._comprobar_tabla()` |
+
+La última es la única con recuento fijo, y lo comprueba **el propio script**, no
+`comprobar_recuento()`: esa función solo conoce las cuatro tablas principales y meter una
+auxiliar en `FILAS_ESPERADAS_POR_VARIANTE` tocaría un contrato que no se toca. La comprobación
+propia verifica **cuatro** cosas al releer el CSV escrito —las 5 filas de la variante; que las
+categorías estén una y solo una vez; que los `n_argmax` de las cuatro sumen `n_normales_d2`, que
+es lo que hace de los buckets del argmax una **partición** de las normales de D2; y que los
+`n_condenadas` de las cuatro sumen el de `__global__`— y **aborta** si alguna falla. Las dos
+últimas son distintas y las dos hacen falta: una partición rota que afectase solo a filas por
+debajo del umbral dejaría los `n_condenadas` cuadrando. Se comprueba sobre enteros y no sobre
+`tasa_condena`, que solo cuadra hasta el redondeo (ver más abajo).
 
 > Al terminar las ocho, si quedan ficheros `*.esquema-anterior.bak` en `Resultados/`, es que
 > había tablas del esquema viejo: comprobar que la nueva trae todas las filas y borrarlos a mano.
-> Un `.bak` no se versiona ni se cita.
+> Un `.bak` no se versiona ni se cita. Las dos invocaciones de `cascada_invertida.py` van aparte y
+> tienen su propio `.bak` si alguna vez cambia su esquema.
 
 ### Las columnas de tiempo: qué miden y hasta dónde valen
 
@@ -167,7 +254,14 @@ casi siempre posterior. Las corridas que existen en git:
 | `38fdd4b` | `34bee30` (y `5516b60`, idénticos) | Primera con `perf_counter`. |
 | `5516b60` | `5f98d88` | Añade `tiempo_score_seleccion_s` y `tiempo_score_umbral_s`. |
 | `ac496cb` | *(nunca versionados: los sustituyó la re-corrida `1163c90` antes del commit de cierre de T18)* | Primera con `n_iter_ganador` y `n_iter_total_grid`. **Corrida histórica**: sus cifras solo sobreviven citadas en este documento, no hay CSV suyo en git. |
-| `1163c90` | *(aún en el árbol de trabajo, pendiente del commit de cierre de T18)* | **La publicada hoy.** Mismo esquema que `ac496cb`. 8 invocaciones, 222 filas, todas con `semilla = 42` y `commit = 1163c90` limpio. |
+| `1163c90` | *(aún en el árbol de trabajo, pendiente del commit de cierre de T18)* | **La publicada hoy.** Mismo esquema que `ac496cb`. 8 invocaciones, **222 filas** —subtotal de las ocho tablas del runbook, **no** el total de `Resultados/`—, todas con `semilla = 42` y `commit = 1163c90` limpio. |
+| `274923d-sucio` | *(aún en el árbol de trabajo)* | **Solo la cascada invertida (T3)**: 2 invocaciones, **10 filas** en `metricas_cascada_invertida.csv`, `semilla = 42`. No toca ninguna de las ocho tablas del runbook. El `-sucio` es correcto y previsto: la corrida es anterior al commit que versiona su propio código (`config._RUTA_SUCIEDAD` mira `Implementacion/`). |
+
+Sumando las dos, `Resultados/` tiene hoy **232 filas repartidas en 9 ficheros** `metricas_*.csv`
+(222 + 10): las **ocho** tablas de la corrida `1163c90` —las cuatro principales más las cuatro
+auxiliares, como detalla la fila de `1163c90`— con `commit = 1163c90`, y la novena, la de la
+cascada invertida, con `274923d-sucio`. Son **dos corridas distintas**, no una, y ninguna cifra de una debe presentarse
+junto a las de la otra sin decirlo.
 
 Cualquier cita a una corrida anterior apunta a **su commit**, nunca a un fichero
 `*.esquema-anterior.bak`: los `.bak` son prescindibles —lo que contienen está en git— y no se
@@ -673,6 +767,112 @@ detectar** —y la detección propiamente dicha no llega al 1 %—.
 > 0-day de los cuatro detectores (que vuelve a puntuar D2 con IF+OCSVM+LOF+AE) y los CSV ya
 > escritos. Son **dos medidas distintas**, no una discrepancia: el propio log lo dice e imprime
 > las dos.
+
+### La cascada invertida (T3): qué mide, qué NO mide y cómo se cita
+
+Aquí viven **la lectura y los números** de `metricas_cascada_invertida.csv`, por la misma regla de
+**T18** que rige los `alcance_tiempo_s`: la celda `alcance` del CSV se repite en las 10 filas y no
+se puede corregir sin re-correr, así que lleva **solo lo estable** —el contrafactual, la
+población, el denominador, la procedencia del umbral y la marca P-4— y todo lo interpretativo se
+escribe en esta sección, anclado al commit de su corrida.
+
+**Qué mide.** `cascada_invertida.py` carga el clasificador de firmas ya entrenado
+(`firma_RandomForest_<set>.joblib`) y le pasa **solo las 9.711 filas normales de D2** —las que en
+el sistema real nunca llegan a la etapa 2, porque la etapa 1 no las marca—. Cuenta cuántas
+saldrían con etiqueta de ataque y confianza `>= UMBRAL_CONF`. Es la afirmación de **3.2.2** («si
+las firmas fueran primero, condenarían tráfico legítimo en masa») convertida en número. La etapa 2
+se entrena solo con D3, que son solo ataques: **no tiene clase `normal`**, así que su argmax es
+siempre una de las cuatro categorías de ataque y lo único que puede frenar una condena es el
+umbral de confianza.
+
+> [!important] La fila `__global__` es una **cota inferior** del FPR, no el FPR
+> Es el error que traía la primera versión de esta medición, enunciado como igualdad tanto en
+> `config.ALCANCE_CASCADA_INVERTIDA` como en el comentario de `cascada_invertida.py`, y que por
+> tanto **viajaba dentro de las 10 filas del CSV**.
+>
+> En el sistema publicado `unknown` **no es** `normal`: es **alarma** (decisión **P-5**; en
+> `hibrido.py::_ensamblar_prediccion` el flujo degradado a `unknown` sigue dentro de
+> `es_sospechoso`, y la binaria del híbrido **es** `es_sospechoso`). Así que los flujos normales
+> que aquí caen por debajo del umbral —**3.153** a 54 características y **6.382** a 122— **no
+> quedan exonerados**: en una cascada con las firmas delante pasarían a la etapa siguiente y
+> podrían acabar en alarma igualmente. Presentar `tasa_condena` como «el FPR de un sistema de
+> firmas-primero» o contradice la convención `unknown` = alarma, o postula en silencio otro
+> sistema — y ese otro sistema es justo el que el descarte **«Cascada invertida completa»**
+> declara inexistente y cerrado («no se puede invertir esta cascada, solo construir otro
+> sistema»).
+>
+> **Lo que la tabla mide sin ambigüedad** son los falsos positivos **irrecuperables**
+> (`n_condenadas`): los que salen ya con etiqueta de ataque y confianza suficiente, y que ninguna
+> etapa posterior puede deshacer. Ese es el número citable.
+>
+> **Este bloque es el único sitio donde vive el DESARROLLO del argumento**, no el único sitio
+> donde se menciona. Hay otras tres apariciones, y las tres son **resúmenes derivados** de este
+> bloque, sin razonamiento propio:
+>
+> | Dónde | Qué contiene | Estatus |
+> |---|---|---|
+> | `Implementacion\PIPELINE.md` (este bloque) | El argumento completo: P-5, `unknown` = alarma, por qué la igualdad era falsa | **fuente** |
+> | `Implementacion\app\cascada_invertida.py:22-43` (docstring) | El mismo aviso en prosa, para quien lea el código sin la guía | derivado |
+> | `Resultados\GUIA_RESULTADOS.md` §6.1 | Tres viñetas de cómo citar la tabla | derivado |
+> | `config.ALCANCE_CASCADA_INVERTIDA` (celda `alcance` del CSV) | Una frase: «cota inferior; lo citable es `n_condenadas`» + puntero aquí | derivado |
+>
+> Que la celda sea solo una frase es deliberado: el porqué depende de la decisión **P-5**, no del
+> código, y una celda se repite en las 10 filas de un CSV que no se corrige sin re-correr.
+>
+> **Si P-5 se revisara algún día**, se reescribe aquí **y se propagan los tres derivados** —el
+> docstring y la guía a mano; la celda `alcance` exige además **re-correr las dos variantes** de
+> `cascada_invertida.py` (≈10 s, no entrena), porque el texto viaja dentro del dato. Corregir solo
+> este bloque deja copias contradictorias en disco.
+
+**Las cifras** (corrida `274923d-sucio`, `semilla = 42`, `UMBRAL_CONF = 0,5` leído de
+`hibrido_<set>.joblib::umbral_conf_elegido` en las dos variantes):
+
+| Variante | Condenadas / 9.711 normales | `tasa_condena` `__global__` | Bajo umbral (→ `unknown`) | Mediana de confianza |
+|---|---|---|---|---|
+| **54** | **6.558** | 0,675317 | 3.153 | 0,5355 |
+| **122** | **3.329** | 0,342807 | 6.382 | 0,46 |
+
+Desglose por categoría asignada por el argmax (`n_argmax` → `n_condenadas`):
+
+| Categoría | 54 | 122 |
+|---|---|---|
+| `dos` | 6.394 → **4.706** | 5.573 → 881 |
+| `probe` | 1.592 → 1.002 | 2.216 → **1.792** |
+| `r2l` | 1.698 → 833 | 1.903 → 643 |
+| `u2r` | 27 → 17 | 19 → 13 |
+| `__global__` | 9.711 → **6.558** | 9.711 → **3.329** |
+
+`n_argmax` de `__global__` es el total de normales **por construcción**, no por casualidad: sin
+clase `normal`, toda fila recibe una categoría de ataque. Los `n_argmax` de las cuatro categorías
+particionan ese total y los `n_condenadas` suman el de `__global__` — lo comprueba el script y
+**aborta** si no cuadra.
+
+> [!note] Las `tasa_condena` de las cuatro categorías **no** suman exactamente el `__global__`
+> Los **recuentos** sí. Las tasas publicadas, no: se redondean a 6 decimales, y en la variante de
+> 122 suman **0,342808** frente al **0,342807** de la fila `__global__`. Es 1 unidad en el sexto
+> decimal, pero la afirmación «suman exactamente» era falsa tal y como estaba escrita —y estaba
+> escrita dentro del dato—. Cualquier comprobación de coherencia se hace sobre `n_condenadas`.
+
+**Las dos variantes no son comparables como «más o menos características».** El gap —67,5 % contra
+34,3 %— se mide sobre **dos bosques distintos**: la configuración ganadora de `RandomForest` en
+`metricas_firmas.csv` es `{max_depth: 10, n_estimators: 300}` a 54 y `{max_depth: None,
+n_estimators: 100}` a 122 (misma tabla que ya obliga a la salvedad del `tiempo_s` del híbrido más
+arriba). Con `max_depth=None` las hojas son puras, así que cada árbol vota one-hot y el
+`predict_proba` de un bosque de 100 solo puede dar múltiplos de 0,01: es exactamente lo que
+enseñan las medianas publicadas de la variante de 122 —**0,44 · 0,55 · 0,46 · 0,73**, frente a
+valores como 0,545132 o 0,533087 en la de 54—, y la mediana global, **0,46**, cae **por debajo**
+del `UMBRAL_CONF = 0,5`. **No se cuantifica aquí** cuánto de la diferencia entre las dos variantes
+aporta cada causa: no hay medida que las separe y sería justo la atribución que este documento
+evita en todas partes.
+
+> [!caution] Si la memoria contrasta este número con el FPR del híbrido, tiene que declararlo
+> El denominador **es el mismo** (las 9.711 normales de D2), así que la resta es aritméticamente
+> posible: `fpr_cascada` = **0,101740** en la variante de 54 (corrida `1163c90`) frente al
+> 0,675317 de aquí. Pero **no son dos medidas del mismo tipo**: una es el FPR **medido** del
+> sistema publicado y la otra una **cota inferior** de un sistema hipotético, salidas además de
+> **dos corridas distintas** (`1163c90` y `274923d-sucio`). El contraste sostiene el argumento de
+> 3.2.2 —el orden de las etapas no es indiferente— siempre que las dos salvedades vayan escritas
+> al lado. Sin ellas es una comparación de peras con manzanas presentada como titular.
 
 ### La columna `commit`: tres valores posibles
 

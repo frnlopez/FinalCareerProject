@@ -62,6 +62,13 @@ class NSLKDDValidator:
         self.D2_y_attack_original = None
         self.D2_y_category_original = None
 
+        # Subconjunto NORMAL de D2 (tarea T2). D2 es 43 % normal + 57 % ataques, así
+        # que el KS de D1 contra D2 COMPLETO mezcla dos cosas: el desplazamiento
+        # entre particiones del tráfico legítimo y la simple presencia de ataques.
+        # Para explicar el FPR hace falta el primero solo, y ese es este subconjunto.
+        # NO sustituye a nada: los dos KS se calculan y se reportan por separado.
+        self.D2_X_normal = None
+
         # D3: ataques conocidos (entrenamiento firmas)
         self.D3_X = None
         self.D3_y_attack_original = None
@@ -119,8 +126,18 @@ class NSLKDDValidator:
 
             self.feature_names = self.D1_X.columns.tolist()
 
+            # Subconjunto NORMAL de D2 (T2): mismo tipo de tráfico que D1, otra
+            # partición. Es el término de comparación que deja FUERA los ataques,
+            # así que el KS calculado contra él mide el desplazamiento del propio
+            # tráfico legítimo. No es un reparto de causas del KS contra D2
+            # completo: son dos mediciones sobre dos poblaciones (ver el bloque de
+            # cabecera de la sección 4).
+            self.D2_X_normal = self.D2_X[self.D2_y_category_original == 'normal']
+
             print(f"   ✓ D1 (Normal):   {self.D1_X.shape[0]:>7,} × {self.D1_X.shape[1]}")
             print(f"   ✓ D2 (Test):     {self.D2_X.shape[0]:>7,} × {self.D2_X.shape[1]}")
+            print(f"   ✓ D2 (solo normales de D2): {self.D2_X_normal.shape[0]:>7,} filas "
+                  f"({self.D2_X_normal.shape[0] / self.D2_X.shape[0] * 100:.1f} % de D2)")
             print(f"   ✓ D3 (Ataques):  {self.D3_X.shape[0]:>7,} × {self.D3_X.shape[1]}")
             print(f"\n✅ {len(self.feature_names)} características cargadas correctamente")
             return True
@@ -391,17 +408,51 @@ class NSLKDDValidator:
         self._save_figure('validacion_discriminantes_d1_vs_d3.png')
 
     # ─────────────────────────────────────────────────────────────────────────
-    # 4. Data drift D1 → D2
+    # 4. Data drift D1 → D2 — DOS mediciones distintas, nunca intercambiables
+    # ─────────────────────────────────────────────────────────────────────────
+    # (A) detect_data_drift()           D1  vs  D2 COMPLETO  (normales + ataques)
+    # (B) detect_data_drift_normales()  D1  vs  SOLO LAS FILAS NORMALES DE D2
+    #
+    # Por qué las dos y por qué separadas (tarea T2). (A) es la medición histórica
+    # y se conserva intacta, pero NO sirve para explicar el FPR: D2 es 43 % normal
+    # y 57 % ataques, así que buena parte de su drift es simplemente que en D2 hay
+    # ataques y en D1 no. (B) compara tráfico legítimo contra tráfico legítimo, así
+    # que lo que mide es el desplazamiento ENTRE PARTICIONES del propio tráfico
+    # normal — que es lo que puede explicar por qué un umbral p95 ajustado sobre
+    # D1_val (≈5 % de FPR prometido) rinde 8-10 % sobre D2.
+    #
+    # PRECISIÓN OBLIGATORIA AL CITARLO: es desplazamiento entre particiones, NO
+    # deriva temporal. NSL-KDD no tiene marca de tiempo y la afirmación temporal no
+    # se sostendría.
+    #
+    # SEGUNDA PRECISIÓN OBLIGATORIA — (A) y (B) NO SE RESTAN PARA REPARTIR CAUSAS.
+    # El informe publica un `delta = (A) - (B)` y es una COMPARACIÓN de las dos
+    # mediciones sobre las mismas características, nunca una descomposición: el
+    # estadístico KS es un SUPREMO de diferencia entre funciones de distribución
+    # acumulada y NO es aditivo sobre una mezcla de poblaciones. Con D2 = mezcla de
+    # normales y ataques, KS(D1, D2) != KS(D1, D2_normales) + «aporte de los
+    # ataques»: ese segundo sumando no existe como magnitud. Un delta grande dice
+    # que la característica se comporta muy distinto bajo las dos poblaciones de
+    # comparación, y hasta ahí llega. Escribirlo como atribución —«cuánto del drift
+    # se debe a X y cuánto a Y»— es lo que este bloque prohíbe, porque de aquí sale
+    # material para la redacción de 5.1/5.4.
+    #
+    # Las columnas de (B) llevan sufijo '_normales' y su figura y su sección del
+    # informe llevan rótulo propio: las dos cifras NO deben poder confundirse.
     # ─────────────────────────────────────────────────────────────────────────
 
     def detect_data_drift(self):
         """
-        Compara distribuciones D1 (normal de entrenamiento) vs D2 (test completo)
-        usando el test de Kolmogorov-Smirnov.
-        Drift alto indica que el test tiene perfiles muy distintos al baseline normal,
-        lo que es esperable si contiene ataques.
+        (A) Compara distribuciones D1 (normal de entrenamiento) vs D2 COMPLETO
+        (normales + ataques) usando el test de Kolmogorov-Smirnov.
+
+        Drift alto indica que el test tiene perfiles muy distintos al baseline
+        normal, lo que es esperable si contiene ataques — y precisamente por eso
+        esta medición NO aísla el desplazamiento del tráfico legítimo: para eso
+        está detect_data_drift_normales(), que es otra cifra y no la sustituye.
         """
-        print("\n🌊 DETECCIÓN DE DRIFT — D1 (Normal train) vs D2 (Test completo)")
+        print("\n🌊 DETECCIÓN DE DRIFT (A) — D1 (Normal train) vs D2 COMPLETO "
+              "(normales + ataques)")
         print("=" * 60)
 
         results = []
@@ -431,6 +482,65 @@ class NSLKDDValidator:
         self._plot_drift(drift_df)
         return drift_df
 
+    def detect_data_drift_normales(self):
+        """
+        (B) Compara D1 (todo normal) contra LAS FILAS NORMALES DE D2 con el mismo
+        test de Kolmogorov-Smirnov y el mismo criterio (p < 0.01). Tarea T2.
+
+        Es tráfico legítimo contra tráfico legítimo, así que el drift que sale aquí
+        NO puede achacarse a la presencia de ataques en el test: es desplazamiento
+        del propio tráfico normal ENTRE PARTICIONES (nunca «deriva temporal»:
+        NSL-KDD no tiene marca de tiempo). Es la cifra que puede explicar por qué
+        el umbral p95 fijado sobre D1_val promete ≈5 % de FPR y sobre D2 sale 8-10 %.
+
+        NO sustituye a detect_data_drift(): son dos mediciones con dos poblaciones
+        de comparación distintas y las dos se publican. Las columnas llevan sufijo
+        '_normales' para que no se puedan confundir ni mezclar por accidente.
+
+        Returns:
+        --------
+        pandas.DataFrame
+            feature · ks_statistic_normales · ks_p_value_normales · mean_d1 ·
+            mean_d2_normal · has_drift_normales
+        """
+        print("\n🌊 DETECCIÓN DE DRIFT (B) — D1 (Normal train) vs D2 SOLO NORMALES "
+              "(tarea T2)")
+        print("=" * 60)
+        print(f"   Poblaciones comparadas: D1 = {len(self.D1_X):,} filas normales  vs  "
+              f"D2-normal = {len(self.D2_X_normal):,} filas normales")
+        print("   (esta cifra NO es la de (A): allí el término de comparación es D2")
+        print("    COMPLETO y parte de su drift es la presencia de ataques)")
+
+        results = []
+        for feat in self.feature_names:
+            ks_stat, ks_p = stats.ks_2samp(
+                self.D1_X[feat].values, self.D2_X_normal[feat].values
+            )
+            results.append({
+                'feature': feat,
+                'ks_statistic_normales': ks_stat,
+                'ks_p_value_normales': ks_p,
+                'mean_d1': self.D1_X[feat].mean(),
+                'mean_d2_normal': self.D2_X_normal[feat].mean(),
+                'has_drift_normales': ks_p < 0.01,
+            })
+
+        drift_norm_df = pd.DataFrame(results)
+        n_drift = drift_norm_df['has_drift_normales'].sum()
+        total = len(drift_norm_df)
+
+        print(f"\n   Drift significativo D1 vs D2-normales (KS p < 0.01): "
+              f"{n_drift}/{total} características ({n_drift/total*100:.1f}%)")
+        if n_drift > 0:
+            print("\n   Top 10 por KS statistic (D1 vs D2-normales):")
+            top = drift_norm_df.nlargest(10, 'ks_statistic_normales')[
+                ['feature', 'ks_statistic_normales', 'ks_p_value_normales']
+            ]
+            print(top.to_string(index=False, float_format='%.4f'))
+
+        self._plot_drift_normales(drift_norm_df)
+        return drift_norm_df
+
     def _plot_drift(self, drift_df):
         fig, axes = plt.subplots(1, 2, figsize=(16, 6))
 
@@ -440,18 +550,90 @@ class NSLKDDValidator:
         axes[0].set_yticks(range(len(top20)))
         axes[0].set_yticklabels([f[:25] for f in top20['feature']], fontsize=8)
         axes[0].invert_yaxis()
-        axes[0].set_title('Top 20 KS Statistic — D1 vs D2\n(rojo = drift significativo)')
+        # Rótulo explícito de la población de comparación (T2): esta figura y la de
+        # D2-solo-normales no deben poder confundirse al mirarlas en la memoria.
+        axes[0].set_title('(A) Top 20 KS — D1 vs D2 COMPLETO (normales + ataques)\n'
+                          '(rojo = drift significativo)')
         axes[0].set_xlabel('KS Statistic')
 
         axes[1].hist(drift_df['ks_p_value'], bins=30, alpha=0.75, edgecolor='black')
         axes[1].axvline(x=0.01, color='red', linestyle='--', label='p=0.01')
-        axes[1].set_title('Distribución de p-values (KS test)')
+        axes[1].set_title('(A) Distribución de p-values — D1 vs D2 COMPLETO')
         axes[1].set_xlabel('p-value')
         axes[1].set_ylabel('Frecuencia')
         axes[1].legend()
 
         plt.tight_layout()
         self._save_figure('validacion_drift_ks.png')
+
+    def _plot_drift_normales(self, drift_norm_df):
+        """
+        Figura propia del KS D1 vs D2-SOLO-NORMALES (T2), con nombre de archivo y
+        títulos que la distinguen de validacion_drift_ks.png. Es la medición (B)
+        por separado: mismo test y mismo criterio que (A) sobre otra población de
+        comparación. No resta nada de (A) — ver la nota de no aditividad en la
+        cabecera de la sección 4.
+        """
+        fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+
+        top20 = drift_norm_df.nlargest(20, 'ks_statistic_normales')
+        colors = ['red' if d else 'steelblue' for d in top20['has_drift_normales']]
+        axes[0].barh(range(len(top20)), top20['ks_statistic_normales'], color=colors)
+        axes[0].set_yticks(range(len(top20)))
+        axes[0].set_yticklabels([f[:25] for f in top20['feature']], fontsize=8)
+        axes[0].invert_yaxis()
+        axes[0].set_title('(B) Top 20 KS — D1 vs D2 SOLO NORMALES\n'
+                          '(rojo = drift significativo)')
+        axes[0].set_xlabel('KS Statistic')
+
+        axes[1].hist(drift_norm_df['ks_p_value_normales'], bins=30, alpha=0.75,
+                     edgecolor='black', color='darkseagreen')
+        axes[1].axvline(x=0.01, color='red', linestyle='--', label='p=0.01')
+        axes[1].set_title('(B) Distribución de p-values — D1 vs D2 SOLO NORMALES')
+        axes[1].set_xlabel('p-value')
+        axes[1].set_ylabel('Frecuencia')
+        axes[1].legend()
+
+        plt.tight_layout()
+        self._save_figure('validacion_drift_ks_d2_normales.png')
+
+    def _plot_drift_comparativa(self, drift_df, drift_norm_df):
+        """
+        Compara las DOS mediciones de KS característica a característica: las
+        mismas features bajo las dos poblaciones de comparación, una barra al lado
+        de la otra.
+
+        NO es una descomposición del drift ni una atribución de causas. El KS es un
+        supremo de diferencia de CDF y no es aditivo sobre una mezcla, así que
+        KS(D1, D2) NO se reparte entre «lo que aporta el tráfico legítimo» y «lo
+        que aportan los ataques» (ver la nota de la cabecera de la sección 4). Lo
+        que la figura enseña es cuál de las dos mediciones es mayor en cada
+        característica y por cuánto — que es también lo que dice el informe
+        publicado: «las mismas características bajo las dos poblaciones ·
+        delta = (A) - (B)».
+        """
+        comparada = drift_df[['feature', 'ks_statistic']].merge(
+            drift_norm_df[['feature', 'ks_statistic_normales']], on='feature'
+        )
+        top = comparada.nlargest(20, 'ks_statistic')
+
+        x = np.arange(len(top))
+        w = 0.4
+        fig, ax = plt.subplots(figsize=(15, 7))
+        ax.bar(x - w / 2, top['ks_statistic'], w,
+               label='(A) D1 vs D2 COMPLETO (normales + ataques)', color='steelblue')
+        ax.bar(x + w / 2, top['ks_statistic_normales'], w,
+               label='(B) D1 vs D2 SOLO NORMALES', color='darkseagreen')
+        ax.set_xticks(x)
+        ax.set_xticklabels([f[:22] for f in top['feature']], rotation=45,
+                           ha='right', fontsize=8)
+        ax.set_ylabel('KS Statistic')
+        ax.set_title('Desplazamiento D1→D2 según la población de comparación\n'
+                     '(top 20 por KS contra D2 completo · desplazamiento entre '
+                     'particiones, NO deriva temporal)')
+        ax.legend()
+        plt.tight_layout()
+        self._save_figure('validacion_drift_ks_comparativa.png')
 
     # ─────────────────────────────────────────────────────────────────────────
     # 5. Outliers
@@ -560,6 +742,9 @@ class NSLKDDValidator:
         d2_dist, d3_dist = self.analyze_class_distribution()
         feat_analysis = self.analyze_feature_distributions()
         drift_df = self.detect_data_drift()
+        # (B) el KS de T2, separado y sin sustituir al anterior.
+        drift_norm_df = self.detect_data_drift_normales()
+        self._plot_drift_comparativa(drift_df, drift_norm_df)
         outlier_summaries = self.analyze_outliers()
         d2_range_df = self.check_d2_scaling_range()
 
@@ -568,9 +753,13 @@ class NSLKDDValidator:
             'issues': issues,
             'D1_size': len(self.D1_X),
             'D2_size': len(self.D2_X),
+            'D2_normal_size': len(self.D2_X_normal),
             'D3_size': len(self.D3_X),
             'n_features': len(self.feature_names),
+            # Clave HISTÓRICA (D1 vs D2 completo): no se renombra ni se cambia su
+            # significado; la de T2 entra como clave NUEVA y explícita.
             'features_with_drift': int(drift_df['has_drift'].sum()),
+            'features_with_drift_normales': int(drift_norm_df['has_drift_normales'].sum()),
             'avg_outlier_pct_D1': float(outlier_summaries['D1'].mean()),
             'low_variance_features': len(feat_analysis['low_variance']),
             'high_corr_pairs': len(feat_analysis['high_correlation']),
@@ -578,25 +767,30 @@ class NSLKDDValidator:
         }
 
         report_path = f'{self.base_path}_validation_report.txt'
-        self._save_report(report, drift_df, d2_range_df, report_path)
+        self._save_report(report, drift_df, d2_range_df, report_path,
+                          drift_norm_df=drift_norm_df)
 
         print(f"\n{'✅' if integrity_ok else '❌'} Integridad: {'APROBADA' if integrity_ok else 'FALLA'}")
-        print(f"🌊 Drift detectado: {report['features_with_drift']}/{report['n_features']} características")
+        print(f"🌊 Drift (A) D1 vs D2 COMPLETO:      {report['features_with_drift']}/{report['n_features']} características")
+        print(f"🌊 Drift (B) D1 vs D2 SOLO NORMALES: {report['features_with_drift_normales']}/{report['n_features']} características")
         print(f"⚠️  Pares alta correlación: {report['high_corr_pairs']}")
         print(f"📄 Reporte guardado en: {report_path}")
 
         return report
 
-    def _save_report(self, report, drift_df, d2_range_df, path):
+    def _save_report(self, report, drift_df, d2_range_df, path, drift_norm_df=None):
         with open(path, 'w', encoding='utf-8') as f:
             f.write("REPORTE DE VALIDACIÓN — DIVISIONES D1/D2/D3 NSL-KDD\n")
             f.write("=" * 60 + "\n\n")
             f.write(f"Integridad:       {'APROBADA' if report['integrity_ok'] else 'FALLA'}\n")
             f.write(f"D1 (Normal):      {report['D1_size']:,} instancias\n")
             f.write(f"D2 (Test):        {report['D2_size']:,} instancias\n")
+            f.write(f"D2 solo normales: {report['D2_normal_size']:,} instancias "
+                    f"({report['D2_normal_size'] / report['D2_size'] * 100:.1f} % de D2)\n")
             f.write(f"D3 (Ataques):     {report['D3_size']:,} instancias\n")
             f.write(f"Características:  {report['n_features']}\n")
-            f.write(f"Drift D1→D2:      {report['features_with_drift']} características\n")
+            f.write(f"Drift (A) D1 vs D2 COMPLETO:      {report['features_with_drift']} características\n")
+            f.write(f"Drift (B) D1 vs D2 SOLO NORMALES: {report['features_with_drift_normales']} características\n")
             f.write(f"Outliers med. D1: {report['avg_outlier_pct_D1']:.2f}%\n")
             f.write(f"Baja varianza (sobre D1+D3):    {report['low_variance_features']} características\n")
             f.write(f"Alta correlación (sobre D1+D3): {report['high_corr_pairs']} pares\n")
@@ -617,11 +811,52 @@ class NSLKDDValidator:
             if report['avg_outlier_pct_D1'] > 15:
                 f.write("  ⚠️  Alto porcentaje de outliers en D1 — revisar preprocesamiento\n")
 
-            f.write("\nTop 15 características con mayor drift (D1 vs D2):\n")
+            # ── Las DOS mediciones de drift, cada una con su población de
+            # comparación escrita en el propio rótulo (T2). No son intercambiables
+            # y la (A) por sí sola NO explica el FPR.
+            f.write("\n(A) Top 15 características con mayor drift — D1 vs D2 COMPLETO\n")
+            f.write("    (D2 completo = normales + ataques: parte de este drift es\n")
+            f.write("     simplemente que en D2 hay ataques y en D1 no)\n")
             top = drift_df.nlargest(15, 'ks_statistic')[
                 ['feature', 'ks_statistic', 'ks_p_value', 'has_drift']
             ]
             f.write(top.to_string(index=False) + "\n")
+
+            if drift_norm_df is not None:
+                f.write("\n(B) Top 15 características con mayor drift — D1 vs D2 SOLO NORMALES\n")
+                f.write("    (tráfico legítimo contra tráfico legítimo: DESPLAZAMIENTO ENTRE\n")
+                f.write("     PARTICIONES, nunca 'deriva temporal' — NSL-KDD no tiene marca de\n")
+                f.write("     tiempo. Es la medición que puede explicar el exceso de FPR sobre\n")
+                f.write("     el ~5 % que promete el umbral p95 ajustado en D1_val)\n")
+                top_n = drift_norm_df.nlargest(15, 'ks_statistic_normales')[
+                    ['feature', 'ks_statistic_normales', 'ks_p_value_normales',
+                     'has_drift_normales']
+                ]
+                f.write(top_n.to_string(index=False) + "\n")
+
+                # Comparación directa de las dos KS sobre las mismas features. El
+                # 'delta' es la diferencia entre DOS MEDICIONES, no un reparto de
+                # causas: el KS no es aditivo sobre una mezcla de poblaciones y
+                # (A) no se descompone en (B) más un «aporte de los ataques».
+                # La salvedad se ESCRIBE EN EL ARTEFACTO, en las tres líneas de
+                # rótulo de aquí abajo, y no solo en este comentario: el .txt se
+                # lee suelto, sin el código ni la guía delante, y una columna
+                # 'delta' sin aviso se lee como atribución. Si se toca el rótulo,
+                # la salvedad se queda.
+                f.write("\n(A) vs (B) — KS de las mismas características bajo las dos poblaciones\n")
+                f.write("    (top 15 por KS contra D2 completo; delta = (A) - (B))\n")
+                f.write("    OJO: 'delta' COMPARA las dos mediciones sobre las mismas\n")
+                f.write("    características; NO es un reparto de causas. El estadístico KS\n")
+                f.write("    es un supremo de diferencia de CDF y NO es aditivo sobre una\n")
+                f.write("    mezcla de poblaciones: (A) no se descompone en (B) más un\n")
+                f.write("    «aporte de los ataques».\n")
+                comparada = drift_df[['feature', 'ks_statistic']].merge(
+                    drift_norm_df[['feature', 'ks_statistic_normales']], on='feature'
+                )
+                comparada['delta'] = (comparada['ks_statistic']
+                                      - comparada['ks_statistic_normales'])
+                f.write(comparada.nlargest(15, 'ks_statistic').to_string(
+                    index=False, float_format='%.4f') + "\n")
 
             # Chequeo informativo (no bloqueante) del rango de D2 tras el escalado
             f.write("\nCaracterísticas de D2 fuera de [0, 1] tras el escalado (INFORMATIVO):\n")

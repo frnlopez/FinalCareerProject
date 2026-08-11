@@ -13,17 +13,23 @@ Aquí se vuelca **todo lo que generan los scripts** de `Implementacion/app/`:
 | Script | Estado | Qué deposita aquí |
 |---|---|---|
 | `program.py` | funcionando | Splits D1/D2/D3 (CSVs originales y procesados), metadatos (`_mappings_and_info.txt`, `_usage_guide.txt`, `selected_features.txt`), transformadores (`.joblib`) y la figura del EDA |
-| `validacion.py` | funcionando | `specialized_nsl_kdd_validation_report.txt` y 4 figuras de validación |
+| `validacion.py` | ejecutado (54 y 122) | **Por variante**: un `..._validation_report.txt` y **6** figuras de validación (las 4 de siempre + las 2 del KS contra los normales de D2, tarea T2). Con las dos variantes: **2** informes (`specialized_nsl_kdd_validation_report.txt` y `specialized_nsl_kdd_sin_seleccion_validation_report.txt`) y **12** figuras `validacion_*` |
 | `anomalias.py` | ejecutado (54 y 122) | `metricas_anomalias.csv`, `modelos\anomalia_*.joblib`, figuras ROC/PR y matrices 2×2 |
 | `firmas.py` | ejecutado (54 y 122) | `metricas_firmas.csv`, `metricas_balanceo.csv`, `firmas_reglas_*.txt`, `modelos\firma_*.joblib`, matrices 4×4 |
 | `baseline.py` | ejecutado (54 y 122) | `metricas_baseline.csv`, `metricas_baseline_0day.csv`, `modelos\baseline_rf_*.joblib`, `figuras\baseline_cm_*.png` |
 | `hibrido.py` | ejecutado (54 y 122) | `metricas_hibrido.csv`, `metricas_hibrido_calibracion.csv`, `metricas_hibrido_0day.csv`, `figuras\hibrido_cm_*.png`, `modelos\hibrido_*.joblib` (descriptor) |
-| `evaluacion.py` | módulo común | No deposita por sí mismo: lo usan los cuatro scripts de modelos |
+| `cascada_invertida.py` | ejecutado (54 y 122) | `metricas_cascada_invertida.csv` y `figuras\cascada_invertida_<set>.png`. **No entrena nada**: carga `firma_*.joblib` y lee el umbral de `hibrido_*.joblib` |
+| `evaluacion.py` | módulo común | No deposita por sí mismo: lo usan los cuatro scripts de modelos y `cascada_invertida.py` |
 
 **Regla de oro:** nada de esta carpeta se edita a mano. Todo se **regenera** ejecutando los
 scripts (con `random_state=42`); si un número va a la memoria, tiene que salir de aquí. Para
 regenerar: activar el venv y ejecutar `python app\program.py` y luego `python app\validacion.py`
+**más `python app\validacion.py --sin-seleccion`** — son dos informes, uno por variante
 (detalles y trampas de ejecución en `next-steps.md`, sección 6.0).
+
+**Corolario de la regla de oro:** como casi todo existe en dos variantes, **ninguna cifra se cita
+sin nombrar el fichero del que sale**. Un «37 características con drift» a secas es ambiguo: son
+37 en 54 características y 44 en 122.
 
 Recordatorio de los splits (contexto en `next-steps.md` 6.0):
 
@@ -102,25 +108,63 @@ auditoría de 2026-07-05; decisión final validada por el experimento H1 el 2026
 **Destino en la memoria:** **4.3.5** (tabla de features conservadas + criterios; el bloque de
 eliminadas puede ir a apéndice).
 
-### 3.2 `specialized_nsl_kdd_validation_report.txt`
+### 3.2 Los dos `..._validation_report.txt`
 
-Resumen de `validacion.py`. Cómo leerlo:
+Resumen de `validacion.py`. **Son dos ficheros, uno por variante**, y no comparten ninguna de las
+cifras que dependen del set de características (sí coinciden, obviamente, en las que no dependen
+de él: tamaños de los splits, normales de D2 y las 4 características fuera de [0,1]):
+
+| Fichero | Variante | Características | Drift (A) | Drift (B) | Mediana outliers D1 | Baja varianza | Alta correlación |
+|---|---|---|---|---|---|---|---|
+| `specialized_nsl_kdd_validation_report.txt` | **54** (la del TFG) | 54 | **37** | **25** | **4,78 %** | 0 | 0 pares |
+| `specialized_nsl_kdd_sin_seleccion_validation_report.txt` | 122 (experimento H1) | 122 | **44** | **31** | **2,44 %** | 1 | 14 pares |
+
+Las dos últimas columnas son la comprobación de que la selección 4.3.5 hizo su trabajo: lo que en
+122 son 1 feature de varianza ~0 y 14 pares correlacionados, en 54 es 0 y 0. **Salvo que se diga
+lo contrario, las cifras de esta guía son las del informe de 54**, que es el set del TFG
+(decisión Q1/C).
+
+Cómo leerlo (los rótulos son idénticos en ambos ficheros):
 
 - `Integridad: APROBADA` → dimensiones, alineación de columnas, ausencia de nulos/inf, pureza de
-  D1 (solo normal) y D3 (solo ataques) correctas. Si dice FALLA, no entrenar nada.
-- Tamaños de los splits (67.343 / 22.544 / 58.630) y **54 características**.
-- `Drift D1→D2: 37 características` → 37 de 54 features cambian de distribución entre train
-  normal y test (test KS, p<0,01). Es **esperado y deseable**: D2 contiene ataques y tipos nuevos;
-  ese drift es justo lo que el detector de anomalías debe captar. Incluye el top-15 por estadístico
-  KS (`src_bytes` 0,346, `dst_bytes` 0,317…).
-- `Baja varianza: 0` y `Alta correlación: 0 pares` → confirma que la selección 4.3.5 ya limpió
-  ambos problemas (el reporte se genera *después* de la selección).
-- `D2 fuera de [0,1]: 4 características (informativo)` → `num_shells` (máx. 2,50),
-  `num_file_creations` (2,33), `duration` (1,35) y `hot` (1,31). **No es un error**: el scaler se
+  D1 (solo normal) y D3 (solo ataques) correctas. Si dice FALLA, no entrenar nada. **Aprobada en
+  los dos informes.**
+- Tamaños de los splits (67.343 / 22.544 / 58.630, iguales en ambas variantes) y el número de
+  características, que es lo único que las distingue: **54** o **122**.
+- `Drift (A) D1 vs D2 COMPLETO: 37 características`
+  (`specialized_nsl_kdd_validation_report.txt`; **44** en el `_sin_seleccion_`) → 37 de 54
+  features cambian de distribución
+  entre train normal y test completo (test KS, p<0,01). Es **esperado y deseable**: D2 contiene
+  ataques y tipos nuevos; ese drift es justo lo que el detector de anomalías debe captar. Incluye
+  el top-15 por estadístico KS (`src_bytes` 0,346, `dst_bytes` 0,317…).
+- `Drift (B) D1 vs D2 SOLO NORMALES: 25 características`
+  (`specialized_nsl_kdd_validation_report.txt`; **31** en el `_sin_seleccion_`) → **la medición
+  de la tarea T2**, añadida
+  sin sustituir a la anterior. Compara D1 contra las **9.711 filas normales de D2**: tráfico
+  legítimo contra tráfico legítimo, así que lo que mide **no** puede achacarse a que en el test
+  haya ataques. Es la cifra que puede explicar por qué un umbral p95 ajustado en D1_val promete
+  ≈5 % de FPR y sobre D2 rinde 8-10 %.
+  - **Es desplazamiento ENTRE PARTICIONES, nunca «deriva temporal»**: NSL-KDD no tiene marca de
+    tiempo.
+  - El informe publica además un bloque `(A) vs (B)` con `delta = (A) − (B)`. Es una
+    **comparación** de las dos mediciones sobre las mismas características, **no** un reparto de
+    causas: el estadístico KS es un supremo de diferencia de CDF y **no es aditivo sobre una
+    mezcla**, así que (A) no se descompone en (B) más un «aporte de los ataques». La salvedad va
+    impresa en el propio `.txt`, bajo el rótulo del bloque: quien abra el artefacto suelto la
+    tiene delante sin necesidad de esta guía.
+- `Baja varianza: 0` y `Alta correlación: 0 pares` **en el informe de 54** → confirma que la
+  selección 4.3.5 ya limpió ambos problemas (ese reporte se genera *después* de la selección). El
+  `_sin_seleccion_` es el antes: **1** feature de varianza ~0 (`num_outbound_cmds`) y **14** pares
+  por encima de 0,95, y por eso imprime dos recomendaciones que el de 54 no imprime.
+- `D2 fuera de [0,1]: 4 características (informativo)` → **las mismas cuatro en los dos
+  informes**: `num_shells` (máx. 2,50), `num_file_creations` (2,33), `duration` (1,35) y `hot`
+  (1,31). **No es un error**: el scaler se
   ajusta solo en train (D1+D3); re-ajustarlo con el test sería leakage. Vigilar su efecto en el
   autoencoder (FPR).
 
 **Destino en la memoria:** **4.2.1** (análisis previo de la BD) y apoyo metodológico en 4.3.2.
+Si a la memoria va una cifra de este apartado, va con el nombre de su fichero: la variante de 122
+es material del experimento H1, no del sistema publicado.
 
 ### 3.3 `specialized_nsl_kdd_mappings_and_info.txt`
 
@@ -144,6 +188,11 @@ a la memoria** (como mucho, inspiración para el Apéndice de manual de uso).
 ## 4. Figuras (`figuras/`)
 
 Todas en PNG, tituladas en español, listas para insertarse en la memoria.
+
+> **Las seis figuras de `validacion.py` (4.2 a 4.5) existen por duplicado**: el nombre sin sufijo
+> es la variante de **54** —la del TFG, la que se describe abajo— y el nombre acabado en
+> `_sin_seleccion` es la de **122** (experimento H1). Son **12 ficheros**. La única de esta
+> sección que **no** tiene gemela es `eda_distribuciones_divisiones.png` (4.1), de `program.py`.
 
 ### 4.1 `eda_distribuciones_divisiones.png` (generada por `program.py`)
 
@@ -192,17 +241,46 @@ Dos paneles del test de Kolmogorov-Smirnov D1 vs D2:
 
 - **Izquierda:** top-20 features por estadístico KS (rojo = drift significativo). `src_bytes` y
   `dst_bytes` encabezan.
-- **Derecha:** histograma de p-values con la línea p=0,01: 34 features caen a la izquierda (drift),
-  unas pocas quedan cerca de 1 (sin drift).
+- **Derecha:** histograma de p-values con la línea p=0,01: **37** features caen a la izquierda
+  (drift), unas pocas quedan cerca de 1 (sin drift).
 
-Conclusión: el test se distribuye de forma distinta al tráfico normal de entrenamiento en el 85 %
-de las features — coherente con que D2 mezcla ataques y tipos nuevos. **Destino:** **4.2.1**
+Conclusión: el test se distribuye de forma distinta al tráfico normal de entrenamiento en el
+**68,5 %** de las features (**37 de 54**) — coherente con que D2 mezcla ataques y tipos nuevos.
+La cifra es la misma que publica `specialized_nsl_kdd_validation_report.txt` en
+`Drift (A) D1 vs D2 COMPLETO: 37 características` y la que ya recoge la sección 3.2 de esta guía.
+Su gemela `validacion_drift_ks_sin_seleccion.png` va con
+`specialized_nsl_kdd_sin_seleccion_validation_report.txt` y dice
+**44 de 122** (36,1 %): es la **misma medición sobre otra variante**, no una segunda medición de
+drift (A) sobre el set del TFG — de esa solo hay una. **Destino:** **4.2.1**
 (caracterización train/test) y argumento de contexto en 5.1.
+
+### 4.4-bis Las dos figuras del KS contra los normales de D2 (T2)
+
+- **`validacion_drift_ks_d2_normales.png`** — misma estructura que la anterior (top-20 por KS +
+  histograma de p-values) pero con la medición **(B)**: D1 contra las 9.711 filas normales de D2.
+  Rótulos propios para que las dos figuras **no se puedan confundir** al mirarlas en la memoria.
+- **`validacion_drift_ks_comparativa.png`** — las dos KS **una al lado de la otra** para el top-20
+  por KS contra D2 completo. Cómo se lee: cuál de las dos mediciones es mayor en cada
+  característica y por cuánto. **Cómo NO se lee:** como una descomposición del drift en «lo que
+  aportan los normales» y «lo que aportan los ataques» — esa resta no es una magnitud.
+
+Las dos existen también con sufijo `_sin_seleccion` (variante de 122), como las otras cuatro. La
+cifra de drift (B) que acompaña a las **sin sufijo** es **25 de 54**
+(`specialized_nsl_kdd_validation_report.txt`); la de las `_sin_seleccion` es **31 de 122**
+(`specialized_nsl_kdd_sin_seleccion_validation_report.txt`). **Destino:** **5.1** (el
+desplazamiento D1→D2 como contexto del FPR) y **5.4**.
 
 ### 4.5 `validacion_outliers_iqr.png`
 
 Barras agrupadas: % de outliers (criterio IQR) por feature (top-15 de D1), comparando D1/D2/D3.
-Mediana de outliers en D1: **4,78 %** (dato del reporte). Cómo leerla: features donde D3 dispara
+Mediana de outliers en D1: **4,78 %**, dato de
+`specialized_nsl_kdd_validation_report.txt` (variante de 54, la del TFG). La gemela
+`validacion_outliers_iqr_sin_seleccion.png` va con
+`specialized_nsl_kdd_sin_seleccion_validation_report.txt`, cuya mediana es **2,44 %**. Las dos
+cifras **no son comparables y no se mezclan en la misma frase**: son la mediana sobre dos
+poblaciones distintas de características (54 y 122), no la misma magnitud medida dos veces. Por
+qué una es casi el doble que la otra **no está medido en ningún artefacto**; si hiciera falta
+afirmarlo, hay que medirlo primero. Cómo leerla: features donde D3 dispara
 los outliers frente a D1 (p. ej. `src_bytes`, `dst_host_diff_srv_*`, `dst_host_rerror_*`) señalan
 comportamiento de ataque; niveles altos también en D1 recuerdan que el tráfico normal tampoco es
 "limpio" (colas largas), relevante para fijar el umbral del detector de anomalías. **Destino:**
@@ -257,6 +335,31 @@ La decisión Q1/C (2026-07-15) fijó el **54** como set del TFG.
 | `metricas_hibrido_0day.csv` (recall 0-day por tipo × 4 detectores + FPR; ojo filas `__global__`) | `hibrido.py` | **5.3** (análisis 0-day; cerró H1) |
 | `figuras\hibrido_cm_<set>.png` (matriz 5×6 con `unknown`) | `hibrido.py` | 5.3 (H-6) |
 | `modelos\hibrido_<set>.joblib` (descriptor: joblibs usados + umbral + τ) | `hibrido.py` | reproducibilidad (4.6/apéndices) |
+| `metricas_cascada_invertida.csv` (5 filas por variante: 4 categorías + `__global__`) | `cascada_invertida.py` | **3.2.2** (por qué las anomalías van primero) |
+| `figuras\cascada_invertida_<set>.png` (barras apiladas condenadas / bajo umbral) | `cascada_invertida.py` | **3.2.2** |
+
+### 6.1 Cómo se cita `metricas_cascada_invertida.csv` (tarea T3)
+
+Mide qué haría la **etapa 2** con el tráfico legítimo **si fuese la primera**: pasa las 9.711
+filas normales de D2 por el clasificador de firmas ya entrenado y cuenta cuántas conservarían
+etiqueta de ataque con confianza `>= UMBRAL_CONF`. Es **contrafactual** —en el sistema real esas
+filas nunca llegan a la etapa 2— y **no es comparable** con ninguna columna de
+`metricas_firmas.csv` ni de `metricas_hibrido.csv`.
+
+- **Lo citable:** `n_condenadas` son los falsos positivos **irrecuperables** — **6.558 de 9.711**
+  a 54 características y **3.329** a 122 (corrida `274923d-sucio`, `UMBRAL_CONF = 0,5`).
+- **Lo que NO es:** la `tasa_condena` de `__global__` **no** es «el FPR de un sistema de
+  firmas-primero», es una **cota inferior**. En este TFG `unknown` es **alarma**, no `normal`
+  (decisión P-5), así que los 3.153 / 6.382 flujos que caen bajo el umbral **no quedan
+  exonerados**: pasarían a la etapa siguiente.
+- La lectura completa, el desglose por categoría y las salvedades para contrastarlo con el FPR del
+  híbrido están en `Implementacion\PIPELINE.md`, sección **«La cascada invertida (T3)»**, anclados
+  al commit de su corrida.
+
+> Las tres viñetas de arriba son un **resumen derivado** de ese bloque de `PIPELINE.md`, que es la
+> fuente. Hay otras dos copias (el docstring de `cascada_invertida.py` y la celda `alcance` del
+> CSV) y `PIPELINE.md` las lista. Si el argumento de la cota inferior cambia —depende de la
+> decisión **P-5**—, se reescribe allí y **se propaga aquí**, no al revés.
 
 > Las notas del vault `04 Implementación del sistema\` y `05 Evaluación\` (volcado 2026-07-15/16)
 > ya consumen estos artefactos; las figuras están copiadas en `Obsidian_TFG_Vault\assets\`.
@@ -265,10 +368,29 @@ La decisión Q1/C (2026-07-15) fijó el **54** como set del TFG.
 
 ## 7. Mantenimiento de esta guía
 
-- **Última actualización: 2026-07-16** (estado: pipeline completo — preprocesado, selección a 54,
+- **Última actualización: 2026-08-10** (cuarta pasada de **T2** y **T3**, solo documentación:
+  cero código de modelos y cero re-entrenamientos). Sobre lo anotado en las pasadas anteriores de
+  esa misma fecha, se registra el **alta de artefactos de `validacion.py`**: al correrse por
+  primera vez la **variante de 122**, `Resultados/` pasa de 1 a **2** informes de validación y de
+  6 a **12** figuras `validacion_*` (6 por variante), todos con marca de tiempo de esta sesión.
+  Consecuencia documental: **toda cifra de validación se cita ahora con el nombre de su fichero**
+  —las dos variantes no comparten ninguna cifra que dependa del set de características:
+  drift (A) **37** (`specialized_nsl_kdd_validation_report.txt`) vs **44**
+  (`specialized_nsl_kdd_sin_seleccion_validation_report.txt`), drift (B) **25** vs **31** y mediana
+  de outliers **4,78 %** vs **2,44 %** en esos mismos dos ficheros, por ese orden— y el recuadro
+  «Hueco de trazabilidad» de `Implementacion\PIPELINE.md`
+  queda corregido: seguía diciendo que `validacion.py` no se había re-corrido, lo que dejó de ser
+  cierto. Sigue anclado al **05/07/2026** todo lo de `program.py`, `eda_distribuciones_divisiones.png`
+  incluida.
+- **En la misma pasada** (**T2**/**T3**): se añaden el KS contra
+  los normales de D2 —drift (B) = **25** características en la variante de 54— con sus dos figuras, y la medición de la
+  cascada invertida con su tabla y sus dos figuras. `Resultados/` pasa a **9** ficheros
+  `metricas_*.csv` y **232** filas: 222 de la corrida `1163c90` del runbook + 10 de la corrida
+  `274923d-sucio` de la cascada invertida. Las **222** filas previas quedan **intactas**.
+- Actualización anterior: 2026-07-16 (pipeline completo — preprocesado, selección a 54,
   los 4 scripts de modelos ejecutados en 54 y 122, H1 cerrado; cifras reconciliadas con el
-  reporte de validación vigente: 54 features, drift 37, outliers mediana 4,78 %, 4 features de D2
-  fuera de [0,1]).
+  reporte de validación vigente: 54 features, drift (A) 37, outliers mediana 4,78 %, 4 features de
+  D2 fuera de [0,1]).
 - Cuando se regeneren artefactos (nuevas ejecuciones de `program.py`/`validacion.py`) o aparezcan
   los ficheros de la sección 6, **actualizar esta guía en la misma sesión**: cifras, figuras
   nuevas y su destino en la memoria. Una guía desactualizada es peor que ninguna.
