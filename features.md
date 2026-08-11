@@ -436,7 +436,16 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > **Las líneas citadas son las POSTERIORES a esa cabecera de migración**, que añadió 5 líneas a §3.2:
 > `:267` era `:262` · `:271` era `:266` · `:282`/`:283`/`:284` eran `:277`/`:278`/`:279`.
 >
-> **DESAJUSTE VIVO — leer antes de citar cualquier salida de `validacion.py`.**
+> **[HISTORIAL — SUPERADO EL 2026-08-11, NO CITAR COMO VIGENTE] Lo que fue el «DESAJUSTE VIVO» de
+> las salidas de `validacion.py`.** El texto de abajo se conserva **sin reescribir**, pero **su
+> contenido ya es falso**: dice que `validacion.py` está «incompleto y sin re-correr» y que los
+> informes de `Resultados/` son de la corrida `274923d`-sucio del 2026-08-10 (20:24 y 20:45).
+> **Verificado en disco el 2026-08-11:** los dos `*_validation_report.txt` llevan sello
+> **`fc1c6b4-sucio`** y fecha **`2026-08-11T20:53:27`** (54) / **`20:53:46`** (122) en su propia
+> cabecera (`:4-5`). **La refutación completa, con lo que sí queda abierto, está ~27 líneas más
+> abajo, en la nota «ACTUALIZACIÓN 2026-08-11 — … QUEDA RESUELTO».** Quien haya llegado aquí por
+> `grep` debe leer esa nota antes de actuar.
+>
 > `Implementacion/app/validacion.py` está **commiteado como WIP en `d9225be`** (`+231 −21`, 6 hunks,
 > 1144 líneas; el registro de aquella sesión salió en `9734f4b`), **incompleto y sin re-correr**.
 >
@@ -490,8 +499,13 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 
 - [ ] **`warnings.filterwarnings('ignore')` global** (🟡) · Código · `ml-implementador`
   Origen: `next-steps.md:271` (§3.2). Oculta avisos útiles durante la experimentación.
-  **ABIERTA. Verificado vivo el 2026-08-11** en `program.py:12` y `validacion.py:21` (era `:12`; la
-  línea se desplazó al entrar el `import program` del cierre de las constantes duplicadas).
+  **ABIERTA. Verificado vivo el 2026-08-11** en `program.py:12` y **`validacion.py:57`**.
+  - **TRAMPA — no citar más `validacion.py:21`.** Esa línea (que esta ficha apuntaba antes, y antes
+    aún `:12`) **es hoy un COMENTARIO**, parte del bloque `:19-25` que documenta los efectos de
+    `import program` y que **menciona** `warnings.filterwarnings('ignore')` citando
+    `program.py:12`. Quien vaya a `:21` a «borrar la línea» **borra la documentación y deja el
+    `filterwarnings` vivo**. La llamada real es `validacion.py:57`, después de
+    `import program` (`:33`) e `import config` (`:55`).
 
 ### Residuos del cierre de `validacion.py` — altas del 2026-08-11
 
@@ -524,6 +538,13 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
     `PIPELINE.md`, y la ficha del `4.2` tiene tres puntos y **ninguno es este**.
   - **Va ANTES de T10.** Si T10 vuelca `4.2` tal cual, el TFG **publica un estadístico que nadie ha
     calculado** — exactamente el defecto que el cierre del rótulo venía a eliminar.
+  - **PUNTERO CRUZADO (añadido el 2026-08-11):** la otra ficha de esta misma nota es
+    **«`4.2`: añadir la medición (B) del KS, arreglar la frase del FPR y el callout de
+    trazabilidad»** (sección «Altas del grill del 2026-08-11»), y su **punto 3 toca `:110`** — a
+    **tres líneas** de la «mediana» de `:107` que corrige esta ficha. **Mismo agente
+    (`redactor-tfg`), mismo párrafo, ambas antes de T10: conviene despacharlas en la MISMA pasada.**
+    Ejecutar una sola deja la nota internamente inconsistente y fuerza una segunda visita al mismo
+    sitio.
 
 > **ACTUALIZACIÓN 2026-08-11 (tercer ciclo):** de los tres residuos de esta sección, los **dos de
 > `validacion.py`** (el alias de las constantes y el comentario falso del orden de import) están
@@ -545,8 +566,63 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
   - **Se resuelve cuando exista el commit de cierre**, de una de dos formas: re-correr `validacion.py`
     en las dos variantes con el árbol limpio (**ninguna cifra debe moverse**; si alguna se mueve, es un
     hallazgo) o re-anclar el texto de los tres documentos al hash real.
+  - **Los anclajes concretos de la vía «re-anclar el texto», verificados en disco el 2026-08-11**
+    (la ficha nombraba los tres documentos pero **no enumeraba las líneas**):
+    **`Implementacion/PIPELINE.md:161, 171, 189, 331`** y
+    **`Resultados/GUIA_RESULTADOS.md:101, 122, 255, 478-481`**. Más el sitio del sello en
+    `resumen-de-decisiones.md`, que va con su propia nota fechada.
+    - **`PIPELINE.md:331` SE AUTO-INSTRUYE a re-anclarse** —la fila `fc1c6b4-sucio` de la tabla de
+      corridas dice literalmente «hay que **re-anclar el hash en el commit de cierre** de este
+      ciclo, en esta fila y en el recuadro de trazabilidad de arriba»—, y esta ficha **no lo
+      sabía**: son **dos** sitios, la fila y el recuadro (`:161`/`:171`).
+    - **`PIPELINE.md:189` es un anclaje FRÁGIL:** cita `fichero:línea` de un **artefacto
+      regenerable** (`Resultados/specialized_nsl_kdd_validation_report.txt:4-5`, la cabecera
+      `Commit del código:` / `Fecha de la corrida:`). Hoy es correcto —verificado byte a byte—, pero
+      **cualquier re-corrida que cambie el número de líneas de cabecera lo desplaza en silencio**.
+      Al re-anclar, comprobar también ese `:4-5`, o citar el campo por su nombre en vez de por su
+      línea.
   - **Convención de los tres valores del sello** (`<hash>` · `-sucio` · `-suciedad_desconocida`):
     tabla canónica en `PIPELINE.md:952-963`.
+  - **PUNTERO CRUZADO (añadido el 2026-08-11):** la tabla de corridas que hay que retocar aquí
+    (`PIPELINE.md:329-331`) arrastra además **dos filas caducadas**, fichadas justo debajo en
+    «Incoherencias de `PIPELINE.md`…» (ficha 2). **Quien abra esa tabla para re-anclar el
+    `fc1c6b4-sucio` de `:331` debería arreglar las tres cosas en la misma pasada.**
+
+### Incoherencias de `PIPELINE.md` — altas del pase de cuadre del 2026-08-11
+
+> Detectadas por el `cronista` en el pase de cuadre de cierre de sesión del **2026-08-11**, fuera del
+> alcance que traía ese encargo, y **dadas de alta por decisión del `leader`** para que no se pierdan.
+> **Las dos son track Código, tocan DOCUMENTACIÓN y no comportamiento: ninguna exige re-correr nada.**
+> Anclas verificadas en disco antes de escribirlas. **Fichar no es resolver: aquí no se arregló nada.**
+
+- [ ] **`PIPELINE.md:180` se contradice con `:171` dentro del MISMO recuadro** (🟠) · Código · `ml-implementador`
+  El recuadro de trazabilidad de `Implementacion/PIPELINE.md` afirma las dos cosas a la vez: `:169-171`
+  dice que «el ciclo de residuos ya está aplicado y re-corrido, pero **su commit de cierre todavía no
+  existe**», y `:179-181` dice que los artefactos «son además **artefactos versionados**: **están
+  commiteados** y `validacion.py` no ha cambiado desde el commit que los versiona».
+  - **Es OTRA RECAÍDA del mismo defecto** que la fila `9af842c` de `## Cerradas` deja documentado como
+    dato que merecía quedar escrito: **afirmar en presente algo que la corrida aún no respaldaba**.
+    Reapareció, una vez más, en un sitio nuevo.
+  - **Cuál de las dos ha quedado falsa hoy: `:171`.** El commit de cierre **ya existe** — es
+    **`9af842c`**—, así que `:180` es la mitad verdadera y la frase «todavía no existe» es la que hay
+    que corregir. Es **texto vigente y engañoso, no historial**: no lleva ninguna nota fechada que lo
+    supere.
+  - **Relación con la ficha del re-anclaje:** `:171` es uno de los cuatro anclajes que esa ficha
+    enumera, así que las dos se tocan — pero **no son la misma cosa**: allí se sustituye un hash,
+    aquí se retira una afirmación falsa.
+
+- [ ] **`PIPELINE.md:329` y `:330` están caducadas: dos corridas «aún en el árbol» que ya tienen commit** (🟡) · Código · `ml-implementador`
+  En la tabla de corridas de `Implementacion/PIPELINE.md`, la columna «versionados» dice:
+  - `:329` — fila `1163c90`: «*(aún en el árbol de trabajo, **pendiente del commit de cierre de
+    T18**)*», cuando `features.md` registra **T18 cerrada en `8fdc421`** (ver `## Cerradas`).
+  - `:330` — fila `274923d-sucio`: «*(aún en el árbol de trabajo)*», cuando esa corrida es la de la
+    cascada invertida (**T3**), **cerrada en `b1f1df2`**.
+  - **Agravante — es la MISMA tabla** en la que vive la fila `fc1c6b4-sucio` (`:331`) que la ficha
+    **«Re-anclar el sello `fc1c6b4-sucio`…»** (justo arriba, en «Residuo del ciclo de los siete»)
+    manda re-anclar. **Quien abra la tabla para eso debería arreglar las tres filas en la misma
+    pasada**; puntero cruzado puesto también en esa ficha.
+  - **No es 🔴 pero engaña sobre reproducibilidad:** un tercero que lea `:329-330` concluye que las
+    cifras publicadas de T18 y de T3 no se pueden recuperar de git, cuando sí se pueden.
 
 ### Altas del grill del 2026-08-11 — dos specs pendientes
 
@@ -568,6 +644,11 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
   3. **Corregir el callout de trazabilidad de `:110`**, que afirma que los estadísticos se calculan
      «sobre los splits ya procesados (54 características)» cuando **ya existe el informe de la variante
      122**.
+  - **PUNTERO CRUZADO (añadido el 2026-08-11):** el `:110` del punto 3 está a **tres líneas** del
+    `:107` de la ficha **«El vault sigue diciendo "mediana" donde el artefacto ya dice "media"»**
+    (sección «Residuos del cierre de media/mediana y constantes»), que corrige el 4,78 % de outliers
+    en esa misma nota. **Mismo agente (`redactor-tfg`), mismo párrafo, ambas antes de T10:
+    despacharlas en la MISMA pasada.** Ejecutar una sola deja la nota internamente inconsistente.
   - **ORDEN IMPUESTO (dependencia dura):** las **tres correcciones de `validacion.py` van ANTES** que
     esta ficha — las del grupo «Migración de `next-steps.md` §3.2»: `:282` (los 17 tipos 0-day), `:283`
     (el delta 77→122) y `:284` (la comparación por orden). **Motivo:** esta nota **cita el informe y
@@ -587,17 +668,30 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
     aquí en `4.2.1`**; `5.1` las usa **por referencia** y **T11 interpreta, no publica**.
 
 - [ ] **Glosa del sufijo `-sucio` en la primera aparición de `PIPELINE.md` y `GUIA_RESULTADOS.md`** · Código · `ml-implementador`
-  **Una línea** en la **primera aparición** de `Implementacion/PIPELINE.md` (`:140`) y de
-  `Resultados/GUIA_RESULTADOS.md` (`:350`), describiendo la **convención** y **remitiendo a la tabla
-  canónica de `PIPELINE.md:952-963`**, que queda **INTACTA y no se duplica**. **Referencia reapuntada
-  el 2026-08-11:** era `:879-888` y se desplazó con el ciclo de los siete residuos; el bloque es hoy el
-  encabezado `### El sello commit…` (`:952`) más su tabla de tres valores (`:959-963`).
+  **Una línea** en la **primera aparición** de `Implementacion/PIPELINE.md` (**`:158`**) y de
+  `Resultados/GUIA_RESULTADOS.md` (**`:101`**), describiendo la **convención** y **remitiendo a la
+  tabla canónica de `PIPELINE.md:952-963`**, que queda **INTACTA y no se duplica**. **Referencia
+  reapuntada el 2026-08-11:** era `:879-888` y se desplazó con el ciclo de los siete residuos; el
+  bloque es hoy el encabezado `### El sello commit…` (`:952`) más su tabla de tres valores
+  (`:959-963`).
+  - **Las dos anclas de la primera aparición, RE-VERIFICADAS EN DISCO el 2026-08-11.** Esta ficha
+    decía `PIPELINE.md:140` y `GUIA_RESULTADOS.md:350`, y **las dos eran falsas**: la primera
+    aparición de `-sucio` está en **`PIPELINE.md:158`** («la corrida de **T2** (`274923d-sucio`…»)
+    y en **`GUIA_RESULTADOS.md:101`** (fila `commit`, `fecha` de la tabla del CSV de vocabulario).
+    **`GUIA_RESULTADOS.md:350` está 249 líneas por debajo y habla de otra cosa** — las figuras del
+    KS de drift (A), «no una segunda medición de drift (A) sobre el set del TFG». **Ojo: el
+    desplazamiento es de SIGNO CONTRARIO** al que esta ficha ya había corregido para la tabla
+    canónica (`:879-888` → `:952`), así que su propio aviso de reapuntado **no cubría este caso**:
+    aquí las líneas subieron, no bajaron.
   - **Contexto verificado el 2026-08-11:** el `-sucio` ya está documentado en `config.py:489-511`,
-    `evaluacion.py:69-75` y esa tabla. **El hueco es solo de orden de lectura**: 740 líneas de
-    distancia dentro de `PIPELINE.md`, y ninguna explicación en `GUIA_RESULTADOS.md`. **No aparece en
-    el vault.**
-  - **Estado: ABIERTA, no empezada.** Verificado: **ninguno de los dos ficheros aparece modificado en
-    el árbol.**
+    `evaluacion.py:69-75` y esa tabla. **El hueco es solo de orden de lectura**: **≈794 líneas** de
+    distancia dentro de `PIPELINE.md` (`:158` → `:952`; la cifra «740» que decía esta ficha salía de
+    las anclas viejas), y ninguna explicación en `GUIA_RESULTADOS.md`. **No aparece en el vault.**
+  - **Estado: ABIERTA, la glosa de una línea NO está escrita** — verificado por lectura de las dos
+    primeras apariciones. **Retirado el argumento «ninguno de los dos ficheros aparece modificado en
+    el árbol»**: era la evidencia de «no empezada» y **hoy no evidencia nada**, porque este ciclo ya
+    commiteó ambos ficheros (`9af842c`, `84e3c8f`). El estado se comprueba leyendo `:158` y `:101`,
+    no el `git status`.
 
 ### Descartado — no reabrir
 
@@ -690,7 +784,7 @@ Antes había aquí una lista de secciones vedadas a los agentes. Solo **una** so
 | 2026-08-11 | Código | **`validacion.py:284` · Comparación de columnas D2/D3 por orden, re-corrida — y la incógnita se resuelve EN NEGATIVO.** Era la mitad que faltaba: el fix estaba en `d9225be` pero **nadie lo había corrido**, así que no se sabía si destapaba un desajuste real. **Ya se sabe: NO destapó ningún desajuste D2/D3.** Los CSV que deja `program.py` **ya estaban alineados posicionalmente en ambas variantes**; la comparación por conjunto **no ocultaba nada**. Es un **resultado, no un no-hallazgo**: la rama de diagnóstico «mismo conjunto, distinto orden» queda como red de seguridad, no como parche de un bug vivo. Verificado además por el auditor en la misma pasada: **cero `fit`**, salvedad del KS **impresa en ambos informes**, KS **coincidente con lo publicado** —(A) **37/54** y **44/122** · (B) **25/54** y **31/122**— y **alcance respetado**. Dictamen de `auditor-ml`: **APTO CON CAMBIOS**. Commit previo del WIP: `d9225be` | `6ae4554` |
 | 2026-08-10 | Código | **T3 · Medición de la cascada invertida.** Script nuevo `Implementacion/app/cascada_invertida.py` (clase `NSLKDDInvertedCascadeMeasurer`): medición **contrafactual y fuera del sistema** que pasa las **9.711 filas normales de D2** por el clasificador de firmas **ya persistido** (`firma_RandomForest_<set>.joblib`) y cuenta cuántas condenaría con confianza ≥ `UMBRAL_CONF`. **Cero `fit`**, solo inferencia; y el umbral se lee de `hibrido_<set>.joblib::umbral_conf_elegido`, **nunca como literal** — si falta el descriptor, **aborta**. Resultados: variante **54 → 6.558 condenadas (67,53 %)**; variante **122 → 3.329 (34,28 %)**. Salida en `Resultados/metricas_cascada_invertida.csv` (**10 filas**, tabla propia: no toca ninguna de las cuatro principales) y dos figuras. **Matiz conceptual que impuso la auditoría y que manda al citar:** la fila `__global__` es una **cota inferior de falsos positivos irrecuperables**, **no** «el FPR de un sistema de firmas-primero» — en el sistema publicado `unknown` es alarma (`hibrido.py:301`, decisión P-5), así que lo que cae bajo umbral **no queda exonerado**. La lectura y los números viven en `Implementacion/PIPELINE.md`, sección «La cascada invertida (T3)». **No cierra `T9`**: solo la alimenta (viñeta `3.2.2`), y allí queda anotada la cifra con su salvedad. Dictamen de `auditor-ml`: **APTO** | `b1f1df2` |
 | 2026-08-10 | Código | **T2 · KS de D1 contra los normales de D2.** Añadido en `Implementacion/app/validacion.py` **sin sustituir** el KS existente: ahora son **dos mediciones separadas y no intercambiables** — **(A)** D1 vs D2 completo: **37/54** y **44/122** características con drift; **(B)** D1 vs las **9.711 normales de D2**: **25/54** y **31/122**. `src_bytes` cae de **0,346 a 0,091** y `dst_bytes` de **0,317 a 0,107**. El `delta = (A) − (B)` se publica como **comparación, nunca como descomposición aditiva** —el KS es un supremo de diferencia de CDF y no es aditivo sobre una mezcla—, y la salvedad quedó **impresa en los dos informes de validación**. **Efecto colateral no previsto:** `validacion.py` **nunca se había corrido en la variante 122**; ahora sí, con informe nuevo (`Resultados/specialized_nsl_kdd_sin_seleccion_validation_report.txt`) y **6 figuras nuevas**. De paso aparecieron **dos cifras inventadas preexistentes** en `Resultados/GUIA_RESULTADOS.md` («34 features», «85 % de drift»), **con destino explícito a §4.2.1 y §5.1**: corregidas a **37** y **68,5 %** contra el artefacto real. Invariantes verificadas **cuatro veces** por `auditor-ml`: cero `fit`, cero recalibración, **D2 solo se reporta** (H-4/P-4 intactas); los **8 `metricas_*.csv` previos sin reescribir** (222 filas, `semilla = 42`, `commit = 1163c90`), y `CLAVE_UNICIDAD`, `_limpiar_variante_csv`, `comprobar_recuento()` y `COLUMNAS_MINIMAS` **sin tocar** — no hubo que re-correr el runbook. **No cierra `T11`**: solo la alimenta (`5.1`/`5.4`), donde quedan anotadas las cifras y la salvedad del `delta`. Dictamen de `auditor-ml`: **APTO** | `b1f1df2` |
-| 2026-08-09 | — | **T0 · Retirada de la regla «lo escribe Francisco».** Aplicadas las dos velocidades de la decisión marco (b) del lote 2026-08-06. **Decisión de Francisco tomada al cerrar: `2.1.4` NO queda exceptuada** — entra en la retirada completa de `2.x`, porque exceptuar una sola nota reintroduciría a mano la regla que la decisión marco acababa de retirar del capítulo entero; **con eso T25 queda desbloqueada, y con ella T24** (el bloque de redes neuronales de `2.1.4` donde se ancla `[6]`). **Recuento real: 15 ficheros tocados (+96 −92), no las 11 ubicaciones que declaraba la ficha.** La ficha **subestimaba el alcance** y por eso hubo que barrer **por contenido, no por la lista**: las ubicaciones que faltaban no llevaban el callout literal, sino la misma regla escrita de otra forma («la redacción corresponde a Francisco», «✍ teoría (Francisco)», «en investigación por Francisco»). Una de ellas es `Obsidian_TFG_Vault/02 Marco Teórico/2.2 Ciberseguridad/2.2.1 Introducción a la ciberseguridad.md:52`: no lleva el callout «Redacción a cargo de Francisco» —eso la ficha lo había corregido bien—, pero dentro del callout de subestructura del 2026-07-15 decía «Cada una contiene un `## Guion propuesto`; la redacción corresponde a Francisco», que es la misma regla escrita de otra forma; corregida. Las otras once: (1) `CLAUDE.md`, donde la viñeta de «Reglas duras del andamiaje» pasa a bloque **«Autoría de la redacción»** con las tres velocidades — `2.x` sin restricción (`2.1.4` incluida), `6.2` borrador de agente con revisión de Francisco, `4.2` ya cedido por la decisión del 2026-07-21, y la bibliografía final en Zotero/IEEE que **sigue siendo de Francisco**; (2) este mismo fichero, cuya sección «Fuera de la lista operativa — lo escribe Francisco» se reescribe como **«Autoría de la redacción — estado vigente desde T0 (2026-08-09)»** con tabla de quién redacta qué —solo sobrevive la bibliografía de Zotero—; (3) `.claude/agents/redactor-tfg.md`, donde «Qué NO tocar» pierde el párrafo que le prohibía redactar teoría y se antepone «Autoría: qué redactas y con qué condición» — **cambio de alcance relevante: se elimina además el párrafo «Los primeros apartados del informe son investigación… Eres encargado de documentar EXCLUSIVAMENTE los resultados del código»**, porque era la misma prohibición en prosa; (4-11) el callout de las **8 notas** (`2.1.6`, `2.2.2`, `2.2.3`, `2.2.4`, `2.2.5`, `2.3.1`, `2.3.2`, `2.3.3`), que pasa de `> [!todo] Redacción a cargo de Francisco` a `> [!info] Redacción a cargo del redactor-tfg` conservando cada coletilla propia (la de `2.2.4` sobre ser la sección-motivación de la tesis, la de `2.1.6` sobre el anclaje a Guia_ML 02-03). **Dos ubicaciones más, aparecidas después de la verificación inicial:** (12) `resumen-de-decisiones.md:560`, cuya «Salvedad abierta» seguía diciendo que el choque T0/T25 sobre `2.1.4` estaba sin resolver — reescrita como **resuelta**, con la decisión de no exceptuar; (13) `Obsidian_TFG_Vault/00 Índice TFG.md`, el **MOC vivo del vault**, en **5 sitios**: el callout «Punto actual» (`:8`), la leyenda `✍ teoría (Francisco)` (`:15`), las **8 líneas de notas** del capítulo 2 (`:44-58`), la línea de `4.2` (`:72`) y la de `6.2` (`:88`) — todas reapuntadas al `redactor-tfg`. **Deliberadamente sin tocar:** `next-steps.md:382,387,421`, que está congelado y es **historial del 2026-07-15**; reescribirlo falsearía lo que se decidió entonces. **No es deuda pendiente.** **Residuo nuevo, sin ficha, señalado y no tocado:** `resumen-de-decisiones.md:459` dice «queda como divergencia a corregir por Francisco al redactar» — roza la regla retirada pero **no es la misma cosa** (habla de corregir una divergencia terminológica concreta en `2.2.4`, «detectores no supervisados», no de la autoría de un capítulo); **si merece ficha propia, lo decide Francisco.** Y las **2 notas de `Obsidian_TFG_Vault/99 Investigación/`** que dicen que `6.2` la redacta Francisco (`aprendizaje-continuo-nested-learning.md:25` y `clasificadores-tabulares-y-arquitecturas-hibridas.md:30`) **no son de T0**: quedan anotadas como trabajo de **T17**, que es quien pasa por los cuatro informes. **Fuera del alcance de T0 pero corregido en el mismo ciclo, con aprobación de Francisco:** `how-to-work.md:32` decía «no te fíes de la prosa de `next-steps.md`/bitácora» cuando desde el 2026-08-01 el registro operativo vivo es `features.md`; reescrito para nombrar los dos ficheros con su papel actual (lo detectó el `cronista` en el cierre anterior) | `d6dae35` |
+| 2026-08-09 | — | **T0 · Retirada de la regla «lo escribe Francisco».** Aplicadas las dos velocidades de la decisión marco (b) del lote 2026-08-06. **Decisión de Francisco tomada al cerrar: `2.1.4` NO queda exceptuada** — entra en la retirada completa de `2.x`, porque exceptuar una sola nota reintroduciría a mano la regla que la decisión marco acababa de retirar del capítulo entero; **con eso T25 queda desbloqueada, y con ella T24** (el bloque de redes neuronales de `2.1.4` donde se ancla `[6]`). **Recuento real: 15 ficheros tocados (+96 −92), no las 11 ubicaciones que declaraba la ficha.** La ficha **subestimaba el alcance** y por eso hubo que barrer **por contenido, no por la lista**: las ubicaciones que faltaban no llevaban el callout literal, sino la misma regla escrita de otra forma («la redacción corresponde a Francisco», «✍ teoría (Francisco)», «en investigación por Francisco»). Una de ellas es `Obsidian_TFG_Vault/02 Marco Teórico/2.2 Ciberseguridad/2.2.1 Introducción a la ciberseguridad.md:52`: no lleva el callout «Redacción a cargo de Francisco» —eso la ficha lo había corregido bien—, pero dentro del callout de subestructura del 2026-07-15 decía «Cada una contiene un `## Guion propuesto`; la redacción corresponde a Francisco», que es la misma regla escrita de otra forma; corregida. Las otras once: (1) `CLAUDE.md`, donde la viñeta de «Reglas duras del andamiaje» pasa a bloque **«Autoría de la redacción»** con las tres velocidades — `2.x` sin restricción (`2.1.4` incluida), `6.2` borrador de agente con revisión de Francisco, `4.2` ya cedido por la decisión del 2026-07-21, y la bibliografía final en Zotero/IEEE que **sigue siendo de Francisco**; (2) este mismo fichero, cuya sección «Fuera de la lista operativa — lo escribe Francisco» se reescribe como **«Autoría de la redacción — estado vigente desde T0 (2026-08-09)»** con tabla de quién redacta qué —solo sobrevive la bibliografía de Zotero—; (3) `.claude/agents/redactor-tfg.md`, donde «Qué NO tocar» pierde el párrafo que le prohibía redactar teoría y se antepone «Autoría: qué redactas y con qué condición» — **cambio de alcance relevante: se elimina además el párrafo «Los primeros apartados del informe son investigación… Eres encargado de documentar EXCLUSIVAMENTE los resultados del código»**, porque era la misma prohibición en prosa; (4-11) el callout de las **8 notas** (`2.1.6`, `2.2.2`, `2.2.3`, `2.2.4`, `2.2.5`, `2.3.1`, `2.3.2`, `2.3.3`), que pasa de `> [!todo] Redacción a cargo de Francisco` a `> [!info] Redacción a cargo del redactor-tfg` conservando cada coletilla propia (la de `2.2.4` sobre ser la sección-motivación de la tesis, la de `2.1.6` sobre el anclaje a Guia_ML 02-03). **Dos ubicaciones más, aparecidas después de la verificación inicial:** (12) `resumen-de-decisiones.md:560`, cuya «Salvedad abierta» seguía diciendo que el choque T0/T25 sobre `2.1.4` estaba sin resolver — reescrita como **resuelta**, con la decisión de no exceptuar; (13) `Obsidian_TFG_Vault/00 Índice TFG.md`, el **MOC vivo del vault**, en **5 sitios**: el callout «Punto actual» (`:8`), la leyenda `✍ teoría (Francisco)` (`:15`), las **8 líneas de notas** del capítulo 2 (`:44-58`), la línea de `4.2` (`:72`) y la de `6.2` (`:88`) — todas reapuntadas al `redactor-tfg`. **Deliberadamente sin tocar:** `next-steps.md:382,387,421`, que está congelado y es **historial del 2026-07-15**; reescribirlo falsearía lo que se decidió entonces. **No es deuda pendiente.** **Residuo nuevo, sin ficha, señalado y no tocado:** `resumen-de-decisiones.md:459` dice «queda como divergencia a corregir por Francisco al redactar» — roza la regla retirada pero **no es la misma cosa** (habla de corregir una divergencia terminológica concreta en `2.2.4`, «detectores no supervisados», no de la autoría de un capítulo); **si merece ficha propia, lo decide Francisco.** **ANOTACIÓN DE ESTADO DEL 2026-08-11 (no es una ficha: sigue sin abrirse como tarea) — DECISIÓN APLAZADA, Y YA VAN DOS VECES.** Se le planteó a Francisco en la sesión del **2026-08-11** y **la aplazó expresamente al cerrar**, sin decidir ni ficha ni descarte. Por tanto **arrastra desde el 2026-08-09** —la sesión en que se detectó y se dejó a su criterio— y **va camino de su tercera sesión sin resolver**. La decisión **sigue siendo suya** y solo tiene **dos salidas: ficha propia en `## Abiertas` o descarte expreso** (que iría a la tabla «Descartado — no reabrir»). **Lo que NO es una salida es seguir como anotación al margen dentro de una fila cerrada**, que es exactamente donde lleva dos sesiones. **Para la próxima sesión: plantearlo ANTES de repartir trabajo**, no al cerrar — aplazarlo es lo que ha pasado las dos veces. Y las **2 notas de `Obsidian_TFG_Vault/99 Investigación/`** que dicen que `6.2` la redacta Francisco (`aprendizaje-continuo-nested-learning.md:25` y `clasificadores-tabulares-y-arquitecturas-hibridas.md:30`) **no son de T0**: quedan anotadas como trabajo de **T17**, que es quien pasa por los cuatro informes. **Fuera del alcance de T0 pero corregido en el mismo ciclo, con aprobación de Francisco:** `how-to-work.md:32` decía «no te fíes de la prosa de `next-steps.md`/bitácora» cuando desde el 2026-08-01 el registro operativo vivo es `features.md`; reescrito para nombrar los dos ficheros con su papel actual (lo detectó el `cronista` en el cierre anterior) | `d6dae35` |
 | 2026-08-09 | Informe | **La línea de `4.2` en «lo escribe Francisco» quedó desfasada** (ficha abierta el 2026-08-01, marcada «la acepta o la retira Francisco»). Se retira de `## Abiertas` por absorción: **T0 la resolvió** y no le quedaba contenido propio. La prosa de `4.2` la redacta el `redactor-tfg` —el borrador de «Origen» y «Las 41 características» ya existía en la nota desde la decisión del 2026-07-21— y Francisco solo **revisa** el «por qué NSL-KDD». Su contenido restante lo cubre **T10**, que sigue abierta | `d6dae35` |
 | 2026-08-09 | — | **Andamiaje · `how-to-work.md` §6 «How to» pasa a exigir recomendación de paso siguiente.** Dos viñetas nuevas (`:30-31`), justo debajo de «Pideme aprobación para cada step a ejecutar», a petición explícita de Francisco: (1) **nunca cerrar una respuesta con un menú de decisiones abiertas** para que elija a ciegas — se propone **un** paso concreto y se justifica por qué ese y no los otros candidatos; la aprobación por step **sigue siendo obligatoria**, recomendar no es ejecutar; (2) criterio de ordenación por defecto de esa recomendación: **qué desbloquea más por minuto de máquina** — lo barato que destraba varias fichas va antes que lo caro que no destraba nada. Intervención sin ficha previa en `## Abiertas`: un solo fichero tocado, +2 líneas | `e1be742` |
 | 2026-08-09 | Código | **T18 · Rediseño de qué se publica en `alcance_tiempo_s`.** Los **cuatro defectos** que dejaron `0595a15` en `[PENDIENTE, NO APTO]` quedan resueltos, y con ellos el bucle de fondo: el CSV publica solo lo **estable** (qué tramos entran, cuáles no y el aviso de P9) y **todos los números viven en `PIPELINE.md`**, anclados a commits de git, editables sin re-correr. Las dos frases empíricas prohibidas —«las desviaciones observadas caben dentro de la dispersión entre corridas» y «un tramo de coste casi FIJO que no escala con el modelo»— estaban en **8/8 y 8/8 filas** y ahora salen **0/8 y 0/8**. Corrida final `1163c90`: **222 filas**, `commit` limpio, `semilla = 42`, **deriva de calidad cero** contra nueve anclas externas y sin fuga de datos. `PIPELINE.md` re-anclado a `1163c90` con todas las cifras reproducibles desde los CSV. **Efecto sobre otras fichas:** re-ancla **T20** (era falsa: 8 de 10 pares, no 4 de 4, y horquilla retirada) y refuerza **T19** (Hallazgo 7). Dictamen de `auditor-ml`: APTO. Commits previos: `ac496cb`, `1163c90` | `8fdc421` |
