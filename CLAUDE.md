@@ -81,8 +81,15 @@ pip install -r requirements.txt
 > sistema. `config.py` y `evaluacion.py` no se ejecutan
 > (no tienen `__main__`): son librerías internas que importan los cuatro scripts de
 > modelos —`anomalias.py`, `firmas.py`, `baseline.py` e `hibrido.py`— **más
-> `cascada_invertida.py`**; `program.py` y
-> `validacion.py` NO dependen de ellas, como dice el encabezado de `config.py`. El pipeline de
+> `cascada_invertida.py`**. **`program.py` no depende de ninguna de las dos.
+> `validacion.py` sí importa `config.py` desde el 2026-08-11**, y solo por la
+> **procedencia**: usa `config.commit_actual()` para estampar `commit` y `fecha` en la cabecera
+> de sus dos informes y en las columnas de su CSV del vocabulario del one-hot, en vez de
+> duplicar el mecanismo por copia (decisión de Francisco registrada en
+> `resumen-de-decisiones.md`, que extiende el alcance de Q2 de las rutas a la procedencia).
+> No importa `evaluacion.py`, y el import no tiene efectos ni ciclos: `config.py` solo define
+> constantes y funciones —no llama a `ensure_dirs()` al importarse— y no importa nada del
+> proyecto. El encabezado de `config.py` está actualizado en consecuencia. El pipeline de
 > preprocesado está diagramado en `Implementacion/PIPELINE.md`, que además guarda el **runbook**
 > de las tablas de métricas y la lectura de la cascada invertida.
 

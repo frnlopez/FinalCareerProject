@@ -7,8 +7,21 @@ cascada_invertida.py. Centraliza rutas, semilla y convenciones de clase para que
 sean IDÉNTICAS en todos ellos y no queden hardcodeadas (cierra la deuda 3.2 🟠
 para el código nuevo).
 
-program.py / validacion.py NO dependen de este módulo: funcionan y están
-APROBADOS; solo migrarán sus rutas aquí si en algún momento se tocan.
+program.py NO depende de este módulo: funciona y está APROBADO; solo migrará sus
+rutas aquí si en algún momento se toca (Q2).
+
+validacion.py SÍ lo importa desde el 2026-08-11, pero SOLO por la procedencia:
+llama a commit_actual() para estampar `commit` y `fecha` dentro de sus artefactos
+(la cabecera de los dos `*_validation_report.txt` y dos columnas de
+`*_vocabulario_onehot.csv`), en vez de duplicar el mecanismo por copia. Sus rutas
+siguen hardcodeadas: esa parte de Q2 continúa sin ejecutarse. La decisión está
+registrada en `resumen-de-decisiones.md` — Francisco EXTENDIÓ el alcance de Q2 de
+las rutas a la procedencia; Q2 por sí sola no autorizaba esto.
+
+NOTA para quien edite este fichero: al importarse NO debe tener efectos. Nada de
+llamar a ensure_dirs(), setup_utf8() ni tocar matplotlib/stdout a nivel de módulo,
+y nada de importar módulos del proyecto (habría riesgo de ciclo). validacion.py
+depende de ambas cosas.
 """
 import os
 import subprocess

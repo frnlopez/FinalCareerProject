@@ -8,15 +8,51 @@ import warnings
 import os
 import sys
 import joblib
+from datetime import datetime
 
 # program.py es la FUENTE CANÓNICA de las columnas categóricas y de las que no
 # son características: se importan, no se copian (antes estaban duplicadas por
 # copia y un cambio allí rompía en silencio medir_vocabulario_onehot()).
-# Esto NO introduce dependencia de config.py ni de evaluacion.py: validacion.py
-# sigue sin importarlas, y program.py tampoco. No hay import circular
-# (program.py no importa validacion.py) ni efectos al importar: todo su código
-# ejecutable vive bajo `if __name__ == "__main__"`.
+# No hay import circular (program.py no importa validacion.py, y config.py solo
+# importa la librería estándar).
+#
+# OJO — program.py SÍ TIENE EFECTOS AL IMPORTARSE. Su código de CLASE y su CLI
+# viven bajo `if __name__ == "__main__"`, pero a nivel de módulo ejecuta cuatro
+# ajustes globales del proceso: `warnings.filterwarnings('ignore')`
+# (program.py:12), el `sys.stdout/stderr.reconfigure` a UTF-8 (program.py:16-23),
+# `plt.style.use('default')` (program.py:26) y `sns.set_palette("husl")`
+# (program.py:27). Hoy es inocuo porque justo debajo validacion.py reaplica esos
+# mismos ajustes y el último en escribir gana; no porque no los haya.
+#
+# CONSECUENCIA LOAD-BEARING: este `import program` DEBE QUEDAR POR ENCIMA del
+# bloque `plt.style.use` / `sns.set_palette` / `plt.rcParams` de más abajo. Si se
+# mueve por debajo de él, el `plt.style.use('default')` de program.py se
+# ejecutaría DESPUÉS y —al resetear los rcParams al default— borraría
+# `plt.rcParams['figure.figsize'] = (12, 8)`: TODAS las figuras de validación
+# cambiarían de tamaño en silencio, sin error y sin que ninguna cifra avisara.
 import program
+
+# config.py se importa SOLO por la procedencia: `config.commit_actual()` estampa
+# el hash del código (con su sufijo '-sucio') en la cabecera de los dos informes
+# de validación y en el CSV del vocabulario del one-hot, igual que ya lo hacen
+# los `metricas_*.csv` desde T1. El mecanismo NO se duplica por copia: se reutiliza
+# el único que existe, con su misma convención de suciedad (`config._RUTA_SUCIEDAD`
+# mira solo `Implementacion/`).
+#
+# ESTO CRUZA UNA FRONTERA que antes se documentaba como inexistente: hasta ahora
+# validacion.py no dependía de config.py. Decisión de Francisco del 2026-08-11,
+# registrada en `resumen-de-decisiones.md` (extiende el alcance de Q2 de las rutas
+# a la procedencia). `program.py` NO ha pasado a depender de config.py: solo este
+# módulo, y sus rutas siguen hardcodeadas. Actualizadas en consecuencia la cabecera
+# de config.py, `CLAUDE.md`, `PIPELINE.md` y `GUIA_RESULTADOS.md`.
+#
+# A diferencia de `import program`, este import NO TIENE EFECTOS AL IMPORTARSE:
+# config.py solo define constantes y funciones —`ensure_dirs()` y `setup_utf8()`
+# existen pero NO se llaman a nivel de módulo—, así que no crea directorios, no
+# toca los rcParams de matplotlib ni reconfigura stdout, y su posición relativa al
+# bloque `plt.style.use` de más abajo no es load-bearing (la de `import program`
+# sí lo es, ver arriba).
+import config
 
 warnings.filterwarnings('ignore')
 
@@ -62,6 +98,19 @@ class NSLKDDValidator:
                                if os.path.basename(base_path).endswith('_sin_seleccion')
                                else '')
 
+        # PROCEDENCIA de la corrida, estampada DENTRO de los artefactos (informe
+        # .txt y CSV del vocabulario), no solo en el commit que los versiona. Antes
+        # solo se podía inferir del mtime, que git no versiona: tras un `clone` los
+        # ficheros llevan la fecha de la copia.
+        #
+        # La fecha se captura UNA VEZ aquí, en el constructor, para que todos los
+        # artefactos de la MISMA invocación lleven el mismo sello y no dos instantes
+        # separados por los segundos que tarda la validación. Cada variante es una
+        # invocación distinta, así que llevará su propia fecha: eso es correcto.
+        # El commit lo cachea config.commit_actual() por proceso.
+        self.commit = config.commit_actual()
+        self.fecha = datetime.now().isoformat(timespec='seconds')
+
         # D1: solo tráfico normal (entrenamiento anomalías)
         self.D1_X = None
         self.D1_y_category_original = None
@@ -97,8 +146,15 @@ class NSLKDDValidator:
     # el one-hot (las usa en 'self.categorical_columns' y en el descarte previo
     # a get_dummies). Así medir_vocabulario_onehot() reproduce por construcción
     # el one-hot real y no puede desincronizarse en silencio.
-    COLUMNAS_CATEGORICAS = program.COLUMNAS_CATEGORICAS
-    COLUMNAS_NO_CARACTERISTICA = program.COLUMNAS_NO_CARACTERISTICA
+    #
+    # `list(...)` a propósito, por SIMETRÍA con program.py:65 (que también copia
+    # la constante de módulo en `self.categorical_columns`): una asignación
+    # directa compartiría el MISMO objeto lista con la fuente canónica, así que
+    # un `.append`/`.remove` sobre estos atributos de clase mutaría las
+    # constantes de program.py. Hoy es inerte —aquí solo se leen— y la copia es
+    # preventiva: la copia es superficial, pero los elementos son cadenas.
+    COLUMNAS_CATEGORICAS = list(program.COLUMNAS_CATEGORICAS)
+    COLUMNAS_NO_CARACTERISTICA = list(program.COLUMNAS_NO_CARACTERISTICA)
 
     # ─────────────────────────────────────────────────────────────────────────
     # Utilidades
@@ -918,8 +974,16 @@ class NSLKDDValidator:
                 'detalle': detalle,
             })
 
-            print(f"   Vocabulario BUGGY (alineado solo con D1): {resultado['total_solo_d1']} "
+            print(f"   Vocabulario BUGGY RECONSTRUIDO (alineado solo con D1): "
+                  f"{resultado['total_solo_d1']} "
                   f"características = {n_numericas} numéricas + {dummies_solo_d1} dummies")
+            print("      ↳ RECONSTRUCCIÓN: se recuenta hoy sobre el D1 de ESTA corrida "
+                  "simulando el\n"
+                  "        alineamiento anterior al fix del 2026-07-05. NO es una cifra "
+                  "observada\n"
+                  "        en aquella corrida (por construcción coincide, pero citarla como "
+                  "observada\n"
+                  "        sería falso).")
             print(f"   Vocabulario ACTUAL (unión D1+D3):         {resultado['total_union']} "
                   f"características = {n_numericas} numéricas + {dummies_union} dummies")
             print(f"   Δ = +{resultado['total_union'] - resultado['total_solo_d1']} características "
@@ -1002,6 +1066,15 @@ class NSLKDDValidator:
         with open(path, 'w', encoding='utf-8') as f:
             f.write("REPORTE DE VALIDACIÓN — DIVISIONES D1/D2/D3 NSL-KDD\n")
             f.write("=" * 60 + "\n\n")
+            # ── Procedencia, para que el fichero se pueda leer SUELTO y sin git
+            # delante. Mismo mecanismo y misma convención que la columna `commit`
+            # de los `metricas_*.csv` (config.commit_actual()): '<hash>' si el
+            # código estaba limpio, '<hash>-sucio' si había cambios sin commitear
+            # en `Implementacion/`, '<hash>-suciedad_desconocida' si el `git
+            # status` falló, y 'desconocido' si no hay git. La tabla canónica de
+            # los tres valores vive en PIPELINE.md y no se duplica aquí.
+            f.write(f"Commit del código: {self.commit}\n")
+            f.write(f"Fecha de la corrida: {self.fecha}\n\n")
             f.write(f"Integridad:       {'APROBADA' if report['integrity_ok'] else 'FALLA'}\n")
             f.write(f"D1 (Normal):      {report['D1_size']:,} instancias\n")
             f.write(f"D2 (Test):        {report['D2_size']:,} instancias\n")
@@ -1026,15 +1099,29 @@ class NSLKDDValidator:
                 for issue in report['issues']:
                     f.write(f"  ❌ {issue}\n")
 
-            f.write("\nRecomendaciones:\n")
+            # El encabezado «Recomendaciones:» solo se escribe SI HAY ALGUNA. En
+            # la variante de 54 las cuatro condiciones son falsas (la selección
+            # 4.3.5 ya limpió varianza y correlación), y el informe imprimía un
+            # rótulo con nada debajo: un encabezado vacío en un artefacto que se
+            # lee suelto se interpreta como «faltan datos», no como «no hay
+            # ninguna».
+            recomendaciones = []
             if not report['integrity_ok']:
-                f.write("  ❌ CRÍTICO: resolver problemas de integridad antes de entrenar\n")
+                recomendaciones.append(
+                    "  ❌ CRÍTICO: resolver problemas de integridad antes de entrenar\n")
             if report['high_corr_pairs'] > 0:
-                f.write("  💡 Considera eliminar características con correlación > 0.95\n")
+                recomendaciones.append(
+                    "  💡 Considera eliminar características con correlación > 0.95\n")
             if report['low_variance_features'] > 0:
-                f.write("  💡 Considera eliminar características con varianza casi nula\n")
+                recomendaciones.append(
+                    "  💡 Considera eliminar características con varianza casi nula\n")
             if report['avg_outlier_pct_D1'] > 15:
-                f.write("  ⚠️  Alto porcentaje de outliers en D1 — revisar preprocesamiento\n")
+                recomendaciones.append(
+                    "  ⚠️  Alto porcentaje de outliers en D1 — revisar preprocesamiento\n")
+            if recomendaciones:
+                f.write("\nRecomendaciones:\n")
+                for recomendacion in recomendaciones:
+                    f.write(recomendacion)
 
             # ── Las DOS mediciones de drift, cada una con su población de
             # comparación escrita en el propio rótulo (T2). No son intercambiables
@@ -1129,7 +1216,18 @@ class NSLKDDValidator:
                 f.write("  El delta se declara en el informe como VALOR HISTÓRICO, con su\n")
                 f.write("  procedencia; no se reconstruye de memoria.\n")
             else:
-                f.write(f"  Vocabulario BUGGY (alineado solo con D1): "
+                # RÓTULO OBLIGATORIO en el artefacto (no solo en el docstring del
+                # método): la cifra "BUGGY" es una RECONSTRUCCIÓN hecha hoy, no un
+                # valor observado en la corrida anterior al fix. Por construcción
+                # coincide con lo que aquella producía, pero citarla como
+                # «observado en la corrida de antes del 2026-07-05» sería falso, y
+                # el .txt se lee suelto.
+                f.write("  Las DOS cifras salen de los CSV `_original_*` de ESTA corrida.\n")
+                f.write("  La primera es una RECONSTRUCCIÓN: se recuenta hoy el vocabulario\n")
+                f.write("  que habría dado el alineamiento anterior al fix del 2026-07-05\n")
+                f.write("  (categorías presentes solo en D1). NO es una cifra observada en\n")
+                f.write("  aquella corrida — coincide por construcción, no por medición.\n")
+                f.write(f"  Vocabulario BUGGY RECONSTRUIDO (alineado solo con D1): "
                         f"{onehot['total_solo_d1']} características = "
                         f"{onehot['n_numericas']} numéricas + "
                         f"{onehot['dummies_solo_d1']} dummies\n")
@@ -1167,10 +1265,17 @@ class NSLKDDValidator:
         """
         ruta = f'{self.base_path}_vocabulario_onehot.csv'
         variante = 'sin_seleccion' if self.variant_suffix else 'con_seleccion'
+        # 'commit' y 'fecha' van AL FINAL a propósito: son procedencia, no
+        # medición, y añadirlas por delante desplazaría las columnas de datos de
+        # cualquier lectura posicional de este CSV. Mismo significado y misma
+        # convención de '-sucio' que la columna `commit` de los `metricas_*.csv`
+        # (config.commit_actual(); tabla canónica de los tres valores en
+        # PIPELINE.md). Se repiten en TODAS las filas porque el CSV se reescribe
+        # completo en cada corrida: no hay filas de corridas distintas mezcladas.
         columnas = ['variante', 'medido', 'motivo', 'columna', 'categorias_en_D1',
                     'categorias_union_D1_D3', 'recuperadas', 'n_numericas',
                     'total_solo_d1', 'total_union', 'delta_total',
-                    'total_union_transformers']
+                    'total_union_transformers', 'commit', 'fecha']
 
         if onehot is None:
             onehot = {'medido': False,
@@ -1182,6 +1287,8 @@ class NSLKDDValidator:
             'medido': bool(onehot.get('medido')),
             'motivo': onehot.get('motivo') or '',
             'total_union_transformers': onehot.get('total_union_transformers'),
+            'commit': self.commit,
+            'fecha': self.fecha,
         }
 
         filas = []
@@ -1212,7 +1319,26 @@ class NSLKDDValidator:
             fila['columna'] = '__no_medido__'
             filas.append(fila)
 
-        pd.DataFrame(filas, columns=columnas).to_csv(ruta, index=False)
+        df = pd.DataFrame(filas, columns=columnas)
+
+        # Las columnas de RECUENTO se escriben como ENTEROS. Sin esto salían como
+        # flotantes ('38.0', '77.0', '122.0', '45.0'): los agregados solo los
+        # rellena la fila `__total__`, así que las filas por columna dejan NaN y
+        # pandas promueve la columna a float64. Una tabla de la memoria copiada de
+        # aquí mostraría «77.0 características», que no es un número de columnas.
+        # 'Int64' (nullable, con mayúscula) es el que admite NaN sin promover, y
+        # to_csv escribe la ausencia como celda VACÍA, no como '0' ni como '<NA>'
+        # —el hueco sigue siendo un hueco declarado—. El paso por float es
+        # deliberado: en las filas de no-medido estas columnas llegan como None
+        # sobre dtype object y astype('Int64') directo no las convierte.
+        COLUMNAS_DE_RECUENTO = ('categorias_en_D1', 'categorias_union_D1_D3',
+                                'recuperadas', 'n_numericas', 'total_solo_d1',
+                                'total_union', 'delta_total',
+                                'total_union_transformers')
+        for col in COLUMNAS_DE_RECUENTO:
+            df[col] = df[col].astype('float64').astype('Int64')
+
+        df.to_csv(ruta, index=False)
         print(f"   ✓ Vocabulario del one-hot guardado en: {ruta}")
 
 

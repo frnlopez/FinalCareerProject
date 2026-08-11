@@ -1,6 +1,9 @@
 REPORTE DE VALIDACIÓN — DIVISIONES D1/D2/D3 NSL-KDD
 ============================================================
 
+Commit del código: fc1c6b4-sucio
+Fecha de la corrida: 2026-08-11T20:53:27
+
 Integridad:       APROBADA
 D1 (Normal):      67,343 instancias
 D2 (Test):        22,544 instancias
@@ -13,8 +16,6 @@ Outliers D1 (media entre características): 4.78%
 Baja varianza (sobre D1+D3):    0 características
 Alta correlación (sobre D1+D3): 0 pares
 D2 fuera de [0,1]: 4 características (informativo)
-
-Recomendaciones:
 
 (A) Top 15 características con mayor drift — D1 vs D2 COMPLETO
     (D2 completo = normales + ataques: parte de este drift es
@@ -117,7 +118,12 @@ snmpgetattack       r2l               178
 
 Vocabulario del One-Hot — delta del fix del 2026-07-05
 (vocabulario alineado solo con D1  →  vocabulario unión D1+D3)
-  Vocabulario BUGGY (alineado solo con D1): 77 características = 38 numéricas + 39 dummies
+  Las DOS cifras salen de los CSV `_original_*` de ESTA corrida.
+  La primera es una RECONSTRUCCIÓN: se recuenta hoy el vocabulario
+  que habría dado el alineamiento anterior al fix del 2026-07-05
+  (categorías presentes solo en D1). NO es una cifra observada en
+  aquella corrida — coincide por construcción, no por medición.
+  Vocabulario BUGGY RECONSTRUIDO (alineado solo con D1): 77 características = 38 numéricas + 39 dummies
   Vocabulario ACTUAL (unión D1+D3):         122 características = 38 numéricas + 84 dummies
   Delta = +45 características (+45 dummies exclusivas de tráfico de ataque)
   Desglose por columna categórica:

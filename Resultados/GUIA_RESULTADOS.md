@@ -13,7 +13,7 @@ Aquí se vuelca **todo lo que generan los scripts** de `Implementacion/app/`:
 | Script | Estado | Qué deposita aquí |
 |---|---|---|
 | `program.py` | funcionando | Splits D1/D2/D3 (CSVs originales y procesados), metadatos (`_mappings_and_info.txt`, `_usage_guide.txt`, `selected_features.txt`), transformadores (`.joblib`) y la figura del EDA |
-| `validacion.py` | ejecutado (54 y 122) | **Por variante**: un `..._validation_report.txt` y **6** figuras de validación (las 4 de siempre + las 2 del KS contra los normales de D2, tarea T2). Con las dos variantes: **2** informes (`specialized_nsl_kdd_validation_report.txt` y `specialized_nsl_kdd_sin_seleccion_validation_report.txt`) y **12** figuras `validacion_*` |
+| `validacion.py` | ejecutado (54 y 122) | **Por variante**: un `..._validation_report.txt`, un `..._vocabulario_onehot.csv` (§2.4) y **6** figuras de validación (las 4 de siempre + las 2 del KS contra los normales de D2, tarea T2). Con las dos variantes: **2** informes (`specialized_nsl_kdd_validation_report.txt` y `specialized_nsl_kdd_sin_seleccion_validation_report.txt`), **2** CSV de vocabulario y **12** figuras `validacion_*` |
 | `anomalias.py` | ejecutado (54 y 122) | `metricas_anomalias.csv`, `modelos\anomalia_*.joblib`, figuras ROC/PR y matrices 2×2 |
 | `firmas.py` | ejecutado (54 y 122) | `metricas_firmas.csv`, `metricas_balanceo.csv`, `firmas_reglas_*.txt`, `modelos\firma_*.joblib`, matrices 4×4 |
 | `baseline.py` | ejecutado (54 y 122) | `metricas_baseline.csv`, `metricas_baseline_0day.csv`, `modelos\baseline_rf_*.joblib`, `figuras\baseline_cm_*.png` |
@@ -83,6 +83,60 @@ Transformadores ajustados y persistidos para inferencia reproducible: `scaler` (
 en D1+D3), `label_encoder`, `category_encoder` y la lista `feature_columns` post one-hot.
 Se carga con `joblib.load(...)`. **Destino:** 4.3.2 (normalización) y reproducibilidad (4.6 / apéndices).
 
+### 2.4 Los dos `..._vocabulario_onehot.csv` (los genera `validacion.py`)
+
+Artefacto que **respalda en disco el delta 77 → 122** del fix del one-hot del 2026-07-05, que
+antes solo vivía en prosa. Una fila por columna categórica (`protocol_type`, `service`, `flag`)
+más una fila `__total__` con los agregados:
+
+| Columna | Qué es |
+|---|---|
+| `variante` | `con_seleccion` / `sin_seleccion` |
+| `medido` | `True` si se pudo recontar; si es `False`, `motivo` dice por qué y el resto va **vacío** (nunca cifras inventadas) |
+| `categorias_en_D1` | categorías de esa columna presentes **solo en D1** |
+| `categorias_union_D1_D3` | categorías en la **unión D1+D3** (el vocabulario actual) |
+| `recuperadas` | la diferencia: dummies que el alineamiento buggy perdía |
+| `n_numericas`, `total_solo_d1`, `total_union`, `delta_total` | agregados; **solo en la fila `__total__`**, vacíos en las demás |
+| `total_union_transformers` | contraste **independiente**: `len(feature_columns_pre_seleccion)` leído del `..._transformers.joblib` |
+| `commit`, `fecha` | procedencia de la corrida, **al final de la fila**; mismo mecanismo y misma convención `-sucio` que la columna `commit` de los `metricas_*.csv` (`config.commit_actual()`). **Presentes en el CSV que hay en disco desde la corrida del 2026-08-11 20:53** (sello `fc1c6b4-sucio`): ver el aviso de abajo sobre qué vale y qué no vale ese sello |
+
+Cifras publicadas (idénticas en los dos ficheros, ver abajo): **38 numéricas + 39 dummies = 77**
+frente a **38 + 84 = 122**, `delta_total` = **+45**, todas de `service` (**+44**) y `flag`
+(**+1**); `protocol_type` no aporta ninguna. El contraste con el joblib da también **122**.
+
+Tres avisos para citarlo:
+
+- **El 77 es una RECONSTRUCCIÓN, no una observación.** Se recuenta hoy sobre el D1 de la corrida
+  en curso simulando el alineamiento anterior al fix; coincide con lo que aquel producía **por
+  construcción**, no por medición. No se puede escribir «observado en la corrida anterior al fix».
+  **El `..._validation_report.txt` lo rotula así** (línea «La primera es una RECONSTRUCCIÓN…»,
+  `validacion.py:1219-1229`), y también la consola. **El CSV NO lo rotula**: ahí la cifra vive en
+  `total_solo_d1` = `77` sin marca alguna. Por eso, cuando se cite el número desde el CSV hay que
+  arrastrar **siempre** este aviso a mano.
+- **Los dos ficheros traen las mismas cifras**, y es correcto: la medición se hace sobre los CSV
+  `_original_*`, y la selección de características actúa **después** del one-hot. Es la única
+  salida de `validacion.py` que no depende de la variante.
+- **El CSV que hay en disco YA lleva `commit` y `fecha`**, igual que los `metricas_*.csv`. El
+  código las escribe desde el 2026-08-11 (`validacion.py` importa `config.py` y llama a
+  `config.commit_actual()`) y las dos variantes **ya se re-corrieron**: los ficheros publicados
+  salen de la corrida del **2026-08-11 a las 20:53**, con sello `fc1c6b4-sucio` y, en cada fila, la
+  fecha de **su propia** invocación: `2026-08-11T20:53:27` en el CSV de la variante de 54 y
+  `2026-08-11T20:53:46` en el de 122. La cabecera de los dos `..._validation_report.txt` trae **el
+  mismo commit y esa misma marca por variante** (`:27` en la de 54, `:46` en la de 122): el commit
+  sí es común a los cuatro artefactos, la fecha no, porque se captura una vez por invocación. Al
+  citar, copiar los segundos del fichero que se está citando. **Esas columnas se pueden y se deben citar**: son
+  la procedencia que viaja dentro del artefacto y sobrevive a un `clone`, al contrario que el
+  mtime. Con una salvedad: un sello `-sucio` **no identifica la versión del código** —el hash es
+  el del commit **anterior** al cambio y `-sucio` solo dice «difería, no se sabe en qué»—, así que
+  aporta fecha fiable y aviso explícito de **no-reproducibilidad desde ese hash**, pero no permite
+  reconstruir el código que lo produjo. Para eso manda el recuadro de anclaje de
+  `Implementacion/PIPELINE.md`, que se re-escribe con el commit de cierre cuando exista.
+
+Son recuentos, así que se publican como **enteros** (`77`, no `77.0`).
+
+**Destino en la memoria:** **4.3.3** (codificación de variables categóricas) como respaldo del
+delta, y 4.6 / apéndices.
+
 ---
 
 ## 3. Ficheros de texto (metadatos y reportes)
@@ -124,7 +178,16 @@ Las dos últimas columnas son la comprobación de que la selección 4.3.5 hizo s
 lo contrario, las cifras de esta guía son las del informe de 54**, que es el set del TFG
 (decisión Q1/C).
 
-Cómo leerlo (los rótulos son idénticos en ambos ficheros):
+**Qué contiene, por orden:** *(en el código, desde el 2026-08-11: dos líneas de procedencia,
+`Commit del código:` y `Fecha de la corrida:`, justo tras el título —**no están en los ficheros que
+hay en disco**, que son anteriores; ver §2.4)* · el titular de integridad y tamaños · las dos mediciones de drift y su
+comparación · las recomendaciones (**solo si hay alguna**) · las características de D2 fuera de
+[0,1] · **los tipos 0-day de D2 nominalmente** · **el vocabulario del one-hot (delta 77 → 122)**.
+Los dos últimos son bloques **nuevos de la re-corrida del 2026-08-11** y se describen al final de
+este apartado; el del vocabulario tiene además CSV propio (**§2.4**).
+
+Cómo leerlo (los rótulos son idénticos en ambos ficheros, salvo el bloque de recomendaciones, que
+el de 54 no imprime):
 
 - `Integridad: APROBADA` → dimensiones, alineación de columnas, ausencia de nulos/inf, pureza de
   D1 (solo normal) y D3 (solo ataques) correctas. Si dice FALLA, no entrenar nada. **Aprobada en
@@ -155,12 +218,45 @@ Cómo leerlo (los rótulos son idénticos en ambos ficheros):
 - `Baja varianza: 0` y `Alta correlación: 0 pares` **en el informe de 54** → confirma que la
   selección 4.3.5 ya limpió ambos problemas (ese reporte se genera *después* de la selección). El
   `_sin_seleccion_` es el antes: **1** feature de varianza ~0 (`num_outbound_cmds`) y **14** pares
-  por encima de 0,95, y por eso imprime dos recomendaciones que el de 54 no imprime.
+  por encima de 0,95, y por eso **es el único que trae bloque `Recomendaciones:`**, con dos.
+  - En el informe de **54** las cuatro condiciones que generan recomendaciones son falsas, así que
+    **el bloque no aparece en absoluto** — ni el encabezado. Es deliberado: antes se imprimía el
+    rótulo con nada debajo y en un artefacto que se lee suelto eso se interpreta como que se perdió
+    algo. **Su ausencia significa «ninguna», no «faltan datos».**
 - `D2 fuera de [0,1]: 4 características (informativo)` → **las mismas cuatro en los dos
   informes**: `num_shells` (máx. 2,50), `num_file_creations` (2,33), `duration` (1,35) y `hot`
   (1,31). **No es un error**: el scaler se
   ajusta solo en train (D1+D3); re-ajustarlo con el test sería leakage. Vigilar su efecto en el
   autoencoder (FPR).
+
+Los **dos bloques nuevos del final** (re-corrida del 2026-08-11), **idénticos en los dos
+informes** porque ninguno depende del set de características:
+
+- `Tipos de ataque 0-day en D2 (presentes en D2, ausentes de D3): 17` → la tabla **nominal** de los
+  0-day, con su categoría y sus instancias, y el total: **3.750 instancias, el 16,63 % de D2**. Los
+  cuatro mayores son `mscan` (996, probe), `apache2` (737, dos), `processtable` (685, dos) y
+  `snmpguess` (331, r2l). Antes esta lista solo salía por consola y no quedaba en ningún artefacto.
+  - La lista es **emergente**: se calcula como diferencia de conjuntos entre las etiquetas de D2 y
+    las de D3, **nunca** desde una lista escrita a mano. Es el respaldo del recall 0-day por tipo
+    de `metricas_baseline_0day.csv` y `metricas_hibrido_0day.csv`: **solo el detector de anomalías
+    puede verlos**, porque el clasificador de firmas no ve ni una muestra suya en D3.
+  - **Los 17 tipos no son las 36 filas** de `metricas_baseline_0day.csv` ni las 144 de
+    `metricas_hibrido_0day.csv`: esas tablas multiplican por variante y por detector.
+- `Vocabulario del One-Hot — delta del fix del 2026-07-05` → **77 → 122 características** (38
+  numéricas + 39 dummies frente a 38 + 84), `Delta = +45`, con el desglose por columna categórica
+  y el contraste independiente contra `feature_columns_pre_seleccion` del joblib. Es el **respaldo
+  en disco** del delta que antes solo estaba en prosa, y tiene CSV propio: **§2.4**, donde están
+  los tres avisos para citarlo (empezando por que **el 77 es una reconstrucción**, no una cifra
+  observada en la corrida anterior al fix).
+
+> **Los dos informes que hay en disco imprimen `commit` y `fecha` en su cabecera** (tras el
+> título, antes de `Integridad:`), igual que los `metricas_*.csv` desde T1. Los publicados salen de
+> la re-corrida del **2026-08-11 a las 20:53**: `specialized_nsl_kdd_validation_report.txt:4-5`
+> dice `Commit del código: fc1c6b4-sucio` y `Fecha de la corrida: 2026-08-11T20:53:27`. **Residuo
+> cerrado.** Queda el límite propio del sufijo: un sello `-sucio` **no identifica la versión del
+> código** (el hash es el del commit *anterior* al cambio; `-sucio` solo dice «difería, no se sabe
+> en qué»), así que da fecha fiable y aviso de **no-reproducibilidad desde ese hash**, y para saber
+> de qué versión salieron manda el recuadro de trazabilidad de `Implementacion/PIPELINE.md`.
 
 **Destino en la memoria:** **4.2.1** (análisis previo de la BD) y apoyo metodológico en 4.3.2.
 Si a la memoria va una cifra de este apartado, va con el nombre de su fichero: la variante de 122
@@ -369,7 +465,23 @@ filas nunca llegan a la etapa 2— y **no es comparable** con ninguna columna de
 
 ## 7. Mantenimiento de esta guía
 
-- **Última actualización: 2026-08-10** (cuarta pasada de **T2** y **T3**, solo documentación:
+- **Última actualización: 2026-08-11** (residuos del cierre de `validacion.py`, solo rótulos,
+  metadatos y documentación: **cero cifras alteradas**, cero re-entrenamientos). Lo que cambia en
+  esta carpeta: **alta del artefacto `..._vocabulario_onehot.csv`** (uno por variante, §2.4 — no
+  estaba inventariado en ninguna de las dos guías) y **dos bloques nuevos al final de los
+  `..._validation_report.txt`**, los tipos 0-day nominales y el vocabulario del one-hot, descritos
+  ya en §3.2. Además: el bloque `Recomendaciones:` **desaparece del informe de 54** cuando no hay
+  ninguna (antes salía el encabezado vacío), el **77 se rotula como RECONSTRUCCIÓN** en el informe
+  y en consola, y los recuentos del CSV de vocabulario se publican como **enteros** (`77`, no
+  `77.0`). El anclaje de procedencia de estos artefactos está en el recuadro «Hueco de
+  trazabilidad» de `Implementacion\PIPELINE.md`, reescrito en la misma pasada: los informes en
+  disco son de la re-corrida del **2026-08-11 a las 20:53** (sello interno `fc1c6b4-sucio`), no de
+  la de T2 del 2026-08-10. **Cerrado también** el residuo de `commit`+`fecha`: se estampan ya en la
+  cabecera de los dos informes y como dos columnas del CSV de vocabulario, y están en los ficheros
+  publicados. Lo único que sigue pendiente es el **re-anclaje**: el sello es `-sucio` porque el
+  commit de cierre de este ciclo aún no existe, y cuando exista hay que sustituirlo en el recuadro
+  de `PIPELINE.md`.
+- Actualización anterior: **2026-08-10** (cuarta pasada de **T2** y **T3**, solo documentación:
   cero código de modelos y cero re-entrenamientos). Sobre lo anotado en las pasadas anteriores de
   esa misma fecha, se registra el **alta de artefactos de `validacion.py`**: al correrse por
   primera vez la **variante de 122**, `Resultados/` pasa de 1 a **2** informes de validación y de

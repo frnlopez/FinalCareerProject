@@ -589,6 +589,78 @@ temporal**. NSL-KDD no tiene marca de tiempo.
 
 **Anotado también en la ficha T11 de `features.md`**, en su viñeta `5.1`/`5.4`.
 
+### Procedencia dentro de los artefactos de `validacion.py` → **`import config`; Q2 EXTENDIDA de las rutas a la procedencia**
+
+**Contexto.** Los artefactos de `validacion.py` —los dos `*_validation_report.txt` y los dos
+`*_vocabulario_onehot.csv`— no permitían leer **de qué corrida** salían: el mtime no lo dice (git no
+lo versiona; tras un `clone` es la fecha de la copia) y el fichero no imprimía `commit` ni `fecha`, a
+diferencia de los `metricas_*.csv`, que traen las dos columnas desde **T1**. El anclaje vivía solo en
+un recuadro de `PIPELINE.md`, que hay que reescribir a mano en cada re-corrida. El mecanismo para
+resolverlo **ya existía y solo existía en un sitio**: `config.commit_actual()`, con su convención de
+sufijo `-sucio` acotada a `Implementacion/`. Duplicarlo por copia estaba descartado de antemano
+—eliminar duplicación por copia es lo que se venía haciendo en los ciclos anteriores—, así que la
+única vía era **importar `config.py` desde `validacion.py`**, y eso choca con una frontera que tres
+sitios del proyecto declaraban inexistente.
+
+**Decisión de Francisco (opción A): se crea la dependencia.** `validacion.py` hace `import config`
+y usa `config.commit_actual()` más `datetime.now()` para estampar `commit` y `fecha` en la cabecera
+de los dos informes (tras el título, antes de `Integridad:`) y como **dos columnas al final** del CSV
+del vocabulario. La fecha se captura **una vez por invocación**, en el constructor, para que todos
+los artefactos de la misma corrida lleven el mismo sello.
+
+**PRECISIÓN SOBRE EL PERMISO — leer con cuidado, porque es fácil de tergiversar.** **Q2** (arriba,
+§ Decisiones del 2026-07-06) dice que `program.py`/`validacion.py` «no se refactorizan ahora… solo
+migran **sus rutas** a `config.py` si en algún momento se tocan». Es decir: **Q2 autoriza cruzar la
+frontera para las RUTAS, y `config.commit_actual()` NO es una ruta.** Por tanto **este permiso no es
+literal: es por ANALOGÍA**, y se apoya en que, una vez escrito el `import config`, la frontera queda
+cruzada igual —el coste arquitectónico que Q2 evaluaba es el mismo—. Lo que ha ocurrido aquí es que
+**Francisco ha consumido Q2 y ha EXTENDIDO su alcance: de las rutas a la procedencia.**
+**No registrar esto como «Q2 ya lo autorizaba tal cual»:** quien lo lea dentro de tres meses creería
+que Q2 dice algo que no dice. Q2 sigue intacta en su literalidad; lo que se amplía es su alcance, y
+la ampliación es de esta fecha y de esta entrada.
+
+**Acotado:** solo `validacion.py`. **`program.py` NO pasa a depender de `config.py`**, y **las rutas
+de ninguno de los dos se han migrado**: esa parte de Q2 continúa sin ejecutarse.
+
+**Dos condiciones verificadas antes de escribir el import** (si alguna hubiese fallado, el cambio no
+se hacía): (1) `config.py` **no tiene efectos al importarse** —solo define constantes y funciones;
+`ensure_dirs()` y `setup_utf8()` existen pero no se llaman a nivel de módulo, así que no crea
+directorios ni toca matplotlib/stdout—, y (2) **no hay ciclo de imports**: `config.py` solo importa
+la librería estándar. La condición (1) queda anotada como nota para quien edite `config.py`, porque
+`validacion.py` ahora depende de ella: a diferencia de `import program`, la posición de
+`import config` respecto al bloque `plt.style.use` **no** es load-bearing.
+
+**Documentación actualizada para que deje de mentir** (la frontera se declaraba inexistente en tres
+sitios, más un cuarto que apareció al revisar): `CLAUDE.md` (bloque de orden de ejecución), la
+cabecera de `Implementacion/app/config.py`, el recuadro de trazabilidad de
+`Implementacion/PIPELINE.md` y `Resultados/GUIA_RESULTADOS.md` (§2.4 y §3.2). **La tabla canónica de
+los tres valores de `commit` (`<hash>`, `-sucio`, `-suciedad_desconocida`) sigue viviendo solo en
+`PIPELINE.md` y no se ha duplicado.**
+
+**Ninguna cifra cambia:** es procedencia y formato. **Y el cambio está en el árbol y las dos
+variantes YA se re-corrieron**: los artefactos publicados salen de la corrida del **2026-08-11 a las
+20:53** y llevan las dos líneas de cabecera y las dos columnas
+(`Resultados/specialized_nsl_kdd_validation_report.txt:4-5` dice `Commit del código: fc1c6b4-sucio`
+y `Fecha de la corrida: 2026-08-11T20:53:27`). **El commit es idéntico en los cuatro artefactos; la
+fecha es la de cada invocación**: `2026-08-11T20:53:27` en la variante de 54 y
+`2026-08-11T20:53:46` en la de 122, y cada CSV de vocabulario repite en sus filas el par de su
+propia invocación. No citar `:27` como sello del informe de 122.
+
+**Aun así el anclaje canónico sigue siendo el recuadro de `PIPELINE.md`, y su aviso de re-anclaje se
+mantiene**, porque el sello estampado es `-sucio`: un sello así **no identifica una versión del
+código** —el hash apunta al commit *anterior* al cambio y `-sucio` solo dice «difería, no se sabe en
+qué»—. Lo que sí aporta es una fecha fiable **dentro** del fichero, que sobrevive a un `clone`, y el
+aviso explícito de **no-reproducibilidad desde ese hash**. Cuando exista el commit de cierre de este
+ciclo, hay que sustituir por él el hash del recuadro y el sello que se cita; **no se anota aquí
+ningún hash futuro**.
+
+**Efecto colateral sobre una ficha abierta — NO está cerrada.** La ficha «Rutas absolutas
+hardcodeadas en `program.py` y `validacion.py`» (🟠, `features.md`; origen `next-steps.md:267`)
+queda **parcialmente destrabada**: el `import config` que necesitaría ya existe en `validacion.py`,
+así que ese obstáculo desaparece. **Sigue ABIERTA**, y su parte bloqueante era otra: toca
+`program.py`, y eso obliga a **decidir antes si se regeneran los splits** — decisión pendiente de
+Francisco.
+
 ---
 
 ## Bitácora de este fichero
@@ -698,3 +770,22 @@ temporal**. NSL-KDD no tiene marca de tiempo.
   los 2 informes de validación y las 12 figuras de `Resultados/` son de la corrida `274923d`-sucio y
   **no corresponden al código actual**; C3 está aplicada en el árbol, y C1 y C2 **a medias** (el dict
   `onehot` es un *dead parameter* y `_save_report()` no escribe ni los 0-day ni el delta).
+  **SUPERADO ese mismo día por la entrada de abajo:** en la re-corrida del **2026-08-11 20:53**
+  (sello `fc1c6b4-sucio`) los cuatro artefactos de `validacion.py` se regeneraron con el código
+  del árbol, así que **ya no son de `274923d`-sucio ni están desalineados**. El desajuste descrito
+  en esta viñeta es el estado **anterior** a esa corrida y no debe citarse como estado actual.
+- `2026-08-11` — **Procedencia dentro de los artefactos de `validacion.py` (residuo 5, opción A).**
+  Registrada arriba la decisión de Francisco de **crear la dependencia `validacion.py` → `config.py`**
+  para reutilizar `config.commit_actual()` y estampar `commit`+`fecha` en los dos informes y en el CSV
+  del vocabulario, en vez de duplicar el mecanismo por copia. **El permiso NO es literal de Q2:**
+  Q2 solo autorizaba cruzar la frontera para las **rutas**, y Francisco **extiende su alcance a la
+  procedencia** (`program.py` no queda afectado; las rutas siguen hardcodeadas). Verificado antes:
+  `config.py` no tiene efectos al importarse y no hay ciclo. Actualizadas las declaraciones de
+  `CLAUDE.md`, la cabecera de `config.py`, `PIPELINE.md` y `GUIA_RESULTADOS.md`. **Sin cambios de
+  cifras**, y **CON re-corrida**: las dos variantes se re-corrieron el **2026-08-11 a las 20:53**
+  (sello `fc1c6b4-sucio`; fecha `2026-08-11T20:53:27` en la variante de 54 y
+  `2026-08-11T20:53:46` en la de 122), así que los artefactos en disco **ya llevan** el sello en
+  la cabecera de los dos informes y en las dos columnas del CSV del vocabulario. **El aviso de
+  re-anclaje de `PIPELINE.md` se mantiene igualmente**, porque un sello `-sucio` no identifica una
+  versión del código. Destraba parcialmente la ficha de rutas hardcodeadas, que
+  **sigue abierta** (su bloqueo real es la decisión sobre regenerar los splits).
