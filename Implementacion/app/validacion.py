@@ -1077,6 +1077,129 @@ class NSLKDDValidator:
             else:
                 f.write(d2_range_df.to_string(index=False, float_format='%.4f') + "\n")
 
+            # ── Los tipos 0-day de D2, NOMINALMENTE y no solo por recuento
+            # (deuda menor de next-steps.md:277: hasta ahora solo salían por
+            # consola y no quedaba constancia en ningún artefacto). La lista es
+            # EMERGENTE: la calcula analyze_class_distribution() como diferencia
+            # de conjuntos entre las etiquetas de D2 y las de D3, así que aquí no
+            # se fija ningún nombre ni ninguna cifra a priori.
+            f.write("\nTipos de ataque 0-day en D2 (presentes en D2, ausentes de D3): "
+                    f"{report['n_zero_day_types']}\n")
+            f.write("Derivados de los datos (etiquetas de D2 menos etiquetas de D3), nunca\n")
+            f.write("de una lista escrita a mano. Solo el modelo de anomalías puede\n")
+            f.write("detectarlos: el clasificador de firmas no ve ni una muestra suya en D3.\n")
+            if self.zero_day_df is None:
+                f.write("  (sin medir — analyze_class_distribution() no llegó a ejecutarse)\n")
+            elif self.zero_day_df.empty:
+                f.write("  (ninguno — todos los ataques de D2 están representados en D3)\n")
+            else:
+                f.write(self.zero_day_df.to_string(index=False) + "\n")
+                n_inst_0day = int(self.zero_day_df['instancias_en_D2'].sum())
+                f.write(f"  Total de instancias 0-day en D2: {n_inst_0day:,} "
+                        f"({n_inst_0day / report['D2_size'] * 100:.2f} % de D2)\n")
+
+            # ── Vocabulario del one-hot: el delta 77 → 122 del fix del
+            # 2026-07-05, RECOMPUTADO por medir_vocabulario_onehot() a partir de
+            # los CSV `_original_*`. Las dos cifras salen de los datos de esta
+            # corrida: en este bloque no hay ningún literal 77 ni 122. Si los CSV
+            # de origen no están en disco, se escribe el motivo y no se inventa
+            # ninguna cifra.
+            f.write("\nVocabulario del One-Hot — delta del fix del 2026-07-05\n")
+            f.write("(vocabulario alineado solo con D1  →  vocabulario unión D1+D3)\n")
+            if onehot is None:
+                f.write("  (sin medir — no se recibió el resultado de "
+                        "medir_vocabulario_onehot())\n")
+            elif not onehot.get('medido'):
+                f.write(f"  (sin medir — {onehot.get('motivo')})\n")
+                f.write("  El delta se declara en el informe como VALOR HISTÓRICO, con su\n")
+                f.write("  procedencia; no se reconstruye de memoria.\n")
+            else:
+                f.write(f"  Vocabulario BUGGY (alineado solo con D1): "
+                        f"{onehot['total_solo_d1']} características = "
+                        f"{onehot['n_numericas']} numéricas + "
+                        f"{onehot['dummies_solo_d1']} dummies\n")
+                f.write(f"  Vocabulario ACTUAL (unión D1+D3):         "
+                        f"{onehot['total_union']} características = "
+                        f"{onehot['n_numericas']} numéricas + "
+                        f"{onehot['dummies_union']} dummies\n")
+                f.write(f"  Delta = +{onehot['total_union'] - onehot['total_solo_d1']} "
+                        f"características "
+                        f"(+{onehot['dummies_union'] - onehot['dummies_solo_d1']} dummies "
+                        f"exclusivas de tráfico de ataque)\n")
+                f.write("  Desglose por columna categórica:\n")
+                f.write(pd.DataFrame(onehot['detalle']).to_string(index=False) + "\n")
+                f.write("  Nota de variante: los CSV `_original_*` son idénticos en las dos\n")
+                f.write("  variantes (54 y 122) porque la selección de características actúa\n")
+                f.write("  DESPUÉS del one-hot; por eso esta medición da lo mismo en ambas.\n")
+            if onehot is not None and onehot.get('total_union_transformers') is not None:
+                f.write(f"  Contraste independiente con "
+                        f"`feature_columns_pre_seleccion` de transformers.joblib: "
+                        f"{onehot['total_union_transformers']} características\n")
+
+        # El vocabulario del one-hot va además a un CSV propio: hasta ahora la
+        # cifra solo vivía en prosa y no había ningún artefacto en disco que la
+        # respaldara.
+        self._guardar_csv_vocabulario_onehot(onehot)
+
+    def _guardar_csv_vocabulario_onehot(self, onehot):
+        """
+        Persiste en CSV la medición de medir_vocabulario_onehot(): una fila por
+        columna categórica más una fila `__total__` con los agregados.
+
+        Degrada igual que el método que lo mide: si no se pudo medir, se escribe
+        una única fila con el `motivo` en lugar de omitir el artefacto o rellenar
+        las celdas con cifras inventadas.
+        """
+        ruta = f'{self.base_path}_vocabulario_onehot.csv'
+        variante = 'sin_seleccion' if self.variant_suffix else 'con_seleccion'
+        columnas = ['variante', 'medido', 'motivo', 'columna', 'categorias_en_D1',
+                    'categorias_union_D1_D3', 'recuperadas', 'n_numericas',
+                    'total_solo_d1', 'total_union', 'delta_total',
+                    'total_union_transformers']
+
+        if onehot is None:
+            onehot = {'medido': False,
+                      'motivo': 'no se recibió el resultado de medir_vocabulario_onehot()',
+                      'total_union_transformers': None}
+
+        base_fila = {
+            'variante': variante,
+            'medido': bool(onehot.get('medido')),
+            'motivo': onehot.get('motivo') or '',
+            'total_union_transformers': onehot.get('total_union_transformers'),
+        }
+
+        filas = []
+        if onehot.get('medido'):
+            for d in onehot.get('detalle', []):
+                fila = dict(base_fila)
+                fila.update({
+                    'columna': d['columna'],
+                    'categorias_en_D1': d['categorias_en_D1'],
+                    'categorias_union_D1_D3': d['categorias_union_D1_D3'],
+                    'recuperadas': d['recuperadas'],
+                })
+                filas.append(fila)
+            total = dict(base_fila)
+            total.update({
+                'columna': '__total__',
+                'categorias_en_D1': onehot['dummies_solo_d1'],
+                'categorias_union_D1_D3': onehot['dummies_union'],
+                'recuperadas': onehot['dummies_union'] - onehot['dummies_solo_d1'],
+                'n_numericas': onehot['n_numericas'],
+                'total_solo_d1': onehot['total_solo_d1'],
+                'total_union': onehot['total_union'],
+                'delta_total': onehot['total_union'] - onehot['total_solo_d1'],
+            })
+            filas.append(total)
+        else:
+            fila = dict(base_fila)
+            fila['columna'] = '__no_medido__'
+            filas.append(fila)
+
+        pd.DataFrame(filas, columns=columnas).to_csv(ruta, index=False)
+        print(f"   ✓ Vocabulario del one-hot guardado en: {ruta}")
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Funciones de uso directo

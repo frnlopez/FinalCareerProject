@@ -1,0 +1,5 @@
+variante,medido,motivo,columna,categorias_en_D1,categorias_union_D1_D3,recuperadas,n_numericas,total_solo_d1,total_union,delta_total,total_union_transformers
+sin_seleccion,True,,protocol_type,3,3,0,,,,,122
+sin_seleccion,True,,service,26,70,44,,,,,122
+sin_seleccion,True,,flag,10,11,1,,,,,122
+sin_seleccion,True,,__total__,39,84,45,38.0,77.0,122.0,45.0,122

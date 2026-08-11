@@ -90,3 +90,42 @@ re-ajusta con el test (sería leakage). Vigilar su efecto en los modelos.
 num_file_creations  0.0000  2.3256
           duration  0.0000  1.3451
                hot  0.0000  1.3117
+
+Tipos de ataque 0-day en D2 (presentes en D2, ausentes de D3): 17
+Derivados de los datos (etiquetas de D2 menos etiquetas de D3), nunca
+de una lista escrita a mano. Solo el modelo de anomalías puede
+detectarlos: el clasificador de firmas no ve ni una muestra suya en D3.
+         tipo categoria  instancias_en_D2
+        mscan     probe               996
+      apache2       dos               737
+ processtable       dos               685
+    snmpguess       r2l               331
+        saint     probe               319
+     mailbomb       dos               293
+snmpgetattack       r2l               178
+   httptunnel       u2r               133
+        named       r2l                17
+           ps       u2r                15
+     sendmail       r2l                14
+        xterm       u2r                13
+        xlock       r2l                 9
+       xsnoop       r2l                 4
+    sqlattack       u2r                 2
+     udpstorm       dos                 2
+         worm       r2l                 2
+  Total de instancias 0-day en D2: 3,750 (16.63 % de D2)
+
+Vocabulario del One-Hot — delta del fix del 2026-07-05
+(vocabulario alineado solo con D1  →  vocabulario unión D1+D3)
+  Vocabulario BUGGY (alineado solo con D1): 77 características = 38 numéricas + 39 dummies
+  Vocabulario ACTUAL (unión D1+D3):         122 características = 38 numéricas + 84 dummies
+  Delta = +45 características (+45 dummies exclusivas de tráfico de ataque)
+  Desglose por columna categórica:
+      columna  categorias_en_D1  categorias_union_D1_D3  recuperadas
+protocol_type                 3                       3            0
+      service                26                      70           44
+         flag                10                      11            1
+  Nota de variante: los CSV `_original_*` son idénticos en las dos
+  variantes (54 y 122) porque la selección de características actúa
+  DESPUÉS del one-hot; por eso esta medición da lo mismo en ambas.
+  Contraste independiente con `feature_columns_pre_seleccion` de transformers.joblib: 122 características

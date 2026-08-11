@@ -462,6 +462,21 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > `COLUMNAS_CATEGORICAS` y `COLUMNAS_NO_CARACTERISTICA` (`:90-91`) son **constantes de clase
 > duplicadas por copia** de `program.py:53` y `program.py:281-283`, acoplamiento que el propio
 > comentario `:87-89` reconoce.
+>
+> **ACTUALIZACIÓN 2026-08-11 — el desajuste vivo de arriba QUEDA RESUELTO; no citarlo más como
+> vigente.** Las **tres fichas `[~]`** (`:282`, `:283`, `:284`) están **cerradas** (ver
+> `## Cerradas`): `validacion.py` se completó sobre el código de `d9225be` —sin reescribir sus
+> ~231 líneas— y se **re-corrió en las dos variantes** (`EXITCODE=0`, `Integridad: APROBADA`), con
+> **16 artefactos regenerados** en `Resultados/` el 2026-08-11 19:28. Los dos
+> `*_validation_report.txt` del 2026-08-10 **ya no son los que hay en disco**, así que la
+> advertencia «no corresponden al código de hoy» **ha dejado de aplicar**. De esta migración
+> **siguen abiertas solo dos** de las cinco fichas (rutas absolutas y `warnings.filterwarnings`),
+> más la ficha nueva de las constantes duplicadas que se abre justo debajo.
+>
+> **Corrección al paréntesis «(se cierra con `:282` y `:283`)» de la deuda nueva:** de sus dos
+> mitades solo se cerró la primera —los comentarios de `:82-83` y `:338-339` **ya son verdad**—.
+> **Las constantes duplicadas de `:90-91` NO se cerraron:** el encargo **prohibía tocarlas**.
+> Pasan a **ficha propia abajo**, pendiente de decisión de Francisco.
 
 - [ ] **Rutas absolutas hardcodeadas en `program.py` y `validacion.py`** (🟠) · Código · `ml-implementador`
   Origen: `next-steps.md:267` (§3.2). Poco portable y poco reproducible.
@@ -472,66 +487,57 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
   Origen: `next-steps.md:271` (§3.2). Oculta avisos útiles durante la experimentación.
   **ABIERTA. Verificado vivo el 2026-08-11** en `program.py:12` y `validacion.py:12`.
 
-- [~] **La lista nominal de los 17 tipos 0-day solo sale por consola** (🟡) · Código · `ml-implementador`
-  Origen: `next-steps.md:282` (§3.2). Hay que **persistirla en el informe de `validacion.py`**.
-  **EN CURSO el 2026-08-11 — commiteada como WIP en `d9225be`, incompleta y sin re-correr; la parte
-  esencial NO está.** **Sigue abierta aun teniendo commit:** lo que falta no es versionar el trabajo,
-  es terminarlo. La computación sí: `self.zero_day_df` se
-  construye con tipo + categoría + instancias (`validacion.py:340-357`), el recuento entra en el dict
-  `report` como `n_zero_day_types` (`:972-974`) y sale por consola (`:360-366`, `:984`). Pero **el
-  cuerpo de `_save_report()` (`:992-1078`) no escribe ni la lista ni el recuento** — cero referencias a
-  `zero_day_df` o `n_zero_day_types` por debajo de `:984`. **Los tipos 0-day siguen quedándose solo en
-  consola, que es justo la deuda que había que cerrar.**
-  - **El 17 es emergente, no una lista escrita a mano** (`:340`).
-  - **Para cerrarla basta un cambio localizado:** escribir `self.zero_day_df` dentro del cuerpo de
-    `_save_report()`, antes de `:1080` — **sobre el código que ya está en `d9225be`; nada que
-    reimplementar.** Y **re-correr**, que es la otra mitad.
-  - **Va ANTES de la ficha del `4.2`** de este mismo lote (dependencia dura, ver allí): esa nota cita
-    el informe que la re-corrida regenera.
+- [ ] **`COLUMNAS_CATEGORICAS` y `COLUMNAS_NO_CARACTERISTICA` duplicadas por copia** (🟡) · Código · `ml-implementador`
+  Ficha propia abierta el **2026-08-11** al cerrar las tres de `validacion.py`. Sale de la «deuda nueva»
+  anotada en la cabecera de este grupo, cuyo paréntesis «(se cierra con `:282` y `:283`)» **no se
+  cumplió en esta mitad**: el encargo del ciclo **prohibía tocarlas**, así que no se tocaron.
+  `validacion.py:90-91` son **constantes de clase duplicadas por copia** de `program.py:53` y
+  `program.py:281-283`, acoplamiento que el propio comentario `:87-89` reconoce.
+  **NO está cerrada y NO está aceptada.** Queda **pendiente de decisión de Francisco**: o ficha propia
+  que se ejecuta, o declararla aceptada. Nadie más la mueve.
+  - La otra mitad de esa deuda **sí quedó cerrada**: los comentarios de `:82-83` y `:338-339`, que
+    afirmaban un comportamiento inexistente, **ya son verdad**.
 
-- [~] **El delta 77→122 del fix one-hot no está en ningún artefacto regenerable** (🟡) · Código · `ml-implementador`
-  Origen: `next-steps.md:283` (§3.2). Hoy la cifra solo vive en prosa; debe quedar en un artefacto de
-  `Resultados/`.
-  **EN CURSO el 2026-08-11 — commiteada como WIP en `d9225be`, incompleta y sin re-correr: medición sí,
-  persistencia NO.** **Sigue abierta aun teniendo commit.** Método nuevo `medir_vocabulario_onehot()`
-  (`validacion.py:796-933`, ~148 líneas), invocado desde `generate_full_report()` (`:954`), y su dict
-  viaja hasta `_save_report(..., onehot=onehot)` (`:979`). Pero **el parámetro `onehot` de `:991` nunca
-  se lee**: es un *dead parameter*, la huella exacta de dónde se cortó el despacho. La única escritura
-  a disco del fichero es el `open(path,'w')` de `:992`; **no hay ningún `to_csv`**, y **no existe
-  ningún artefacto de vocabulario/one-hot en `Resultados/`**.
-  - **El 77 NO está hardcodeado: se recuenta de verdad.** `medir_vocabulario_onehot()` lee los CSV
-    reales `_original_D1_normal_for_anomaly.csv` y `_original_D3_known_attacks_for_signatures.csv`
-    (`:833-843`), hace `cats_d1 = set(d1_cat[col].unique())` y `n_union = len(cats_d1 | cats_d3)`
-    (`:855-864`), cuenta numéricas por exclusión desde la cabecera real (`:848-851`) y deriva
-    `total_solo_d1` / `total_union` (`:876-877`). **No hay literales `77` ni `122` en el código.**
-    Contrasta además contra `feature_columns_pre_seleccion` del joblib (`program.py:702`) y degrada
-    limpio con `motivo` si faltan los CSV.
-  - **Aviso que debe sobrevivir a la sesión:** el 77 **solo es *medible*** recontando el vocabulario
-    one-hot restringido a D1 frente a la unión D1+D3 — y **ya se verificó que lo es**: el camino
-    medible existe y está implementado. Si en algún momento dejara de serlo, entra como **valor
-    histórico declarado y NUNCA como cifra hardcodeada**. Importa porque **T19 y T20 existen
-    precisamente por cifras sin artefacto**.
-  - **Para cerrarla basta un cambio localizado:** leer el dict `onehot` dentro del cuerpo de
-    `_save_report()` (antes de `:1080`) y/o volcarlo a un CSV propio en `Resultados/` — **sobre el
-    código que ya está en `d9225be`; las ~148 líneas del método NO se reescriben.** Y **re-correr**.
-  - **Va ANTES de la ficha del `4.2`** de este mismo lote (dependencia dura, ver allí).
+### Residuos del cierre de `validacion.py` — altas del 2026-08-11
 
-- [~] **`validacion.py` comparaba columnas D2/D3 por conjunto y no por orden** (🟡) · Código · `ml-implementador`
-  Origen: `next-steps.md:284` (§3.2), donde constaba como «`validacion.py:156-159` — fix de una línea».
-  **COMMITEADA COMO WIP en `d9225be`, incompleta y sin re-correr** — **no se mueve a `## Cerradas`.**
-  **Ojo al cambio de motivo:** mientras estuvo sin commitear se quedaba abierta por «lo hecho es lo que
-  tiene commit»; **ese argumento ya no vale, porque el commit existe**. Sigue abierta porque **nadie la
-  ha re-corrido**: hasta que se corra no se sabe si el fix destapa un desajuste D2/D3 real, y el grupo
-  al que pertenece quedó incompleto. `validacion.py:205-208`: `set(...)` → `list(...)`, comparación
-  posicional.
-  - **Alcance excedido:** el encargo era un fix de una línea y son **~34** (`:196-229`), con rama nueva
-    que diagnostica «mismo conjunto, distinto orden» y lista las **5 primeras posiciones divergentes**.
-    Correcto, pero **excede el mandato**.
-  - **Aviso que debe sobrevivir a la sesión:** este fix **puede destapar un desajuste de orden** que la
-    comparación por conjunto venía ocultando. **Está commiteado (`d9225be`) pero sin re-correr, así que
-    todavía no se sabe.** Si aparece, **es hallazgo que se reporta, no se silencia.**
-  - **Va ANTES de la ficha del `4.2`** de este mismo lote (dependencia dura, ver allí): esa nota cita
-    las figuras que la re-corrida regenera.
+> Las tres fichas `[~]` de `validacion.py` (`:282`, `:283`, `:284`) se cerraron el **2026-08-11** con
+> dictamen **APTO CON CAMBIOS** de `auditor-ml` (ver `## Cerradas`). Estas seis fichas son lo que
+> **quedó fuera** de ese cierre. **Ninguna es 🔴.** La primera es la única con consecuencia sobre la
+> memoria.
+
+- [ ] **El 4,78 % / 2,44 % de outliers de D1 es una MEDIA, y dos ficheros lo llaman «mediana»** (🟠) · Código · `ml-implementador`
+  **El residuo más serio del ciclo.** `validacion.py:968` calcula la cifra con `.mean()` — es una
+  **media entre características**—, pero `Resultados\GUIA_RESULTADOS.md:117-120` titula la columna
+  **«Mediana outliers D1»** y `Implementacion\PIPELINE.md:53-54` escribe **«mediana»**.
+  **Consecuencia:** si **T10** copia esa cifra desde cualquiera de los dos, la memoria **afirmará un
+  estadístico que nadie ha calculado**.
+  - Es la **misma clase de defecto que originó T19 y T20** (cifra sin respaldo en el artefacto),
+    **agravado**: aquí el artefacto **sí existe** y **dice otra cosa**.
+  - Decidir si se arregla el rótulo (media) o si se calcula además la mediana. **Lo primero es
+    barato y suficiente.**
+
+- [ ] **Falta `commit`+`fecha` en el CSV nuevo y en la cabecera de los informes** (🟡) · Código · `ml-implementador`
+  Ni `*_vocabulario_onehot.csv` ni la cabecera de los dos `*_validation_report.txt` traen `commit` ni
+  fecha de corrida. El **CSV reproduce evitablemente una limitación ya declarada** en
+  `Implementacion/PIPELINE.md:146-153`: nace sin la trazabilidad que las cuatro tablas principales
+  sí tienen desde T1.
+
+- [ ] **`PIPELINE.md` y `GUIA_RESULTADOS.md` desactualizados por esta corrida** (🟡) · Código · `ml-implementador`
+  `Implementacion/PIPELINE.md:43-45,103-108,139-153` y `Resultados/GUIA_RESULTADOS.md:16,§3.2` quedan
+  **desactualizados** tras la re-corrida del 2026-08-11 y **no listan el artefacto nuevo**
+  `*_vocabulario_onehot.csv`.
+
+- [ ] **Rotular el 77 como reconstrucción** (🟡) · Código · `ml-implementador`
+  El 77 del delta 77→122 se **recuenta** desde los CSV `_original_*`, no es el vocabulario que el
+  pipeline usó en su día: hay que **rotularlo como reconstrucción** allí donde se publique, para que
+  nadie lo lea como una cifra registrada por `program.py`.
+
+- [ ] **Enteros en el CSV de vocabulario one-hot** (🟡) · Código · `ml-implementador`
+  Las cuentas salen como flotantes (`77.0`). Son recuentos: deben publicarse como **enteros**.
+
+- [ ] **Encabezado «Recomendaciones:» vacío en los informes de validación** (🟡) · Código · `ml-implementador`
+  Los `*_validation_report.txt` imprimen el encabezado **sin contenido debajo**. O se rellena o se
+  suprime; un encabezado vacío en un artefacto publicado invita a pensar que se perdió algo.
 
 ### Altas del grill del 2026-08-11 — dos specs pendientes
 
@@ -558,6 +564,12 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
     (el delta 77→122) y `:284` (la comparación por orden). **Motivo:** esta nota **cita el informe y
     las figuras que la re-corrida regenera**, y los que hay hoy en disco son de la corrida
     `274923d`-sucio (ver el desajuste vivo anotado en la cabecera de ese grupo).
+    → **DEPENDENCIA SATISFECHA el 2026-08-11:** las tres están **cerradas** y `validacion.py` se
+    re-corrió en ambas variantes, con **16 artefactos regenerados** en `Resultados/` (19:28). **Esta
+    ficha queda desbloqueada** y debe citar los informes y figuras de **esa** corrida, no los del
+    2026-08-10. **Advertencia al redactar:** el `*_vocabulario_onehot.csv` nuevo y las cabeceras de los
+    informes **todavía no llevan `commit` ni fecha** (residuo abierto), así que la trazabilidad hay que
+    anclarla a mano.
   - **Fuente numérica:** por la decisión del 2026-08-11, las cifras del KS se publican **una sola vez,
     aquí en `4.2.1`**; `5.1` las usa **por referencia** y **T11 interpreta, no publica**.
 
@@ -649,6 +661,9 @@ Antes había aquí una lista de secciones vedadas a los agentes. Solo **una** so
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-11 | Código | **`validacion.py:282` · La lista nominal de los 17 tipos 0-day ya se persiste en el informe.** Cerrada completando el WIP de `d9225be` **sin reescribir sus ~231 líneas**: el cambio queda confinado a `_save_report()` (`:1080-1142`). `_save_report()` ya escribe la lista nominal completa —**tipo, categoría, instancias, total y % de D2**— con **tres ramas de degradación**, así que los 0-day dejan de quedarse solo en consola, que era la deuda. **El 17 sigue siendo emergente, no una lista a mano** (`:340`), y el auditor verificó que **los 17 tipos coinciden uno a uno con `metricas_hibrido_0day.csv`**. Re-corrida en las **dos variantes**: `EXITCODE=0`, `Integridad: APROBADA`, **16 artefactos regenerados** en `Resultados/` (2026-08-11 19:28), **ningún `metricas_*.csv` y ningún `.joblib` tocados**. Con esto **queda desbloqueada la ficha del `4.2`**, que cita el informe que esta re-corrida regenera. Dictamen de `auditor-ml`: **APTO CON CAMBIOS** — los cambios salen como residuos, ninguno 🔴. Commit previo del WIP: `d9225be` | — |
+| 2026-08-11 | Código | **`validacion.py:283` · El delta 77→122 del fix one-hot ya vive en un artefacto regenerable.** El parámetro `onehot` de `:991` **deja de ser *dead parameter***: ahora se lee y se escribe el delta **con desglose por columna categórica**, y nace el artefacto **`Resultados/specialized_nsl_kdd_vocabulario_onehot.csv`** (más su gemelo `_sin_seleccion_`), vía el helper nuevo y contiguo `_guardar_csv_vocabulario_onehot()` (`:1144-1201`). Las **~148 líneas** de `medir_vocabulario_onehot()` **no se reescribieron**. **Resultado que hay que leer bien: el delta sale 77→122 en las DOS variantes**, no 77→54 en la de 54 — **correcto por construcción y verificado en código**: el one-hot ocurre en `program.py:283`, `select_features()` se invoca **después** (`:1148-1150`) y los CSV `_original_*` se escriben **pre-one-hot** (`:650-652`). Queda **declarado en los dos informes**. **Cero literales**: el 17, el 77, el 122 y el 45 se **recuentan** (verificado por el auditor). Dictamen de `auditor-ml`: **APTO CON CAMBIOS**. Commit previo del WIP: `d9225be` | — |
+| 2026-08-11 | Código | **`validacion.py:284` · Comparación de columnas D2/D3 por orden, re-corrida — y la incógnita se resuelve EN NEGATIVO.** Era la mitad que faltaba: el fix estaba en `d9225be` pero **nadie lo había corrido**, así que no se sabía si destapaba un desajuste real. **Ya se sabe: NO destapó ningún desajuste D2/D3.** Los CSV que deja `program.py` **ya estaban alineados posicionalmente en ambas variantes**; la comparación por conjunto **no ocultaba nada**. Es un **resultado, no un no-hallazgo**: la rama de diagnóstico «mismo conjunto, distinto orden» queda como red de seguridad, no como parche de un bug vivo. Verificado además por el auditor en la misma pasada: **cero `fit`**, salvedad del KS **impresa en ambos informes**, KS **coincidente con lo publicado** —(A) **37/54** y **44/122** · (B) **25/54** y **31/122**— y **alcance respetado**. Dictamen de `auditor-ml`: **APTO CON CAMBIOS**. Commit previo del WIP: `d9225be` | — |
 | 2026-08-10 | Código | **T3 · Medición de la cascada invertida.** Script nuevo `Implementacion/app/cascada_invertida.py` (clase `NSLKDDInvertedCascadeMeasurer`): medición **contrafactual y fuera del sistema** que pasa las **9.711 filas normales de D2** por el clasificador de firmas **ya persistido** (`firma_RandomForest_<set>.joblib`) y cuenta cuántas condenaría con confianza ≥ `UMBRAL_CONF`. **Cero `fit`**, solo inferencia; y el umbral se lee de `hibrido_<set>.joblib::umbral_conf_elegido`, **nunca como literal** — si falta el descriptor, **aborta**. Resultados: variante **54 → 6.558 condenadas (67,53 %)**; variante **122 → 3.329 (34,28 %)**. Salida en `Resultados/metricas_cascada_invertida.csv` (**10 filas**, tabla propia: no toca ninguna de las cuatro principales) y dos figuras. **Matiz conceptual que impuso la auditoría y que manda al citar:** la fila `__global__` es una **cota inferior de falsos positivos irrecuperables**, **no** «el FPR de un sistema de firmas-primero» — en el sistema publicado `unknown` es alarma (`hibrido.py:301`, decisión P-5), así que lo que cae bajo umbral **no queda exonerado**. La lectura y los números viven en `Implementacion/PIPELINE.md`, sección «La cascada invertida (T3)». **No cierra `T9`**: solo la alimenta (viñeta `3.2.2`), y allí queda anotada la cifra con su salvedad. Dictamen de `auditor-ml`: **APTO** | `b1f1df2` |
 | 2026-08-10 | Código | **T2 · KS de D1 contra los normales de D2.** Añadido en `Implementacion/app/validacion.py` **sin sustituir** el KS existente: ahora son **dos mediciones separadas y no intercambiables** — **(A)** D1 vs D2 completo: **37/54** y **44/122** características con drift; **(B)** D1 vs las **9.711 normales de D2**: **25/54** y **31/122**. `src_bytes` cae de **0,346 a 0,091** y `dst_bytes` de **0,317 a 0,107**. El `delta = (A) − (B)` se publica como **comparación, nunca como descomposición aditiva** —el KS es un supremo de diferencia de CDF y no es aditivo sobre una mezcla—, y la salvedad quedó **impresa en los dos informes de validación**. **Efecto colateral no previsto:** `validacion.py` **nunca se había corrido en la variante 122**; ahora sí, con informe nuevo (`Resultados/specialized_nsl_kdd_sin_seleccion_validation_report.txt`) y **6 figuras nuevas**. De paso aparecieron **dos cifras inventadas preexistentes** en `Resultados/GUIA_RESULTADOS.md` («34 features», «85 % de drift»), **con destino explícito a §4.2.1 y §5.1**: corregidas a **37** y **68,5 %** contra el artefacto real. Invariantes verificadas **cuatro veces** por `auditor-ml`: cero `fit`, cero recalibración, **D2 solo se reporta** (H-4/P-4 intactas); los **8 `metricas_*.csv` previos sin reescribir** (222 filas, `semilla = 42`, `commit = 1163c90`), y `CLAVE_UNICIDAD`, `_limpiar_variante_csv`, `comprobar_recuento()` y `COLUMNAS_MINIMAS` **sin tocar** — no hubo que re-correr el runbook. **No cierra `T11`**: solo la alimenta (`5.1`/`5.4`), donde quedan anotadas las cifras y la salvedad del `delta`. Dictamen de `auditor-ml`: **APTO** | `b1f1df2` |
 | 2026-08-09 | — | **T0 · Retirada de la regla «lo escribe Francisco».** Aplicadas las dos velocidades de la decisión marco (b) del lote 2026-08-06. **Decisión de Francisco tomada al cerrar: `2.1.4` NO queda exceptuada** — entra en la retirada completa de `2.x`, porque exceptuar una sola nota reintroduciría a mano la regla que la decisión marco acababa de retirar del capítulo entero; **con eso T25 queda desbloqueada, y con ella T24** (el bloque de redes neuronales de `2.1.4` donde se ancla `[6]`). **Recuento real: 15 ficheros tocados (+96 −92), no las 11 ubicaciones que declaraba la ficha.** La ficha **subestimaba el alcance** y por eso hubo que barrer **por contenido, no por la lista**: las ubicaciones que faltaban no llevaban el callout literal, sino la misma regla escrita de otra forma («la redacción corresponde a Francisco», «✍ teoría (Francisco)», «en investigación por Francisco»). Una de ellas es `Obsidian_TFG_Vault/02 Marco Teórico/2.2 Ciberseguridad/2.2.1 Introducción a la ciberseguridad.md:52`: no lleva el callout «Redacción a cargo de Francisco» —eso la ficha lo había corregido bien—, pero dentro del callout de subestructura del 2026-07-15 decía «Cada una contiene un `## Guion propuesto`; la redacción corresponde a Francisco», que es la misma regla escrita de otra forma; corregida. Las otras once: (1) `CLAUDE.md`, donde la viñeta de «Reglas duras del andamiaje» pasa a bloque **«Autoría de la redacción»** con las tres velocidades — `2.x` sin restricción (`2.1.4` incluida), `6.2` borrador de agente con revisión de Francisco, `4.2` ya cedido por la decisión del 2026-07-21, y la bibliografía final en Zotero/IEEE que **sigue siendo de Francisco**; (2) este mismo fichero, cuya sección «Fuera de la lista operativa — lo escribe Francisco» se reescribe como **«Autoría de la redacción — estado vigente desde T0 (2026-08-09)»** con tabla de quién redacta qué —solo sobrevive la bibliografía de Zotero—; (3) `.claude/agents/redactor-tfg.md`, donde «Qué NO tocar» pierde el párrafo que le prohibía redactar teoría y se antepone «Autoría: qué redactas y con qué condición» — **cambio de alcance relevante: se elimina además el párrafo «Los primeros apartados del informe son investigación… Eres encargado de documentar EXCLUSIVAMENTE los resultados del código»**, porque era la misma prohibición en prosa; (4-11) el callout de las **8 notas** (`2.1.6`, `2.2.2`, `2.2.3`, `2.2.4`, `2.2.5`, `2.3.1`, `2.3.2`, `2.3.3`), que pasa de `> [!todo] Redacción a cargo de Francisco` a `> [!info] Redacción a cargo del redactor-tfg` conservando cada coletilla propia (la de `2.2.4` sobre ser la sección-motivación de la tesis, la de `2.1.6` sobre el anclaje a Guia_ML 02-03). **Dos ubicaciones más, aparecidas después de la verificación inicial:** (12) `resumen-de-decisiones.md:560`, cuya «Salvedad abierta» seguía diciendo que el choque T0/T25 sobre `2.1.4` estaba sin resolver — reescrita como **resuelta**, con la decisión de no exceptuar; (13) `Obsidian_TFG_Vault/00 Índice TFG.md`, el **MOC vivo del vault**, en **5 sitios**: el callout «Punto actual» (`:8`), la leyenda `✍ teoría (Francisco)` (`:15`), las **8 líneas de notas** del capítulo 2 (`:44-58`), la línea de `4.2` (`:72`) y la de `6.2` (`:88`) — todas reapuntadas al `redactor-tfg`. **Deliberadamente sin tocar:** `next-steps.md:382,387,421`, que está congelado y es **historial del 2026-07-15**; reescribirlo falsearía lo que se decidió entonces. **No es deuda pendiente.** **Residuo nuevo, sin ficha, señalado y no tocado:** `resumen-de-decisiones.md:459` dice «queda como divergencia a corregir por Francisco al redactar» — roza la regla retirada pero **no es la misma cosa** (habla de corregir una divergencia terminológica concreta en `2.2.4`, «detectores no supervisados», no de la autoría de un capítulo); **si merece ficha propia, lo decide Francisco.** Y las **2 notas de `Obsidian_TFG_Vault/99 Investigación/`** que dicen que `6.2` la redacta Francisco (`aprendizaje-continuo-nested-learning.md:25` y `clasificadores-tabulares-y-arquitecturas-hibridas.md:30`) **no son de T0**: quedan anotadas como trabajo de **T17**, que es quien pasa por los cuatro informes. **Fuera del alcance de T0 pero corregido en el mismo ciclo, con aprobación de Francisco:** `how-to-work.md:32` decía «no te fíes de la prosa de `next-steps.md`/bitácora» cuando desde el 2026-08-01 el registro operativo vivo es `features.md`; reescrito para nombrar los dos ficheros con su papel actual (lo detectó el `cronista` en el cierre anterior) | `d6dae35` |
