@@ -76,6 +76,20 @@ class NSLKDDValidator:
 
         self.feature_names = None
 
+        # Tipos de ataque presentes en D2 y ausentes del entrenamiento (los
+        # "0-day" del experimento). Se calculan en analyze_class_distribution()
+        # SIEMPRE desde los datos —nunca desde una lista escrita a mano— y se
+        # persisten en el informe (deuda menor de next-steps.md:277: hasta ahora
+        # solo salían por consola).
+        self.zero_day_df = None
+
+    # Columnas categóricas del NSL-KDD y columnas que no son características.
+    # Deben coincidir con program.py:53 ('self.categorical_columns') y con las
+    # que program.py:281-283 descarta antes del one-hot: si allí cambiaran, la
+    # medición del vocabulario dejaría de reproducir el one-hot real.
+    COLUMNAS_CATEGORICAS = ['protocol_type', 'service', 'flag']
+    COLUMNAS_NO_CARACTERISTICA = ['attack', 'level', 'attack_category']
+
     # ─────────────────────────────────────────────────────────────────────────
     # Utilidades
     # ─────────────────────────────────────────────────────────────────────────
@@ -179,22 +193,40 @@ class NSLKDDValidator:
             else:
                 print(f"   ✓ {name}: {len(X):,} muestras consistentes")
 
-        # 2. Alineación de columnas
-        print("\n2. Alineación de columnas entre divisiones:")
-        cols_d1 = set(self.D1_X.columns)
-        cols_d2 = set(self.D2_X.columns)
-        cols_d3 = set(self.D3_X.columns)
+        # 2. Alineación de columnas — POR ORDEN, no por conjunto
+        # Deuda menor de next-steps.md:279: la comparación anterior era de
+        # conjuntos, así que daba por buenas tres matrices con las mismas
+        # columnas PERMUTADAS. Eso no es inocuo: los modelos consumen los CSV
+        # como arrays posicionales (sklearn ignora los nombres), de modo que una
+        # permutación entre D1/D2/D3 pasaría el chequeo y envenenaría la
+        # inferencia en silencio. Se compara la lista ordenada y, cuando el
+        # conjunto coincide pero el orden no, se dice exactamente eso.
+        print("\n2. Alineación de columnas entre divisiones (conjunto Y orden):")
+        cols_d1 = list(self.D1_X.columns)
+        cols_d2 = list(self.D2_X.columns)
+        cols_d3 = list(self.D3_X.columns)
         if cols_d1 == cols_d2 == cols_d3:
-            print(f"   ✓ {len(self.feature_names)} columnas alineadas en D1 / D2 / D3")
+            print(f"   ✓ {len(self.feature_names)} columnas alineadas en D1 / D2 / D3 "
+                  f"(mismo conjunto y mismo orden)")
         else:
-            diff_d2 = cols_d1.symmetric_difference(cols_d2)
-            diff_d3 = cols_d1.symmetric_difference(cols_d3)
-            if diff_d2:
-                issues.append(f"Columnas D1 ≠ D2: {diff_d2}")
-                print(f"   ❌ Diferencias D1 ↔ D2: {diff_d2}")
-            if diff_d3:
-                issues.append(f"Columnas D1 ≠ D3: {diff_d3}")
-                print(f"   ❌ Diferencias D1 ↔ D3: {diff_d3}")
+            for nombre, cols in [('D2', cols_d2), ('D3', cols_d3)]:
+                if cols == cols_d1:
+                    continue
+                diferencia = set(cols_d1).symmetric_difference(set(cols))
+                if diferencia:
+                    issues.append(f"Columnas D1 ≠ {nombre}: {diferencia}")
+                    print(f"   ❌ Diferencias D1 ↔ {nombre}: {diferencia}")
+                else:
+                    # Mismo conjunto, distinto orden: justo lo que la comparación
+                    # por conjunto ocultaba.
+                    desordenadas = [(i, a, b) for i, (a, b) in enumerate(zip(cols_d1, cols))
+                                    if a != b]
+                    issues.append(f"Columnas D1 y {nombre}: mismo conjunto pero distinto "
+                                  f"ORDEN ({len(desordenadas)} posiciones)")
+                    print(f"   ❌ D1 y {nombre} tienen las mismas columnas en distinto ORDEN "
+                          f"({len(desordenadas)} posiciones). Primeras 5:")
+                    for i, a, b in desordenadas[:5]:
+                        print(f"      posición {i}: D1='{a}'  {nombre}='{b}'")
 
         # 2b. Consistencia con los transformadores persistidos: las columnas de
         # los CSVs deben coincidir con 'feature_columns' del transformers.joblib
@@ -299,12 +331,40 @@ class NSLKDDValidator:
         if ratio > 100:
             print("   ⚠️  Alto desbalance — considera class_weight='balanced' en el modelo de firmas")
 
-        # Ataques nuevos en D2 no vistos en D3
-        new_in_test = set(d2_att.unique()) - {'normal'} - set(d3_att.unique())
+        # Ataques nuevos en D2 no vistos en D3 = los "0-day" del experimento.
+        # Se derivan SIEMPRE de los datos (diferencia de conjuntos entre las
+        # etiquetas de D2 y las de D3); no hay ninguna lista literal escrita a
+        # mano ni ningún recuento fijado a priori. El resultado se guarda en
+        # self.zero_day_df para que _save_report() lo persista en el informe
+        # (next-steps.md:277: hasta ahora solo salía por consola).
+        new_in_test = sorted(set(d2_att.unique()) - {'normal'} - set(d3_att.unique()))
+        d2_cat_series = pd.Series(self.D2_y_category_original)
+        filas = []
+        for a in new_in_test:
+            mascara = (d2_att == a).values
+            categorias = d2_cat_series[mascara].unique().tolist()
+            filas.append({
+                'tipo': a,
+                'categoria': '/'.join(sorted(categorias)),
+                'instancias_en_D2': int(mascara.sum()),
+            })
+        self.zero_day_df = pd.DataFrame(
+            filas, columns=['tipo', 'categoria', 'instancias_en_D2']
+        )
+        if not self.zero_day_df.empty:
+            self.zero_day_df = self.zero_day_df.sort_values(
+                'instancias_en_D2', ascending=False
+            ).reset_index(drop=True)
+
         if new_in_test:
-            print(f"\n   ⚠️  {len(new_in_test)} tipo(s) de ataque NUEVOS en D2 (no vistos en D3):")
-            for a in sorted(new_in_test):
-                print(f"      → {a}  (solo detectable por el modelo de anomalías)")
+            n_inst = int(self.zero_day_df['instancias_en_D2'].sum())
+            print(f"\n   ⚠️  {len(new_in_test)} tipo(s) de ataque NUEVOS en D2 (no vistos en D3) "
+                  f"— {n_inst:,} instancias "
+                  f"({n_inst / len(self.D2_y_attack_original) * 100:.2f} % de D2):")
+            for _, fila in self.zero_day_df.iterrows():
+                print(f"      → {fila['tipo']:<20} [{fila['categoria']}]  "
+                      f"{fila['instancias_en_D2']:>5,} instancias en D2  "
+                      f"(solo detectable por el modelo de anomalías)")
         else:
             print("\n   ✓ Todos los ataques de D2 están representados en D3")
 
@@ -730,6 +790,148 @@ class NSLKDDValidator:
         return resumen
 
     # ─────────────────────────────────────────────────────────────────────────
+    # 7. Vocabulario del One-Hot: el delta 77 → 122 del fix del 2026-07-05
+    # ─────────────────────────────────────────────────────────────────────────
+
+    def medir_vocabulario_onehot(self):
+        """
+        RECOMPUTA el delta 77 → 122 del fix del one-hot (deuda de
+        next-steps.md:278) contando las categorías reales de los CSV
+        `_original_*` que dejó program.py. No hay ningún literal: las dos cifras
+        salen de los datos de esta misma corrida.
+
+        Qué se mide y por qué son dos números:
+          - Vocabulario BUGGY (solo D1): antes del 2026-07-05 las columnas se
+            alineaban contra D1, que es solo tráfico normal, así que las
+            categorías de service/flag que únicamente aparecen en tráfico de
+            ataque se descartaban al reindexar. Aquí se reconstruye contando las
+            categorías presentes SOLO en D1.
+          - Vocabulario ACTUAL (unión D1+D3): el que fija program.py:292-298.
+
+        Este chequeo NO toca D2 ni ajusta nada: solo cuenta categorías (es la
+        misma puerta de calidad de siempre, sin fit).
+
+        Nota de variante: los CSV `_original_*` son idénticos en las dos
+        variantes (54 y 122) porque la selección de características actúa
+        después del one-hot; por eso esta medición da lo mismo en ambas, y el
+        informe lo dice explícitamente.
+
+        Returns:
+        --------
+        dict
+            medido · n_numericas · dummies_solo_d1 · dummies_union ·
+            total_solo_d1 · total_union · detalle (por columna categórica) ·
+            total_union_transformers (contraste independiente) · motivo (si no
+            se pudo medir)
+        """
+        print("\n🧬 VOCABULARIO DEL ONE-HOT — delta del fix de 2026-07-05 "
+              "(D1 solo → unión D1+D3)")
+        print("=" * 60)
+
+        ruta_d1 = f'{self.base_path}_original_D1_normal_for_anomaly.csv'
+        ruta_d3 = f'{self.base_path}_original_D3_known_attacks_for_signatures.csv'
+
+        resultado = {
+            'medido': False,
+            'motivo': None,
+            'n_numericas': None,
+            'dummies_solo_d1': None,
+            'dummies_union': None,
+            'total_solo_d1': None,
+            'total_union': None,
+            'detalle': [],
+            'total_union_transformers': None,
+        }
+
+        # Contraste independiente del 122: la lista completa post-one-hot que
+        # program.py persiste en el joblib ('feature_columns_pre_seleccion').
+        # Es otra medición del mismo número, por otra vía, y está disponible
+        # también en la variante de 54 (donde los CSV procesados ya vienen
+        # filtrados y no permitirían contarlo).
+        transformers_path = f'{self.base_path}_transformers.joblib'
+        if os.path.exists(transformers_path):
+            try:
+                pre = joblib.load(transformers_path).get('feature_columns_pre_seleccion')
+                if pre is not None:
+                    resultado['total_union_transformers'] = len(pre)
+            except Exception as e:
+                print(f"   ℹ️  No se pudo leer transformers.joblib ({e})")
+
+        if not (os.path.exists(ruta_d1) and os.path.exists(ruta_d3)):
+            resultado['motivo'] = ('no están en disco los CSV `_original_D1` / '
+                                   '`_original_D3` que genera program.py')
+            print(f"   ℹ️  Medición omitida: {resultado['motivo']}.")
+            print("      El informe declarará el delta como VALOR HISTÓRICO con su procedencia.")
+            return resultado
+
+        try:
+            cabecera = pd.read_csv(ruta_d1, nrows=0).columns.tolist()
+            faltan = [c for c in self.COLUMNAS_CATEGORICAS if c not in cabecera]
+            if faltan:
+                resultado['motivo'] = f"faltan columnas categóricas en los CSV originales: {faltan}"
+                print(f"   ℹ️  Medición omitida: {resultado['motivo']}.")
+                return resultado
+
+            d1_cat = pd.read_csv(ruta_d1, usecols=self.COLUMNAS_CATEGORICAS)
+            d3_cat = pd.read_csv(ruta_d3, usecols=self.COLUMNAS_CATEGORICAS)
+
+            # Numéricas = todo lo que no es categórico ni etiqueta. Es el mismo
+            # criterio que aplica program.py antes del get_dummies.
+            n_numericas = len([c for c in cabecera
+                               if c not in self.COLUMNAS_CATEGORICAS
+                               and c not in self.COLUMNAS_NO_CARACTERISTICA])
+
+            detalle = []
+            dummies_solo_d1 = 0
+            dummies_union = 0
+            for col in self.COLUMNAS_CATEGORICAS:
+                cats_d1 = set(d1_cat[col].unique())
+                cats_d3 = set(d3_cat[col].unique())
+                n_d1 = len(cats_d1)
+                n_union = len(cats_d1 | cats_d3)
+                dummies_solo_d1 += n_d1
+                dummies_union += n_union
+                detalle.append({
+                    'columna': col,
+                    'categorias_en_D1': n_d1,
+                    'categorias_union_D1_D3': n_union,
+                    'recuperadas': n_union - n_d1,
+                })
+
+            resultado.update({
+                'medido': True,
+                'n_numericas': n_numericas,
+                'dummies_solo_d1': dummies_solo_d1,
+                'dummies_union': dummies_union,
+                'total_solo_d1': n_numericas + dummies_solo_d1,
+                'total_union': n_numericas + dummies_union,
+                'detalle': detalle,
+            })
+
+            print(f"   Vocabulario BUGGY (alineado solo con D1): {resultado['total_solo_d1']} "
+                  f"características = {n_numericas} numéricas + {dummies_solo_d1} dummies")
+            print(f"   Vocabulario ACTUAL (unión D1+D3):         {resultado['total_union']} "
+                  f"características = {n_numericas} numéricas + {dummies_union} dummies")
+            print(f"   Δ = +{resultado['total_union'] - resultado['total_solo_d1']} características "
+                  f"(+{dummies_union - dummies_solo_d1} dummies exclusivas de tráfico de ataque)")
+            for d in detalle:
+                print(f"      {d['columna']:<15} D1={d['categorias_en_D1']:>3}  "
+                      f"unión={d['categorias_union_D1_D3']:>3}  "
+                      f"(+{d['recuperadas']})")
+            if resultado['total_union_transformers'] is not None:
+                coincide = (resultado['total_union_transformers'] == resultado['total_union'])
+                print(f"   {'✓' if coincide else '❌'} Contraste con transformers.joblib "
+                      f"('feature_columns_pre_seleccion'): "
+                      f"{resultado['total_union_transformers']} características")
+
+        except Exception as e:
+            resultado['medido'] = False
+            resultado['motivo'] = f"error al leer los CSV originales: {e}"
+            print(f"   ℹ️  Medición omitida: {resultado['motivo']}.")
+
+        return resultado
+
+    # ─────────────────────────────────────────────────────────────────────────
     # Reporte completo
     # ─────────────────────────────────────────────────────────────────────────
 
@@ -747,6 +949,9 @@ class NSLKDDValidator:
         self._plot_drift_comparativa(drift_df, drift_norm_df)
         outlier_summaries = self.analyze_outliers()
         d2_range_df = self.check_d2_scaling_range()
+        # Delta 77 → 122 del fix del one-hot, recomputado desde los datos
+        # (next-steps.md:278).
+        onehot = self.medir_vocabulario_onehot()
 
         report = {
             'integrity_ok': integrity_ok,
@@ -764,21 +969,26 @@ class NSLKDDValidator:
             'low_variance_features': len(feat_analysis['low_variance']),
             'high_corr_pairs': len(feat_analysis['high_correlation']),
             'd2_features_fuera_rango': len(d2_range_df),
+            # Recuento (nunca una lista fija) de los tipos 0-day de D2
+            'n_zero_day_types': (0 if self.zero_day_df is None
+                                 else int(len(self.zero_day_df))),
         }
 
         report_path = f'{self.base_path}_validation_report.txt'
         self._save_report(report, drift_df, d2_range_df, report_path,
-                          drift_norm_df=drift_norm_df)
+                          drift_norm_df=drift_norm_df, onehot=onehot)
 
         print(f"\n{'✅' if integrity_ok else '❌'} Integridad: {'APROBADA' if integrity_ok else 'FALLA'}")
         print(f"🌊 Drift (A) D1 vs D2 COMPLETO:      {report['features_with_drift']}/{report['n_features']} características")
         print(f"🌊 Drift (B) D1 vs D2 SOLO NORMALES: {report['features_with_drift_normales']}/{report['n_features']} características")
+        print(f"🕳️  Tipos 0-day en D2 (no vistos en D3): {report['n_zero_day_types']}")
         print(f"⚠️  Pares alta correlación: {report['high_corr_pairs']}")
         print(f"📄 Reporte guardado en: {report_path}")
 
         return report
 
-    def _save_report(self, report, drift_df, d2_range_df, path, drift_norm_df=None):
+    def _save_report(self, report, drift_df, d2_range_df, path, drift_norm_df=None,
+                     onehot=None):
         with open(path, 'w', encoding='utf-8') as f:
             f.write("REPORTE DE VALIDACIÓN — DIVISIONES D1/D2/D3 NSL-KDD\n")
             f.write("=" * 60 + "\n\n")
