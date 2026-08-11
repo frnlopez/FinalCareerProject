@@ -255,6 +255,11 @@ app/
 
 ### 3.2 Deuda técnica priorizada
 > Documentado, **sin arreglar aún**. Revisar antes de dar los resultados por definitivos.
+>
+> **Migrado a `features.md` el 2026-08-11; esta sección queda como historial.** Las casillas de abajo
+> **no se reescriben** —el congelado del 2026-08-01 se mantiene—: lo que siga abierto vive como ficha
+> en `features.md`, bajo «Migración de `next-steps.md` §3.2 — altas del 2026-08-11», y **allí está su
+> estado real**.
 
 - `☑` 🔴 **Posible pérdida de datos en el One-Hot.** Se alinean columnas usando **D1 (solo normal)** como referencia; las categorías de `service`/`flag` presentes solo en D3 (ataques) o D2 (test) se **descartan** al reindexar. Debería alinearse contra la **unión** de categorías (o fijar el vocabulario con todo el train). *Impacto: sesgo en firmas y en evaluación.*
   → **DECIDIDO 2026-07-02: arreglar ANTES de entrenar ningún modelo.** Corregir alineación (vocabulario = D1+D3), regenerar CSVs y re-validar con `validacion.py`. Es el **paso 0** del track de código.
@@ -279,6 +284,15 @@ app/
 - `☐` 🟡 `validacion.py` compara columnas D2/D3 por conjunto, no por orden (`validacion.py:156-159`) — fix de una línea.
 
 ### 3.3 Reproducibilidad
+> **Migrado a `features.md` el 2026-08-11; esta sección queda como historial.** Las casillas de abajo
+> **no se reescriben** —el congelado del 2026-08-01 se mantiene—.
+>
+> **Aviso para que nadie las reabra creyéndolas pendientes:** las **tres casillas `☐`** de esta sección
+> **ya están hechas**, y se dejan sin marcar a propósito porque la sección no se reescribe.
+> **No son trabajo pendiente:** «fijar semilla global» = `config.RANDOM_STATE` **42**; «centralizar
+> rutas/parámetros en un config» = `config.py`, en su sitio desde **T1**; «fijar versiones en
+> `requirements.txt`» = *pinning* hecho (21 dependencias, `scikit-learn==1.7.1`).
+
 - `☑` Persistir transformadores ajustados (`scaler`, `label_encoder`, `category_encoder`) con `joblib` para inferencia consistente.
   → **Hecho 2026-07-05** para el preprocesado: `Resultados\specialized_nsl_kdd_transformers.joblib`. Los modelos (anomalías/firmas) se persistirán en sus propios scripts.
 - `☐` Fijar **semilla global** (`random_state`) en todos los experimentos.

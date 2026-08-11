@@ -246,6 +246,11 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
     0,091, `dst_bytes` 0,317 → 0,107). El `delta = (A) − (B)` **se publica como comparación, nunca
     como descomposición aditiva**: el KS es un supremo de diferencia de CDF y no es aditivo sobre una
     mezcla. La salvedad está impresa en los dos informes de validación; escribirla también aquí.
+    → **Estrechamiento decidido por Francisco el 2026-08-11: T11 pasa a INTERPRETAR, no a publicar.**
+    `4.2.1` es la **FUENTE NUMÉRICA** del KS y `5.1` la usa **por referencia, sin repetir cifras**.
+    Las cifras de (A) y (B) y la salvedad del `delta` se publican **una sola vez, en `4.2.1`**; aquí se
+    citan y se interpretan. Registrado como decisión en `resumen-de-decisiones.md`
+    (§ Decisiones del 2026-08-11).
 
 - [ ] **T12 · `6.2 Líneas futuras`, borrador desde `EL_FUTURO.md`** · Informe · `redactor-tfg`
   El aprendizaje continuo aparece **fusionado en tres peldaños encadenados**, nunca como línea
@@ -420,6 +425,133 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
     `Bibliografía.md:32`, retirar el aviso de `Bibliografía.md:86` si ya no procede, y corregir el
     error de `Obsidian_TFG_Vault/99 Investigación/Auditoría de Bibliografía.md:140`, que afirma que
     «`[6]` se usa bien en otros sitios y se queda» — **es falso**.
+
+### Migración de `next-steps.md` §3.2 — altas del 2026-08-11
+
+> Las cinco fichas siguientes salen de la **migración de la deuda técnica de `next-steps.md` §3.2**,
+> hecha el **2026-08-11**: eran casillas `☐` dentro de un fichero congelado, donde nadie las miraba.
+> **§3.2 y §3.3 quedan como historial**, con cabecera propia y **sin reescribir ni una casilla**; el
+> estado vivo de lo que siga abierto es **este**.
+>
+> **Las líneas citadas son las POSTERIORES a esa cabecera de migración**, que añadió 5 líneas a §3.2:
+> `:267` era `:262` · `:271` era `:266` · `:282`/`:283`/`:284` eran `:277`/`:278`/`:279`.
+>
+> **DESAJUSTE VIVO — leer antes de citar cualquier salida de `validacion.py`.**
+> `Implementacion/app/validacion.py` está **modificado y sin commitear** (`+231 −21`, 6 hunks, 1144
+> líneas) y **NO se ha re-corrido**. Los **2 informes de validación y las 12 figuras** que hay en
+> `Resultados/` son de la corrida **`274923d`-sucio**: los dos `*_validation_report.txt` son del
+> **2026-08-10** (20:24 y 20:45), **previos** a estas ediciones, y **no contienen ni el delta 77→122 ni
+> la lista de 0-day**. **No corresponden al código que hay hoy en el fichero, y nadie debe citarlas
+> como producto suyo.** El fichero **no quedó roto: quedó incompleto** (`ast.parse` OK) — un
+> implementador se cortó a media ejecución. **No hay nada que revertir.**
+>
+> **Deuda nueva detectada en la misma inspección, sin ficha propia** (se cierra con `:282` y `:283`):
+> (i) los comentarios de `validacion.py:82-83` y `:338-339` **afirman un comportamiento que no
+> existe** («se persisten en el informe», «para que `_save_report()` lo persista»); (ii)
+> `COLUMNAS_CATEGORICAS` y `COLUMNAS_NO_CARACTERISTICA` (`:90-91`) son **constantes de clase
+> duplicadas por copia** de `program.py:53` y `program.py:281-283`, acoplamiento que el propio
+> comentario `:87-89` reconoce.
+
+- [ ] **Rutas absolutas hardcodeadas en `program.py` y `validacion.py`** (🟠) · Código · `ml-implementador`
+  Origen: `next-steps.md:267` (§3.2). Poco portable y poco reproducible.
+  **ABIERTA. No se toca en este lote:** toca `program.py`, y eso obliga a **decidir antes si se
+  regeneran los splits**. Esa decisión es de Francisco.
+
+- [ ] **`warnings.filterwarnings('ignore')` global** (🟡) · Código · `ml-implementador`
+  Origen: `next-steps.md:271` (§3.2). Oculta avisos útiles durante la experimentación.
+  **ABIERTA. Verificado vivo el 2026-08-11** en `program.py:12` y `validacion.py:12`.
+
+- [~] **La lista nominal de los 17 tipos 0-day solo sale por consola** (🟡) · Código · `ml-implementador`
+  Origen: `next-steps.md:282` (§3.2). Hay que **persistirla en el informe de `validacion.py`**.
+  **EN CURSO el 2026-08-11 — la parte esencial NO está.** La computación sí: `self.zero_day_df` se
+  construye con tipo + categoría + instancias (`validacion.py:340-357`), el recuento entra en el dict
+  `report` como `n_zero_day_types` (`:972-974`) y sale por consola (`:360-366`, `:984`). Pero **el
+  cuerpo de `_save_report()` (`:992-1078`) no escribe ni la lista ni el recuento** — cero referencias a
+  `zero_day_df` o `n_zero_day_types` por debajo de `:984`. **Los tipos 0-day siguen quedándose solo en
+  consola, que es justo la deuda que había que cerrar.**
+  - **El 17 es emergente, no una lista escrita a mano** (`:340`).
+  - **Para cerrarla basta un cambio localizado:** escribir `self.zero_day_df` dentro del cuerpo de
+    `_save_report()`, antes de `:1080`.
+  - **Va ANTES de la ficha del `4.2`** de este mismo lote (dependencia dura, ver allí): esa nota cita
+    el informe que la re-corrida regenera.
+
+- [~] **El delta 77→122 del fix one-hot no está en ningún artefacto regenerable** (🟡) · Código · `ml-implementador`
+  Origen: `next-steps.md:283` (§3.2). Hoy la cifra solo vive en prosa; debe quedar en un artefacto de
+  `Resultados/`.
+  **EN CURSO el 2026-08-11 — medición sí, persistencia NO.** Método nuevo `medir_vocabulario_onehot()`
+  (`validacion.py:796-933`, ~148 líneas), invocado desde `generate_full_report()` (`:954`), y su dict
+  viaja hasta `_save_report(..., onehot=onehot)` (`:979`). Pero **el parámetro `onehot` de `:991` nunca
+  se lee**: es un *dead parameter*, la huella exacta de dónde se cortó el despacho. La única escritura
+  a disco del fichero es el `open(path,'w')` de `:992`; **no hay ningún `to_csv`**, y **no existe
+  ningún artefacto de vocabulario/one-hot en `Resultados/`**.
+  - **El 77 NO está hardcodeado: se recuenta de verdad.** `medir_vocabulario_onehot()` lee los CSV
+    reales `_original_D1_normal_for_anomaly.csv` y `_original_D3_known_attacks_for_signatures.csv`
+    (`:833-843`), hace `cats_d1 = set(d1_cat[col].unique())` y `n_union = len(cats_d1 | cats_d3)`
+    (`:855-864`), cuenta numéricas por exclusión desde la cabecera real (`:848-851`) y deriva
+    `total_solo_d1` / `total_union` (`:876-877`). **No hay literales `77` ni `122` en el código.**
+    Contrasta además contra `feature_columns_pre_seleccion` del joblib (`program.py:702`) y degrada
+    limpio con `motivo` si faltan los CSV.
+  - **Aviso que debe sobrevivir a la sesión:** el 77 **solo es *medible*** recontando el vocabulario
+    one-hot restringido a D1 frente a la unión D1+D3 — y **ya se verificó que lo es**: el camino
+    medible existe y está implementado. Si en algún momento dejara de serlo, entra como **valor
+    histórico declarado y NUNCA como cifra hardcodeada**. Importa porque **T19 y T20 existen
+    precisamente por cifras sin artefacto**.
+  - **Para cerrarla basta un cambio localizado:** leer el dict `onehot` dentro del cuerpo de
+    `_save_report()` (antes de `:1080`) y/o volcarlo a un CSV propio en `Resultados/`.
+  - **Va ANTES de la ficha del `4.2`** de este mismo lote (dependencia dura, ver allí).
+
+- [~] **`validacion.py` comparaba columnas D2/D3 por conjunto y no por orden** (🟡) · Código · `ml-implementador`
+  Origen: `next-steps.md:284` (§3.2), donde constaba como «`validacion.py:156-159` — fix de una línea».
+  **APLICADA en el árbol pero SIN COMMITEAR ni re-correr** — **no se mueve a `## Cerradas`: no tiene
+  commit, y «lo hecho es lo que tiene commit».** `validacion.py:205-208`: `set(...)` → `list(...)`,
+  comparación posicional.
+  - **Alcance excedido:** el encargo era un fix de una línea y son **~34** (`:196-229`), con rama nueva
+    que diagnostica «mismo conjunto, distinto orden» y lista las **5 primeras posiciones divergentes**.
+    Correcto, pero **excede el mandato**.
+  - **Aviso que debe sobrevivir a la sesión:** este fix **puede destapar un desajuste de orden** que la
+    comparación por conjunto venía ocultando. **Está aplicado pero sin re-correr, así que todavía no se
+    sabe.** Si aparece, **es hallazgo que se reporta, no se silencia.**
+  - **Va ANTES de la ficha del `4.2`** de este mismo lote (dependencia dura, ver allí): esa nota cita
+    las figuras que la re-corrida regenera.
+
+### Altas del grill del 2026-08-11 — dos specs pendientes
+
+> Salen del `grill-me` cerrado con Francisco el **2026-08-11**; ninguna de las dos estaba en disco
+> antes de esa fecha. Ambas son **carril Intervención** y de **lectura estrecha**: **no absorben ni
+> sustituyen ninguna ficha existente.**
+
+- [ ] **`4.2`: añadir la medición (B) del KS, arreglar la frase del FPR y el callout de trazabilidad** · Informe · `redactor-tfg`
+  Sobre `Obsidian_TFG_Vault/04 Implementación del sistema/4.2 Base de datos utilizada.md`. Tres puntos
+  y nada más. **T10 sigue intacta: esto no la sustituye ni la absorbe.**
+  1. Añadir la medición **(B)** junto a la **(A)**, con tabla: **(A)** D1 vs D2 completo = **37/54** y
+     **44/122**; **(B)** D1 vs las **9.711 normales de D2** = **25/54** y **31/122** (`src_bytes`
+     0,346 → 0,091; `dst_bytes` 0,317 → 0,107). **Con la salvedad impresa:** el `delta = (A) − (B)` es
+     **COMPARACIÓN, nunca descomposición aditiva** — el KS es un supremo de diferencia de CDF y **no es
+     aditivo sobre una mezcla**.
+  2. **Reescribir la frase del FPR de `:99`**, que hoy usa **(A)** para sostener algo que **solo (B)
+     sostiene**: (A) compara D1 contra un D2 que es **57 % ataques**, y los falsos positivos los
+     generan las filas **normales**.
+  3. **Corregir el callout de trazabilidad de `:110`**, que afirma que los estadísticos se calculan
+     «sobre los splits ya procesados (54 características)» cuando **ya existe el informe de la variante
+     122**.
+  - **ORDEN IMPUESTO (dependencia dura):** las **tres correcciones de `validacion.py` van ANTES** que
+    esta ficha — las del grupo «Migración de `next-steps.md` §3.2»: `:282` (los 17 tipos 0-day), `:283`
+    (el delta 77→122) y `:284` (la comparación por orden). **Motivo:** esta nota **cita el informe y
+    las figuras que la re-corrida regenera**, y los que hay hoy en disco son de la corrida
+    `274923d`-sucio (ver el desajuste vivo anotado en la cabecera de ese grupo).
+  - **Fuente numérica:** por la decisión del 2026-08-11, las cifras del KS se publican **una sola vez,
+    aquí en `4.2.1`**; `5.1` las usa **por referencia** y **T11 interpreta, no publica**.
+
+- [ ] **Glosa del sufijo `-sucio` en la primera aparición de `PIPELINE.md` y `GUIA_RESULTADOS.md`** · Código · `ml-implementador`
+  **Una línea** en la **primera aparición** de `Implementacion/PIPELINE.md` (`:140`) y de
+  `Resultados/GUIA_RESULTADOS.md` (`:350`), describiendo la **convención** y **remitiendo a la tabla
+  canónica de `PIPELINE.md:879-888`**, que queda **INTACTA y no se duplica**.
+  - **Contexto verificado el 2026-08-11:** el `-sucio` ya está documentado en `config.py:489-511`,
+    `evaluacion.py:69-75` y esa tabla. **El hueco es solo de orden de lectura**: 740 líneas de
+    distancia dentro de `PIPELINE.md`, y ninguna explicación en `GUIA_RESULTADOS.md`. **No aparece en
+    el vault.**
+  - **Estado: ABIERTA, no empezada.** Verificado: **ninguno de los dos ficheros aparece modificado en
+    el árbol.**
 
 ### Descartado — no reabrir
 

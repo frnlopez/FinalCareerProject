@@ -565,6 +565,32 @@ reconstrucción**, que el proyecto usa en `3.4.2` y `4.4`: Goodfellow se cita co
 
 ---
 
+## Decisiones del 2026-08-11
+
+### T11 se estrecha — **`4.2.1` es la fuente numérica del KS; `5.1` la usa por referencia**
+
+**Contexto.** El cierre de **T2** (2026-08-10) dejó el drift KS medido en **dos mediciones separadas y
+no intercambiables**: **(A)** D1 vs D2 completo (**37/54** y **44/122** características con drift) y
+**(B)** D1 vs las **9.711 normales de D2** (**25/54** y **31/122**; `src_bytes` 0,346 → 0,091,
+`dst_bytes` 0,317 → 0,107). Con T10 escribiendo `4.2.1` y T11 escribiendo `5.1`, las mismas cifras
+podían acabar **publicadas dos veces**, con el riesgo de que divergieran.
+
+**Decisión de Francisco: `4.2.1` es la FUENTE NUMÉRICA y `5.1` la usa por referencia, sin repetir
+cifras.** Consecuencia directa: **T11 pasa a interpretar, no a publicar** — el capítulo 5 explica el
+desplazamiento D1→D2 y por qué el umbral p95 promete ≈5 % de FPR y el real es 8-10 %, pero **los
+números y la tabla viven en `4.2.1`**.
+
+**Se mantiene intacta la salvedad de T2:** el `delta = (A) − (B)` se publica como **comparación, nunca
+como descomposición aditiva** —el KS es un supremo de diferencia de CDF y **no es aditivo sobre una
+mezcla**—, y debe ir impresa **donde estén las cifras**, es decir en `4.2.1`.
+
+**Precisión de vocabulario que no se relaja:** es **desplazamiento entre particiones, no deriva
+temporal**. NSL-KDD no tiene marca de tiempo.
+
+**Anotado también en la ficha T11 de `features.md`**, en su viñeta `5.1`/`5.4`.
+
+---
+
 ## Bitácora de este fichero
 
 - `2026-07-06` — Creado. Reconciliado el estado real (54 features, H1-Opción1/H2/H3 hechos
@@ -660,3 +686,15 @@ reconstrucción**, que el proyecto usa en `3.4.2` y `4.4`: Goodfellow se cita co
   **no retirar `[6]` (Goodfellow) y anclarla en `2.1.4`** con sus tres descartes. **Volcado parcial de
   T17**, que sigue abierta: falta el bloque «Decisiones tomadas a partir de este informe» en los
   cuatro informes de `99 Investigación/` y la deriva de documentación de `evaluacion.py`.
+- `2026-08-11` — **Estrechamiento de T11 y migración de la deuda técnica de `next-steps.md` §3.2.**
+  Registrada arriba (§ Decisiones del 2026-08-11) la decisión de Francisco de que **`4.2.1` sea la
+  fuente numérica del KS y `5.1` la use por referencia** ⇒ **T11 interpreta, no publica**. En el mismo
+  cierre, las casillas de deuda de `next-steps.md` §3.2 pasan a **cinco fichas de `features.md`** (§3.2
+  y §3.3 quedan como historial con cabecera propia, **sin reescribir ninguna casilla**; el aviso de
+  §3.3 declara que sus tres `☐` ya están hechas y no deben reabrirse), y quedan dadas de alta **dos
+  specs nuevas**: las tres correcciones del `4.2` y la glosa del sufijo `-sucio` en `PIPELINE.md` y
+  `GUIA_RESULTADOS.md`. **Sin cambios de cifras.** **Desajuste vivo anotado en `features.md`:**
+  `Implementacion/app/validacion.py` está **modificado, sin commitear y sin re-correr** (`+231 −21`) —
+  los 2 informes de validación y las 12 figuras de `Resultados/` son de la corrida `274923d`-sucio y
+  **no corresponden al código actual**; C3 está aplicada en el árbol, y C1 y C2 **a medias** (el dict
+  `onehot` es un *dead parameter* y `_save_report()` no escribe ni los 0-day ni el delta).
