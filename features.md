@@ -477,6 +477,11 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > mitades solo se cerró la primera —los comentarios de `:82-83` y `:338-339` **ya son verdad**—.
 > **Las constantes duplicadas de `:90-91` NO se cerraron:** el encargo **prohibía tocarlas**.
 > Pasan a **ficha propia abajo**, pendiente de decisión de Francisco.
+>
+> **ACTUALIZACIÓN 2026-08-11 (segundo ciclo) — esa ficha propia ya está CERRADA** (ver
+> `## Cerradas`): Francisco decidió **ejecutarla, no aceptarla como deuda**. Las constantes son ahora
+> de **módulo** en `program.py:36-37` y `validacion.py` las **importa**; las líneas se desplazaron de
+> `:90-91` a **`:100-101`**, así que **no citar más `:90-91`**.
 
 - [ ] **Rutas absolutas hardcodeadas en `program.py` y `validacion.py`** (🟠) · Código · `ml-implementador`
   Origen: `next-steps.md:267` (§3.2). Poco portable y poco reproducible.
@@ -485,36 +490,18 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 
 - [ ] **`warnings.filterwarnings('ignore')` global** (🟡) · Código · `ml-implementador`
   Origen: `next-steps.md:271` (§3.2). Oculta avisos útiles durante la experimentación.
-  **ABIERTA. Verificado vivo el 2026-08-11** en `program.py:12` y `validacion.py:12`.
-
-- [ ] **`COLUMNAS_CATEGORICAS` y `COLUMNAS_NO_CARACTERISTICA` duplicadas por copia** (🟡) · Código · `ml-implementador`
-  Ficha propia abierta el **2026-08-11** al cerrar las tres de `validacion.py`. Sale de la «deuda nueva»
-  anotada en la cabecera de este grupo, cuyo paréntesis «(se cierra con `:282` y `:283`)» **no se
-  cumplió en esta mitad**: el encargo del ciclo **prohibía tocarlas**, así que no se tocaron.
-  `validacion.py:90-91` son **constantes de clase duplicadas por copia** de `program.py:53` y
-  `program.py:281-283`, acoplamiento que el propio comentario `:87-89` reconoce.
-  **NO está cerrada y NO está aceptada.** Queda **pendiente de decisión de Francisco**: o ficha propia
-  que se ejecuta, o declararla aceptada. Nadie más la mueve.
-  - La otra mitad de esa deuda **sí quedó cerrada**: los comentarios de `:82-83` y `:338-339`, que
-    afirmaban un comportamiento inexistente, **ya son verdad**.
+  **ABIERTA. Verificado vivo el 2026-08-11** en `program.py:12` y `validacion.py:21` (era `:12`; la
+  línea se desplazó al entrar el `import program` del cierre de las constantes duplicadas).
 
 ### Residuos del cierre de `validacion.py` — altas del 2026-08-11
 
 > Las tres fichas `[~]` de `validacion.py` (`:282`, `:283`, `:284`) se cerraron el **2026-08-11** con
-> dictamen **APTO CON CAMBIOS** de `auditor-ml` (ver `## Cerradas`). Estas seis fichas son lo que
-> **quedó fuera** de ese cierre. **Ninguna es 🔴.** La primera es la única con consecuencia sobre la
-> memoria.
-
-- [ ] **El 4,78 % / 2,44 % de outliers de D1 es una MEDIA, y dos ficheros lo llaman «mediana»** (🟠) · Código · `ml-implementador`
-  **El residuo más serio del ciclo.** `validacion.py:968` calcula la cifra con `.mean()` — es una
-  **media entre características**—, pero `Resultados\GUIA_RESULTADOS.md:117-120` titula la columna
-  **«Mediana outliers D1»** y `Implementacion\PIPELINE.md:53-54` escribe **«mediana»**.
-  **Consecuencia:** si **T10** copia esa cifra desde cualquiera de los dos, la memoria **afirmará un
-  estadístico que nadie ha calculado**.
-  - Es la **misma clase de defecto que originó T19 y T20** (cifra sin respaldo en el artefacto),
-    **agravado**: aquí el artefacto **sí existe** y **dice otra cosa**.
-  - Decidir si se arregla el rótulo (media) o si se calcula además la mediana. **Lo primero es
-    barato y suficiente.**
+> dictamen **APTO CON CAMBIOS** de `auditor-ml` (ver `## Cerradas`). Estas fichas son lo que
+> **quedó fuera** de ese cierre. **Ninguna es 🔴.**
+>
+> **Actualización 2026-08-11 (segundo ciclo):** de las seis originales, la del **rótulo media/mediana**
+> está **cerrada** (ver `## Cerradas`), así que **quedan cinco**. La que hoy tiene consecuencia sobre
+> la memoria es el residuo nuevo del vault (`4.2:107`) que se abre más abajo.
 
 - [ ] **Falta `commit`+`fecha` en el CSV nuevo y en la cabecera de los informes** (🟡) · Código · `ml-implementador`
   Ni `*_vocabulario_onehot.csv` ni la cabecera de los dos `*_validation_report.txt` traen `commit` ni
@@ -522,10 +509,17 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
   `Implementacion/PIPELINE.md:146-153`: nace sin la trazabilidad que las cuatro tablas principales
   sí tienen desde T1.
 
-- [ ] **`PIPELINE.md` y `GUIA_RESULTADOS.md` desactualizados por esta corrida** (🟡) · Código · `ml-implementador`
+- [ ] **`PIPELINE.md` y `GUIA_RESULTADOS.md` desactualizados por esta corrida** (🟠) · Código · `ml-implementador`
   `Implementacion/PIPELINE.md:43-45,103-108,139-153` y `Resultados/GUIA_RESULTADOS.md:16,§3.2` quedan
   **desactualizados** tras la re-corrida del 2026-08-11 y **no listan el artefacto nuevo**
   `*_vocabulario_onehot.csv`.
+  - **Subida de 🟡 a 🟠 el 2026-08-11 (segundo ciclo): `PIPELINE.md:141-146` ya no está
+    desactualizado, MIENTE.** Atribuye los informes y las 12 figuras que hay en disco a la corrida
+    `274923d`-sucio del **2026-08-10**, «todos con marca de tiempo de esa re-corrida», y remata
+    «**hay que creerse este recuadro**» (`:152`). Los informes de hoy contienen el **delta 77→122**,
+    los **17 tipos 0-day** y el **rótulo «media entre características»**, ninguno de los cuales
+    producía aquella corrida. El recuadro **pide crédito explícito y no lo merece**: es la misma
+    clase de defecto que T19/T20, agravado por pedir confianza.
 
 - [ ] **Rotular el 77 como reconstrucción** (🟡) · Código · `ml-implementador`
   El 77 del delta 77→122 se **recuenta** desde los CSV `_original_*`, no es el vocabulario que el
@@ -538,6 +532,38 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 - [ ] **Encabezado «Recomendaciones:» vacío en los informes de validación** (🟡) · Código · `ml-implementador`
   Los `*_validation_report.txt` imprimen el encabezado **sin contenido debajo**. O se rellena o se
   suprime; un encabezado vacío en un artefacto publicado invita a pensar que se perdió algo.
+
+### Residuos del cierre de media/mediana y constantes — altas del 2026-08-11 (segundo ciclo)
+
+> Salen del cierre de las dos fichas de arriba (rótulo media/mediana y constantes duplicadas), con
+> dictamen **APTO CON CAMBIOS** de `auditor-ml` y **ninguna cifra publicada alterada**. **Ninguno es
+> 🔴.** Los dos primeros son 🟠 y **no tenían ficha propia**; los dos últimos son de una línea y **no
+> exigen re-correr nada**.
+
+- [ ] **El vault sigue diciendo «mediana» donde el artefacto ya dice «media»** (🟠) · Informe · `redactor-tfg`
+  `Obsidian_TFG_Vault\04 Implementación del sistema\4.2 Base de datos utilizada.md:107` afirma «**La
+  mediana de outliers en D1 es del 4,78 %**». Es el **único** sitio del vault afectado y
+  **correctamente no se tocó** en el cierre del rótulo (es track Informe), pero ahora **contradice
+  explícitamente al artefacto de origen**, que ya rotula «media entre características».
+  - **Nadie lo tenía fichado:** la ficha del rótulo solo nombraba `GUIA_RESULTADOS.md` y
+    `PIPELINE.md`, y la ficha del `4.2` tiene tres puntos y **ninguno es este**.
+  - **Va ANTES de T10.** Si T10 vuelca `4.2` tal cual, el TFG **publica un estadístico que nadie ha
+    calculado** — exactamente el defecto que el cierre del rótulo venía a eliminar.
+
+- [ ] **`validacion.py:100-101` es un alias, no una copia** (🟡) · Código · `ml-implementador`
+  Las constantes importadas **comparten el objeto lista** con la canónica de `program.py:36-37`,
+  mientras `program.py:65` sí se protege con `list(...)`. **Inerte hoy** —todos los usos son de
+  lectura—, pero una **mutación futura contaminaría el one-hot real sin dejar rastro**. Arreglo de una
+  línea: envolver en `list(...)` como hace `program.py`. **No exige re-correr.**
+
+- [ ] **El comentario de `validacion.py:16-18` es falso, y el orden de import es load-bearing** (🟡) · Código · `ml-implementador`
+  Dice que `program.py` **no tiene efectos al importarse**, cuando `program.py:12`, `:16-23` y
+  `:26-27` **sí los tiene** (`warnings.filterwarnings`, reconfiguración de `stdout`,
+  `plt.style.use('default')` y `sns.set_palette`). **Inocuo hoy** porque `validacion.py:21,34-36` los
+  reaplica **después**, pero esa dependencia de orden **no está escrita**: si alguien mueve el
+  `import program` por debajo de `:36`, el `plt.style.use('default')` de `program.py` **borraría
+  `figure.figsize`** y las 12 figuras cambiarían de tamaño **en silencio**. Corregir el comentario y
+  **declarar el orden como requisito**.
 
 ### Altas del grill del 2026-08-11 — dos specs pendientes
 
@@ -661,6 +687,8 @@ Antes había aquí una lista de secciones vedadas a los agentes. Solo **una** so
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-11 | Código | **El 4,78 % / 2,44 % de outliers de D1 ya se publica como MEDIA, no como «mediana».** Se cambió el **nombre, no el cálculo**: `.mean()` sigue donde estaba (`validacion.py:978`, era `:968`) y **las cifras 4,78 % y 2,44 % siguen siendo válidas**. El rótulo del informe pasa a **«Outliers D1 (media entre características)»**, y corregidos `Resultados/GUIA_RESULTADOS.md` (`:117`, `:276-281`, `:379-381`, `:394`) e `Implementacion/PIPELINE.md:54-55`. **La verificación que importaba:** el auditor comprobó que **no se corrigió ninguna mediana legítima** por error — `cascada_invertida.py:296`, `PIPELINE.md:832,864-865,746` y `conf_mediana_argmax` **siguen intactas**. Re-corrido en las dos variantes (19:51-19:52): `git diff 6ae4554 -- Resultados/` da **una única línea cambiada por informe**, la del rótulo, y los dos `*_vocabulario_onehot.csv` **byte-idénticos**; todo lo demás igual —17 tipos 0-day, 3.750 (16,63 %), delta 77→122, KS (A: 37/54 y 44/122 · B: 25/54 y 31/122), conteos, `Integridad: APROBADA`—. Dictamen de `auditor-ml`: **APTO CON CAMBIOS**, ningún hallazgo 🔴, **ninguna cifra publicada cambia**. **Residuo que deja: el vault (`4.2:107`) sigue diciendo «mediana»** — ficha nueva 🟠 en `## Abiertas`, **antes de T10** | — |
+| 2026-08-11 | Código | **`COLUMNAS_CATEGORICAS` y `COLUMNAS_NO_CARACTERISTICA` dejan de estar duplicadas por copia.** **Ejecutada, no aceptada como deuda** — decisión explícita de Francisco sobre la ficha que quedó pendiente de su criterio. Son ahora **constantes de módulo** en `program.py:36-37`, y `validacion.py` las **importa** (`:100-101`, antes `:90-91`). **Camino elegido: `import program`** —fuente canónica, que es quien hace el one-hot— en vez de subirlas a `config.py`, que **sí habría violado** la restricción de `CLAUDE.md`: `program.py` y `validacion.py` no dependen de `config.py`. **La verificación que importaba:** el **orden** de la lista **no puede alterar ningún artefacto**, porque `program.py:310-311` fija `train_cols = sorted(set(D1) | set(D3))` y `:316` reindexa las tres matrices con esa lista — el orden final es **alfabético e independiente del one-hot**. Solo importa la **pertenencia**, corroborada por los CSV (38 numéricas + 39/84 dummies = 77/122) y por el contraste independiente del `.joblib`. **Sin import circular**, `argparse` bajo `__main__`, **cero `fit`**, y **los splits en disco NO se regeneraron porque no hacía falta**. Re-corrido con la ficha del rótulo (19:51-19:52), mismo diff de una línea por informe. Dictamen de `auditor-ml`: **APTO CON CAMBIOS**, ningún hallazgo 🔴. **Residuos que deja:** el alias de `:100-101` (comparte objeto lista) y el comentario falso de `:16-18` — dos fichas 🟡 nuevas en `## Abiertas` | — |
 | 2026-08-11 | Código | **`validacion.py:282` · La lista nominal de los 17 tipos 0-day ya se persiste en el informe.** Cerrada completando el WIP de `d9225be` **sin reescribir sus ~231 líneas**: el cambio queda confinado a `_save_report()` (`:1080-1142`). `_save_report()` ya escribe la lista nominal completa —**tipo, categoría, instancias, total y % de D2**— con **tres ramas de degradación**, así que los 0-day dejan de quedarse solo en consola, que era la deuda. **El 17 sigue siendo emergente, no una lista a mano** (`:340`), y el auditor verificó que **los 17 tipos coinciden uno a uno con `metricas_hibrido_0day.csv`**. Re-corrida en las **dos variantes**: `EXITCODE=0`, `Integridad: APROBADA`, **16 artefactos regenerados** en `Resultados/` (2026-08-11 19:28), **ningún `metricas_*.csv` y ningún `.joblib` tocados**. Con esto **queda desbloqueada la ficha del `4.2`**, que cita el informe que esta re-corrida regenera. Dictamen de `auditor-ml`: **APTO CON CAMBIOS** — los cambios salen como residuos, ninguno 🔴. Commit previo del WIP: `d9225be` | `6ae4554` |
 | 2026-08-11 | Código | **`validacion.py:283` · El delta 77→122 del fix one-hot ya vive en un artefacto regenerable.** El parámetro `onehot` de `:991` **deja de ser *dead parameter***: ahora se lee y se escribe el delta **con desglose por columna categórica**, y nace el artefacto **`Resultados/specialized_nsl_kdd_vocabulario_onehot.csv`** (más su gemelo `_sin_seleccion_`), vía el helper nuevo y contiguo `_guardar_csv_vocabulario_onehot()` (`:1144-1201`). Las **~148 líneas** de `medir_vocabulario_onehot()` **no se reescribieron**. **Resultado que hay que leer bien: el delta sale 77→122 en las DOS variantes**, no 77→54 en la de 54 — **correcto por construcción y verificado en código**: el one-hot ocurre en `program.py:283`, `select_features()` se invoca **después** (`:1148-1150`) y los CSV `_original_*` se escriben **pre-one-hot** (`:650-652`). Queda **declarado en los dos informes**. **Cero literales**: el 17, el 77, el 122 y el 45 se **recuentan** (verificado por el auditor). Dictamen de `auditor-ml`: **APTO CON CAMBIOS**. Commit previo del WIP: `d9225be` | `6ae4554` |
 | 2026-08-11 | Código | **`validacion.py:284` · Comparación de columnas D2/D3 por orden, re-corrida — y la incógnita se resuelve EN NEGATIVO.** Era la mitad que faltaba: el fix estaba en `d9225be` pero **nadie lo había corrido**, así que no se sabía si destapaba un desajuste real. **Ya se sabe: NO destapó ningún desajuste D2/D3.** Los CSV que deja `program.py` **ya estaban alineados posicionalmente en ambas variantes**; la comparación por conjunto **no ocultaba nada**. Es un **resultado, no un no-hallazgo**: la rama de diagnóstico «mismo conjunto, distinto orden» queda como red de seguridad, no como parche de un bug vivo. Verificado además por el auditor en la misma pasada: **cero `fit`**, salvedad del KS **impresa en ambos informes**, KS **coincidente con lo publicado** —(A) **37/54** y **44/122** · (B) **25/54** y **31/122**— y **alcance respetado**. Dictamen de `auditor-ml`: **APTO CON CAMBIOS**. Commit previo del WIP: `d9225be` | `6ae4554` |

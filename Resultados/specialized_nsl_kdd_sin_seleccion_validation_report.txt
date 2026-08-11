@@ -9,7 +9,7 @@ D3 (Ataques):     58,630 instancias
 Características:  122
 Drift (A) D1 vs D2 COMPLETO:      44 características
 Drift (B) D1 vs D2 SOLO NORMALES: 31 características
-Outliers med. D1: 2.44%
+Outliers D1 (media entre características): 2.44%
 Baja varianza (sobre D1+D3):    1 características
 Alta correlación (sobre D1+D3): 14 pares
 D2 fuera de [0,1]: 4 características (informativo)

@@ -9,6 +9,15 @@ import os
 import sys
 import joblib
 
+# program.py es la FUENTE CANÓNICA de las columnas categóricas y de las que no
+# son características: se importan, no se copian (antes estaban duplicadas por
+# copia y un cambio allí rompía en silencio medir_vocabulario_onehot()).
+# Esto NO introduce dependencia de config.py ni de evaluacion.py: validacion.py
+# sigue sin importarlas, y program.py tampoco. No hay import circular
+# (program.py no importa validacion.py) ni efectos al importar: todo su código
+# ejecutable vive bajo `if __name__ == "__main__"`.
+import program
+
 warnings.filterwarnings('ignore')
 
 # Forzar salida UTF-8 en consolas Windows: sin esto, los prints con emojis
@@ -84,11 +93,12 @@ class NSLKDDValidator:
         self.zero_day_df = None
 
     # Columnas categóricas del NSL-KDD y columnas que no son características.
-    # Deben coincidir con program.py:53 ('self.categorical_columns') y con las
-    # que program.py:281-283 descarta antes del one-hot: si allí cambiaran, la
-    # medición del vocabulario dejaría de reproducir el one-hot real.
-    COLUMNAS_CATEGORICAS = ['protocol_type', 'service', 'flag']
-    COLUMNAS_NO_CARACTERISTICA = ['attack', 'level', 'attack_category']
+    # NO se declaran aquí: se toman de program.py, que es quien realmente hace
+    # el one-hot (las usa en 'self.categorical_columns' y en el descarte previo
+    # a get_dummies). Así medir_vocabulario_onehot() reproduce por construcción
+    # el one-hot real y no puede desincronizarse en silencio.
+    COLUMNAS_CATEGORICAS = program.COLUMNAS_CATEGORICAS
+    COLUMNAS_NO_CARACTERISTICA = program.COLUMNAS_NO_CARACTERISTICA
 
     # ─────────────────────────────────────────────────────────────────────────
     # Utilidades
@@ -1001,7 +1011,12 @@ class NSLKDDValidator:
             f.write(f"Características:  {report['n_features']}\n")
             f.write(f"Drift (A) D1 vs D2 COMPLETO:      {report['features_with_drift']} características\n")
             f.write(f"Drift (B) D1 vs D2 SOLO NORMALES: {report['features_with_drift_normales']} características\n")
-            f.write(f"Outliers med. D1: {report['avg_outlier_pct_D1']:.2f}%\n")
+            # Rótulo explícito: `iqr_outlier_pct()` devuelve un porcentaje POR
+            # CARACTERÍSTICA y aquí se publica su MEDIA entre características
+            # (`.mean()`), no una mediana. La abreviatura anterior ("med.") era
+            # ambigua y se documentó por error como mediana.
+            f.write(f"Outliers D1 (media entre características): "
+                    f"{report['avg_outlier_pct_D1']:.2f}%\n")
             f.write(f"Baja varianza (sobre D1+D3):    {report['low_variance_features']} características\n")
             f.write(f"Alta correlación (sobre D1+D3): {report['high_corr_pairs']} pares\n")
             f.write(f"D2 fuera de [0,1]: {report['d2_features_fuera_rango']} características (informativo)\n")

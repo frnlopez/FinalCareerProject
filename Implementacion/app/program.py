@@ -26,6 +26,17 @@ if sys.stdout.encoding and sys.stdout.encoding.lower().replace('-', '') != 'utf8
 plt.style.use('default')
 sns.set_palette("husl")
 
+# ─────────────────────────────────────────────────────────────────────────────
+# FUENTE CANÓNICA de las columnas categóricas del NSL-KDD y de las columnas que
+# no son características. Están a nivel de módulo —y no solo dentro de
+# NSLKDDPreprocessor— para que validacion.py las importe en vez de copiarlas:
+# antes eran constantes duplicadas por copia y un cambio aquí rompía en silencio
+# la reproducción del one-hot en medir_vocabulario_onehot().
+# ─────────────────────────────────────────────────────────────────────────────
+COLUMNAS_CATEGORICAS = ['protocol_type', 'service', 'flag']
+COLUMNAS_NO_CARACTERISTICA = ['attack', 'level', 'attack_category']
+
+
 class NSLKDDPreprocessor:
     """
     Clase para el preprocesamiento completo del dataset NSL-KDD
@@ -49,8 +60,9 @@ class NSLKDDPreprocessor:
             'dst_host_srv_rerror_rate', 'attack', 'level'
         ]
         
-        # Columnas categóricas
-        self.categorical_columns = ['protocol_type', 'service', 'flag']
+        # Columnas categóricas (copia local de la constante de módulo, para que
+        # una mutación de la instancia no altere la fuente canónica)
+        self.categorical_columns = list(COLUMNAS_CATEGORICAS)
         
         # Columnas numéricas (todas excepto las categóricas, attack y level)
         self.numerical_columns = [col for col in self.column_names 
@@ -278,7 +290,7 @@ class NSLKDDPreprocessor:
         encoded = {}
         for name, df in data_splits.items():
             df_copy = df.copy()
-            drop_cols = [c for c in ['attack', 'level', 'attack_category'] if c in df_copy.columns]
+            drop_cols = [c for c in COLUMNAS_NO_CARACTERISTICA if c in df_copy.columns]
             X = df_copy.drop(drop_cols, axis=1)
             X_enc = pd.get_dummies(X, columns=self.categorical_columns, prefix=self.categorical_columns)
             encoded[name] = {

@@ -51,7 +51,9 @@ Resultados/
 > `specialized_nsl_kdd_validation_report.txt` y
 > `specialized_nsl_kdd_sin_seleccion_validation_report.txt`, y **no comparten ninguna de las
 > cifras que dependen del set de características** (54 vs 122 características, drift (A) 37 vs 44,
-> drift (B) 25 vs 31, mediana de outliers 4,78 % vs 2,44 %). Lo que no depende del set sí es
+> drift (B) 25 vs 31, media de outliers entre características 4,78 % vs 2,44 % —el criterio IQR da
+> un porcentaje por característica y la cifra publicada es su media, no su mediana). Lo que no
+> depende del set sí es
 > idéntico en los dos: los tamaños D1 67.343 / D2 22.544 / D3 58.630, los 9.711 normales de D2 y
 > las 4 características fuera de [0,1]. Cualquier número tomado de un informe tiene que decir de
 > cuál sale.

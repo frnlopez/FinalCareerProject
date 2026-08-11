@@ -114,7 +114,7 @@ Resumen de `validacion.py`. **Son dos ficheros, uno por variante**, y no compart
 cifras que dependen del set de características (sí coinciden, obviamente, en las que no dependen
 de él: tamaños de los splits, normales de D2 y las 4 características fuera de [0,1]):
 
-| Fichero | Variante | Características | Drift (A) | Drift (B) | Mediana outliers D1 | Baja varianza | Alta correlación |
+| Fichero | Variante | Características | Drift (A) | Drift (B) | Media outliers D1 (entre características) | Baja varianza | Alta correlación |
 |---|---|---|---|---|---|---|---|
 | `specialized_nsl_kdd_validation_report.txt` | **54** (la del TFG) | 54 | **37** | **25** | **4,78 %** | 0 | 0 pares |
 | `specialized_nsl_kdd_sin_seleccion_validation_report.txt` | 122 (experimento H1) | 122 | **44** | **31** | **2,44 %** | 1 | 14 pares |
@@ -273,11 +273,12 @@ desplazamiento D1→D2 como contexto del FPR) y **5.4**.
 ### 4.5 `validacion_outliers_iqr.png`
 
 Barras agrupadas: % de outliers (criterio IQR) por feature (top-15 de D1), comparando D1/D2/D3.
-Mediana de outliers en D1: **4,78 %**, dato de
+Media de outliers en D1 **entre características** (el criterio IQR da un porcentaje por
+característica y esta cifra es su media aritmética, no su mediana): **4,78 %**, dato de
 `specialized_nsl_kdd_validation_report.txt` (variante de 54, la del TFG). La gemela
 `validacion_outliers_iqr_sin_seleccion.png` va con
-`specialized_nsl_kdd_sin_seleccion_validation_report.txt`, cuya mediana es **2,44 %**. Las dos
-cifras **no son comparables y no se mezclan en la misma frase**: son la mediana sobre dos
+`specialized_nsl_kdd_sin_seleccion_validation_report.txt`, cuya media es **2,44 %**. Las dos
+cifras **no son comparables y no se mezclan en la misma frase**: son la media sobre dos
 poblaciones distintas de características (54 y 122), no la misma magnitud medida dos veces. Por
 qué una es casi el doble que la otra **no está medido en ningún artefacto**; si hiciera falta
 afirmarlo, hay que medirlo primero. Cómo leerla: features donde D3 dispara
@@ -376,8 +377,9 @@ filas nunca llegan a la etapa 2— y **no es comparable** con ninguna columna de
   Consecuencia documental: **toda cifra de validación se cita ahora con el nombre de su fichero**
   —las dos variantes no comparten ninguna cifra que dependa del set de características:
   drift (A) **37** (`specialized_nsl_kdd_validation_report.txt`) vs **44**
-  (`specialized_nsl_kdd_sin_seleccion_validation_report.txt`), drift (B) **25** vs **31** y mediana
-  de outliers **4,78 %** vs **2,44 %** en esos mismos dos ficheros, por ese orden— y el recuadro
+  (`specialized_nsl_kdd_sin_seleccion_validation_report.txt`), drift (B) **25** vs **31** y media
+  de outliers entre características **4,78 %** vs **2,44 %** en esos mismos dos ficheros, por ese
+  orden— y el recuadro
   «Hueco de trazabilidad» de `Implementacion\PIPELINE.md`
   queda corregido: seguía diciendo que `validacion.py` no se había re-corrido, lo que dejó de ser
   cierto. Sigue anclado al **05/07/2026** todo lo de `program.py`, `eda_distribuciones_divisiones.png`
@@ -389,7 +391,7 @@ filas nunca llegan a la etapa 2— y **no es comparable** con ninguna columna de
   `274923d-sucio` de la cascada invertida. Las **222** filas previas quedan **intactas**.
 - Actualización anterior: 2026-07-16 (pipeline completo — preprocesado, selección a 54,
   los 4 scripts de modelos ejecutados en 54 y 122, H1 cerrado; cifras reconciliadas con el
-  reporte de validación vigente: 54 features, drift (A) 37, outliers mediana 4,78 %, 4 features de
+  reporte de validación vigente: 54 features, drift (A) 37, outliers media 4,78 %, 4 features de
   D2 fuera de [0,1]).
 - Cuando se regeneren artefactos (nuevas ejecuciones de `program.py`/`validacion.py`) o aparezcan
   los ficheros de la sección 6, **actualizar esta guía en la misma sesión**: cifras, figuras
