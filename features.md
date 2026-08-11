@@ -437,12 +437,23 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > `:267` era `:262` · `:271` era `:266` · `:282`/`:283`/`:284` eran `:277`/`:278`/`:279`.
 >
 > **DESAJUSTE VIVO — leer antes de citar cualquier salida de `validacion.py`.**
-> `Implementacion/app/validacion.py` está **modificado y sin commitear** (`+231 −21`, 6 hunks, 1144
-> líneas) y **NO se ha re-corrido**. Los **2 informes de validación y las 12 figuras** que hay en
-> `Resultados/` son de la corrida **`274923d`-sucio**: los dos `*_validation_report.txt` son del
-> **2026-08-10** (20:24 y 20:45), **previos** a estas ediciones, y **no contienen ni el delta 77→122 ni
-> la lista de 0-day**. **No corresponden al código que hay hoy en el fichero, y nadie debe citarlas
-> como producto suyo.** El fichero **no quedó roto: quedó incompleto** (`ast.parse` OK) — un
+> `Implementacion/app/validacion.py` está **commiteado como WIP en `d9225be`** (`+231 −21`, 6 hunks,
+> 1144 líneas; el registro de aquella sesión salió en `9734f4b`), **incompleto y sin re-correr**.
+>
+> **COMMITEADO NO ES TERMINADO — es la distinción que gobierna este grupo.** Las **tres fichas `[~]`**
+> de abajo (`:282`, `:283`, `:284`) **siguen abiertas**, y **ya no por falta de commit —lo tienen—**
+> sino por dos motivos nuevos: (i) el fichero **quedó incompleto** —`_save_report()` **no escribe**
+> `zero_day_df`, y el parámetro `onehot` de `:991` **nunca se lee** (parámetro muerto)—; y (ii) **no se
+> ha re-corrido**, así que **no se sabe si el fix de orden destapa un desajuste D2/D3 real**. De ahí las
+> **dos lecturas erróneas que hay que evitar, y van en direcciones opuestas**: **ni** dar el trabajo por
+> perdido y **reimplementar las ~231 líneas** —están en `d9225be`—, **ni** cerrar las fichas invocando
+> «lo hecho es lo que tiene commit», porque aquí el commit **no** acredita que la tarea esté hecha.
+>
+> **El commit no regenera nada en disco.** Los **2 informes de validación y las 12 figuras** que hay en
+> `Resultados/` **siguen siendo** de la corrida **`274923d`-sucio**: los dos `*_validation_report.txt`
+> son del **2026-08-10** (20:24 y 20:45), **previos** a esas ediciones, y **no contienen ni el delta
+> 77→122 ni la lista de 0-day**. **No corresponden al código que hay hoy en el fichero, y nadie debe
+> citarlas como producto suyo.** El fichero **no quedó roto: quedó incompleto** (`ast.parse` OK) — un
 > implementador se cortó a media ejecución. **No hay nada que revertir.**
 >
 > **Deuda nueva detectada en la misma inspección, sin ficha propia** (se cierra con `:282` y `:283`):
@@ -463,7 +474,9 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 
 - [~] **La lista nominal de los 17 tipos 0-day solo sale por consola** (🟡) · Código · `ml-implementador`
   Origen: `next-steps.md:282` (§3.2). Hay que **persistirla en el informe de `validacion.py`**.
-  **EN CURSO el 2026-08-11 — la parte esencial NO está.** La computación sí: `self.zero_day_df` se
+  **EN CURSO el 2026-08-11 — commiteada como WIP en `d9225be`, incompleta y sin re-correr; la parte
+  esencial NO está.** **Sigue abierta aun teniendo commit:** lo que falta no es versionar el trabajo,
+  es terminarlo. La computación sí: `self.zero_day_df` se
   construye con tipo + categoría + instancias (`validacion.py:340-357`), el recuento entra en el dict
   `report` como `n_zero_day_types` (`:972-974`) y sale por consola (`:360-366`, `:984`). Pero **el
   cuerpo de `_save_report()` (`:992-1078`) no escribe ni la lista ni el recuento** — cero referencias a
@@ -471,14 +484,16 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
   consola, que es justo la deuda que había que cerrar.**
   - **El 17 es emergente, no una lista escrita a mano** (`:340`).
   - **Para cerrarla basta un cambio localizado:** escribir `self.zero_day_df` dentro del cuerpo de
-    `_save_report()`, antes de `:1080`.
+    `_save_report()`, antes de `:1080` — **sobre el código que ya está en `d9225be`; nada que
+    reimplementar.** Y **re-correr**, que es la otra mitad.
   - **Va ANTES de la ficha del `4.2`** de este mismo lote (dependencia dura, ver allí): esa nota cita
     el informe que la re-corrida regenera.
 
 - [~] **El delta 77→122 del fix one-hot no está en ningún artefacto regenerable** (🟡) · Código · `ml-implementador`
   Origen: `next-steps.md:283` (§3.2). Hoy la cifra solo vive en prosa; debe quedar en un artefacto de
   `Resultados/`.
-  **EN CURSO el 2026-08-11 — medición sí, persistencia NO.** Método nuevo `medir_vocabulario_onehot()`
+  **EN CURSO el 2026-08-11 — commiteada como WIP en `d9225be`, incompleta y sin re-correr: medición sí,
+  persistencia NO.** **Sigue abierta aun teniendo commit.** Método nuevo `medir_vocabulario_onehot()`
   (`validacion.py:796-933`, ~148 líneas), invocado desde `generate_full_report()` (`:954`), y su dict
   viaja hasta `_save_report(..., onehot=onehot)` (`:979`). Pero **el parámetro `onehot` de `:991` nunca
   se lee**: es un *dead parameter*, la huella exacta de dónde se cortó el despacho. La única escritura
@@ -497,20 +512,24 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
     histórico declarado y NUNCA como cifra hardcodeada**. Importa porque **T19 y T20 existen
     precisamente por cifras sin artefacto**.
   - **Para cerrarla basta un cambio localizado:** leer el dict `onehot` dentro del cuerpo de
-    `_save_report()` (antes de `:1080`) y/o volcarlo a un CSV propio en `Resultados/`.
+    `_save_report()` (antes de `:1080`) y/o volcarlo a un CSV propio en `Resultados/` — **sobre el
+    código que ya está en `d9225be`; las ~148 líneas del método NO se reescriben.** Y **re-correr**.
   - **Va ANTES de la ficha del `4.2`** de este mismo lote (dependencia dura, ver allí).
 
 - [~] **`validacion.py` comparaba columnas D2/D3 por conjunto y no por orden** (🟡) · Código · `ml-implementador`
   Origen: `next-steps.md:284` (§3.2), donde constaba como «`validacion.py:156-159` — fix de una línea».
-  **APLICADA en el árbol pero SIN COMMITEAR ni re-correr** — **no se mueve a `## Cerradas`: no tiene
-  commit, y «lo hecho es lo que tiene commit».** `validacion.py:205-208`: `set(...)` → `list(...)`,
-  comparación posicional.
+  **COMMITEADA COMO WIP en `d9225be`, incompleta y sin re-correr** — **no se mueve a `## Cerradas`.**
+  **Ojo al cambio de motivo:** mientras estuvo sin commitear se quedaba abierta por «lo hecho es lo que
+  tiene commit»; **ese argumento ya no vale, porque el commit existe**. Sigue abierta porque **nadie la
+  ha re-corrido**: hasta que se corra no se sabe si el fix destapa un desajuste D2/D3 real, y el grupo
+  al que pertenece quedó incompleto. `validacion.py:205-208`: `set(...)` → `list(...)`, comparación
+  posicional.
   - **Alcance excedido:** el encargo era un fix de una línea y son **~34** (`:196-229`), con rama nueva
     que diagnostica «mismo conjunto, distinto orden» y lista las **5 primeras posiciones divergentes**.
     Correcto, pero **excede el mandato**.
   - **Aviso que debe sobrevivir a la sesión:** este fix **puede destapar un desajuste de orden** que la
-    comparación por conjunto venía ocultando. **Está aplicado pero sin re-correr, así que todavía no se
-    sabe.** Si aparece, **es hallazgo que se reporta, no se silencia.**
+    comparación por conjunto venía ocultando. **Está commiteado (`d9225be`) pero sin re-correr, así que
+    todavía no se sabe.** Si aparece, **es hallazgo que se reporta, no se silencia.**
   - **Va ANTES de la ficha del `4.2`** de este mismo lote (dependencia dura, ver allí): esa nota cita
     las figuras que la re-corrida regenera.
 
