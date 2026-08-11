@@ -43,7 +43,10 @@ Archivos dataset/
 # Los .doc/.docx son el volcado final: no diffean y pesan 10 MB.
 *.doc
 *.docx
+# Owner files de Word (~$nombre.docx) y sus temporales de guardado (~WRL0008.tmp),
+# que `~$*` no cubre porque no empiezan por `~$`.
 ~$*
+~WRL*.tmp
 
 # --- Obsidian ---------------------------------------------------------------
 # Se versiona la configuración del vault, no el estado local ni los plugins.
