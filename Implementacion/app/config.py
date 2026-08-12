@@ -22,13 +22,66 @@ NOTA para quien edite este fichero: al importarse NO debe tener efectos. Nada de
 llamar a ensure_dirs(), setup_utf8() ni tocar matplotlib/stdout a nivel de módulo,
 y nada de importar módulos del proyecto (habría riesgo de ciclo). validacion.py
 depende de ambas cosas.
+
+---------------------------------------------------------------------------
+CÓMO SE INYECTA LA SEMILLA (tarea T4) — y por qué así
+---------------------------------------------------------------------------
+VÍA ELEGIDA: un flag de CLI `--semilla N` (argparse) en los cinco scripts
+ejecutables —anomalias.py, firmas.py, baseline.py, hibrido.py y
+cascada_invertida.py— que llama a `config.fijar_semilla(N)` en el bloque
+`__main__`, ANTES de construir la clase del script. Una sola vía, la misma en
+los cinco.
+
+POR QUÉ EL FLAG Y NO UNA VARIABLE DE ENTORNO NI UN ARGUMENTO DE FUNCIÓN:
+  * Los cinco consumidores leen `config.RANDOM_STATE` por ATRIBUTO DE MÓDULO en
+    el momento de usarlo (nunca `from config import RANDOM_STATE`), así que
+    mutar la global desde fijar_semilla() propaga a los ~15 sitios que la usan
+    sin tocar ni una firma de función ni una llamada. Un argumento de función
+    habría obligado a enhebrar `semilla=` por toda la cadena, y es justo la
+    clase de cambio invasivo que puede alterar el comportamiento con 42.
+  * El flag QUEDA EN EL COMANDO, así que el log del barrido dice con qué semilla
+    se produjo cada pase. Una variable de entorno se pierde y deja el dato sin
+    forma de auditarse desde el log.
+  * `fijar_semilla` es una FUNCIÓN: importar config.py sigue sin tener efectos, y
+    validacion.py —que lo importa solo por commit_actual()— no se ve afectado.
+
+EL DEFECTO SIGUE SIENDO 42. Correr cualquier script SIN `--semilla` produce
+exactamente el comportamiento anterior a T4: mismos nombres de artefactos, mismas
+cuatro tablas principales, mismas figuras. La decisión del 2026-07-02
+(random_state=42 en TODO) NO se retira; se le añade un override explícito.
+
+ORDEN DE LLAMADA — REQUISITO, no recomendación: fijar_semilla() debe llamarse
+antes de instanciar la clase del script. Tres de las clases construyen un
+`StratifiedKFold(random_state=config.RANDOM_STATE)` en su `__init__`
+(firmas.py, baseline.py, hibrido.py), así que una llamada posterior dejaría ese
+CV con la semilla anterior mientras el resto de la corrida usa la nueva. En los
+cinco `__main__` la llamada va inmediatamente después de parse_args().
+
+QUÉ PASA CON LOS ARTEFACTOS Y LAS TABLAS CUANDO LA SEMILLA NO ES 42 (las dos
+reglas que impiden que el barrido pise lo publicado):
+  1. NOMBRES DE ARTEFACTO. Los .joblib, las figuras y firmas_reglas_*.txt se
+     sufijan con `sufijo_semilla()` = '_semilla<N>' vía `sufijo_artefactos()`.
+     Con 42 el sufijo es CADENA VACÍA, así que los ficheros de la semilla 42 que
+     sostienen las cifras publicadas conservan su nombre exacto y NINGUNA corrida
+     del barrido los sobrescribe.
+  2. TABLAS DE MÉTRICAS. `ruta_tabla()` desvía la escritura a una tabla NUEVA
+     '<nombre>_semillas.csv'. Las nueve tablas publicadas no se abren siquiera.
+     Es obligatorio y no una precaución: las cuatro principales borran por
+     VARIANTE (limpiar_variante_csv), su CLAVE_UNICIDAD no incluye `semilla` y su
+     recuento es fijo 4/4/1/1, así que 10 semillas en ellas colapsarían a la
+     última o abortarían. Está escrito también en el docstring de
+     evaluacion.comprobar_recuento() y en Implementacion/PIPELINE.md.
 """
 import os
 import subprocess
 import sys
 
 # --- Reproducibilidad (decisión 2026-07-02: random_state=42 en TODO) ---
-RANDOM_STATE = 42
+# 42 es el DEFECTO y sigue siendo la semilla de todo lo publicado. RANDOM_STATE es
+# global mutable a propósito: fijar_semilla() la reescribe y los consumidores la
+# leen por atributo (ver el bloque "CÓMO SE INYECTA LA SEMILLA" del encabezado).
+SEMILLA_POR_DEFECTO = 42
+RANDOM_STATE = SEMILLA_POR_DEFECTO
 
 # --- Rutas base del proyecto ---
 RESULTADOS_DIR = r"C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Resultados"
@@ -52,6 +105,139 @@ BASE_PATH_122 = os.path.join(RESULTADOS_DIR, "specialized_nsl_kdd_sin_seleccion"
 def base_path(sin_seleccion=False):
     """Prefijo de los CSV procesados según la variante de features (Q1/C)."""
     return BASE_PATH_122 if sin_seleccion else BASE_PATH_54
+
+
+# ---------------------------------------------------------------------------
+# Semilla parametrizable (tarea T4): inyección, nombres y desvío de tablas
+# ---------------------------------------------------------------------------
+# El razonamiento completo de la vía elegida está en el encabezado del módulo.
+# Aquí solo el mecanismo. Tres piezas y ninguna más:
+#   fijar_semilla()      la escribe (única forma legítima de cambiarla)
+#   sufijo_artefactos()  la mete en el NOMBRE de joblibs, figuras y .txt
+#   ruta_tabla()         desvía las métricas a la tabla nueva '*_semillas.csv'
+
+# Marca que llevan los artefactos de una corrida con semilla distinta de 42.
+_PLANTILLA_SUFIJO_SEMILLA = "_semilla{}"
+
+# Sufijo del nombre de las tablas del barrido. La tabla '<x>.csv' publicada con la
+# semilla 42 y la tabla '<x>_semillas.csv' del barrido son DOS FICHEROS: la primera
+# no se abre en una corrida con semilla != 42.
+SUFIJO_TABLA_SEMILLAS = "_semillas"
+
+
+def fijar_semilla(valor):
+    """
+    Fija la semilla global de la corrida. ÚNICA forma legítima de cambiarla.
+
+    Debe llamarse desde el `__main__` del script, justo después de parse_args() y
+    ANTES de instanciar su clase (ver el encabezado: hay `StratifiedKFold` que se
+    construyen en `__init__` y congelarían la semilla anterior).
+
+    Parameters
+    ----------
+    valor : int
+        Semilla entera y no negativa. `None` se acepta y se interpreta como "no
+        se pidió semilla": deja RANDOM_STATE como está (42), de modo que el
+        `__main__` puede llamar sin ramificar.
+
+    Returns
+    -------
+    int : la semilla vigente tras la llamada.
+    """
+    global RANDOM_STATE
+    if valor is None:
+        return RANDOM_STATE
+    try:
+        semilla = int(valor)
+    except (TypeError, ValueError):
+        raise ValueError("La semilla debe ser un entero: " + repr(valor))
+    if semilla < 0:
+        # Un negativo reventaría dentro de sklearn con un mensaje peor, y además
+        # produciría nombres de artefacto con guion ('_semilla-3').
+        raise ValueError("La semilla debe ser >= 0: " + repr(valor))
+    RANDOM_STATE = semilla
+    return RANDOM_STATE
+
+
+def es_semilla_por_defecto():
+    """True si la corrida usa la semilla 42 (la de todo lo publicado)."""
+    return RANDOM_STATE == SEMILLA_POR_DEFECTO
+
+
+def sufijo_semilla():
+    """
+    Sufijo de la semilla para nombres de fichero: '' con 42, '_semilla<N>' si no.
+
+    Que con 42 sea CADENA VACÍA es el requisito central de T4: los artefactos de
+    la semilla 42 —los que sostienen las cifras de 5.1-5.3— conservan su nombre
+    exacto y ninguna corrida del barrido puede sobrescribirlos.
+    """
+    if es_semilla_por_defecto():
+        return ""
+    return _PLANTILLA_SUFIJO_SEMILLA.format(RANDOM_STATE)
+
+
+def sufijo_artefactos(set_features):
+    """
+    Token que identifica una corrida en el NOMBRE de sus artefactos:
+    '<set_features>' con la semilla 42 y '<set_features>_semilla<N>' con las demás.
+
+    Lo usan los cinco scripts para los .joblib, las figuras y
+    firmas_reglas_*.txt. NO sustituye a `set_features` en la COLUMNA homónima de
+    los CSV: esa columna sigue valiendo '54' o '122_sin_seleccion' a secas (la
+    semilla viaja en su propia columna, inyectada por
+    evaluacion.guardar_metricas). Mezclar las dos cosas rompería el filtrado por
+    variante y el vocabulario declarado en T1.
+    """
+    return "{}{}".format(set_features, sufijo_semilla())
+
+
+# Texto de ayuda del flag `--semilla`, único para los cinco scripts: la vía de
+# inyección es la misma en todos y su documentación no debe divergir por copia.
+AYUDA_CLI_SEMILLA = (
+    "Semilla de la corrida (por defecto {}, la de todo lo publicado). Con "
+    "cualquier otro valor la corrida NO toca las tablas publicadas —escribe en "
+    "'metricas_*{}.csv'— ni los artefactos de la 42: sus .joblib y figuras se "
+    "sufijan con '_semilla<N>'. Es la vía del barrido de dispersión (T4); los "
+    "titulares del capítulo 5 siguen siendo los de la semilla {}."
+).format(SEMILLA_POR_DEFECTO, SUFIJO_TABLA_SEMILLAS, SEMILLA_POR_DEFECTO)
+
+
+def nombre_tabla_semillas(nombre_csv):
+    """Nombre de la tabla del barrido correspondiente a una tabla publicada."""
+    raiz, ext = os.path.splitext(nombre_csv)
+    return raiz + SUFIJO_TABLA_SEMILLAS + ext
+
+
+def es_tabla_de_semillas(nombre_csv):
+    """True si el nombre (o la ruta) es una tabla del barrido de semillas."""
+    raiz, _ = os.path.splitext(os.path.basename(nombre_csv))
+    return raiz.endswith(SUFIJO_TABLA_SEMILLAS)
+
+
+def nombre_tabla_base(nombre_csv):
+    """Inversa de nombre_tabla_semillas(): '<x>_semillas.csv' -> '<x>.csv'."""
+    nombre = os.path.basename(nombre_csv)
+    raiz, ext = os.path.splitext(nombre)
+    if raiz.endswith(SUFIJO_TABLA_SEMILLAS):
+        raiz = raiz[:-len(SUFIJO_TABLA_SEMILLAS)]
+    return raiz + ext
+
+
+def ruta_tabla(nombre_csv):
+    """
+    Ruta de una tabla de métricas, DESVIADA a '*_semillas.csv' si la semilla no
+    es 42. Los scripts construyen así las nueve rutas: ninguno concatena ya el
+    nombre a RESULTADOS_DIR por su cuenta.
+
+    Con la semilla 42 devuelve la ruta publicada de siempre. Con cualquier otra
+    devuelve la tabla nueva, y por eso T4 no puede tocar las cuatro principales
+    ni las cinco auxiliares: no llega a abrirlas.
+    """
+    nombre = os.path.basename(nombre_csv)
+    if not es_semilla_por_defecto():
+        nombre = nombre_tabla_semillas(nombre)
+    return os.path.join(RESULTADOS_DIR, nombre)
 
 
 # --- Convenciones de clase (decisión Q3) — únicas para los tres modelos ---

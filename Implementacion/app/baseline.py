@@ -72,6 +72,11 @@ class NSLKDDBaselineTrainer:
         self.sin_seleccion = sin_seleccion
         self.base_path = config.base_path(sin_seleccion=sin_seleccion)
         self.set_features = "122_sin_seleccion" if sin_seleccion else "54"
+        # Token para los NOMBRES de artefacto (joblib y figura). Con la semilla 42
+        # es igual a set_features —los nombres publicados no cambian—; con otra
+        # añade '_semilla<N>' (T4). Se congela aquí: config.fijar_semilla() se
+        # llama antes de instanciar la clase.
+        self.sufijo_artefactos = config.sufijo_artefactos(self.set_features)
 
         # Protocolo CV único (mismo split, misma semilla) que firmas.py.
         self.cv = StratifiedKFold(
@@ -243,7 +248,7 @@ class NSLKDDBaselineTrainer:
         evaluacion.plot_matriz_confusion(
             self.y_D2_cat, y_pred, labels=config.CATEGORIAS_MULTICLASE,
             titulo="Matriz de confusión — RF monolítico (baseline, D2 completo)",
-            filename="baseline_cm_{}.png".format(self.set_features),
+            filename="baseline_cm_{}.png".format(self.sufijo_artefactos),
         )
 
     # ------------------------------------------------------------------
@@ -322,7 +327,8 @@ class NSLKDDBaselineTrainer:
     def _persistir(self):
         """Guarda el modelo, la fila de métricas y la tabla 0-day por tipo."""
         # --- Modelo joblib (sufijado por variante para que 54 y 122 coexistan). ---
-        ruta_modelo = config.MODELOS_DIR + r"\baseline_rf_{}.joblib".format(self.set_features)
+        ruta_modelo = config.MODELOS_DIR + r"\baseline_rf_{}.joblib".format(
+            self.sufijo_artefactos)
         joblib.dump(
             {
                 "algoritmo": "RandomForest_monolitico",
@@ -345,7 +351,8 @@ class NSLKDDBaselineTrainer:
         print("   Guardado modelo: {}".format(ruta_modelo))
 
         # --- Tabla de métricas (una fila; → capítulo 5, comparativa con el híbrido). ---
-        csv_path = config.RESULTADOS_DIR + r"\metricas_baseline.csv"
+        # Con la semilla 42, la tabla publicada; con otra, la del barrido (T4).
+        csv_path = config.ruta_tabla("metricas_baseline.csv")
         fila = self._fila_metricas()
         evaluacion.limpiar_variante_csv(
             csv_path, self.set_features, evaluacion.cabecera_esperada(fila)
@@ -360,7 +367,7 @@ class NSLKDDBaselineTrainer:
         # principales, cumple evaluacion.COLUMNAS_MINIMAS_AUXILIARES, con
         # 'alcance' explícito porque su columna 'recall' se refiere a una
         # partición distinta de la de la tabla principal.
-        csv_0day = config.RESULTADOS_DIR + r"\metricas_baseline_0day.csv"
+        csv_0day = config.ruta_tabla("metricas_baseline_0day.csv")
         filas_0day = []
         for tipo in list(self.tipos_0day) + ["__global__"]:
             d = self.metricas_0day[tipo]
@@ -417,7 +424,15 @@ if __name__ == "__main__":
         help="Usa el set de 122 features (variante sin selección 4.3.5) en lugar "
              "de las 54 por defecto. Para el experimento 54-vs-122 (decisión Q1/C).",
     )
+    parser.add_argument(
+        "--semilla", type=int, default=config.SEMILLA_POR_DEFECTO,
+        help=config.AYUDA_CLI_SEMILLA,
+    )
     args = parser.parse_args()
+
+    # ANTES de instanciar: el __init__ congela el StratifiedKFold del protocolo y
+    # el sufijo de los artefactos. Ver config.py, encabezado.
+    config.fijar_semilla(args.semilla)
 
     trainer = NSLKDDBaselineTrainer(sin_seleccion=args.sin_seleccion)
     trainer.entrenar_todos()

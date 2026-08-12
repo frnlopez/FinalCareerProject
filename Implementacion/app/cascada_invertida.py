@@ -121,6 +121,11 @@ class NSLKDDInvertedCascadeMeasurer:
         self.firma = firma
         self.base_path = config.base_path(sin_seleccion=sin_seleccion)
         self.set_features = "122_sin_seleccion" if sin_seleccion else "54"
+        # Token para los NOMBRES de artefacto: los dos .joblib que LEE (el de
+        # firmas y el descriptor del híbrido, de donde sale UMBRAL_CONF) y la
+        # figura. Con la semilla 42 es igual a set_features —lee exactamente lo
+        # publicado—; con otra apunta a los '_semilla<N>' de ese pase (T4).
+        self.sufijo_artefactos = config.sufijo_artefactos(self.set_features)
 
         # Rellenados por cargar_datos()
         self.X_normales = None      # filas de D2 con category_original == 'normal'
@@ -170,7 +175,7 @@ class NSLKDDInvertedCascadeMeasurer:
     # ------------------------------------------------------------------
     def _cargar_joblib_firma(self):
         ruta = config.MODELOS_DIR + r"\firma_{}_{}.joblib".format(
-            self.firma, self.set_features)
+            self.firma, self.sufijo_artefactos)
         datos = joblib.load(ruta)
         # Misma salvaguarda que hibrido.py: un joblib de otra variante no cuadraría
         # en columnas con X_normales.
@@ -183,6 +188,17 @@ class NSLKDDInvertedCascadeMeasurer:
             raise RuntimeError(
                 "Las columnas de D2 no coinciden con las 'feature_names' del "
                 "joblib {}: la medición no sería válida.".format(ruta))
+        # Misma salvaguarda de SEMILLA que hibrido._cargar_joblib (T4): medir con el
+        # modelo de otra semilla daría una fila cuya columna 'semilla' mentiría.
+        semilla_joblib = datos.get("semilla")
+        if semilla_joblib is None:
+            print("   [aviso] {} no declara 'semilla': no se puede comprobar que "
+                  "sea de esta corrida.".format(ruta))
+        elif int(semilla_joblib) != int(config.RANDOM_STATE):
+            raise RuntimeError(
+                "El joblib {} se entrenó con la semilla {} y esta corrida usa la "
+                "{}: la fila declararía una semilla que no es la del modelo.".format(
+                    ruta, semilla_joblib, config.RANDOM_STATE))
         return datos, ruta
 
     def _leer_umbral_conf(self):
@@ -193,7 +209,8 @@ class NSLKDDInvertedCascadeMeasurer:
         regla de presupuesto τ). Si el descriptor falta, se ABORTA: un literal
         escrito a mano aquí sería un número inventado.
         """
-        ruta = config.MODELOS_DIR + r"\hibrido_{}.joblib".format(self.set_features)
+        ruta = config.MODELOS_DIR + r"\hibrido_{}.joblib".format(
+            self.sufijo_artefactos)
         try:
             desc = joblib.load(ruta)
         except FileNotFoundError:
@@ -211,7 +228,7 @@ class NSLKDDInvertedCascadeMeasurer:
                   "y se declara en la columna 'origen_umbral_conf'.".format(
                       desc.get("firma"), self.firma))
         origen = "{}::umbral_conf_elegido".format(
-            "hibrido_{}.joblib".format(self.set_features))
+            "hibrido_{}.joblib".format(self.sufijo_artefactos))
         return float(umbral), origen
 
     # ------------------------------------------------------------------
@@ -329,7 +346,8 @@ class NSLKDDInvertedCascadeMeasurer:
             if c + b > 0:
                 ax.text(xi, c + b, str(c + b), ha="center", va="bottom", fontsize=9)
         fig.tight_layout()
-        ruta = config.FIGURAS_DIR + r"\cascada_invertida_{}.png".format(self.set_features)
+        ruta = config.FIGURAS_DIR + r"\cascada_invertida_{}.png".format(
+            self.sufijo_artefactos)
         fig.savefig(ruta, dpi=300, bbox_inches="tight")
         plt.close(fig)
         print("   Figura: {}".format(ruta))
@@ -338,7 +356,9 @@ class NSLKDDInvertedCascadeMeasurer:
     # 5. Persistencia — tabla PROPIA, nunca las cuatro principales
     # ------------------------------------------------------------------
     def _persistir(self):
-        csv_path = config.RESULTADOS_DIR + "\\" + self.NOMBRE_CSV
+        # Con la semilla 42, la tabla propia publicada; con otra, su '*_semillas.csv'
+        # (T4). En ningún caso ninguna de las cuatro principales.
+        csv_path = config.ruta_tabla(self.NOMBRE_CSV)
         evaluacion.limpiar_variante_csv(
             csv_path, self.set_features,
             evaluacion.cabecera_esperada(self.filas[0]) if self.filas else None,
@@ -374,13 +394,28 @@ class NSLKDDInvertedCascadeMeasurer:
         """
         nombre = os.path.basename(csv_path)
         df = pd.read_csv(csv_path)
-        df_var = df[df["set_features"].astype(str) == str(self.set_features)]
+        mask = df["set_features"].astype(str) == str(self.set_features)
+        # En la tabla del barrido de semillas (T4) la unidad es (variante, semilla):
+        # sin este filtro, dos semillas de la misma variante darían 10 filas y el
+        # recuento de 5 abortaría siendo ambas correctas.
+        de_semillas = config.es_tabla_de_semillas(nombre)
+        if de_semillas and "semilla" in df.columns:
+            mask &= df["semilla"].astype(str) == str(config.RANDOM_STATE)
+        df_var = df[mask]
+
+        # Cómo se nombra la unidad comprobada en los mensajes: la variante en la
+        # tabla publicada, el par (variante, semilla) en la del barrido.
+        if de_semillas:
+            unidad = "la variante '{}' con la semilla {}".format(
+                self.set_features, config.RANDOM_STATE)
+        else:
+            unidad = "la variante '{}'".format(self.set_features)
 
         if len(df_var) != self.FILAS_ESPERADAS_POR_VARIANTE:
             raise ValueError(
-                "{}: la variante '{}' tiene {} filas y debería tener {}. Regenera "
-                "la tabla con un pase completo del script para esa variante.".format(
-                    nombre, self.set_features, len(df_var),
+                "{}: {} tiene {} filas y debería tener {}. Regenera "
+                "la tabla con un pase completo del script para esa unidad.".format(
+                    nombre, unidad, len(df_var),
                     self.FILAS_ESPERADAS_POR_VARIANTE)
             )
 
@@ -424,12 +459,18 @@ class NSLKDDInvertedCascadeMeasurer:
                     suma_glob)
             )
 
-        print("   Recuento {}: {} filas en la variante '{}' (total en fichero: {} "
-              "de {} esperadas con las dos variantes corridas) · categorías "
+        # En la tabla del barrido NO se declara un total esperado del fichero:
+        # depende de cuántas semillas se hayan corrido y el barrido es incremental.
+        if de_semillas:
+            nota_total = "total en fichero: {} filas".format(len(df))
+        else:
+            nota_total = ("total en fichero: {} de {} esperadas con las dos "
+                          "variantes corridas".format(
+                              len(df), self.FILAS_ESPERADAS_POR_VARIANTE * 2))
+        print("   Recuento {}: {} filas en {} ({}) · categorías "
               "únicas y completas · argmax particiona las {} normales de D2 · "
               "recuentos coherentes con '{}'".format(
-                  nombre, len(df_var), self.set_features, len(df),
-                  self.FILAS_ESPERADAS_POR_VARIANTE * 2, n_normales_d2,
+                  nombre, len(df_var), unidad, nota_total, n_normales_d2,
                   self.FILA_GLOBAL))
 
     # ------------------------------------------------------------------
@@ -465,7 +506,16 @@ if __name__ == "__main__":
         help="Clasificador de firmas a medir (por defecto RandomForest, el de la "
              "cascada del híbrido).",
     )
+    parser.add_argument(
+        "--semilla", type=int, default=config.SEMILLA_POR_DEFECTO,
+        help=config.AYUDA_CLI_SEMILLA + " Requiere los .joblib de firmas y del "
+             "híbrido de ESA MISMA semilla: se abortaría si declarasen otra.",
+    )
     args = parser.parse_args()
+
+    # ANTES de instanciar: el __init__ congela el sufijo con el que se buscan los
+    # dos .joblib que este script LEE. Ver config.py, encabezado.
+    config.fijar_semilla(args.semilla)
 
     medidor = NSLKDDInvertedCascadeMeasurer(
         sin_seleccion=args.sin_seleccion, firma=args.firma

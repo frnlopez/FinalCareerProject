@@ -105,6 +105,12 @@ COLUMNAS_MINIMAS = (
 # cascadas alternativas, van a una tabla propia, no a esta.
 CLAVE_UNICIDAD = ("set_features", "algoritmo", "alcance")
 
+# CLAVE DE UNICIDAD de las tablas del BARRIDO DE SEMILLAS (T4). La de arriba no
+# les vale y es exactamente el muro (b) que documenta comprobar_recuento(): diez
+# semillas de la misma variante comparten (set_features, algoritmo, alcance), así
+# que serían diez duplicados. Aquí `semilla` ES parte de la identidad de la fila.
+CLAVE_UNICIDAD_SEMILLAS = CLAVE_UNICIDAD + ("semilla",)
+
 # Las cuatro tablas de métricas de los modelos: sobre ellas se exige el conjunto
 # mínimo de columnas.
 TABLAS_PRINCIPALES = frozenset({
@@ -166,6 +172,36 @@ FILAS_ESPERADAS_POR_VARIANTE = {
     "metricas_baseline.csv": 1,
     "metricas_hibrido.csv": 1,
 }
+
+# ---------------------------------------------------------------------------
+# Tablas del BARRIDO DE SEMILLAS (tarea T4)
+# ---------------------------------------------------------------------------
+# Una corrida con `--semilla N` (N != 42) NO escribe en ninguna de las nueve
+# tablas de arriba: config.ruta_tabla() la desvía a '<nombre>_semillas.csv'. Estos
+# dos conjuntos son esas tablas nuevas, DERIVADAS de los anteriores y no
+# enumeradas a mano, para que añadir una tabla no obligue a acordarse de la suya.
+#
+# Tienen las MISMAS columnas que su tabla base —incluida `semilla`, que ya
+# inyectaba guardar_metricas desde T1— así que pasan la MISMA validación de
+# esquema. Lo que cambia es lo que depende de la identidad de la fila, y son tres
+# cosas, resueltas en las tres funciones de abajo:
+#   limpiar_variante_csv   borra por (variante, semilla) y no por variante sola:
+#                          re-correr la semilla 7 no puede llevarse la 3 y la 5.
+#   comprobar_unicidad     clave CLAVE_UNICIDAD_SEMILLAS (con `semilla`).
+#   comprobar_recuento     cuenta 4/4/1/1 por (variante, semilla), no por variante.
+#
+# CÓMO LO SABEN: por el NOMBRE del fichero (config.es_tabla_de_semillas), no por
+# un parámetro nuevo en cada llamada. Es deliberado: las nueve llamadas de los
+# cinco scripts ya construyen la ruta con config.ruta_tabla(), así que la regla
+# vive en UN sitio y es imposible olvidarla en un call site. El precio es que las
+# tres funciones leen config.RANDOM_STATE del estado global; se acepta porque la
+# semilla ES global en esta corrida (la fija fijar_semilla() antes de todo).
+TABLAS_PRINCIPALES_SEMILLAS = frozenset(
+    config.nombre_tabla_semillas(n) for n in TABLAS_PRINCIPALES
+)
+TABLAS_AUXILIARES_SEMILLAS = frozenset(
+    config.nombre_tabla_semillas(n) for n in TABLAS_AUXILIARES
+)
 
 # Columnas de tiempo (T1): el tiempo de ENTRENAMIENTO y el de INFERENCIA no son
 # la misma magnitud ni responden a la misma pregunta. El de inferencia es el que
@@ -612,6 +648,13 @@ def limpiar_variante_csv(csv_path, set_features, columnas_esperadas=None):
     subconjuntos de algoritmos de la misma variante: la tabla refleja el último
     pase completo.
 
+    EXCEPCIÓN — TABLAS DEL BARRIDO DE SEMILLAS (T4): en una tabla '*_semillas.csv'
+    el borrado es por (VARIANTE, SEMILLA). Borrar por variante sola sería el muro
+    (a) de comprobar_recuento(): la semilla 7 se llevaría por delante las filas de
+    la 3 y la 5 y las diez colapsarían a la última. La semilla no llega por
+    parámetro: se lee de config.RANDOM_STATE, que es la de esta corrida y la que
+    guardar_metricas() acaba de escribir en esas filas.
+
     Parameters
     ----------
     csv_path : str
@@ -668,8 +711,13 @@ def limpiar_variante_csv(csv_path, set_features, columnas_esperadas=None):
     if "set_features" not in df.columns:
         return
 
-    # (3) Filtrado de las filas de ESTA variante.
-    df = df[df["set_features"].astype(str) != str(set_features)]
+    # (3) Filtrado de las filas de ESTA variante — y, en las tablas del barrido,
+    # solo las de ESTA semilla (si a la tabla le faltase la columna `semilla` sería
+    # de otro esquema y el bloque (1) ya la habría apartado).
+    a_borrar = df["set_features"].astype(str) == str(set_features)
+    if config.es_tabla_de_semillas(csv_path) and "semilla" in df.columns:
+        a_borrar &= df["semilla"].astype(str) == str(config.RANDOM_STATE)
+    df = df[~a_borrar]
 
     # Sin filas de otras variantes → se elimina el fichero para que
     # guardar_metricas lo recree con cabecera fresca (evita cabeceras rancias).
@@ -690,7 +738,14 @@ def comprobar_unicidad(csv_path, clave=None):
 
     Si al CSV le falta alguna columna de la clave, no se comprueba nada (tablas
     auxiliares con otra granularidad de fila).
+
+    En las tablas del BARRIDO DE SEMILLAS (T4) la clave por defecto es
+    CLAVE_UNICIDAD_SEMILLAS: allí diez semillas de la misma variante comparten
+    (variante, algoritmo, alcance) sin ser duplicados, y `semilla` es lo que las
+    distingue. Un `clave` explícito manda sobre las dos.
     """
+    if clave is None and config.es_tabla_de_semillas(csv_path):
+        clave = CLAVE_UNICIDAD_SEMILLAS
     clave = tuple(clave) if clave is not None else CLAVE_UNICIDAD
     if not os.path.exists(csv_path):
         return
@@ -727,21 +782,59 @@ def comprobar_recuento(csv_path, set_features):
     aborta; (c) FILAS_ESPERADAS_POR_VARIANTE es fijo 4/4/1/1, así que 40 filas
     abortan aquí—. El abort se conserva a propósito: ninguna invocación legítima
     de la CLI actual lo dispara y es lo que hace comprobable el recuento.
+
+    CÓMO SE RESOLVIÓ ESO EN T4 (2026-08-12), para que este docstring no quede
+    describiendo un problema ya cerrado: la corrida con `--semilla N` no llega a
+    esta tabla —config.ruta_tabla() la desvía a '<nombre>_semillas.csv'— y los
+    tres muros se levantan allí de otra forma: (a) limpiar_variante_csv() borra por
+    (variante, semilla); (b) la clave es CLAVE_UNICIDAD_SEMILLAS, con `semilla`
+    dentro; (c) el 4/4/1/1 de aquí abajo se exige por (variante, semilla) y no por
+    variante, así que las diez semillas caben y cada una debe estar COMPLETA.
+    El abort de las cuatro tablas principales se conserva intacto.
     """
     nombre = os.path.basename(csv_path)
-    esperadas = FILAS_ESPERADAS_POR_VARIANTE.get(nombre)
+    de_semillas = config.es_tabla_de_semillas(nombre)
+    # El nº de filas esperado por pase es el de la tabla BASE: una corrida del
+    # barrido produce los mismos 4/4/1/1, solo que por (variante, semilla).
+    esperadas = FILAS_ESPERADAS_POR_VARIANTE.get(
+        config.nombre_tabla_base(nombre) if de_semillas else nombre
+    )
     if esperadas is None or not os.path.exists(csv_path):
         return
     df = pd.read_csv(csv_path)
     if "set_features" not in df.columns:
         return
-    n_variante = int((df["set_features"].astype(str) == str(set_features)).sum())
+
+    mask = df["set_features"].astype(str) == str(set_features)
+    if de_semillas:
+        if "semilla" not in df.columns:
+            return
+        mask &= df["semilla"].astype(str) == str(config.RANDOM_STATE)
+    n_variante = int(mask.sum())
+
     if n_variante != esperadas:
         raise ValueError(
-            "{}: la variante '{}' tiene {} filas y debería tener {}. Regenera la "
-            "tabla con un pase completo del script para esa variante.".format(
-                nombre, set_features, n_variante, esperadas)
+            "{}: {} tiene {} filas y debería tener {}. Regenera la tabla con un "
+            "pase completo del script para esa {}.".format(
+                nombre,
+                "la variante '{}' con la semilla {}".format(
+                    set_features, config.RANDOM_STATE)
+                if de_semillas else "la variante '{}'".format(set_features),
+                n_variante, esperadas,
+                "combinación de variante y semilla" if de_semillas else "variante")
         )
+
+    if de_semillas:
+        # Aquí NO se declara un total esperado del fichero: depende de cuántas
+        # semillas se hayan corrido ya y el barrido es incremental. Se informa de
+        # lo que hay, que es lo comprobable sin inventar una expectativa.
+        n_semillas = int(df["semilla"].nunique())
+        print("   Recuento {}: {} filas en la variante '{}' con la semilla {} "
+              "(total en fichero: {} filas de {} semillas distintas)".format(
+                  nombre, n_variante, set_features, config.RANDOM_STATE,
+                  len(df), n_semillas))
+        return
+
     total_esperado = esperadas * 2  # dos variantes: 54 y 122_sin_seleccion
     print("   Recuento {}: {} filas en la variante '{}' (total en fichero: {} "
           "de {} esperadas con las dos variantes corridas)".format(
@@ -770,10 +863,13 @@ def guardar_metricas(fila, csv_path):
     fila.setdefault("commit", config.commit_actual())
     fila.setdefault("fecha", datetime.now().isoformat(timespec="seconds"))
 
+    # Las tablas del barrido de semillas (T4) validan el MISMO esquema que su tabla
+    # base: son las mismas columnas con `semilla` como parte de la identidad de la
+    # fila, no un esquema nuevo (T1 no se rediseña).
     nombre = os.path.basename(csv_path)
-    if nombre in TABLAS_PRINCIPALES:
+    if nombre in TABLAS_PRINCIPALES or nombre in TABLAS_PRINCIPALES_SEMILLAS:
         validar_esquema_minimo(fila, csv_path)
-    elif nombre in TABLAS_AUXILIARES:
+    elif nombre in TABLAS_AUXILIARES or nombre in TABLAS_AUXILIARES_SEMILLAS:
         # Las auxiliares no tienen 'algoritmo' ni clave de unicidad, pero sí
         # alcance y procedencia: las cinco por igual (coherencia de procedencia).
         validar_esquema_minimo(fila, csv_path,

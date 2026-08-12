@@ -88,6 +88,41 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
     122), así que la dispersión es **carga de máquina, no épocas**. Consecuencia práctica para quien
     arranque T4: **no diseñar las 10 semillas para resolver la duda del número de épocas — ya está
     resuelta.**
+  - **ESTADO 2026-08-12 · el ANDAMIAJE DE SEMILLA está CERRADO, T4 NO.** El flag `--semilla N` y las
+    nueve tablas `*_semillas.csv` están implementados y auditados (ver `## Cerradas`), con **cómputo
+    cero**: no se ha corrido ni una semilla. Lo que queda de T4 es **lanzar el barrido y agregar la
+    dispersión**.
+    - **Corrección de recuento que arrastra esta ficha:** dice «10 semillas × **4 scripts**» y son
+      **cinco** — `cascada_invertida.py` entra también, porque sin el flag correrla bajo otra semilla
+      habría escrito en su tabla publicada. La estimación de ≈160 min **no incluye** ese quinto script.
+    - **LÍMITE DEL DISEÑO, a declarar en `A.3` (T7) y en `5.4`/`5.2` (T11):** `program.py` **no está
+      parametrizado** —su `random_state=42` es literal y no importa `config.py`—. Las 10 semillas miden
+      dispersión **de los modelos sobre splits D1/D2/D3 y set de características FIJOS**: **no**
+      incluyen variabilidad del preprocesado ni de la selección de características. Escribirlo así, no
+      como «dispersión del sistema».
+  - **OCHO HALLAZGOS ABIERTOS del andamiaje — bloquean el lanzamiento del barrido.** Ninguno es 🔴 y
+    **ninguno se ha aplicado**. Van aquí y no en ficha propia porque son el trabajo que le falta a T4:
+    1. (🟠) **~5 GB de `.joblib`:** 20 modelos por pase × 10 semillas × 2 sets, **sin borrado entre
+       semillas**. `Resultados/modelos/` ocupa hoy **482 MB** (`firma_KNN_122` pesa **173 MB**). Hacen
+       falta **≥6 GB libres** o borrado por semilla, pero **DESPUÉS** de `hibrido.py` y
+       `cascada_invertida.py`, que consumen los de su propia semilla.
+    2. (🟠) **La lista de las 10 semillas no está definida** — ni aquí ni en `PIPELINE.md`. **Si 42 va
+       dentro**, `--semilla 42` es **indistinguible de una corrida por defecto**: pisaría las cuatro
+       tablas publicadas, los 20 `.joblib` y las figuras, dejaría falsa la línea `PIPELINE.md:369` y
+       `A.3` con **9 puntos de 10 corridas**.
+    3. (🟠) **No existe agregador de la dispersión:** nada convierte los `*_semillas.csv` en
+       media/sd/mín/máx, así que la tabla de `A.3` saldría de **cálculo manual**, que la regla del
+       proyecto prohíbe. Implementación pendiente.
+    4. (🟡) **~260 figuras nuevas** (13 PNG a 300 dpi × 10 × 2) caerían en directorio **versionado**: el
+       `.gitignore` raíz **no excluye** `*_semilla*`.
+    5. (🟡) **Declarar en `PIPELINE.md` qué SÍ varía dentro de cada semilla:** el split 80/20 de D1 —y
+       por tanto el **umbral p95**—, la muestra de 5.000 de D3, la submuestra de 20.000 de OCSVM y los
+       folds. **No es cosmético:** T11 y T7 van a citar esa banda y hoy se leería como «solo
+       aleatoriedad del modelo».
+    6. (🟡) Dejar la **traza de la verificación de `semilla = 42`**.
+    7. (🟡) **Simetrizar la salvaguarda** en `cascada_invertida._leer_umbral_conf`.
+    8. (🟡) Mencionar `--semilla` en las **cabeceras de los cinco scripts**, `README.md` y
+       `GUIA_RESULTADOS.md`.
 
 - [ ] **T5 · `5.0 Protocolo de evaluación`** · Informe · `redactor-tfg`
   Nota nueva, antes de `5.1`. Recoge junto lo que hoy está disperso en Q4, Q6, H-1…H-7 y P-1…P-5 de
@@ -862,6 +897,7 @@ Antes había aquí una lista de secciones vedadas a los agentes. Solo **una** so
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-12 | Código | **Andamiaje de semilla para T4 — el flag `--semilla N` y las nueve tablas `*_semillas.csv`. NO es T4: es la ENTRADA al barrido, con cómputo CERO, y `T4` SIGUE ABIERTA.** Registrado como trabajo sin ficha propia (carril Intervención dentro de T4). **Vía elegida:** flag CLI `--semilla N` que llama a `config.fijar_semilla(N)` **antes de instanciar**; los consumidores ya leían `config.RANDOM_STATE` **por atributo**, así que mutar la global propaga **sin cambiar ninguna firma**. **Tres decisiones de diseño cerradas:** (1) **una tabla `*_semillas.csv` por cada tabla existente (9), no una común** — obligado, porque `guardar_metricas()` **aborta** si el conjunto de columnas difiere entre filas del mismo CSV y las cuatro principales tienen columnas distintas; una tabla común exigía **rediseñar T1**, que estaba prohibido; (2) **con semilla 42 el sufijo es cadena vacía**, así que una corrida por defecto es **idéntica a la actual**, y con semilla ≠ 42 la corrida **no llega a abrir ninguna de las nueve tablas publicadas**; (3) **se incluyó `cascada_invertida.py`** —el encargo decía cuatro scripts, **son cinco**—: sin el flag, correrla bajo otra semilla **habría escrito en su tabla publicada**. **Límite del diseño, ya anotado en T4:** `program.py` **no** está parametrizado (su `random_state=42` es literal y no importa `config.py`), así que las 10 semillas medirán dispersión **de los modelos sobre splits y set de características FIJOS**, sin variabilidad de preprocesado ni de selección. Ficheros: `Implementacion/app/config.py`, `evaluacion.py`, `anomalias.py`, `firmas.py`, `baseline.py`, `hibrido.py`, `cascada_invertida.py` e `Implementacion/PIPELINE.md`. Dictamen de `auditor-ml`: **APTO CON CAMBIOS, ningún 🔴** — verificó que el **peor modo de fallo** (10 corridas con semilla 42 → **dispersión cero, falso tranquilizador**) **no puede darse**: no hay ni un `from config import RANDOM_STATE`, los ~15 usos son por atributo dentro de funciones y `fijar_semilla()` se llama en los **cinco `__main__`** antes de instanciar. Sin leakage nuevo, sin rediseño de T1, y `config.py` **sigue sin imports del proyecto** (de lo que depende `validacion.py`). **Deja 8 hallazgos ABIERTOS que bloquean el lanzamiento del barrido, anotados dentro de T4** — 3 🟠 (los ~5 GB de `.joblib`, la lista de las 10 semillas sin definir y la ausencia de agregador de dispersión) y 5 🟡 | — |
 | 2026-08-12 | Código | **`PIPELINE.md` ya no está desalineado con su propia figura** (ficha abierta el 2026-08-01, «la acepta o la retira Francisco»). El árbol de ficheros generados lista ya **`transformers.joblib`** (`:53`) y **`selected_features.txt`** (`:30`), **distingue lo que existe por duplicado —uno por variante, `_transformers.joblib` incluido— de lo que no**, y **declara su alcance** (`:71-72`). **Corrección verificada en disco que la propia ficha traía mal:** `selected_features.txt` lo escribe **`program.py:531-535`**, no `:521`, y **no lleva prefijo de variante** — es la única excepción a la regla del prefijo. **Documentación pura:** ningún script de `app/` tocado, ninguna corrida, ninguna cifra publicada movida. Sale en el **clúster de cinco fichas de `PIPELINE.md`**; dictamen común en la fila de abajo | `97e679b` |
 | 2026-08-12 | Código | **Re-anclado el sello `fc1c6b4-sucio` a su commit de cierre, `9af842c`** — la ficha que **no podía cerrarse hasta que el commit existiera**, y ya existe. Re-anclado en los **tres** documentos: `Implementacion/PIPELINE.md`, `Resultados/GUIA_RESULTADOS.md` y `resumen-de-decisiones.md`. **El implementador se dejó el tercero en la primera pasada y se completó en una segunda.** **El sello impreso DENTRO de los artefactos no se tocó** —sigue diciendo `fc1c6b4-sucio`— **y se dice por qué**: es una salida generada, no un texto editable; quien la edite a mano rompe la correspondencia con lo que imprimió `config.commit_actual()`. Corregido de paso el **anclaje frágil** `..._validation_report.txt:4-5`, que pasa a citarse **por el nombre del campo**. **Re-anclaje textual: cero corridas, cero artefactos regenerados, cero cifras alteradas.** **Residuos: `resumen-de-decisiones.md:820-821`** (punto 5 de la auditoría, sin permiso de escritura en aquella pasada) **y la copia viva del vault** (`4.2:145`, track Informe) — **dos fichas nuevas en `## Abiertas`**. **Dictamen de `auditor-ml` del clúster: APTO CON CAMBIOS, todo aplicado.** Encontró un **🟠 real**: `GUIA_RESULTADOS.md` afirmaba que las líneas de procedencia «no están en los ficheros que hay en disco» cuando **sí están** desde la corrida de las 20:53, **contradiciendo a su propia §3.2** — es la **variante INVERSA del defecto reincidente del proyecto**: no afirmar en presente lo que la corrida no respalda, sino **negar en presente lo que la corrida sí respalda**. Más **tres 🟡** de texto caducado, aplicados | `97e679b` |
 | 2026-08-12 | Código | **`PIPELINE.md` ya no se contradice dentro del mismo recuadro de trazabilidad.** Retirada la frase falsa «**su commit de cierre todavía no existe**» —el commit existe y es `9af842c`—, que chocaba con la mitad verdadera del mismo recuadro («están commiteados»). **Y no era una, eran tres:** se retiraron además **dos recaídas gemelas del mismo recuadro**. Verificado en disco el 2026-08-12: **cero apariciones** de «todavía no existe» en `Implementacion/PIPELINE.md`. Era **texto vigente y engañoso, no historial** —no llevaba nota fechada que lo superase—, y por eso se **corrige**, no se anota. Sale en el clúster de cinco; dictamen en la fila de arriba | `97e679b` |

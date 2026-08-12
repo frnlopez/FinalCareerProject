@@ -110,6 +110,11 @@ class NSLKDDSignatureTrainer:
         self.base_path = config.base_path(sin_seleccion=sin_seleccion)
         # Etiqueta legible del set de features para artefactos y tablas.
         self.set_features = "122_sin_seleccion" if sin_seleccion else "54"
+        # Token para los NOMBRES de artefacto (joblibs, figuras, reglas .txt). Con
+        # la semilla 42 es igual a set_features —los nombres publicados no
+        # cambian—; con otra añade '_semilla<N>' (T4). Se congela aquí porque
+        # config.fijar_semilla() se llama antes de instanciar la clase.
+        self.sufijo_artefactos = config.sufijo_artefactos(self.set_features)
 
         # Protocolo CV único (mismo split, misma semilla) para los 4 algoritmos.
         self.cv = StratifiedKFold(
@@ -328,7 +333,7 @@ class NSLKDDSignatureTrainer:
         evaluacion.plot_matriz_confusion(
             self.y_D2_eval, y_pred, labels=config.CATEGORIAS_ATAQUE,
             titulo="Matriz de confusión — {} (firmas, D2 tipos conocidos)".format(algo),
-            filename="firmas_cm_{}_{}.png".format(algo, self.set_features),
+            filename="firmas_cm_{}_{}.png".format(algo, self.sufijo_artefactos),
         )
 
         self.resultados[algo] = {
@@ -373,7 +378,8 @@ class NSLKDDSignatureTrainer:
         """
         Con el MEJOR DecisionTree, export_text(max_depth=5) → reglas legibles tipo
         'si flag_S0 > 0.5 → dos'. Se guardan en firmas_reglas_<set_features>.txt para
-        la sección 4.5 (IDS clásico). Sufijado para que las variantes coexistan.
+        la sección 4.5 (IDS clásico). Sufijado para que las variantes coexistan —y,
+        desde T4, también las semillas: con 42 el nombre es el publicado.
         """
         if "DecisionTree" not in self.resultados:
             return
@@ -381,7 +387,12 @@ class NSLKDDSignatureTrainer:
         reglas = export_text(
             dt, feature_names=list(self.X_D3.columns), max_depth=5
         )
-        ruta = config.RESULTADOS_DIR + r"\firmas_reglas_{}.txt".format(self.set_features)
+        ruta = config.RESULTADOS_DIR + r"\firmas_reglas_{}.txt".format(
+            self.sufijo_artefactos)
+        # La cabecera NO lleva la semilla a propósito: con 42 este fichero está
+        # publicado y versionado, y añadirle una línea cambiaría su contenido en la
+        # próxima corrida por defecto (T4 no puede alterar nada de la 42). Cuando
+        # la semilla no es 42, va en el NOMBRE del fichero.
         cabecera = (
             "Reglas del mejor DecisionTree de firmas (export_text, max_depth=5)\n"
             "Set de features: {} · Balanceo: {} · Config: {}\n"
@@ -411,7 +422,7 @@ class NSLKDDSignatureTrainer:
         config.ALCANCE_BALANCEO: CV sobre D3 con SMOTE intra-fold) y la
         procedencia.
         """
-        csv_path = config.RESULTADOS_DIR + r"\metricas_balanceo.csv"
+        csv_path = config.ruta_tabla("metricas_balanceo.csv")
         evaluacion.limpiar_variante_csv(
             csv_path, self.set_features,
             evaluacion.cabecera_esperada(self.filas_balanceo[0])
@@ -472,7 +483,9 @@ class NSLKDDSignatureTrainer:
 
     def _persistir(self):
         """Guarda modelos, la tabla de métricas de firmas y (fuera) la de balanceo."""
-        csv_path = config.RESULTADOS_DIR + r"\metricas_firmas.csv"
+        # Con la semilla 42, la tabla publicada; con otra, la tabla nueva del
+        # barrido ('metricas_firmas_semillas.csv'). Ver config.ruta_tabla (T4).
+        csv_path = config.ruta_tabla("metricas_firmas.csv")
 
         filas = {algo: self._fila_metricas(algo, r)
                  for algo, r in self.resultados.items()}
@@ -487,7 +500,7 @@ class NSLKDDSignatureTrainer:
             # coexistan. Guarda TODO lo necesario para el híbrido (el modelo soporta
             # predict_proba: DT/RF/KNN/HistGB lo tienen, y el ImbPipeline lo expone).
             ruta_modelo = config.MODELOS_DIR + r"\firma_{}_{}.joblib".format(
-                algo, self.set_features)
+                algo, self.sufijo_artefactos)
             joblib.dump(
                 {
                     "algoritmo": algo,
@@ -548,7 +561,15 @@ if __name__ == "__main__":
         help="Usa el set de 122 features (variante sin selección 4.3.5) en lugar "
              "de las 54 por defecto. Para el experimento 54-vs-122 (decisión Q1/C).",
     )
+    parser.add_argument(
+        "--semilla", type=int, default=config.SEMILLA_POR_DEFECTO,
+        help=config.AYUDA_CLI_SEMILLA,
+    )
     args = parser.parse_args()
+
+    # ANTES de instanciar: el __init__ congela el StratifiedKFold del protocolo y
+    # el sufijo de los artefactos. Ver config.py, encabezado.
+    config.fijar_semilla(args.semilla)
 
     trainer = NSLKDDSignatureTrainer(sin_seleccion=args.sin_seleccion)
     trainer.entrenar_todos()

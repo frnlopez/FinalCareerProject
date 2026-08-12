@@ -1013,8 +1013,9 @@ disponible o el directorio no es un repositorio, el valor es `desconocido` (sin 
 
 Las cuatro tablas principales contienen **un solo pase, con la semilla 42**. La dispersión entre
 semillas (tarea **T4**, 10 semillas) **no entra en ellas**: va a **tabla propia**, con clave de
-unicidad que incluya `semilla`. Queda escrito aquí porque hoy T4 chocaría contra tres muros a la
-vez y se descubriría en ejecución, no antes:
+unicidad que incluye `semilla`. El motivo son tres muros que, en las cuatro tablas principales,
+siguen intactos y **se conservan** — ninguna invocación legítima de la CLI los dispara y son lo
+que hace comprobable el recuento del runbook:
 
 1. `evaluacion.limpiar_variante_csv()` borra por **variante**, no por clave: 10 semillas de la
    misma variante colapsarían a la última escrita.
@@ -1023,9 +1024,50 @@ vez y se descubriría en ejecución, no antes:
 3. `evaluacion.FILAS_ESPERADAS_POR_VARIANTE` es fijo 4/4/1/1: 40 filas hacen **abortar** a
    `comprobar_recuento()`.
 
-Los tres aborts **se conservan**: ninguna invocación legítima de la CLI actual los dispara y son
-lo que hace comprobable el recuento del runbook. La dispersión de T4 entra como tabla nueva
-en el anexo `A.3`.
+La dispersión de T4 entra como tabla nueva en el anexo `A.3`.
+
+#### El andamiaje de la semilla (implementado el 2026-08-12; el barrido aún NO se ha corrido)
+
+Esta subsección describe **código que ya está en disco**, no resultados: al escribirla, las tablas
+`metricas_*_semillas.csv` **no existen todavía** y ninguna corrida del barrido se ha lanzado. Las
+cifras de dispersión —y la lectura de si los intervalos de RandomForest/HistGradientBoosting y de
+Autoencoder/IsolationForest se solapan— se añadirán aquí **después** de correrlo.
+
+**Vía de inyección: un flag `--semilla N`** en los cinco scripts ejecutables (`anomalias.py`,
+`firmas.py`, `baseline.py`, `hibrido.py`, `cascada_invertida.py`), que llama a
+`config.fijar_semilla(N)` **antes** de instanciar la clase del script. El razonamiento de por qué
+un flag y no una variable de entorno ni un argumento de función está en el encabezado de
+`config.py`, sección «CÓMO SE INYECTA LA SEMILLA». `validacion.py` **no** lleva el flag: no
+consume `RANDOM_STATE` (valida los splits que deja `program.py`).
+
+**El defecto sigue siendo 42.** Sin `--semilla`, cada script produce exactamente lo de antes:
+mismos nombres de artefacto, mismas nueve tablas, mismas figuras.
+
+Con una semilla distinta de 42 se activan dos desvíos, y son los que impiden pisar lo publicado:
+
+| Qué | Con semilla 42 | Con semilla N ≠ 42 |
+|---|---|---|
+| `.joblib`, figuras, `firmas_reglas_*.txt` | nombre publicado (`…_54.joblib`) | sufijo `_semilla<N>` (`…_54_semilla<N>.joblib`), vía `config.sufijo_artefactos()` |
+| Las nueve tablas de métricas | la tabla publicada | `metricas_<x>_semillas.csv`, vía `config.ruta_tabla()` — la publicada **no se abre** |
+
+En las tablas `*_semillas.csv` la unidad de fila es el par **(variante, semilla)**, y las tres
+comprobaciones se adaptan a esa unidad sin tocar el contrato de las principales: el borrado es por
+(variante, semilla), la clave es `CLAVE_UNICIDAD_SEMILLAS` (la de siempre **más** `semilla`) y el
+recuento exige los mismos 4/4/1/1 **por cada** (variante, semilla). Lo deciden por el **nombre del
+fichero** (`config.es_tabla_de_semillas()`), no por un parámetro en cada llamada, para que la regla
+viva en un solo sitio.
+
+**Salvaguarda de mezcla:** `hibrido.py` y `cascada_invertida.py` cargan `.joblib` de otros scripts,
+así que comprueban que la clave `semilla` del artefacto coincide con la de la corrida y **abortan**
+si no. Verificado en disco: los 20 `.joblib` publicados declaran `semilla = 42`, así que una corrida
+por defecto pasa la comprobación.
+
+**Lo que el barrido NO varía, y hay que declararlo al leer la dispersión:** los splits D1/D2/D3 y la
+selección de las 54 características. `program.py` no está parametrizado por semilla (su
+`random_state=42` es literal y no importa `config.py`), así que las 10 semillas miden la dispersión
+**de los modelos sobre unos splits y un set de características fijos** — no la del preprocesado.
+Es lo que la ficha T4 pide (10 semillas × 4 scripts × 2 sets), pero una banda leída como si
+incluyese la variabilidad de la selección de características sería una banda sobrevendida.
 
 ---
 

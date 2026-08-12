@@ -100,6 +100,11 @@ class NSLKDDAnomalyTrainer:
         self.base_path = config.base_path(sin_seleccion=sin_seleccion)
         # Etiqueta legible del set de features para la tabla de métricas.
         self.set_features = "122_sin_seleccion" if sin_seleccion else "54"
+        # Token para los NOMBRES de artefacto (joblibs y figuras). Con la semilla
+        # 42 es igual a set_features, así que los nombres publicados no cambian;
+        # con otra semilla añade '_semilla<N>' y el barrido de T4 no pisa nada.
+        # Se congela aquí: config.fijar_semilla() se llama antes de instanciar.
+        self.sufijo_artefactos = config.sufijo_artefactos(self.set_features)
 
         # Rellenados por cargar_datos()
         self.X_D1_train = None
@@ -359,7 +364,7 @@ class NSLKDDAnomalyTrainer:
         evaluacion.plot_matriz_confusion(
             y_true_str, y_pred_str, labels=etiquetas,
             titulo="Matriz de confusión — {} (anomalías, D2)".format(algo),
-            filename="anomalias_cm_{}_{}.png".format(algo, self.set_features),
+            filename="anomalias_cm_{}_{}.png".format(algo, self.sufijo_artefactos),
         )
 
         # Épocas (solo Autoencoder; None en los otros tres). DOS cifras y no una:
@@ -507,7 +512,10 @@ class NSLKDDAnomalyTrainer:
 
     def _persistir(self):
         """Guarda modelos, la tabla de métricas y las curvas ROC/PR superpuestas."""
-        csv_path = config.RESULTADOS_DIR + r"\metricas_anomalias.csv"
+        # Con la semilla 42, la tabla publicada de siempre; con cualquier otra,
+        # config.ruta_tabla() desvía a 'metricas_anomalias_semillas.csv' y esta
+        # corrida no abre la publicada (T4).
+        csv_path = config.ruta_tabla("metricas_anomalias.csv")
 
         filas = {algo: self._fila_metricas(algo, r)
                  for algo, r in self.resultados.items()}
@@ -526,7 +534,7 @@ class NSLKDDAnomalyTrainer:
             # Un joblib por algoritmo, sufijado por variante de features (H3) para
             # que 54 y 122 coexistan sin pisarse. Todo lo necesario para desplegar.
             ruta_modelo = config.MODELOS_DIR + r"\anomalia_{}_{}.joblib".format(
-                algo, self.set_features)
+                algo, self.sufijo_artefactos)
             joblib.dump(
                 {
                     "algoritmo": algo,
@@ -564,7 +572,7 @@ class NSLKDDAnomalyTrainer:
 
         # Figura estrella de 5.1: ROC/PR de los 4 algoritmos superpuestas.
         scores_por_algo = {algo: r["score_D2"] for algo, r in self.resultados.items()}
-        nombre_fig = "anomalias_{}".format(self.set_features)
+        nombre_fig = "anomalias_{}".format(self.sufijo_artefactos)
         evaluacion.plot_roc_pr(
             scores_por_algo, self.y_bin,
             nombre_fig=nombre_fig,
@@ -600,7 +608,15 @@ if __name__ == "__main__":
         help="Usa el set de 122 features (variante sin selección 4.3.5) en lugar "
              "de las 54 por defecto. Para el experimento 54-vs-122 (decisión Q1/C).",
     )
+    parser.add_argument(
+        "--semilla", type=int, default=config.SEMILLA_POR_DEFECTO,
+        help=config.AYUDA_CLI_SEMILLA,
+    )
     args = parser.parse_args()
+
+    # ANTES de instanciar: la clase congela en su __init__ el sufijo de los
+    # artefactos (y otras clases, su StratifiedKFold). Ver config.py, encabezado.
+    config.fijar_semilla(args.semilla)
 
     trainer = NSLKDDAnomalyTrainer(sin_seleccion=args.sin_seleccion)
     trainer.entrenar_todos()

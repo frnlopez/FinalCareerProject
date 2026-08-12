@@ -90,6 +90,12 @@ class NSLKDDHybridEvaluator:
         self.firma = firma
         self.base_path = config.base_path(sin_seleccion=sin_seleccion)
         self.set_features = "122_sin_seleccion" if sin_seleccion else "54"
+        # Token para los NOMBRES de artefacto: los .joblib que CARGA (etapas 1 y 2),
+        # el descriptor que escribe y la figura 5x6. Con la semilla 42 es igual a
+        # set_features, así que el híbrido publicado sigue cargando exactamente los
+        # mismos ficheros; con otra semilla apunta a los '_semilla<N>' que dejaron
+        # anomalias.py y firmas.py en ese mismo pase del barrido (T4).
+        self.sufijo_artefactos = config.sufijo_artefactos(self.set_features)
 
         # Reutilizamos los builders auditados (H-1): scoring de anomalías y
         # reconstrucción del estimador de firmas. No se reimplementa nada.
@@ -171,7 +177,8 @@ class NSLKDDHybridEvaluator:
     # Carga de joblibs persistidos (H-1) con verificación de variante
     # ------------------------------------------------------------------
     def _cargar_joblib(self, prefijo, algo):
-        ruta = config.MODELOS_DIR + r"\{}_{}_{}.joblib".format(prefijo, algo, self.set_features)
+        ruta = config.MODELOS_DIR + r"\{}_{}_{}.joblib".format(
+            prefijo, algo, self.sufijo_artefactos)
         datos = joblib.load(ruta)
         # Salvaguarda: el joblib debe ser de la misma variante de features (54/122)
         # que estamos evaluando, o las columnas no cuadrarían con X_D2.
@@ -179,6 +186,21 @@ class NSLKDDHybridEvaluator:
             raise RuntimeError(
                 "El joblib {} es de la variante '{}' pero se esperaba '{}'".format(
                     ruta, datos.get("set_features"), self.set_features))
+        # Salvaguarda equivalente para la SEMILLA (T4): una cascada que mezclase la
+        # etapa 1 de una semilla con la etapa 2 de otra —o con las de la 42— no
+        # mediría la dispersión de nada, y el nombre del fichero no basta para
+        # detectarlo si alguien renombra a mano. Los cinco scripts persisten
+        # 'semilla' desde T1, así que la clave está en todos los .joblib en disco;
+        # si faltase (artefacto anterior) se avisa y se continúa, no se aborta.
+        semilla_joblib = datos.get("semilla")
+        if semilla_joblib is None:
+            print("   [aviso] {} no declara 'semilla': no se puede comprobar que "
+                  "sea de esta corrida.".format(ruta))
+        elif int(semilla_joblib) != int(config.RANDOM_STATE):
+            raise RuntimeError(
+                "El joblib {} se entrenó con la semilla {} y esta corrida usa la "
+                "{}: la cascada mezclaría dos corridas distintas.".format(
+                    ruta, semilla_joblib, config.RANDOM_STATE))
         return datos, ruta
 
     # ------------------------------------------------------------------
@@ -418,7 +440,8 @@ class NSLKDDHybridEvaluator:
         ax.set_title("Matriz de confusión — híbrido {}→{} (D2, {} features)".format(
             self.detector, self.firma, self.set_features))
         fig.tight_layout()
-        ruta = config.FIGURAS_DIR + r"\hibrido_cm_{}.png".format(self.set_features)
+        ruta = config.FIGURAS_DIR + r"\hibrido_cm_{}.png".format(
+            self.sufijo_artefactos)
         fig.savefig(ruta, dpi=300, bbox_inches="tight")
         plt.close(fig)
         print("   Matriz 5×6: {}".format(ruta))
@@ -430,7 +453,9 @@ class NSLKDDHybridEvaluator:
         # Idempotencia por variante con la función única de evaluacion.py (T1:
         # antes había una copia de esta lógica en cada uno de los 4 scripts).
         # (1) Tabla de calibración: sensibilidad de los 3 umbrales (OOF + D2, H-4).
-        csv_cal = config.RESULTADOS_DIR + r"\metricas_hibrido_calibracion.csv"
+        # Las tres rutas por config.ruta_tabla(): con la semilla 42 son las tablas
+        # publicadas y con cualquier otra las '*_semillas.csv' del barrido (T4).
+        csv_cal = config.ruta_tabla("metricas_hibrido_calibracion.csv")
         evaluacion.limpiar_variante_csv(
             csv_cal, self.set_features,
             evaluacion.cabecera_esperada(self.tabla_calibracion[0])
@@ -441,7 +466,7 @@ class NSLKDDHybridEvaluator:
         print("   Tabla de calibración: {}".format(csv_cal))
 
         # (2) Tabla 0-day por tipo de los 4 detectores (cierra H1, con FPR).
-        csv_0day = config.RESULTADOS_DIR + r"\metricas_hibrido_0day.csv"
+        csv_0day = config.ruta_tabla("metricas_hibrido_0day.csv")
         evaluacion.limpiar_variante_csv(
             csv_0day, self.set_features,
             evaluacion.cabecera_esperada(self.tabla_0day[0])
@@ -452,7 +477,7 @@ class NSLKDDHybridEvaluator:
         print("   Tabla 0-day (4 detectores): {}".format(csv_0day))
 
         # (3) Fila resumen de la corrida (métricas por alcance con el umbral elegido).
-        csv_res = config.RESULTADOS_DIR + r"\metricas_hibrido.csv"
+        csv_res = config.ruta_tabla("metricas_hibrido.csv")
         evaluacion.limpiar_variante_csv(
             csv_res, self.set_features,
             evaluacion.cabecera_esperada(self.metricas_run),
@@ -464,7 +489,8 @@ class NSLKDDHybridEvaluator:
 
         # (4) Descriptor reproducible (H-7): referencias + umbral + τ. NO re-serializa
         # los modelos (ya existen en sus joblibs); guarda qué usa y la decisión.
-        ruta_desc = config.MODELOS_DIR + r"\hibrido_{}.joblib".format(self.set_features)
+        ruta_desc = config.MODELOS_DIR + r"\hibrido_{}.joblib".format(
+            self.sufijo_artefactos)
         joblib.dump({
             "tipo": "descriptor_hibrido",
             "set_features": self.set_features,
@@ -675,7 +701,17 @@ if __name__ == "__main__":
         "--firma", choices=NSLKDDHybridEvaluator.FIRMAS, default="RandomForest",
         help="Clasificador de la etapa 2 (por defecto RandomForest; H-3).",
     )
+    parser.add_argument(
+        "--semilla", type=int, default=config.SEMILLA_POR_DEFECTO,
+        help=config.AYUDA_CLI_SEMILLA + " Requiere haber corrido antes anomalias.py "
+             "y firmas.py con ESA MISMA semilla: el híbrido carga sus .joblib y "
+             "aborta si la semilla que declaran no es la de esta corrida.",
+    )
     args = parser.parse_args()
+
+    # ANTES de instanciar: el __init__ congela el StratifiedKFold del OOF, el
+    # sufijo de los artefactos y los dos trainers auxiliares. Ver config.py.
+    config.fijar_semilla(args.semilla)
 
     evaluador = NSLKDDHybridEvaluator(
         sin_seleccion=args.sin_seleccion, detector=args.detector, firma=args.firma
