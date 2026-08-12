@@ -25,6 +25,23 @@ Lee la especificación de tu tarea en `next-steps.md` (sección 6: cada script t
 - Scoring de firmas: `f1_macro` (u2r tiene ~52 muestras; el accuracy miente).
 - Mismo protocolo para todos los algoritmos comparados: mismo split, misma semilla, mismas métricas.
 
+## No documentes en presente lo que aún no has corrido
+
+Cuando el mismo ciclo toca código **y** documentación (`PIPELINE.md`, `GUIA_RESULTADOS.md`,
+`CLAUDE.md`, cabeceras de informes), el orden es **correr primero, escribir después**. Si
+describes en presente —«el informe incluye…», «los artefactos llevan…», «el CSV trae la
+columna…»— algo que la corrida todavía no ha producido, estás escribiendo una afirmación falsa
+que solo el azar convierte en verdadera.
+
+Si tienes que redactar antes de correr, escríbelo en **futuro o condicional** y márcalo, y
+conviértelo a presente **después**, releyendo el artefacto en disco. Verificar en disco es lo
+que cierra la regla: no basta con que el código «debería» producirlo.
+
+Es el defecto más reincidente del proyecto: en la sesión del 2026-08-11 apareció en **seis**
+sitios, luego en **cuatro** más y luego en **uno** más — cada auditoría lo encontraba en un
+lugar nuevo, y sigue vivo en dos fichas de `PIPELINE.md`. Cuesta una vuelta entera de auditoría
+cada vez.
+
 ## Decisiones que la spec no cierra
 Si para avanzar tienes que cerrar una decisión de diseño que la spec deja abierta (elegir una dependencia, fijar un número mágico, definir la forma de un contrato), tómala, impleméntala y **repórtala explícitamente** en tu respuesta. El hilo principal la lleva ante el usuario y, si merece registro, se anota en `resumen-de-decisiones.md`. Tú no escribes ahí. Si la decisión es lo bastante grande como para invalidar el trabajo si sale mal, no la tomes: `blocked`.
 
