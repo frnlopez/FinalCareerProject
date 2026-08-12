@@ -19,13 +19,6 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 
 ## Abiertas
 
-- [ ] **`PIPELINE.md` desalineado con su propia figura** · Código · `ml-implementador`
-  Detectado el 2026-08-01 al cerrar el diagrama `01_pipeline_completo.mmd`. El árbol de ficheros
-  generados de `Implementacion/PIPELINE.md:24-46` no lista `_transformers.joblib`,
-  `selected_features.txt` (que sí escribe `program.py:521`) ni la variante de prefijo
-  `_sin_seleccion` (122 características). El texto y el `.svg` que él mismo incrusta dicen cosas
-  distintas sobre los mismos ficheros. **La acepta o la retira Francisco.**
-
 - [ ] **Diagrama y README de agentes describen la arquitectura anterior** · Código · `ml-implementador`
   Detectado el 2026-08-01. `Implementacion/diagramas/README.md:10` y
   `Implementacion/diagramas/03_orquestacion_agentes.mmd` documentan el ciclo «orquestador →
@@ -385,8 +378,11 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
   `0,0035 / 0,0069` que citaba esta ficha son de otra corrida). Y sigue **sin ganar `f1_macro`**
   (0,804 vs 0,822).
   **La dirección aguanta y la prosa del vault no se toca**; lo que era falso es la formulación
-  recomendada aquí. **La formulación correcta y anclada está en `PIPELINE.md:252-256`**, y es la que
+  recomendada aquí. **La formulación correcta y anclada está en `PIPELINE.md:493-498`**, y es la que
   debe usarse.
+  **Ancla reapuntada el 2026-08-12** (el clúster de las cinco fichas de `PIPELINE.md` creció el
+  fichero ~40 líneas): era `:252-256`, que **hoy apunta a otra cosa** —el recuadro «Qué vale y qué no
+  vale un sello `-sucio`»—. El bloque bueno es el que empieza «**Lo citable, y ni una palabra más**».
 
 - [ ] **T21 · Declarar la mitad de P9 que T1 no cubre** · Informe · `redactor-tfg`
   `latencia_ms_por_flujo` mide **solo `predict`/`score`** sobre características ya calculadas y en
@@ -559,36 +555,10 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > Sale del cierre agrupado de los siete residuos de `validacion.py`. **No es 🔴** y **no se cerró a
 > propósito**: no puede cerrarse hasta que exista el commit.
 
-- [ ] **Re-anclar el sello `fc1c6b4-sucio` de los cuatro artefactos de validación** (🟡) · Código · `ml-implementador`
-  Los dos `*_validation_report.txt` y los dos `*_vocabulario_onehot.csv` salieron sellados
-  **`fc1c6b4-sucio`** (fecha por invocación: 54 → `20:53:27` · 122 → `20:53:46`) porque la corrida se
-  hizo con el árbol sucio. El aviso de «**pendiente de re-anclaje**» está **conservado y replicado** en
-  `Implementacion/PIPELINE.md`, `Resultados/GUIA_RESULTADOS.md` y `resumen-de-decisiones.md`, **sin
-  ningún hash inventado** — y así debe quedarse hasta que se resuelva.
-  - **Se resuelve cuando exista el commit de cierre**, de una de dos formas: re-correr `validacion.py`
-    en las dos variantes con el árbol limpio (**ninguna cifra debe moverse**; si alguna se mueve, es un
-    hallazgo) o re-anclar el texto de los tres documentos al hash real.
-  - **Los anclajes concretos de la vía «re-anclar el texto», verificados en disco el 2026-08-11**
-    (la ficha nombraba los tres documentos pero **no enumeraba las líneas**):
-    **`Implementacion/PIPELINE.md:161, 171, 189, 331`** y
-    **`Resultados/GUIA_RESULTADOS.md:101, 122, 255, 478-481`**. Más el sitio del sello en
-    `resumen-de-decisiones.md`, que va con su propia nota fechada.
-    - **`PIPELINE.md:331` SE AUTO-INSTRUYE a re-anclarse** —la fila `fc1c6b4-sucio` de la tabla de
-      corridas dice literalmente «hay que **re-anclar el hash en el commit de cierre** de este
-      ciclo, en esta fila y en el recuadro de trazabilidad de arriba»—, y esta ficha **no lo
-      sabía**: son **dos** sitios, la fila y el recuadro (`:161`/`:171`).
-    - **`PIPELINE.md:189` es un anclaje FRÁGIL:** cita `fichero:línea` de un **artefacto
-      regenerable** (`Resultados/specialized_nsl_kdd_validation_report.txt:4-5`, la cabecera
-      `Commit del código:` / `Fecha de la corrida:`). Hoy es correcto —verificado byte a byte—, pero
-      **cualquier re-corrida que cambie el número de líneas de cabecera lo desplaza en silencio**.
-      Al re-anclar, comprobar también ese `:4-5`, o citar el campo por su nombre en vez de por su
-      línea.
-  - **Convención de los tres valores del sello** (`<hash>` · `-sucio` · `-suciedad_desconocida`):
-    tabla canónica en `PIPELINE.md:952-963`.
-  - **PUNTERO CRUZADO (añadido el 2026-08-11):** la tabla de corridas que hay que retocar aquí
-    (`PIPELINE.md:329-331`) arrastra además **dos filas caducadas**, fichadas justo debajo en
-    «Incoherencias de `PIPELINE.md`…» (ficha 2). **Quien abra esa tabla para re-anclar el
-    `fc1c6b4-sucio` de `:331` debería arreglar las tres cosas en la misma pasada.**
+> **ACTUALIZACIÓN 2026-08-12 — la ficha del re-anclaje está CERRADA** (ver `## Cerradas`): el commit
+> de cierre ya existe (**`9af842c`**) y el sello se re-ancló **en los tres documentos**. Esta cabecera
+> queda como **historial**; **no quedan fichas abiertas debajo de ella**. Lo que quedó fuera está en
+> «Residuos del clúster de `PIPELINE.md` — altas del 2026-08-12».
 
 ### Incoherencias de `PIPELINE.md` — altas del pase de cuadre del 2026-08-11
 
@@ -597,34 +567,9 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > **Las dos son track Código, tocan DOCUMENTACIÓN y no comportamiento: ninguna exige re-correr nada.**
 > Anclas verificadas en disco antes de escribirlas. **Fichar no es resolver: aquí no se arregló nada.**
 
-- [ ] **`PIPELINE.md:180` se contradice con `:171` dentro del MISMO recuadro** (🟠) · Código · `ml-implementador`
-  El recuadro de trazabilidad de `Implementacion/PIPELINE.md` afirma las dos cosas a la vez: `:169-171`
-  dice que «el ciclo de residuos ya está aplicado y re-corrido, pero **su commit de cierre todavía no
-  existe**», y `:179-181` dice que los artefactos «son además **artefactos versionados**: **están
-  commiteados** y `validacion.py` no ha cambiado desde el commit que los versiona».
-  - **Es OTRA RECAÍDA del mismo defecto** que la fila `9af842c` de `## Cerradas` deja documentado como
-    dato que merecía quedar escrito: **afirmar en presente algo que la corrida aún no respaldaba**.
-    Reapareció, una vez más, en un sitio nuevo.
-  - **Cuál de las dos ha quedado falsa hoy: `:171`.** El commit de cierre **ya existe** — es
-    **`9af842c`**—, así que `:180` es la mitad verdadera y la frase «todavía no existe» es la que hay
-    que corregir. Es **texto vigente y engañoso, no historial**: no lleva ninguna nota fechada que lo
-    supere.
-  - **Relación con la ficha del re-anclaje:** `:171` es uno de los cuatro anclajes que esa ficha
-    enumera, así que las dos se tocan — pero **no son la misma cosa**: allí se sustituye un hash,
-    aquí se retira una afirmación falsa.
-
-- [ ] **`PIPELINE.md:329` y `:330` están caducadas: dos corridas «aún en el árbol» que ya tienen commit** (🟡) · Código · `ml-implementador`
-  En la tabla de corridas de `Implementacion/PIPELINE.md`, la columna «versionados» dice:
-  - `:329` — fila `1163c90`: «*(aún en el árbol de trabajo, **pendiente del commit de cierre de
-    T18**)*», cuando `features.md` registra **T18 cerrada en `8fdc421`** (ver `## Cerradas`).
-  - `:330` — fila `274923d-sucio`: «*(aún en el árbol de trabajo)*», cuando esa corrida es la de la
-    cascada invertida (**T3**), **cerrada en `b1f1df2`**.
-  - **Agravante — es la MISMA tabla** en la que vive la fila `fc1c6b4-sucio` (`:331`) que la ficha
-    **«Re-anclar el sello `fc1c6b4-sucio`…»** (justo arriba, en «Residuo del ciclo de los siete»)
-    manda re-anclar. **Quien abra la tabla para eso debería arreglar las tres filas en la misma
-    pasada**; puntero cruzado puesto también en esa ficha.
-  - **No es 🔴 pero engaña sobre reproducibilidad:** un tercero que lea `:329-330` concluye que las
-    cifras publicadas de T18 y de T3 no se pueden recuperar de git, cuando sí se pueden.
+> **ACTUALIZACIÓN 2026-08-12 — las dos están CERRADAS** (ver `## Cerradas`), dentro del clúster de
+> cinco fichas de `PIPELINE.md` despachado ese día. Esta cabecera queda como **historial**; **no
+> quedan fichas abiertas debajo de ella**.
 
 ### Altas del grill del 2026-08-11 — dos specs pendientes
 
@@ -637,31 +582,9 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > como ordenaba su puntero cruzado. **Sigue abierta la segunda**, la glosa del sufijo `-sucio`. Los
 > residuos de esa pasada están en «Residuos del despacho de `4.2` — altas del 2026-08-12».
 
-- [ ] **Glosa del sufijo `-sucio` en la primera aparición de `PIPELINE.md` y `GUIA_RESULTADOS.md`** · Código · `ml-implementador`
-  **Una línea** en la **primera aparición** de `Implementacion/PIPELINE.md` (**`:158`**) y de
-  `Resultados/GUIA_RESULTADOS.md` (**`:101`**), describiendo la **convención** y **remitiendo a la
-  tabla canónica de `PIPELINE.md:952-963`**, que queda **INTACTA y no se duplica**. **Referencia
-  reapuntada el 2026-08-11:** era `:879-888` y se desplazó con el ciclo de los siete residuos; el
-  bloque es hoy el encabezado `### El sello commit…` (`:952`) más su tabla de tres valores
-  (`:959-963`).
-  - **Las dos anclas de la primera aparición, RE-VERIFICADAS EN DISCO el 2026-08-11.** Esta ficha
-    decía `PIPELINE.md:140` y `GUIA_RESULTADOS.md:350`, y **las dos eran falsas**: la primera
-    aparición de `-sucio` está en **`PIPELINE.md:158`** («la corrida de **T2** (`274923d-sucio`…»)
-    y en **`GUIA_RESULTADOS.md:101`** (fila `commit`, `fecha` de la tabla del CSV de vocabulario).
-    **`GUIA_RESULTADOS.md:350` está 249 líneas por debajo y habla de otra cosa** — las figuras del
-    KS de drift (A), «no una segunda medición de drift (A) sobre el set del TFG». **Ojo: el
-    desplazamiento es de SIGNO CONTRARIO** al que esta ficha ya había corregido para la tabla
-    canónica (`:879-888` → `:952`), así que su propio aviso de reapuntado **no cubría este caso**:
-    aquí las líneas subieron, no bajaron.
-  - **Contexto verificado el 2026-08-11:** el `-sucio` ya está documentado en `config.py:489-511`,
-    `evaluacion.py:69-75` y esa tabla. **El hueco es solo de orden de lectura**: **≈794 líneas** de
-    distancia dentro de `PIPELINE.md` (`:158` → `:952`; la cifra «740» que decía esta ficha salía de
-    las anclas viejas), y ninguna explicación en `GUIA_RESULTADOS.md`. **No aparece en el vault.**
-  - **Estado: ABIERTA, la glosa de una línea NO está escrita** — verificado por lectura de las dos
-    primeras apariciones. **Retirado el argumento «ninguno de los dos ficheros aparece modificado en
-    el árbol»**: era la evidencia de «no empezada» y **hoy no evidencia nada**, porque este ciclo ya
-    commiteó ambos ficheros (`9af842c`, `84e3c8f`). El estado se comprueba leyendo `:158` y `:101`,
-    no el `git status`.
+> **ACTUALIZACIÓN 2026-08-12 (segunda pasada) — la glosa del sufijo `-sucio` también está CERRADA**
+> (ver `## Cerradas`), dentro del clúster de cinco fichas de `PIPELINE.md`. Esta cabecera queda como
+> **historial**; **no quedan fichas abiertas debajo de ella**.
 
 ### Residuos del despacho de `4.2` — altas del 2026-08-12
 
@@ -692,6 +615,48 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
      tribunal mira.
   2. **`4.2:105`** — acota el **ranking** a la variante de **54** cuando es **idéntico en ambas**.
      Basta con retirar la acotación.
+
+### Residuos del clúster de `PIPELINE.md` — altas del 2026-08-12
+
+> Salen del cierre **en una sola pasada** de las **cinco fichas de `PIPELINE.md`** (ver
+> `## Cerradas`), con dictamen **APTO CON CAMBIOS** de `auditor-ml`, todo aplicado. **Documentación
+> pura: ningún script de `app/` tocado, ninguna corrida, ninguna cifra publicada movida.** **Ninguno
+> de estos residuos es 🔴.**
+>
+> **Lo que NO abre ficha porque ya está aplicado en este mismo pase:** las **anclas de este fichero
+> invalidadas por el propio cierre** — `PIPELINE.md` creció ~40 líneas. Estado verificado en disco el
+> **2026-08-12**: tabla canónica del sello, encabezado **`:994`** + tabla **`:1001-1005`** (era
+> `:952-963`); glosa nueva del `-sucio`, **`:186-190`**, colgando de la primera aparición **`:184`**
+> (era `:158`); tabla de corridas, las tres filas ancladas en **`:369-371`** (era `:329-331`). **Ojo:
+> la nota del despacho anunciaba `:992-1008`, `:182/184` y `:367-369`; las cifras buenas son las de
+> arriba, contadas en disco.** Reapuntada también **`T20`**, cuyo `PIPELINE.md:252-256` había pasado a
+> señalar otro recuadro (hoy **`:493-498`**). La instrucción de «conservar el aviso hasta que se
+> resuelva» desapareció con la ficha del re-anclaje, que es la que la daba.
+
+- [ ] **`resumen-de-decisiones.md:820-821` sigue afirmando en presente que el aviso de re-anclaje se mantiene** (🟠) · Código · `ml-implementador`
+  Es el **punto 5 de la auditoría, el único que quedó sin aplicar**: el `ml-implementador` se declaró
+  **sin permiso para escribir en ese fichero** en esa pasada. La entrada del `2026-08-11` (procedencia,
+  residuo 5) dice «**El aviso de re-anclaje de `PIPELINE.md` se mantiene igualmente**», y **ya no se
+  mantiene**: el re-anclaje está hecho y el commit es `9af842c`.
+  - **Cómo se arregla, y solo así: nota fechada que la supera, sin reescribir el texto histórico** —
+    es la convención que el propio fichero ya usa en **`:805-808`**.
+  - **No basta con la entrada del `2026-08-12` (`:824-834`)**, que dice haber añadido «arriba, dentro
+    de la entrada de procedencia» una nota fechada: la nota que existe está en **`:657-664`**, en otra
+    sección, y **no cubre `:820-821`**.
+  - **Es la enésima recaída del defecto reincidente del proyecto** (afirmar en presente algo que ya no
+    respalda el estado del repo), esta vez en su forma de **texto que no se actualizó**.
+
+- [ ] **El vault sigue diciendo «pendiente de re-anclaje» del sello `fc1c6b4-sucio`** (🟡) · Informe · `redactor-tfg`
+  `Obsidian_TFG_Vault\04 Implementación del sistema\4.2 Base de datos utilizada.md:145` conserva el
+  callout de procedencia con «**pendiente de re-anclaje al commit de cierre**». Es la **cuarta copia
+  viva** del aviso: las otras tres (`PIPELINE.md`, `GUIA_RESULTADOS.md`, `resumen-de-decisiones.md`)
+  se re-anclaron el 2026-08-12, pero esta es **track Informe** y **no se tocó en aquel ciclo**, que
+  era track Código.
+  - **El sello se cita tal cual, `fc1c6b4-sucio` — eso NO se cambia**, porque es lo que está impreso
+    dentro del artefacto. Lo que hay que añadir es **su commit de cierre, `9af842c`**, y retirar el
+    «pendiente».
+  - **Va ANTES de T10**, como sus dos fichas hermanas de esta nota: si T10 vuelca `4.2` tal cual, la
+    memoria publica un «pendiente» que ya no lo está.
 
 ### Apuntes de relectura de la memoria — alta del 2026-08-12
 
@@ -847,6 +812,11 @@ Antes había aquí una lista de secciones vedadas a los agentes. Solo **una** so
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-12 | Código | **`PIPELINE.md` ya no está desalineado con su propia figura** (ficha abierta el 2026-08-01, «la acepta o la retira Francisco»). El árbol de ficheros generados lista ya **`transformers.joblib`** (`:53`) y **`selected_features.txt`** (`:30`), **distingue lo que existe por duplicado —uno por variante, `_transformers.joblib` incluido— de lo que no**, y **declara su alcance** (`:71-72`). **Corrección verificada en disco que la propia ficha traía mal:** `selected_features.txt` lo escribe **`program.py:531-535`**, no `:521`, y **no lleva prefijo de variante** — es la única excepción a la regla del prefijo. **Documentación pura:** ningún script de `app/` tocado, ninguna corrida, ninguna cifra publicada movida. Sale en el **clúster de cinco fichas de `PIPELINE.md`**; dictamen común en la fila de abajo | — |
+| 2026-08-12 | Código | **Re-anclado el sello `fc1c6b4-sucio` a su commit de cierre, `9af842c`** — la ficha que **no podía cerrarse hasta que el commit existiera**, y ya existe. Re-anclado en los **tres** documentos: `Implementacion/PIPELINE.md`, `Resultados/GUIA_RESULTADOS.md` y `resumen-de-decisiones.md`. **El implementador se dejó el tercero en la primera pasada y se completó en una segunda.** **El sello impreso DENTRO de los artefactos no se tocó** —sigue diciendo `fc1c6b4-sucio`— **y se dice por qué**: es una salida generada, no un texto editable; quien la edite a mano rompe la correspondencia con lo que imprimió `config.commit_actual()`. Corregido de paso el **anclaje frágil** `..._validation_report.txt:4-5`, que pasa a citarse **por el nombre del campo**. **Re-anclaje textual: cero corridas, cero artefactos regenerados, cero cifras alteradas.** **Residuos: `resumen-de-decisiones.md:820-821`** (punto 5 de la auditoría, sin permiso de escritura en aquella pasada) **y la copia viva del vault** (`4.2:145`, track Informe) — **dos fichas nuevas en `## Abiertas`**. **Dictamen de `auditor-ml` del clúster: APTO CON CAMBIOS, todo aplicado.** Encontró un **🟠 real**: `GUIA_RESULTADOS.md` afirmaba que las líneas de procedencia «no están en los ficheros que hay en disco» cuando **sí están** desde la corrida de las 20:53, **contradiciendo a su propia §3.2** — es la **variante INVERSA del defecto reincidente del proyecto**: no afirmar en presente lo que la corrida no respalda, sino **negar en presente lo que la corrida sí respalda**. Más **tres 🟡** de texto caducado, aplicados | — |
+| 2026-08-12 | Código | **`PIPELINE.md` ya no se contradice dentro del mismo recuadro de trazabilidad.** Retirada la frase falsa «**su commit de cierre todavía no existe**» —el commit existe y es `9af842c`—, que chocaba con la mitad verdadera del mismo recuadro («están commiteados»). **Y no era una, eran tres:** se retiraron además **dos recaídas gemelas del mismo recuadro**. Verificado en disco el 2026-08-12: **cero apariciones** de «todavía no existe» en `Implementacion/PIPELINE.md`. Era **texto vigente y engañoso, no historial** —no llevaba nota fechada que lo superase—, y por eso se **corrige**, no se anota. Sale en el clúster de cinco; dictamen en la fila de arriba | — |
+| 2026-08-12 | Código | **Las tres filas de la tabla de corridas de `PIPELINE.md` quedan ancladas a su commit.** Ya no dicen «*aún en el árbol de trabajo*»: **`1163c90` → `8fdc421`** (cierre de **T18**), **`274923d-sucio` → `b1f1df2`** (cierre de **T3**) y **`fc1c6b4-sucio` → `9af842c`** (cierre del ciclo de los siete residuos). Las dos primeras eran el 🟡 «caducadas» y la tercera es el re-anclaje: **las tres en la misma pasada**, como ordenaban sus punteros cruzados. Importa porque un tercero que leyera la columna concluía que **las cifras publicadas de T18 y de T3 no se pueden recuperar de git**, cuando sí se pueden. Las filas viven hoy en **`PIPELINE.md:369-371`**. Sale en el clúster de cinco | — |
+| 2026-08-12 | Código | **Glosa del sufijo `-sucio` escrita en la primera aparición de los dos ficheros.** Una línea en `Implementacion/PIPELINE.md` (glosa **`:186-190`**, colgando de la primera aparición **`:184`**) y en `Resultados/GUIA_RESULTADOS.md` (**`:104-106`**, bajo la fila `commit`/`fecha` de **`:102`**), describiendo la convención y **remitiendo a la tabla canónica**, que queda **INTACTA y no se duplica** —hoy en `PIPELINE.md:994` (encabezado) + `:1001-1005` (los tres valores)—. El hueco era **de orden de lectura**: el `-sucio` ya estaba documentado en `config.py`, `evaluacion.py` y esa tabla, pero a **≈800 líneas** de su primera aparición, y **sin ninguna explicación** en `GUIA_RESULTADOS.md`. **Queda fuera el vault**, donde el `-sucio` sigue sin glosarse: se cubre con la ficha nueva de `4.2:145`. Sale en el clúster de cinco | — |
 | 2026-08-12 | Informe | **`4.2` · la medición (B) del KS, la frase del FPR y el callout de trazabilidad.** Despachada en la **misma pasada** que la fila de abajo, como ordenaba el puntero cruzado de ambas: **un solo fichero tocado**, `Obsidian_TFG_Vault\04 Implementación del sistema\4.2 Base de datos utilizada.md`. La medición **(B)** entra **junto a (A)**, con tabla: **37/54 · 44/122** frente a **25/54 · 31/122**, y `src_bytes` **0,346 → 0,091**, `dst_bytes` **0,317 → 0,107**. La salvedad del `delta = (A) − (B)` queda **impresa como COMPARACIÓN y no como descomposición aditiva** —el KS es un supremo de diferencia de CDF y no es aditivo sobre una mezcla—. La frase del FPR queda **reanclada a (B)**, que es la que la sostiene: (A) compara contra un D2 que es 57 % ataques y los falsos positivos los generan las filas **normales**. Y el callout de trazabilidad cita **las dos variantes** con sus fechas (**20:53:27** / **20:53:46**) y el sello **`fc1c6b4-sucio` tal cual, sin inventar hash** — su re-anclaje tiene **ficha propia abierta**. Dictamen de `auditor-ml`: **APTO CON CAMBIOS** — sin leakage, sin cifras caducadas y **sin invadir T10, que sigue intacta**. **Residuos que deja:** las figuras de `assets\` (la de (A) es de una corrida anterior y las de (B) no están copiadas, con un `> [!todo]` vivo en la nota) y dos imprecisiones 🟡 de una línea (`:120` y `:105`) — **dos fichas nuevas en `## Abiertas`**; más el «~33 %» de DoS de `:72`, **anclado dentro de T10** | `7c0659f` |
 | 2026-08-12 | Informe | **El vault ya no dice «mediana» donde el artefacto dice «media».** `4.2 Base de datos utilizada.md:107` afirmaba «la **mediana** de outliers en D1 es del 4,78 %» y era el **único** sitio del vault afectado tras el cierre del rótulo del 2026-08-11 (`84e3c8f`). Rótulo corregido a **media entre características**, con **4,78 %** (54) y **2,44 %** (122), **verificados contra los dos `*_validation_report.txt`** — no copiados de la ficha. Cerrada **antes de T10**, que era la condición: si T10 hubiera volcado `4.2` tal cual, el TFG publica un estadístico que **nadie ha calculado**. Sale en la misma pasada y bajo el mismo dictamen que la fila de arriba | `7c0659f` |
 | 2026-08-11 | Código | **`commit` + `fecha` en el CSV de vocabulario y en la cabecera de los dos informes de validación** — la ficha que gobierna el **ciclo agrupado de los siete residuos** de `validacion.py`. Cerrada por la **opción A que aprobó Francisco**: `validacion.py` **importa `config.py`** (`:55`) y estampa `config.commit_actual()` (`:111`) en los **cuatro artefactos**. **Cruza una frontera que se documentaba como inexistente** —`program.py` y `validacion.py` no dependían de `config.py`—: registrado en `resumen-de-decisiones.md` que la decisión **CONSUME Q2 y EXTIENDE su alcance de rutas a procedencia**, y **explícitamente NO como permiso literal**, porque Q2 hablaba de rutas y `commit_actual()` no es una ruta. **`program.py` NO pasa a depender de `config.py`**; actualizadas en consecuencia la frase de independencia de `CLAUDE.md`, la cabecera de `config.py` y `PIPELINE.md`. Sello: **`fc1c6b4-sucio`**, fecha por invocación (54 → `20:53:27` · 122 → `20:53:46`), **pendiente de re-anclaje** al commit de cierre — **ficha propia abierta**, sin ningún hash inventado. **Hechos del ciclo, comunes a las siete filas:** **dos pasadas de `auditor-ml`, ambas APTO CON CAMBIOS, ambas aplicadas** —la primera con **seis afirmaciones falsas** (documentación escrita **en presente antes** de la corrida), la segunda, estrecha, con **cuatro correcciones**—; **no se despachó tercera vuelta**, y la razón queda declarada: eran correcciones textuales verificables por lectura directa (un ancla, una fila de tabla, dos reformulaciones y una cláusula de bitácora) y el auditor ya había validado **dos veces** la sustancia (frontera `config.py` sin efectos ni ciclos, `program.py` intacto, cero `fit`, cero cifras alteradas, matiz de Q2 correcto). **Una sola corrida y ninguna cifra publicada se mueve:** diff de `Resultados/` contra `fc1c6b4` caracterizado, **cero diferencias fuera de las cuatro clases esperadas**; intactos `Integridad: APROBADA`, D1 67.343 / D2 22.544 / D3 58.630 / 9.711 normales (43,1 %), drift (A) 37 y 44 · (B) 25 y 31, outliers 4,78 % y 2,44 % con el rótulo «media entre características», **los 17 tipos 0-day byte a byte** (mscan 996 … worm 2; total 3.750, 16,63 %) y el one-hot 77→122 con desglose `service` +44 / `flag` +1 / `protocol_type` +0. Zanjado además: las **12 figuras son byte-idénticas** a HEAD (generación determinista), los **splits NO se regeneraron** (`*_original_*`, `*_processed_*` y ambos `_transformers.joblib` conservan mtime del 2026-07-05) y **ningún `metricas_*.csv`** se tocó. **Dato que merece quedar escrito:** el mismo defecto —afirmar en presente algo que la corrida no respalda— **reapareció en un sitio nuevo en cada vuelta**; la segunda aparición viva estaba en `resumen-de-decisiones.md:765-769` y se trató bien: **nota fechada que la supera, sin reescribir el texto histórico** | `9af842c` |

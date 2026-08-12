@@ -654,6 +654,38 @@ aviso explícito de **no-reproducibilidad desde ese hash**. Cuando exista el com
 ciclo, hay que sustituir por él el hash del recuadro y el sello que se cita; **no se anota aquí
 ningún hash futuro**.
 
+> **NOTA FECHADA — 2026-08-12: el commit de cierre ya existe y es `9af842c`.** Los dos párrafos de
+> arriba se conservan **tal cual** como historial de la decisión; lo que sigue es su actualización,
+> no una reescritura. El commit de cierre de este ciclo es **`9af842c`** («codigo: cerrar los siete
+> residuos de validacion.py y estampar la procedencia en sus artefactos»), que versiona **a la vez**
+> `validacion.py`, `config.py` y los **cuatro artefactos** de la corrida del 2026-08-11 20:53, y es
+> el **último** commit que toca `validacion.py` (verificado con `git log -- Implementacion/app/validacion.py`).
+> Por eso el sello impreso `fc1c6b4-sucio` —cuyo hash es el del commit **anterior** al cambio—
+> corresponde al estado de `validacion.py` **en `9af842c`**, y ahí es donde hay que hacer
+> `git checkout` para reproducir los cuatro artefactos.
+>
+> - **El re-anclaje se hizo por vía TEXTUAL, no re-corriendo.** Se actualizaron el recuadro de
+>   trazabilidad y la tabla de corridas de `Implementacion/PIPELINE.md` y las §2.4, §3.2 y §7 de
+>   `Resultados/GUIA_RESULTADOS.md`. **Cero cifras alteradas y cero artefactos regenerados.**
+> - **El sello DENTRO de los artefactos NO se editó y sigue diciendo `fc1c6b4-sucio`**: es una
+>   salida generada, y solo cambiaría re-corriendo `validacion.py` con el árbol limpio. Lo que el
+>   fichero no puede decir por sí solo —de qué versión salió— lo dicen el recuadro de `PIPELINE.md`
+>   y esta nota.
+> - **Anclaje frágil corregido de paso:** la cita `..._validation_report.txt:4-5` del párrafo de
+>   arriba apunta a un artefacto regenerable y cualquier re-corrida que cambie el número de líneas
+>   de cabecera la desplaza en silencio. Hoy sigue siendo correcta (verificado en disco el
+>   2026-08-12: la línea 4 dice `Commit del código: fc1c6b4-sucio` y la 5
+>   `Fecha de la corrida: 2026-08-11T20:53:27`), pero la forma canónica de citarla es **por el
+>   nombre del campo** (`Commit del código:` / `Fecha de la corrida:`), no por su número de línea.
+> - **Lo que NO cambia:** el anclaje canónico de procedencia sigue siendo el recuadro de
+>   `PIPELINE.md`; la tabla de los tres valores de `commit` sigue viviendo solo ahí; y la
+>   advertencia de que un sello `-sucio` no identifica por sí mismo una versión del código sigue
+>   siendo cierta —lo que la resuelve aquí es el par «commit de cierre + este documento», no el
+>   sello.
+> - **Queda fuera de esta nota** el sello citado en
+>   `Obsidian_TFG_Vault\04 Implementación del sistema\4.2 Base de datos utilizada.md`, que es del
+>   vault y lo lleva el `redactor-tfg`: está fichado como residuo en `features.md`.
+
 **Efecto colateral sobre una ficha abierta — NO está cerrada.** La ficha «Rutas absolutas
 hardcodeadas en `program.py` y `validacion.py`» (🟠, `features.md`; origen `next-steps.md:267`)
 queda **parcialmente destrabada**: el `import config` que necesitaría ya existe en `validacion.py`,
@@ -789,3 +821,14 @@ Francisco.
   re-anclaje de `PIPELINE.md` se mantiene igualmente**, porque un sello `-sucio` no identifica una
   versión del código. Destraba parcialmente la ficha de rutas hardcodeadas, que
   **sigue abierta** (su bloqueo real es la decisión sobre regenerar los splits).
+- `2026-08-12` — **Re-anclaje del sello `fc1c6b4-sucio` a su commit de cierre, `9af842c`.** Añadida
+  arriba, dentro de la entrada de procedencia, una **nota fechada** que actualiza el aviso «cuando
+  exista el commit de cierre…» sin borrar el texto original: ese commit **ya existe** y es
+  **`9af842c`**, último que toca `validacion.py` y que versiona a la vez el script y los cuatro
+  artefactos. Re-anclaje **textual**: **cero cifras alteradas, cero corridas, cero artefactos
+  regenerados**, y **el sello impreso dentro de los artefactos no se editó** (sigue diciendo
+  `fc1c6b4-sucio`, porque es una salida generada). Misma pasada que el re-anclaje de
+  `Implementacion/PIPELINE.md` y `Resultados/GUIA_RESULTADOS.md`. Corregido de paso el anclaje
+  frágil `..._validation_report.txt:4-5`, que pasa a citarse **por el nombre del campo**. Queda
+  fuera —y fichado como residuo— el sello citado en el vault (`4.2 Base de datos utilizada.md`),
+  que lleva el `redactor-tfg`.

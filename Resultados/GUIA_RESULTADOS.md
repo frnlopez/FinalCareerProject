@@ -80,7 +80,8 @@ Dimensiones actuales (verificadas por `specialized_nsl_kdd_validation_report.txt
 ### 2.3 `specialized_nsl_kdd_transformers.joblib`
 
 Transformadores ajustados y persistidos para inferencia reproducible: `scaler` (MinMax ajustado
-en D1+D3), `label_encoder`, `category_encoder` y la lista `feature_columns` post one-hot.
+en D1+D3), `label_encoder`, `category_encoder`, la lista `feature_columns` —la **final, tras la
+selección** (54)— y `feature_columns_pre_seleccion`, que es la post one-hot (122).
 Se carga con `joblib.load(...)`. **Destino:** 4.3.2 (normalización) y reproducibilidad (4.6 / apéndices).
 
 ### 2.4 Los dos `..._vocabulario_onehot.csv` (los genera `validacion.py`)
@@ -99,6 +100,12 @@ más una fila `__total__` con los agregados:
 | `n_numericas`, `total_solo_d1`, `total_union`, `delta_total` | agregados; **solo en la fila `__total__`**, vacíos en las demás |
 | `total_union_transformers` | contraste **independiente**: `len(feature_columns_pre_seleccion)` leído del `..._transformers.joblib` |
 | `commit`, `fecha` | procedencia de la corrida, **al final de la fila**; mismo mecanismo y misma convención `-sucio` que la columna `commit` de los `metricas_*.csv` (`config.commit_actual()`). **Presentes en el CSV que hay en disco desde la corrida del 2026-08-11 20:53** (sello `fc1c6b4-sucio`): ver el aviso de abajo sobre qué vale y qué no vale ese sello |
+
+> El sufijo **`-sucio`** de un sello dice que al correr había cambios sin commitear en
+> `Implementacion/`, de modo que el hash es el del commit **anterior** al código que produjo el
+> artefacto. Los tres valores posibles (`<hash>` · `-sucio` · `-suciedad_desconocida`) están
+> tabulados en `Implementacion/PIPELINE.md`, sección «El sello `commit`: tres valores posibles»,
+> que es la definición canónica: aquí no se duplica.
 
 Cifras publicadas (idénticas en los dos ficheros, ver abajo): **38 numéricas + 39 dummies = 77**
 frente a **38 + 84 = 122**, `delta_total` = **+45**, todas de `service` (**+44**) y `flag`
@@ -130,7 +137,10 @@ Tres avisos para citarlo:
   el del commit **anterior** al cambio y `-sucio` solo dice «difería, no se sabe en qué»—, así que
   aporta fecha fiable y aviso explícito de **no-reproducibilidad desde ese hash**, pero no permite
   reconstruir el código que lo produjo. Para eso manda el recuadro de anclaje de
-  `Implementacion/PIPELINE.md`, que se re-escribe con el commit de cierre cuando exista.
+  `Implementacion/PIPELINE.md`, que ya lo declara: el commit de cierre de ese ciclo es
+  **`9af842c`**, que versiona a la vez `validacion.py` y los cuatro artefactos y es el último que
+  toca ese script, así que el sello impreso `fc1c6b4-sucio` corresponde al estado de
+  `validacion.py` **en `9af842c`**.
 
 Son recuentos, así que se publican como **enteros** (`77`, no `77.0`).
 
@@ -178,9 +188,9 @@ Las dos últimas columnas son la comprobación de que la selección 4.3.5 hizo s
 lo contrario, las cifras de esta guía son las del informe de 54**, que es el set del TFG
 (decisión Q1/C).
 
-**Qué contiene, por orden:** *(en el código, desde el 2026-08-11: dos líneas de procedencia,
-`Commit del código:` y `Fecha de la corrida:`, justo tras el título —**no están en los ficheros que
-hay en disco**, que son anteriores; ver §2.4)* · el titular de integridad y tamaños · las dos mediciones de drift y su
+**Qué contiene, por orden:** *(desde la re-corrida del 2026-08-11 20:53: dos líneas de procedencia,
+`Commit del código:` y `Fecha de la corrida:`, justo tras el título —**presentes en los dos ficheros
+que hay en disco**; el detalle, en el aviso al final de este apartado y en §2.4)* · el titular de integridad y tamaños · las dos mediciones de drift y su
 comparación · las recomendaciones (**solo si hay alguna**) · las características de D2 fuera de
 [0,1] · **los tipos 0-day de D2 nominalmente** · **el vocabulario del one-hot (delta 77 → 122)**.
 Los dos últimos son bloques **nuevos de la re-corrida del 2026-08-11** y se describen al final de
@@ -251,12 +261,16 @@ informes** porque ninguno depende del set de características:
 
 > **Los dos informes que hay en disco imprimen `commit` y `fecha` en su cabecera** (tras el
 > título, antes de `Integridad:`), igual que los `metricas_*.csv` desde T1. Los publicados salen de
-> la re-corrida del **2026-08-11 a las 20:53**: `specialized_nsl_kdd_validation_report.txt:4-5`
-> dice `Commit del código: fc1c6b4-sucio` y `Fecha de la corrida: 2026-08-11T20:53:27`. **Residuo
+> la re-corrida del **2026-08-11 a las 20:53**: en
+> `specialized_nsl_kdd_validation_report.txt`, los campos `Commit del código:` y
+> `Fecha de la corrida:` dicen `fc1c6b4-sucio` y `2026-08-11T20:53:27` (se citan **por su nombre
+> de campo**, no por su número de línea: el informe es regenerable y una re-corrida que cambie el
+> alto de la cabecera desplazaría la referencia). **Residuo
 > cerrado.** Queda el límite propio del sufijo: un sello `-sucio` **no identifica la versión del
 > código** (el hash es el del commit *anterior* al cambio; `-sucio` solo dice «difería, no se sabe
-> en qué»), así que da fecha fiable y aviso de **no-reproducibilidad desde ese hash**, y para saber
-> de qué versión salieron manda el recuadro de trazabilidad de `Implementacion/PIPELINE.md`.
+> en qué»), así que da fecha fiable y aviso de **no-reproducibilidad desde ese hash**, y de qué
+> versión salieron lo declara el recuadro de trazabilidad de `Implementacion/PIPELINE.md`: el
+> commit de cierre es **`9af842c`**, que versiona a la vez el script y sus cuatro artefactos.
 
 **Destino en la memoria:** **4.2.1** (análisis previo de la BD) y apoyo metodológico en 4.3.2.
 Si a la memoria va una cifra de este apartado, va con el nombre de su fichero: la variante de 122
@@ -403,7 +417,8 @@ Resumen de la narrativa del preprocesado (con su artefacto de origen):
    mini-experimento SMOTE vs `class_weight` (4.3.4) y el uso de `f1_macro`.
    *(Visible en el EDA y en `validacion_distribucion_clases.png`.)*
 5. **17 tipos de ataque de D2 no existen en el train** (el 42,5 % de los tipos del test, panel
-   "Cobertura" del EDA; `validacion.py` los lista por consola). Son los "0-day" del experimento:
+   "Cobertura" del EDA; `validacion.py` los lista **nominalmente en su informe** desde la
+   re-corrida del 2026-08-11, además de por consola — ver §3.2). Son los "0-day" del experimento:
    indetectables por firmas, solo la etapa de anomalías puede cazarlos → argumento central del
    sistema híbrido (5.3).
 6. **4 features de D2 quedan fuera de [0,1]** tras el escalado (`num_shells`,
@@ -465,7 +480,15 @@ filas nunca llegan a la etapa 2— y **no es comparable** con ninguna columna de
 
 ## 7. Mantenimiento de esta guía
 
-- **Última actualización: 2026-08-11** (residuos del cierre de `validacion.py`, solo rótulos,
+- **Última actualización: 2026-08-12** (solo texto: **cero cifras alteradas**, cero corridas, cero
+  artefactos regenerados). Tres cosas, todas de trazabilidad: (1) **re-anclaje textual** del sello
+  `fc1c6b4-sucio` de los cuatro artefactos de validación a su commit de cierre, **`9af842c`**
+  (§2.4, §3.2 y la entrada de abajo); (2) las citas a la cabecera de los
+  `..._validation_report.txt` pasan a nombrar el **campo** (`Commit del código:` /
+  `Fecha de la corrida:`) en vez del número de línea, que es frágil ante cualquier re-corrida; y
+  (3) **glosa de una línea del sufijo `-sucio`** en su primera aparición (§2.4), que remite a la
+  tabla canónica de `Implementacion/PIPELINE.md` sin duplicarla.
+- Actualización anterior: **2026-08-11** (residuos del cierre de `validacion.py`, solo rótulos,
   metadatos y documentación: **cero cifras alteradas**, cero re-entrenamientos). Lo que cambia en
   esta carpeta: **alta del artefacto `..._vocabulario_onehot.csv`** (uno por variante, §2.4 — no
   estaba inventariado en ninguna de las dos guías) y **dos bloques nuevos al final de los
@@ -478,9 +501,11 @@ filas nunca llegan a la etapa 2— y **no es comparable** con ninguna columna de
   disco son de la re-corrida del **2026-08-11 a las 20:53** (sello interno `fc1c6b4-sucio`), no de
   la de T2 del 2026-08-10. **Cerrado también** el residuo de `commit`+`fecha`: se estampan ya en la
   cabecera de los dos informes y como dos columnas del CSV de vocabulario, y están en los ficheros
-  publicados. Lo único que sigue pendiente es el **re-anclaje**: el sello es `-sucio` porque el
-  commit de cierre de este ciclo aún no existe, y cuando exista hay que sustituirlo en el recuadro
-  de `PIPELINE.md`.
+  publicados. Quedaba pendiente el **re-anclaje** —el sello es `-sucio` porque al correr el ciclo
+  aún no estaba commiteado—, **resuelto el 2026-08-12 por vía textual**: el commit de cierre es
+  **`9af842c`** y así lo declaran hoy el recuadro de trazabilidad y la tabla de corridas de
+  `Implementacion/PIPELINE.md`, además de §2.4 y §3.2 de esta guía. El sello impreso dentro de los
+  artefactos **no se editó**: es una salida generada y sigue diciendo `fc1c6b4-sucio`.
 - Actualización anterior: **2026-08-10** (cuarta pasada de **T2** y **T3**, solo documentación:
   cero código de modelos y cero re-entrenamientos). Sobre lo anotado en las pasadas anteriores de
   esa misma fecha, se registra el **alta de artefactos de `validacion.py`**: al correrse por
