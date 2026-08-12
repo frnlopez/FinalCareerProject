@@ -161,8 +161,11 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
        → **Y esto NO vuelve innecesario el preflight.** Lo resuelto es el residuo **concreto** de
        hoy, no la comprobación: cualquier corrida futura interrumpida vuelve a dejar ficheros
        `*_semilla*`, y la reanudación los tomaría como celdas hechas. Por eso el **paso 2 del runbook**
-       (`Implementacion/PIPELINE.md:1255-1395`) exige que
-       `Get-ChildItem -Recurse ..\Resultados -Filter *_semilla*` salga **VACÍO** antes de lanzar.
+       (`Implementacion/PIPELINE.md:1255-1400`) exige que
+       `Get-ChildItem -Recurse ..\Resultados -Filter *_semilla*` salga **VACÍO** antes de lanzar,
+       **excluyendo `verificacion_semilla_joblib.txt`**: esa traza casa con el patrón, está versionada
+       en `54d1349` y es **permanente**, así que sin excluirla el comando no podría salir vacío nunca
+       y la comprobación se volvería ruido que el operador aprende a ignorar.
     2. **Rematar el ensayo de humo (≈10 min).** El `ejecutor-experimentos` cayó con un **529
        Overloaded** tras las comprobaciones estáticas y `anomalias.py --semilla 1`. Quedan **tres
        puntos sin probar**: la **salvaguarda de mezcla de semillas** (`hibrido.py --semilla 2` sin
@@ -190,14 +193,25 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
        - **🟡 La rama del agregador «1 semilla de 10» queda sin ejercitar en ejecución** — solo
          auditada su lógica. Llegar a ella exige correr `anomalias.py` y `firmas.py` de una semilla
          entera, fuera del presupuesto de 15 min del ensayo. **Lo asume o lo cubre Francisco.**
-    - **Lo que el ensayo a medias ya deja verificado y vale:** `metricas_anomalias_semillas.csv` con
-      **4 filas `semilla = 1`**, `commit = 00c3c3e-sucio`, recuento **4/4/1/1** por (variante, semilla)
-      correcto; artefactos con sufijo (`anomalia_*_54_semilla1`, 6 figuras `*_54_semilla1`); y
-      **ninguna de las nueve tablas publicadas se abrió**, que es exactamente lo que el andamiaje
-      existe para garantizar.
-    - **Dato de un solo punto, no concluyente pero del mismo signo:** a semilla 1, Autoencoder `f1`
-      **0,8632** / `accuracy` **0,8520** frente a IsolationForest **0,8226** / **0,8157** — **mismo
-      signo que el hueco publicado** con la 42 (0,8605 vs 0,8257). No sustituye al barrido.
+    - **Lo que el ensayo a medias dejó verificado y sigue valiendo (los artefactos YA NO ESTÁN en
+      disco: se borraron el 2026-08-12, ver punto 1 de esta ficha).** El ensayo **escribió**
+      `metricas_anomalias_semillas.csv` con **4 filas `semilla = 1`**, sello `commit = 00c3c3e-sucio`
+      y recuento **4/4/1/1** por (variante, semilla) **correcto**; **escribió** los artefactos con
+      sufijo (`anomalia_*_54_semilla1`, 6 figuras `*_54_semilla1`); y **ninguna de las nueve tablas
+      publicadas se abrió**, que es exactamente lo que el andamiaje existe para garantizar. Lo que
+      caducó es la ubicación en disco, **no la medición**: esos 11 ficheros fueron precisamente el
+      residuo `_semilla1` borrado en el punto 1.
+    - **Dato de un solo punto, no concluyente pero del mismo signo:** a semilla 1, Autoencoder
+      `f1` **0,8632** / `accuracy` **0,8520** frente a IsolationForest `f1` **0,8226** / `accuracy`
+      **0,8157** — **mismo signo que el hueco publicado** con la 42, que en `accuracy` es
+      **0,8605 vs 0,8257** y en `f1` **0,8716 vs 0,8341** (`Resultados/metricas_anomalias.csv`, set 54).
+      El signo se sostiene en las dos métricas. **No sustituye al barrido.**
+      → **Aviso de procedencia, y no es formalismo:** estas cuatro cifras de la semilla 1
+      **no son verificables desde git por un tercero**. El CSV que las respaldaba
+      (`metricas_anomalias_semillas.csv`) se borró como residuo y **nunca se commiteó**, así que no
+      hay ninguna coincidencia de `0.8632|0.8520|0.8226|0.8157` en el repositorio. Sirven como
+      indicio interno para decidir; **no valen como evidencia citable en la memoria**. Las de la 42 sí
+      están en disco y versionadas.
 
 - [ ] **T5 · `5.0 Protocolo de evaluación`** · Informe · `redactor-tfg`
   Nota nueva, antes de `5.1`. Recoge junto lo que hoy está disperso en Q4, Q6, H-1…H-7 y P-1…P-5 de

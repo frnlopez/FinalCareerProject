@@ -77,6 +77,11 @@ Resultados/
 > segunda invocación sobrescribe a la primera), y `validacion.py` deposita **12 ficheros** — sus
 > 6 figuras `validacion_*.png` × 2 variantes, estas sí con sufijo, tabuladas más abajo en el
 > recuadro de la re-corrida del 2026-08-11 (aquí no se duplican).
+> **Tampoco cuelga de este árbol `Resultados/verificacion_semilla_joblib.txt`**, y se declara aquí
+> para que el inventario no lo omita: lo escribe `barrido_semillas.py` —no `program.py` ni
+> `validacion.py`— en modo `--solo-verificar` y cuando el preflight encuentra un problema, **existe
+> una sola vez** (no lleva sufijo de variante, porque recorre las dos), está **versionado** y su
+> subsección propia está más abajo, en la ficha de la traza de la semilla.
 > Los informes de validación, por tanto, son **dos**:
 > `specialized_nsl_kdd_validation_report.txt` y
 > `specialized_nsl_kdd_sin_seleccion_validation_report.txt` (y **dos** también los
@@ -384,11 +389,15 @@ casi siempre posterior. Las corridas que existen en git:
 | `1163c90` | `8fdc421` (commit de cierre de **T18**) | **La publicada hoy.** Mismo esquema que `ac496cb`. 8 invocaciones, **222 filas** —subtotal de las ocho tablas del runbook, **no** el total de `Resultados/`—, todas con `semilla = 42` y `commit = 1163c90` limpio. |
 | `274923d-sucio` | `b1f1df2` (commit de cierre de **T3**, que versiona a la vez `cascada_invertida.py` y su CSV) | **Solo la cascada invertida (T3)**: 2 invocaciones, **10 filas** en `metricas_cascada_invertida.csv`, `semilla = 42`. No toca ninguna de las ocho tablas del runbook. El `-sucio` es correcto y previsto: la corrida es anterior al commit que versiona su propio código (`config._RUTA_SUCIEDAD` mira `Implementacion/`). |
 | `fc1c6b4-sucio` | `9af842c` (commit de cierre del ciclo de los siete residuos, que versiona a la vez `validacion.py` y sus cuatro artefactos) | **Solo `validacion.py`**, corrida del **2026-08-11 20:53** (2 invocaciones). Entra en esta tabla porque la columna `commit` rige también en los dos `*_vocabulario_onehot.csv`, que **sí están versionados**; el mismo sello va en la cabecera de los dos `*_validation_report.txt`. **No escribe en ningún `metricas_*.csv`**, así que no altera el recuento de filas de abajo. El commit es común a los cuatro artefactos; la **fecha** es la de cada invocación (`2026-08-11T20:53:27` a 54, `2026-08-11T20:53:46` a 122). El `-sucio` es previsto y **no identifica una versión del código** —el hash es el del commit **anterior** al cambio—, así que la versión que lo produjo es la de la columna de al lado, `9af842c`: el re-anclaje está hecho aquí y en el recuadro de trazabilidad de arriba. |
+| `00c3c3e-sucio` | `54d1349` (commit que versiona a la vez `barrido_semillas.py` y la traza que ese script produce) | **No es una corrida de modelos**: es la verificación `--solo-verificar` del **2026-08-12 15:57**, con **cero `fit`**, que solo lee los descriptores de los 20 `.joblib` publicados y escribe `Resultados/verificacion_semilla_joblib.txt`. Entra en esta tabla porque ese fichero lleva el mismo campo de cabecera `Commit del código:` y la misma convención. **No escribe en ningún `metricas_*.csv`**, así que no altera el recuento de filas de abajo. El `-sucio` es previsto: HEAD era `00c3c3e` y el código del lanzador estaba sin commitear, de modo que la versión que produjo la traza es la de la columna de al lado, `54d1349`. El sello impreso dentro del fichero **no se edita** —es salida de `config.commit_actual()`—: el re-anclaje se hace aquí y en la subsección de la traza de la semilla. **El mismo sello lo lleva otra cosa, y no es esta:** el **ensayo de humo a semilla 1** de ese mismo día (`anomalias.py --semilla 1`) corrió con el árbol igual de sucio, así que **sí hizo `fit`** (cuatro) y **sí escribió** una `metricas_*.csv` — `metricas_anomalias_semillas.csv`, que **nunca fue una de las nueve publicadas** y **ya está borrada** (era residuo del ensayo). Bajo la clave «una corrida se identifica por el commit del código que la produjo», este sello nombra **dos** corridas: al citarlo hay que decir cuál. |
 
-De las tres corridas más recientes —las tres ya versionadas: `1163c90` en `8fdc421`,
-`274923d-sucio` en `b1f1df2` y `fc1c6b4-sucio` en `9af842c`—, solo dos escriben `metricas_*.csv`
-(`fc1c6b4-sucio` no toca
-ninguno). Sumando esas dos, `Resultados/` tiene hoy **232 filas repartidas en 9 ficheros**
+De las **cuatro corridas más recientes de esta tabla** —las cuatro ya versionadas: `1163c90` en
+`8fdc421`, `274923d-sucio` en `b1f1df2`, `fc1c6b4-sucio` en `9af842c` y `00c3c3e-sucio` en
+`54d1349`; no confundir con «las cuatro corridas versionadas» de más abajo (`:452`, `:474`, `:484`),
+que designa otro cuarteto—, solo dos escriben en alguna de las nueve `metricas_*.csv` **publicadas**
+(no lo hacen ni `fc1c6b4-sucio` ni la verificación de `00c3c3e-sucio`; la `metricas_anomalias_semillas.csv`
+que escribió el ensayo de humo bajo ese mismo sello no era una de las nueve y ya está
+borrada). Sumando esas dos, `Resultados/` tiene hoy **232 filas repartidas en 9 ficheros**
 `metricas_*.csv`
 (222 + 10): las **ocho** tablas de la corrida `1163c90` —las cuatro principales más las cuatro
 auxiliares, como detalla la fila de `1163c90`— con `commit = 1163c90`, y la novena, la de la
@@ -1084,9 +1093,20 @@ corresponder a la fila que la publica (`cascada_invertida._leer_umbral_conf`).
 declaran `semilla = 42`» ya no descansa en la palabra de quien la escribió: la produce
 `python app\barrido_semillas.py --solo-verificar`, que lee los descriptores (**cero `fit`**) y deja
 la lista completa en `Resultados/verificacion_semilla_joblib.txt`. Corrida del **2026-08-12**:
-**20 de 20** con `semilla = 42`, todos con `commit=1163c90`; el sello propio del fichero es
-`00c3c3e-sucio` porque se generó en la misma pasada que este texto, antes de commitearla. La traza
-sostiene dos cosas: que una corrida por defecto pasa la salvaguarda de mezcla, y que el borrado por
+**20 de 20** con `semilla = 42`, todos con `commit=1163c90`. Esa traza **está versionada**: su
+**commit de cierre es `54d1349`** —el que introduce a la vez `barrido_semillas.py` y el fichero que
+produce—, así que es recuperable desde git por ahí. Comprobado el **2026-08-12**: el fichero en
+disco es idéntico al de `54d1349` y ningún otro commit lo ha tocado.
+
+**El sello interno del fichero sigue diciendo `00c3c3e-sucio`, y así se queda.** Ese campo es
+**salida generada** por `config.commit_actual()` en una pasada con el árbol sucio en HEAD=`00c3c3e`
+(el código del lanzador aún estaba sin commitear), no texto editable: retocarlo a mano rompería la
+correspondencia entre el artefacto y lo que imprimió el código. La versión que lo produjo es la de
+la columna de al lado en la tabla de corridas, `54d1349`, y el re-anclaje se hace **en la prosa y en
+esa tabla**. Es la misma razón por la que en `97e679b` se re-ancló `fc1c6b4-sucio` a `9af842c` sin
+tocar el sello impreso.
+
+La traza sostiene dos cosas: que una corrida por defecto pasa la salvaguarda de mezcla, y que el borrado por
 sufijo del lanzador **no puede alcanzar** ninguno de esos 20 ficheros (ninguno lleva la marca
 `_semilla`, `config.MARCA_SEMILLA`).
 
@@ -1094,12 +1114,25 @@ sufijo del lanzador **no puede alcanzar** ninguno de esos 20 ficheros (ninguno l
 > barrido). La misma verificación corre como **preflight de todo lanzamiento** —`--dry-run`
 > incluido: `--dry-run` no ejecuta scripts ni borra `.joblib`, pero **no es una pasada de solo
 > lectura**—. En ese papel es una comprobación, no un artefacto: si sale limpia **no reescribe** el
-> fichero (`verificar_joblibs_publicados(escribir_si_ok=False)`), así que el sello `00c3c3e-sucio`
-> citado arriba sigue siendo el que hay en disco. Se reescribe en dos casos: con
+> fichero (`verificar_joblibs_publicados(escribir_si_ok=False)`), así que el sello `00c3c3e-sucio` y
+> la fecha citados arriba siguen siendo los que hay en disco, y el fichero sigue siendo el mismo que
+> versiona `54d1349`. Se reescribe en dos casos: con
 > `--solo-verificar`, que es el modo cuyo propósito *es* producirlo, y cuando el preflight
 > **encuentra un problema**, porque entonces el fichero es el diagnóstico del abort. Sin esta
 > asimetría, el primer lanzamiento real habría re-sellado la cabecera con otro commit y otra fecha
 > y habría dejado esta cita falsa sin que nadie tocase una cifra.
+>
+> **Pero el propio runbook SÍ re-sella la traza, en su paso 3.** Ese paso es
+> `python app\barrido_semillas.py --solo-verificar`, y ese modo reescribe el fichero **siempre**
+> (`escribir_si_ok=True` por defecto, `barrido_semillas.py:149-150`) — de hecho el paso de cierre
+> **espera** ver la traza como línea `M` en el `git status`. Así que, **en cuanto alguien siga el
+> runbook, el sello `00c3c3e-sucio` y la fecha `15:57` citados arriba dejan de ser los que hay en
+> disco, y la traza deja de ser la que versiona `54d1349`.** Eso no es un fallo: es lo que se quiere,
+> porque el sello nuevo identificará la corrida nueva. Lo que hay que hacer entonces es **re-anclar
+> esta cita al commit de cierre del barrido**, igual que se hizo aquí con `00c3c3e-sucio` → `54d1349`
+> y antes con `fc1c6b4-sucio` → `9af842c`. Léanse las dos citas de arriba como «la verificación del
+> 2026-08-12 a las 15:57, cuya versión de código es `54d1349`», no como una descripción del disco
+> a perpetuidad.
 
 **Las diez semillas son `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]`** (`config.SEMILLAS_BARRIDO`, con
 aserciones al importar: diez valores, sin repetidos y **sin la 42**). La 42 queda fuera por dos
@@ -1287,7 +1320,12 @@ cd Implementacion
 
 # 2. PREFLIGHT MANUAL: no puede quedar residuo de una corrida previa a medias.
 #    Debe salir VACÍO (ver más abajo por qué esto no es limpieza cosmética).
-Get-ChildItem -Recurse ..\Resultados -Filter *_semilla* | Select-Object FullName
+#    OJO: se excluye verificacion_semilla_joblib.txt a propósito. Esa traza casa con
+#    *_semilla*, está versionada en 54d1349 y es PERMANENTE: no es residuo. Sin la
+#    exclusión el comando nunca saldría vacío y la comprobación se volvería ruido.
+Get-ChildItem -Recurse ..\Resultados -Filter *_semilla* |
+  Where-Object { $_.Name -ne 'verificacion_semilla_joblib.txt' } |
+  Select-Object FullName
 
 # 3. Verificar los .joblib publicados (cero fit; reescribe la traza)
 python app\barrido_semillas.py --solo-verificar
@@ -1387,7 +1425,7 @@ cambia.
   descriptor y debe informar de **20 de 20** con `semilla = 42` y **0 con problema**, dejando la lista
   en `Resultados/verificacion_semilla_joblib.txt`. Si el borrado por semilla funcionó, además, en
   `Resultados/modelos/` no debe quedar **ningún** fichero con `_semilla` en el nombre (mismo comando
-  del paso 2).
+  del paso 2, con su misma exclusión de la traza).
 
 **Si se corta o si un hijo falla.** El *mecanismo* (reanudación por recuento exacto y fallo rápido
 sin borrar los `.joblib`) está en la ficha anterior; aquí solo lo operativo:
