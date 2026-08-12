@@ -34,9 +34,16 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
   `next-steps.md` está congelado: el roadmap vivo es `features.md`. Regenerar `.png` y `.svg` si
   se toca el `.mmd`. **La acepta o la retira Francisco.**
 
-- [ ] **Resumen y Abstract** · Informe · `redactor-tfg`
+- [ ] **Preliminares: título, resumen y abstract** · Informe · `redactor-tfg`
   Se redactan **al final**, cuando el resto de capítulos esté cerrado.
   Notas: `00 Preliminares/Resumen.md` y `00 Preliminares/Abstract.md`.
+  - **Ampliada el 2026-08-12** a partir de `mis-apuntes-del-informe.md:5` (el **resumen no está
+    escrito** y Francisco pide propuesta; el **abstract** es ese mismo texto en inglés) y
+    `mis-apuntes-del-informe.md:7` (**falta el título del proyecto**). Ese fichero es
+    **incremental**: al ejecutar esta ficha hay que **releerlo entero** y no fiarse de lo anotado
+    aquí, que es el estado del **2026-08-12**.
+  - **El título es decisión de Francisco, no de un agente:** un agente puede **proponer
+    candidatos**, no fijarlo.
 
 ### Lote 2026-08-06 — los 4 informes del `researcher` convertidos en tareas
 
@@ -692,6 +699,83 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
     el árbol»**: era la evidencia de «no empezada» y **hoy no evidencia nada**, porque este ciclo ya
     commiteó ambos ficheros (`9af842c`, `84e3c8f`). El estado se comprueba leyendo `:158` y `:101`,
     no el `git status`.
+
+### Apuntes de relectura de la memoria — alta del 2026-08-12
+
+- [ ] **`1.4`: qué conceptos de IA entran de verdad en el capítulo 2, y resúmenes de capítulo demasiado escuetos** · Informe · `redactor-tfg`
+  Sale de la **relectura de la memoria completa** que está haciendo Francisco. **Fuente viva:
+  `mis-apuntes-del-informe.md`**, en la raíz del repo. Ese fichero es **incremental**: Francisco lo
+  sigue ampliando conforme relee, así que **al ejecutar esta ficha hay que releerlo entero** y
+  trabajar sobre lo que diga ese día — **no fiarse de lo copiado aquí**, que es solo el estado del
+  **2026-08-12**.
+  - **ORDEN — se ejecuta LA ÚLTIMA:** después de **todas** las fichas abiertas hoy en este fichero.
+    Lo pidió Francisco el **2026-08-12**.
+  1. **`1.4` dice que el capítulo 2 introduce los conceptos en tres bloques, uno de ellos de IA** —
+     y la pregunta de Francisco es **qué conceptos de IA se están incluyendo realmente, si es que
+     hay alguno**. O el capítulo 2 cumple lo que `1.4` promete, o hay que ajustar una de las dos
+     partes.
+  2. **El resumen de cada capítulo en `1.4` es excesivamente escueto.**
+  - **DELIMITACIÓN DURA — no absorbe ni sustituye a `T24` ni a `T25`.** `T24` (`2.1.4 Algoritmos de
+    ML` sin bloque de redes neuronales) y `T25` (anclaje de `[6]` Goodfellow en ese mismo bloque)
+    son **una nota concreta y un hueco concreto**. Esta ficha es otra cosa: pregunta si el
+    **capítulo 2 en su conjunto cumple lo que `1.4` promete** sobre el bloque de IA, y **añade el
+    punto de los resúmenes escuetos, que no está en ninguna ficha**.
+  - **ALCANCE NO CERRADO:** cuando le llegue el turno hará falta un **`grill-me` con Francisco**.
+    «Qué conceptos de IA entran en el capítulo 2» es una **decisión de contenido** y **no la puede
+    tomar un agente**.
+
+- [ ] **`2.1` · coherencia y densidad del guion teórico** · Informe · `redactor-tfg`
+  Sale de la misma relectura. **Fuente viva: `mis-apuntes-del-informe.md`**, en la raíz del repo.
+  Ese fichero es **incremental**: Francisco lo sigue ampliando conforme relee, así que **al
+  ejecutar esta ficha hay que releerlo entero** y trabajar sobre lo que diga ese día — **no fiarse
+  de lo anotado aquí**, que es solo el estado del **2026-08-12**.
+  1. `mis-apuntes-del-informe.md:13` — `2.1.1` introduce la IA en un punto que Francisco considera
+     equivocado: la definición debe ir **más adelante**, aunque la comparación IA/ML sí aporta
+     perspectiva ahí.
+  2. `mis-apuntes-del-informe.md:16` — la figura de `1.4` menciona el **aprendizaje continuo** y no
+     está definido en ningún sitio; Francisco propone definirlo. **Punto de contacto con `T12`**
+     (`6.2 Líneas futuras`), que es donde vive el material de aprendizaje continuo: **no duplicar**,
+     decidir qué se define en `2.x` y qué se queda en `6.2`.
+  3. `mis-apuntes-del-informe.md:18` y `:22` — en `2.1.3`, etapa 3, se citan juntos
+     *cross-validation*, N-fold y desviación estándar; Francisco pregunta si son **tres cosas
+     distintas** y si la frase de validación cruzada es un punto propio de la enumeración o va
+     dentro de «Medir y comparar su rendimiento».
+  4. `mis-apuntes-del-informe.md:20` — la lista larga que sigue son, presumiblemente, las
+     **métricas de selección de modelo**; hay que confirmarlo y darle **encabezado propio** si lo es.
+  5. `mis-apuntes-del-informe.md:26` — **asimetría de formato**: lo importante del algoritmo va en
+     enumeración separada por párrafos y las propiedades que lo hacen bueno, no.
+  6. `mis-apuntes-del-informe.md:28` — Francisco pregunta si el apartado incluye **demasiada
+     información**. Es una **decisión de densidad, no de estilo**: converge con la ficha de la
+     revisión del profesor (justo debajo), que pide simplificar. **Ejecutarlas con el mismo
+     criterio.**
+  - `mis-apuntes-del-informe.md:24` — **NO es trabajo de agente.** Francisco lo apunta como **tarea
+    suya**: cómo maquetar las fórmulas de probabilidad dentro de la definición de la regresión
+    logística. Queda anotado aquí **solo para no perderlo**.
+  - **ALCANCE NO CERRADO:** «cuánta teoría sobra» y «dónde se define la IA» son **decisiones de
+    contenido**; hará falta un **`grill-me` con Francisco** antes de ejecutar.
+
+- [ ] **Revisión del profesor: simplificar, unificar y desduplicar del capítulo 3 en adelante** · Informe · `redactor-tfg`
+  **El material que el profesor pide quitar del cuerpo se MUEVE al apéndice `A.3 Ficha del
+  sistema` (`T7`), NO se elimina.** `T7` es exactamente la *model card* donde viven semilla,
+  hiperparámetros y configuraciones ganadoras; borrar esos datos rompería `T7` y la
+  **reproducibilidad declarada** del trabajo.
+  **Fuente viva: `mis-apuntes-del-informe.md`**, en la raíz del repo. Ese fichero es
+  **incremental**: Francisco lo sigue ampliando conforme relee, así que **al ejecutar esta ficha
+  hay que releerlo entero** y trabajar sobre lo que diga ese día — **no fiarse de lo anotado
+  aquí**, que es solo el estado del **2026-08-12**.
+  - `mis-apuntes-del-informe.md:30` y `:32` — **cita textual del profesor** tras su primer revisado
+    del informe completo: mejorar la redacción, **simplificar las explicaciones de las soluciones
+    analizadas sin dar todos los hiperparámetros** (su propio ejemplo: la semilla 42), y
+    **recortar/unificar apartados** — señala explícitamente **los primeros apartados del
+    capítulo 3**.
+  - `mis-apuntes-del-informe.md:34` — encargo de Francisco: **interpretar** esas palabras, **no
+    rehacer el informe**; identificar qué apartados conviene **recortar o unificar** y hacer un
+    **repaso de duplicación en todo el informe**, incluidos los puntos definidos últimamente.
+    Francisco confirma haber notado que **en el capítulo 3 se repiten muchas veces los mismos
+    datos**.
+  - **Alcance: del capítulo 3 en adelante** (es la parte redactada por agente).
+  - **ALCANCE NO CERRADO:** qué se unifica y qué se recorta necesita un **`grill-me` con
+    Francisco** antes de tocar ninguna nota.
 
 ### Descartado — no reabrir
 
