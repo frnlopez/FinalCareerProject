@@ -64,6 +64,8 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
   10 semillas × 4 scripts × 2 sets de características, **≈160 min de cómputo desatendido** (un pase
   completo son ≈16 min: anomalías 90 s + 280 s, firmas 177 s + 307 s, baseline 25 s + 34 s, híbrido
   27 s + 16 s).
+  - **ORDEN — es la SIGUIENTE ficha en implementarse.** Elegida por Francisco el **2026-08-12** para
+    arrancar la próxima sesión.
   - **Los titulares de 5.1-5.3 siguen siendo los de la semilla 42.** La dispersión (media, sd, mín,
     máx) entra como tabla nueva en `A.3` más un párrafo en `5.4`. **No se reescribe el capítulo.**
   - Cierra los ítems FT *number of runs*, *error bars* y *central tendency* de Pineau et al.
@@ -613,6 +615,48 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
      `5.1` **desde el mismo CSV**. Hay que decidir cuál es el bueno **contra el artefacto**, no por
      preferencia: dos capítulos dando rangos distintos de la misma fuente es exactamente lo que un
      tribunal mira.
+     - **No es una línea, son CUATRO sitios** (localizados con `Grep` y contados en disco el
+       **2026-08-12**):
+       - `Obsidian_TFG_Vault\04 Implementación del sistema\4.2 Base de datos utilizada.md:120` —
+         «(~8–10 %)» frente al ~5 % de diseño.
+       - `Obsidian_TFG_Vault\Apéndices\A.2 Métricas de desempeño.md:69` — «FPR real observado
+         (≈ 8–10 %)», y **remite a `5.1`**, que es justo el que publica el otro rango.
+       - **`features.md:174`** — viñeta `3.4` de **T9** («la explicación teórica del FPR del 8-10 %»).
+       - **`features.md:249`** — viñeta del KS de **T11** («el umbral p95 promete ≈5 % de FPR y el
+         real es 8-10 %»). *(Antes de la pasada del 2026-08-12 estas dos eran `:172` y `:247`.)*
+     - **Cuál de los dos rangos es el bueno se decide CONTRA EL ARTEFACTO** (`Resultados/metricas_*.csv`,
+       columna `bin_fpr`), **no por preferencia ni por antigüedad del texto**.
+     - **PENDIENTE DE DECISIÓN DE FRANCISCO.** Hasta que la tome **no se toca ninguno de los cuatro
+       sitios**: corregir unos y dejar otros deja el repo a medio corregir, que es peor que la
+       discrepancia actual porque la esconde.
+     - Cuando se aplique, **los cuatro en la MISMA pasada**, incluidas las dos viñetas de **T9** y
+       **T11** de este mismo fichero.
+     - **Fuera del alcance de esta ficha** (se anotan para que nadie los confunda con los cuatro): el
+       rango también aparece en `next-steps.md:178,370,451` (congelado, historial), en
+       `resumen-de-decisiones.md:346,580`, en `EL_FUTURO.md:96`, en `sesion-2026-07-06.md:66`, en
+       `Resultados\GUIA_RESULTADOS.md:219`, en `Guia_ML\04_los_tres_modelos.md:35`, en
+       `Implementacion\app\validacion.py:548,620` (comentarios) y en tres informes de
+       `Obsidian_TFG_Vault\99 Investigación\` — que **no es memoria**.
+     - **INVENTARIO AMPLIADO, VERIFICADO EN DISCO EL 2026-08-12.** Las **once apariciones extra** del
+       rango, fuera de las cuatro de esta ficha (más las de los tres informes de `99 Investigación\`),
+       en **tres capas que no se mezclan**:
+       - **(a) Texto vivo que habría que corregir en la MISMA pasada si Francisco fija «8,5–16 %»:**
+         `Resultados\GUIA_RESULTADOS.md:219` y los comentarios de
+         `Implementacion\app\validacion.py:548,620`. **Ojo:** lo de `validacion.py` es **código, así
+         que exigiría `auditor-ml`** aunque solo sean comentarios; **esa parte NO la absorbe una ficha
+         de track Informe** y tendría que ir por su propia vía.
+       - **(b) Congelado o registro histórico — NO se toca:** `next-steps.md:178,370,451` (congelado),
+         `resumen-de-decisiones.md:346,580`, `EL_FUTURO.md:96`, la nota de sesión
+         `sesion-2026-07-06.md:66`, `Guia_ML\04_los_tres_modelos.md:35` y los tres informes
+         `Obsidian_TFG_Vault\99 Investigación\arquitecturas-hibridas-en-la-literatura.md:53,243,474`,
+         `Obsidian_TFG_Vault\99 Investigación\aprendizaje-continuo-nested-learning.md:276,506` y
+         `Obsidian_TFG_Vault\99 Investigación\benchmark-comparativo-nsl-kdd.md:153`. **Motivo: son foto
+         de su fecha** — dicen lo que se sabía entonces, y reescribirlos falsearía el registro.
+       - **(c) CONTRADICCIÓN INTERNA, lo más grave del hallazgo:**
+         `Obsidian_TFG_Vault\Apéndices\A.2 Métricas de desempeño.md:69` no solo repite el rango, sino
+         que **remite a `5.1`**, que es justo la nota que publica el otro. **El apéndice se contradice
+         con su propia referencia.**
+       - Esto **no levanta el bloqueo**: **nada se corrige hasta que Francisco decida el rango**.
   2. **`4.2:105`** — acota el **ranking** a la variante de **54** cuando es **idéntico en ambas**.
      Basta con retirar la acotación.
 
@@ -778,6 +822,12 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > cierran, solo las alimentan —el número de la cascada invertida va a `3.2.2` (T9) y el KS separado a
 > `5.1`/`5.4` (T11)—, y las cifras quedan anotadas dentro de cada ficha con su salvedad de uso.
 
+> **Actualización 2026-08-12:** Francisco elige **`T4` (10 semillas) como la siguiente tarea a
+> implementar**, y con ella arranca la próxima sesión. No contradice a la nota del 2026-08-09 —que ya
+> daba `T4` por **desbloqueada**—: **la confirma y le fija el turno**. Sigue siendo lo **único** que
+> queda abierto del track de código reabierto el 2026-08-06; el orden queda anotado también en la
+> parte alta de las viñetas de la propia ficha.
+
 > **Sección reescrita por T0 el 2026-08-09**, al aplicar la retirada de la regla «lo escribe
 > Francisco» en sus dos velocidades. Lo que sigue es el estado vigente; la lista anterior —que
 > reservaba a Francisco todo el capítulo 2, la prosa de `4.2` y `6.2`— **ya no está en vigor**.
@@ -820,7 +870,7 @@ Antes había aquí una lista de secciones vedadas a los agentes. Solo **una** so
 | 2026-08-12 | Informe | **`4.2` · la medición (B) del KS, la frase del FPR y el callout de trazabilidad.** Despachada en la **misma pasada** que la fila de abajo, como ordenaba el puntero cruzado de ambas: **un solo fichero tocado**, `Obsidian_TFG_Vault\04 Implementación del sistema\4.2 Base de datos utilizada.md`. La medición **(B)** entra **junto a (A)**, con tabla: **37/54 · 44/122** frente a **25/54 · 31/122**, y `src_bytes` **0,346 → 0,091**, `dst_bytes` **0,317 → 0,107**. La salvedad del `delta = (A) − (B)` queda **impresa como COMPARACIÓN y no como descomposición aditiva** —el KS es un supremo de diferencia de CDF y no es aditivo sobre una mezcla—. La frase del FPR queda **reanclada a (B)**, que es la que la sostiene: (A) compara contra un D2 que es 57 % ataques y los falsos positivos los generan las filas **normales**. Y el callout de trazabilidad cita **las dos variantes** con sus fechas (**20:53:27** / **20:53:46**) y el sello **`fc1c6b4-sucio` tal cual, sin inventar hash** — su re-anclaje tiene **ficha propia abierta**. Dictamen de `auditor-ml`: **APTO CON CAMBIOS** — sin leakage, sin cifras caducadas y **sin invadir T10, que sigue intacta**. **Residuos que deja:** las figuras de `assets\` (la de (A) es de una corrida anterior y las de (B) no están copiadas, con un `> [!todo]` vivo en la nota) y dos imprecisiones 🟡 de una línea (`:120` y `:105`) — **dos fichas nuevas en `## Abiertas`**; más el «~33 %» de DoS de `:72`, **anclado dentro de T10** | `7c0659f` |
 | 2026-08-12 | Informe | **El vault ya no dice «mediana» donde el artefacto dice «media».** `4.2 Base de datos utilizada.md:107` afirmaba «la **mediana** de outliers en D1 es del 4,78 %» y era el **único** sitio del vault afectado tras el cierre del rótulo del 2026-08-11 (`84e3c8f`). Rótulo corregido a **media entre características**, con **4,78 %** (54) y **2,44 %** (122), **verificados contra los dos `*_validation_report.txt`** — no copiados de la ficha. Cerrada **antes de T10**, que era la condición: si T10 hubiera volcado `4.2` tal cual, el TFG publica un estadístico que **nadie ha calculado**. Sale en la misma pasada y bajo el mismo dictamen que la fila de arriba | `7c0659f` |
 | 2026-08-11 | Código | **`commit` + `fecha` en el CSV de vocabulario y en la cabecera de los dos informes de validación** — la ficha que gobierna el **ciclo agrupado de los siete residuos** de `validacion.py`. Cerrada por la **opción A que aprobó Francisco**: `validacion.py` **importa `config.py`** (`:55`) y estampa `config.commit_actual()` (`:111`) en los **cuatro artefactos**. **Cruza una frontera que se documentaba como inexistente** —`program.py` y `validacion.py` no dependían de `config.py`—: registrado en `resumen-de-decisiones.md` que la decisión **CONSUME Q2 y EXTIENDE su alcance de rutas a procedencia**, y **explícitamente NO como permiso literal**, porque Q2 hablaba de rutas y `commit_actual()` no es una ruta. **`program.py` NO pasa a depender de `config.py`**; actualizadas en consecuencia la frase de independencia de `CLAUDE.md`, la cabecera de `config.py` y `PIPELINE.md`. Sello: **`fc1c6b4-sucio`**, fecha por invocación (54 → `20:53:27` · 122 → `20:53:46`), **pendiente de re-anclaje** al commit de cierre — **ficha propia abierta**, sin ningún hash inventado. **Hechos del ciclo, comunes a las siete filas:** **dos pasadas de `auditor-ml`, ambas APTO CON CAMBIOS, ambas aplicadas** —la primera con **seis afirmaciones falsas** (documentación escrita **en presente antes** de la corrida), la segunda, estrecha, con **cuatro correcciones**—; **no se despachó tercera vuelta**, y la razón queda declarada: eran correcciones textuales verificables por lectura directa (un ancla, una fila de tabla, dos reformulaciones y una cláusula de bitácora) y el auditor ya había validado **dos veces** la sustancia (frontera `config.py` sin efectos ni ciclos, `program.py` intacto, cero `fit`, cero cifras alteradas, matiz de Q2 correcto). **Una sola corrida y ninguna cifra publicada se mueve:** diff de `Resultados/` contra `fc1c6b4` caracterizado, **cero diferencias fuera de las cuatro clases esperadas**; intactos `Integridad: APROBADA`, D1 67.343 / D2 22.544 / D3 58.630 / 9.711 normales (43,1 %), drift (A) 37 y 44 · (B) 25 y 31, outliers 4,78 % y 2,44 % con el rótulo «media entre características», **los 17 tipos 0-day byte a byte** (mscan 996 … worm 2; total 3.750, 16,63 %) y el one-hot 77→122 con desglose `service` +44 / `flag` +1 / `protocol_type` +0. Zanjado además: las **12 figuras son byte-idénticas** a HEAD (generación determinista), los **splits NO se regeneraron** (`*_original_*`, `*_processed_*` y ambos `_transformers.joblib` conservan mtime del 2026-07-05) y **ningún `metricas_*.csv`** se tocó. **Dato que merece quedar escrito:** el mismo defecto —afirmar en presente algo que la corrida no respalda— **reapareció en un sitio nuevo en cada vuelta**; la segunda aparición viva estaba en `resumen-de-decisiones.md:765-769` y se trató bien: **nota fechada que la supera, sin reescribir el texto histórico** | `9af842c` |
-| 2026-08-11 | Código | **`PIPELINE.md` y `GUIA_RESULTADOS.md` al día — y el recuadro que MENTÍA ya no miente.** Era el 🟠 del grupo: `PIPELINE.md:141-146` atribuía los informes y las 12 figuras que hay en disco a la corrida `274923d`-sucio del **2026-08-10** «todos con marca de tiempo de esa re-corrida» y remataba «**hay que creerse este recuadro**» (`:152`) — pedía crédito explícito que no merecía. Reatribuido a la corrida del **2026-08-11** y puestos al día `Implementacion/PIPELINE.md:43-45,103-108,139-153` y `Resultados/GUIA_RESULTADOS.md:16,§3.2`, que además **ya listan el artefacto nuevo** `*_vocabulario_onehot.csv`. La tabla canónica del sello `commit` queda en `PIPELINE.md:952-963` (**la referencia se desplazó**: era `:879-888`). Sale en el ciclo agrupado de los siete; dictamen y verificaciones, en la fila de arriba | `9af842c` |
+| 2026-08-11 | Código | **`PIPELINE.md` y `GUIA_RESULTADOS.md` al día — y el recuadro que MENTÍA ya no miente.** Era el 🟠 del grupo: `PIPELINE.md:141-146` atribuía los informes y las 12 figuras que hay en disco a la corrida `274923d`-sucio del **2026-08-10** «todos con marca de tiempo de esa re-corrida» y remataba «**hay que creerse este recuadro**» (`:152`) — pedía crédito explícito que no merecía. Reatribuido a la corrida del **2026-08-11** y puestos al día `Implementacion/PIPELINE.md:43-45,103-108,139-153` y `Resultados/GUIA_RESULTADOS.md:16,§3.2`, que además **ya listan el artefacto nuevo** `*_vocabulario_onehot.csv`. La tabla canónica del sello `commit` vive hoy en **`PIPELINE.md:994`** (encabezado) **+ `:1001-1005`** (los tres valores), **verificado en disco el 2026-08-12**. **La referencia se ha desplazado dos veces y esta fila deja la traza**: era `:879-888`, pasó a `:952-963` al cerrar este ciclo (2026-08-11) y el clúster de cinco fichas de `PIPELINE.md` del **2026-08-12** volvió a moverla ~40 líneas hasta `:994` + `:1001-1005`. Sale en el ciclo agrupado de los siete; dictamen y verificaciones, en la fila de arriba | `9af842c` |
 | 2026-08-11 | Código | **El 77 del delta 77→122 ya se publica rotulado como RECONSTRUCCIÓN.** No es el vocabulario que el pipeline usó en su día: se **recuenta** desde los CSV `_original_*`, así que sin rótulo cualquiera podía leerlo como cifra registrada por `program.py`. El token `RECONSTRUIDO` va ahora **en consola y en el informe** (`validacion.py:977` y `:1230`), en las dos variantes. Cambio de rótulo, **no de cálculo**: el 77, el 122 y el 45 siguen **recontándose, cero literales**. Sale en el ciclo agrupado de los siete | `9af842c` |
 | 2026-08-11 | Código | **Los recuentos del CSV de vocabulario one-hot ya son enteros.** `38.0 / 77.0 / 122.0 / 45.0` pasan a `38 / 77 / 122 / 45` en la fila `__total__` de los dos `*_vocabulario_onehot.csv`. Son recuentos: publicarlos como flotantes invitaba a leerlos como promedios. Sale en el ciclo agrupado de los siete | `9af842c` |
 | 2026-08-11 | Código | **El encabezado «Recomendaciones:» ya no se imprime vacío.** Ahora solo se escribe **si hay alguna** (`validacion.py:1102`, `:1122`), con la condición documentada en el propio código. Efecto verificado en disco: la variante de **54 pierde el encabezado** —no tenía recomendaciones que dar— y es una de las cuatro clases de diferencia esperadas del diff. Un encabezado vacío en un artefacto publicado invitaba a pensar que se había perdido algo. Sale en el ciclo agrupado de los siete | `9af842c` |
