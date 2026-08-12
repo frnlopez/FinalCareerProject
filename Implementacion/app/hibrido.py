@@ -192,7 +192,31 @@ class NSLKDDHybridEvaluator:
     def _cargar_joblib(self, prefijo, algo):
         ruta = config.MODELOS_DIR + r"\{}_{}_{}.joblib".format(
             prefijo, algo, self.sufijo_artefactos)
-        datos = joblib.load(ruta)
+        # Si el .joblib no está, el traceback crudo de joblib.load() no dice ni qué
+        # etapa falta ni qué script la produce. Se relanza como RuntimeError con el
+        # mismo tono que cascada_invertida._leer_umbral_conf: qué fichero falta, qué
+        # hay que correr antes y —si el nombre lleva la marca de semilla— con qué
+        # semilla. Sigue ABORTANDO: no se sustituye ni se continúa a medias.
+        try:
+            datos = joblib.load(ruta)
+        except FileNotFoundError:
+            script_previo = "anomalias.py" if prefijo == "anomalia" else "firmas.py"
+            # El nombre de la variante no basta para reproducir la corrida que falta:
+            # la de 122 features se pide con --sin-seleccion y la de 54 es la de por
+            # defecto (sin flag). Se nombra el flag literal, igual que --semilla N.
+            flag_variante = " --sin-seleccion" if self.sin_seleccion else ""
+            aviso_semilla = ""
+            if not config.es_semilla_por_defecto():
+                aviso_semilla = (" Este nombre lleva la marca de la semilla en curso "
+                                 "({}), así que hay que correrlo con --semilla {}.".format(
+                                     config.RANDOM_STATE, config.RANDOM_STATE))
+            # 'from None' corta el encadenado del FileNotFoundError crudo: el objetivo
+            # es leer ESTE mensaje, no el traceback de joblib.load() delante de él.
+            raise RuntimeError(
+                "No existe {}: la cascada carga las dos etapas ya entrenadas y no "
+                "entrena ninguna. Ejecuta primero {}{} para la variante '{}'.{}".format(
+                    ruta, script_previo, flag_variante, self.set_features,
+                    aviso_semilla)) from None
         # Salvaguarda: el joblib debe ser de la misma variante de features (54/122)
         # que estamos evaluando, o las columnas no cuadrarían con X_D2.
         if str(datos.get("set_features")) != str(self.set_features):
@@ -403,6 +427,10 @@ class NSLKDDHybridEvaluator:
             except (FileNotFoundError, RuntimeError) as e:
                 # M1: un joblib ausente o de otra variante (54/122) no debe abortar
                 # toda la tabla; se omite ese detector con aviso y se sigue con el resto.
+                # OJO: este except también absorbe el abort por SEMILLA distinta
+                # (líneas 236-240), que en el resto del script sí es fatal. Es la
+                # excepción declarada en PIPELINE.md (salvaguarda de mezcla): la tabla
+                # queda corta con aviso; la cascada principal sí aborta.
                 print("   [aviso] detector {} no disponible ({}); se omite.".format(det, e))
                 continue
             score = self._anom._score(det, jd["modelo"], self.X_D2)

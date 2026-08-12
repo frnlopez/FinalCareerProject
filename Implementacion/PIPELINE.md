@@ -1083,7 +1083,13 @@ viva en un solo sitio.
 
 **Salvaguarda de mezcla:** `hibrido.py` y `cascada_invertida.py` cargan `.joblib` de otros scripts,
 así que comprueban que la clave `semilla` del artefacto coincide con la de la corrida y **abortan**
-si no. Desde el 2026-08-12 la comprobación es **simétrica en los dos artefactos que lee
+si no. **Con una excepción declarada:** la tabla de los cuatro detectores de `hibrido.py`
+(`_tabla_0day_cuatro_detectores`) no aborta — su guarda M1 captura el fallo de carga, **incluido el
+de semilla distinta**, omite ese detector con un aviso y sigue, dejando la celda de
+`metricas_hibrido_0day*` corta (54 filas en vez de 72). La fila de la **cascada principal** sí
+aborta, igual que `cascada_invertida.py`, así que ninguna cifra citable sale de un artefacto de otra
+semilla sin que la corrida se caiga o la tabla quede visiblemente corta.
+Desde el 2026-08-12 la comprobación es **simétrica en los dos artefactos que lee
 `cascada_invertida.py`**: antes el descriptor del híbrido —de donde sale `UMBRAL_CONF`— entraba solo
 por el nombre del fichero, sin verificar variante ni semilla. Importa porque ese umbral **es** el
 criterio de condena: con uno de otra semilla, `n_condenadas` —la cifra citable— dejaría de
@@ -1314,6 +1320,11 @@ de `sys.path`, no el cwd.
 `Working_Directory/`):
 
 ```powershell
+# 0. ÁRBOL LIMPIO ANTES DE LANZAR: debe salir VACÍO. Si sale algo, NO se lanza el
+#    barrido: primero se cierra el commit (lo hace el skill `cierre`, en hilo
+#    principal y preguntando) y luego se vuelve a comprobar aquí.
+git status --porcelain -- Implementacion
+
 # 1. Entorno
 cd Implementacion
 .\Imp\Scripts\Activate.ps1
@@ -1340,7 +1351,17 @@ python app\barrido_semillas.py
 python app\agregar_semillas.py
 ```
 
-**Los dos prerrequisitos del paso 2 y 4, con su razón.**
+**Los tres prerrequisitos de los pasos 0, 2 y 4, con su razón.**
+
+0. **El árbol tiene que estar limpio ANTES de lanzar** — es una **comprobación** que teclea el
+   operador (paso 0), no un `git commit` que se lance desde el runbook: el commit lo hace el skill
+   `cierre`, en hilo principal y preguntando. La razón es la procedencia:
+   `config.commit_actual()` (`config.py:783-822`) sella el hash con sufijo **`-sucio`** si hay
+   cambios sin commitear en `Implementacion/`, y ese sello se estampa en la columna `commit` de cada
+   fila que escriba la corrida. Lanzar con el árbol sucio haría nacer las 2.320 filas de las nueve
+   `metricas_*_semillas.csv` con un sello **no recuperable desde git** —`<hash>-sucio` no identifica
+   ningún estado del código— y **no hay re-anclaje posible a posteriori**: la única forma de arreglarlo
+   sería volver a correr el barrido entero, 4-5 h.
 
 1. **Cero residuo con marca `_semilla` y ninguna `metricas_*_semillas.csv` de una corrida previa a
    medias.** Hay que **comprobarlo** con el comando del paso 2 (y borrar a mano lo que aparezca)
@@ -1352,7 +1373,8 @@ python app\agregar_semillas.py
    `Resultados/modelos/`, las figuras `Resultados/figuras/*_semilla*`, los
    `firmas_reglas_*_semilla*.txt`, los logs de `logs_barrido/` y las propias
    `metricas_*_semillas.csv` (la cadena `_semillas` contiene `_semilla`). Y **no** alcanza nada de la
-   semilla 42: con la 42 el sufijo de `config.sufijo_de_semilla()` es cadena vacía.
+   semilla 42: los nombres de artefacto de la corrida los gobierna `config.sufijo_semilla()`
+   (`config.py:203-213`), que con la 42 devuelve cadena vacía.
 2. **`--dry-run` primero.** Imprime las 100 invocaciones y qué `.joblib` borraría, sin ejecutar
    ningún hijo. No es una pasada de solo lectura: hace el preflight de la 42 y
    `config.ensure_dirs()` (ver el recuadro sobre cuándo se re-sella la traza).
@@ -1381,7 +1403,8 @@ python app\agregar_semillas.py
 `evaluacion.FILAS_ESPERADAS_POR_VARIANTE`, **y las 5 de la cascada invertida**, que el paso declara
 en el propio `PASOS` (`barrido_semillas.py:107-109`, `len(config.CATEGORIAS_ATAQUE) + 1`) porque
 `FILAS_ESPERADAS_POR_VARIANTE` solo cubre las principales. Ese 5 lo verifica además el propio script
-al reescribir su tabla (`cascada_invertida._comprobar_tabla()`, `cascada_invertida.py:124` y `:462`),
+al reescribir su tabla (`cascada_invertida._comprobar_tabla()`, `cascada_invertida.py:124` y
+`:477-483`),
 que es la comprobación equivalente a `comprobar_recuento()` para una tabla que no puede pasar por
 ella (`evaluacion.py:148-152`). Es el mismo reparto que declara la ficha anterior: «4/4/1/1 … y 5 en
 la cascada invertida». Las que **no** tiene comprobación automática son las **cuatro** auxiliares

@@ -188,7 +188,29 @@ class NSLKDDInvertedCascadeMeasurer:
     def _cargar_joblib_firma(self):
         ruta = config.MODELOS_DIR + r"\firma_{}_{}.joblib".format(
             self.firma, self.sufijo_artefactos)
-        datos = joblib.load(ruta)
+        # Simetría con _leer_umbral_conf(), que ya explicaba su ausencia: el otro
+        # artefacto que lee este script entraba con un joblib.load() desnudo, cuyo
+        # traceback no dice qué falta ni de dónde sale. Se relanza con el mismo tono
+        # y se sigue ABORTANDO (sin este modelo no hay nada que medir).
+        try:
+            datos = joblib.load(ruta)
+        except FileNotFoundError:
+            # El nombre de la variante no basta para reproducir la corrida que falta:
+            # la de 122 features se pide con --sin-seleccion y la de 54 es la de por
+            # defecto (sin flag). Se nombra el flag literal, igual que --semilla N.
+            flag_variante = " --sin-seleccion" if self.sin_seleccion else ""
+            aviso_semilla = ""
+            if not config.es_semilla_por_defecto():
+                aviso_semilla = (" Este nombre lleva la marca de la semilla en curso "
+                                 "({}), así que hay que correrlo con --semilla {}.".format(
+                                     config.RANDOM_STATE, config.RANDOM_STATE))
+            # 'from None' corta el encadenado del FileNotFoundError crudo: el objetivo
+            # es leer ESTE mensaje, no el traceback de joblib.load() delante de él.
+            raise RuntimeError(
+                "No existe {}: es el clasificador de firmas que esta medición hace "
+                "juzgar a los normales de D2, y aquí no se entrena nada. Ejecuta "
+                "primero firmas.py{} para la variante '{}'.{}".format(
+                    ruta, flag_variante, self.set_features, aviso_semilla)) from None
         # Misma salvaguarda que hibrido.py: un joblib de otra variante no cuadraría
         # en columnas con X_normales.
         if str(datos.get("set_features")) != str(self.set_features):
@@ -289,7 +311,8 @@ class NSLKDDInvertedCascadeMeasurer:
         self.conf = proba.max(axis=1)
         self.cat_argmax = self.clases_firma[proba.argmax(axis=1)]
 
-        # MISMA regla de corte que la cascada real (hibrido.py:301): la etiqueta de
+        # MISMA regla de corte que la cascada real (hibrido.py:360, la regla P-5 de
+        # 'unknown'; NO la regla τ, que es otra decisión): la etiqueta de
         # ataque se CONSERVA cuando conf >= UMBRAL_CONF y se degrada a 'unknown'
         # cuando conf < UMBRAL_CONF. Aquí "condena" = conservar etiqueta de ataque.
         condenadas = self.conf >= self.umbral_conf
