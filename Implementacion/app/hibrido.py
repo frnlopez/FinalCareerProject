@@ -22,7 +22,19 @@ Reglas de protocolo (invalidan el TFG si se rompen):
     D2 se usa SOLO para reportar (tabla de sensibilidad). Elegir el umbral por su
     resultado en D2 sería leakage.
   * D1 no se carga (P-3): el detector y su umbral llegan ya entrenados del joblib.
-  * random_state=42 en todo; mismo StratifiedKFold(5) que firmas.py para el OOF (Q4).
+  * UNA SOLA semilla en toda la corrida —`config.RANDOM_STATE`, que es 42 por defecto
+    y la que diga `--semilla` en el barrido de T4—: mismo StratifiedKFold(5) que
+    firmas.py para el OOF (Q4) y ningún literal de semilla en el código.
+
+Semilla (--semilla N, tarea T4): POR DEFECTO ES LA 42 y entonces la cascada carga
+exactamente los .joblib publicados y escribe en las tres tablas publicadas. Con
+otra semilla carga los '_semilla<N>' que dejaron anomalias.py y firmas.py en ese
+mismo pase —y ABORTA si el joblib declara otra semilla, para no mezclar dos
+corridas—, sufija su descriptor y su figura, y escribe en
+'metricas_hibrido*_semillas.csv'. Ojo con lo que arrastra la semilla aquí: cambia
+el StratifiedKFold del OOF, así que UMBRAL_CONF se recalibra y puede salir
+distinto. El mecanismo está en el encabezado de config.py; las diez semillas del
+barrido, en config.SEMILLAS_BARRIDO (la 42 NO está entre ellas).
 
 Decisiones: resumen-de-decisiones.md § 2026-07-14 (H-1…H-7 + P-1…P-5).
 """
@@ -102,7 +114,8 @@ class NSLKDDHybridEvaluator:
         self._anom = NSLKDDAnomalyTrainer(sin_seleccion=sin_seleccion)
         self._sig = NSLKDDSignatureTrainer(sin_seleccion=sin_seleccion)
 
-        # Mismo CV que firmas.py (Q4): StratifiedKFold(5, shuffle, semilla 42).
+        # Mismo CV que firmas.py (Q4): StratifiedKFold(5, shuffle) con la semilla de
+        # la corrida —42 por defecto, otra con --semilla en el barrido de T4—.
         self.cv = StratifiedKFold(
             n_splits=5, shuffle=True, random_state=config.RANDOM_STATE
         )
@@ -476,19 +489,21 @@ class NSLKDDHybridEvaluator:
             evaluacion.guardar_metricas(fila, csv_0day)
         print("   Tabla 0-day (4 detectores): {}".format(csv_0day))
 
-        # (3) Fila resumen de la corrida (métricas por alcance con el umbral elegido).
-        csv_res = config.ruta_tabla("metricas_hibrido.csv")
-        evaluacion.limpiar_variante_csv(
-            csv_res, self.set_features,
-            evaluacion.cabecera_esperada(self.metricas_run),
-        )
-        evaluacion.guardar_metricas(self.metricas_run, csv_res)
-        evaluacion.comprobar_unicidad(csv_res)
-        evaluacion.comprobar_recuento(csv_res, self.set_features)
-        print("   Tabla resumen: {}".format(csv_res))
-
-        # (4) Descriptor reproducible (H-7): referencias + umbral + τ. NO re-serializa
+        # (3) Descriptor reproducible (H-7): referencias + umbral + τ. NO re-serializa
         # los modelos (ya existen en sus joblibs); guarda qué usa y la decisión.
+        #
+        # VA ANTES DE LA FILA RESUMEN, y el orden importa (corrección del 2026-08-12,
+        # andamiaje de T4). Con el orden anterior —fila y después descriptor— había
+        # una ventana en la que un corte del proceso dejaba la fila escrita y el
+        # descriptor sin volcar. En el barrido reanudable eso es un bloqueo, no una
+        # molestia: barrido_semillas.ya_hecho() da el paso por hecho porque la fila
+        # está, pero cascada_invertida._leer_umbral_conf() aborta porque el
+        # descriptor —de donde sale UMBRAL_CONF— no existe, y cada relanzamiento
+        # vuelve a fallar en el mismo sitio hasta que alguien borre la fila a mano.
+        # Volcando primero el descriptor, la ventana se invierte y se vuelve inocua:
+        # un corte ahí deja el descriptor huérfano, ya_hecho() devuelve False y la
+        # reanudación reejecuta el paso, que lo sobrescribe. Es el mismo orden que
+        # ya seguían anomalias.py, firmas.py y baseline.py (joblib antes de CSV).
         ruta_desc = config.MODELOS_DIR + r"\hibrido_{}.joblib".format(
             self.sufijo_artefactos)
         joblib.dump({
@@ -509,6 +524,20 @@ class NSLKDDHybridEvaluator:
             "commit": config.commit_actual(),
         }, ruta_desc)
         print("   Descriptor del híbrido: {}".format(ruta_desc))
+
+        # (4) Fila resumen de la corrida (métricas por alcance con el umbral elegido).
+        # ÚLTIMA a propósito: es la que barrido_semillas.ya_hecho() consulta para dar
+        # el paso por hecho, así que se escribe cuando ya está en disco todo lo que
+        # los pasos siguientes necesitan (ver el comentario del bloque (3)).
+        csv_res = config.ruta_tabla("metricas_hibrido.csv")
+        evaluacion.limpiar_variante_csv(
+            csv_res, self.set_features,
+            evaluacion.cabecera_esperada(self.metricas_run),
+        )
+        evaluacion.guardar_metricas(self.metricas_run, csv_res)
+        evaluacion.comprobar_unicidad(csv_res)
+        evaluacion.comprobar_recuento(csv_res, self.set_features)
+        print("   Tabla resumen: {}".format(csv_res))
 
     # ------------------------------------------------------------------
     # Orquestación

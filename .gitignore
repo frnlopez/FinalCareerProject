@@ -17,9 +17,10 @@ __pycache__/
 *$py.class
 .ipynb_checkpoints/
 
-# --- Modelos entrenados (482 MB) --------------------------------------------
-# Regenerables y deterministas (random_state=42). El mayor, firma_KNN_122,
-# pesa 173 MB: por sí solo hace que GitHub rechace el push.
+# --- Modelos entrenados (481 MB) --------------------------------------------
+# Regenerables y deterministas (random_state=42). Son 20 ficheros y 481,33 MB
+# medidos el 2026-08-12, ya con las dos variantes de características dentro. El
+# mayor, firma_KNN_122, pesa 173 MB: por sí solo hace que GitHub rechace el push.
 Resultados/modelos/
 
 # --- Splits y transformadores (~170 MB) -------------------------------------
@@ -27,6 +28,32 @@ Resultados/modelos/
 Resultados/*_processed_*.csv
 Resultados/*_original_*.csv
 Resultados/*_transformers.joblib
+
+# --- Figuras del barrido de semillas (T4) -----------------------------------
+# ~260 PNG a 300 dpi (13 por pase × 10 semillas × 2 sets). Los cinco scripts no
+# tienen flag para no dibujar y no se les añade uno: las figuras se generan y NO
+# se versionan, porque las de la memoria son las de la semilla 42 y de estas no se
+# cita ninguna — el resultado del barrido es la tabla de dispersión, que sí se
+# versiona (texto plano).
+# El patrón alcanza SOLO lo sufijado por config.sufijo_semilla(), que con la
+# semilla 42 es cadena vacía: verificado a 2026-08-12, ninguna de las 39 figuras
+# publicadas lleva '_semilla' en el nombre.
+Resultados/figuras/*_semilla*
+
+# --- Reglas del árbol del barrido de semillas (T4) ---------------------------
+# 20 ficheros (1 por variante × 10 semillas) que deja firmas.py con export_text
+# del DecisionTree. Mismo criterio que las figuras del barrido: del barrido no se
+# cita ninguno —las reglas de la memoria son las de la semilla 42, que NO llevan
+# '_semilla' en el nombre y siguen versionadas— y son texto que ensuciaría la raíz
+# de Resultados/ sin aportar nada citable.
+Resultados/firmas_reglas_*_semilla*.txt
+
+# --- Logs del barrido de semillas (T4) --------------------------------------
+# Un fichero por corrida (100 en el barrido completo): stdout y stderr del script
+# hijo. Son la traza operativa de una ejecución, no un resultado, y se regeneran
+# al relanzar. Lo citable del barrido son 'metricas_*_semillas.csv' y
+# 'dispersion_semillas.csv'/'.md', que SÍ se versionan.
+Resultados/logs_barrido/
 
 # --- Respaldos de tablas con el esquema anterior -----------------------------
 # Los genera evaluacion.limpiar_variante_csv() al apartar un CSV de métricas de

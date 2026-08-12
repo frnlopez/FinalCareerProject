@@ -19,12 +19,22 @@ anomalías; la hipótesis es que el del RF monolítico es sensiblemente inferior
 Reglas de protocolo (invalidan el TFG si se rompen):
   * D2 es INTOCABLE: no se usa para elegir hiperparámetros (todo por CV sobre el train).
     D2 solo para la evaluación final.
-  * random_state=42 en TODO (StratifiedKFold, RandomForest, GridSearchCV).
+  * UNA SOLA semilla en TODO (StratifiedKFold, RandomForest, GridSearchCV), y es
+    `config.RANDOM_STATE`: 42 por defecto —la de todo lo publicado— y la que diga
+    `--semilla` en el barrido de T4. Ni un literal de semilla en el código.
   * class_weight='balanced' fijo (no se cruza con el eje de balanceo, decisión Q6);
     mismo criterio que la selección 4.3.5.
 
 Decisión Q1/C: el set de features es parametrizable (--sin-seleccion → 122 features
 en lugar de las 54 por defecto). Nada de rutas hardcodeadas: todo sale de config.
+
+Semilla (--semilla N, tarea T4): POR DEFECTO ES LA 42 y entonces el comportamiento
+es el anterior a T4 (mismo nombre de .joblib y de figura, mismas dos tablas
+publicadas). Con otra semilla el .joblib y la figura se sufijan '_semilla<N>' y las
+métricas van a 'metricas_baseline_semillas.csv' y
+'metricas_baseline_0day_semillas.csv'. El mecanismo está en el encabezado de
+config.py; las diez semillas del barrido, en config.SEMILLAS_BARRIDO (la 42 NO
+está entre ellas).
 """
 import argparse
 import time

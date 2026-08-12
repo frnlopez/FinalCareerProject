@@ -71,6 +71,21 @@ reglas que impiden que el barrido pise lo publicado):
      recuento es fijo 4/4/1/1, así que 10 semillas en ellas colapsarían a la
      última o abortarían. Está escrito también en el docstring de
      evaluacion.comprobar_recuento() y en Implementacion/PIPELINE.md.
+
+QUÉ SEMILLAS SE BARREN Y POR QUÉ LA 42 NO ESTÁ ENTRE ELLAS (SEMILLAS_BARRIDO,
+decisión de Francisco del 2026-08-12): el barrido son las diez semillas
+1..10 y la 42 queda FUERA a propósito. Dos razones, y ninguna es de comodidad:
+  1. `--semilla 42` es INDISTINGUIBLE de una corrida por defecto: sufijo_semilla()
+     devuelve cadena vacía y ruta_tabla() no desvía nada, así que ese pase
+     sobrescribiría las cuatro tablas publicadas, los 20 .joblib y las 39 figuras
+     de la 42 — exactamente lo que todo este andamiaje existe para impedir.
+  2. La 42 es el TITULAR de 5.1-5.3 y por tanto un PUNTO INDEPENDIENTE de la
+     banda: se cita como el resultado publicado y la banda de dispersión se cita
+     al lado. Meterla dentro convertiría el titular en uno de los diez sumandos de
+     su propia media, y la comparación «el titular cae dentro de la banda» dejaría
+     de significar nada.
+Consecuencia que hay que escribir al publicar A.3: son ONCE corridas por variante
+—diez del barrido más la publicada—, no diez de las cuales una es el titular.
 """
 import os
 import subprocess
@@ -118,6 +133,27 @@ def base_path(sin_seleccion=False):
 
 # Marca que llevan los artefactos de una corrida con semilla distinta de 42.
 _PLANTILLA_SUFIJO_SEMILLA = "_semilla{}"
+
+# La misma marca SIN el número: '_semilla'. Es el discriminante entre "artefacto
+# publicado" (no la lleva) y "artefacto del barrido" (sí), y lo usan el borrado por
+# semilla y la verificación de los .joblib publicados de barrido_semillas.py. Se
+# deriva de la plantilla en lugar de escribirse aparte para que no puedan
+# divergir: si la plantilla cambiara, el filtro del borrado cambia con ella.
+MARCA_SEMILLA = _PLANTILLA_SUFIJO_SEMILLA.format("")
+
+
+def sufijo_de_semilla(valor):
+    """
+    Sufijo de artefacto de UNA semilla dada, sin mirar la global de la corrida.
+
+    sufijo_semilla() devuelve el de config.RANDOM_STATE; esta compone el de una
+    semilla arbitraria, que es lo que necesita el borrado del barrido
+    (barrido_semillas.py) para construir '_semilla7.joblib' mientras la corrida en
+    curso no tiene ninguna semilla fijada. Se mantiene aquí, junto a la plantilla,
+    para que el filtro del borrado NO se escriba como un glob a mano: es la
+    operación que podría alcanzar los .joblib publicados si divergiera.
+    """
+    return _PLANTILLA_SUFIJO_SEMILLA.format(int(valor))
 
 # Sufijo del nombre de las tablas del barrido. La tabla '<x>.csv' publicada con la
 # semilla 42 y la tabla '<x>_semillas.csv' del barrido son DOS FICHEROS: la primera
@@ -201,6 +237,37 @@ AYUDA_CLI_SEMILLA = (
     "sufijan con '_semilla<N>'. Es la vía del barrido de dispersión (T4); los "
     "titulares del capítulo 5 siguen siendo los de la semilla {}."
 ).format(SEMILLA_POR_DEFECTO, SUFIJO_TABLA_SEMILLAS, SEMILLA_POR_DEFECTO)
+
+
+# ---------------------------------------------------------------------------
+# Las diez semillas del barrido de dispersión (T4)
+# ---------------------------------------------------------------------------
+# Lista CERRADA por Francisco el 2026-08-12. El razonamiento completo —por qué la
+# 42 queda fuera— está en el encabezado del módulo, sección "QUÉ SEMILLAS SE
+# BARREN"; en resumen: con 42 no habría desvío ni de artefactos ni de tablas (el
+# pase pisaría lo publicado) y además la 42 es el TITULAR, un punto independiente
+# de la banda, no uno de sus diez sumandos.
+#
+# La consume barrido_semillas.py (el lanzador) y la comprueba agregar_semillas.py
+# (el agregador aborta si a una combinación le faltan semillas de esta lista). Que
+# viva aquí y no en cada script es lo que impide que las dos piezas divergan.
+SEMILLAS_BARRIDO = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Invariantes de la lista, comprobados al importar: son barato y protegen de la
+# única forma en que esta constante puede corromperse (una edición a mano). Un
+# duplicado daría una "media de 10" con 9 puntos, y colar la 42 haría que una
+# corrida del barrido sobrescribiese las cuatro tablas publicadas.
+assert len(SEMILLAS_BARRIDO) == 10, (
+    "SEMILLAS_BARRIDO debe tener 10 valores: la ficha T4 pide 10 semillas")
+assert len(set(SEMILLAS_BARRIDO)) == len(SEMILLAS_BARRIDO), (
+    "SEMILLAS_BARRIDO tiene valores repetidos: la media saldría con menos "
+    "puntos de los que declara")
+assert SEMILLA_POR_DEFECTO not in SEMILLAS_BARRIDO, (
+    "La semilla {} NO puede estar en SEMILLAS_BARRIDO: con ella no hay desvío "
+    "de artefactos ni de tablas y el pase pisaría todo lo publicado".format(
+        SEMILLA_POR_DEFECTO))
+assert all(isinstance(s, int) and s >= 0 for s in SEMILLAS_BARRIDO), (
+    "Las semillas de SEMILLAS_BARRIDO deben ser enteros no negativos")
 
 
 def nombre_tabla_semillas(nombre_csv):
@@ -382,10 +449,22 @@ ALCANCE_SELECCION = (
 # NO tiene (su fila es algoritmo × balanceo y solo trae f1_macro_cv/_cv_std), así
 # que describía media tabla ajena y ninguna de las suyas. Este sí dice lo que hay:
 # de dónde sale el f1_macro_cv y por qué el SMOTE de esas filas no es leakage.
+#
+# SIN NÚMERO DE SEMILLA EN EL TEXTO (corrección del 2026-08-12, andamiaje de T4).
+# Antes decía «StratifiedKFold 5 · semilla 42» y era un literal: firmas.py escribe
+# esta constante en la columna 'alcance' de metricas_balanceo.csv, así que una
+# corrida '--semilla 7' habría producido filas cuya columna 'semilla' dice 7 y cuyo
+# 'alcance' afirma 42 — 160 filas versionadas con una afirmación falsa DENTRO del
+# dato, y un CSV no se corrige sin re-correr (regla T18). Tampoco se interpola
+# RANDOM_STATE aquí: esta constante se evalúa AL IMPORTAR el módulo y
+# fijar_semilla() se llama después, así que la interpolación congelaría el 42 igual.
+# La semilla de la corrida viaja en su propia columna ('semilla', inyectada por
+# evaluacion.guardar_metricas) y ahí no puede quedar desfasada.
 ALCANCE_BALANCEO = (
     "selección del esquema de balanceo (4.3.4): f1_macro medio en CV sobre D3 "
-    "(StratifiedKFold 5 · semilla 42) con SMOTE aplicado SOLO dentro de cada fold "
-    "vía imblearn.Pipeline — nunca D2 y nunca citable como resultado"
+    "(StratifiedKFold 5 · shuffle · la semilla de la corrida está en la columna "
+    "'semilla') con SMOTE aplicado SOLO dentro de cada fold vía imblearn.Pipeline "
+    "— nunca D2 y nunca citable como resultado"
 )
 
 ALCANCE_HIBRIDO_CALIBRACION = (
@@ -395,8 +474,13 @@ ALCANCE_HIBRIDO_CALIBRACION = (
 )
 
 # Los dos bloques de esa fila mixta, por separado.
-ALCANCE_OOF_D3 = ("out-of-fold sobre D3 (StratifiedKFold 5 · semilla 42): de aquí "
-                  "SALE la decisión de UMBRAL_CONF — nunca D2")
+# Sin número de semilla, por el mismo motivo que ALCANCE_BALANCEO: el CV lo
+# construye hibrido.py con config.RANDOM_STATE, que en el barrido no es 42. Este
+# texto es DOCUMENTACIÓN (ALCANCE_PREFIJOS_AUXILIARES, no se escribe en ningún CSV),
+# pero un literal desfasado aquí acabaría copiado a un sitio donde sí importa.
+ALCANCE_OOF_D3 = ("out-of-fold sobre D3 (StratifiedKFold 5 · shuffle · la semilla "
+                  "de la corrida está en la columna 'semilla'): de aquí SALE la "
+                  "decisión de UMBRAL_CONF — nunca D2")
 ALCANCE_D2_REPORTE = ("sobre D2 completo y SOLO como reporte: ninguna decisión se "
                       "toma con estas columnas (P-4)")
 

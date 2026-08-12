@@ -285,13 +285,28 @@ documento, anclados al commit de su corrida. **Ninguna métrica de calidad se ve
 > `alcance_tiempo_s` publicadas coinciden **carácter a carácter** con las cuatro constantes
 > `config.ALCANCE_TIEMPO_S_*` del código de hoy (2.367 · 1.536 · 1.196 · 1.676 caracteres).
 >
-> La única divergencia viva entre `config.py` y lo publicado es el texto de
-> `config.ALCANCE_N_ITER_TOTAL`, reformulado **después** de `1163c90` (recuadro de las dos
-> columnas de épocas del autoencoder, más abajo). **No obliga a re-correr y no toca el
-> dato**: ese texto **no viaja a ninguna columna** de ningún CSV —`ALCANCE_COLUMNAS` solo lo
-> consulta `config.alcance_de_columna()`, y a esa función solo llega `validar_esquema_minimo()`
-> para columnas que casan con `PREFIJOS_SIN_DECLARAR`, filtro con el que `n_iter_total_grid` no
-> casa—. Es documentación en el código, no celda.
+> Quedan **dos** divergencias vivas entre `config.py` y lo publicado, y ninguna de las dos obliga
+> a re-correr:
+>
+> 1. **`config.ALCANCE_N_ITER_TOTAL`**, reformulado **después** de `1163c90` (recuadro de las dos
+>    columnas de épocas del autoencoder, más abajo). **No toca el dato**: ese texto **no viaja a
+>    ninguna columna** de ningún CSV —`ALCANCE_COLUMNAS` solo lo consulta
+>    `config.alcance_de_columna()`, y a esa función solo llega `validar_esquema_minimo()` para
+>    columnas que casan con `PREFIJOS_SIN_DECLARAR`, filtro con el que `n_iter_total_grid` no
+>    casa—. Es documentación en el código, no celda.
+> 2. **`config.ALCANCE_BALANCEO`**, al que el 2026-08-12 se le quitó el número de semilla (decía
+>    «StratifiedKFold 5 · semilla 42» y ahora dice «StratifiedKFold 5 · shuffle · la semilla de la
+>    corrida está en la columna `semilla`»). Esta **sí** es una celda publicada: `firmas.py:280`
+>    escribe esa constante en la columna `alcance`, y las 16 filas de
+>    `Resultados/metricas_balanceo.csv` conservan el texto antiguo. **No hay dato corrupto y no hay
+>    que re-correr `firmas.py`**: esas 16 filas son todas `semilla = 42` (verificado en el CSV), así
+>    que el texto viejo es verdadero de ellas — se quitó el literal precisamente para que dejara de
+>    serlo automáticamente en un barrido, no para corregir una falsedad ya escrita. La divergencia se
+>    cierra sola la próxima vez que se re-corra `firmas.py` con el defecto.
+>    **Aviso operativo:** si algún día se re-corre `firmas.py`, hay que re-correr **las dos variantes
+>    o ninguna**. `evaluacion.limpiar_variante_csv()` compara **conjuntos de columnas**, no valores,
+>    así que re-correr solo `54` no invalidaría las filas de `122_sin_seleccion`: la tabla quedaría
+>    con 8 filas declarando el alcance nuevo y 8 el viejo, mezcla que ninguna comprobación detecta.
 
 ### Recuento esperado (comprobado por código, no a ojo)
 
@@ -1059,15 +1074,183 @@ viva en un solo sitio.
 
 **Salvaguarda de mezcla:** `hibrido.py` y `cascada_invertida.py` cargan `.joblib` de otros scripts,
 así que comprueban que la clave `semilla` del artefacto coincide con la de la corrida y **abortan**
-si no. Verificado en disco: los 20 `.joblib` publicados declaran `semilla = 42`, así que una corrida
-por defecto pasa la comprobación.
+si no. Desde el 2026-08-12 la comprobación es **simétrica en los dos artefactos que lee
+`cascada_invertida.py`**: antes el descriptor del híbrido —de donde sale `UMBRAL_CONF`— entraba solo
+por el nombre del fichero, sin verificar variante ni semilla. Importa porque ese umbral **es** el
+criterio de condena: con uno de otra semilla, `n_condenadas` —la cifra citable— dejaría de
+corresponder a la fila que la publica (`cascada_invertida._leer_umbral_conf`).
 
-**Lo que el barrido NO varía, y hay que declararlo al leer la dispersión:** los splits D1/D2/D3 y la
-selección de las 54 características. `program.py` no está parametrizado por semilla (su
-`random_state=42` es literal y no importa `config.py`), así que las 10 semillas miden la dispersión
-**de los modelos sobre unos splits y un set de características fijos** — no la del preprocesado.
-Es lo que la ficha T4 pide (10 semillas × 4 scripts × 2 sets), pero una banda leída como si
-incluyese la variabilidad de la selección de características sería una banda sobrevendida.
+**Traza de la semilla de los `.joblib` publicados.** La afirmación «los 20 `.joblib` publicados
+declaran `semilla = 42`» ya no descansa en la palabra de quien la escribió: la produce
+`python app\barrido_semillas.py --solo-verificar`, que lee los descriptores (**cero `fit`**) y deja
+la lista completa en `Resultados/verificacion_semilla_joblib.txt`. Corrida del **2026-08-12**:
+**20 de 20** con `semilla = 42`, todos con `commit=1163c90`; el sello propio del fichero es
+`00c3c3e-sucio` porque se generó en la misma pasada que este texto, antes de commitearla. La traza
+sostiene dos cosas: que una corrida por defecto pasa la salvaguarda de mezcla, y que el borrado por
+sufijo del lanzador **no puede alcanzar** ninguno de esos 20 ficheros (ninguno lleva la marca
+`_semilla`, `config.MARCA_SEMILLA`).
+
+> **Cuándo se re-sella esa traza** (y por qué la frase de arriba no se vuelve falsa al lanzar el
+> barrido). La misma verificación corre como **preflight de todo lanzamiento** —`--dry-run`
+> incluido: `--dry-run` no ejecuta scripts ni borra `.joblib`, pero **no es una pasada de solo
+> lectura**—. En ese papel es una comprobación, no un artefacto: si sale limpia **no reescribe** el
+> fichero (`verificar_joblibs_publicados(escribir_si_ok=False)`), así que el sello `00c3c3e-sucio`
+> citado arriba sigue siendo el que hay en disco. Se reescribe en dos casos: con
+> `--solo-verificar`, que es el modo cuyo propósito *es* producirlo, y cuando el preflight
+> **encuentra un problema**, porque entonces el fichero es el diagnóstico del abort. Sin esta
+> asimetría, el primer lanzamiento real habría re-sellado la cabecera con otro commit y otra fecha
+> y habría dejado esta cita falsa sin que nadie tocase una cifra.
+
+**Las diez semillas son `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]`** (`config.SEMILLAS_BARRIDO`, con
+aserciones al importar: diez valores, sin repetidos y **sin la 42**). La 42 queda fuera por dos
+razones y ninguna es de comodidad: (1) `--semilla 42` es **indistinguible de una corrida por
+defecto** —el sufijo es cadena vacía y no hay desvío de tablas—, así que ese pase sobrescribiría las
+cuatro tablas publicadas, los 20 `.joblib` y las 39 figuras; y (2) la 42 es el **titular** de
+5.1-5.3, un punto **independiente** de la banda, no uno de sus diez sumandos. Consecuencia para
+`A.3`: por variante hay **once** corridas —diez del barrido más la publicada—, y el titular se cita
+**al lado** de la banda, nunca dentro.
+
+**Lo que SÍ varía dentro de cada semilla** (verificado línea a línea contra el código, no deducido
+del nombre del flag). Es lo que hay que declarar al citar la banda: sin esta lista, la dispersión se
+leería como «solo aleatoriedad de la inicialización del modelo», y es bastante más que eso.
+
+| Qué cambia | Dónde | Qué arrastra |
+|---|---|---|
+| El **split 80/20 de D1** en `D1_train`/`D1_val` | `anomalias.py:152` (`train_test_split(..., random_state=config.RANDOM_STATE)`) | Los cuatro detectores se ajustan sobre otras filas **y el umbral cambia**: es el percentil 95 del score sobre `D1_val` (`anomalias.py:352`). El umbral es la frontera de decisión de la etapa 1, así que mueve recall y FPR de anomalías **y del híbrido** (su binaria *es* la etapa 1) |
+| La **muestra de 5.000 de D3** del set de validación etiquetado | `anomalias.py:161` (`X_D3.sample(random_state=...)`) | Cambia el `auc_val` con el que se **elige la configuración** de cada detector: el ganador del grid puede ser otro |
+| La **submuestra de 20.000 de OneClassSVM** | `anomalias.py:244` (`X_train.sample(random_state=...)`) | OneClassSVM no admite `random_state` —es determinista dado el dato—, así que **toda** su variación entre semillas viene de aquí y del split de D1 |
+| Los **folds del `StratifiedKFold(5, shuffle=True)`** | `firmas.py:131`, `baseline.py:91`, `hibrido.py:117` | El `f1_macro` de CV con el que se elige el **balanceo ganador de 4.3.4**, el `best_params_` del `GridSearchCV` y las probabilidades **out-of-fold** con las que se calibra `UMBRAL_CONF`: las tres decisiones pueden salir distintas |
+| La **inicialización de los modelos** | `IsolationForest`, `MLPRegressor` (pesos + el 10 % interno del `early_stopping`), `DecisionTree`, `RandomForest`, `SMOTE` | La dispersión «clásica» de la semilla. `OneClassSVM`, `LocalOutlierFactor` y `KNN` no la tienen: no aceptan `random_state` |
+
+**Lo que el barrido NO varía, y hay que declararlo igual:** los splits D1/D2/D3, el vocabulario del
+one-hot, el escalador y la selección de las 54 características. `program.py` no está parametrizado
+por semilla (su `random_state=42` es literal y no importa `config.py`), así que las 10 semillas miden
+la dispersión **de los modelos sobre unos splits y un set de características fijos** — no la del
+preprocesado. Una banda leída como si incluyese la variabilidad de la selección de características
+sería una banda sobrevendida.
+
+#### El lanzador y el agregador del barrido (escritos el 2026-08-12; sin correr)
+
+Dos scripts nuevos, los dos **fuera** del pipeline del sistema: no entrenan nada del H-NIDS y
+ninguno de los cinco scripts de modelos los importa.
+
+- **`app/barrido_semillas.py`** — lanzador desatendido. Recorre las 10 semillas × 2 variantes × 5
+  scripts en el orden de dependencias (`anomalias` → `firmas` → `hibrido` → `cascada_invertida`, y
+  `baseline` al final: depende del preprocesado pero no del híbrido). Tres propiedades que no son
+  extras:
+  - **Reanudable.** Antes de cada corrida comprueba si la tabla `*_semillas.csv` de ese paso ya trae
+    el recuento **exacto** de filas de esa `(variante, semilla)` —4/4/1/1 de
+    `evaluacion.FILAS_ESPERADAS_POR_VARIANTE` y 5 en la cascada invertida— y la salta si sí. El
+    barrido corre mientras la máquina se usa para otras cosas, así que tiene que poder cortarse y
+    continuar. Se exige el recuento exacto y no «al menos una fila»: una corrida cortada a medias
+    puede haber dejado 2 de las 4 filas de anomalías, y darla por hecha dejaría la celda incompleta.
+    Para que la reanudación no se atasque, cada paso escribe su `.joblib` **antes** de la fila que
+    `ya_hecho()` consulta; `hibrido.py` lo hacía al revés y se corrigió el 2026-08-12 (ver el
+    recuadro «La ventana de bloqueo» más abajo).
+  - **Borra los `.joblib` de cada semilla al terminarla**, y solo entonces —después de `hibrido.py` y
+    `cascada_invertida.py`, que consumen los de su propia semilla, y en las dos variantes a la vez
+    porque comparten el sufijo de semilla—. Sin borrado serían **200 ficheros ≈ 4,8 GB**: los
+    **20 `.joblib` de un pase ya cubren las dos variantes** (10 de `54` y 10 de `122_sin_seleccion`)
+    y ocupan **481,33 MB** medidos el 2026-08-12, así que la cuenta es 481,33 MB × 10 semillas. La
+    derivación anterior decía «20 modelos × 10 semillas × 2 sets ≈ 5 GB» y **multiplicaba las
+    variantes dos veces**; el «≈5 GB» salía parecido por casualidad. El filtro exige que el nombre
+    **termine** en `_semilla<N>.joblib`, con el sufijo compuesto por `config.sufijo_de_semilla()` y no
+    por un glob a mano, así que `_semilla1` no puede llevarse `_semilla10` y los 20 publicados quedan
+    fuera por construcción.
+  - **Falla rápido.** Si un hijo devuelve código ≠ 0, el barrido se detiene y **no** borra los
+    `.joblib` de esa semilla: quedan para diagnosticar y la reanudación los reutiliza. Un fallo casi
+    nunca es de una semilla concreta —el código es el mismo en las diez— y seguir produciría diez
+    veces el mismo error con horas de cómputo en medio.
+  - Un **log por corrida** en `Resultados/logs_barrido/` (no versionado). `--dry-run` imprime el plan
+    sin ejecutar ningún script ni borrar ningún `.joblib`, pero **sí** hace el preflight de
+    verificación y **sí** crea los directorios de salida: no es una pasada de solo lectura (ver el
+    recuadro sobre cuándo se re-sella la traza).
+- **`app/agregar_semillas.py`** — agregador. Lee **solo** las `metricas_*_semillas.csv` (nunca las
+  nueve publicadas; construye las rutas con `config.nombre_tabla_semillas()` y no con
+  `config.ruta_tabla()`, que dependería de la semilla global) y emite dos ficheros:
+  `Resultados/dispersion_semillas.csv` y `Resultados/dispersion_semillas.md`, este último con la
+  tabla ya formateada para pegarla en `A.3` sin recalcular nada a mano.
+  - Agrupa por `(set_features, algoritmo, alcance)` —la `CLAVE_UNICIDAD` de las tablas **sin**
+    `semilla`, que es el eje sobre el que se agrega— y da `n`, media, **sd muestral (`ddof=1`)**, mín
+    y máx a **4 decimales**. `ddof=1` porque las diez semillas son una muestra, no la población.
+  - **Aborta** si a alguna combinación le falta alguna semilla, le sobra una ajena o le aparece
+    repetida. Una media de 7 puntos rotulada como de 10 es peor que no tener tabla, y nadie la
+    detecta releyendo la tabla.
+  - Métricas agregadas, lista cerrada: anomalías `roc_auc`/`pr_auc`/`f1`/`fpr`/`umbral`; firmas
+    `f1_macro`/`accuracy_D2`/`recall_macro`/`f1_u2r`; baseline
+    `bin_accuracy`/`bin_fpr`/`f1_macro`/`recall_0day_global`; híbrido
+    `bin_recall`/`bin_fpr`/`bin_accuracy`/`conocida_f1_macro`/`recall_0day_global`/`fpr_cascada`/
+    `umbral_conf_elegido`; cascada invertida `n_condenadas` **y** `tasa_condena` de la fila
+    `__global__`. Las dos de la cascada y no solo la tasa aunque una sea la otra reescalada por un
+    denominador constante (las 9.711 normales de D2): **lo citable es `n_condenadas`** —así lo
+    declaran esta ficha y `config.ALCANCE_CASCADA_INVERTIDA`—, y con solo la tasa a 4 decimales
+    habría que multiplicar por 9.711 **a mano** para recuperarla, cálculo manual que este proyecto no
+    admite y que además perdería ~1 flujo de resolución.
+  - **Procedencia por celda, con dos sellos que no son el mismo.** `commits_origen` trae el conjunto
+    distinto de commits de las diez filas agregadas —el que vale para citar la banda— y
+    `commit_agregador` es el del **agregador** (con qué versión de `agregar_semillas.py` se
+    calcularon media y sd). Se llama `commit_agregador` y **no** `commit`: en las nueve
+    `metricas_*.csv` esa columna significa «el código que produjo la fila» y aquí significaría «el
+    del agregador, que no produjo ninguno de los diez puntos» — el homónimo con dos significados
+    que prohíbe la regla de `config.py:326-332`, y esta tabla no pasa por
+    `guardar_metricas()`/`validar_esquema_minimo()`, así que el nombre distinto es la única red. El
+    script **avisa** si una celda mezcla commits, y el `.md` lista los dos sellos por separado en su
+    cabecera. Importa porque el barrido es reanudable y puede correrse a lo largo de días: basta que
+    cambie el sufijo `-sucio` para que una celda deje de venir de una sola versión del código, y
+    sellarla con el commit del agregador publicaría diez puntos rotulados con un commit que no
+    produjo ninguno de ellos.
+  - **Avisa si una DECISIÓN no es constante dentro de la celda** (`balanceo`, `config_ganadora`), con
+    el reparto —«SMOTE en 7 semilla(s) · class_weight en 3»— y **sin abortar**. El reparto es
+    **columna del CSV** (`decisiones_no_constantes`, vacía si la decisión fue la misma en las diez) y
+    no solo aviso del `.md`: si `A.3` se armase desde la tabla, un aviso que vive en otro fichero
+    dejaría invisible la mezcla justo en la fila cuya media la promedia. Los folds del
+    `StratifiedKFold` mueven el balanceo ganador de 4.3.4 y el `best_params_` del `GridSearchCV`, y el
+    balanceo por algoritmo es una decisión **cerrada con n=1**: sin este aviso, `A.3` publicaría la
+    media de `f1_macro` de RandomForest sobre diez modelos entrenados con dos esquemas de balanceo
+    distintos sin decirlo. No aborta a propósito: que la decisión voltee en 3 de 10 semillas es un
+    **hallazgo para 5.4**, no un error del barrido.
+  - Las **columnas de tiempo van en bloque aparte**, rotulado como *dispersión de máquina* y con la
+    razón escrita en el propio fichero: el wall-clock dispersa hasta **4,8×** entre corridas en
+    máquina no dedicada con calidad idéntica al bit (Autoencoder-54: 37,71 → 181,91 s, dato de T1) y
+    con el recuento de épocas determinista, así que su sd mide carga de máquina, no algoritmo.
+    `alcance_tiempo_s` **no** se agrega —es prosa, no un número—; en su lugar se comprueba que sea
+    constante dentro de cada celda.
+  - **No decide nada:** no dice si dos intervalos se solapan ni calcula p-valores. Eso lo escribe T11
+    en prosa, y la renuncia al contraste (10 puntos sobre un único dataset) va declarada.
+
+**La ventana de bloqueo de la reanudación (corregida el 2026-08-12, antes de correr el barrido).**
+`hibrido.py` escribía su fila resumen **antes** de volcar el descriptor `hibrido_<sufijo>.joblib`. Con
+ese orden, un corte del proceso entre las dos escrituras dejaba el barrido **atascado**, no solo
+incompleto: al relanzar, `barrido_semillas.ya_hecho()` daba el paso por hecho —la fila estaba— pero
+`cascada_invertida.py` abortaba porque el descriptor de donde lee `UMBRAL_CONF` no existía, y cada
+relanzamiento volvía a fallar en el mismo punto hasta que alguien borrase la fila a mano. Ahora
+`hibrido._persistir()` vuelca **primero** el descriptor y **después** la fila, con lo que la ventana
+se invierte y se vuelve inocua: un corte ahí deja un descriptor huérfano, `ya_hecho()` devuelve
+`False` y la reanudación reejecuta el paso y lo sobrescribe. Es el orden que ya seguían `anomalias.py`,
+`firmas.py` y `baseline.py` (`.joblib` antes que CSV), así que la corrección lo **unifica**: en los
+cinco scripts, la fila de métricas es lo último que se escribe. Ni una cifra cambia — es solo el
+orden de dos escrituras.
+
+**Qué del barrido se versiona y qué no.** Se versionan las nueve `metricas_*_semillas.csv` y
+`dispersion_semillas.csv`/`.md` (texto plano, y son lo citable). Quedan **fuera** del repositorio,
+por el mismo criterio —del barrido no se cita ninguno—: los `.joblib` (`Resultados/modelos/` entero),
+las ~260 figuras `*_semilla*`, los ~100 logs de `logs_barrido/` y los **20
+`firmas_reglas_*_semilla*.txt`** que deja `firmas.py`. Los cuatro patrones están en el `.gitignore`
+raíz; los artefactos homólogos de la semilla 42 no llevan la marca `_semilla` y siguen versionados.
+
+**Estado, para que no se lea en presente lo que no ha pasado:** de todo este bloque, lo único que
+existe hoy en `Resultados/` es `verificacion_semilla_joblib.txt`. Las nueve
+`metricas_*_semillas.csv`, `dispersion_semillas.csv`/`.md`, las ~260 figuras `*_semilla*`, los 20
+`firmas_reglas_*_semilla*.txt` y los logs **no existen**: el barrido no se ha lanzado. Todo lo
+descrito arriba —`commits_origen`, `commit_agregador`, `decisiones_no_constantes`, `n_condenadas`
+agregada, el nuevo orden de escritura de `hibrido.py`— es **código en disco**, no resultados.
+
+Lo que sí se puede ejecutar hoy sin producir ni una cifra son las dos vías de solo-comprobación que
+el lanzador trae escritas: `--solo-verificar` recorre los `.joblib` de `Resultados/modelos/` sin la
+marca `_semilla`, lee su descriptor y comprueba que los 20 declaran `semilla = 42` (cero `fit`), y
+`--dry-run` imprime el plan completo —los comandos de las 100 corridas y qué `.joblib` borraría—
+ejecutando igual ese preflight y `config.ensure_dirs()`, pero sin lanzar ningún script hijo ni borrar
+nada.
 
 ---
 

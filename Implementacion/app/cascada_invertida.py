@@ -57,6 +57,18 @@ Reglas de protocolo (invalidan el TFG si se rompen)
     en las cuatro tablas principales — su borrado es por variante, su
     CLAVE_UNICIDAD no incluye 'semilla' y su recuento por variante es fijo.
 
+Semilla (--semilla N, tarea T4)
+-------------------------------
+POR DEFECTO ES LA 42 y entonces la medición lee exactamente los .joblib publicados
+y escribe en la tabla publicada. Con otra semilla lee los '_semilla<N>' de ese pase
+del barrido y escribe en 'metricas_cascada_invertida_semillas.csv'. Los DOS
+artefactos que carga —el clasificador de firmas y el descriptor del híbrido de
+donde sale UMBRAL_CONF— se comprueban por variante Y por semilla, y la corrida
+ABORTA si declaran otra: con un umbral de otra semilla, 'n_condenadas' —la cifra
+citable— dejaría de corresponder a la fila que la publica. Este script entra en el
+barrido de T4: son CINCO scripts por semilla, no cuatro. Las diez semillas están en
+config.SEMILLAS_BARRIDO (la 42 NO está entre ellas).
+
 Salida
 ------
   Resultados/metricas_cascada_invertida.csv   5 filas por variante (4 categorías
@@ -208,6 +220,19 @@ class NSLKDDInvertedCascadeMeasurer:
         cross_val_predict out-of-fold sobre D3 (hibrido.py::_calibrar_umbral_conf,
         regla de presupuesto τ). Si el descriptor falta, se ABORTA: un literal
         escrito a mano aquí sería un número inventado.
+
+        SALVAGUARDAS SIMÉTRICAS A LAS DE _cargar_joblib_firma() (hallazgo 7 del
+        andamiaje de T4): este descriptor es el SEGUNDO artefacto que el script
+        lee, y hasta ahora entraba sin comprobar ni variante ni semilla — solo por
+        el nombre del fichero. Y el nombre no basta: basta un renombrado a mano, o
+        un `hibrido_54_semilla3.joblib` copiado de otra corrida, para que la
+        medición use un umbral ajeno mientras la columna 'semilla' de las cinco
+        filas del CSV declara la de ESTA corrida. Como el umbral es el criterio de
+        condena, un umbral de otra semilla mueve directamente 'n_condenadas', que
+        es la cifra citable. Se comprueban las dos cosas con el mismo criterio que
+        el joblib de firmas: la variante ABORTA si no cuadra, y la semilla ABORTA
+        si no cuadra pero solo AVISA si el descriptor no la declara (artefacto
+        anterior a T1).
         """
         ruta = config.MODELOS_DIR + r"\hibrido_{}.joblib".format(
             self.sufijo_artefactos)
@@ -218,6 +243,21 @@ class NSLKDDInvertedCascadeMeasurer:
                 "No existe {}: UMBRAL_CONF vive ahí (lo deja la calibración OOF de "
                 "hibrido.py) y este script no puede inventárselo. Ejecuta primero "
                 "hibrido.py para esta variante.".format(ruta))
+        if str(desc.get("set_features")) != str(self.set_features):
+            raise RuntimeError(
+                "El descriptor {} es de la variante '{}' pero se esperaba '{}': su "
+                "UMBRAL_CONF se calibró sobre otro set de características".format(
+                    ruta, desc.get("set_features"), self.set_features))
+        semilla_desc = desc.get("semilla")
+        if semilla_desc is None:
+            print("   [aviso] {} no declara 'semilla': no se puede comprobar que "
+                  "el UMBRAL_CONF sea el de esta corrida.".format(ruta))
+        elif int(semilla_desc) != int(config.RANDOM_STATE):
+            raise RuntimeError(
+                "El descriptor {} se calibró con la semilla {} y esta corrida usa "
+                "la {}: la medición condenaría con un umbral ajeno mientras la "
+                "fila declara esta semilla.".format(
+                    ruta, semilla_desc, config.RANDOM_STATE))
         umbral = desc.get("umbral_conf_elegido")
         if umbral is None:
             raise RuntimeError(

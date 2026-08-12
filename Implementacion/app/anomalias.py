@@ -3,8 +3,9 @@
 anomalias.py — Etapa 1 del H-NIDS: detección de anomalías (spec next-steps.md §6.3).
 
 Compara CUATRO algoritmos no supervisados entrenados SOLO con tráfico normal (D1)
-y evaluados sobre el test completo (D2), bajo protocolo idéntico (mismo split,
-misma semilla 42, mismo umbral percentil 95, mismas métricas):
+y evaluados sobre el test completo (D2), bajo protocolo idéntico (mismo split, la
+misma semilla —`config.RANDOM_STATE`: 42 por defecto, la del barrido de T4 con
+`--semilla`—, mismo umbral percentil 95, mismas métricas):
 
   - IsolationForest
   - OneClassSVM (kernel RBF)
@@ -23,6 +24,14 @@ Reglas de protocolo (invalidan el TFG si se rompen):
 Decisión Q1/C: el set de features es parametrizable (--sin-seleccion → 122 features
 en lugar de las 54 por defecto) para poder correr el experimento 54-vs-122 sin
 reescribir el script. Nada de rutas hardcodeadas: todo sale de config.base_path().
+
+Semilla (--semilla N, tarea T4): la corrida acepta una semilla distinta de la 42.
+POR DEFECTO ES LA 42 y el comportamiento es exactamente el anterior a T4 (mismos
+nombres de artefacto, misma tabla publicada, mismas figuras). Con otra semilla los
+.joblib y las figuras se sufijan '_semilla<N>' y las métricas van a
+'metricas_anomalias_semillas.csv': ni las tablas ni los artefactos de la 42 se
+tocan. El mecanismo y su razón están en el encabezado de config.py; las diez
+semillas del barrido, en config.SEMILLAS_BARRIDO (la 42 NO está entre ellas).
 """
 import argparse
 import time
@@ -140,7 +149,8 @@ class NSLKDDAnomalyTrainer:
         cat_D2 = splits["D2"]["y_category"]["category_original"].values
         self.y_bin = (cat_D2 != config.ETIQUETA_NORMAL).astype(int)
 
-        # Split de D1 (solo normal): 80% entrenamiento, 20% validación (semilla 42).
+        # Split de D1 (solo normal): 80% entrenamiento, 20% validación, con la
+        # semilla de la corrida (42 por defecto; otra en el barrido de T4).
         self.X_D1_train, self.X_D1_val = train_test_split(
             X_D1, test_size=0.2, random_state=config.RANDOM_STATE
         )
@@ -169,7 +179,11 @@ class NSLKDDAnomalyTrainer:
     # Construcción de modelos, datos de entrenamiento y anomaly score unificado
     # ------------------------------------------------------------------
     def _construir(self, algo, cfg):
-        """Instancia el modelo del algoritmo con la configuración dada (semilla 42)."""
+        """Instancia el modelo del algoritmo con la configuración dada.
+
+        La semilla es la de la corrida (config.RANDOM_STATE: 42 por defecto, otra
+        con --semilla en el barrido de T4), no un literal.
+        """
         if algo == "IsolationForest":
             return IsolationForest(random_state=config.RANDOM_STATE, n_jobs=-1, **cfg)
         if algo == "OneClassSVM":

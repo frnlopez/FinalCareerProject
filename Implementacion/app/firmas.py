@@ -13,7 +13,8 @@ algoritmos supervisados de scikit-learn bajo protocolo idéntico:
   - HistGradientBoosting
 
 Protocolo (igual para los 4):
-  * GridSearchCV con StratifiedKFold(5, shuffle=True, random_state=42) y
+  * GridSearchCV con StratifiedKFold(5, shuffle=True,
+    random_state=config.RANDOM_STATE) y
     scoring='f1_macro' (u2r tiene ~52 muestras: el accuracy miente, la macro no).
   * Mini-experimento de balanceo 4.3.4: SMOTE (dentro de cada fold, vía ImbPipeline)
     vs class_weight='balanced' (DT/RF) o vs nada (KNN/HistGB). El balanceo ganador
@@ -24,10 +25,22 @@ Reglas de protocolo (invalidan el TFG si se rompen):
     (todo por CV sobre D3). D2 solo para la evaluación final (5.2).
   * SMOTE SOLO dentro de cada fold del CV (ImbPipeline), NUNCA antes del split (si
     no, los folds de validación contendrían sintéticos → CV optimista / leakage).
-  * random_state=42 en TODO (StratifiedKFold, SMOTE, modelos, GridSearchCV).
+  * UNA SOLA semilla en TODO (StratifiedKFold, SMOTE, modelos, GridSearchCV), y es
+    `config.RANDOM_STATE`: 42 por defecto —la de todo lo publicado— y la que diga
+    `--semilla` en el barrido de T4. Ni un literal de semilla en el código.
 
 Decisión Q1/C: el set de features es parametrizable (--sin-seleccion → 122 features
 en lugar de las 54 por defecto). Nada de rutas hardcodeadas: todo sale de config.
+
+Semilla (--semilla N, tarea T4): POR DEFECTO ES LA 42 y entonces el comportamiento
+es el anterior a T4 (mismos nombres de artefacto, mismas tablas publicadas, mismas
+figuras, mismo firmas_reglas_<set>.txt). Con otra semilla los .joblib, las figuras
+y el .txt de reglas se sufijan '_semilla<N>' y las métricas van a
+'metricas_firmas_semillas.csv' y 'metricas_balanceo_semillas.csv'. Ojo: cambia
+también el StratifiedKFold, así que el balanceo ganador de 4.3.4 y la config
+ganadora del grid pueden salir distintos — es justo lo que el barrido mide. El
+mecanismo está en el encabezado de config.py; las diez semillas, en
+config.SEMILLAS_BARRIDO (la 42 NO está entre ellas).
 """
 import argparse
 import time
@@ -189,7 +202,11 @@ class NSLKDDSignatureTrainer:
     # Construcción de estimadores (base y con balanceo)
     # ------------------------------------------------------------------
     def _estimador_base(self, algo, class_weight=None):
-        """Instancia el clasificador del algoritmo (semilla 42, class_weight opcional)."""
+        """Instancia el clasificador del algoritmo (class_weight opcional).
+
+        La semilla es la de la corrida (config.RANDOM_STATE: 42 por defecto, otra
+        con --semilla en el barrido de T4), no un literal.
+        """
         if algo == "DecisionTree":
             return DecisionTreeClassifier(
                 random_state=config.RANDOM_STATE, class_weight=class_weight

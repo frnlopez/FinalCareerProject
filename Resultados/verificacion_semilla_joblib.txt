@@ -1,0 +1,37 @@
+Verificación de la semilla declarada en los .joblib PUBLICADOS
+======================================================================
+Generado por: Implementacion/app/barrido_semillas.py (--solo-verificar)
+Commit del código: 00c3c3e-sucio
+Fecha de la verificación: 2026-08-12T15:57:09
+Directorio: C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Resultados\modelos
+Criterio de 'publicado': el nombre NO contiene la marca '_semilla'
+Semilla esperada: 42 (config.SEMILLA_POR_DEFECTO)
+
+OK       anomalia_Autoencoder_122_sin_seleccion.joblib    semilla=42     commit=1163c90
+OK       anomalia_Autoencoder_54.joblib                   semilla=42     commit=1163c90
+OK       anomalia_IsolationForest_122_sin_seleccion.joblib semilla=42     commit=1163c90
+OK       anomalia_IsolationForest_54.joblib               semilla=42     commit=1163c90
+OK       anomalia_LocalOutlierFactor_122_sin_seleccion.joblib semilla=42     commit=1163c90
+OK       anomalia_LocalOutlierFactor_54.joblib            semilla=42     commit=1163c90
+OK       anomalia_OneClassSVM_122_sin_seleccion.joblib    semilla=42     commit=1163c90
+OK       anomalia_OneClassSVM_54.joblib                   semilla=42     commit=1163c90
+OK       baseline_rf_122_sin_seleccion.joblib             semilla=42     commit=1163c90
+OK       baseline_rf_54.joblib                            semilla=42     commit=1163c90
+OK       firma_DecisionTree_122_sin_seleccion.joblib      semilla=42     commit=1163c90
+OK       firma_DecisionTree_54.joblib                     semilla=42     commit=1163c90
+OK       firma_HistGradientBoosting_122_sin_seleccion.joblib semilla=42     commit=1163c90
+OK       firma_HistGradientBoosting_54.joblib             semilla=42     commit=1163c90
+OK       firma_KNN_122_sin_seleccion.joblib               semilla=42     commit=1163c90
+OK       firma_KNN_54.joblib                              semilla=42     commit=1163c90
+OK       firma_RandomForest_122_sin_seleccion.joblib      semilla=42     commit=1163c90
+OK       firma_RandomForest_54.joblib                     semilla=42     commit=1163c90
+OK       hibrido_122_sin_seleccion.joblib                 semilla=42     commit=1163c90
+OK       hibrido_54.joblib                                semilla=42     commit=1163c90
+
+Ficheros publicados examinados: 20
+Con semilla = 42: 20
+Con problema: 0
+
+CONSECUENCIAS COMPROBADAS (las dos afirmaciones que esta traza sostiene):
+  1. Una corrida por defecto pasa la salvaguarda de mezcla de semillas de hibrido._cargar_joblib() y de cascada_invertida._cargar_joblib_firma()/_leer_umbral_conf().
+  2. El borrado por sufijo del barrido (BarridoSemillas.borrar_joblibs_de_semilla) no puede alcanzar ninguno de estos ficheros: ninguno lleva la marca '_semilla'.

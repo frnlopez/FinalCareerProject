@@ -55,6 +55,14 @@ El dataset **no está en el repositorio**. Descarga `KDDTrain+.txt` y `KDDTest+.
 Se ejecutan en este orden. Todos aceptan `--sin-seleccion` para trabajar con las **122**
 características del one-hot en lugar de las **54** seleccionadas, que es lo predeterminado.
 
+Los cinco scripts de modelos (`anomalias.py`, `firmas.py`, `baseline.py`, `hibrido.py` y
+`cascada_invertida.py`) aceptan además **`--semilla N`**. El valor predeterminado es **42**, la
+semilla de todo lo publicado, y sin el flag el comportamiento es exactamente el de siempre: mismos
+nombres de artefacto, mismas nueve tablas de métricas, mismas figuras. Con cualquier otra semilla la
+corrida **no toca nada de lo publicado**: sus `.joblib`, figuras y reglas se sufijan `_semilla<N>` y
+las métricas van a tablas aparte, `metricas_*_semillas.csv`. Es la vía del barrido de dispersión
+(tarea T4); lo lanza `barrido_semillas.py` y lo resume `agregar_semillas.py`.
+
 | # | Script | Qué hace |
 |---|---|---|
 | 1 | `program.py` | Carga NSL-KDD, análisis exploratorio, one-hot de `protocol_type`/`service`/`flag`, escalado, codificación de etiquetas, balanceo y selección de características. Genera los splits **D1/D2/D3** y sus metadatos |
@@ -66,12 +74,22 @@ características del one-hot en lugar de las **54** seleccionadas, que es lo pre
 | 7 | `cascada_invertida.py` | **Medición aparte, no es parte del sistema.** Pasa las 9.711 filas normales de D2 por el clasificador de firmas ya entrenado para contar cuántas condenaría si las firmas fuesen la primera etapa. Es **contrafactual** y no entrena nada: solo `predict_proba` sobre `.joblib` persistidos, con el umbral leído del descriptor del híbrido. Su titular es una **cota inferior** del FPR de ese sistema hipotético, no ese FPR |
 | — | `config.py` | Configuración central: rutas, semilla y convenciones de clase, compartidas por los scripts de modelos |
 | — | `evaluacion.py` | Módulo común de métricas y figuras: evaluación binaria, multiclase y de 0-day por tipo, matrices de confusión y curvas ROC/PR |
+| — | `barrido_semillas.py` | **Lanzador del barrido de dispersión (T4), aún sin correr.** Recorre las 10 semillas de `config.SEMILLAS_BARRIDO` × 2 sets × 5 scripts en orden de dependencias, con un log por corrida, borrado de los `.joblib` de cada semilla al terminarla y reanudación (salta lo que ya está en las tablas `*_semillas.csv`). Verifica antes que los `.joblib` publicados declaran `semilla = 42` |
+| — | `agregar_semillas.py` | **Agregador de la dispersión (T4).** Convierte las tablas `metricas_*_semillas.csv` en `dispersion_semillas.csv` y `dispersion_semillas.md` (n, media, desviación típica muestral, mín y máx). Aborta si a alguna combinación le faltan semillas, y avisa —sin abortar— si una celda mezcla commits o si el balanceo ganador cambia entre semillas. No abre ninguna de las nueve tablas publicadas |
 
 ```powershell
 cd Implementacion
 python app\program.py            # y después validacion, anomalias, firmas, baseline, hibrido
                                  # y, si se quiere la medición T3, cascada_invertida
 python app\program.py --sin-seleccion
+
+# Barrido de dispersión entre semillas (T4). Todavía NO se ha corrido.
+python app\barrido_semillas.py --dry-run   # imprime el plan: no corre ningún script
+                                           # ni borra nada, pero sí hace el preflight
+                                           # (lee los .joblib publicados y aborta si
+                                           #  alguno no declara semilla 42)
+python app\barrido_semillas.py            # 10 semillas × 2 sets × 5 scripts, reanudable
+python app\agregar_semillas.py            # la tabla de dispersión para A.3
 ```
 
 ### Los tres splits
@@ -108,7 +126,7 @@ exclusiones el repositorio pesaría 1,1 GB y GitHub rechazaría el envío.
 | Excluido | Peso | Cómo se recupera |
 |---|---|---|
 | `Implementacion/Imp/` | 423 MB | `python -m venv` + `requirements.txt` |
-| `Resultados/modelos/*.joblib` | 482 MB | Reejecutando los scripts 3, 4 y 5 |
+| `Resultados/modelos/*.joblib` | 481 MB | Reejecutando los scripts 3, 4 y 5 |
 | Splits procesados (`*_processed_*.csv`) | ~170 MB | Reejecutando `program.py` |
 | `Archivos dataset/` | 22 MB | Descarga desde el repositorio de NSL-KDD |
 | `*.doc`, `*.docx` | 10 MB | Volcado final de la memoria; la fuente es el vault |

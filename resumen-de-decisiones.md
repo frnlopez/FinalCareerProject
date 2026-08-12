@@ -832,3 +832,66 @@ Francisco.
   frágil `..._validation_report.txt:4-5`, que pasa a citarse **por el nombre del campo**. Queda
   fuera —y fichado como residuo— el sello citado en el vault (`4.2 Base de datos utilizada.md`),
   que lleva el `redactor-tfg`.
+- `2026-08-12` — **Las siete decisiones D1-D7 del barrido de semillas de T4.** Tomadas por Francisco
+  en la sesión del andamiaje, antes de lanzar cómputo alguno. Se registran aquí porque **D1 y D5 son
+  las que `A.3` y `5.4` van a citar**, y hasta ahora vivían solo en docstrings, en
+  `Implementacion/PIPELINE.md` y en la ficha T4.
+  - **D1 · Las 10 semillas son `[1,2,3,4,5,6,7,8,9,10]`**, constante `SEMILLAS_BARRIDO` en
+    `config.py`, con aserción de que son 10 distintas y de que **42 no está dentro**. *Por qué esa
+    lista:* es trivialmente reproducible, se escribe en `A.3` en una línea y **no admite la sospecha
+    de *cherry-picking*** que sí admitiría cualquier lista de valores «bonitos» (7, 13, 99, 777). Las
+    semillas no tienen semántica: basta con que sean fijas, públicas y elegidas **antes** de ver
+    resultados. *Por qué 42 queda fuera a propósito:* la alternativa —9 semillas nuevas más reutilizar
+    la fila ya publicada de la 42— obligaría al agregador a **leer las tablas publicadas**, que es
+    precisamente lo que el andamiaje existe para no abrir. **Consecuencia que `A.3` y `5.4` deben
+    decir explícitamente: la banda son 10 puntos con las semillas 1-10, y el titular de `5.1`-`5.3`
+    es la 42, un punto INDEPENDIENTE que se declara y se sitúa dentro o fuera de la banda** — más
+    honesto que meter el titular dentro de su propia banda.
+  - **D2 · `cascada_invertida.py` entra en el barrido, con las 10 semillas.** Es el **quinto** script
+    (la ficha T4 decía «4» y estaba mal; corregido en la ficha). No hace `fit` y cuesta segundos, y su
+    cifra (67,53 % / 34,28 %) la va a citar **T9**: publicarla con `n=1` cuando las otras cuatro van
+    con `n=10` sería incoherente.
+  - **D3 · Los `.joblib` del barrido se borran al terminar cada semilla**, después de `hibrido.py` y
+    `cascada_invertida.py` —que consumen los de su propia semilla—, dejando **intactos los 20
+    publicados de la 42**. Lo hace el lanzador, no una pasada manual. *Por qué, habiendo 80,26 GB
+    libres:* no son versionables ni reproducen nada que el código más la semilla no reproduzcan, y
+    4,8 GB de `*_semilla<N>.joblib` convertirían `Resultados/modelos/` en un sitio donde ya no se
+    distingue de un vistazo lo publicado de lo desechable.
+  - **D4 · Las ~260 figuras del barrido no aportan**: se excluyen con `Resultados/figuras/*_semilla*`
+    en el `.gitignore` raíz y se deja que se generen. Añadir un flag `--sin-figuras` habría obligado a
+    tocar cinco scripts para ahorrar ≈44 MB locales. **`A.3` publica una tabla de dispersión, no 260
+    gráficas.**
+  - **D5 · Lista CERRADA de métricas que agrega el agregador** — de aquí sale literalmente la tabla de
+    `A.3`. Anomalías: `roc_auc`, `pr_auc`, `f1`, `fpr`, `umbral`. Firmas: `f1_macro`, `accuracy_D2`,
+    `recall_macro`, `f1_u2r` (la clase frágil). Baseline: `bin_accuracy`, `bin_fpr`, `f1_macro`,
+    `recall_0day_global`. Híbrido: `bin_recall`, `bin_fpr`, `bin_accuracy`, `conocida_f1_macro`,
+    `recall_0day_global`, `fpr_cascada`, `umbral_conf_elegido`. Cascada invertida: la tasa de la fila
+    `__global__`. **`umbral` y `umbral_conf_elegido` entran a propósito**: son parámetros calibrados
+    por semilla, y su dispersión es lo que **explica** la del FPR. **Las 6 columnas de tiempo NO
+    entran, y la razón es medida, no estética:** el wall-clock dispersa **4,8×** entre corridas de
+    calidad idéntica al bit (Autoencoder-54: 37,71 → 181,91 s, dato de T1), así que una `sd` de
+    tiempos sobre 10 semillas mediría **la carga de la máquina, no el algoritmo**. Si algún día se
+    publican, van en bloque aparte **rotulado como dispersión de máquina**, nunca junto a las métricas
+    de calidad.
+  - **D6 · El agregador es un script nuevo, `Implementacion/app/agregar_semillas.py`**: cero `fit` y
+    cero acceso a los CSV publicados. Lee las `metricas_*_semillas.csv`, agrupa por
+    `(set_features, algoritmo, alcance)` y emite `n`, media, **`sd` muestral (`ddof=1`)**, mín y máx a
+    4 decimales, con procedencia en cabecera. Dos salidas: `Resultados/dispersion_semillas.csv` **y**
+    `Resultados/dispersion_semillas.md` con la tabla ya formateada, para que **T7** la pegue en `A.3`
+    sin recalcular nada a mano —la regla del proyecto prohíbe el cálculo manual, que era el hallazgo
+    🟠 nº 3 del andamiaje—. **Aborta si alguna combinación no tiene las 10 semillas:** una media de 7
+    puntos presentada como de 10 es peor que no tener tabla. **El agregador NO decide el
+    solapamiento:** emite mín/máx y `sd`, y la lectura —«los intervalos de RF y HGB se solapan, luego
+    el orden no queda establecido»— la escribe **T11 en prosa, sin p-valor y con la renuncia
+    declarada**.
+  - **D7 · Se acepta la ventana de 4-5 h de máquina desatendida** con Francisco trabajando en
+    paralelo. La estimación de ≈160 min de la ficha era de 4 scripts sin `cascada_invertida.py`, y el
+    ensayo midió **1,6× más lento** con la máquina en uso (≈145 s frente a los ≈90 s publicados para
+    anomalías-54). Por eso **el lanzador debe poder reanudar por semilla** —saltar las celdas
+    `(semilla, set)` que ya tengan sus filas—: es **requisito**, no un extra.
+  - **Límite del diseño que acompaña a las siete y hay que declarar en la memoria:** `program.py`
+    **no** está parametrizado por semilla (su `random_state=42` es literal y no importa `config.py`).
+    Las 10 semillas miden dispersión **de los modelos sobre splits D1/D2/D3 y set de características
+    FIJOS**, sin variabilidad de preprocesado ni de selección de features. **Consecuencia para `5.4`:
+    si RF y HGB se solapan, NO se podrá concluir «son equivalentes», solo «con estos splits el orden
+    no queda establecido».**
