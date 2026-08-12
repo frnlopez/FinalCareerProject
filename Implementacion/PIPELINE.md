@@ -1252,6 +1252,158 @@ marca `_semilla`, lee su descriptor y comprueba que los 20 declaran `semilla = 4
 ejecutando igual ese preflight y `config.ensure_dirs()`, pero sin lanzar ningún script hijo ni borrar
 nada.
 
+#### Runbook del barrido de semillas (escrito el 2026-08-12, antes de lanzarlo)
+
+Esta ficha es **operativa**: qué se teclea, en qué directorio, qué hay que comprobar antes, cuántas
+filas debe haber al acabar y cómo se verifica que la semilla 42 no se movió. **No repite** lo que
+explica la ficha anterior (*El lanzador y el agregador del barrido*): la reanudabilidad, el borrado de
+los `.joblib` por semilla, la ventana de bloqueo de `hibrido.py` y qué se versiona y qué no están
+allí, y allí se leen.
+
+**Desde qué directorio, y por qué aquí dice otra cosa que el runbook de T1.** Los dos son correctos y
+no se contradicen en el resultado, solo en la forma de escribir el comando:
+
+| Runbook | Directorio de trabajo | Forma de la invocación |
+|---|---|---|
+| Reconstrucción de las tablas (T1, más arriba en este documento) | `Implementacion/app/` | `python anomalias.py` |
+| Barrido de semillas (este) | `Implementacion/` | `python app\barrido_semillas.py` |
+
+El cwd **no cambia ningún artefacto**: todas las rutas de datos y de salida son absolutas y salen de
+`config.py` (`config.RESULTADOS_DIR` es una ruta literal absoluta, y `FIGURAS_DIR`/`MODELOS_DIR`
+cuelgan de ella). Lo único que cambia es la ruta con la que se nombra el script. Para el barrido el
+cwd correcto es `Implementacion/` porque es el que el propio lanzador **fija a sus procesos hijo**
+(`barrido_semillas.py:128-134`, `subprocess.run(..., cwd=self.dir_impl)` en la línea 366): tecleando
+desde ahí, lo que se ve por consola es lo mismo que el barrido hace por dentro. El `import config`
+funciona igual en los dos casos porque Python pone el directorio **del script** (`app/`) a la cabeza
+de `sys.path`, no el cwd.
+
+**El bloque completo, copiable de una vez** (PowerShell, desde la raíz del repositorio
+`Working_Directory/`):
+
+```powershell
+# 1. Entorno
+cd Implementacion
+.\Imp\Scripts\Activate.ps1
+
+# 2. PREFLIGHT MANUAL: no puede quedar residuo de una corrida previa a medias.
+#    Debe salir VACÍO (ver más abajo por qué esto no es limpieza cosmética).
+Get-ChildItem -Recurse ..\Resultados -Filter *_semilla* | Select-Object FullName
+
+# 3. Verificar los .joblib publicados (cero fit; reescribe la traza)
+python app\barrido_semillas.py --solo-verificar
+
+# 4. Plan sin ejecutar nada (sí hace el preflight de la 42 y crea directorios)
+python app\barrido_semillas.py --dry-run
+
+# 5. El barrido: 10 semillas x 2 sets x 5 scripts = 100 corridas, reanudable
+python app\barrido_semillas.py
+
+# 6. La tabla de dispersión para A.3
+python app\agregar_semillas.py
+```
+
+**Los dos prerrequisitos del paso 2 y 4, con su razón.**
+
+1. **Cero residuo con marca `_semilla` y ninguna `metricas_*_semillas.csv` de una corrida previa a
+   medias.** Hay que **comprobarlo** con el comando del paso 2 (y borrar a mano lo que aparezca)
+   **antes** de lanzar. El motivo no es el orden: `barrido_semillas.ya_hecho()` decide si una
+   `(variante, semilla)` está hecha **leyendo las filas de esas tablas**, así que una tabla dejada por
+   una corrida anterior —sobre todo si la produjo código sin commitear— hace que la reanudación tome
+   la celda por hecha y **se salte un paso del barrido real**, publicando una banda con un punto que
+   no salió de este pase. El filtro `*_semilla*` alcanza a la vez los `.joblib` de
+   `Resultados/modelos/`, las figuras `Resultados/figuras/*_semilla*`, los
+   `firmas_reglas_*_semilla*.txt`, los logs de `logs_barrido/` y las propias
+   `metricas_*_semillas.csv` (la cadena `_semillas` contiene `_semilla`). Y **no** alcanza nada de la
+   semilla 42: con la 42 el sufijo de `config.sufijo_de_semilla()` es cadena vacía.
+2. **`--dry-run` primero.** Imprime las 100 invocaciones y qué `.joblib` borraría, sin ejecutar
+   ningún hijo. No es una pasada de solo lectura: hace el preflight de la 42 y
+   `config.ensure_dirs()` (ver el recuadro sobre cuándo se re-sella la traza).
+
+**Recuento total esperado al acabar el barrido completo.** La reanudación comprueba filas por
+`(variante, semilla)`; esta tabla es el total del fichero, y **se deriva**, no se escribe a mano:
+
+> total = (filas por variante y semilla) × **2** variantes (`54`, `122_sin_seleccion`) × **10**
+> semillas (`len(config.SEMILLAS_BARRIDO)`, que son `[1..10]` sin la 42)
+
+| Tabla | Filas por (variante, semilla) | De dónde sale ese número | Total (× 2 × 10) |
+|---|---|---|---|
+| `metricas_anomalias_semillas.csv` | 4 | `evaluacion.FILAS_ESPERADAS_POR_VARIANTE` (4 detectores) | **80** |
+| `metricas_firmas_semillas.csv` | 4 | `evaluacion.FILAS_ESPERADAS_POR_VARIANTE` (4 clasificadores) | **80** |
+| `metricas_baseline_semillas.csv` | 1 | `evaluacion.FILAS_ESPERADAS_POR_VARIANTE` (un RF monolítico) | **20** |
+| `metricas_hibrido_semillas.csv` | 1 | `evaluacion.FILAS_ESPERADAS_POR_VARIANTE` (una cascada) | **20** |
+| `metricas_balanceo_semillas.csv` | 8 | 4 algoritmos × 2 esquemas de balanceo (`firmas.py`: SMOTE vs `class_weight` en DT y RF; SMOTE vs nada en KNN y HGB) | **160** |
+| `metricas_baseline_0day_semillas.csv` | 18 | 17 tipos 0-day de D2 + la fila `__global__` | **360** |
+| `metricas_hibrido_0day_semillas.csv` | 72 | 4 detectores × esas 18 filas (`hibrido._tabla_0day_cuatro_detectores`) | **1.440** |
+| `metricas_hibrido_calibracion_semillas.csv` | 3 | los 3 umbrales de `hibrido.UMBRALES_CONF = [0.4, 0.5, 0.6]` | **60** |
+| `metricas_cascada_invertida_semillas.csv` | 5 | `len(config.CATEGORIAS_ATAQUE) + 1` (4 categorías + `__global__`) | **100** |
+
+**Cinco** de esas nueve cifras las exige el lanzador de forma **exacta** para dar un paso por hecho
+(`barrido_semillas.PASOS` + `_filas_esperadas()`, comparado con `==` en `ya_hecho()`,
+`barrido_semillas.py:280-320`): las cuatro principales, que salen de
+`evaluacion.FILAS_ESPERADAS_POR_VARIANTE`, **y las 5 de la cascada invertida**, que el paso declara
+en el propio `PASOS` (`barrido_semillas.py:107-109`, `len(config.CATEGORIAS_ATAQUE) + 1`) porque
+`FILAS_ESPERADAS_POR_VARIANTE` solo cubre las principales. Ese 5 lo verifica además el propio script
+al reescribir su tabla (`cascada_invertida._comprobar_tabla()`, `cascada_invertida.py:124` y `:462`),
+que es la comprobación equivalente a `comprobar_recuento()` para una tabla que no puede pasar por
+ella (`evaluacion.py:148-152`). Es el mismo reparto que declara la ficha anterior: «4/4/1/1 … y 5 en
+la cascada invertida». Las que **no** tiene comprobación automática son las **cuatro** auxiliares
+restantes —balanceo 8, `baseline_0day` 18, `hibrido_0day` 72 y calibración 3—, y por eso van
+tabuladas aquí: son la comprobación a mano del final. Las tres derivadas de datos (8, 18, 72) son **invariantes a la
+semilla** porque dependen de los splits y del vocabulario, que `program.py` **no** parametriza por
+semilla; el 18 y el 72 se verificaron contra las tablas publicadas de la semilla 42 (18 y 72 filas
+por variante). Salvedad declarada del 72: si a un detector le faltase su `.joblib`, `hibrido.py` lo
+**omite con aviso** en lugar de abortar la tabla (guarda M1), y esa celda saldría con 54 en vez de 72
+— un 72 corto es señal de detector caído, no de tabla mal contada.
+
+**Comprobación de cierre: que la semilla 42 no se movió.** El `--solo-verificar` del paso 3 es
+*preflight*, o sea **antes**. Al terminar el barrido hay que comprobarlo **después**, y son dos
+comandos:
+
+```powershell
+git status --porcelain -- Resultados
+python app\barrido_semillas.py --solo-verificar
+```
+
+Qué debe salir, exactamente. **Estos dos comandos se teclean después del paso 6**, no del 5: así los
+`??` esperados incluyen `dispersion_semillas.csv` / `.md`, que las produce el agregador. Si se
+comprueba tras el paso 5, la lista de `??` es la misma **menos esas dos**; el resto del criterio no
+cambia.
+
+- **`git status`**: como **añadidos** (`??`) las nueve `metricas_*_semillas.csv` y
+  —tras el paso 6— `dispersion_semillas.csv` / `dispersion_semillas.md`. **Nada más**, con una
+  única línea `M` esperada: la de `verificacion_semilla_joblib.txt`, que **la produce el propio
+  paso 3** del bloque (`--solo-verificar` la reescribe siempre: `escribir_si_ok=True` es su defecto,
+  `barrido_semillas.py:149-150`). Esa `M` se espera; **cualquier otra `M` es el problema**: ni sobre
+  las nueve `metricas_*.csv` publicadas, ni sobre las **39** figuras de `Resultados/figuras/`, ni
+  sobre `firmas_reglas_54.txt` / `firmas_reglas_122_sin_seleccion.txt`. (El barrido en sí **no**
+  reescribe la traza: como preflight se invoca con `escribir_si_ok=False` y solo la toca si encuentra
+  problemas, que sería un abort.) Son 61 ficheros versionados en `Resultados/` y el barrido no debe
+  tocar ninguno.
+- **Lo que `git status` NO puede ver, y por eso hace falta el segundo comando**: los `.joblib`
+  (`Resultados/modelos/` entero está en `.gitignore`), las ~260 figuras `*_semilla*`, los 20
+  `firmas_reglas_*_semilla*.txt` y los logs de `logs_barrido/` están **ignorados**, así que un
+  `.joblib` publicado pisado por el barrido **no saldría** en el `git status`. Eso lo cierra
+  `--solo-verificar`: recorre los `.joblib` de `Resultados/modelos/` sin la marca `_semilla`, lee su
+  descriptor y debe informar de **20 de 20** con `semilla = 42` y **0 con problema**, dejando la lista
+  en `Resultados/verificacion_semilla_joblib.txt`. Si el borrado por semilla funcionó, además, en
+  `Resultados/modelos/` no debe quedar **ningún** fichero con `_semilla` en el nombre (mismo comando
+  del paso 2).
+
+**Si se corta o si un hijo falla.** El *mecanismo* (reanudación por recuento exacto y fallo rápido
+sin borrar los `.joblib`) está en la ficha anterior; aquí solo lo operativo:
+
+- **Qué se teclea, en los dos casos:** exactamente **el mismo comando, sin flags** —
+  `python app\barrido_semillas.py` —. **No hay que pasar `--semillas`**: el `--semillas` del
+  *lanzador* selecciona **qué semillas se ejecutan** (`barrido_semillas.py:498-503`), no sirve para
+  reanudar, y el homónimo que existe «solo para auditar un barrido parcial» es el del **agregador**
+  (`agregar_semillas.py:688-695`).
+- **Dónde está el diagnóstico de un fallo:** el mensaje de error trae la ruta del log, que es
+  `Resultados/logs_barrido/<script>_<set>_semilla<N>.log`, con el comando completo y la salida del
+  hijo (stdout y stderr juntos).
+- **Si el arreglo toca código:** las celdas ya corridas quedan selladas con el commit anterior, así
+  que `agregar_semillas.py` avisará de que esa celda **mezcla commits** (`commits_origen` con más de
+  un valor) — el aviso es correcto y hay que decidir si se acepta o se reejecuta la semilla entera.
+
 ---
 
 ## Decisión de diseño clave: ajuste del scaler

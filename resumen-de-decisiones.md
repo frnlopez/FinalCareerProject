@@ -873,6 +873,15 @@ Francisco.
     tiempos sobre 10 semillas mediría **la carga de la máquina, no el algoritmo**. Si algún día se
     publican, van en bloque aparte **rotulado como dispersión de máquina**, nunca junto a las métricas
     de calidad.
+    - **Ampliación fechada del 2026-08-12 (no reescribe lo de arriba):** de la cascada invertida se
+      agregan **dos** columnas de la fila `__global__`, `n_condenadas` **y** `tasa_condena`, no solo
+      la tasa. Así está en el agregador (`agregar_semillas.py:139`) y así lo documenta
+      `PIPELINE.md`. *Por qué:* aunque una sea la otra reescalada por un denominador constante (las
+      9.711 normales de D2), **lo citable es `n_condenadas`** —lo declaran la ficha del barrido en
+      `PIPELINE.md` y `config.ALCANCE_CASCADA_INVERTIDA`—, y con solo la tasa a 4 decimales T7/T11
+      tendrían que multiplicar por 9.711 **a mano** para recuperarla: cálculo manual, que este
+      proyecto no admite, y con pérdida de ~1 flujo de resolución. Es un entero: agregarlo es
+      gratis y sin pérdida. El resto de la lista de D5 sigue **cerrada** tal cual.
   - **D6 · El agregador es un script nuevo, `Implementacion/app/agregar_semillas.py`**: cero `fit` y
     cero acceso a los CSV publicados. Lee las `metricas_*_semillas.csv`, agrupa por
     `(set_features, algoritmo, alcance)` y emite `n`, media, **`sd` muestral (`ddof=1`)**, mín y máx a

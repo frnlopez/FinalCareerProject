@@ -92,6 +92,10 @@ python app\barrido_semillas.py            # 10 semillas × 2 sets × 5 scripts, 
 python app\agregar_semillas.py            # la tabla de dispersión para A.3
 ```
 
+> Runbook completo del barrido —prerrequisitos antes de lanzar, recuento total esperado en las nueve
+> `metricas_*_semillas.csv`, comprobación de cierre de que la semilla 42 no se movió y qué hacer si se
+> corta— en `Implementacion/PIPELINE.md`, sección «Runbook del barrido de semillas».
+
 ### Los tres splits
 
 | Split | Contenido | Uso |
