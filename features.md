@@ -395,6 +395,10 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
     Y **la decisión de balanceo de 4.3.4 no es constante entre semillas** (`class_weight` gana en
     **17 de 40** celdas de DecisionTree/RandomForest, estando cerrada con **n=1**) — eso toca `5.4`
     o `4.3.4`, y **lo decide Francisco**, no esta ficha.
+    → **Sacado a FICHA PROPIA el 2026-08-13** («La decisión de balanceo de `4.3.4` no es constante
+      entre semillas», sección «Residuos del cómputo de T4»), porque delegado aquí quedaba en una
+      ficha de track **Informe** que **no puede resolver una decisión de diseño**. **T11 no lo
+      resuelve: lo consume** una vez Francisco decida.
   - `5.3`: **el 13,4 % de enrutado a `unknown` explicado, no disculpado.** Scheirer et al.
     (umbralizar un clasificador de conjunto cerrado no acota el riesgo de espacio abierto), Bendale y
     Boult (OpenMax supera explícitamente al umbralizado de la salida probabilística, que es el
@@ -959,6 +963,76 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
   - **Alcance: del capítulo 3 en adelante** (es la parte redactada por agente).
   - **ALCANCE NO CERRADO:** qué se unifica y qué se recorta necesita un **`grill-me` con
     Francisco** antes de tocar ninguna nota.
+
+### Residuos del cómputo de T4 — altas del 2026-08-13
+
+> Salen del **cierre de sesión del 2026-08-13**, al verificar el registro contra disco tras cerrar la
+> parte de cómputo de T4 (`9ad971b`). **Fichar no es resolver: aquí no se ha tocado ni una línea de
+> código.** Tres de estas cuatro estaban **enterradas dentro de la fila `9ad971b` de `## Cerradas`** o
+> **dentro de T11**, donde nadie las mira; la primera **no estaba en ninguna parte**. Por la regla de
+> este fichero —**estar en Abiertas significa estar abierto**—, hoy eran invisibles para quien retome
+> el proyecto. **Ninguna lleva commit ni fecha de cierre: no se ha cerrado nada.**
+
+- [ ] **`resumen-de-decisiones.md:120` describe un alcance de balanceo que el código no tiene** (🟠) · Código · `ml-implementador` **para redactar el texto; lo APLICA el hilo principal con Francisco**
+  Texto literal verificado en `resumen-de-decisiones.md:120` (Q6, 2026-07-11): «*Balanceo (SMOTE vs
+  class_weight, 4 algoritmos) se corre solo sobre el set 54*». **Es falso contra disco.**
+  - `firmas.py:559` llama a `_experimento_balanceo()` **sin ningún condicional de variante**, y
+    `Resultados/metricas_balanceo.csv` trae **16 filas = 8 por variante** (`54` y
+    `122_sin_seleccion`). `config.ALCANCE_BALANCEO` (`config.py:463-467`) es **agnóstico a la
+    variante**.
+  - **La contradicción ya es interna y visible en el repo:** `PIPELINE.md:337`, `:302-309` (nota
+    fechada del 2026-08-12) y `:1307` **ya** dicen 16 filas y «las dos variantes». Quien lea los dos
+    ficheros el mismo día se encuentra con dos alcances distintos para la misma decisión.
+  - **PERMISO DE ESCRITURA — la parte que hace especial a esta ficha:** ningún agente de código puede
+    escribir en `resumen-de-decisiones.md`, que lo mantiene el hilo principal con Francisco delante.
+    El `ml-implementador` **redacta y verifica el texto de sustitución**; **la edición la aplica el
+    hilo principal**. El texto ya quedó redactado en la traza del `ml-implementador` de la sesión del
+    **2026-08-13**.
+  - **ES CORREGIR UNA DESCRIPCIÓN, NO REABRIR Q6.** Lo que sigue **vigente** de Q6: el balanceo **no
+    se cruza** con el grid ni con el eje de selección (`firmas.py:158-159`). Eso no se toca.
+
+- [ ] **El recuento «13 de 98» es cálculo manual y ya está escrito en documentos versionados** (🟠) · Código · `ml-implementador` — **ALCANCE NUEVO, PENDIENTE DE DECISIÓN DE FRANCISCO**
+  El titular **13 de 98** (celdas en las que la semilla 42 cae **fuera de la banda** de las diez)
+  **no lo produce ningún script**: `agregar_semillas.py` **no tiene columna ni cálculo de banda**, y
+  su propio texto (`:34`, `:611-614`) declara que **la semilla 42 no entra en la agregación**. Es
+  **cálculo manual**, lo que la regla del proyecto prohíbe para algo que va a la memoria.
+  - **Agravante que no estaba anotado en ninguna ficha: la cifra manual YA ESTÁ ESCRITA en un
+    documento versionado** — `Implementacion/PIPELINE.md:1335` («descontarlos rompería el titular
+    "13 de 98"»), además de `features.md:393` y la fila `9ad971b` de `## Cerradas`.
+  - **Arreglo propuesto: una columna nueva** en `agregar_semillas.py` que emita el recuento «fuera de
+    banda» de la semilla 42, para que el titular salga del artefacto y no de una cuenta a mano.
+  - **Recomendación de orden: hacerlo ANTES de que `T7` y `T11` lo citen, no después.** Hoy la
+    instrucción vigente en T11 es **no citarlo en la memoria hasta que esté automatizado**.
+  - **NO está aprobada: es recomendación.** La acepta o la retira **Francisco**.
+
+- [ ] **Re-anclar en prosa `commit_agregador = df30cb2-sucio` → `9ad971b`** (🟡) · Código · `ml-implementador`
+  **Tercer re-anclaje del proyecto**, tras `fc1c6b4-sucio → 9af842c` (`97e679b`) y
+  `00c3c3e-sucio → 54d1349` (`ad62665`). Sello real verificado en disco el **2026-08-13** en
+  `Resultados/dispersion_semillas.csv` y `.md`: `commit_agregador: df30cb2-sucio`,
+  `commits_origen: df30cb2`, fecha `2026-08-13T07:43:40`.
+  - **NO REGENERAR EL ARTEFACTO.** Dictamen de `auditor-ml`: lo que estampa `config.commit_actual()`
+    **no puede** llevar el hash del commit que lo versiona, **porque tiene que existir antes**. El
+    sello impreso **dentro** del artefacto **no se edita a mano** — es la misma razón de los dos
+    re-anclajes anteriores.
+  - **Sitios a tocar: la tabla de corridas de `Implementacion/PIPELINE.md` y
+    `Resultados/GUIA_RESULTADOS.md`**, con fila/nota nueva que ancle `df30cb2-sucio` a su commit de
+    cierre `9ad971b`.
+  - **`T7` tiene que citar el sello RE-ANCLADO, no el impreso** — ya anotado dentro de su ficha.
+
+- [ ] **La decisión de balanceo de `4.3.4` no es constante entre semillas** · Código · **PENDIENTE DE DECISIÓN DE FRANCISCO**
+  `class_weight` gana en **17 de 40** celdas de DecisionTree/RandomForest a lo largo de las 10
+  semillas, y la decisión de `4.3.4` se cerró con **n=1** (semilla 42). Medido en el barrido del
+  2026-08-12/13 (ver la fila `9ad971b` de `## Cerradas`).
+  - **Por qué sale a ficha propia:** hasta hoy **vivía solo dentro de `T11`**, marcada «lo decide
+    Francisco» pero **delegada a una ficha de track Informe, que no puede resolverla**. Una decisión
+    de diseño no se resuelve desde el capítulo que la cita.
+  - **Es una decisión de DISEÑO, no de redacción.** El agente puede **presentar el recuento y las
+    opciones**; **fijar el eje de balanceo es de Francisco**. Según lo que decida, toca `4.3.4`
+    (rehacer la decisión con n=10) o `5.4` (declararla no constante y dejarla como está).
+  - **Nada que ejecutar hasta que Francisco decida:** si se reabriera el eje de balanceo habría que
+    pasar por `auditor-ml` y **movería cifras publicadas**, así que **no se toca `firmas.py`** por
+    iniciativa de nadie.
+  - **Puntero cruzado:** la viñeta de `5.2` de **T11** remite aquí; **T11 no la resuelve**.
 
 ### Descartado — no reabrir
 
