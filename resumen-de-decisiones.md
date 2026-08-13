@@ -117,7 +117,17 @@ de los CSVs como argumento, de modo que cambiar 54↔122 sea un flag, no una ree
 
 ### Q6 — ejes experimentales → **no cruzar**
 
-- **Balanceo** (SMOTE vs class_weight, 4 algoritmos) se corre solo sobre el set **54**.
+- **Balanceo** (4 algoritmos × 2 esquemas; el eje comparado **depende del algoritmo**: SMOTE vs
+  `class_weight` en DecisionTree y RandomForest, SMOTE vs **nada** en KNN e HistGradientBoosting,
+  que no admiten `class_weight` en sklearn — `firmas.py:91-96`) **no se cruza con el grid de
+  hiperparámetros**: se mide con un hiperparámetro por defecto y su ganador entra al GridSearch
+  (`firmas.py:248-256`). **Corregido el 2026-08-13:** se corre **dentro de cada corrida de
+  `firmas.py`, en las dos variantes** — no solo sobre el set **54**, como decía antes este bullet.
+  Verificado contra disco: `firmas.py:559` llama a `_experimento_balanceo()` **sin condicional de
+  variante**, `Resultados/metricas_balanceo.csv` trae **16 filas = 8 por variante** (`54` y
+  `122_sin_seleccion`) y `config.ALCANCE_BALANCEO` (`config.py:463-468`) es **agnóstico a la
+  variante**. `PIPELINE.md:1544` ya lo decía. **Esto corrige una descripción, no reabre Q6:** lo
+  vigente de Q6 —que el balanceo no se cruza con el grid ni con el eje de selección— sigue intacto.
 - **Selección** (54 vs 122, H1) se corre una vez con el baseline de cada modelo
   (IsolationForest / RandomForest) y el balanceo ya fijado, midiendo recall 0-day por tipo
   + F1 macro.
