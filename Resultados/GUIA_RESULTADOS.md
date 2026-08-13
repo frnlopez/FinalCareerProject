@@ -21,7 +21,7 @@ Aquí se vuelca **todo lo que generan los scripts** de `Implementacion/app/`:
 | `cascada_invertida.py` | ejecutado (54 y 122) | `metricas_cascada_invertida.csv` y `figuras\cascada_invertida_<set>.png`. **No entrena nada**: carga `firma_*.joblib` y lee el umbral de `hibrido_*.joblib` |
 | `evaluacion.py` | módulo común | No deposita por sí mismo: lo usan los cuatro scripts de modelos y `cascada_invertida.py` |
 | `barrido_semillas.py` | **corrido** (T4, 2026-08-12 22:09 → 00:38, sello `df30cb2`) | Las **nueve** tablas `metricas_*_semillas.csv` (**2.320 filas** en total), a través de los cinco scripts hijos, más los artefactos sufijados `_semilla<N>` **no versionados**: **260** figuras `figuras\*_semilla*`, **20** `firmas_reglas_*_semilla*.txt` y **100** logs en `logs_barrido\`. Los `.joblib` por semilla los borra él mismo al cerrar cada semilla (en `modelos\` no queda ninguno). Además, `verificacion_semilla_joblib.txt`: la traza de que los 20 `.joblib` publicados declaran `semilla = 42` |
-| `agregar_semillas.py` | **corrido dos veces** (T4, 2026-08-13: **7,2 s** la primera y **1,70 s** la definitiva, tras el arreglo de `_tabla_md()`; **en disco están los de la segunda**, cabecera `2026-08-13T07:43:40`) | `dispersion_semillas.csv` y `dispersion_semillas.md` — **198 filas** (98 de *calidad* + 100 de *dispersión de máquina*) con n, media, sd muestral (`ddof=1`), mín y máx; `commits_origen = df30cb2` único en todas las celdas y `commit_agregador = df30cb2-sucio` |
+| `agregar_semillas.py` | **corrido dos veces** (T4, 2026-08-13: **7,2 s** la primera y **1,70 s** la definitiva, tras el arreglo de `_tabla_md()`; **en disco están los de la segunda**, cabecera `2026-08-13T07:43:40`) | `dispersion_semillas.csv` y `dispersion_semillas.md` — **198 filas** (98 de *calidad* + 100 de *dispersión de máquina*) con n, media, sd muestral (`ddof=1`), mín y máx; `commits_origen = df30cb2` único en todas las celdas y `commit_agregador = df30cb2-sucio` — sello impreso, **re-anclado en prosa a `9ad971b`** (§6.2) |
 
 **Regla de oro:** nada de esta carpeta se edita a mano. Todo se **regenera** ejecutando los
 scripts (con `random_state=42`); si un número va a la memoria, tiene que salir de aquí. Para
@@ -490,13 +490,21 @@ anterior:
 | `.joblib`, figuras, `firmas_reglas_*.txt` | nombre de siempre | sufijo `_semilla<N>` |
 | Las nueve tablas de métricas | `metricas_<x>.csv` | `metricas_<x>_semillas.csv` (la publicada **no se abre**) |
 
-**El barrido ya corrió** (2026-08-12 22:09 → 00:38, sello `commit = df30cb2`) y **ya se agregó**
+**El barrido ya corrió** (2026-08-12 22:09 → 00:38, sello `commit = df30cb2` limpio; sus nueve tablas
+quedaron versionadas en `9ad971b`) y **ya se agregó**
 (2026-08-13). El agregador se ejecutó **dos veces**: la primera en **7,2 s** y la definitiva en
 **1,70 s**, ya con el arreglo de `_tabla_md()` que añade las columnas `Tabla de origen` y `Alcance`;
 **los dos ficheros de dispersión que hay en disco son los de la segunda** (cabecera
 `2026-08-13T07:43:40`, `commit_agregador = df30cb2-sucio`). Cero `fit` en ambas pasadas: el agregador
-solo lee CSV. Ese sello **no se retoca ni se regenera** —se re-anclará en prosa al commit de cierre de
-T4, por la razón estructural que explica `Implementacion\PIPELINE.md`—. Lo que hay en disco:
+solo lee CSV. Ese sello **no se retoca ni se regenera** —por la razón estructural que explica
+`Implementacion\PIPELINE.md`: un artefacto que estampa `config.commit_actual()` no puede llevar el
+hash del commit que lo versiona, porque ese commit todavía no existe cuando el artefacto se
+escribe—, así que el desajuste se resuelve **en prosa**: el sello `df30cb2-sucio` queda **re-anclado
+al commit de cierre del cómputo de T4, `9ad971b`**, que es el que versiona a la vez
+`agregar_semillas.py`, las nueve tablas del barrido y los dos ficheros de dispersión. **La versión
+del código que produjo la agregación es `9ad971b`, no `df30cb2`**; y el `-sucio` no contamina las
+bandas, que las respalda `commits_origen = df30cb2` limpio. Es el **tercer** re-anclaje del
+proyecto, tras `fc1c6b4-sucio` → `9af842c` y `00c3c3e-sucio` → `54d1349`. Lo que hay en disco:
 
 - **`verificacion_semilla_joblib.txt`** — la lista de los **20** `.joblib` publicados con la semilla
   que declara cada uno. Lo genera `python app\barrido_semillas.py --solo-verificar`, que **no entrena
@@ -564,7 +572,15 @@ Detalle completo en `Implementacion\PIPELINE.md`, subsección «El andamiaje de 
 
 ## 7. Mantenimiento de esta guía
 
-- **Última actualización: 2026-08-13** (**cero cifras alteradas** y **cero `fit`**; pero **no** cero
+- **Última actualización: 2026-08-13, segunda pasada** (**cero corridas, cero `fit`, cero artefactos
+  regenerados y cero cifras alteradas**: solo texto). **Re-anclaje textual** del sello
+  `commit_agregador = df30cb2-sucio` de `dispersion_semillas.csv`/`.md` a su commit de cierre,
+  **`9ad971b`** (§1 y §6.2 de esta guía; la tabla de corridas y el recuadro del barrido en
+  `Implementacion\PIPELINE.md`). Es el **tercer** re-anclaje del proyecto, tras `fc1c6b4-sucio` →
+  `9af842c` y `00c3c3e-sucio` → `54d1349`, y se hace por la misma razón estructural: el sello
+  impreso **dentro** de los dos artefactos **no se edita ni se regenera**, porque lo estampa
+  `config.commit_actual()` y no puede llevar el hash del commit que lo versiona.
+- **Añadido el 2026-08-13, primera pasada** (**cero cifras alteradas** y **cero `fit`**; pero **no** cero
   corridas: ese día se re-ejecutó `agregar_semillas.py` —solo lectura de CSV— y reescribió
   `dispersion_semillas.csv` y `.md`, que en disco son los de esa segunda pasada de 1,70 s).
   Pone al día lo que la corrida del barrido de **T4** dejó desfasado: la fila de
