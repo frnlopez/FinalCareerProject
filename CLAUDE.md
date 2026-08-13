@@ -189,11 +189,33 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
   el hook, no un agente.
 - **El `researcher` solo se despacha si el usuario lo pide explícitamente**, y con el encargo
   cerrado: pregunta concreta, qué entra y qué queda fuera.
-- **Track Código no se cierra sin `auditor-ml`.**
+- **Track Código no se cierra sin `auditor-ml`.** Y **el que escribe no puede ser el que audita**:
+  la revisión es un pase separado, con instrucción adversaria explícita.
+- **Despacho en paralelo (desde el 2026-08-13).** El track Informe es el grueso de lo que queda y
+  se acelera despachando varias notas a la vez. **La unidad es el FICHERO, no el tema**: dos
+  agentes trabajan a la vez solo si escriben ficheros distintos. Las 8 notas en guion del capítulo
+  2 son el caso claro (tandas de 3-4). **Nunca en paralelo:** dos agentes sobre la misma nota,
+  `Bibliografía.md`, `features.md`, `00 Índice TFG.md`, la asignación de números `[n]`, ni el pase
+  de `auditor-ml` (va después, no a la vez). **Varios `auditor-ml` sí pueden ir en paralelo**: son
+  de solo lectura. Un cierre por **tanda**, no por nota: una sola pasada de `cronista`.
+- **Protocolo de citas — vale para CUALQUIER agente que escriba en el vault.** Los marcadores `[n]`
+  son un **contador global** que apunta a `Bibliografía.md`, y ya están en uso (`[4]`, `[5]`, `[7]`,
+  `[8]`, `[10]`). **Nadie inventa un `[n]` nuevo**: se escribe `[CITA: autor o tema]`, convención
+  que el proyecto ya usa (`4.2` arrastra 6). Si dos agentes en paralelo asignaran números, los dos
+  empezarían en el mismo y el solape no lo ve nadie al leer. La conversión de `[CITA: …]` a `[n]` y
+  el alta en `Bibliografía.md` es un pase **posterior y en serie**, del `researcher`. Un `[n]` que
+  ya estaba en la nota **se respeta**: no se renumera ni se borra.
+- **Auditar una tanda paralela es auditar la COHERENCIA ENTRE sus notas**, no cada nota por
+  separado: dos notas que no chocan en disco sí pueden definir el mismo concepto dos veces o citar
+  una cifra de dos maneras. Ese fallo solo se ve mirándolas juntas.
 - **No hay máquina de estados**: lo abierto es lo que está en `features.md`; lo hecho es lo que
   tiene commit.
 - **Autoría de la redacción** (decisión marco (b) del lote 2026-08-06, aplicada en T0 el
-  2026-08-09; sustituye a la regla anterior «la teoría en prosa la escribe Francisco»):
+  2026-08-09; sustituye a la regla anterior «la teoría en prosa la escribe Francisco»).
+  **Aviso del 2026-08-13:** `leader.md` seguía llevando la prohibición derogada, y como es el
+  agente que despacha, ganaba la regla vieja — **esa fue la razón estructural de que las 8 notas
+  del capítulo 2 llevaran semanas en guion sin que nadie tuviera permiso de escribirlas**.
+  Corregido. No reintroducir la prohibición en ningún fichero:
   - **Capítulos 2.x — sin restricción.** El `redactor-tfg` redacta la prosa a partir de los
     guiones que ya están en las notas. Aplica a **todo** el capítulo 2, `2.1.4` incluida: no hay
     ninguna sección exceptuada.

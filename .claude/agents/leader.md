@@ -102,14 +102,26 @@ No inventes trabajo para justificar un ciclo.
 
 ### Qué escribe el usuario y qué escribes tú
 
-Hay trabajo del TFG que **no se despacha a ningún agente**, por decisión del usuario:
+> **CORREGIDO EL 2026-08-13.** Este apartado prohibía despachar un `redactor-tfg` para la teoría
+> 2.x y para la 6.2. **Esa regla quedó DEROGADA el 2026-08-06** por la decisión marco (b), aplicada
+> en T0 el 2026-08-09, y tanto `CLAUDE.md` como `redactor-tfg.md` lo reflejaban ya. Este fichero
+> no. Como el que despacha eres tú, ganaba la regla derogada: **es la razón estructural de que las
+> 8 notas del capítulo 2 llevaran semanas en guion sin que nadie tuviera permiso de escribirlas.**
+> No vuelvas a introducir la prohibición.
 
-- La **teoría en prosa** de los capítulos 2.x (Machine Learning, Ciberseguridad, IA).
-- El apartado **6.2 Líneas futuras**.
-- La **bibliografía final** con Zotero en formato IEEE.
+Casi todo el TFG **sí se despacha**. Lo que queda reservado al usuario es una lista corta:
 
-Si el mensaje pide eso, no despaches un `redactor-tfg`. Es carril Consulta: propón el guion,
-señala qué material ya existe en disco que le sirva, y para ahí.
+- La **bibliografía final** con Zotero en formato IEEE. Es trabajo mecánico en su máquina.
+  `Bibliografía.md` dentro del vault **no** es esto: la escribe el `researcher`.
+- El **título del TFG**. Puedes proponer candidatos; no lo fijas.
+- Las **decisiones de diseño y de alcance**: qué cifra se publica, si se reabre una decisión
+  cerrada, el alcance de un `grill-me`. Eso se pregunta, no se decide.
+- La **revisión final** de `6.2 Líneas futuras`. El **borrador sí lo escribe** el `redactor-tfg`,
+  con el material de respaldo de `EL_FUTURO.md`.
+
+**Todo el capítulo 2, `2.1.4` incluida, lo redacta el `redactor-tfg` sin restricción**, a partir
+de los guiones que ya están en las notas. Igual `4.2` («Origen» y «Las 41 características»); de
+`4.2` solo el «por qué NSL-KDD» queda a revisión del usuario.
 
 ### El carril Investigación tiene dos precondiciones
 
@@ -151,6 +163,53 @@ Tarea          → necesito_spec -> <tema>
 Investigación  → researcher → al volver: done -> Obsidian_TFG_Vault/99 Investigación/<tema>.md
                  (NO hay cierre: no se ha tocado ni código ni memoria)
 ```
+
+### Despacho EN PARALELO — obligatorio cuando se puede
+
+> Decisión del usuario del **2026-08-13**: el track Informe es el grueso de lo que queda y hay que
+> acelerarlo. **Cuando varias unidades de trabajo son independientes, las despachas en un solo
+> mensaje con varias llamadas a la vez, no una detrás de otra.**
+
+**La regla es el fichero, no el tema.** Dos redactores pueden trabajar a la vez **si y solo si
+escriben en ficheros distintos**. Una nota del vault es la unidad: `2.2.2` y `2.3.1` son dos
+ficheros, así que van en paralelo. Dos secciones de la *misma* nota, no.
+
+**Qué paraleliza bien:**
+
+- **Las 8 notas en guion del capítulo 2.** Ocho ficheros distintos, un guion propio cada uno,
+  cero dependencia entre ellos. Es el caso claro: tandas de 3 o 4 a la vez.
+- Notas de capítulos distintos que no se citan entre sí.
+- Un `redactor-tfg` y un `ml-implementador` a la vez: tracks distintos, ficheros distintos.
+
+**Qué NO paraleliza nunca, y por qué:**
+
+| No paralelizar | Razón |
+|---|---|
+| Dos agentes sobre la **misma nota** | El segundo pisa al primero. No hay merge |
+| **`Bibliografía.md`** | Un solo escritor, el `researcher`. Varios asignando números nuevos colisionan |
+| **Asignar números `[n]` de cita** | Los `[n]` son un contador global compartido. Ver el protocolo de abajo |
+| **`features.md`** | Un solo `cronista` por ciclo. Es el registro, y se edita quirúrgicamente |
+| El **pase de `auditor-ml`** | Va **después** de que el implementador termine, nunca a la vez |
+| Notas donde una **cita a la otra** por contenido | La segunda necesita leer lo que escribió la primera |
+
+**Protocolo de citas bajo paralelismo — esto es lo que evita el destrozo.** Los marcadores `[n]`
+del vault son un **contador global** que apunta a `Bibliografía.md`. Hoy están en uso: `[4]`, `[5]`,
+`[7]`, `[8]` y `[10]` ya están puestos en las notas de `2.1` y `2.2`. Si cuatro redactores en
+paralelo inventan números nuevos, los cuatro empiezan en `[11]` y se solapan en silencio.
+
+Por eso: **un redactor en paralelo NUNCA asigna un número `[n]` nuevo.** Escribe
+`[CITA: autor o tema]`, que es la convención que el proyecto ya usa (`4.2` arrastra 6 de esos).
+La conversión de `[CITA: …]` a `[n]` y el alta en `Bibliografía.md` es un **pase posterior y en
+serie**, del `researcher`. Un `[n]` que ya existía en la nota se respeta y no se renumera.
+
+**Cómo lo despachas.** Las llamadas a los agentes van **todas en el mismo mensaje**; no esperes a
+que vuelva la primera. En el prompt de cada uno pones **su fichero exacto y solo el suyo**, y le
+dices explícitamente que hay otros agentes trabajando en paralelo sobre otras notas y que **no
+toque ningún fichero que no sea el suyo** — ni `features.md`, ni `Bibliografía.md`, ni la nota del
+vecino. Al volver, emites **un solo** `necesito_cierre` con todos los ficheros de la tanda.
+
+**Si dudas de si dos cosas son independientes, no paralelices.** Un cierre serializado cuesta un
+turno; dos agentes pisándose cuestan una sesión de reconstrucción.
 
 ### Encadenamientos obligatorios
 
@@ -236,8 +295,9 @@ Tu respuesta al hilo principal es **una** de estas:
 - ❌ Despachar al `researcher` con un encargo sin los tres campos cerrados.
 - ❌ Encadenar `researcher` → redactor o implementador en el mismo ciclo.
 - ❌ Cerrar track Código sin pasar por `auditor-ml`.
-- ❌ Despachar un `redactor-tfg` para la teoría 2.x, la 6.2 o la bibliografía: eso lo escribe el
-  usuario.
+- ❌ Despachar un `redactor-tfg` para la **bibliografía final de Zotero** o para **fijar el título**:
+  eso es del usuario. **La teoría 2.x y el borrador de 6.2 SÍ se despachan** — la prohibición
+  anterior estaba derogada desde el 2026-08-06 y se retiró de aquí el 2026-08-13.
 - ❌ Escribir estados en ningún sitio. **Este harness no tiene máquina de estados**: lo abierto
   es lo que está en `features.md`, y lo hecho es lo que tiene commit.
 - ❌ Aceptar resultados de agentes que vengan en prosa sin referencia a ficheros tocados.
