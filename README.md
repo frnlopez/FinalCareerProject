@@ -74,7 +74,7 @@ las métricas van a tablas aparte, `metricas_*_semillas.csv`. Es la vía del bar
 | 7 | `cascada_invertida.py` | **Medición aparte, no es parte del sistema.** Pasa las 9.711 filas normales de D2 por el clasificador de firmas ya entrenado para contar cuántas condenaría si las firmas fuesen la primera etapa. Es **contrafactual** y no entrena nada: solo `predict_proba` sobre `.joblib` persistidos, con el umbral leído del descriptor del híbrido. Su titular es una **cota inferior** del FPR de ese sistema hipotético, no ese FPR |
 | — | `config.py` | Configuración central: rutas, semilla y convenciones de clase, compartidas por los scripts de modelos |
 | — | `evaluacion.py` | Módulo común de métricas y figuras: evaluación binaria, multiclase y de 0-day por tipo, matrices de confusión y curvas ROC/PR |
-| — | `barrido_semillas.py` | **Lanzador del barrido de dispersión (T4), aún sin correr.** Recorre las 10 semillas de `config.SEMILLAS_BARRIDO` × 2 sets × 5 scripts en orden de dependencias, con un log por corrida, borrado de los `.joblib` de cada semilla al terminarla y reanudación (salta lo que ya está en las tablas `*_semillas.csv`). Verifica antes que los `.joblib` publicados declaran `semilla = 42` |
+| — | `barrido_semillas.py` | **Lanzador del barrido de dispersión (T4), corrido el 2026-08-12/13.** Recorre las 10 semillas de `config.SEMILLAS_BARRIDO` × 2 sets × 5 scripts en orden de dependencias, con un log por corrida, borrado de los `.joblib` de cada semilla al terminarla y reanudación (salta lo que ya está en las tablas `*_semillas.csv`). Verifica antes que los `.joblib` publicados declaran `semilla = 42` |
 | — | `agregar_semillas.py` | **Agregador de la dispersión (T4).** Convierte las tablas `metricas_*_semillas.csv` en `dispersion_semillas.csv` y `dispersion_semillas.md` (n, media, desviación típica muestral, mín y máx). Aborta si a alguna combinación le faltan semillas, y avisa —sin abortar— si una celda mezcla commits o si el balanceo ganador cambia entre semillas. No abre ninguna de las nueve tablas publicadas |
 
 ```powershell
@@ -83,7 +83,9 @@ python app\program.py            # y después validacion, anomalias, firmas, bas
                                  # y, si se quiere la medición T3, cascada_invertida
 python app\program.py --sin-seleccion
 
-# Barrido de dispersión entre semillas (T4). Todavía NO se ha corrido.
+# Barrido de dispersión entre semillas (T4). Ya corrido y agregado (2026-08-12/13,
+# sello df30cb2): estos comandos lo REPETIRÍAN. Antes de relanzarlo, léase el runbook
+# de PIPELINE.md, porque el paso 2 exige cero residuo con marca _semilla.
 python app\barrido_semillas.py --dry-run   # imprime el plan: no corre ningún script
                                            # ni borra nada, pero sí hace el preflight
                                            # (lee los .joblib publicados y aborta si

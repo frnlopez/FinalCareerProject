@@ -541,17 +541,47 @@ class AgregadorSemillas:
         print("   Tabla de dispersión (CSV): {}".format(ruta))
         return ruta
 
+    # Recorte del 'alcance' en el .md (decisión de implementación, 2026-08-13): el
+    # texto íntegro llega a 1.258 caracteres (el de la cascada invertida) y dentro de
+    # una celda Markdown haría la tabla de A.3 ilegible. Se recorta a los primeros
+    # LARGO_ALCANCE_MD caracteres, que BASTAN para distinguir los cinco alcances de
+    # esta tabla —empiezan por «binario…», «cascada extremo a extremo…», «medida
+    # CONTRAFACTUAL…», «multiclase 4 categorías…» y «multiclase 5 clases…»—, y el
+    # texto completo queda en la columna 'alcance' del CSV, que es la fuente.
+    LARGO_ALCANCE_MD = 70
+
+    def _celda_md(self, texto):
+        """Texto plano seguro dentro de una celda Markdown, recortado si es largo."""
+        limpio = " ".join(str(texto).split()).replace("|", "\\|")
+        if len(limpio) > self.LARGO_ALCANCE_MD:
+            limpio = limpio[:self.LARGO_ALCANCE_MD].rstrip() + "…"
+        return limpio
+
     def _tabla_md(self, df_bloque):
-        """Una tabla Markdown por bloque, ya formateada a 4 decimales."""
-        lineas = ["| Variante | Algoritmo | Métrica | n | Media | sd | Mín | Máx |",
-                  "|---|---|---|---:|---:|---:|---:|---:|"]
+        """
+        Una tabla Markdown por bloque, ya formateada a 4 decimales.
+
+        LLEVA 'alcance' Y 'tabla_origen' (añadidas el 2026-08-13, corrigiendo un
+        defecto real): sin ellas el .md —que es justo el artefacto que se pega en
+        A.3— rotulaba «54 | RandomForest» tanto para el CLASIFICADOR DE FIRMAS como
+        para la MEDICIÓN CONTRAFACTUAL de la cascada invertida, dos alcances
+        incompatibles bajo la misma etiqueta. Es el mismo defecto que cerró T1 y que
+        el CSV ya evitaba (ver el comentario de 'alcance' en _agregar_metrica): el
+        alcance de la fila de origen tiene que viajar con la cifra agregada.
+        """
+        lineas = ["| Tabla de origen | Variante | Algoritmo | Alcance | Métrica | "
+                  "n | Media | sd | Mín | Máx |",
+                  "|---|---|---|---|---|---:|---:|---:|---:|---:|"]
         for _, f in df_bloque.iterrows():
             def fmt(valor):
                 return ("—" if valor != valor
                         else "{:.4f}".format(float(valor)))
-            lineas.append("| {} | {} | `{}` | {} | {} | {} | {} | {} |".format(
-                f["set_features"], f["algoritmo"], f["metrica"], int(f["n"]),
-                fmt(f["media"]), fmt(f["sd"]), fmt(f["min"]), fmt(f["max"])))
+            lineas.append(
+                "| `{}` | {} | {} | {} | `{}` | {} | {} | {} | {} | {} |".format(
+                    f["tabla_origen"], f["set_features"], f["algoritmo"],
+                    self._celda_md(f["alcance"]), f["metrica"], int(f["n"]),
+                    fmt(f["media"]), fmt(f["sd"]), fmt(f["min"]),
+                    fmt(f["max"])))
         return "\n".join(lineas)
 
     def _escribir_md(self):
@@ -596,12 +626,19 @@ class AgregadorSemillas:
             "p-valor**: 10 puntos sobre un único dataset no sostienen un "
             "contraste, y la renuncia se declara (ficha T4).",
             "",
-            "Las tablas de abajo son la vista legible. El CSV "
-            "(`dispersion_semillas.csv`) trae por celda tres columnas que aquí no "
-            "caben y que hay que mirar antes de citar una banda: `commits_origen`, "
-            "`commit_agregador` y `decisiones_no_constantes` (el reparto del "
-            "`balanceo`/`config_ganadora` cuando no fue el mismo en las diez "
-            "semillas; vacío = lo fue).",
+            "Las tablas de abajo son la vista legible, y llevan `tabla_origen` y "
+            "`alcance` porque **sin el alcance la etiqueta es ambigua**: «54 · "
+            "RandomForest» nombra por igual el CLASIFICADOR DE FIRMAS y la MEDICIÓN "
+            "CONTRAFACTUAL de la cascada invertida, que son dos medidas distintas. "
+            "El `alcance` va **recortado a {} caracteres** para que la tabla quepa; "
+            "su texto íntegro está en la columna `alcance` del CSV, que es la "
+            "fuente.".format(self.LARGO_ALCANCE_MD),
+            "",
+            "El CSV (`dispersion_semillas.csv`) trae por celda tres columnas más "
+            "que aquí no caben y que hay que mirar antes de citar una banda: "
+            "`commits_origen`, `commit_agregador` y `decisiones_no_constantes` (el "
+            "reparto del `balanceo`/`config_ganadora` cuando no fue el mismo en las "
+            "diez semillas; vacío = lo fue).",
             "",
             "## Calidad",
             "",

@@ -1,8 +1,8 @@
 Verificación de la semilla declarada en los .joblib PUBLICADOS
 ======================================================================
 Generado por: Implementacion/app/barrido_semillas.py (--solo-verificar)
-Commit del código: 00c3c3e-sucio
-Fecha de la verificación: 2026-08-12T15:57:09
+Commit del código: df30cb2
+Fecha de la verificación: 2026-08-12T22:07:10
 Directorio: C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Resultados\modelos
 Criterio de 'publicado': el nombre NO contiene la marca '_semilla'
 Semilla esperada: 42 (config.SEMILLA_POR_DEFECTO)

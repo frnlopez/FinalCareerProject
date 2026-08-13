@@ -20,8 +20,8 @@ Aquí se vuelca **todo lo que generan los scripts** de `Implementacion/app/`:
 | `hibrido.py` | ejecutado (54 y 122) | `metricas_hibrido.csv`, `metricas_hibrido_calibracion.csv`, `metricas_hibrido_0day.csv`, `figuras\hibrido_cm_*.png`, `modelos\hibrido_*.joblib` (descriptor) |
 | `cascada_invertida.py` | ejecutado (54 y 122) | `metricas_cascada_invertida.csv` y `figuras\cascada_invertida_<set>.png`. **No entrena nada**: carga `firma_*.joblib` y lee el umbral de `hibrido_*.joblib` |
 | `evaluacion.py` | módulo común | No deposita por sí mismo: lo usan los cuatro scripts de modelos y `cascada_invertida.py` |
-| `barrido_semillas.py` | **sin correr** (T4) | Cuando se lance: un log por corrida en `logs_barrido\` (no versionado) y, a través de los cinco scripts hijos, las nueve tablas `metricas_*_semillas.csv` más los artefactos sufijados `_semilla<N>`. Ya en disco ahora: `verificacion_semilla_joblib.txt`, la traza de que los 20 `.joblib` publicados declaran `semilla = 42` |
-| `agregar_semillas.py` | **sin correr** (T4) | Cuando haya barrido: `dispersion_semillas.csv` y `dispersion_semillas.md` (n, media, sd muestral, mín, máx) |
+| `barrido_semillas.py` | **corrido** (T4, 2026-08-12 22:09 → 00:38, sello `df30cb2`) | Las **nueve** tablas `metricas_*_semillas.csv` (**2.320 filas** en total), a través de los cinco scripts hijos, más los artefactos sufijados `_semilla<N>` **no versionados**: **260** figuras `figuras\*_semilla*`, **20** `firmas_reglas_*_semilla*.txt` y **100** logs en `logs_barrido\`. Los `.joblib` por semilla los borra él mismo al cerrar cada semilla (en `modelos\` no queda ninguno). Además, `verificacion_semilla_joblib.txt`: la traza de que los 20 `.joblib` publicados declaran `semilla = 42` |
+| `agregar_semillas.py` | **corrido dos veces** (T4, 2026-08-13: **7,2 s** la primera y **1,70 s** la definitiva, tras el arreglo de `_tabla_md()`; **en disco están los de la segunda**, cabecera `2026-08-13T07:43:40`) | `dispersion_semillas.csv` y `dispersion_semillas.md` — **198 filas** (98 de *calidad* + 100 de *dispersión de máquina*) con n, media, sd muestral (`ddof=1`), mín y máx; `commits_origen = df30cb2` único en todas las celdas y `commit_agregador = df30cb2-sucio` |
 
 **Regla de oro:** nada de esta carpeta se edita a mano. Todo se **regenera** ejecutando los
 scripts (con `random_state=42`); si un número va a la memoria, tiene que salir de aquí. Para
@@ -478,7 +478,7 @@ filas nunca llegan a la etapa 2— y **no es comparable** con ninguna columna de
 > Las notas del vault `04 Implementación del sistema\` y `05 Evaluación\` (volcado 2026-07-15/16)
 > ya consumen estos artefactos; las figuras están copiadas en `Obsidian_TFG_Vault\assets\`.
 
-### 6.2 Los artefactos del barrido de semillas (tarea T4) — **el barrido aún NO se ha corrido**
+### 6.2 Los artefactos del barrido de semillas (tarea T4) — **corrido y agregado el 2026-08-12/13**
 
 Los cinco scripts de modelos aceptan **`--semilla N`**. Sin el flag la semilla es **42** y todo lo
 descrito arriba se produce con su nombre de siempre; **todo lo publicado en esta carpeta es de la
@@ -490,33 +490,69 @@ anterior:
 | `.joblib`, figuras, `firmas_reglas_*.txt` | nombre de siempre | sufijo `_semilla<N>` |
 | Las nueve tablas de métricas | `metricas_<x>.csv` | `metricas_<x>_semillas.csv` (la publicada **no se abre**) |
 
-Lo que **hoy existe en disco** de todo esto es el código y **una** traza:
+**El barrido ya corrió** (2026-08-12 22:09 → 00:38, sello `commit = df30cb2`) y **ya se agregó**
+(2026-08-13). El agregador se ejecutó **dos veces**: la primera en **7,2 s** y la definitiva en
+**1,70 s**, ya con el arreglo de `_tabla_md()` que añade las columnas `Tabla de origen` y `Alcance`;
+**los dos ficheros de dispersión que hay en disco son los de la segunda** (cabecera
+`2026-08-13T07:43:40`, `commit_agregador = df30cb2-sucio`). Cero `fit` en ambas pasadas: el agregador
+solo lee CSV. Ese sello **no se retoca ni se regenera** —se re-anclará en prosa al commit de cierre de
+T4, por la razón estructural que explica `Implementacion\PIPELINE.md`—. Lo que hay en disco:
 
 - **`verificacion_semilla_joblib.txt`** — la lista de los **20** `.joblib` publicados con la semilla
-  que declara cada uno. Verificado el **2026-08-12**: los 20 declaran `semilla = 42` (todos con
-  `commit=1163c90`). Lo genera `python app\barrido_semillas.py --solo-verificar`, que **no entrena
-  nada**: solo lee los descriptores. Sostiene dos afirmaciones que el barrido necesita — que una
-  corrida por defecto pasa la salvaguarda de mezcla de semillas, y que el borrado por sufijo del
-  lanzador **no puede alcanzar** ninguno de esos 20 ficheros.
-
-Lo que **aparecerá cuando se lance** (y no antes; si esta lista no cuadra con el disco, es que el
-barrido no se ha corrido todavía):
+  que declara cada uno. Lo genera `python app\barrido_semillas.py --solo-verificar`, que **no entrena
+  nada**: solo lee los descriptores. Veredicto, el mismo en sus dos pasadas: los 20 declaran
+  `semilla = 42` (todos con `commit=1163c90`). El fichero en disco es el que **re-selló el preflight
+  del barrido** (cabecera `Commit del código: df30cb2`, `2026-08-12T22:07:10`), no el de la pasada de
+  las 15:57 — el runbook cuenta por qué en `Implementacion\PIPELINE.md`. Sostiene dos afirmaciones que
+  el barrido necesita: que una corrida por defecto pasa la salvaguarda de mezcla de semillas, y que el
+  borrado por sufijo del lanzador **no puede alcanzar** ninguno de esos 20 ficheros.
 
 - **nueve `metricas_*_semillas.csv`** — mismas columnas que su tabla publicada, con `semilla` como
-  parte de la identidad de la fila. **Se versionan** (texto plano).
+  parte de la identidad de la fila; **2.320 filas** entre las nueve. **Se versionan** (texto plano).
 - **`dispersion_semillas.csv` y `dispersion_semillas.md`** — la agregación (`n`, media, **sd
   muestral `ddof=1`**, mín, máx a 4 decimales) por variante × algoritmo × alcance × métrica, con las
-  columnas de tiempo en **bloque aparte** rotulado como dispersión de máquina. El `.md` es la tabla
-  ya formateada para `A.3`. Las produce `python app\agregar_semillas.py`, que **aborta** si a alguna
+  columnas de tiempo en **bloque aparte** rotulado como dispersión de máquina: **198 filas**, 98 de
+  calidad + 100 de dispersión de máquina. El `.md` es la tabla ya formateada para `A.3`. Las produce
+  `python app\agregar_semillas.py` (sin flags, desde `Implementacion/`), que **aborta** si a alguna
   combinación le faltan semillas. Dos columnas que hay que mirar antes de citar una banda, porque el
   agregador las llena **avisando** sin abortar: `commits_origen` (los commits de las diez filas
   agregadas — **no** es `commit_agregador`, que es la del agregador y no produjo ninguno de los diez
-  puntos) dirá si una celda mezcla versiones del código, y `decisiones_no_constantes` dirá, con el
-  reparto y en la misma fila que la media, si el `balanceo` o la `config_ganadora` no fueron los
-  mismos en las diez semillas. Lo segundo no es un fallo: es material de `5.4`.
-- **~260 figuras `*_semilla*`**, **20 `firmas_reglas_*_semilla*.txt`** y **~100 logs en
+  puntos) dice si una celda mezcla versiones del código —en esta corrida **no**: `df30cb2` único en
+  las 198 filas—, y `decisiones_no_constantes` dice, con el reparto y en la misma fila que la media,
+  si el `balanceo` o la `config_ganadora` no fueron los mismos en las diez semillas. Aquí **sí**:
+  está poblada en **140 de las 198 filas** (15 celdas distintas). Eso no es un fallo: es material de
+  `5.4`.
+- **260 figuras `*_semilla*`**, **20 `firmas_reglas_*_semilla*.txt`** y **100 logs en
   `logs_barrido\`** — **no se versionan** (ver el `.gitignore` raíz). Del barrido no se cita ninguno
   de estos ficheros: las figuras y las reglas de la memoria son las de la semilla 42.
+- **Ningún `.joblib` con sufijo `_semilla`** en `modelos\`: el lanzador los borra al cerrar cada
+  semilla. Y las nueve tablas publicadas de la 42 quedaron **bit a bit idénticas**.
+
+**Los tres titulares que hay que leer antes de citar la banda** (lectura completa, con las cifras y
+sus salvedades, en `Implementacion\PIPELINE.md` → «El lanzador y el agregador del barrido» → *Lo que
+dio la primera ejecución real*):
+
+1. La **decisión de balanceo de 4.3.4 no es constante** entre semillas: `class_weight` gana en **17 de
+   40** celdas de DecisionTree/RandomForest, y la `config_ganadora` del `GridSearchCV` tampoco es
+   constante.
+2. De los dos huecos que motivaron T4, uno **no** se cierra y el otro **sí**: firmas RF vs HGB
+   (`f1_macro`, set 54) tiene **bandas solapadas** —el orden no queda establecido—, mientras que
+   anomalías Autoencoder vs IsolationForest (`f1`) tiene **bandas disjuntas** y 10/10 semillas a favor
+   del Autoencoder.
+3. **La semilla 42 cae fuera de la banda [mín, máx] en 13 de las 98 celdas de calidad** (de esas 98,
+   **10 son umbrales**: 8 de `umbral` y 2 de `umbral_conf_elegido`, que se agregan a propósito aunque
+   no sean métricas sobre D2 — descontarlos daría 88 y rompería este titular, y además **uno de los
+   tres empates del borde es un umbral**) —7 de
+   anomalías, 5 de firmas y 1 del híbrido; baseline (8 celdas) y cascada invertida (4), todas
+   dentro—, comparando contra los valores **crudos** y **no** contra los redondeados a 4 decimales
+   que publica `dispersion_semillas.md`. **Los empates cuentan como dentro** (tres celdas en el borde
+   exacto; contándolas como fuera saldrían 16). El caso a declarar: firmas 54-RF `f1_macro` 42 =
+   **0,8223 > máx 0,8205**, o sea que el titular publicado del clasificador de firmas es el punto
+   **más favorable** de las once corridas, no el centro (media **0,8035**); eso **no invalida el
+   titular** —es el resultado real de su corrida—, pero obliga a **declarar la banda a su lado** en
+   `5.2`. **Este recuento no lo produce ningún script** (`agregar_semillas.py:29-32` «NO DECIDE
+   NADA» y no compara la 42 contra la banda): es cálculo manual y hay que recontarlo si las tablas se
+   mueven. Lista completa de las 13 celdas y los dos matices, en `Implementacion\PIPELINE.md`.
 
 **Cómo se cita la dispersión:** la semilla 42 **no está** en el barrido (las diez son 1…10,
 `config.SEMILLAS_BARRIDO`), así que el titular de 5.1-5.3 es un punto **independiente** de la banda
@@ -528,20 +564,33 @@ Detalle completo en `Implementacion\PIPELINE.md`, subsección «El andamiaje de 
 
 ## 7. Mantenimiento de esta guía
 
+- **Última actualización: 2026-08-13** (**cero cifras alteradas** y **cero `fit`**; pero **no** cero
+  corridas: ese día se re-ejecutó `agregar_semillas.py` —solo lectura de CSV— y reescribió
+  `dispersion_semillas.csv` y `.md`, que en disco son los de esa segunda pasada de 1,70 s).
+  Pone al día lo que la corrida del barrido de **T4** dejó desfasado: la fila de
+  `barrido_semillas.py` y la de `agregar_semillas.py` en §1 pasan de «sin correr» a **corrido**, con
+  los recuentos verificados en disco (2.320 filas en las nueve `metricas_*_semillas.csv`; 198 en
+  `dispersion_semillas.csv`/`.md`; 260 figuras, 100 logs y 20 ficheros de reglas por semilla; cero
+  `.joblib` con sufijo `_semilla`), y §6.2 deja de estar escrita en futuro y añade los tres titulares
+  del barrido —balanceo no constante, el hueco RF/HGB que **no** se cierra frente al AE/IF que **sí**,
+  y las **13** celdas donde la 42 cae fuera de la banda (recuento manual, verificado celda a celda
+  contra los valores crudos; una versión previa de esta guía decía 14)—. La lectura completa vive en
+  `Implementacion\PIPELINE.md`; aquí solo el resumen y los recuentos de esta carpeta.
 - **Añadido el 2026-08-12, tercera pasada** (cambios que exigió la auditoría del andamiaje de
   **T4**, todos aplicados **antes** de lanzar el barrido): §6.2 documenta ahora los dos avisos del
   agregador que hay que leer antes de citar una banda —mezcla de commits (`commits_origen`) y
   decisión de balanceo no constante— y añade los **20 `firmas_reglas_*_semilla*.txt`** a la lista de
   artefactos del barrido que **no** se versionan. **Cero corridas de modelos y cero cifras
-  alteradas**; sigue sin existir ninguna tabla del barrido.
+  alteradas**; en aquel momento no existía todavía ninguna tabla del barrido (se lanzó esa misma
+  noche).
 - **Añadido el 2026-08-12, misma fecha y segunda pasada** (cierre del andamiaje de **T4**): **§6.2
   nueva** con los artefactos del barrido de semillas y las dos filas de `barrido_semillas.py` y
   `agregar_semillas.py` en la tabla de §1. **Cero corridas de modelos y cero cifras alteradas**: el
   único artefacto nuevo en disco es `verificacion_semilla_joblib.txt`, que se produce leyendo los
-  descriptores de los 20 `.joblib` publicados (ni un `fit`). Las nueve tablas
-  `metricas_*_semillas.csv` y la dispersión **no existen todavía**: §6.2 lo dice en futuro a
-  propósito.
-- **Última actualización: 2026-08-12** (solo texto: **cero cifras alteradas**, cero corridas, cero
+  descriptores de los 20 `.joblib` publicados (ni un `fit`). En esa pasada las nueve tablas
+  `metricas_*_semillas.csv` y la dispersión aún **no existían**, y §6.2 se escribió en futuro a
+  propósito; ya existen desde el barrido del 2026-08-12/13 y §6.2 está en presente.
+- Actualización anterior: **2026-08-12** (solo texto: **cero cifras alteradas**, cero corridas, cero
   artefactos regenerados). Tres cosas, todas de trazabilidad: (1) **re-anclaje textual** del sello
   `fc1c6b4-sucio` de los cuatro artefactos de validación a su commit de cierre, **`9af842c`**
   (§2.4, §3.2 y la entrada de abajo); (2) las citas a la cabecera de los
