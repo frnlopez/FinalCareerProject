@@ -1025,6 +1025,54 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
     iniciativa de nadie.
   - **Puntero cruzado:** la viñeta de `5.2` de **T11** remite aquí; **T11 no la resuelve**.
 
+### Huecos del informe detectados contra disco — altas del 2026-08-13
+
+> Salen del **pase de verificación contra disco del 2026-08-13**, hecho al preparar el plan de cierre
+> que Francisco aprobó ese mismo día. **Fichar no es resolver: aquí no se ha redactado ni una línea de
+> la memoria.** La primera es **el mayor bloque de trabajo pendiente del TFG y hoy era invisible en
+> este fichero**; las otras tres son residuos menores sin ficha. **Ninguna lleva commit ni fecha de
+> cierre: no se ha cerrado nada.**
+>
+> **Recuento real del vault hoy, medido en disco: 44 notas — 31 redactadas, 8 en guion, 3 vacías**
+> (`Resumen` 120 B, `Abstract` 123 B, `6.2 Líneas futuras` 688 B).
+
+- [ ] **La prosa de las 8 notas en guion del capítulo 2 no la encarga ninguna ficha** · Informe · `redactor-tfg`
+  Las **8 notas están en GUION PURO** —bullets bajo un epígrafe «Guion propuesto», **cero prosa
+  redactada**— y **todas llevan `estado: pendiente`** en el frontmatter, línea 4:
+  `2.1.6 Metodologías y buenas prácticas` (7502 B), `2.2.2 Sistemas de detección de intrusiones`
+  (3728 B), `2.2.3 Taxonomía de los IDS` (3415 B), `2.2.4 Detección por firmas frente a anomalías`
+  (4801 B), `2.2.5 Taxonomía de ataques y panorama` (4402 B), `2.3.1 IA, ML y Deep Learning`
+  (4414 B), `2.3.2 La IA en ciberseguridad` (4905 B), `2.3.3 Límites y consideraciones éticas`
+  (5220 B).
+  - **POR QUÉ ES UN HUECO REAL, y no una ficha duplicada:** **T8** solo encarga *insertar citas en el
+    punto de la decisión* en `2.1.5`, `2.1.6`, `2.2.3`, `2.2.4` y `2.3.3` — **no la prosa**. La ficha
+    **`2.1 · coherencia y densidad del guion teórico`** cubre el bloque `2.1`. Resultado: **la prosa
+    de `2.2.2`, `2.2.5`, `2.3.1` y `2.3.2` no la tiene asignada nadie**, y la de las otras cuatro
+    solo está cubierta **de refilón**, por una ficha que va a insertar citas dentro de un texto que
+    todavía no existe.
+  - **AUTORIZACIÓN YA EXISTENTE — no hace falta decisión nueva de Francisco.** La **decisión marco
+    (b) del 2026-08-06** retiró la regla «la teoría la escribe Francisco» para **todo el capítulo 2,
+    `2.1.4` incluida**, y la tabla de autoría vigente de este mismo fichero lo confirma: «Todo
+    `02 Marco Teórico` … `redactor-tfg`, condición: **ninguna**».
+  - **EJECUCIÓN RECOMENDADA: redactar la prosa E INSERTAR LAS CITAS DE T8 EN LA MISMA PASADA**, nota
+    por nota. Hacer dos pases sobre las mismas ocho notas es trabajo duplicado.
+  - **Estimación: es la fase más larga del plan de cierre, cuatro o cinco sesiones.** Le corresponde
+    la **Fase 4**.
+
+- [ ] **`03 Desarrollo\` está vacía en disco y solo falta borrar la carpeta** (🟡) · Informe · `redactor-tfg`
+  `00 Índice TFG.md:101-102` la marca «pendiente de borrado físico», y **además su texto afirma que
+  «contiene solo avisos de migración», lo que YA ES FALSO**: en disco **no hay ni un `.md`**. Son dos
+  cosas: borrar la carpeta y corregir esa frase del índice.
+
+- [ ] **`00 Índice TFG.md:104` declara un recuento que no cuadra con el disco** (🟡) · Informe · `redactor-tfg`
+  Dice «**de 43 notas**» con un desglose (5+6 borrador, 9 teoría, 10 pendiente de volcado, 10
+  esqueleto, 2 pendiente) que **hoy no corresponde**: son **44 notas, 31 redactadas, 8 en guion, 3
+  vacías**. Cuadrarlo al final, cuando la Fase 4 haya movido el reparto redactadas/guion.
+
+- [ ] **`4.2 Base de datos utilizada.md` arrastra 6 marcadores `[CITA:` sin resolver** (🟡) · Informe · `redactor-tfg`
+  Líneas **8, 18, 22, 24 (tres veces), 36 y 45**. **Alimentan a T16 y a la bibliografía de Zotero:
+  es dependencia de la Fase 7, no trabajo suelto** — resolverlos antes de T16 y no después.
+
 ### Descartado — no reabrir
 
 > Descartes **cerrados en el `grill-me` del 2026-08-06**. No son tareas pendientes ni pospuestas:
@@ -1101,6 +1149,89 @@ Antes había aquí una lista de secciones vedadas a los agentes. Solo **una** so
 
 > **Recuento:** la lista anterior decía «las 9 notas». Son **8** — `2.2.1` nunca llevó el callout de
 > autoría, como ya corrigió la ficha de T0.
+
+---
+
+## Plan de cierre — aprobado por Francisco el 2026-08-13
+
+> **AVISO: esto es un ORDEN DE EJECUCIÓN, no un estado.** Las **fichas de `## Abiertas` siguen siendo
+> la única fuente de verdad de lo que está abierto**; esta sección solo dice **en qué orden
+> atacarlas**. Aquí no se cierra nada, no se acepta nada y no se borra nada: leer una ficha nombrada
+> en una fase **no** significa que esté hecha ni empezada.
+>
+> **Objetivo declarado por Francisco el 2026-08-13:** cerrar todas las tareas pendientes para poder
+> **dar él una última vuelta al informe y cerrarlo**.
+
+### Las ocho decisiones que solo puede tomar Francisco
+
+Son **el cuello de botella real del plan, no el volumen de trabajo**. Ninguna la puede tomar un
+agente; cada una deja bloqueado lo de la columna derecha.
+
+| # | Decisión | Qué bloquea |
+|---|---|---|
+| 1 | **Rango de FPR: 8-10 % frente a 8,5-16 %** | `4.2:120`, `A.2:69` y viñetas de **T9** y **T11** |
+| 2 | **Eje de balanceo de `4.3.4`**: rehacer la decisión con n=10, o declararla no constante | El cierre de **T11** |
+| 3 | **Automatizar o no el titular «13 de 98»** | **T7** y **T11**, donde hoy está **prohibido citarlo** |
+| 4 | **¿Se regeneran los splits?** | La ficha de las **rutas absolutas hardcodeadas** |
+| 5 | **Permiso de escritura en `resumen-de-decisiones.md` para el `ml-implementador`** | Dos fichas de corrección |
+| 6 | **¿Consigue acceso institucional?** | **T14** y la ficha de guardia del PDF |
+| 7 | **Alcance de los tres `grill-me`** (`2.1`, revisión del profesor, `1.4`) | No son despachables sin él |
+| 8 | **El título del TFG** | **Preliminares**. Un agente **propone candidatos**, no lo fija |
+
+### Las siete fases, en orden
+
+- **Fase 0 — Decisiones.** Las **ocho** de la tabla de arriba, **más aplicar la Tarea B ya redactada y
+  verificada**: el bullet **Q6 de `resumen-de-decisiones.md:120`**, que **lo aplica el hilo principal
+  con Francisco delante** (ningún agente escribe en ese fichero). **Cero cómputo.** Va primera porque
+  **cuatro fases posteriores arrancan a medias sin esto**.
+- **Fase 1 — Barrido de correcciones de una línea.** **DOS ciclos, uno por track**, porque el agente
+  difiere.
+  - **Código:** `warnings.filterwarnings('ignore')` en **`program.py:12`** y **`validacion.py:57`**
+    —**ojo: NO `validacion.py:21`, que es comentario**— y la **nota fechada de
+    `resumen-de-decisiones.md:820-821`**.
+  - **Informe:** **`4.2:105`** (el **punto 2**, que es independiente del punto 1, bloqueado por la
+    decisión 1), el **sello de `4.2:145`**, **T20** (desbloquea **T9**) y las **tres correcciones de
+    una línea de T25** en `Bibliografía.md:32`, `:86` y `Auditoría de Bibliografía.md:140`, **que solo
+    toca el `researcher`**.
+  - **Minutos de trabajo, cierra seis fichas.** Por eso va tan arriba.
+- **Fase 2 — Cerrar T4.** **Automatizar «13 de 98»** → **crear `A.3` (T7)** con la tabla de
+  `Resultados/dispersion_semillas.md` → **queda servido T11**. **T7 va ANTES de la revisión del
+  profesor** porque el material que se recorte del cuerpo **se MUEVE a `A.3`, no se elimina**.
+- **Fase 3 — Deuda de datos del informe.** **Figuras de `assets\`** (va **antes de T10** y **retira un
+  `[!todo]` vivo en `4.2:117`**), **T19**, **T21**.
+- **Fase 4 — Capítulo 2.** La **ficha nueva de la prosa de las 8 notas en guion** (alta del
+  2026-08-13), con **T8 y T24 integrados en la misma pasada por nota**. **La fase más larga del
+  plan.**
+- **Fase 5 — Capítulos 3 a 6.** **T5** (crea `5.0`, que **NO existe en disco**), **T10**, **T11**,
+  **T9**, **T6**, **T13**, **T12**.
+- **Fase 6 — Los tres `grill-me`.** `2.1`, revisión del profesor, y **la ficha `1.4` la ÚLTIMA de
+  todas**, como pidió Francisco el **2026-08-12**.
+- **Fase 7 — Cierre.** **T16** (obligatoriamente **después de T8-T13**, por su regla dura «ninguna
+  entrada sin cita en el texto»), **T17**, **Preliminares con el título**, **borrar `03 Desarrollo\`**
+  y **cuadrar el recuento del índice**. **La bibliografía final Zotero/IEEE es de Francisco**, no
+  entra en ninguna fase.
+- **Fuera de fases, a aceptar o retirar por Francisco:** el **diagrama de agentes desactualizado** y
+  las **rutas hardcodeadas**.
+
+### Ordenaciones duras heredadas que el plan respeta
+
+Se dejan listadas para que **nadie las rompa** al reordenar:
+
+- **T16 después de T8-T13.**
+- **Figuras de `assets\` y el sello `4.2:145` antes de T10.**
+- **T20 antes de T9.**
+- **La ficha `1.4`, la última de todas.**
+- **El recorte del profesor va a `A.3`**, así que **T7 antes**.
+- **«13 de 98» automatizado antes de que T7 y T11 lo citen.**
+
+### Estimación y límite declarado
+
+**Entre diez y catorce sesiones**, **dominadas por la Fase 4**.
+
+**El límite, dicho sin rodeos: NO se pueden cerrar «todas» las fichas por parte de agentes.** **Siete
+son estructuralmente de Francisco** — bibliografía Zotero/IEEE, título del TFG, rango de FPR, eje de
+balanceo, alcance de los tres `grill-me` y acceso institucional. **Si esas se quedan quietas, el plan
+se atasca en la Fase 0, no en la Fase 4.**
 
 ---
 
