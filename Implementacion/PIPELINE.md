@@ -391,11 +391,13 @@ casi siempre posterior. Las corridas que existen en git:
 | `fc1c6b4-sucio` | `9af842c` (commit de cierre del ciclo de los siete residuos, que versiona a la vez `validacion.py` y sus cuatro artefactos) | **Solo `validacion.py`**, corrida del **2026-08-11 20:53** (2 invocaciones). Entra en esta tabla porque la columna `commit` rige también en los dos `*_vocabulario_onehot.csv`, que **sí están versionados**; el mismo sello va en la cabecera de los dos `*_validation_report.txt`. **No escribe en ningún `metricas_*.csv`**, así que no altera el recuento de filas de abajo. El commit es común a los cuatro artefactos; la **fecha** es la de cada invocación (`2026-08-11T20:53:27` a 54, `2026-08-11T20:53:46` a 122). El `-sucio` es previsto y **no identifica una versión del código** —el hash es el del commit **anterior** al cambio—, así que la versión que lo produjo es la de la columna de al lado, `9af842c`: el re-anclaje está hecho aquí y en el recuadro de trazabilidad de arriba. |
 | `00c3c3e-sucio` | `54d1349` (commit que versiona a la vez `barrido_semillas.py` y la traza que ese script produce) | **No es una corrida de modelos**: es la verificación `--solo-verificar` del **2026-08-12 15:57**, con **cero `fit`**, que solo lee los descriptores de los 20 `.joblib` publicados y escribe `Resultados/verificacion_semilla_joblib.txt`. Entra en esta tabla porque ese fichero lleva el mismo campo de cabecera `Commit del código:` y la misma convención. **No escribe en ningún `metricas_*.csv`**, así que no altera el recuento de filas de abajo. El `-sucio` es previsto: HEAD era `00c3c3e` y el código del lanzador estaba sin commitear, de modo que la versión que produjo la traza es la de la columna de al lado, `54d1349`. El sello impreso dentro del fichero **no se edita** —es salida de `config.commit_actual()`—: el re-anclaje se hace aquí y en la subsección de la traza de la semilla. **El mismo sello lo lleva otra cosa, y no es esta:** el **ensayo de humo a semilla 1** de ese mismo día (`anomalias.py --semilla 1`) corrió con el árbol igual de sucio, así que **sí hizo `fit`** (cuatro) y **sí escribió** una `metricas_*.csv` — `metricas_anomalias_semillas.csv`, que **nunca fue una de las nueve publicadas**. Ese fichero **sí existe hoy** en `Resultados/` —es una de las nueve `metricas_*_semillas.csv` del barrido, con 80 filas—, pero **el contenido que escribió el ensayo ya no está**: lo sobrescribió el barrido de `df30cb2` (el residuo del ensayo desapareció, no el fichero). Bajo la clave «una corrida se identifica por el commit del código que la produjo», este sello nombra **dos** corridas: al citarlo hay que decir cuál. |
 | `df30cb2` | `9ad971b` (commit de cierre del **cómputo de T4**, que versiona a la vez las nueve tablas del barrido y los dos artefactos de la agregación) | **El barrido de las diez semillas (T4)**, del **2026-08-12 22:09 al 2026-08-13 00:38**: 100 invocaciones (5 scripts × 2 variantes × 10 semillas) que escriben **2.320 filas** repartidas en las nueve `metricas_*_semillas.csv`, con `semilla` de 1 a 10 y `commit = df30cb2` **limpio** en todas (lo verificó el agregador: `commits_origen = df30cb2` único en sus 198 celdas). **No toca ninguna de las nueve tablas publicadas de la semilla 42**, que quedaron bit a bit idénticas. El mismo sello, con fecha `2026-08-12T22:07:10`, lo lleva `verificacion_semilla_joblib.txt`, re-sellado por el preflight del barrido. |
-| `df30cb2-sucio` | `9ad971b` (el mismo commit de cierre: versiona a la vez `agregar_semillas.py` y sus dos artefactos) | **No es una corrida de modelos**: es el **agregador** de T4 (`agregar_semillas.py`) del **2026-08-13**, con **cero `fit`** —solo lee CSV—, que escribe `dispersion_semillas.csv` y `.md` (**198 filas**) con `commit_agregador = df30cb2-sucio` y fecha `2026-08-13T07:43:40`. Entra en esta tabla porque esos dos artefactos **están versionados** y llevan la misma convención de sello. **No escribe en ningún `metricas_*.csv`**, así que no altera el recuento de filas de abajo. El `-sucio` es previsto: HEAD era `df30cb2` y el arreglo de `_tabla_md()` estaba sin commitear, de modo que la versión que produjo la agregación es la de la columna de al lado, `9ad971b`. El sello impreso dentro de los dos artefactos **no se edita** —es salida de `config.commit_actual()`—: el re-anclaje se hace aquí y en el recuadro del «tercer re-anclaje de sello del proyecto», al final de «Lo que dio la primera ejecución real». Y **el `-sucio` no contamina la cita**: lo que respalda cada banda es `commits_origen = df30cb2` limpio, no este sello. |
+| `df30cb2-sucio` | `9ad971b` (el mismo commit de cierre: versiona a la vez `agregar_semillas.py` y sus dos artefactos) | **No es una corrida de modelos**: es el **agregador** de T4 (`agregar_semillas.py`) del **2026-08-13**, con **cero `fit`** —solo lee CSV—, que escribe `dispersion_semillas.csv` y `.md` (**198 filas**) con `commit_agregador = df30cb2-sucio` y fecha `2026-08-13T07:43:40`. Entra en esta tabla porque esos dos artefactos **están versionados** y llevan la misma convención de sello. **No escribe en ningún `metricas_*.csv`**, así que no altera el recuento de filas de abajo. El `-sucio` es previsto: HEAD era `df30cb2` y el arreglo de `_tabla_md()` estaba sin commitear, de modo que la versión que produjo la agregación es la de la columna de al lado, `9ad971b`. El sello impreso dentro de los dos artefactos **no se edita** —es salida de `config.commit_actual()`—: el re-anclaje se hace aquí y en el recuadro del «tercer re-anclaje de sello del proyecto», al final de «Lo que dio la primera ejecución real». Y **el `-sucio` no contamina la cita**: lo que respalda cada banda es `commits_origen = df30cb2` limpio, no este sello. **Este sello ya no es el que hay en disco**: lo sobrescribió la tercera pasada del agregador (fila siguiente). Sigue nombrando su corrida —la segunda pasada, de las `07:43:40`—, que es lo que una tabla de corridas registra. |
+| `ddade37-sucio` | *(pendiente: el commit de cierre todavía no existe)* | **No es una corrida de modelos**: es la **tercera pasada del agregador** de T4, del **2026-08-13 `19:54:48`**, con **cero `fit`** —solo lee CSV—, que reescribe `dispersion_semillas.csv` y `.md` (**198 filas**, las mismas cifras) añadiendo el **titular automático**: las cuatro columnas `*_42` y el recuento «13 de 98». **Es la que hay en disco** (verificado el 2026-08-13 en la cabecera del `.md` y en la columna `commit_agregador` del CSV). Para eso **abre las nueve publicadas en LECTURA**, y **sigue sin escribir en ninguna `metricas_*.csv`**, así que no altera el recuento de filas de abajo. El `-sucio` es previsto: HEAD era `ddade37` y el titular automático estaba sin commitear. **Re-anclaje PENDIENTE**: aquí no se escribe ningún hash hasta que el commit de cierre exista. Ojo también a la procedencia cruzada que expone esta pasada: `commit_semilla_42` es `1163c90` / `274923d-sucio` mientras `commits_origen` es `df30cb2` — titular y banda no salen del mismo código. |
 
-De las **seis corridas más recientes de esta tabla** —las seis ya versionadas: `1163c90` en
-`8fdc421`, `274923d-sucio` en `b1f1df2`, `fc1c6b4-sucio` en `9af842c`, `00c3c3e-sucio` en
-`54d1349` y las dos de `df30cb2` (limpio y `-sucio`) en `9ad971b`; no confundir con «las cuatro
+De las **seis corridas ya versionadas de esta tabla** —`1163c90` en `8fdc421`, `274923d-sucio` en
+`b1f1df2`, `fc1c6b4-sucio` en `9af842c`, `00c3c3e-sucio` en `54d1349` y las dos de `df30cb2` (limpio
+y `-sucio`) en `9ad971b`; **la séptima y más reciente, `ddade37-sucio`, todavía no está versionada**,
+y tampoco escribe en ninguna publicada; no confundir con «las cuatro
 corridas versionadas» de la subsección «Lo que `perf_counter` NO arregla», que designa otro
 cuarteto y se cita por su nombre y no por número de línea—, solo dos escriben en alguna de las
 nueve `metricas_*.csv` **publicadas**
@@ -1236,11 +1238,20 @@ ninguno de los cinco scripts de modelos los importa.
     sin ejecutar ningún script ni borrar ningún `.joblib`, pero **sí** hace el preflight de
     verificación y **sí** crea los directorios de salida: no es una pasada de solo lectura (ver el
     recuadro sobre cuándo se re-sella la traza).
-- **`app/agregar_semillas.py`** — agregador. Lee **solo** las `metricas_*_semillas.csv` (nunca las
-  nueve publicadas; construye las rutas con `config.nombre_tabla_semillas()` y no con
-  `config.ruta_tabla()`, que dependería de la semilla global) y emite dos ficheros:
+- **`app/agregar_semillas.py`** — agregador. Las **bandas** (`n`/media/sd/mín/máx) salen **solo** de
+  las `metricas_*_semillas.csv`: construye esas rutas con `config.nombre_tabla_semillas()` y no con
+  `config.ruta_tabla()`, que dependería de la semilla global. Emite dos ficheros:
   `Resultados/dispersion_semillas.csv` y `Resultados/dispersion_semillas.md`, este último con la
   tabla ya formateada para pegarla en `A.3` sin recalcular nada a mano.
+  - **Lectura sí, escritura no** (cambió el **2026-08-13**; antes esta ficha decía «nunca abre las
+    nueve publicadas», y eso ya no describe el código). Desde que el agregador emite él mismo el
+    titular «N de M celdas fuera de banda», `_leer_publicada()` **abre las nueve tablas publicadas en
+    modo LECTURA** —`pd.read_csv`, cacheada por fichero— para recuperar el valor de la semilla 42 de
+    cada celda. La distinción es la garantía que importa y por eso se escribe con estas palabras:
+    **ninguna tabla publicada se escribe jamás**, y el script lo comprueba antes de empezar en
+    `_comprobar_salidas_no_publicadas()`, que contrasta sus dos rutas de salida **por nombre y por
+    ruta absoluta** contra las de todas las publicadas y las del barrido. Las **bandas** siguen sin
+    tocar las publicadas: de ahí sale únicamente el punto de comparación.
   - Agrupa por `(set_features, algoritmo, alcance)` —la `CLAVE_UNICIDAD` de las tablas **sin**
     `semilla`, que es el eje sobre el que se agrega— y da `n`, media, **sd muestral (`ddof=1`)**, mín
     y máx a **4 decimales**. `ddof=1` porque las diez semillas son una muestra, no la población.
@@ -1251,11 +1262,12 @@ ninguno de los cinco scripts de modelos los importa.
     en `_agregar_metrica`). Corregido en el código el **2026-08-13** —`_tabla_md()` emite las dos
     columnas y recorta el `alcance` a 70 caracteres, con el texto íntegro en la columna del CSV— y el
     agregador se **re-ejecutó** a continuación, así que el `dispersion_semillas.md` que hay en disco
-    **ya las lleva**: sus **198 filas** traen `Tabla de origen` y `Alcance`, y su cabecera dice
-    `2026-08-13T07:43:40` (verificado en disco, no deducido del código). Esa re-ejecución re-selló
-    `commit_agregador` a `df30cb2-sucio`; el detalle de las dos corridas y el **re-anclaje** de ese
-    sello a su commit de cierre, **`9ad971b`**, están más abajo, en «Lo que dio la primera ejecución
-    real», y en la tabla de corridas.
+    **ya las lleva**: sus **198 filas** traen `Tabla de origen` y `Alcance`. Ese `.md` en disco es
+    el de la **tercera** pasada del agregador, la del titular automático: su cabecera dice
+    `2026-08-13T19:54:48` y `commit_agregador = ddade37-sucio` (verificado en disco el 2026-08-13, no
+    deducido del código). El histórico de las tres pasadas, con qué sello dejó cada una y el
+    **re-anclaje** del sello de la segunda —`df30cb2-sucio` → **`9ad971b`**—, están más abajo, en «Lo
+    que dio la primera ejecución real», y en la tabla de corridas.
   - **Aborta** si a alguna combinación le falta alguna semilla, le sobra una ajena o le aparece
     repetida. Una media de 7 puntos rotulada como de 10 es peor que no tener tabla, y nadie la
     detecta releyendo la tabla.
@@ -1304,15 +1316,21 @@ ninguno de los cinco scripts de modelos los importa.
 ##### Lo que dio la primera ejecución real (2026-08-12/13)
 
 El barrido corrió del **2026-08-12 22:09 al 2026-08-13 00:38** y el agregador a continuación
-(`python app\agregar_semillas.py` sin flags, desde `Implementacion/`). **El agregador se ejecutó dos
-veces**, y conviene declararlo porque los sellos de los artefactos son los de la segunda: la primera
-pasada tardó **7,2 s** y la definitiva **1,70 s**, ya con el arreglo de `_tabla_md()` que añade las
-columnas `Tabla de origen` y `Alcance`. **Los dos ficheros que hay en disco son los de la segunda**
-(cabecera `2026-08-13T07:43:40`). Cero `fit` en las dos: el agregador solo lee CSV. Salida:
+(`python app\agregar_semillas.py` sin flags, desde `Implementacion/`). **El agregador se ha ejecutado
+tres veces**, y conviene declararlo porque cada pasada re-sella los dos artefactos y solo la última
+es la que hay en disco:
+
+| Pasada | Cuándo | Qué la motivó | Sello que dejó | Estado del sello |
+|---|---|---|---|---|
+| 1.ª (7,2 s) | 2026-08-13 madrugada | la agregación inicial | *(sobrescrito)* | — |
+| 2.ª (1,70 s) | 2026-08-13 `07:43:40` | el arreglo de `_tabla_md()` (columnas `Tabla de origen` y `Alcance`) | `commit_agregador = df30cb2-sucio` | **re-anclado en prosa a `9ad971b`** (recuadro del final de esta subsección y tabla de corridas) |
+| 3.ª | 2026-08-13 `19:54:48` | el **titular automático**: el agregador pasa a comparar la semilla 42 contra cada banda y a emitir «N de M» | `commit_agregador = ddade37-sucio` | **pendiente de re-anclaje**: `ddade37` es el commit anterior al cambio y el de cierre todavía no existe. Cuando se cierre, se anota aquí y en la tabla de corridas, como los tres anteriores |
+
+**Los dos ficheros que hay en disco son los de la tercera** (cabecera `2026-08-13T19:54:48`,
+verificada en disco). Cero `fit` en las tres: el agregador solo lee CSV. Salida:
 `dispersion_semillas.csv` y `.md`, **198 filas** = 98 de *calidad* + 100 de *dispersión de máquina*,
-con `commits_origen = df30cb2` **único** en todas las celdas (ninguna mezcla versiones del código) y
-`commit_agregador = df30cb2-sucio` (sello impreso, **re-anclado en prosa a `9ad971b`**: ver el
-recuadro del final de esta subsección y la tabla de corridas). Las nueve tablas publicadas de la
+con `commits_origen = df30cb2` **único** en todas las celdas (ninguna mezcla versiones del código).
+Las nueve tablas publicadas de la
 semilla 42 quedaron **bit a bit
 idénticas** y `Resultados/modelos/` no contiene ningún `.joblib` con sufijo `_semilla`: el borrado por
 semilla funcionó. Cuatro hallazgos, y los cuatro son material citable — de **`A.3`** (T7) y de
@@ -1348,12 +1366,18 @@ semilla funcionó. Cuatro hallazgos, y los cuatro son material citable — de **
    variantes)—, que **no** son métricas sobre D2 y se agregan a propósito porque son justo lo que el
    barrido pone a prueba (`agregar_semillas.py:86-90`; lista cerrada de métricas más arriba). Importa
    aquí y no en otro sitio porque **uno de los tres empates del borde es un umbral**, así que
-   descontarlos rompería el titular «13 de 98». *(El encabezado `## Calidad` de
-   `dispersion_semillas.md` no lo aclara todavía: ese texto lo emite el script, y el artefacto **no se
-   regenera** en este cierre — la aclaración entrará en la próxima regeneración del `.md`.)* El recuento
-   compara la 42 contra los **valores crudos** de las diez semillas, **no** contra los redondeados a 4
-   decimales que publica `dispersion_semillas.md`: a 4 decimales hay márgenes que desaparecen y el
-   recuento saldría otro. Lista completa, por tabla:
+   descontarlos rompería el titular «13 de 98». *(Ese aviso **no** llegó al `.md` en la regeneración
+   del 2026-08-13 19:54, aunque la ficha lo daba por prometido. El texto lo emite el script, así que
+   se ha añadido a `agregar_semillas.py` —`_nota_no_metricas_md()`, en la sección «El titular (semilla
+   42) frente a la banda»—, y **calculado, no escrito a mano**: el desglose 8 + 2, el denominador 88
+   que saldría al descontarlos y el hecho de que uno de los tres empates de borde sea un umbral los
+   cuenta el propio agregador. **El `.md` en disco todavía no lo lleva**: entrará en la próxima
+   regeneración, que es la que tiene que verificarse contra el fichero antes de dar esto por hecho.)*
+   El recuento
+   compara la 42 contra los valores de las diez semillas **con la precisión con la que se persistieron
+   los CSV de origen** (6 decimales), **no** contra los redondeados a 4 decimales que publica
+   `dispersion_semillas.md`: a 4 decimales hay márgenes que desaparecen y el recuento saldría otro.
+   Lista completa, por tabla:
    - **Anomalías (7):** 54-IF `pr_auc` 0,918074 < mín 0,919704 · 54-AE `pr_auc` 0,909239 < mín
      0,920772 · 54-OCSVM `roc_auc` 0,835981 > máx 0,835884 · 122-IF `roc_auc` 0,945888 < mín 0,947293 ·
      122-IF `pr_auc` 0,951087 < mín 0,954561 · 122-OCSVM `fpr` 0,083411 > máx 0,082999 · 122-LOF `fpr`
@@ -1377,33 +1401,73 @@ semilla funcionó. Cuatro hallazgos, y los cuatro son material citable — de **
    titular** —cada cifra publicada es el resultado real de su corrida—, pero obliga a **declarar la
    banda junto al titular** en `5.2`.
 
-   **Advertencia de método: este recuento no lo produce ningún script.**
-   `agregar_semillas.py:29-32` declara «NO DECIDE NADA» y no compara la 42 contra la banda, así que las
-   13 celdas salen de **cálculo manual** sobre las nueve `metricas_*.csv` y sus `*_semillas.csv`, y
-   **hay que recontarlas si alguna de esas tablas se mueve**.
+   **Procedencia del recuento: lo produce el script, desde el 2026-08-13.** Hasta esa fecha esta
+   ficha advertía lo contrario —«este recuento no lo produce ningún script… las 13 celdas salen de
+   cálculo manual»—, y era cierto cuando se escribió; **ya no lo es**, y el ancla que citaba
+   (`agregar_semillas.py:29-32`) dice hoy justo lo opuesto. Lo que hace el código actual:
+   `_valor_semilla_42()` **abre en lectura** la tabla publicada homóloga —única lectura de una tabla
+   publicada en todo el script, y nunca una escritura— y casa la fila de la semilla 42 por tabla,
+   `CLAVE_AGRUPACION` completa (incluido el TEXTO de `alcance`), filtro de la `ESPECIFICACION` y
+   `semilla = 42`, exigiendo **exactamente una** fila; `_comparar_con_titular()` la compara contra
+   `min_crudo`/`max_crudo` (los extremos con la precisión del CSV de origen, 6 decimales) y
+   `_recuento_titular()` emite «N de M». El «NO DECIDE NADA» del encabezado sigue vigente pero acotado
+   a lo que siempre significó: **no** dice si dos intervalos se solapan ni calcula p-valores. Una
+   celda que no case queda **fuera de las dos cifras** —ni numerador ni denominador— y se avisa.
+   Consecuencia práctica: **si alguna de esas tablas se mueve, el recuento no se recuenta a mano, se
+   vuelve a correr el agregador**.
 
-> **Tercer re-anclaje de sello del proyecto, ya HECHO** (los otros dos, ambos citados arriba, son
-> `fc1c6b4-sucio` → `9af842c` y `00c3c3e-sucio` → `54d1349`).
-> `dispersion_semillas.csv`/`.md` llevan impreso `commit_agregador = df30cb2-sucio`, y ese sello
-> **queda intacto**: el re-anclaje se hace **en prosa**, y su commit de cierre es **`9ad971b`** —el
-> que versiona a la vez `agregar_semillas.py` y los dos artefactos de dispersión—, igual que se hizo
-> `00c3c3e-sucio` → `54d1349` y `fc1c6b4-sucio` → `9af842c`. Está anclado en dos sitios: aquí y en la
-> **tabla de corridas** de más arriba, que le dedica su propia fila. **La versión del código que
-> produjo la agregación es `9ad971b`, no `df30cb2`.**
+> **Tercer re-anclaje de sello del proyecto, ya HECHO — y un cuarto PENDIENTE.** Los otros dos, ambos
+> citados arriba, son `fc1c6b4-sucio` → `9af842c` y `00c3c3e-sucio` → `54d1349`.
 >
-> **La razón es estructural, y con escribirla una vez basta para los tres casos: un artefacto
+> **El tercero, hecho, es el de la SEGUNDA pasada del agregador:** `dispersion_semillas.csv`/`.md`
+> llevaron impreso `commit_agregador = df30cb2-sucio`, y ese sello **queda intacto**: el re-anclaje se
+> hace **en prosa**, y su commit de cierre es **`9ad971b`** —el que versiona a la vez
+> `agregar_semillas.py` y los dos artefactos de dispersión—, igual que se hizo `00c3c3e-sucio` →
+> `54d1349` y `fc1c6b4-sucio` → `9af842c`. Está anclado en dos sitios: aquí y en la **tabla de
+> corridas** de más arriba, que le dedica su propia fila. **La versión del código que produjo aquella
+> agregación es `9ad971b`, no `df30cb2`.**
+>
+> **El cuarto, pendiente, es el de la TERCERA pasada** (2026-08-13 `19:54:48`, la del titular
+> automático), que es la que hay hoy en disco: sus dos artefactos llevan impreso
+> `commit_agregador = ddade37-sucio`. `ddade37` es el commit **anterior** al cambio y por tanto **no
+> identifica la versión que produjo la agregación**; el commit de cierre que sí la identificará
+> todavía **no existe**, así que aquí no se escribe ningún hash: **queda anotado como pendiente de
+> re-anclaje** y se completará —aquí y en la tabla de corridas— cuando ese commit exista. El
+> re-anclaje `df30cb2-sucio` → `9ad971b` **sigue siendo válido para lo que nombra**: la pasada
+> segunda. No es un ancla huérfana ni se borra; simplemente ya no describe el fichero que hay en
+> disco, y por eso las tres pasadas están tabuladas más arriba con el sello de cada una.
+>
+> **Aviso de estado, 2026-08-13:** hay una **cuarta** regeneración prevista —la que incorporará al
+> `.md` la nota de las 10 celdas que son umbrales y la salvedad de procedencia del titular—, y
+> **volverá a re-sellar los dos artefactos con otra fecha y otro `commit_agregador`**. Cuando se
+> corra, esta subsección y la tabla de las pasadas se releen **contra el fichero en disco** antes de
+> darlas por buenas.
+>
+> **La razón es estructural, y con escribirla una vez basta para los cuatro casos: un artefacto
 > versionado que estampa `config.commit_actual()` no puede llevar nunca el hash del commit que lo
 > versiona, porque tiene que existir antes de ese commit.** De ahí se sigue lo demás: regenerarlo
 > después del cierre no arregla nada —volvería a salir como línea `M` del `git status` y exigiría un
 > segundo commit, que a su vez tampoco estaría en el sello—, así que no se regenera y el desajuste se
 > resuelve en el texto, no en el fichero.
 >
-> **Y el `-sucio` no contamina la cita.** Lo que respalda la banda es `commits_origen = df30cb2`
-> **limpio** —los diez puntos de cada celda—; `commit_agregador` solo dice con qué versión del
-> agregador se calcularon media y sd. Además el sufijo está **acotado a `Implementacion/`**
-> (`config.py:783-822`, `_RUTA_SUCIEDAD`): no señala nada del dataset ni de los resultados, sino
-> exactamente el arreglo de `agregar_semillas.py` (`_tabla_md()`) todavía sin commitear cuando corrió
-> la segunda pasada.
+> **Y el `-sucio` no contamina la cita**, ni en la segunda pasada ni en la tercera. Lo que respalda la
+> banda es `commits_origen = df30cb2` **limpio** —los diez puntos de cada celda—; `commit_agregador`
+> solo dice con qué versión del agregador se calcularon media y sd. Además el sufijo está **acotado a
+> `Implementacion/`** (`config.py:783-822`, `_RUTA_SUCIEDAD`): no señala nada del dataset ni de los
+> resultados, sino exactamente el cambio de `agregar_semillas.py` todavía sin commitear cuando corrió
+> cada pasada — el arreglo de `_tabla_md()` en la segunda, el titular automático en la tercera.
+>
+> **Lo que el `-sucio` sí obliga a mirar en la tercera pasada, y es otra cosa:** el titular y la banda
+> **no salen del mismo commit**. `commits_origen` es `df30cb2` en las 198 celdas, pero
+> `commit_semilla_42` es **`1163c90`** en 94 de las celdas de calidad y **`274923d-sucio`** en las 4
+> de la cascada invertida (verificado en `dispersion_semillas.csv` el 2026-08-13). Es la cronología
+> normal del proyecto —el titular se publicó antes de que existiera el barrido— y **no invalida
+> nada**: cada cifra es el resultado real de su corrida. Pero es una **salvedad de procedencia** que
+> hay que declarar al citar «13 de 98», porque parte de la distancia de una celda podría ser **deriva
+> de código** entre esas versiones y no dispersión por semilla. El agregador la emite desde el
+> 2026-08-13 en la sección del titular del `.md` (`_nota_procedencia_titular_md()`), comparando los
+> dos conjuntos de commits; **el `.md` en disco todavía no la lleva** —entrará en la próxima
+> regeneración— y la columna `commit_semilla_42` del CSV la da celda a celda desde la tercera pasada.
 
 **La ventana de bloqueo de la reanudación (corregida el 2026-08-12, antes de correr el barrido).**
 `hibrido.py` escribía su fila resumen **antes** de volcar el descriptor `hibrido_<sufijo>.joblib`. Con

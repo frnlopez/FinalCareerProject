@@ -8,6 +8,10 @@ variante de características × algoritmo × alcance × métrica, el recuento `n
 media, la desviación típica MUESTRAL (ddof=1), el mínimo y el máximo, a 4
 decimales.
 
+Emite además, por cada celda de calidad, el valor de la SEMILLA 42 al lado de esa
+banda y el veredicto dentro/fuera, con su recuento agregado («N de M celdas fuera
+de banda»): ver la sección "EL TITULAR (SEMILLA 42) FRENTE A LA BANDA".
+
 POR QUÉ EXISTE: sin él la tabla de `A.3` saldría de cálculo manual sobre diez
 filas por celda, y la regla del proyecto lo prohíbe. Emite además la misma tabla
 ya formateada en Markdown (`dispersion_semillas.md`) para que T7 la pegue en el
@@ -16,10 +20,20 @@ anexo sin recalcular ni un número a mano.
 Reglas de protocolo (invalidan el TFG si se rompen)
 ---------------------------------------------------
   * CERO `fit`. Este script solo lee CSV y calcula estadísticos descriptivos.
-  * NO ABRE NINGUNA DE LAS NUEVE TABLAS PUBLICADAS. Lee exclusivamente sus
-    homólogas `*_semillas.csv` (nombres derivados con
-    `config.nombre_tabla_semillas()`), y las abre en modo lectura. Las cuatro
-    principales y las cinco auxiliares de la semilla 42 no se tocan.
+  * NO ESCRIBE EN NINGUNA TABLA PUBLICADA. Sus dos únicas salidas son
+    `dispersion_semillas.csv` y `dispersion_semillas.md`; se comprueba en
+    _comprobar_salidas_no_publicadas() que ni el NOMBRE ni la RUTA de esas dos
+    salidas coincidan con los de ninguna tabla de métricas (publicada o del
+    barrido). Escribir en las cuatro principales sería
+    incompatible con su borrado por variante, con su `CLAVE_UNICIDAD` sin
+    `semilla` y con su recuento fijo.
+  * LAS TABLAS PUBLICADAS SÍ SE LEEN, y SOLO en modo lectura (desde el
+    2026-08-13; antes no se abrían en absoluto). Las abre `_leer_publicada()`
+    —con `pd.read_csv`, nunca con `to_csv`— y únicamente para recuperar el valor
+    de la SEMILLA 42 de cada celda de calidad, que es lo que permite emitir el
+    titular «N de M celdas fuera de banda» desde el artefacto en vez de contarlo
+    a mano. La agregación (n/media/sd/mín/máx) NO las usa: sale exclusivamente de
+    las `*_semillas.csv`.
   * NO CONSUME `config.RANDOM_STATE`: las rutas se construyen a mano contra
     `config.RESULTADOS_DIR` en vez de con `config.ruta_tabla()`, que depende de la
     semilla global de la corrida. Este script no tiene semilla: agrega las de otros.
@@ -35,6 +49,59 @@ La semilla 42 NO entra en la agregación, y no porque se filtre aquí: es que no
 está en `config.SEMILLAS_BARRIDO` ni escribe en estas tablas (ver el encabezado
 de `config.py`). Es el TITULAR de 5.1-5.3, un punto independiente de la banda.
 
+---------------------------------------------------------------------------
+EL TITULAR (SEMILLA 42) FRENTE A LA BANDA — de dónde sale «N de M»
+---------------------------------------------------------------------------
+POR QUÉ SE AÑADIÓ (2026-08-13): el titular «13 de 98» —cuántas celdas de calidad
+tienen el valor de la semilla 42 FUERA del intervalo [mín, máx] de las diez
+semillas— era CÁLCULO MANUAL. La regla del proyecto lo prohíbe para cualquier
+cifra que vaya a la memoria, y esa cifra ya estaba escrita en tres documentos
+versionados. Desde aquí la emite el script.
+
+NO ES UN UNDÉCIMO PUNTO. `n`, `media`, `sd`, `min` y `max` se siguen calculando
+SOLO sobre las diez semillas de `config.SEMILLAS_BARRIDO`. Lo que se añade es una
+COMPARACIÓN del titular contra esa banda ya cerrada: el valor de la 42 no entra en
+ningún estadístico. Son once corridas por variante —diez de la banda más la
+publicada— y no diez con el titular dentro (encabezado de `config.py`).
+
+CRITERIO DE CASADO (una celda de calidad ←→ su valor homólogo de la 42):
+  1. TABLA. La publicada homóloga de `tabla_origen`, vía
+     `config.nombre_tabla_base()`: `metricas_firmas_semillas.csv` casa con
+     `metricas_firmas.csv` y con ninguna otra. Es el primer discriminante y el que
+     impide confundir el `RandomForest` de firmas con el de la cascada invertida.
+  2. FILA. La CLAVE_AGRUPACION completa —`set_features`, `algoritmo` y el TEXTO de
+     `alcance`—, que es la `CLAVE_UNICIDAD` de las tablas de métricas, MÁS el
+     mismo `filtro` declarado en la ESPECIFICACIÓN (en la cascada invertida,
+     `categoria_asignada == '__global__'`) y `semilla == 42`. El `algoritmo` se
+     normaliza igual que en la agregación (en la cascada viaja en la columna
+     `firma`).
+  3. COLUMNA. La misma `metrica` de la fila de dispersión.
+  4. UNICIDAD. Debe salir EXACTAMENTE UNA fila. Si salen cero o más de una, o si
+     el valor no es numérico, la celda queda SIN CASAR: sus columnas del titular
+     van vacías, se avisa, y esa celda NO cuenta ni en el numerador ni en el
+     denominador de «N de M». No se fuerza ningún casado aproximado — un casado
+     laxo (por ejemplo ignorando `alcance`) es justo el defecto que ya se corrigió
+     una vez en este agregador.
+
+DENTRO/FUERA SE DECIDE CON LOS EXTREMOS TAL COMO SE PERSISTIERON EN EL CSV DE
+ORIGEN —es decir, a los 6 DECIMALES con los que los escriben `anomalias.py`,
+`firmas.py`, `baseline.py`, `hibrido.py` y `cascada_invertida.py`—, y NO con el
+`min`/`max` a 4 decimales de la tabla de dispersión. Decir "sin redondear" sería
+inexacto: nadie compara aquí contra el float de 17 dígitos que salió del modelo,
+porque ese número no está en ningún fichero. Y no es un detalle:
+con el `min`/`max` de la tabla (4 decimales) el recuento sale 14 en vez de 13,
+porque una celda cuyo mínimo real ES el valor de la 42 (`f1_u2r` de RandomForest
+en 122: 0,318182) parece caer fuera al comparar contra un mínimo redondeado hacia
+arriba. El redondeo es para leer, no para decidir. Un valor IGUAL a un extremo
+cuenta como DENTRO. La columna `distancia_fuera_banda_42` publica lo lejos que
+queda cada titular de su banda, para que las celdas que salen fuera por menos de
+lo que se ve a 4 decimales se reconozcan como lo que son.
+
+SOLO EL BLOQUE DE CALIDAD. Las filas del bloque de máquina (los tiempos) llevan
+estas columnas VACÍAS a propósito: su banda mide carga de máquina y no el
+algoritmo (ver RAZON_BLOQUE_MAQUINA), así que un «fuera de banda» ahí no diría
+nada del sistema y solo inflaría el denominador del titular.
+
 Procedencia: cada celda lleva DOS sellos y no uno —`commits_origen` (los commits de
 las diez filas agregadas, que es el que vale para citar la banda) y `commit_agregador`
 (el del agregador)—, y el script AVISA si una celda mezcla commits. También avisa, con el
@@ -49,7 +116,9 @@ Salidas
 -------
   Resultados/dispersion_semillas.csv   una fila por (variante, algoritmo, alcance,
                                        métrica, bloque)
-  Resultados/dispersion_semillas.md    la misma tabla formateada para `A.3`
+  Resultados/dispersion_semillas.md    la misma tabla formateada para `A.3`, más
+                                       la sección del titular con el recuento
+                                       «N de M» y las celdas que caen fuera
 
 Uso
 ---
@@ -185,6 +254,49 @@ class AgregadorSemillas:
     BLOQUE_CALIDAD = "calidad"
     BLOQUE_MAQUINA = "dispersion_de_maquina"
 
+    # --- EL TITULAR (SEMILLA 42) FRENTE A LA BANDA ----------------------------
+    # Cuatro columnas por celda de calidad. El razonamiento y el criterio de
+    # casado están en el encabezado del módulo, sección "EL TITULAR (SEMILLA 42)
+    # FRENTE A LA BANDA"; aquí solo los nombres, que son los que se citan en A.3.
+    #
+    # Llevan todas el sufijo '_42' a propósito: en esta tabla 'min'/'max'/'media'
+    # son de las DIEZ semillas del barrido y estas cuatro son de UNA que no está
+    # entre ellas. Sin la marca en el nombre, 'valor' y 'commit' se leerían como
+    # dos columnas más de la misma banda (la misma regla de homónimos que obligó a
+    # llamar 'commit_agregador' al commit del agregador).
+    COL_VALOR_42 = "valor_semilla_42"
+    COL_DENTRO_42 = "dentro_banda_42"
+    COL_DISTANCIA_42 = "distancia_fuera_banda_42"
+    COL_COMMIT_42 = "commit_semilla_42"
+
+    VEREDICTO_DENTRO = "dentro"
+    VEREDICTO_FUERA = "fuera"
+    VEREDICTO_SIN_CASAR = "sin_casar"
+
+    # --- LAS CELDAS DE CALIDAD QUE NO SON MÉTRICAS SOBRE D2 -------------------
+    # Se agregan a propósito (ver el comentario de ESPECIFICACION: son justo lo que
+    # el barrido pone a prueba), pero entran en el DENOMINADOR del titular «N de M»
+    # junto a métricas de rendimiento sobre D2, y eso hay que declararlo en el
+    # artefacto: T7 pega este `.md` en `A.3`, y un denominador rotulado como
+    # "métricas" que incluye umbrales es una etiqueta falsa. El .md dice cuántas
+    # son, cuál sería el denominador sin ellas y si alguno de los empates de borde
+    # —los que deciden el recuento— es un umbral. NO se descuentan: el titular se
+    # publica sobre todas las celdas de calidad casadas.
+    METRICAS_NO_D2 = ("umbral", "umbral_conf_elegido")
+
+    # Decimales de 'distancia_fuera_banda_42'. MÁS que los 4 de la tabla y no por
+    # capricho: su trabajo es hacer visibles justo las celdas que se salen por
+    # menos de lo que se ve a 4 decimales (la menor medida hoy es 9,7e-05, en
+    # 'roc_auc' de OneClassSVM en 54). A 4 decimales esa distancia se imprimiría
+    # como 0,0001 o como 0,0000 y la celda parecería un error de redondeo.
+    DECIMALES_DISTANCIA = 6
+
+    # La columna 'semilla' de las tablas publicadas. Se filtra por ella además de
+    # por la clave: una tabla publicada solo debería contener filas de la 42, pero
+    # el filtro es gratis y convierte una tabla contaminada en un "sin casar"
+    # ruidoso en lugar de en un titular silenciosamente equivocado.
+    COLUMNA_SEMILLA = "semilla"
+
     # Columna de procedencia de las filas de ORIGEN. No es la del agregador: ver
     # _commits_de_celda().
     COLUMNA_COMMIT = "commit"
@@ -212,6 +324,29 @@ class AgregadorSemillas:
         self.fecha = None
         # Todos los commits vistos en las filas agregadas, para la cabecera del .md.
         self.commits_vistos = set()
+        # Tablas publicadas ya leídas (solo lectura), cacheadas por nombre: el
+        # casado del titular consulta la misma tabla una vez por métrica y por
+        # celda, y releerla cada vez sería releer el mismo fichero ~40 veces.
+        self._publicadas = {}
+        # Celdas de calidad casadas contra el titular de la 42, para el recuento
+        # «N de M» y para la sección propia del .md.
+        self.celdas_fuera_banda = []
+        self.celdas_dentro_banda = 0
+        self.celdas_sin_casar = 0
+        # Celdas de calidad CASADAS cuya métrica no es una métrica sobre D2
+        # (METRICAS_NO_D2), por nombre de métrica: el desglose del denominador.
+        self.celdas_no_d2 = {}
+        # Celdas CASADAS cuyo titular cae EXACTAMENTE sobre un extremo de la banda.
+        # Cuentan como DENTRO (criterio declarado), y por eso deciden el recuento:
+        # si los empates contasen como fuera, «N de M» sería otro.
+        self.celdas_borde = []
+        # Commits vistos en la fila PUBLICADA de la semilla 42, para poder
+        # compararlos con los de las bandas (`commits_origen`): ver
+        # _salvedad_procedencia_titular().
+        self.commits_titular = set()
+        # Claves de avisos ya emitidos, para no repetir el mismo aviso una vez por
+        # métrica (hasta 40 veces sobre la misma tabla).
+        self._avisos_emitidos = set()
 
     # ------------------------------------------------------------------
     # 1. Lectura de una tabla del barrido
@@ -221,9 +356,16 @@ class AgregadorSemillas:
         Ruta de la tabla del BARRIDO correspondiente a una tabla publicada.
 
         No se usa config.ruta_tabla() a propósito: esa función decide por la
-        semilla GLOBAL de la corrida y este script no tiene semilla. Aquí el
-        desvío es incondicional, así que es imposible que una ejecución de este
-        agregador acabe leyendo —y mucho menos escribiendo— una tabla publicada.
+        semilla GLOBAL de la corrida y este script no tiene semilla. El desvío al
+        `*_semillas.csv` es incondicional, así que las BANDAS no pueden salir de
+        una tabla publicada.
+
+        OJO, y desde el 2026-08-13 hay que decirlo aquí: esta función ya no es la
+        única puerta a `RESULTADOS_DIR`. `_ruta_tabla_publicada()` abre las nueve
+        publicadas EN LECTURA para recuperar el valor de la semilla 42, así que la
+        garantía que sigue en pie —y es la que importa— no es «no se abren», sino
+        «no se escriben»: lo comprueba _comprobar_salidas_no_publicadas(),
+        contrastando las rutas de escritura contra las de todas las publicadas.
         """
         return os.path.join(config.RESULTADOS_DIR,
                             config.nombre_tabla_semillas(nombre_publicado))
@@ -238,25 +380,8 @@ class AgregadorSemillas:
                 "'python app\\barrido_semillas.py' antes de agregar.".format(
                     ruta, len(self.semillas)))
         df = pd.read_csv(ruta)
-
-        # Columna 'algoritmo' unificada: en las cuatro principales ya se llama así;
-        # en la tabla de la cascada invertida el modelo medido viaja en 'firma'.
-        col_algo = spec["columna_algoritmo"]
-        if col_algo not in df.columns:
-            raise RuntimeError(
-                "{} no trae la columna '{}': no se puede identificar el "
-                "algoritmo de cada fila.".format(ruta, col_algo))
-        if col_algo != "algoritmo":
-            df = df.copy()
-            df["algoritmo"] = df[col_algo].astype(str)
-
-        if spec["filtro"] is not None:
-            columna, valor = spec["filtro"]
-            if columna not in df.columns:
-                raise RuntimeError(
-                    "{} no trae la columna '{}' del filtro declarado.".format(
-                        ruta, columna))
-            df = df[df[columna].astype(str) == str(valor)]
+        df = self._normalizar_algoritmo(df, spec, ruta)
+        df = self._aplicar_filtro(df, spec, ruta)
 
         faltan = [c for c in self.CLAVE_AGRUPACION + ("semilla",)
                   if c not in df.columns]
@@ -265,6 +390,36 @@ class AgregadorSemillas:
                 "{} no trae las columnas {}: es de otro esquema y no se puede "
                 "agregar.".format(ruta, faltan))
         return df, ruta
+
+    def _normalizar_algoritmo(self, df, spec, ruta):
+        """
+        Columna 'algoritmo' unificada: en las cuatro principales ya se llama así;
+        en la tabla de la cascada invertida el modelo medido viaja en 'firma'.
+
+        Se aplica IGUAL a la tabla del barrido y a su homóloga publicada (las dos
+        comparten esquema), para que el casado del titular use exactamente la
+        misma noción de 'algoritmo' que la agregación.
+        """
+        col_algo = spec["columna_algoritmo"]
+        if col_algo not in df.columns:
+            raise RuntimeError(
+                "{} no trae la columna '{}': no se puede identificar el "
+                "algoritmo de cada fila.".format(ruta, col_algo))
+        if col_algo != "algoritmo":
+            df = df.copy()
+            df["algoritmo"] = df[col_algo].astype(str)
+        return df
+
+    def _aplicar_filtro(self, df, spec, ruta):
+        """Filtro de filas declarado en la ESPECIFICACIÓN ('__global__' en T3)."""
+        if spec["filtro"] is None:
+            return df
+        columna, valor = spec["filtro"]
+        if columna not in df.columns:
+            raise RuntimeError(
+                "{} no trae la columna '{}' del filtro declarado.".format(
+                    ruta, columna))
+        return df[df[columna].astype(str) == str(valor)]
 
     # ------------------------------------------------------------------
     # 2. Comprobación de completitud — el abort que exige la decisión D6
@@ -311,6 +466,15 @@ class AgregadorSemillas:
         """
         n, media, sd MUESTRAL (ddof=1), mín y máx de una serie, a 4 decimales.
 
+        Devuelve ADEMÁS 'min_crudo' y 'max_crudo' sin el redondeo a 4 decimales de
+        esta tabla —o sea, con la precisión con la que se persistió el CSV de
+        origen: 6 decimales—, que no van al CSV: son los extremos con los que se
+        decide si el titular de la semilla 42 cae dentro o fuera de la banda.
+        Decidir con los de 4 decimales daría un recuento distinto (ver el
+        encabezado del módulo). 'crudo' significa aquí "sin redondear POR ESTE
+        SCRIPT", no "con toda la precisión del modelo": esa ya se perdió al
+        escribir el CSV.
+
         ddof=1 y no ddof=0: las diez semillas son una MUESTRA de las infinitas
         inicializaciones posibles, no la población entera. numpy usa ddof=0 por
         defecto (que subestima), así que se pasa explícito. Con n=10 la diferencia
@@ -331,6 +495,220 @@ class AgregadorSemillas:
             "sd": (round(sd, self.DECIMALES) if sd == sd else float("nan")),
             "min": round(float(arr.min()), self.DECIMALES),
             "max": round(float(arr.max()), self.DECIMALES),
+            "min_crudo": float(arr.min()),
+            "max_crudo": float(arr.max()),
+        }
+
+    # ------------------------------------------------------------------
+    # 3-bis. El titular de la semilla 42 frente a la banda
+    # ------------------------------------------------------------------
+    def _ruta_tabla_publicada(self, spec):
+        """
+        Ruta de la tabla PUBLICADA (semilla 42) homóloga de la del barrido.
+
+        No se usa config.ruta_tabla() por el mismo motivo que en
+        _ruta_tabla_semillas(): esa función decide por la semilla global de la
+        corrida y este script no tiene semilla. config.nombre_tabla_base() es
+        idempotente sobre un nombre ya publicado y deja explícito de qué tabla del
+        barrido es homóloga esta.
+        """
+        return os.path.join(config.RESULTADOS_DIR,
+                            config.nombre_tabla_base(spec["tabla"]))
+
+    def _leer_publicada(self, spec):
+        """
+        Tabla publicada de la semilla 42, EN MODO LECTURA y cacheada.
+
+        Es la única función de este script que abre una tabla publicada, y no
+        escribe en ella jamás: solo se consulta el valor del titular para
+        compararlo con la banda. Si no existe, se avisa UNA vez y el casado de esa
+        familia de filas queda sin hacer (columnas vacías), sin abortar: la tabla
+        de dispersión —que es el entregable de T4— no depende de ella.
+        """
+        ruta = self._ruta_tabla_publicada(spec)
+        if ruta in self._publicadas:
+            return self._publicadas[ruta], ruta
+        if not os.path.exists(ruta):
+            self._publicadas[ruta] = None
+            self.avisos.append(
+                "No existe {}: las celdas de esa tabla quedan SIN el valor de la "
+                "semilla 42 y no cuentan en el recuento de fuera de banda.".format(
+                    os.path.basename(ruta)))
+            return None, ruta
+        df = pd.read_csv(ruta)
+        try:
+            df = self._normalizar_algoritmo(df, spec, ruta)
+            df = self._aplicar_filtro(df, spec, ruta)
+        except RuntimeError as error:
+            # La publicada es de otro esquema: se degrada el casado, no se aborta.
+            self._publicadas[ruta] = None
+            self.avisos.append(
+                "{}: no se puede casar con el barrido ({}). Sus celdas quedan SIN "
+                "el valor de la semilla 42.".format(os.path.basename(ruta), error))
+            return None, ruta
+        self._publicadas[ruta] = df
+        return df, ruta
+
+    def _avisar_una_vez(self, clave_aviso, texto):
+        """
+        Añade un aviso SOLO la primera vez que se pide con la misma `clave_aviso`.
+
+        Existe porque _valor_semilla_42() se llama una vez POR MÉTRICA (hasta 7 por
+        celda, y hasta 40 sobre la misma tabla) y sus avisos son propiedades de la
+        TABLA o de la CELDA, no de la métrica: sin esta deduplicación, una tabla
+        publicada que faltase llenaría la sección «Avisos» del `.md` con el mismo
+        párrafo decenas de veces y el resto de avisos —que sí son distintos entre
+        sí— quedaría enterrado. No cambia ningún recuento: `celdas_sin_casar` se
+        sigue incrementando por celda y por métrica, que es lo que se cuenta.
+        """
+        if clave_aviso in self._avisos_emitidos:
+            return
+        self._avisos_emitidos.add(clave_aviso)
+        self.avisos.append(texto)
+
+    def _valor_semilla_42(self, spec, clave, metrica):
+        """
+        Valor publicado de la semilla 42 para UNA celda, y el commit que lo produjo.
+
+        Criterio de casado completo en el encabezado del módulo. En resumen: misma
+        tabla homóloga, misma CLAVE_AGRUPACION (incluido el TEXTO de `alcance`),
+        mismo filtro de la ESPECIFICACIÓN, `semilla` = 42, y EXACTAMENTE una fila.
+
+        Devuelve (valor, commit) o (None, "") si no casa. Nunca fuerza un casado
+        aproximado: si la clave estricta no da una fila única, se avisa y la celda
+        queda fuera del recuento. Cuando el fallo es SOLO por el texto de
+        `alcance` el aviso lo dice con ese nombre, porque esa es la avería
+        probable —una constante ALCANCE_* editada después de la corrida
+        publicada— y confundirla con "no hay fila" mandaría a buscar donde no es.
+        """
+        df, ruta = self._leer_publicada(spec)
+        if df is None:
+            return None, ""
+        set_features, algoritmo, alcance = clave
+        base = df[(df["set_features"].astype(str) == str(set_features))
+                  & (df["algoritmo"].astype(str) == str(algoritmo))]
+        sel = base[base["alcance"].astype(str) == str(alcance)]
+        if self.COLUMNA_SEMILLA in df.columns:
+            sel = sel[sel[self.COLUMNA_SEMILLA].astype(str)
+                      == str(config.SEMILLA_POR_DEFECTO)]
+        else:
+            # Propiedad de la TABLA, no de la métrica: una vez por tabla.
+            self._avisar_una_vez(
+                ("sin_columna_semilla", ruta),
+                "{}: sin columna '{}'; el casado del titular no puede comprobar "
+                "que la fila sea la de la semilla {}.".format(
+                    os.path.basename(ruta), self.COLUMNA_SEMILLA,
+                    config.SEMILLA_POR_DEFECTO))
+        if len(sel) != 1:
+            if len(sel) == 0 and len(base) > 0:
+                motivo = ("hay {} fila(s) con esa variante y ese algoritmo pero "
+                          "ninguna con el mismo texto de 'alcance': la constante "
+                          "ALCANCE_* ha cambiado desde la corrida publicada".format(
+                              len(base)))
+            else:
+                motivo = "la clave casa con {} filas y debe casar con 1".format(
+                    len(sel))
+            # Propiedad de la CELDA (la fila no casa para ninguna métrica): una vez
+            # por tabla y clave, no una por cada métrica de la celda.
+            self._avisar_una_vez(
+                ("sin_casar", ruta, clave),
+                "{} · {}: SIN valor de la semilla {} ({}). Las celdas de calidad de "
+                "esta combinación no entran en el recuento de fuera de banda.".format(
+                    os.path.basename(ruta), clave, config.SEMILLA_POR_DEFECTO,
+                    motivo))
+            return None, ""
+        fila = sel.iloc[0]
+        if metrica not in sel.columns:
+            self.avisos.append(
+                "{} · {}: la tabla publicada no trae la columna '{}'; celda sin "
+                "titular.".format(os.path.basename(ruta), clave, metrica))
+            return None, ""
+        valor = pd.to_numeric(pd.Series([fila[metrica]]), errors="coerce").iloc[0]
+        if valor != valor:  # NaN: celda vacía o no numérica en la publicada
+            self.avisos.append(
+                "{} · {} · '{}': el valor de la semilla {} no es numérico; celda "
+                "sin titular.".format(os.path.basename(ruta), clave, metrica,
+                                      config.SEMILLA_POR_DEFECTO))
+            return None, ""
+        commit = ""
+        if self.COLUMNA_COMMIT in sel.columns:
+            commit = str(fila[self.COLUMNA_COMMIT])
+        return float(valor), commit
+
+    def _comparar_con_titular(self, spec, clave, metrica, est):
+        """
+        Compara el titular de la semilla 42 con la banda [mín, máx] de las diez.
+
+        La comparación usa los extremos SIN redondear ('min_crudo'/'max_crudo') y
+        un valor IGUAL a un extremo cuenta como DENTRO (ver el encabezado). No
+        modifica ningún estadístico: la 42 no es un undécimo punto de la banda.
+
+        Devuelve el dict de las cuatro columnas del titular y actualiza los
+        contadores del recuento «N de M».
+        """
+        valor, commit = self._valor_semilla_42(spec, clave, metrica)
+        if valor is None:
+            self.celdas_sin_casar += 1
+            return {
+                self.COL_VALOR_42: "",
+                self.COL_DENTRO_42: self.VEREDICTO_SIN_CASAR,
+                self.COL_DISTANCIA_42: "",
+                self.COL_COMMIT_42: "",
+            }
+        if commit:
+            self.commits_titular.add(commit)
+        if metrica in self.METRICAS_NO_D2:
+            self.celdas_no_d2[metrica] = self.celdas_no_d2.get(metrica, 0) + 1
+        minimo, maximo = est["min_crudo"], est["max_crudo"]
+        if valor in (minimo, maximo):
+            self.celdas_borde.append({
+                "set_features": clave[0],
+                "algoritmo": clave[1],
+                "metrica": metrica,
+                "extremo": "mín" if valor == minimo else "máx",
+                "es_umbral": metrica in self.METRICAS_NO_D2,
+            })
+        if valor < minimo:
+            dentro, distancia = False, minimo - valor
+        elif valor > maximo:
+            dentro, distancia = False, valor - maximo
+        else:
+            dentro, distancia = True, 0.0
+        if dentro:
+            self.celdas_dentro_banda += 1
+        else:
+            self.celdas_fuera_banda.append({
+                "tabla_origen": config.nombre_tabla_semillas(spec["tabla"]),
+                "set_features": clave[0],
+                "algoritmo": clave[1],
+                "alcance": clave[2],
+                "metrica": metrica,
+                "valor_42": valor,
+                "min": minimo,
+                "max": maximo,
+                "distancia": distancia,
+            })
+        return {
+            self.COL_VALOR_42: round(valor, self.DECIMALES),
+            self.COL_DENTRO_42: (self.VEREDICTO_DENTRO if dentro
+                                 else self.VEREDICTO_FUERA),
+            self.COL_DISTANCIA_42: round(distancia, self.DECIMALES_DISTANCIA),
+            self.COL_COMMIT_42: commit,
+        }
+
+    def _columnas_titular_vacias(self):
+        """
+        Las cuatro columnas del titular, VACÍAS: es lo que llevan las filas del
+        bloque de máquina. No es un dato que falte, es una comparación que no se
+        hace a propósito (RAZON_BLOQUE_MAQUINA): la banda de un wall-clock mide
+        carga de máquina, así que un 'fuera de banda' ahí no diría nada del
+        sistema y solo inflaría el denominador del titular.
+        """
+        return {
+            self.COL_VALOR_42: "",
+            self.COL_DENTRO_42: "",
+            self.COL_DISTANCIA_42: "",
+            self.COL_COMMIT_42: "",
         }
 
     def _agregar_metrica(self, spec, grupo, clave, metrica, bloque,
@@ -364,6 +742,11 @@ class AgregadorSemillas:
                 return
 
         set_features, algoritmo, alcance = clave
+        # El titular de la 42 solo se compara en el bloque de CALIDAD (ver
+        # _columnas_titular_vacias()).
+        columnas_42 = (self._comparar_con_titular(spec, clave, metrica, est)
+                       if bloque == self.BLOQUE_CALIDAD
+                       else self._columnas_titular_vacias())
         self.filas.append({
             "tabla_origen": config.nombre_tabla_semillas(spec["tabla"]),
             "bloque": bloque,
@@ -375,6 +758,17 @@ class AgregadorSemillas:
             "sd": est["sd"],
             "min": est["min"],
             "max": est["max"],
+            # Las cuatro columnas del TITULAR van pegadas a la banda que
+            # comparan, no al final de la fila: quien lea el CSV ve el valor de la
+            # 42 y su veredicto junto al mín/máx del que salen. La 42 NO entra en
+            # 'n' ni en 'media' ni en 'sd' — es una comparación, no un sumando.
+            self.COL_VALOR_42: columnas_42[self.COL_VALOR_42],
+            self.COL_DENTRO_42: columnas_42[self.COL_DENTRO_42],
+            self.COL_DISTANCIA_42: columnas_42[self.COL_DISTANCIA_42],
+            # Procedencia del titular, que NO es la de la banda: la fila publicada
+            # se produjo con otro commit que las diez del barrido (mismo motivo por
+            # el que 'commits_origen' y 'commit_agregador' son dos columnas).
+            self.COL_COMMIT_42: columnas_42[self.COL_COMMIT_42],
             "semillas": " ".join(str(s) for s in self.semillas),
             # El alcance de la fila de origen viaja con la cifra agregada: sin él,
             # un 'f1_macro' de firmas y uno de baseline se leerían como la misma
@@ -557,9 +951,15 @@ class AgregadorSemillas:
             limpio = limpio[:self.LARGO_ALCANCE_MD].rstrip() + "…"
         return limpio
 
-    def _tabla_md(self, df_bloque):
+    def _tabla_md(self, df_bloque, con_titular=False):
         """
         Una tabla Markdown por bloque, ya formateada a 4 decimales.
+
+        `con_titular` añade las dos columnas del titular de la semilla 42 (su
+        valor y el veredicto dentro/fuera de la banda). Solo la tabla de CALIDAD
+        las lleva: en el bloque de máquina esas columnas van vacías a propósito
+        (ver _columnas_titular_vacias()) y una columna entera de guiones en A.3
+        solo invitaría a preguntar por un dato que no debe existir.
 
         LLEVA 'alcance' Y 'tabla_origen' (añadidas el 2026-08-13, corrigiendo un
         defecto real): sin ellas el .md —que es justo el artefacto que se pega en
@@ -569,20 +969,253 @@ class AgregadorSemillas:
         el CSV ya evitaba (ver el comentario de 'alcance' en _agregar_metrica): el
         alcance de la fila de origen tiene que viajar con la cifra agregada.
         """
-        lineas = ["| Tabla de origen | Variante | Algoritmo | Alcance | Métrica | "
-                  "n | Media | sd | Mín | Máx |",
-                  "|---|---|---|---|---|---:|---:|---:|---:|---:|"]
+        cabecera = ("| Tabla de origen | Variante | Algoritmo | Alcance | Métrica "
+                    "| n | Media | sd | Mín | Máx |")
+        separador = "|---|---|---|---|---|---:|---:|---:|---:|---:|"
+        if con_titular:
+            cabecera += " Semilla 42 | ¿En banda? |"
+            separador += "---:|---|"
+        lineas = [cabecera, separador]
         for _, f in df_bloque.iterrows():
             def fmt(valor):
                 return ("—" if valor != valor
                         else "{:.4f}".format(float(valor)))
-            lineas.append(
-                "| `{}` | {} | {} | {} | `{}` | {} | {} | {} | {} | {} |".format(
-                    f["tabla_origen"], f["set_features"], f["algoritmo"],
-                    self._celda_md(f["alcance"]), f["metrica"], int(f["n"]),
-                    fmt(f["media"]), fmt(f["sd"]), fmt(f["min"]),
-                    fmt(f["max"])))
+            fila = "| `{}` | {} | {} | {} | `{}` | {} | {} | {} | {} | {} |".format(
+                f["tabla_origen"], f["set_features"], f["algoritmo"],
+                self._celda_md(f["alcance"]), f["metrica"], int(f["n"]),
+                fmt(f["media"]), fmt(f["sd"]), fmt(f["min"]), fmt(f["max"]))
+            if con_titular:
+                valor_42 = f[self.COL_VALOR_42]
+                veredicto = str(f[self.COL_DENTRO_42])
+                texto_valor = ("—" if valor_42 == "" or valor_42 != valor_42
+                               else "{:.4f}".format(float(valor_42)))
+                # En NEGRITA solo el 'fuera': es lo que se cuenta en el titular y
+                # lo que hay que poder localizar de un vistazo en A.3.
+                texto_veredicto = {
+                    self.VEREDICTO_DENTRO: "dentro",
+                    self.VEREDICTO_FUERA: "**FUERA**",
+                    self.VEREDICTO_SIN_CASAR: "_sin casar_",
+                }.get(veredicto, "—")
+                fila += " {} | {} |".format(texto_valor, texto_veredicto)
+            lineas.append(fila)
         return "\n".join(lineas)
+
+    def _recuento_titular(self):
+        """
+        (fuera, casadas) — el numerador y el DENOMINADOR del titular «N de M».
+
+        `casadas` NO es "todas las celdas de calidad": es cuántas se pudieron casar
+        con su fila publicada. Las que no casan quedan fuera de las dos cifras, y el
+        aviso dice cuáles: un denominador que las incluyese haría pasar por
+        "dentro de banda" a una celda que nunca se comparó.
+        """
+        return len(self.celdas_fuera_banda), (len(self.celdas_fuera_banda)
+                                              + self.celdas_dentro_banda)
+
+    def _nota_no_metricas_md(self):
+        """
+        Qué parte del denominador NO son métricas sobre D2, y qué pasaría al quitarlas.
+
+        POR QUÉ ESTÁ AQUÍ (añadido el 2026-08-13): este `.md` se pega en el anexo
+        `A.3`, y «N de M celdas de calidad» se lee como «N de M métricas». No lo es:
+        entre las M hay celdas de `umbral` y `umbral_conf_elegido`, que son
+        DECISIONES DEL PIPELINE recalculadas en cada semilla —el p95 sobre el 20 %
+        de D1 y el UMBRAL_CONF por OOF—, no rendimiento sobre D2. Se agregan a
+        propósito (son justo lo que el barrido pone a prueba) y NO se descuentan del
+        titular, pero el lector tiene que poder verlas: sin esta nota, `A.3`
+        publicaría un denominador rotulado como métricas que no lo es del todo.
+        Y el descuento no sería inocuo: uno de los empates de borde puede ser un
+        umbral, y los empates —que cuentan como DENTRO— son justo lo que decide el
+        recuento.
+        """
+        total = sum(self.celdas_no_d2.values())
+        if not total:
+            return []
+        reparto = " · ".join(
+            "{} de `{}`".format(n, m)
+            for m, n in sorted(self.celdas_no_d2.items()))
+        _, casadas = self._recuento_titular()
+        partes = [
+            "**No todas esas celdas son métricas sobre D2.** De las {} del "
+            "denominador, **{} son umbrales** ({}): no miden rendimiento sobre D2 "
+            "sino una decisión del pipeline que se recalcula en cada semilla (el "
+            "p95 sobre el 20 % de D1 y el `UMBRAL_CONF` calibrado por OOF), y se "
+            "agregan a propósito porque son justo lo que el barrido pone a prueba. "
+            "**No se descuentan** del titular; si se descontasen, el denominador "
+            "sería **{}** y la cifra habría que recontarla.".format(
+                casadas, total, reparto, casadas - total),
+            "",
+        ]
+        if self.celdas_borde:
+            umbrales_borde = [c for c in self.celdas_borde if c["es_umbral"]]
+            detalle = " · ".join(
+                "{} {} `{}` (= {})".format(c["set_features"], c["algoritmo"],
+                                           c["metrica"], c["extremo"])
+                for c in self.celdas_borde)
+            n_borde = len(self.celdas_borde)
+            partes += [
+                "Y el descuento no sería inocuo: **{} {}** en el borde exacto de su "
+                "banda ({}), {} como **dentro** por el criterio declarado arriba y "
+                "por eso {} el recuento — y **{}**.".format(
+                    n_borde,
+                    "celda cae" if n_borde == 1 else "celdas caen",
+                    detalle,
+                    "cuenta" if n_borde == 1 else "cuentan",
+                    "decide" if n_borde == 1 else "deciden",
+                    ("ninguna de ellas es un umbral" if not umbrales_borde
+                     else ("una de ellas es un umbral" if len(umbrales_borde) == 1
+                           else "{} de ellas son umbrales".format(
+                               len(umbrales_borde))))),
+                "",
+            ]
+        return partes
+
+    def _nota_procedencia_titular_md(self):
+        """
+        Salvedad de procedencia: el titular y la banda pueden venir de otro commit.
+
+        POR QUÉ (añadido el 2026-08-13): el script ya avisaba si una BANDA mezclaba
+        commits (_commits_de_celda), pero no comparaba el commit de la fila
+        publicada de la semilla 42 contra el de las diez del barrido. Si no
+        coinciden —y hoy no coinciden—, parte de la distancia que mide
+        `distancia_fuera_banda_42` puede ser DERIVA DE CÓDIGO entre dos versiones y
+        no dispersión por semilla.
+
+        NO INVALIDA NADA y así se redacta: cada cifra es el resultado real de su
+        corrida, y el titular publicado se produjo antes que el barrido por pura
+        cronología del proyecto. Es una salvedad que hay que declarar al citar
+        «N de M», no un motivo para no citarlo.
+        """
+        if not self.commits_titular:
+            return []
+        if self.commits_titular == self.commits_vistos:
+            return [
+                "Procedencia: el titular y las bandas salen del **mismo** commit "
+                "({}), así que la comparación es entre corridas del mismo "
+                "código.".format(", ".join("`{}`".format(c) for c in
+                                           sorted(self.commits_titular))),
+                "",
+            ]
+        return [
+            "> [!warning] **Salvedad de procedencia: el titular y la banda no salen "
+            "del mismo commit.** Los valores de la semilla 42 vienen de {} "
+            "(columna `commit_semilla_42` del CSV, celda a celda) y los diez puntos "
+            "de cada banda de {} (columna `commits_origen`). Parte de la distancia "
+            "que se lista abajo **podría ser deriva de código** entre esas "
+            "versiones y no dispersión por semilla. No invalida ninguna cifra —cada "
+            "una es el resultado real de su corrida—, pero hay que declararlo al "
+            "citar «N de M».".format(
+                ", ".join("`{}`".format(c) for c in sorted(self.commits_titular)),
+                ", ".join("`{}`".format(c) for c in sorted(self.commits_vistos))
+                or "_sin commit declarado_"),
+            "",
+        ]
+
+    def _seccion_titular_md(self):
+        """
+        Sección propia del titular: el recuento «N de M» y las celdas que caen fuera.
+
+        ES LA RAZÓN DE SER de esta parte del script: esta cifra se citaba a mano y
+        ahora sale del artefacto. El listado va ordenado por distancia DECRECIENTE
+        —las desviaciones grandes primero— porque es el orden en el que se lee al
+        redactar, y con la distancia a la vista para que las celdas que se salen por
+        menos de lo que se ve a 4 decimales no se citen como si fuesen iguales a
+        las que se salen por dos centésimas.
+        """
+        fuera, casadas = self._recuento_titular()
+        partes = [
+            "## El titular (semilla 42) frente a la banda",
+            "",
+            "**{} de {}** celdas de calidad tienen el valor de la semilla 42 "
+            "**fuera** del intervalo [mín, máx] de las diez semillas del barrido. "
+            "Esta cifra la calcula el agregador: no se cuenta a mano.".format(
+                fuera, casadas),
+            "",
+            "Cómo se decide: el valor de la 42 se toma de su tabla PUBLICADA "
+            "homóloga (misma variante, mismo algoritmo, mismo texto de `alcance`, "
+            "`semilla` = 42; criterio completo en el encabezado del script), y se "
+            "compara con los extremos **con la precisión con la que se persistió "
+            "el CSV de origen** (6 decimales), no con el `mín`/`máx` a 4 decimales "
+            "que publican las tablas de abajo: esos están redondeados para leerlos "
+            "y decidir con ellos daría otro recuento. Un valor **igual** a un "
+            "extremo cuenta como dentro.",
+            "",
+            "Solo el bloque de **calidad** entra: en el de máquina la banda mide "
+            "carga de máquina y no el algoritmo, así que un «fuera» ahí no diría "
+            "nada del sistema.",
+            "",
+        ]
+        partes += self._nota_no_metricas_md()
+        partes += self._nota_procedencia_titular_md()
+        if self.celdas_sin_casar:
+            partes += [
+                "> [!warning] {} celda(s) de calidad NO se pudieron casar con su "
+                "fila publicada y quedan fuera de las dos cifras de arriba (ni "
+                "numerador ni denominador). El bloque de avisos dice cuáles y por "
+                "qué.".format(self.celdas_sin_casar),
+                "",
+            ]
+        if not self.celdas_fuera_banda:
+            partes += ["Ninguna celda cae fuera de su banda.", ""]
+            return partes
+        partes += [
+            "| Tabla de origen | Variante | Algoritmo | Alcance | Métrica | "
+            "Semilla 42 | Mín (10) | Máx (10) | Distancia |",
+            "|---|---|---|---|---|---:|---:|---:|---:|",
+        ]
+        for c in sorted(self.celdas_fuera_banda,
+                        key=lambda x: x["distancia"], reverse=True):
+            partes.append(
+                "| `{}` | {} | {} | {} | `{}` | {:.4f} | {:.4f} | {:.4f} | "
+                "{:.6f} |".format(
+                    c["tabla_origen"], c["set_features"], c["algoritmo"],
+                    self._celda_md(c["alcance"]), c["metrica"], c["valor_42"],
+                    c["min"], c["max"], c["distancia"]))
+        partes.append("")
+        return partes
+
+    def _comprobar_salidas_no_publicadas(self):
+        """
+        Ninguna ruta de escritura de este script puede ser la de una tabla publicada.
+
+        Barato y protege del único accidente que arruinaría lo publicado: que una
+        edición futura reutilizase estas constantes para escribir en una
+        `metricas_*.csv`. Las cuatro principales borran por variante y su
+        `CLAVE_UNICIDAD` no incluye `semilla`, así que una escritura ahí no se
+        podría deshacer sin re-correr el pipeline entero.
+
+        DOS COMPROBACIONES, y la segunda se añadió el 2026-08-13 al abrir las
+        publicadas en lectura: (1) el NOMBRE no empieza por `metricas_`, y (2) la
+        RUTA absoluta de cada salida no coincide con la de ninguna tabla publicada
+        de la ESPECIFICACION —las mismas que ahora se abren para el titular— ni con
+        la de su homóloga del barrido. La primera sola era un chequeo de cadena: si
+        alguien renombrase las salidas o cambiase la convención de nombres, pasaría
+        limpia mientras escribía encima de una tabla. Comparar rutas normalizadas
+        cierra ese hueco.
+        """
+        for nombre in (self.NOMBRE_CSV, self.NOMBRE_MD):
+            base = os.path.basename(nombre)
+            if base.startswith("metricas_"):
+                raise RuntimeError(
+                    "La salida '{}' tiene nombre de tabla de métricas: este script "
+                    "NO escribe en tablas publicadas.".format(base))
+
+        def normalizar(ruta):
+            return os.path.normcase(os.path.abspath(ruta))
+
+        prohibidas = {}
+        for spec in self.ESPECIFICACION:
+            for ruta in (self._ruta_tabla_publicada(spec),
+                         self._ruta_tabla_semillas(spec["tabla"])):
+                prohibidas[normalizar(ruta)] = ruta
+        for nombre in (self.NOMBRE_CSV, self.NOMBRE_MD):
+            salida = os.path.join(config.RESULTADOS_DIR, nombre)
+            choque = prohibidas.get(normalizar(salida))
+            if choque is not None:
+                raise RuntimeError(
+                    "La salida '{}' apunta a la MISMA RUTA que la tabla '{}': este "
+                    "script no escribe en tablas de métricas, ni publicadas ni del "
+                    "barrido.".format(salida, choque))
 
     def _escribir_md(self):
         ruta = os.path.join(config.RESULTADOS_DIR, self.NOMBRE_MD)
@@ -608,10 +1241,13 @@ class AgregadorSemillas:
                 len(self.semillas),
                 ", ".join(str(s) for s in self.semillas)),
             "",
-            "La **semilla 42 no está aquí**, y es deliberado: es el titular de "
-            "5.1-5.3 y un punto **independiente** de esta banda, no uno de sus "
-            "sumandos (razón completa en el encabezado de `config.py`). Al citar, "
-            "el titular va al lado de la banda, nunca dentro de ella.",
+            "La **semilla 42 no entra en ninguna banda**, y es deliberado: es el "
+            "titular de 5.1-5.3 y un punto **independiente**, no uno de los "
+            "sumandos de su propia media (razón completa en el encabezado de "
+            "`config.py`). `n`, `media`, `sd`, `mín` y `máx` son de las **diez** "
+            "semillas del barrido. Lo que sí aparece —desde el 2026-08-13— es su "
+            "valor **al lado** de la banda, para poder decir cuántas veces cae "
+            "fuera sin contarlo a mano: ver «El titular frente a la banda».",
             "",
             "Lo que **sí varía** entre estas corridas y lo que **no** está "
             "declarado en `Implementacion/PIPELINE.md`, subsección «El andamiaje "
@@ -634,18 +1270,23 @@ class AgregadorSemillas:
             "su texto íntegro está en la columna `alcance` del CSV, que es la "
             "fuente.".format(self.LARGO_ALCANCE_MD),
             "",
-            "El CSV (`dispersion_semillas.csv`) trae por celda tres columnas más "
+            "El CSV (`dispersion_semillas.csv`) trae por celda cinco columnas más "
             "que aquí no caben y que hay que mirar antes de citar una banda: "
-            "`commits_origen`, `commit_agregador` y `decisiones_no_constantes` (el "
+            "`commits_origen`, `commit_agregador`, `decisiones_no_constantes` (el "
             "reparto del `balanceo`/`config_ganadora` cuando no fue el mismo en las "
-            "diez semillas; vacío = lo fue).",
+            "diez semillas; vacío = lo fue), `distancia_fuera_banda_42` y "
+            "`commit_semilla_42`.",
+            "",
+        ]
+        partes += self._seccion_titular_md()
+        partes += [
             "",
             "## Calidad",
             "",
         ]
         calidad = df[df["bloque"] == self.BLOQUE_CALIDAD].sort_values(
             ["tabla_origen", "set_features", "algoritmo", "metrica"])
-        partes.append(self._tabla_md(calidad))
+        partes.append(self._tabla_md(calidad, con_titular=True))
 
         maquina = df[df["bloque"] == self.BLOQUE_MAQUINA].sort_values(
             ["tabla_origen", "set_features", "algoritmo", "metrica"])
@@ -685,10 +1326,13 @@ class AgregadorSemillas:
         print("=" * 70)
         print("   Semillas esperadas ({}): {}".format(
             len(self.semillas), self.semillas))
-        print("   La semilla {} NO entra (es el titular publicado, punto "
-              "independiente de la banda)".format(config.SEMILLA_POR_DEFECTO))
-        print("   Tablas leídas: SOLO las '*{}.csv' — ninguna de las nueve "
-              "publicadas se abre".format(config.SUFIJO_TABLA_SEMILLAS))
+        print("   La semilla {} NO entra en ninguna banda (es el titular "
+              "publicado, punto independiente): solo se COMPARA contra "
+              "ella".format(config.SEMILLA_POR_DEFECTO))
+        print("   Bandas: SOLO desde las '*{}.csv'. Las publicadas se abren en "
+              "LECTURA y solo para el valor del titular; ninguna se "
+              "escribe".format(config.SUFIJO_TABLA_SEMILLAS))
+        self._comprobar_salidas_no_publicadas()
         print("-" * 70)
 
         for spec in self.ESPECIFICACION:
@@ -711,6 +1355,13 @@ class AgregadorSemillas:
                       if f["bloque"] == self.BLOQUE_CALIDAD),
                   sum(1 for f in self.filas
                       if f["bloque"] == self.BLOQUE_MAQUINA)))
+        # EL TITULAR, emitido por el script: esta cifra se citaba a mano.
+        fuera, casadas = self._recuento_titular()
+        print("TITULAR (semilla {}) FUERA DE BANDA: {} de {} celdas de calidad "
+              "casadas".format(config.SEMILLA_POR_DEFECTO, fuera, casadas))
+        if self.celdas_sin_casar:
+            print("   ({} celda(s) de calidad SIN casar: no cuentan en ninguna de "
+                  "las dos cifras — ver avisos)".format(self.celdas_sin_casar))
         print("=" * 70)
         return self.filas
 
@@ -719,8 +1370,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Agrega las tablas del barrido de semillas "
                     "('metricas_*_semillas.csv') en la tabla de dispersión de "
-                    "A.3: n, media, sd muestral, mín y máx. No entrena nada y no "
-                    "abre ninguna de las nueve tablas publicadas."
+                    "A.3: n, media, sd muestral, mín y máx, más la comparación del "
+                    "titular de la semilla 42 contra cada banda ('N de M celdas "
+                    "fuera'). No entrena nada y no escribe en ninguna tabla "
+                    "publicada: las abre en LECTURA solo para el valor del titular."
     )
     parser.add_argument(
         "--semillas", type=int, nargs="+", default=None,

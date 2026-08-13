@@ -290,6 +290,15 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
     `config.commit_actual()` no puede llevar el hash del commit que lo versiona). **Re-anclaje hecho
     el 2026-08-13** en `PIPELINE.md` y `GUIA_RESULTADOS.md` (`ea35ce3`): la versión del código que
     produjo la agregación es **`9ad971b`**, y es ese hash el que va en `A.3`, no `df30cb2-sucio`.
+    → **SUPERADO EL MISMO 2026-08-13 por la automatización del «13 de 98»** (ver `## Cerradas`): los
+      dos artefactos se **regeneraron dos veces** y hoy llevan `commit_agregador = ddade37-sucio`,
+      que es **pre-commit** y tiene **ficha propia abierta** de re-anclaje. **T7 cita el sello
+      re-anclado al commit de ESTE ciclo, no `9ad971b` y no `ddade37-sucio`; y no se inventa el
+      hash.** El artefacto trae además **sección propia con el recuento «fuera de banda» de la
+      semilla 42** y **la prohibición de citar el 13 de 98 queda LEVANTADA** — con las **tres
+      salvedades** que hay que pegar junto a la tabla (extremos sin redondear con la igualdad
+      contando como dentro; **10 de las 98 celdas son umbrales**, denominador alternativo **88**; y
+      **titular y banda de commits distintos**), detalladas en la viñeta `5.2` de **T11**.
   - **Checklist de Pineau: los 11 ítems FT, NO los 17.** Los otros seis van de liberación de código y
     presupuesto de cómputo y no aplican; rellenarlos es paja que diluye los que importan. Decir
     explícitamente que son el subconjunto FT del checklist de 17.
@@ -394,6 +403,19 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
     `ESPECIFICACION` para anomalías**: **no figura en la tabla de dispersión**, cítese por `f1`;
     (c) **la semilla 42 cae fuera de la banda en 13 de 98 celdas** — y ese recuento es **cálculo
     manual, no lo produce ningún script**: no citarlo en la memoria hasta que esté automatizado.
+    → **PROHIBICIÓN LEVANTADA el 2026-08-13: el recuento YA ESTÁ AUTOMATIZADO** (ver `## Cerradas`,
+      Decisión 3 de la Fase 0). El titular **sale del artefacto** —cuatro columnas nuevas en
+      `agregar_semillas.py` y sección propia en `dispersion_semillas.md`— y **el número manual
+      resiste: 13 de 98, con 0 celdas sin casar**. **Ya se puede citar**, con sus **tres salvedades,
+      que van escritas al lado y no omitidas**: (i) el **13 solo sale con los extremos SIN
+      redondear** —con el mín/máx a 4 decimales de la tabla salen **14**, porque `f1_u2r` de
+      RandomForest en 122 tiene la 42 en **0,318182**, exactamente en el mínimo—, y el criterio
+      adoptado es **la igualdad cuenta como dentro, simétrico en ambos extremos**; (ii) **de las 98
+      celdas, 10 son umbrales**, no métricas sobre D2 —descontarlos daría denominador **88**, y **una
+      de las tres celdas de borde que deciden el recuento es un umbral**—; (iii) **el titular y la
+      banda NO salen del mismo commit** (semilla 42 de `1163c90` y `274923d-sucio`; bandas de
+      `df30cb2`), así que parte de la distancia podría ser **deriva de código, no dispersión por
+      semilla**: es **salvedad de procedencia, no invalidación**.
     Y **la decisión de balanceo de 4.3.4 no es constante entre semillas** (`class_weight` gana en
     **17 de 40** celdas de DecisionTree/RandomForest, estando cerrada con **n=1**) — eso toca `5.4`
     o `4.3.4`, y **lo decide Francisco**, no esta ficha.
@@ -813,6 +835,18 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
          real es 8-10 %»). *(Antes de la pasada del 2026-08-12 estas dos eran `:172` y `:247`.)*
      - **Cuál de los dos rangos es el bueno se decide CONTRA EL ARTEFACTO** (`Resultados/metricas_*.csv`,
        columna `bin_fpr`), **no por preferencia ni por antigüedad del texto**.
+       → **RESUELTO CONTRA ARTEFACTO el 2026-08-13, PENDIENTE DEL OK DE FRANCISCO para despachar la
+         corrección** (Decisión 1 de la Fase 0 del plan de cierre). El hallazgo: **«8,5-16 %» era de
+         OTRA TABLA y OTRA COLUMNA** — `Resultados/metricas_anomalias.csv`, columna `fpr`, los cuatro
+         detectores de anomalías **sueltos**, con el extremo alto puesto por **LocalOutlierFactor
+         (16,6 %), que fue DESCARTADO**. El **híbrido** es **10,2 % en 54** y **8,5 % en 122**
+         (`Resultados/metricas_hibrido.csv`, columna `bin_fpr`).
+       → **Recomendación del `leader`: retirar «8,5-16 %» y citar LAS DOS CIFRAS EXACTAS**, no el
+         rango redondeado «8-10 %» — redondea **10,17 a la baja** y deja el valor real **fuera** del
+         rango. Si además se cita la banda entre semillas, es **4,9-10,7 %** y va **rotulada como
+         otra cosa**, no fundida con las dos anteriores.
+       → **Esto NO levanta el bloqueo:** sigue sin tocarse ninguno de los cuatro sitios hasta que
+         Francisco decida, y **cuando decida, los cuatro en la misma pasada**.
      - **PENDIENTE DE DECISIÓN DE FRANCISCO.** Hasta que la tome **no se toca ninguno de los cuatro
        sitios**: corregir unos y dejar otros deja el repo a medio corregir, que es peor que la
        discrepancia actual porque la esconde.
@@ -985,6 +1019,13 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
   - **La contradicción ya es interna y visible en el repo:** `PIPELINE.md:337`, `:302-309` (nota
     fechada del 2026-08-12) y `:1307` **ya** dicen 16 filas y «las dos variantes». Quien lea los dos
     ficheros el mismo día se encuentra con dos alcances distintos para la misma decisión.
+    → **Corrección de ancla del 2026-08-13: `PIPELINE.md:1307` es un ancla DÉBIL; la buena es
+      `PIPELINE.md:1544`.** Citar esa.
+  - **Precisión del 2026-08-13 sobre el texto de sustitución, que hay que corregir DENTRO de esta
+    ficha antes de aplicarlo: la fórmula «SMOTE vs class_weight» es IMPRECISA.** Solo vale para
+    **DecisionTree y RandomForest**; **KNN e HistGradientBoosting comparan SMOTE contra NADA**,
+    porque sklearn no les admite `class_weight` (`firmas.py:91-96`). El «**4 algoritmos**» sí es
+    correcto. **No aplicar el texto redactado sin este arreglo.**
   - **PERMISO DE ESCRITURA — la parte que hace especial a esta ficha:** ningún agente de código puede
     escribir en `resumen-de-decisiones.md`, que lo mantiene el hilo principal con Francisco delante.
     El `ml-implementador` **redacta y verifica el texto de sustitución**; **la edición la aplica el
@@ -995,20 +1036,6 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
     `_experimento_balanceo`). Eso no se toca. **Anclas corregidas el 2026-08-13** (dictamen de
     `auditor-ml`): decían `firmas.py:158-159` —que es `load_specialized_splits`, no el balanceo— y
     `config.py:463-467`. **No volver a citar las viejas.**
-
-- [ ] **El recuento «13 de 98» es cálculo manual y ya está escrito en documentos versionados** (🟠) · Código · `ml-implementador` — **ALCANCE NUEVO, PENDIENTE DE DECISIÓN DE FRANCISCO**
-  El titular **13 de 98** (celdas en las que la semilla 42 cae **fuera de la banda** de las diez)
-  **no lo produce ningún script**: `agregar_semillas.py` **no tiene columna ni cálculo de banda**, y
-  su propio texto (`:34`, `:611-614`) declara que **la semilla 42 no entra en la agregación**. Es
-  **cálculo manual**, lo que la regla del proyecto prohíbe para algo que va a la memoria.
-  - **Agravante que no estaba anotado en ninguna ficha: la cifra manual YA ESTÁ ESCRITA en un
-    documento versionado** — `Implementacion/PIPELINE.md:1335` («descontarlos rompería el titular
-    "13 de 98"»), además de `features.md:393` y la fila `9ad971b` de `## Cerradas`.
-  - **Arreglo propuesto: una columna nueva** en `agregar_semillas.py` que emita el recuento «fuera de
-    banda» de la semilla 42, para que el titular salga del artefacto y no de una cuenta a mano.
-  - **Recomendación de orden: hacerlo ANTES de que `T7` y `T11` lo citen, no después.** Hoy la
-    instrucción vigente en T11 es **no citarlo en la memoria hasta que esté automatizado**.
-  - **NO está aprobada: es recomendación.** La acepta o la retira **Francisco**.
 
 - [ ] **La decisión de balanceo de `4.3.4` no es constante entre semillas** · Código · **PENDIENTE DE DECISIÓN DE FRANCISCO**
   `class_weight` gana en **17 de 40** celdas de DecisionTree/RandomForest a lo largo de las 10
@@ -1024,6 +1051,33 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
     pasar por `auditor-ml` y **movería cifras publicadas**, así que **no se toca `firmas.py`** por
     iniciativa de nadie.
   - **Puntero cruzado:** la viñeta de `5.2` de **T11** remite aquí; **T11 no la resuelve**.
+
+### Residuos de la automatización del «13 de 98» — altas del 2026-08-13
+
+> Salen del ciclo que **cerró** la ficha 🟠 del recuento manual (Decisión 3 de la Fase 0 del plan de
+> cierre, aprobada por Francisco el **2026-08-13**; ver `## Cerradas`). **Fichar no es resolver:
+> ninguna de las dos se ha tocado.** **Ninguna lleva commit ni fecha de cierre.**
+
+- [ ] **La salvedad de procedencia de `dispersion_semillas.md` enumera los dos commits pero no
+  imprime los recuentos 94/4** (🟡) · Código · `ml-implementador`
+  El `.md` declara que el titular y la banda **no salen del mismo commit** —la semilla 42 viene de
+  `1163c90` y de `274923d-sucio` (la cascada invertida), y las bandas de `df30cb2`—, pero **no dice
+  cuántas celdas aporta cada uno**: son **94 y 4**. El **CSV sí lo da celda a celda**, así que el
+  dato existe y solo falta emitirlo agregado. Importa porque **T7 pega ese `.md` en `A.3`** y un
+  lector no puede dimensionar la salvedad sin los recuentos.
+
+- [ ] **El sello `ddade37-sucio` de los artefactos regenerados queda pendiente de re-anclaje en
+  prosa** · Código · `ml-implementador`
+  `Resultados/dispersion_semillas.csv` y `.md` se regeneraron con `commit_agregador = ddade37-sucio`,
+  que es **pre-commit**: hay que re-anclarlo en prosa (`PIPELINE.md`, `GUIA_RESULTADOS.md`) al commit
+  de este ciclo **cuando exista**. **No inventar el hash.**
+  - **Sería el CUARTO re-anclaje del proyecto** y va **con la misma forma que los tres anteriores**
+    (`fc1c6b4-sucio → 9af842c`, `00c3c3e-sucio → 54d1349`, `df30cb2-sucio → 9ad971b`): **el sello
+    impreso DENTRO del artefacto NO se toca** —lo estampa `config.commit_actual()` y no puede llevar
+    el hash del commit que lo versiona, porque ese commit tiene que existir después—.
+  - **Consecuencia para `T7`: cita el sello RE-ANCLADO, no el impreso.** Y ojo: el re-anclaje
+    anterior (`df30cb2-sucio → 9ad971b`, commit `ea35ce3`) **queda superado por este** para los dos
+    artefactos de dispersión, que ya no son los de `9ad971b`.
 
 ### Huecos del informe detectados contra disco — altas del 2026-08-13
 
@@ -1239,6 +1293,7 @@ se atasca en la Fase 0, no en la Fase 4.**
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-13 | Código | **El titular «13 de 98» ya SALE DEL ARTEFACTO: automatizado el recuento «fuera de banda» de la semilla 42** (ficha 🟠 del lote «Residuos del cómputo de T4»). Es la **Decisión 3 de la Fase 0** del plan de cierre, aprobada por Francisco el **2026-08-13**; la ficha estaba marcada «NO está aprobada: es recomendación» y deja de estarlo. Cuatro columnas nuevas en `agregar_semillas.py` —`valor_semilla_42`, `dentro_banda_42`, `distancia_fuera_banda_42`, `commit_semilla_42`—, **sección propia en el `.md`** y **recuento por stdout**. **El número manual RESISTE: 13 de 98, con 0 celdas sin casar.** Artefacto **regenerado dos veces**; **las nueve `metricas_*.csv` publicadas quedan con md5 IDÉNTICO antes y después**, verificado en las dos pasadas, y **cero entrenamiento**. **Dictamen de `auditor-ml`: APTO CON CAMBIOS**, los **cinco hallazgos altos aplicados y reverificados** — prosa que seguía afirmando que el recuento era manual, sellos desfasados contra disco, el invariante «**no abre las tablas publicadas**» que **ya no se cumple** y hubo que reescribir, el caveat de los 10 umbrales, y la salvedad de procedencia entre commits. **LAS TRES SALVEDADES QUE T7 TIENE QUE PEGAR JUNTO A LA TABLA EN `A.3`, porque se van con el `.md`:** (1) **el 13 solo sale con los extremos SIN redondear** — con el mín/máx a **4 decimales** de la tabla salen **14**, porque `f1_u2r` de RandomForest en **122** tiene la 42 en **0,318182**, **exactamente en el mínimo**, y el redondeo la empuja fuera; criterio adoptado: **la igualdad cuenta como DENTRO, simétrico en ambos extremos**, documentado y **emitido en el propio artefacto**; (2) **de las 98 celdas, 10 son UMBRALES**, no métricas sobre D2 — el `.md` ya lo declara: descontarlos daría denominador **88**, y **una de las tres celdas de borde que deciden el recuento es un umbral**; (3) **el titular y la banda NO salen del mismo commit** — la semilla 42 viene de **`1163c90` (94 celdas)** y **`274923d-sucio` (4, la cascada invertida)**, y las bandas de **`df30cb2`**, así que **parte de la distancia podría ser deriva de código, no dispersión por semilla**: queda como **salvedad de procedencia, NO como invalidación**. **Consecuencia inmediata: queda LEVANTADA la instrucción vigente de «no citar el 13 de 98 en la memoria hasta que esté automatizado»**, anotado dentro de **T7** y **T11**. **Lo que este ciclo NO cierra:** la **Tarea B** (bullet **Q6** de `resumen-de-decisiones.md:120`) **sigue ABIERTA** —el texto de sustitución está redactado y verificado, pero **lo aplica el hilo principal con Francisco delante**—, y de paso se corrigen dentro de esa ficha **dos precisiones nuevas**: el ancla `PIPELINE.md:1307` es **débil** (la buena es **`:1544`**) y la fórmula «**SMOTE vs class_weight**» es **imprecisa** —solo vale para DecisionTree y RandomForest; **KNN e HistGradientBoosting comparan SMOTE contra NADA**, porque sklearn no les admite `class_weight`—, mientras que el «4 algoritmos» **sí** es correcto; la **Decisión 1 (rango de FPR)**, **resuelta contra artefacto pero PENDIENTE DEL OK DE FRANCISCO** —«**8,5-16 %**» era de **otra tabla y otra columna** (`metricas_anomalias.csv`, columna `fpr`, los cuatro detectores **sueltos**, con el extremo alto puesto por **LocalOutlierFactor, 16,6 %, que fue descartado**), y el híbrido es **10,2 % en 54** y **8,5 % en 122** (`metricas_hibrido.csv`, `bin_fpr`)—; y **T4**, que **sigue abierta** por el **consumo** de la banda (`A.3`/**T7** y `5.2`/`5.4`/**T11**). **Dos residuos nuevos, ambos con ficha en `## Abiertas`:** la salvedad de procedencia del `.md` **enumera los dos commits pero no imprime los recuentos 94/4** (🟡, el CSV sí los da celda a celda) y el sello **`ddade37-sucio`** de los artefactos regenerados es **pre-commit** y queda **pendiente de re-anclaje en prosa** al commit de este ciclo — **sin inventar el hash**, igual que los tres re-anclajes anteriores. Ficheros: `Implementacion/app/agregar_semillas.py`, `Implementacion/PIPELINE.md`, `Resultados/GUIA_RESULTADOS.md`, `README.md`, `Resultados/dispersion_semillas.csv` y `Resultados/dispersion_semillas.md` | — |
 | 2026-08-13 | Código | **Re-anclado en prosa el sello `commit_agregador = df30cb2-sucio` → `9ad971b`** (ficha 🟡 del lote «Residuos del cómputo de T4»). **Tercer re-anclaje del proyecto**, tras `fc1c6b4-sucio → 9af842c` (`97e679b`) y `00c3c3e-sucio → 54d1349` (`ad62665`), y **con la misma forma que los dos anteriores**. Ficheros: `Implementacion/PIPELINE.md` y `Resultados/GUIA_RESULTADOS.md` (tabla de corridas **y** prosa en ambos). **Cero cómputo, cero artefactos regenerados, ninguna cifra publicada movida.** **El sello impreso DENTRO de `Resultados/dispersion_semillas.csv`/`.md` NO se tocó:** las **198/198 filas siguen con `commit_agregador = df30cb2-sucio`** — lo que estampa `config.commit_actual()` **no puede** llevar el hash del commit que lo versiona, porque tiene que existir antes. **Consecuencia para `T7`: cita el sello RE-ANCLADO, no el impreso.** De paso se cerró el **pendiente hermano de `PIPELINE.md:1152`** (el commit de cierre del barrido ya existe) y se **acotaron dos recuentos sin moverlos**, verificados fichero a fichero por el auditor: **2.320 filas** en las nueve `metricas_*_semillas.csv` y **232 = 222 + 10** en las nueve publicadas. **Dictamen de `auditor-ml`: APTO CON CAMBIOS**, los tres cambios aplicados en la segunda pasada. **Lo que este ciclo NO cierra:** la ficha 🟠 de `resumen-de-decisiones.md:120` (Q6, «se corre solo sobre el set 54» → «en las dos variantes») **sigue ABIERTA** — el texto de sustitución está redactado y verificado, pero **la edición la aplica el hilo principal con Francisco delante**; y **T4 sigue abierta** por el consumo de la banda (`A.3`/**T7** y `5.2`/`5.4`/**T11**) | `ea35ce3` |
 | 2026-08-13 | Código | **La parte de CÓMPUTO de T4 — barrido de 10 semillas CORRIDO y agregado. NO cierra T4: `T4` SIGUE ABIERTA por el CONSUMO del resultado** — la tabla de dispersión de `A.3` (**T7**) y los párrafos de `5.2`/`5.4` (**T11**). Registrado como trabajo sin ficha propia (carril Intervención dentro de T4). **Verificación de la corrida por `auditor-ml`: APTO** — y la primera cosa que descubrió es que **el barrido ya estaba corrido, contra lo que decía el registro**: corrió el **2026-08-12T22:09 → 2026-08-13T00:38**, **≈2 h 29 min** (así que **ni el ≈160 min ni las 4-5 h son citables**: la medida real es esa). **2.320 filas**, **20/20 celdas completas** (10 semillas × 2 variantes, `54` y `122_sin_seleccion`), sello de procedencia **`df30cb2` único y limpio**. **Aislamiento intacto, que es lo que todo el andamiaje existe para garantizar:** las nueve tablas publicadas, los 20 `.joblib` y las 39 figuras **sin tocar**; **cero residuos `_semilla`** en `Resultados/modelos/`; los **100 logs** de `Resultados/logs_barrido/` terminan en `COMPLETADO` **sin tracebacks**. Verificado además que la **propagación de `--semilla` es real y no cosmética**. **Agregador ejecutado** (`agregar_semillas.py`) → `Resultados/dispersion_semillas.csv` y `.md`, **198 filas** (98 de calidad + 100 de dispersión de máquina), `sd` **muestral `ddof=1`**. **Bug corregido en el agregador, y es una REINCIDENCIA del defecto que cerró T1:** `_tabla_md` **no emitía `alcance` ni `tabla_origen`**, así que el `.md` —el artefacto que **T7** pega en `A.3`— rotulaba **`54 | RandomForest`** tanto para el clasificador de firmas como para la cascada invertida, dos cosas distintas bajo la misma etiqueta; corregido y agregador **re-ejecutado**. **La auditoría tomó tres pasadas: la 2.ª salió NO APTO.** **LOS RESULTADOS, que es para lo que existía T4:** (1) **el hueco RandomForest vs HistGradientBoosting NO sobrevive** — `f1_macro` RF-54 **[0,7779–0,8205]** vs HGB-54 **[0,7680–0,8327]** **solapan de par en par**, y el **máximo de HGB supera la media de RF**: **el orden no queda establecido**. Como observación **pareada**, RF gana en **8 de 10** semillas. **Toca `5.2`** — y esto es exactamente el hallazgo que la ficha de T4 anticipaba («si los intervalos se solapan, decirlo y no establecer el orden»), **no un desastre**. (2) **El hueco Autoencoder vs IsolationForest SÍ aguanta:** bandas **disjuntas** en `f1`, AE gana **10 de 10**. **Aviso:** `accuracy` **no está en la lista cerrada de `ESPECIFICACION` para anomalías**, así que el contraste publicado **0,8605 vs 0,8257** (que son *accuracies*) **no figura en la tabla de dispersión**. (3) **El titular publicado de firmas es el punto más favorable de once corridas:** firmas 54-RF `f1_macro` **0,8223** queda **por encima del máximo de las diez semillas (0,8205)**, con media **0,8035**. **Obliga a declarar la banda junto al titular**; en **122** el mismo modelo cae **al otro lado**. (4) La **semilla 42 cae fuera de la banda en 13 de 98 celdas**. (5) **La decisión de balanceo de 4.3.4 NO es constante entre semillas:** `class_weight` gana en **17 de 40** celdas de DecisionTree/RandomForest, y esa decisión estaba **cerrada con n=1**. (6) **Alcance de lo medido, a escribir así y no de otra manera:** es dispersión **de los modelos sobre splits y set de características FIJOS** (`program.py` no está parametrizado, su `random_state=42` es literal), **no «dispersión del sistema»**. **Advertencia de método que queda anotada:** el recuento **«13 de 98» no lo produce ningún script** — es **cálculo manual**, lo que la regla del proyecto prohíbe para algo que va a la memoria; **automatizarlo** (columna nueva en el agregador) es **alcance nuevo pendiente de decisión de Francisco**. **Pendiente de re-anclaje de sello en prosa:** `commit_agregador = df30cb2-sucio`, y el auditor dictaminó **NO regenerar** — un artefacto que estampa `config.commit_actual()` **no puede** llevar el hash del commit que lo versiona porque tiene que existir antes; **se suma a los dos re-anclajes que ya existían**. Ficheros: `Implementacion/app/agregar_semillas.py`, `Implementacion/PIPELINE.md`, `Resultados/GUIA_RESULTADOS.md`, `README.md` (modificados); `Resultados/dispersion_semillas.csv` y `.md` **(nuevos)**; los **nueve `Resultados/metricas_*_semillas.csv`** del barrido **(nuevos)**; `Resultados/verificacion_semilla_joblib.txt` (modificado) | `9ad971b` |
 | 2026-08-12 | Código | **El traceback crudo de `FileNotFoundError` al cargar los `.joblib`, arreglado — más tres correcciones de documentación en el runbook del barrido. NO es T4: `T4` SIGUE ABIERTA y ya solo le falta LANZAR el barrido de 4-5 h.** Registrado como trabajo sin ficha propia (carril Intervención dentro de T4): era el **🟡 anotado en la ficha de T4** y Francisco lo mandó arreglar **antes** de lanzar. **Cero cambios de lógica, umbrales, métricas o escritura de tablas; ningún número publicado se mueve.** Ficheros (3, todos bajo `Implementacion/`): (1) **`app/hibrido.py:200-219`** — `_cargar_joblib` envuelve el `joblib.load` en `try/except FileNotFoundError` y relanza `RuntimeError ... from None` con **ruta, script previo** (`anomalias.py`/`firmas.py` según prefijo), **variante con su flag `--sin-seleccion`** y **semilla si no es la 42**; sigue **abortando con exit ≠ 0 y escritura cero**, que era el comportamiento correcto — lo que fallaba era la usabilidad en una corrida desatendida de 4-5 h. (2) **`app/cascada_invertida.py:198-213`** — lo mismo en `_cargar_joblib_firma`, **simetrizando con `_leer_umbral_conf`**, que ya lo tenía; el caso «joblib **AUSENTE**» dejaba de estar cubierto por las salvaguardas auditadas, que solo cubrían «joblib de **OTRA** semilla presente». (3) **`PIPELINE.md`**. **La cita falsa que merece quedar escrita:** `cascada_invertida.py:314` citaba **`hibrido.py:301`** como respaldo de **P-5** y esa línea es hoy **la regla τ**, otra decisión distinta; reanclada **por símbolo** (`hibrido.py::_ensamblar_prediccion`) y **anotada dentro de T9**, que arrastraba la misma cita. **Tres correcciones en el runbook, las tres por afirmar en absoluto algo que el código no sostiene:** **paso 0 nuevo** (`:1317-1320`, razón técnica en `:1350-1352`) — comprobar que el árbol está **limpio bajo `Implementacion/` ANTES de lanzar**, porque `config.commit_actual()` sella **`-sucio`** y las **2.320 filas** del barrido nacerían con un sello **no recuperable desde git**, que es exactamente el defecto que este proyecto ya ha pagado dos veces re-anclando sellos; **salvedad al «abortan»** de `:1084-1096` — la **tabla de los cuatro detectores es la excepción**: omite el detector con aviso y deja `metricas_hibrido_0day*` en **54 filas en vez de 72**, y estaba escrito en absoluto; y **`:1376-1377`**, que **nombraba la función equivocada**: citaba `config.sufijo_de_semilla()`, que **existe pero toma un argumento** y devuelve `"_semilla42"` para el 42 (la usa el **borrado** del barrido); la que gobierna los nombres de artefacto de la corrida es **`config.sufijo_semilla()`** (`config.py:203-213`), y **con la 42 devuelve cadena vacía**, que es lo que hace verdadera la garantía de T4 (el filtro `*_semilla*` no alcanza nada de la 42). **El texto original acertaba en la afirmación y erraba en el nombre; la corrección arregla el nombre y CONSERVA la afirmación.** Verificado ejecutando las dos funciones, no leyéndolas. **Auditoría: tres pasadas de `auditor-ml`, veredicto final APTO** — con la salvedad de que el resumen del cierre invirtió este punto y se corrigió en hilo principal contra ejecución. **Dos cifras corregidas contra medida propia, que sustituyen a las que arrastraba la ficha de T4:** el espacio libre en C: son **65,2 GB** (el «80,26 GB» está **caducado**, y aparece también en la fila del andamiaje de `54d1349`, que es historial y no se reescribe) y el total de filas del barrido son **2.320 verificadas por dos vías** (no «~2.200») | `91f2ed7` |

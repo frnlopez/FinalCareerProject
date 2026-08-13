@@ -21,7 +21,7 @@ Aquí se vuelca **todo lo que generan los scripts** de `Implementacion/app/`:
 | `cascada_invertida.py` | ejecutado (54 y 122) | `metricas_cascada_invertida.csv` y `figuras\cascada_invertida_<set>.png`. **No entrena nada**: carga `firma_*.joblib` y lee el umbral de `hibrido_*.joblib` |
 | `evaluacion.py` | módulo común | No deposita por sí mismo: lo usan los cuatro scripts de modelos y `cascada_invertida.py` |
 | `barrido_semillas.py` | **corrido** (T4, 2026-08-12 22:09 → 00:38, sello `df30cb2`) | Las **nueve** tablas `metricas_*_semillas.csv` (**2.320 filas** en total), a través de los cinco scripts hijos, más los artefactos sufijados `_semilla<N>` **no versionados**: **260** figuras `figuras\*_semilla*`, **20** `firmas_reglas_*_semilla*.txt` y **100** logs en `logs_barrido\`. Los `.joblib` por semilla los borra él mismo al cerrar cada semilla (en `modelos\` no queda ninguno). Además, `verificacion_semilla_joblib.txt`: la traza de que los 20 `.joblib` publicados declaran `semilla = 42` |
-| `agregar_semillas.py` | **corrido dos veces** (T4, 2026-08-13: **7,2 s** la primera y **1,70 s** la definitiva, tras el arreglo de `_tabla_md()`; **en disco están los de la segunda**, cabecera `2026-08-13T07:43:40`) | `dispersion_semillas.csv` y `dispersion_semillas.md` — **198 filas** (98 de *calidad* + 100 de *dispersión de máquina*) con n, media, sd muestral (`ddof=1`), mín y máx; `commits_origen = df30cb2` único en todas las celdas y `commit_agregador = df30cb2-sucio` — sello impreso, **re-anclado en prosa a `9ad971b`** (§6.2) |
+| `agregar_semillas.py` | **corrido tres veces** (T4, 2026-08-13: **7,2 s** la primera; **1,70 s** la segunda, tras el arreglo de `_tabla_md()`; y una tercera con el **titular automático**. **En disco están los de la tercera**, cabecera `2026-08-13T19:54:48`) | `dispersion_semillas.csv` y `dispersion_semillas.md` — **198 filas** (98 de *calidad* + 100 de *dispersión de máquina*) con n, media, sd muestral (`ddof=1`), mín y máx, más el valor de la semilla 42 al lado de cada banda y el recuento **«13 de 98»** fuera de banda; `commits_origen = df30cb2` único en todas las celdas y `commit_agregador = ddade37-sucio` — sello impreso, **pendiente de re-anclaje** (el de la segunda pasada, `df30cb2-sucio`, quedó re-anclado a `9ad971b`; §6.2) |
 
 **Regla de oro:** nada de esta carpeta se edita a mano. Todo se **regenera** ejecutando los
 scripts (con `random_state=42`); si un número va a la memoria, tiene que salir de aquí. Para
@@ -488,23 +488,36 @@ anterior:
 | Qué | Semilla 42 (lo publicado) | Semilla N ≠ 42 (el barrido) |
 |---|---|---|
 | `.joblib`, figuras, `firmas_reglas_*.txt` | nombre de siempre | sufijo `_semilla<N>` |
-| Las nueve tablas de métricas | `metricas_<x>.csv` | `metricas_<x>_semillas.csv` (la publicada **no se abre**) |
+| Las nueve tablas de métricas | `metricas_<x>.csv` | `metricas_<x>_semillas.csv` (la publicada **no la abre ningún script de modelos**; el **agregador** sí, en lectura — ver más abajo) |
 
 **El barrido ya corrió** (2026-08-12 22:09 → 00:38, sello `commit = df30cb2` limpio; sus nueve tablas
 quedaron versionadas en `9ad971b`) y **ya se agregó**
-(2026-08-13). El agregador se ejecutó **dos veces**: la primera en **7,2 s** y la definitiva en
-**1,70 s**, ya con el arreglo de `_tabla_md()` que añade las columnas `Tabla de origen` y `Alcance`;
-**los dos ficheros de dispersión que hay en disco son los de la segunda** (cabecera
-`2026-08-13T07:43:40`, `commit_agregador = df30cb2-sucio`). Cero `fit` en ambas pasadas: el agregador
-solo lee CSV. Ese sello **no se retoca ni se regenera** —por la razón estructural que explica
+(2026-08-13). El agregador se ha ejecutado **tres veces**, todas con cero `fit` —solo lee CSV—: la
+primera en **7,2 s**; la segunda en **1,70 s**, con el arreglo de `_tabla_md()` que añade las
+columnas `Tabla de origen` y `Alcance` (sello `commit_agregador = df30cb2-sucio`, cabecera
+`2026-08-13T07:43:40`); y la tercera con el **titular automático** —las cuatro columnas `*_42` y el
+recuento «13 de 98», que antes se calculaba a mano—. **Los dos ficheros de dispersión que hay en
+disco son los de la tercera**: cabecera `2026-08-13T19:54:48` y
+`commit_agregador = ddade37-sucio`, verificado en disco el 2026-08-13.
+
+Esos sellos **no se retocan ni se regeneran** —por la razón estructural que explica
 `Implementacion\PIPELINE.md`: un artefacto que estampa `config.commit_actual()` no puede llevar el
 hash del commit que lo versiona, porque ese commit todavía no existe cuando el artefacto se
-escribe—, así que el desajuste se resuelve **en prosa**: el sello `df30cb2-sucio` queda **re-anclado
-al commit de cierre del cómputo de T4, `9ad971b`**, que es el que versiona a la vez
-`agregar_semillas.py`, las nueve tablas del barrido y los dos ficheros de dispersión. **La versión
-del código que produjo la agregación es `9ad971b`, no `df30cb2`**; y el `-sucio` no contamina las
-bandas, que las respalda `commits_origen = df30cb2` limpio. Es el **tercer** re-anclaje del
-proyecto, tras `fc1c6b4-sucio` → `9af842c` y `00c3c3e-sucio` → `54d1349`. Lo que hay en disco:
+escribe—, así que el desajuste se resuelve **en prosa**, sello a sello y sin borrar el historial:
+
+- **Segunda pasada, re-anclada:** `df30cb2-sucio` → **`9ad971b`**, el commit de cierre del cómputo de
+  T4, que versiona a la vez `agregar_semillas.py`, las nueve tablas del barrido y los dos ficheros de
+  dispersión. Ese re-anclaje **sigue siendo válido para lo que nombra** —aquella pasada—, aunque su
+  sello ya no sea el que hay en disco. Fue el **tercer** re-anclaje del proyecto, tras
+  `fc1c6b4-sucio` → `9af842c` y `00c3c3e-sucio` → `54d1349`.
+- **Tercera pasada, PENDIENTE de re-anclaje:** `ddade37` es el commit **anterior** al cambio, así que
+  el sello `ddade37-sucio` no identifica la versión que produjo la agregación; el commit de cierre
+  que sí lo hará **todavía no existe** y aquí no se inventa ningún hash. Se completará cuando exista.
+
+Y el `-sucio` no contamina las bandas, que las respalda `commits_origen = df30cb2` limpio. Lo que sí
+hay que declarar al citar el titular es otra cosa: **titular y banda no salen del mismo commit**
+(`commit_semilla_42` es `1163c90`, o `274923d-sucio` en la cascada invertida, frente a
+`commits_origen = df30cb2`). Lo que hay en disco:
 
 - **`verificacion_semilla_joblib.txt`** — la lista de los **20** `.joblib` publicados con la semilla
   que declara cada uno. Lo genera `python app\barrido_semillas.py --solo-verificar`, que **no entrena
@@ -529,7 +542,11 @@ proyecto, tras `fc1c6b4-sucio` → `9af842c` y `00c3c3e-sucio` → `54d1349`. Lo
   las 198 filas—, y `decisiones_no_constantes` dice, con el reparto y en la misma fila que la media,
   si el `balanceo` o la `config_ganadora` no fueron los mismos en las diez semillas. Aquí **sí**:
   está poblada en **140 de las 198 filas** (15 celdas distintas). Eso no es un fallo: es material de
-  `5.4`.
+  `5.4`. Desde la **tercera** pasada el CSV trae además cuatro columnas del **titular**
+  —`valor_semilla_42`, `dentro_banda_42`, `distancia_fuera_banda_42` y `commit_semilla_42`—, vacías a
+  propósito en el bloque de máquina, y el `.md` la sección «El titular (semilla 42) frente a la
+  banda» con el recuento **13 de 98**. La 42 **no entra** en ningún estadístico: es una comparación
+  al lado de la banda, no un undécimo punto.
 - **260 figuras `*_semilla*`**, **20 `firmas_reglas_*_semilla*.txt`** y **100 logs en
   `logs_barrido\`** — **no se versionan** (ver el `.gitignore` raíz). Del barrido no se cita ninguno
   de estos ficheros: las figuras y las reglas de la memoria son las de la semilla 42.
@@ -552,15 +569,21 @@ dio la primera ejecución real*):
    no sean métricas sobre D2 — descontarlos daría 88 y rompería este titular, y además **uno de los
    tres empates del borde es un umbral**) —7 de
    anomalías, 5 de firmas y 1 del híbrido; baseline (8 celdas) y cascada invertida (4), todas
-   dentro—, comparando contra los valores **crudos** y **no** contra los redondeados a 4 decimales
-   que publica `dispersion_semillas.md`. **Los empates cuentan como dentro** (tres celdas en el borde
+   dentro—, comparando contra los valores **con la precisión con la que se persistieron los CSV de
+   origen** (6 decimales) y **no** contra los redondeados a 4 decimales que publica
+   `dispersion_semillas.md`. **Los empates cuentan como dentro** (tres celdas en el borde
    exacto; contándolas como fuera saldrían 16). El caso a declarar: firmas 54-RF `f1_macro` 42 =
    **0,8223 > máx 0,8205**, o sea que el titular publicado del clasificador de firmas es el punto
    **más favorable** de las once corridas, no el centro (media **0,8035**); eso **no invalida el
    titular** —es el resultado real de su corrida—, pero obliga a **declarar la banda a su lado** en
-   `5.2`. **Este recuento no lo produce ningún script** (`agregar_semillas.py:29-32` «NO DECIDE
-   NADA» y no compara la 42 contra la banda): es cálculo manual y hay que recontarlo si las tablas se
-   mueven. Lista completa de las 13 celdas y los dos matices, en `Implementacion\PIPELINE.md`.
+   `5.2`. **Este recuento lo produce el agregador desde el 2026-08-13**: `_valor_semilla_42()` abre la
+   tabla publicada homóloga **en lectura** —nunca en escritura—, casa la fila de la semilla 42 por
+   clave estricta y `_recuento_titular()` emite «13 de 98» dentro de `dispersion_semillas.md`, con el
+   valor de la 42 y su veredicto en cuatro columnas del CSV. *(Hasta esa fecha esta guía advertía lo
+   contrario —«no lo produce ningún script… es cálculo manual», anclado a `agregar_semillas.py:29-32`,
+   que hoy dice justo lo opuesto—; era cierto cuando se escribió y ha dejado de serlo.)* Si alguna de
+   esas tablas se mueve, **no se recuenta a mano: se vuelve a correr el agregador**. Lista completa de
+   las 13 celdas y los dos matices, en `Implementacion\PIPELINE.md`.
 
 **Cómo se cita la dispersión:** la semilla 42 **no está** en el barrido (las diez son 1…10,
 `config.SEMILLAS_BARRIDO`), así que el titular de 5.1-5.3 es un punto **independiente** de la banda
@@ -572,7 +595,24 @@ Detalle completo en `Implementacion\PIPELINE.md`, subsección «El andamiaje de 
 
 ## 7. Mantenimiento de esta guía
 
-- **Última actualización: 2026-08-13, segunda pasada** (**cero corridas, cero `fit`, cero artefactos
+- **Última actualización: 2026-08-13, tercera pasada** (**cero corridas de modelos, cero `fit` y cero
+  cifras alteradas**; solo texto y código de documentación). Pone al día lo que dejó desfasado la
+  **automatización del titular «13 de 98»** en `agregar_semillas.py`:
+  - §6.2 ya **no** dice que el recuento sea cálculo manual: lo emite el agregador, que **abre las
+    nueve tablas publicadas en LECTURA** para recuperar el valor de la semilla 42 y **sigue sin
+    escribir en ninguna** (la distinción lectura/escritura es la garantía, y se escribe con esas
+    palabras aquí y en la tabla de §6.2).
+  - Los sellos de §6.2 pasan de la **segunda** pasada del agregador (`df30cb2-sucio`,
+    `2026-08-13T07:43:40`) a la **tercera**, que es la que hay en disco (`ddade37-sucio`,
+    `2026-08-13T19:54:48`, verificado en el `.md` y en el CSV). El re-anclaje `df30cb2-sucio` →
+    `9ad971b` **no se borra**: sigue nombrando la segunda pasada. El de la tercera queda **pendiente**
+    hasta que exista su commit de cierre.
+  - **Pendiente de esta misma fecha:** hay una **cuarta** regeneración prevista, la que llevará al
+    `.md` la nota de que 10 de las 98 celdas son umbrales y la salvedad de que titular y banda vienen
+    de commits distintos (las dos ya emitidas por el script, **ninguna de las dos en el fichero
+    todavía**). Volverá a re-sellar los dos artefactos: al correrla, esta sección y §6.2 se releen
+    **contra el fichero en disco**.
+- **Añadido el 2026-08-13, segunda pasada** (**cero corridas, cero `fit`, cero artefactos
   regenerados y cero cifras alteradas**: solo texto). **Re-anclaje textual** del sello
   `commit_agregador = df30cb2-sucio` de `dispersion_semillas.csv`/`.md` a su commit de cierre,
   **`9ad971b`** (§1 y §6.2 de esta guía; la tabla de corridas y el recuadro del barrido en
