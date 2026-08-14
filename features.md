@@ -197,6 +197,29 @@ tres filas del 2026-08-14 de esta tanda.
   `00 Índice TFG.md:8` **no menciona `A.3`**, pero está **fechado el 2026-07-16**, así que es
   **historial** y la recomendación fue **no tocarlo**.
 
+**Tanda 4 — prosa del bloque `2.2` completo. EJECUTADA el 2026-08-14** (arranque de la **Fase 4** del
+plan de cierre), con **4 redactores en paralelo, un fichero cada uno**. Se deja la línea, como las
+cuatro anteriores, **para que nadie la vuelva a despachar**: el detalle está en `## Cerradas`, en las
+filas del 2026-08-14 de esta tanda.
+- **Cubre 4 de las 8 notas del capítulo 2**, todas en
+  `Obsidian_TFG_Vault/02 Marco Teórico/2.2 Ciberseguridad/`: `2.2.2`, `2.2.3`, `2.2.4` y `2.2.5`.
+- **T8 entra en la misma pasada, pero SOLO su parte de `2.2.3`/`2.2.4`** — los cuatro sentidos de
+  «híbrido» (el TFG usa el (a)), que Khraisat et al. 2019 no taxonomiza lo híbrido, y el linaje
+  ADAM 2001 / Tombini 2004. La **definición canónica de «híbrido»** queda fijada en callout
+  `[!important]` de `2.2.3`, y es la que referencia el resto del capítulo.
+- **Decisión 8 APLICADA en `2.2.4`:** término canónico «semisupervisado (one-class)», sin
+  reintroducir «no supervisado».
+- **Proceso:** 4 redactores → auditoría de coherencia entre notas → 3 correctores en paralelo →
+  segunda auditoría → 1 corrección residual. **Dos pases de `auditor-ml`, ambos cerrados sin ningún
+  🔴.**
+- **VIVO Y CON FICHA: las 4 notas restantes del capítulo 2** — `2.1.6`, `2.3.1`, `2.3.2` y `2.3.3`
+  (esta última con la carga T8 de P9/P10 y el modelo de amenaza). Van en la **Tanda 5**.
+- **VIVO dentro de `2.2.2`:** un `> [!todo]` por el **diagrama de bloques del NIDS**, que va a
+  `assets/` — mismo cuello que las figuras de `assets/` que ya bloquean T10.
+- **AVISO QUE TIENE QUE SOBREVIVIR AL PASE EN SERIE DEL `researcher`:** las citas nuevas quedan como
+  `[CITA: …]`, **cero `[n]` nuevos y ningún `[n]` preexistente renumerado**; y **Anderson 1980 ya es
+  `[2]` y Denning 1987 ya es `[3]`**, así que en ese pase hay que **MAPEAR, no dar de alta**.
+
 ---
 
 ## Abiertas
@@ -379,8 +402,12 @@ tres filas del 2026-08-14 de esta tanda.
     - `A.3:159` — **remisión a `5.0`**, que **no existe todavía**: es **T5**. Se resuelve al cerrar
       T5, no antes.
 
-- [ ] **T8 · Cita en el punto de la decisión — capítulo 2** · Informe · `redactor-tfg`
-  - `2.2.3`/`2.2.4`: **los 4 sentidos de «híbrido»** y cuál usa el TFG. En la literatura NSL-KDD
+- [~] **T8 · Cita en el punto de la decisión — capítulo 2** · Informe · `redactor-tfg`
+  - **Estado a 2026-08-14: PARCIALMENTE CERRADA — solo la parte de `2.2.3`/`2.2.4`**, escrita en la
+    **Tanda 4** dentro de la misma pasada que su prosa. La **definición canónica de «híbrido»** vive
+    ya en el callout `[!important]` de `2.2.3`. **Siguen VIVAS las otras dos viñetas**: `2.1.5`/`2.1.6`
+    y `2.3.3`, ambas en la **Tanda 5**. **No se vuelve a encargar `2.2.3`/`2.2.4`.**
+  - `2.2.3`/`2.2.4` (**HECHA, Tanda 4**): **los 4 sentidos de «híbrido»** y cuál usa el TFG. En la literatura NSL-KDD
     «híbrido» designa con la misma frecuencia (a) anomalías + firmas —el de este TFG—, (b) selección
     de características + clasificador, (c) *clustering* + clasificador, (d) dos clasificadores
     supervisados en *ensemble*. Sin acotarlo aquí, toda comparación posterior es ruido. Añadir que la
@@ -634,6 +661,11 @@ tres filas del 2026-08-14 de esta tanda.
   se filtran por el mapa de T8-T12. Estimación: entran 25-30. Volcar ahora produciría una
   bibliografía inflada con entradas que no aparecen citadas en ningún sitio — lo contrario del rigor
   que busca todo este lote.
+  - **AVISO PARA EL PASE EN SERIE DE `[CITA: …]` → `[n]` (2026-08-14, Tanda 4):** el bloque `2.2`
+    quedó redactado **sin un solo `[n]` nuevo** y sin renumerar ninguno preexistente, tal como manda
+    el protocolo. **Anderson 1980 ya es `[2]` y Denning 1987 ya es `[3]`: en ese pase hay que
+    MAPEAR a los números existentes, NO dar de alta entradas nuevas.** Darlas de alta duplicaría dos
+    referencias que ya están en `Bibliografía.md`.
 
 - [ ] **T17 · Volcar las decisiones del grill a `resumen-de-decisiones.md`** · — · `cronista` + `redactor-tfg`
   Acompaña cada cierre del lote. **Parcialmente cubierta:** el volcado a `resumen-de-decisiones.md`
@@ -912,7 +944,13 @@ tres filas del 2026-08-14 de esta tanda.
 > **Recuento real del vault hoy, medido en disco: 44 notas — 31 redactadas, 8 en guion, 3 vacías**
 > (`Resumen` 120 B, `Abstract` 123 B, `6.2 Líneas futuras` 688 B).
 
-- [ ] **La prosa de las 8 notas en guion del capítulo 2 no la encarga ninguna ficha** · Informe · `redactor-tfg`
+- [~] **La prosa de las 8 notas en guion del capítulo 2 no la encarga ninguna ficha** · Informe · `redactor-tfg`
+  **Estado a 2026-08-14: CERRADA PARCIALMENTE, 4 de 8.** La **Tanda 4** redactó el bloque `2.2`
+  completo —`2.2.2`, `2.2.3`, `2.2.4` y `2.2.5`—, con T8 y la Decisión 8 aplicadas en la misma
+  pasada y **dos pases de `auditor-ml` sin ningún 🔴**. **Quedan las 4 restantes, y son lo que
+  mantiene abierta esta ficha:** `2.1.6`, `2.3.1`, `2.3.2` y `2.3.3` (con la carga T8 de P9/P10 y el
+  modelo de amenaza). Van en la **Tanda 5**. **No se vuelve a encargar el bloque `2.2`.** Deja vivo
+  un `> [!todo]` en `2.2.2`: el **diagrama de bloques del NIDS**, que va a `assets/`.
   Las **8 notas están en GUION PURO** —bullets bajo un epígrafe «Guion propuesto», **cero prosa
   redactada**— y **todas llevan `estado: pendiente`** en el frontmatter, línea 4:
   `2.1.6 Metodologías y buenas prácticas` (7502 B), `2.2.2 Sistemas de detección de intrusiones`
@@ -1184,6 +1222,13 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-14 | — | **TANDA 4 (arranque de la FASE 4 del plan de cierre) — CUATRO NOTAS EN PARALELO, un redactor por fichero: la prosa del bloque `2.2` COMPLETO.** Cubre **4 de las 8** notas en guion del capítulo 2, todas en `Obsidian_TFG_Vault/02 Marco Teórico/2.2 Ciberseguridad/`; lo que cierra va desglosado en las cuatro filas de abajo, más **dos filas de HALLAZGO** que no cierran ficha. **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida.** Proceso: **4 redactores en paralelo → auditoría de COHERENCIA ENTRE NOTAS → 3 correctores en paralelo → segunda auditoría → 1 corrección residual**; **dos pases de `auditor-ml`, ambos cerrados SIN NINGÚN 🔴**. Ficheros (**4**): `2.2.2 Sistemas de detección de intrusiones.md`, `2.2.3 Taxonomía de los IDS.md`, `2.2.4 Detección por firmas frente a detección por anomalías.md` y `2.2.5 Taxonomía de ataques y panorama de amenazas.md`. **Cuarto commit por tanda** bajo la Decisión 7. **Protocolo de citas respetado: CERO `[n]` nuevos y ningún `[n]` preexistente renumerado**; todas las citas nuevas quedan como `[CITA: …]`, pendientes del pase **en serie** del `researcher` al final de la fase. **Aviso que tiene que sobrevivir a ese pase: Anderson 1980 ya es `[2]` y Denning 1987 ya es `[3]` — hay que MAPEAR, no dar de alta.** **CIERRA PARCIALMENTE, no del todo:** la ficha de la prosa de las 8 notas queda en **4 de 8** y **T8** solo en su parte de `2.2.3`/`2.2.4`. **Vivos:** las **4 notas restantes** —`2.1.6`, `2.3.1`, `2.3.2` y `2.3.3`, esta con la carga T8 de P9/P10 y el modelo de amenaza—, que van en la **Tanda 5**, y el `> [!todo]` del **diagrama de bloques del NIDS** en `2.2.2` | — |
+| 2026-08-14 | Informe | **`2.2.2 Sistemas de detección de intrusiones` — PROSA REDACTADA** desde su guion: definición, componentes, IDS frente a IPS y ubicación en la red. **Deja vivo un `> [!todo]` DENTRO de la nota**: falta el **diagrama de bloques del NIDS**, que va a `assets/` y por tanto comparte cuello con las figuras que ya bloquean T10 — el `redactor-tfg` no escribe binario | — |
+| 2026-08-14 | Informe | **`2.2.3 Taxonomía de los IDS` — PROSA REDACTADA, y con ella la parte de `2.2.3` de T8.** Ejes de clasificación más la carga citada: **los cuatro sentidos de «híbrido»** en la literatura NSL-KDD y cuál usa el TFG —el **(a)**, anomalías + firmas—, que **Khraisat et al. 2019 NO taxonomiza lo híbrido**, y el **linaje ADAM 2001 / Tombini 2004**. **Fija en callout `[!important]` la DEFINICIÓN CANÓNICA de «híbrido»**, que es la que referencia el resto del capítulo: cualquier nota posterior remite a ella en vez de redefinirlo | — |
+| 2026-08-14 | Informe | **`2.2.4 Detección por firmas frente a detección por anomalías` — PROSA REDACTADA, y con ella la parte de `2.2.4` de T8.** Comparativa de los dos paradigmas y justificación de la cascada. **APLICA LA DECISIÓN 8 de la Fase 0:** término canónico **«semisupervisado (one-class)»**, **sin reintroducir «no supervisado»** como si fuera término propio — el sinónimo se declara una sola vez y es en `3.4.1`. Con esto la Decisión 8 queda consumida donde tocaba: dentro de una nota ya encargada, sin ciclo propio | — |
+| 2026-08-14 | Informe | **`2.2.5 Taxonomía de ataques y panorama de amenazas` — PROSA REDACTADA** desde su guion: las cuatro categorías `dos`/`probe`/`r2l`/`u2r` y el panorama de amenazas. **Escrita con las 40 etiquetas correctas** (`normal` + 39 tipos de ataque): **la cifra errónea «51» NO aparece en la nota**, que es justo el número que `CLAUDE.md` dejó marcado como falso | — |
+| 2026-08-14 | Informe | **HALLAZGO (no cierra ficha) · El marcador de cautela aplicado DE MÁS — patrón INVERSO al habitual de este proyecto.** `2.2.3` marcaba como «**sin acceso al texto completo**» a **Khraisat 2019, Sommer y Paxson 2010 y ADAM 2001**, y **el disco lo desmentía**: `Obsidian_TFG_Vault/99 Investigación/arquitecturas-hibridas-en-la-literatura.md` registra los **tres como leídos íntegros**. Marcadores **retirados**. **La reserva de la Decisión 4 queda SOLO para Tombini 2004**, que sí se conoce por resumen. Merece quedar escrito porque la regla permanente del `redactor-tfg` (marcar dentro de la nota) se puede sobreaplicar, y una salvedad falsa **degrada gratis** una fuente que sí sostiene el texto | — |
+| 2026-08-14 | Informe | **HALLAZGO (no cierra ficha) · Dos afirmaciones falsas cazadas por la auditoría de coherencia y CORREGIDAS dentro de la tanda.** (1) Una remisión a **`firmas_reglas.txt`, fichero que NO EXISTE**: el que hay en disco es **`firmas_reglas_54.txt`**, con la variante en el nombre — una ruta sin variante es incitable. (2) Un «**tres órdenes de magnitud**» que **en disco son 883:1, es decir 2,9** — la magnitud redondeada hacia arriba sin comprobar el dato. Ambas son del tipo que **solo se ve mirando las notas juntas y contra disco**, que es exactamente para lo que existe el pase de coherencia entre notas de una tanda paralela | — |
 | 2026-08-14 | — | **TANDA 3 (Fase 3 del plan de cierre) — DOS FICHAS EN PARALELO, un track cada una, despachadas sobre ficheros disjuntos.** Lo que cierra va desglosado en las dos filas de abajo: el **alta de `A.3` en el índice** (Informe) y el **QUINTO re-anclaje de sello** (Código). **Cero cómputo, cero corridas, ninguna cifra publicada movida, ningún hash inventado** — `1cb5c26` está verificado con git. `auditor-ml`: **APTO** tras **dos pases**, con los hallazgos aplicados. Ficheros (**4**): `Implementacion/PIPELINE.md`, `Obsidian_TFG_Vault/00 Índice TFG.md`, `Obsidian_TFG_Vault/Apéndices/A.3 Ficha del sistema.md` y `Resultados/GUIA_RESULTADOS.md`. **Tercer commit por tanda** bajo la Decisión 7. **Queda ABIERTO y a criterio de Francisco, no despachado:** el callout «Punto actual» de `00 Índice TFG.md:8` no menciona `A.3`, pero está **fechado el 2026-07-16**, así que es **historial** y la recomendación fue **no tocarlo** | `cbdd084` |
 | 2026-08-14 | Informe | **`A.3 Ficha del sistema` DADA DE ALTA en `00 Índice TFG.md`**, en el listado de apéndices (`:92-93`), **con el mismo formato que `A.1` y `A.2`**. Cierra la viñeta viva de la ficha «Residuos de `A.3`» y el pase en serie sobre el índice que la Tanda 2 dejó pendiente. En la misma pasada, **corregida la afirmación FALSA de `:101-102`**, que decía que `03 Desarrollo/` «contiene solo avisos de migración»: en disco la carpeta **existe y está VACÍA**, sin un solo `.md`. **La cifra «de 43 notas» de `:104` se dejó INTACTA a propósito** —se cuadra en la Fase 4, cuando haya movido el reparto redactadas/guion—, y el auditor confirmó además que **cuadra con disco**. **Lo que NO cierra:** el **borrado físico** de `03 Desarrollo/` sigue abierto —exige un agente con shell, que el `redactor-tfg` no tiene— y la ficha de `:104` sigue abierta por decisión | `cbdd084` |
 | 2026-08-14 | Código | **QUINTO RE-ANCLAJE del proyecto: `6bb224c-sucio → 1cb5c26`.** Cierra la ficha homónima. Escrito en `Implementacion/PIPELINE.md` y `Obsidian_TFG_Vault/Apéndices/A.3 Ficha del sistema.md`; **hash verificado con git**, no copiado de una ficha. **El sello impreso DENTRO del artefacto NO se toca**, misma forma que los cuatro anteriores (`fc1c6b4-sucio → 9af842c`, `00c3c3e-sucio → 54d1349`, `df30cb2-sucio → 9ad971b`, `ddade37-sucio → 9d4c26d`): lo estampa `config.commit_actual()` y no puede llevar el hash del commit que lo versiona. **HALLAZGO DE AUDITORÍA, aplicado y que merece quedar escrito: el implementador había dejado FUERA `Resultados/GUIA_RESULTADOS.md`**, que según `resumen-de-decisiones.md:686-688` **forma parte de la unidad de un re-anclaje**. Sin ese arreglo, `PIPELINE.md` habría afirmado «no queda ningún re-anclaje pendiente» **mientras el runbook de `Resultados/` seguía diciendo que ese commit no existe** — exactamente el defecto reincidente del proyecto. Completado en `GUIA_RESULTADOS.md` en los **5 puntos** que declaraban pendiente la cuarta pasada, más la **cláusula que resuelve la contradicción sobre la pasada del FPR**. **El recuento inicial del implementador también estaba mal: 6 ocurrencias, no 8, y 2 de ellas eran sellos impresos que no se tocan.** Dos pases de `auditor-ml`, **APTO** tras aplicar hallazgos | `cbdd084` |
