@@ -29,9 +29,19 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > siendo lo que está en `## Abiertas`.
 
 > **Dónde queda el 2026-08-14: la Fase 0 está CERRADA.** Francisco tomó el **2026-08-14** las **ocho
-> decisiones** que quedaban (ver `## Cerradas`, ocho filas de esa fecha). **El cuello de botella
-> declarado del plan desaparece**: a partir de aquí todo lo abierto es despachable por agentes, salvo
-> lo que la Fase 6 y la bibliografía Zotero/IEEE reservan a Francisco.
+> decisiones** que quedaban (ver `## Cerradas`, ocho filas de esa fecha; contenido en **`ff54553`** y
+> estampado de sus hashes en **`9077500`**). **El cuello de botella declarado del plan desaparece**: a
+> partir de aquí todo lo abierto es despachable por agentes, salvo lo que la Fase 6 y la bibliografía
+> Zotero/IEEE reservan a Francisco.
+>
+> **Y la Tanda 1 de la Fase 1 queda EJECUTADA y COMMITEADA** en **`cd407b1`** —el **primer commit por
+> tanda** bajo la Decisión 7—, más el commit que estampa ese hash en las ocho filas de `## Cerradas` y
+> que, por construcción, no lleva hash propio en este fichero. El detalle está en el bloque de la
+> **Tanda 1**, más abajo: no se repite aquí. **Lo único vivo de esa tanda es `T25`**, en serie y solo
+> `researcher`. El árbol queda **limpio**.
+>
+> **La sesión siguiente arranca por la Tanda 2**: crear **`A.3` (T7)** desde
+> `Resultados/dispersion_semillas.md`. Condiciones y encadenamiento, en el bloque de la Tanda 2.
 >
 > **Dónde quedó la sesión del 2026-08-13.** De las decisiones, la **1 (rango
 > de FPR)** y la **3 (automatizar el «13 de 98»)** están **resueltas**, y la **Tarea B queda APLICADA**
@@ -52,20 +62,29 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 **Tanda 0 — YA NO EXISTE: las ocho decisiones están tomadas (2026-08-14).** Se deja la línea para que
 nadie la busque. Lo que dejan como **precondiciones vivas de otras tandas**, y que no está en ninguna
 de las tandas de abajo:
-- **Precondición de la Fase 4:** el hilo principal tiene que matizar `CLAUDE.md` §Git a «un commit por
-  tarea, **o por tanda paralela nombrando sus fichas**». Si no, la regla vigente y la práctica
-  divergen en silencio.
-- **Andamiaje pendiente del hilo principal**, no de un agente: el permiso ACOTADO de
-  `ml-implementador` sobre `resumen-de-decisiones.md` (solo **añadir nota fechada**) en
-  `.claude/agents/ml-implementador.md`, y la regla de marcado de fuentes sin acceso en
-  `.claude/agents/redactor-tfg.md`.
+- **Andamiaje del hilo principal — los tres ítems quedan APLICADOS.** Comprobado **contra disco el
+  2026-08-14**: el registro decía «pendiente» cuando ya estaba hecho, es decir, la divergencia iba
+  **al contrario** de la habitual. Se deja escrito, no borrado, porque el defecto reincidente del
+  proyecto es que regla vigente y práctica divergen en silencio.
+  - **Commit por tanda — APLICADO.** `CLAUDE.md` §Git, **línea 239**: «Un **commit por tarea
+    cerrada, o un commit por tanda paralela** nombrando en el cuerpo las fichas que cierra», con el
+    razonamiento de la **Decisión 7** al lado (granularidad ficticia: los 3-4 agentes de una tanda
+    terminan sobre el mismo estado del árbol) y fechado 2026-08-14.
+  - **Permiso ACOTADO de `ml-implementador` — APLICADO.** `.claude/agents/ml-implementador.md:63`:
+    «En `resumen-de-decisiones.md` solo **añades nota fechada**, nunca reescritura».
+  - **Marcado de fuentes sin acceso — APLICADO.** `.claude/agents/redactor-tfg.md:28` lleva el
+    callout `> [!warning] Verificación pendiente — sin acceso al texto completo`, y `:41` el
+    criterio «no verificable sin acceso institucional; no sostiene ninguna afirmación del trabajo».
+  - **Por tanto la Fase 4 ya NO tiene precondición de andamiaje pendiente.** No se cita hash para
+    estos tres: son andamiaje aplicado en commits ya existentes, y aquí se verifican por fichero y
+    línea.
 - **La Fase 6 se lleva los tres `grill-me`** (`2.1`, revisión del profesor, `1.4`) y va **detrás de
   absolutamente todo**.
 
 **Tanda 1 — barrido de correcciones de una línea. EJECUTADA el 2026-08-14** (Fase 1 del plan de
 cierre), en los **dos ciclos EN PARALELO** previstos, uno por track. Se deja la línea, como la Tanda 0,
 **para que nadie la vuelva a despachar**: el detalle y la evidencia están en `## Cerradas`, en las
-**ocho filas del 2026-08-14 con hash `—`** (cabecera de tanda, cinco fichas y dos hallazgos).
+**ocho filas del 2026-08-14 con hash `cd407b1`** (cabecera de tanda, cinco fichas y dos hallazgos).
 - **Código — HECHO:** `warnings.filterwarnings('ignore')` retirado de `program.py:12` y
   `validacion.py:57` (**`validacion.py:21` NO se tocó: es comentario**) + **nota fechada** en
   `resumen-de-decisiones.md:820-821`.
