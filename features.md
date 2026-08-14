@@ -25,6 +25,42 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 
 ## PRÓXIMOS PASOS — próxima sesión
 
+> ### ⚡ EMPIEZA POR AQUÍ — apunte de traspaso del 2026-08-14
+>
+> **El árbol está LIMPIO y la Tanda 2 está cerrada.** No hay nada a medias, no hay ninguna ejecución
+> colgada y no hay que relanzar nada. La sesión se cortó por presupuesto, no por un problema.
+>
+> **Lo único que tiene que hacer Francisco: `! git push origin develop`.** Van **quince** commits sin
+> subir. Falla por autenticación desde el harness, no desde su máquina.
+>
+> **Las tres tareas cortas ya están repasadas y priorizadas. Se pueden despachar tal cual, sin volver
+> a analizar nada:**
+>
+> | # | Tarea | Track / agente | Coste | Ojo con |
+> |---|---|---|---|---|
+> | **1** | **`00 Índice TFG.md`**: dar de alta **`A.3`** en `:92-93` (hoy solo lista `A.1` y `A.2`) y corregir `:101-102`, que dice que `03 Desarrollo/` «contiene solo avisos de migración» | Informe · `redactor-tfg` | Minutos | **NO tocar el «de 43 notas» de `:104`** — se cuadra al final, cuando la Fase 4 haya movido el reparto redactadas/guion. Hacerlo hoy es escribir una cifra que la primera tanda del cap. 2 vuelve a falsear |
+> | **2** | **QUINTO re-anclaje de sello: `6bb224c-sucio → 1cb5c26`**. Tres puntos ya localizados: `PIPELINE.md:1332`, `PIPELINE.md:1454-1458`, `A.3:609-612` | Código · `ml-implementador` | Minutos de escritura, **pero arrastra pase obligatorio de `auditor-ml`** | **El sello impreso DENTRO del artefacto no se toca** (lo estampa `config.commit_actual()`). Misma forma que los cuatro anteriores. El hash `1cb5c26` está **verificado con git**, no inventado |
+> | **3** | **T25** — tres correcciones de una línea: `Bibliografía.md:32`, `:86` y `Auditoría de Bibliografía.md:140` | Solo `researcher` | Minutos | **No se despacha sin que Francisco lo pida explícitamente.** El anclaje de `[6]` en `2.1.4` **NO es esto**: exige redactar el bloque de redes neuronales, que es Fase 4 |
+>
+> **Recomendación: 1 y 2 en el mismo ciclo.** Tocan ficheros distintos, así que van en paralelo, cierran
+> dos fichas con un solo commit de tanda, y el pase de `auditor-ml` que el re-anclaje exige de todas
+> formas aprovecha para auditar la coherencia entre ambas.
+>
+> **Dato verificado en disco el 2026-08-14, para que nadie lo repita:** `Obsidian_TFG_Vault/03 Desarrollo/`
+> **existe pero está VACÍA**, y git no la trackea (git no versiona directorios vacíos). Un `Glob` sobre
+> ella sale vacío y **eso no prueba que no exista**. Si se quiere borrar la carpeta física hace falta un
+> agente con shell: el `redactor-tfg` no tiene.
+>
+> **Lo que PARECE de minutos y no lo es** (ya medido, no volver a evaluarlo): las figuras de `assets/`
+> (necesita **dos** agentes, porque `Write` no escribe binario — pero es **dependencia dura de T10**, así
+> que va justo detrás de las tres de arriba); **T21** (sus destinos son `5.4`, territorio de T11, y el
+> inventario de T6, que no existe); **T19** (hay que regenerar cada cifra desde `Resultados/` y envolverla
+> en la salvedad de la dispersión 4,8×).
+>
+> **Bloqueado por dependencia, no por olvido:** **T4** no se puede cerrar — su único consumidor vivo es
+> **T11** (Fase 5); T7 ya lo consumió. Y la **Fase 4** (las 8 notas del cap. 2, en tandas de 3-4 en
+> paralelo) es el grueso real que mueve el TFG, pero no es material de «pocos minutos».
+
 > Derivado del «Plan de cierre» de más abajo. **Orden de ejecución, no estado**: lo abierto sigue
 > siendo lo que está en `## Abiertas`.
 
