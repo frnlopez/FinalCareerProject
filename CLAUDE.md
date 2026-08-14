@@ -199,8 +199,12 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
   de `auditor-ml` (va después, no a la vez). **Varios `auditor-ml` sí pueden ir en paralelo**: son
   de solo lectura. Un cierre por **tanda**, no por nota: una sola pasada de `cronista`.
 - **Protocolo de citas — vale para CUALQUIER agente que escriba en el vault.** Los marcadores `[n]`
-  son un **contador global** que apunta a `Bibliografía.md`, y ya están en uso (`[4]`, `[5]`, `[7]`,
-  `[8]`, `[10]`). **Nadie inventa un `[n]` nuevo**: se escribe `[CITA: autor o tema]`, convención
+  son un **contador global** que apunta a `Bibliografía.md`. **En uso hoy: `[1]`–`[8]` y `[10]`**
+  —verificado contra `Bibliografía.md` el 2026-08-14—, y **`[9]` está RETIRADA SIN RENUMERAR**
+  (`396e283`), así que está **quemada, no libre**. El primer número disponible es el `[11]`.
+  Importa porque `[2]` (Anderson 1980) y `[3]` (Denning 1987) son las que más se citan al redactar
+  el capítulo 2: **se MAPEAN, no se dan de alta**.
+  **Nadie inventa un `[n]` nuevo**: se escribe `[CITA: autor o tema]`, convención
   que el proyecto ya usa (`4.2` arrastra 6). Si dos agentes en paralelo asignaran números, los dos
   empezarían en el mismo y el solape no lo ve nadie al leer. La conversión de `[CITA: …]` a `[n]` y
   el alta en `Bibliografía.md` es un pase **posterior y en serie**, del `researcher`. Un `[n]` que
