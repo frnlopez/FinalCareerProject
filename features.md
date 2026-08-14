@@ -40,8 +40,15 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > **Tanda 1**, más abajo: no se repite aquí. **Lo único vivo de esa tanda es `T25`**, en serie y solo
 > `researcher`. El árbol queda **limpio**.
 >
-> **La sesión siguiente arranca por la Tanda 2**: crear **`A.3` (T7)** desde
-> `Resultados/dispersion_semillas.md`. Condiciones y encadenamiento, en el bloque de la Tanda 2.
+> **Y la Tanda 2 de la Fase 2 queda EJECUTADA el 2026-08-14, sin commitear todavía**: `A.3` creada
+> (T7), reconciliación de sellos y **cuarto re-anclaje** (`ddade37-sucio → 9d4c26d`) escritos. El
+> detalle está en el bloque de la **Tanda 2** y en `## Cerradas`. **El árbol NO queda limpio**:
+> arrastra además, sin commitear desde sesiones anteriores,
+> `Implementacion/app/agregar_semillas.py`, `Resultados/dispersion_semillas.csv` y
+> `Resultados/dispersion_semillas.md`.
+>
+> **La sesión siguiente arranca por la Tanda 3.** De la Tanda 2 quedan vivos `T25`, el alta de `A.3`
+> en `00 Índice TFG.md` y los dos `> [!todo]` internos de `A.3`.
 >
 > **Dónde quedó la sesión del 2026-08-13.** De las decisiones, la **1 (rango
 > de FPR)** y la **3 (automatizar el «13 de 98»)** están **resueltas**, y la **Tarea B queda APLICADA**
@@ -53,10 +60,11 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > **El `push` está PENDIENTE.** Con hash y sin subir van **once**: `ea35ce3`, `dbba05e`, `ddade37`,
 > `9d4c26d`, `0fb5f2b`, `6bfc779`, `c5ceca5`, `0dec53e`, los **dos de la Fase 0** — `ff54553` (el
 > contenido) y `9077500` (el estampado de sus hashes) — y **`cd407b1`, el commit de la TANDA de la
-> Fase 1** (2026-08-14), que es el **primer commit por tanda** bajo la Decisión 7. **A esos se suma
-> el commit que estampa `cd407b1` en las ocho filas de `## Cerradas` y en esta misma línea**, que por
-> construcción no puede llevar su propio hash: serían **doce**. En este fichero no se escribe ningún
-> hash inventado. Sigue fallando por **autenticación desde el harness**, así que **el `push` lo tiene
+> Fase 1** (2026-08-14), que es el **primer commit por tanda** bajo la Decisión 7. **A esos se suman
+> dos que ya existen y tampoco están subidos**: `1d2a7dd` (el estampado de `cd407b1` en las ocho filas
+> de `## Cerradas`) y `6bb224c` (el registro del cierre de sesión del 2026-08-14). Van **trece**. **Y
+> falta por crear el commit de la TANDA 2**, que por construcción no puede llevar aquí su propio hash:
+> serían **catorce**. En este fichero no se escribe ningún hash inventado. Sigue fallando por **autenticación desde el harness**, así que **el `push` lo tiene
 > que lanzar Francisco**.
 
 **Tanda 0 — YA NO EXISTE: las ocho decisiones están tomadas (2026-08-14).** Se deja la línea para que
@@ -102,10 +110,19 @@ cierre), en los **dos ciclos EN PARALELO** previstos, uno por track. Se deja la 
   la nombran como si fuera independiente. Resolverlo es **decidir cómo se fichan las sub-tareas**, y
   eso no se decide en un cierre: queda apuntado para que no se pierda.
 
-**Tanda 2 — `A.3` y cierre de T4.** Precondición: nada; el «13 de 98» ya está automatizado
-(`9d4c26d`). Crear **`A.3` (T7)** pegando `Resultados/dispersion_semillas.md` con sus tres
-salvedades → con eso **queda servido T11** → y **T4 se puede cerrar**. `redactor-tfg`, en serie
-respecto a T11.
+**Tanda 2 — `A.3` y cierre de T4. EJECUTADA el 2026-08-14** (Fase 2 del plan de cierre). Se deja la
+línea, como las dos anteriores, **para que nadie la vuelva a despachar**: el detalle está en
+`## Cerradas`, en las filas del 2026-08-14 de esta tanda.
+- **`A.3` (T7) — HECHA:** `Obsidian_TFG_Vault/Apéndices/A.3 Ficha del sistema.md`, *model card*
+  completa, con la tabla de dispersión y sus salvedades. `auditor-ml`: **APTO CON CAMBIOS**, 8
+  hallazgos, ninguno crítico, **todos corregidos**.
+- **Reconciliación de sellos y CUARTO re-anclaje (`ddade37-sucio → 9d4c26d`) — HECHOS** en
+  `Implementacion/PIPELINE.md` y `Resultados/GUIA_RESULTADOS.md`.
+- **T4 NO se cierra todavía:** su consumidor vivo es **T11** (`5.2`/`5.4`), que sigue abierto.
+- **Vivos de esta tanda:** `T25` (en serie, solo `researcher`), el **alta de `A.3` en
+  `00 Índice TFG.md`** (pase en serie sobre el índice) y los **dos `> [!todo]` internos de `A.3`**
+  —los seis ítems no-FT de Pineau y la remisión a `5.0` (T5)—, más el **quinto re-anclaje**, el del
+  sello `6bb224c-sucio`, que espera a que exista el commit.
 
 ---
 
@@ -164,6 +181,8 @@ respecto a T11.
     Lo que queda vivo de T4 es el **consumo del resultado en el informe**: la tabla de dispersión de
     `A.3` (**T7**) y los párrafos de `5.2`/`5.4` (**T11**). **T4 no se cierra hasta que esos dos
     consuman la banda.**
+    - **Estado a 2026-08-14: T7 está CERRADA** —`A.3` ya pega la tabla con sus salvedades—, así que
+      **el único consumidor vivo es T11**. **T4 no se cierra hasta que `5.2`/`5.4` estén escritos.**
   - **Los titulares de 5.1-5.3 siguen siendo los de la semilla 42.** La dispersión (media, sd, mín,
     máx) entra como tabla nueva en `A.3` más un párrafo en `5.4`. **No se reescribe el capítulo.**
   - Cierra los ítems FT *number of runs*, *error bars* y *central tendency* de Pineau et al.
@@ -273,41 +292,19 @@ respecto a T11.
   - **Resultado a escribir:** de los diez pitfalls de Arp et al., ocho cubiertos y dos cubiertos
     hasta donde el dataset permite, con la razón técnica escrita. No «P9 y P10 no aplican a un TFG».
 
-- [ ] **T7 · `A.3 Ficha del sistema`** · Informe · `redactor-tfg`
-  Apéndice nuevo, plantilla de *model card* de Mitchell et al. 2019. Volcado seco: particiones,
-  semilla, configuraciones ganadoras, alcance de cada métrica, tabla de dispersión de T4, e
-  **infraestructura de cómputo**: i7-12700H, 34 GB RAM, Windows 11 Pro 10.0.26200, Python 3.11,
-  21 dependencias fijadas (`scikit-learn==1.7.1`).
-  → **La tabla de dispersión de T4 YA EXISTE:** `Resultados/dispersion_semillas.md` es el artefacto a
-    pegar (`.csv` al lado), **198 filas**, `sd` muestral `ddof=1`, con **sección propia del recuento
-    «fuera de banda» de la semilla 42**. Cuatro cosas al pegarla:
-    - **Rotular `alcance` y `tabla_origen`** — sin ellas «`54 | RandomForest`» nombra a la vez al
-      clasificador de firmas y a la cascada invertida, que fue el bug corregido en el agregador.
-    - **Declarar el alcance:** dispersión **de los modelos sobre splits y set de características
-      FIJOS**, no «del sistema».
-    - **El sello impreso en el artefacto es `commit_agregador = ddade37-sucio`, que es pre-commit.**
-      **T7 cita el sello RE-ANCLADO al commit de este ciclo, y no se inventa el hash.** El artefacto
-      **no se regenera**: lo estampa `config.commit_actual()` y no puede llevar el hash del commit que
-      lo versiona. El re-anclaje tiene **ficha propia abierta**.
-    - **Pegar las TRES SALVEDADES del «13 de 98»**, que **ya se puede citar** (automatizado en
-      `9d4c26d`): (i) el 13 sale con los **extremos SIN redondear** y la **igualdad contando como
-      dentro**, simétrico en ambos extremos —con mín/máx a 4 decimales salen **14**, porque `f1_u2r`
-      de RandomForest en 122 tiene la 42 en **0,318182**, exactamente en el mínimo—; (ii) **10 de las
-      98 celdas son umbrales**, no métricas sobre D2: descontarlos daría denominador **88**, y **una
-      de las tres celdas de borde que deciden el recuento es un umbral**; (iii) **titular y banda NO
-      salen del mismo commit** —semilla 42 de `1163c90` (94 celdas) y `274923d-sucio` (4, la cascada
-      invertida), bandas de `df30cb2`—, así que parte de la distancia podría ser **deriva de código,
-      no dispersión por semilla**: es **salvedad de procedencia, no invalidación**.
-  - **ENCARGO NUEVO (Decisión 2 de la Fase 0, Francisco, 2026-08-14): `A.3` declara las RUTAS
-    ABSOLUTAS HARDCODEADAS como límite conocido.** La ficha de portabilidad se retiró de `## Abiertas`
-    (ver `## Cerradas`) porque su ejecución obligaba a decidir la regeneración de los splits, y **los
-    splits NO se regeneran**. Redactarlo como límite de reproducibilidad, con su razón: `program.py` y
-    `validacion.py` llevan rutas absolutas a `C:\Users\francisco.lopez\...`, así que reproducir el
-    pipeline en otra máquina exige editarlas. **No se disfraza de decisión de diseño: es deuda
-    declarada.** Encaja con los ítems FT del checklist de Pineau que ya rellena este apéndice.
-  - **Checklist de Pineau: los 11 ítems FT, NO los 17.** Los otros seis van de liberación de código y
-    presupuesto de cómputo y no aplican; rellenarlos es paja que diluye los que importan. Decir
-    explícitamente que son el subconjunto FT del checklist de 17.
+- [ ] **Residuos de `A.3` (T7 cerrada el 2026-08-14)** · Informe · `redactor-tfg` / `researcher`
+  **T7 está CERRADA** (ver `## Cerradas`): la nota
+  `Obsidian_TFG_Vault/Apéndices/A.3 Ficha del sistema.md` existe, es la *model card* completa y pasó
+  `auditor-ml` con **APTO CON CAMBIOS** (8 hallazgos, ninguno crítico, todos corregidos). **No se
+  vuelve a encargar `A.3`.** Lo que quedó vivo, y solo esto:
+  - **El alta de `A.3` en `00 Índice TFG.md` no está hecha.** Es un **pase en serie**: `00 Índice
+    TFG.md` no se toca en paralelo con nadie. Cuadra con las dos fichas del índice que ya están
+    abiertas más abajo (`:101-102` y `:104`): **hacerlo en la misma pasada**, no en tres.
+  - **Dos `> [!todo]` vivos DENTRO de la nota, ninguno resoluble hoy:**
+    - `A.3:574` — **caracterización de los seis ítems no-FT** del checklist de Pineau. Requiere el
+      **checklist original**; sin él, nombrarlos sería inventarlos. Depende de acceso a la fuente.
+    - `A.3:159` — **remisión a `5.0`**, que **no existe todavía**: es **T5**. Se resuelve al cerrar
+      T5, no antes.
 
 - [ ] **T8 · Cita en el punto de la decisión — capítulo 2** · Informe · `redactor-tfg`
   - `2.2.3`/`2.2.4`: **los 4 sentidos de «híbrido»** y cuál usa el TFG. En la literatura NSL-KDD
@@ -822,29 +819,30 @@ respecto a T11.
 ### Residuos de la automatización del «13 de 98» — altas del 2026-08-13
 
 > Salen del ciclo que **cerró** la ficha 🟠 del recuento manual (Decisión 3 de la Fase 0 del plan de
-> cierre, aprobada por Francisco el **2026-08-13**; ver `## Cerradas`). **Fichar no es resolver:
-> ninguna de las dos se ha tocado.** **Ninguna lleva commit ni fecha de cierre.**
+> cierre, aprobada por Francisco el **2026-08-13**; ver `## Cerradas`). **Estado a 2026-08-14: las
+> dos quedan resueltas** —la de los recuentos 94/4 y la del re-anclaje `ddade37-sucio → 9d4c26d`,
+> ambas en `## Cerradas`—, pero **el re-anclaje deja descendencia**: la cuarta pasada del agregador
+> imprimió un sello nuevo, y esa es la ficha que queda abierta abajo.
 
-- [ ] **La salvedad de procedencia de `dispersion_semillas.md` enumera los dos commits pero no
-  imprime los recuentos 94/4** (🟡) · Código · `ml-implementador`
-  El `.md` declara que el titular y la banda **no salen del mismo commit** —la semilla 42 viene de
-  `1163c90` y de `274923d-sucio` (la cascada invertida), y las bandas de `df30cb2`—, pero **no dice
-  cuántas celdas aporta cada uno**: son **94 y 4**. El **CSV sí lo da celda a celda**, así que el
-  dato existe y solo falta emitirlo agregado. Importa porque **T7 pega ese `.md` en `A.3`** y un
-  lector no puede dimensionar la salvedad sin los recuentos.
-
-- [ ] **El sello `ddade37-sucio` de los artefactos regenerados queda pendiente de re-anclaje en
+- [ ] **El sello `6bb224c-sucio` de los artefactos regenerados queda pendiente de re-anclaje en
   prosa** · Código · `ml-implementador`
-  `Resultados/dispersion_semillas.csv` y `.md` se regeneraron con `commit_agregador = ddade37-sucio`,
-  que es **pre-commit**: hay que re-anclarlo en prosa (`PIPELINE.md`, `GUIA_RESULTADOS.md`) al commit
+  **Corregido el 2026-08-14: esta ficha citaba `ddade37-sucio`, que es el sello DESFASADO.** Ese ya
+  se re-ancló a **`9d4c26d`** (cuarto re-anclaje del proyecto, ver `## Cerradas`). El sello que hay
+  **hoy en disco** en `Resultados/dispersion_semillas.csv` y `.md` —cuarta pasada del agregador,
+  cabecera `2026-08-14T15:15:13`— es **`commit_agregador = 6bb224c-sucio`**, y vuelve a ser
+  **pre-commit**: hay que re-anclarlo en prosa (`PIPELINE.md`, `GUIA_RESULTADOS.md`, `A.3`) al commit
   de este ciclo **cuando exista**. **No inventar el hash.**
-  - **Sería el CUARTO re-anclaje del proyecto** y va **con la misma forma que los tres anteriores**
-    (`fc1c6b4-sucio → 9af842c`, `00c3c3e-sucio → 54d1349`, `df30cb2-sucio → 9ad971b`): **el sello
-    impreso DENTRO del artefacto NO se toca** —lo estampa `config.commit_actual()` y no puede llevar
-    el hash del commit que lo versiona, porque ese commit tiene que existir después—.
-  - **Consecuencia para `T7`: cita el sello RE-ANCLADO, no el impreso.** Y ojo: el re-anclaje
-    anterior (`df30cb2-sucio → 9ad971b`, commit `ea35ce3`) **queda superado por este** para los dos
-    artefactos de dispersión, que ya no son los de `9ad971b`.
+  - **Sería el QUINTO re-anclaje del proyecto** y va **con la misma forma que los cuatro anteriores**
+    (`fc1c6b4-sucio → 9af842c`, `00c3c3e-sucio → 54d1349`, `df30cb2-sucio → 9ad971b`,
+    `ddade37-sucio → 9d4c26d`): **el sello impreso DENTRO del artefacto NO se toca** —lo estampa
+    `config.commit_actual()` y no puede llevar el hash del commit que lo versiona, porque ese commit
+    tiene que existir después—.
+  - **Los cuatro re-anclajes hechos siguen siendo válidos para lo que nombran: cada uno, su pasada.**
+    Ninguno queda superado por este; lo que cambia es cuál describe el artefacto en disco. El sitio
+    donde está contado pasada a pasada es `PIPELINE.md`, tabla de corridas del agregador y el bloque
+    «Cuarto re-anclaje de sello del proyecto, ya HECHO — y uno PENDIENTE».
+  - **Consecuencia para `A.3`: cita el sello IMPRESO (`6bb224c-sucio`) declarándolo pre-commit**, y
+    se re-ancla cuando exista el hash. Ya está redactado así en `A.3:609-612`.
 
 ### Huecos del informe detectados contra disco — altas del 2026-08-13
 
@@ -1126,6 +1124,12 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-14 | — | **FASE 2 DEL PLAN DE CIERRE, CERRADA: la Tanda 2 —`A.3` más la reconciliación del trabajo que quedó colgado de la sesión anterior— despachada.** Lo que cierra va desglosado en las filas de abajo: **T7**, la reconciliación de sellos con el **cuarto re-anclaje**, el **diagnóstico de la «ejecución colgada»** y el residuo de los **recuentos 94/4**, más **una fila de HALLAZGO** que no cierra ficha. **Cero cómputo, cero corridas, ninguna cifra publicada movida** y **ningún hash inventado**. `auditor-ml`: **APTO CON CAMBIOS**, **8 hallazgos, ninguno crítico, todos corregidos**. Ficheros: `Obsidian_TFG_Vault/Apéndices/A.3 Ficha del sistema.md` (**nuevo**), `Implementacion/PIPELINE.md` y `Resultados/GUIA_RESULTADOS.md`. **El commit arrastra además tres ficheros sin commitear de sesiones anteriores**, y hay que nombrarlos en su cuerpo para que no entren de tapadillo: `Implementacion/app/agregar_semillas.py`, `Resultados/dispersion_semillas.csv` y `Resultados/dispersion_semillas.md`. **Vivos y NO despachados:** `T25`, el alta de `A.3` en `00 Índice TFG.md`, los dos `> [!todo]` internos de `A.3` y el **quinto re-anclaje** (sello `6bb224c-sucio`) | `—` |
+| 2026-08-14 | Informe | **T7 · `A.3 Ficha del sistema` — CREADA.** `Obsidian_TFG_Vault/Apéndices/A.3 Ficha del sistema.md`, *model card* completa según Mitchell et al. 2019: particiones, semilla, configuraciones ganadoras, alcance de cada métrica, infraestructura de cómputo (i7-12700H, 34 GB RAM, Windows 11 Pro 10.0.26200, Python 3.11, 21 dependencias fijadas con `scikit-learn==1.7.1`) y la **tabla de dispersión de T4** pegada desde `Resultados/dispersion_semillas.md` (**198 filas**, `sd` muestral `ddof=1`) con `alcance` y `tabla_origen` rotulados, el **alcance declarado** —dispersión de los modelos sobre splits y set de características **FIJOS**, no «del sistema»— y las **tres salvedades del «13 de 98»**. Incluye el **encargo de la Decisión 2 de la Fase 0**: las **rutas absolutas hardcodeadas** declaradas como **límite conocido de reproducibilidad**, no disfrazadas de decisión de diseño. Checklist de Pineau: los **11 ítems FT**, declarados explícitamente como subconjunto del de 17. **El sello se cita como IMPRESO y pre-commit (`6bb224c-sucio`, `A.3:609-612`)**, pendiente del quinto re-anclaje. **No se vuelve a encargar `A.3`**: lo que queda vivo son sus residuos, con ficha propia en `## Abiertas` | `—` |
+| 2026-08-14 | Código | **Reconciliación de sellos y CUARTO RE-ANCLAJE del proyecto (`ddade37-sucio → 9d4c26d`), escrito en `Implementacion/PIPELINE.md` y `Resultados/GUIA_RESULTADOS.md`.** Verificado **con git**, no copiado de una ficha: `9d4c26d` es el commit de cierre de ese ciclo y `ddade37` el **inmediatamente anterior** al cambio. **Los tres ficheros llevaban dos días afirmando que el re-anclaje seguía pendiente «porque el commit de cierre no existe», cuando `features.md` ya identificaba `9d4c26d` seis veces**: la divergencia iba **al contrario** de la habitual —el registro tenía el dato y la prosa lo negaba—, y por eso queda escrito. **El sello impreso DENTRO de los artefactos NO se toca**, por la razón de siempre: lo estampa `config.commit_actual()` y no puede llevar el hash del commit que lo versiona. **Deja descendencia, con ficha abierta**: la cuarta pasada del agregador imprimió `6bb224c-sucio`, que exige un **quinto** re-anclaje cuando exista el commit de este ciclo | `—` |
+| 2026-08-14 | Código | **Diagnóstico de la «ejecución colgada» que reportó Francisco: NO hubo tal.** La **cuarta pasada del agregador SÍ completó**, cabecera `2026-08-14T15:15:13`. Lo que quedó desfasado fue la **prosa** de `PIPELINE.md` y `GUIA_RESULTADOS.md`, escrita a las **15:11**, **cuatro minutos antes**, y que por eso afirmaba que la cuarta regeneración estaba «prevista» y que el `.md` «todavía no lo lleva». **Artefactos verificados íntegros en disco: 198 filas, recuento 13/98, reparto por commit de origen 94/4, cero residuos `*_semilla*`.** Queda escrito porque el patrón se va a repetir: **una prosa escrita minutos antes de que termine la ejecución se lee después como una ejecución fallida** | `—` |
+| 2026-08-14 | Código | **La salvedad de procedencia de `dispersion_semillas.md` ya imprime los recuentos 94/4** — cierra la ficha 🟡 de los residuos de la automatización del «13 de 98». El `.md` enumeraba los dos commits de origen del titular sin decir cuántas celdas aporta cada uno; ahora lo emite el agregador (`_reparto_commits_titular_md()`, cuarta pasada): de las **98 celdas casadas**, `1163c90` aporta **94** (**13 fuera de banda**) y `274923d-sucio` aporta **4** (**ninguna fuera**). Importaba porque **`A.3` pega ese `.md`** y sin los recuentos el lector no puede dimensionar la salvedad | `—` |
+| 2026-08-14 | Código | **HALLAZGO (no cierra ficha) · `ddade37-sucio` nombra DOS invocaciones distintas del agregador, no una.** La versión que quedó **versionada en `9d4c26d`** tiene cabecera **`2026-08-13T20:13:37`**, no `19:54:48`: el mismo sello `-sucio` se imprimió en dos corridas del mismo árbol sucio. **Consecuencia práctica: un sello `-sucio` NO identifica una corrida, solo un estado del código** — para identificar la corrida hace falta la **cabecera con la marca de tiempo**, y por eso la tabla de corridas del agregador de `PIPELINE.md` va por marca de tiempo y no por sello. **Tiene que quedar escrito aquí**, o el próximo que compare dos artefactos con el mismo `-sucio` los dará por idénticos | `—` |
 | 2026-08-14 | — | **FASE 1 DEL PLAN DE CIERRE, CERRADA: la Tanda 1 —barrido de correcciones de una línea— despachada en DOS CICLOS EN PARALELO, uno por track.** Las **cinco fichas** que cierra van desglosadas en las cinco filas de abajo, más **dos filas de HALLAZGO** que no cierran ficha pero no pueden perderse. **Cero cómputo, cero corridas, ninguna cifra publicada movida:** las **nueve `metricas_*.csv` verificadas intactas**, y **ningún hash inventado**. Proceso: **tres pasadas de implementación y VARIAS de `auditor-ml`** —la del cuerpo de la tanda, **APTO CON CAMBIOS** aplicados, y las de la corrección del «más del doble» que se describe abajo, una de ellas **NO APTO** antes de quedar resuelta—. **El recuento se deja así a propósito, sin número cerrado: la tanda siguió recibiendo pasadas después de escrita esta fila.** **Es el PRIMER COMMIT POR TANDA bajo la Decisión 7** de la Fase 0 — las fichas que cierra van nombradas en el cuerpo del commit. Ficheros: `Implementacion/app/program.py`, `Implementacion/app/validacion.py`, `Resultados/GUIA_RESULTADOS.md`, `resumen-de-decisiones.md`, `Obsidian_TFG_Vault/04 Implementación del sistema/4.2 Base de datos utilizada.md` y `Obsidian_TFG_Vault/Apéndices/A.2 Métricas de desempeño.md`. **Aplicada de paso la Decisión 1 del FPR en sus sitios**: el rango viejo se sustituye por la **cifra por variante — 10,2 % en 54 y 8,5 % en 122** — en los **dos comentarios de `validacion.py`**, en `GUIA_RESULTADOS.md` (**bitácora §7 actualizada**) y en **`A.2:69`**. **Imprecisión detectada en la revisión del diff y CORREGIDA DENTRO DE LA MISMA TANDA, no ficha abierta:** al sustituir el «8-10 %» quedó «**más del doble**», que **vale para 54 (10,2 / 5 = 2,04×) pero NO para 122 (8,5 / 5 = 1,7×)**. **Eran TRES sitios, no dos:** `validacion.py:551`, `GUIA_RESULTADOS.md:221` y —el que sobrevivió al primer barrido— el **docstring de `detect_data_drift_normales()`**, `Implementacion/app/validacion.py:638-639`, que es **la afirmación operativa pegada a las dos cifras que la desmienten**. **Hicieron falta DOS pasadas de corrección**, con un dictamen **NO APTO** de `auditor-ml` en medio: la primera dejó fuera el tercer sitio **y** puso una formulación que tampoco era literal —«entre 1,7 y 2 veces», cuando **0,10174 / 0,05 = 2,0348×** se sale del intervalo por arriba—. **Formulación definitiva: se abandona el rango y se cita POR VARIANTE, ≈2,0× con 54 y ≈1,7× con 122**, que es lo que la Decisión 1 exige de todas formas. **LECCIÓN DEL BARRIDO, que va a volver a pasar y por eso queda escrita: la frase estaba PARTIDA POR EL SALTO DE LÍNEA** («…sale más\\n del doble…»), así que un `grep "más del doble"` **daba limpio siendo falso**. **Se busca por el fragmento más corto que no se parta, o en multilínea** — un barrido que sale vacío sobre una expresión de varias palabras no prueba nada por sí solo | `cd407b1` |
 | 2026-08-14 | Código | **El `warnings.filterwarnings('ignore')` global, RETIRADO** — la quinta y última ficha de la migración de la deuda técnica de `next-steps.md` §3.2. Retirado de **`program.py:12`** y **`validacion.py:57`**. **`validacion.py:21` NO se tocó**: es un **comentario**, y llevaba meses mal apuntado en la propia ficha. El implementador retiró además **`import warnings`** de ambos scripts, ya sin uso, y el auditor verificó que **no queda ni una llamada a `warnings.` en todo `app/`**. Con esto la sección de la migración de §3.2 **queda sin fichas abiertas** | `cd407b1` |
 | 2026-08-14 | Código | **`resumen-de-decisiones.md:820-821` ya no afirma en presente que el aviso de re-anclaje se mantiene.** Era el **punto 5 de la auditoría**, el único que quedó sin aplicar en `97e679b` por falta de permiso de escritura. Resuelta con **nota fechada que supera el aviso obsoleto**, la convención que el propio fichero ya usa. **PRIMERA APLICACIÓN DEL PERMISO ACOTADO** que Francisco concedió al `ml-implementador` ese mismo día (**Decisión 3 de la Fase 0**): auditado que la edición **SOLO AÑADE**, sin tocar una línea de texto histórico — que es exactamente la garantía por la que el permiso se acotó | `cd407b1` |

@@ -102,6 +102,15 @@ estas columnas VACÍAS a propósito: su banda mide carga de máquina y no el
 algoritmo (ver RAZON_BLOQUE_MAQUINA), así que un «fuera de banda» ahí no diría
 nada del sistema y solo inflaría el denominador del titular.
 
+LA SALVEDAD DE PROCEDENCIA DEL TITULAR LLEVA EL RECUENTO POR COMMIT (2026-08-14).
+El `.md` no solo ENUMERA los commits de los que sale el valor de la semilla 42:
+dice cuántas de las M celdas casadas aporta cada uno y cuántos de los N «fuera»
+salen de cada versión del código (`_reparto_commits_titular_md()`). Sin ese peso,
+«el titular viene de dos commits» admite cualquier reparto —mitad y mitad, o 97 y
+1—, y de él depende cuánta de la distancia listada podría ser deriva de código. Los
+recuentos se CUENTAN celda a celda sobre el mismo conjunto que «N de M» (bloque de
+calidad, solo casadas); nunca se escriben a mano, y se comprueba que sumen M.
+
 Procedencia: cada celda lleva DOS sellos y no uno —`commits_origen` (los commits de
 las diez filas agregadas, que es el que vale para citar la banda) y `commit_agregador`
 (el del agregador)—, y el script AVISA si una celda mezcla commits. También avisa, con el
@@ -291,6 +300,12 @@ class AgregadorSemillas:
     # como 0,0001 o como 0,0000 y la celda parecería un error de redondeo.
     DECIMALES_DISTANCIA = 6
 
+    # Etiqueta del reparto por commit para las celdas casadas cuya fila publicada
+    # NO trae commit. No se omiten del reparto: si se omitiesen, la suma de los
+    # recuentos por commit no cuadraría con el denominador «M» y el lector no
+    # sabría si falta un commit o falta una celda.
+    ETIQUETA_SIN_COMMIT_42 = "_sin commit declarado_"
+
     # La columna 'semilla' de las tablas publicadas. Se filtra por ella además de
     # por la clave: una tabla publicada solo debería contener filas de la 42, pero
     # el filtro es gratis y convierte una tabla contaminada en un "sin casar"
@@ -344,6 +359,15 @@ class AgregadorSemillas:
         # compararlos con los de las bandas (`commits_origen`): ver
         # _salvedad_procedencia_titular().
         self.commits_titular = set()
+        # Reparto de las celdas CASADAS por commit de origen del titular:
+        # {commit: {"casadas": n, "fuera": n}}. Se cuenta sobre EXACTAMENTE el
+        # mismo conjunto de celdas del que sale el titular «N de M» —solo bloque
+        # de CALIDAD y solo casadas—, así que la suma de 'casadas' tiene que ser M.
+        # Sirve para que la salvedad de procedencia no se limite a ENUMERAR los
+        # commits: dice cuántas celdas aporta cada uno y cuántos de los «fuera»
+        # salen de cada versión del código, que es lo que permite juzgar cuánta de
+        # la distancia podría ser deriva de código.
+        self.recuento_titular_por_commit = {}
         # Claves de avisos ya emitidos, para no repetir el mismo aviso una vez por
         # métrica (hasta 40 veces sobre la misma tabla).
         self._avisos_emitidos = set()
@@ -674,6 +698,15 @@ class AgregadorSemillas:
             dentro, distancia = False, valor - maximo
         else:
             dentro, distancia = True, 0.0
+        # Reparto por commit de origen del titular. Se cuenta AQUÍ y no releyendo
+        # el CSV: esta rama es exactamente la de las celdas casadas del bloque de
+        # calidad, las mismas que forman «N de M».
+        etiqueta = commit if commit else self.ETIQUETA_SIN_COMMIT_42
+        entrada = self.recuento_titular_por_commit.setdefault(
+            etiqueta, {"casadas": 0, "fuera": 0})
+        entrada["casadas"] += 1
+        if not dentro:
+            entrada["fuera"] += 1
         if dentro:
             self.celdas_dentro_banda += 1
         else:
@@ -1070,6 +1103,55 @@ class AgregadorSemillas:
             ]
         return partes
 
+    def _reparto_commits_titular_md(self):
+        """
+        Cuántas celdas casadas aporta CADA commit de origen del titular, y cuántos
+        de los «fuera de banda» salen de cada uno. Texto ya formateado ('' si no
+        hay reparto).
+
+        POR QUÉ (añadido el 2026-08-14): la salvedad de procedencia ENUMERABA los
+        commits del titular pero no decía con qué peso entra cada uno. Con la
+        enumeración sola, «el titular viene de dos commits» se lee como si el
+        reparto fuese cualquiera —mitad y mitad, o 97 y 1—, y de ese peso depende
+        cuánta de la distancia listada abajo podría ser deriva de código. El
+        recuento se CALCULA celda a celda (misma fuente que la columna
+        `commit_semilla_42` del CSV), nunca se escribe a mano.
+
+        SE COMPRUEBA QUE LA SUMA SEA EL DENOMINADOR «M»: si no lo fuese, el reparto
+        estaría contando sobre otro conjunto de celdas que el titular y publicarlo
+        al lado de «N de M» sería engañoso, así que se avisa.
+        """
+        if not self.recuento_titular_por_commit:
+            return ""
+        _, casadas = self._recuento_titular()
+        suma = sum(d["casadas"]
+                   for d in self.recuento_titular_por_commit.values())
+        if suma != casadas:
+            self.avisos.append(
+                "El reparto de celdas por commit del titular suma {} y el "
+                "denominador del titular es {}: los dos recuentos NO salen del "
+                "mismo conjunto de celdas y el reparto no se puede leer al lado de "
+                "«N de M».".format(suma, casadas))
+        # Orden: primero el commit que más celdas aporta; a igualdad, por nombre.
+        orden = sorted(self.recuento_titular_por_commit.items(),
+                       key=lambda par: (-par[1]["casadas"], par[0]))
+        trozos = []
+        for etiqueta, datos in orden:
+            nombre = (etiqueta if etiqueta == self.ETIQUETA_SIN_COMMIT_42
+                      else "`{}`".format(etiqueta))
+            n_fuera = datos["fuera"]
+            if n_fuera == 0:
+                cola = "ninguna fuera de banda"
+            elif n_fuera == 1:
+                cola = "1 fuera de banda"
+            else:
+                cola = "{} fuera de banda".format(n_fuera)
+            trozos.append("{} aporta **{}** ({})".format(
+                nombre, datos["casadas"], cola))
+        return ("Reparto de las {} celdas casadas por commit de origen del "
+                "titular (columna `commit_semilla_42`, contado por el "
+                "agregador): {}.".format(casadas, " · ".join(trozos)))
+
     def _nota_procedencia_titular_md(self):
         """
         Salvedad de procedencia: el titular y la banda pueden venir de otro commit.
@@ -1088,15 +1170,19 @@ class AgregadorSemillas:
         """
         if not self.commits_titular:
             return []
+        reparto = self._reparto_commits_titular_md()
         if self.commits_titular == self.commits_vistos:
-            return [
+            partes = [
                 "Procedencia: el titular y las bandas salen del **mismo** commit "
                 "({}), así que la comparación es entre corridas del mismo "
                 "código.".format(", ".join("`{}`".format(c) for c in
                                            sorted(self.commits_titular))),
                 "",
             ]
-        return [
+            if reparto:
+                partes += [reparto, ""]
+            return partes
+        partes = [
             "> [!warning] **Salvedad de procedencia: el titular y la banda no salen "
             "del mismo commit.** Los valores de la semilla 42 vienen de {} "
             "(columna `commit_semilla_42` del CSV, celda a celda) y los diez puntos "
@@ -1110,6 +1196,12 @@ class AgregadorSemillas:
                 or "_sin commit declarado_"),
             "",
         ]
+        # El reparto va DENTRO de la salvedad, como continuación del callout: es el
+        # dato que le da peso ("dos commits" con qué proporción) y separarlo lo
+        # dejaría leyéndose como una nota independiente.
+        if reparto:
+            partes[0] += " {}".format(reparto)
+        return partes
 
     def _seccion_titular_md(self):
         """
@@ -1359,6 +1451,14 @@ class AgregadorSemillas:
         fuera, casadas = self._recuento_titular()
         print("TITULAR (semilla {}) FUERA DE BANDA: {} de {} celdas de calidad "
               "casadas".format(config.SEMILLA_POR_DEFECTO, fuera, casadas))
+        # Reparto por commit de origen del titular, contado (no escrito a mano).
+        # Se imprime desde el dict y no llamando a _reparto_commits_titular_md():
+        # ese método puede añadir un aviso y llamarlo dos veces lo duplicaría.
+        for etiqueta, datos in sorted(
+                self.recuento_titular_por_commit.items(),
+                key=lambda par: (-par[1]["casadas"], par[0])):
+            print("   commit del titular '{}': {} celda(s) casada(s) · {} fuera de "
+                  "banda".format(etiqueta, datos["casadas"], datos["fuera"]))
         if self.celdas_sin_casar:
             print("   ({} celda(s) de calidad SIN casar: no cuentan en ninguna de "
                   "las dos cifras — ver avisos)".format(self.celdas_sin_casar))

@@ -1,33 +1,274 @@
-# Dispersión entre semillas (tarea T4)
+---
+titulo: "Apéndice A.3 — Ficha del sistema (model card)"
+numero: "A.3"
+estado: borrador
+---
 
-> Generado por `Implementacion/app/agregar_semillas.py`. **No se edita a mano**: se regenera corriendo el agregador.
-> Commit del **agregador** (columna `commit_agregador` del CSV: con qué versión de `agregar_semillas.py` se calcularon media y sd): `6bb224c-sucio` · Fecha: 2026-08-14T15:15:13
-> Commit(s) de las **filas agregadas** (con qué versión del código se produjeron los puntos de las bandas): `df30cb2`. La columna `commits_origen` del CSV lo da por celda; si aquí hay más de uno, el bloque de avisos dice en qué celdas.
-> Semillas agregadas (10): 1, 2, 3, 4, 5, 6, 7, 8, 9, 10.
+# A.3 Ficha del sistema
 
-La **semilla 42 no entra en ninguna banda**, y es deliberado: es el titular de 5.1-5.3 y un punto **independiente**, no uno de los sumandos de su propia media (razón completa en el encabezado de `config.py`). `n`, `media`, `sd`, `mín` y `máx` son de las **diez** semillas del barrido. Lo que sí aparece —desde el 2026-08-13— es su valor **al lado** de la banda, para poder decir cuántas veces cae fuera sin contarlo a mano: ver «El titular frente a la banda».
+Este apéndice documenta el sistema evaluado siguiendo la plantilla de **model card** propuesta por
+[CITA: Mitchell et al. 2019]: detalles del modelo, uso previsto, particiones de datos, configuraciones
+seleccionadas, alcance exacto de cada métrica, infraestructura de cómputo, análisis cuantitativo con
+dispersión y limitaciones declaradas.
 
-Lo que **sí varía** entre estas corridas y lo que **no** está declarado en `Implementacion/PIPELINE.md`, subsección «El andamiaje de la semilla»: varían el split 80/20 de D1 (y con él el umbral p95), la muestra de 5.000 de D3, la submuestra de 20.000 de OneClassSVM, los folds del CV y la inicialización de los modelos; **no** varían los splits D1/D2/D3 ni la selección de las 54 características, porque `program.py` no está parametrizado por semilla.
+> [!note] Naturaleza de este apéndice
+> Es un **volcado**, no una discusión. Todas las cifras se transcriben de los artefactos de
+> `Resultados/` que se citan celda a celda; la interpretación corresponde al
+> [[5.4 Conclusiones del capítulo|capítulo 5]] y a [[6.1 Conclusiones]]. Ninguna cifra de este
+> apéndice se calcula aquí.
 
-`sd` es la desviación típica **muestral** (`ddof=1`). **Sin p-valor**: 10 puntos sobre un único dataset no sostienen un contraste, y la renuncia se declara (ficha T4).
+---
 
-Las tablas de abajo son la vista legible, y llevan `tabla_origen` y `alcance` porque **sin el alcance la etiqueta es ambigua**: «54 · RandomForest» nombra por igual el CLASIFICADOR DE FIRMAS y la MEDICIÓN CONTRAFACTUAL de la cascada invertida, que son dos medidas distintas. El `alcance` va **recortado a 70 caracteres** para que la tabla quepa; su texto íntegro está en la columna `alcance` del CSV, que es la fuente.
+## A.3.1 Detalles del modelo
 
-El CSV (`dispersion_semillas.csv`) trae por celda cinco columnas más que aquí no caben y que hay que mirar antes de citar una banda: `commits_origen`, `commit_agregador`, `decisiones_no_constantes` (el reparto del `balanceo`/`config_ganadora` cuando no fue el mismo en las diez semillas; vacío = lo fue), `distancia_fuera_banda_42` y `commit_semilla_42`.
+| Campo | Valor |
+|---|---|
+| Nombre | H-NIDS híbrido en cascada anomalías → firmas |
+| Tipo | Sistema de dos etapas: detector *one-class* (etapa 1) + clasificador multiclase supervisado (etapa 2) |
+| Etapa 1 publicada | **Autoencoder-MLP** (`sklearn.neural_network.MLPRegressor`), umbral por percentil 95 sobre `D1_val` |
+| Etapa 2 publicada | **RandomForest** multiclase de 4 categorías de ataque, con umbral de confianza y clase de rechazo `unknown` |
+| Variantes evaluadas | `54` (con selección de características) y `122_sin_seleccion` (sin selección) |
+| Dataset | NSL-KDD (`KDDTrain+.txt` / `KDDTest+.txt`) |
+| Semilla | `RANDOM_STATE = 42`, centralizada en `Implementacion/app/config.py` |
+| Artefactos de origen (cuatro tablas principales) | `Resultados/metricas_anomalias.csv` · `metricas_firmas.csv` · `metricas_hibrido.csv` · `metricas_baseline.csv` |
+| Artefacto de origen (medición aparte) | `Resultados/metricas_cascada_invertida.csv` |
+| Sello de las **cuatro tablas principales** | `commit = 1163c90`, fecha `2026-08-09` (columnas `commit` y `fecha` de esos cuatro CSV) |
+| Sello de la **cascada invertida** | `commit = 274923d-sucio`, fecha `2026-08-10` (columnas `commit` y `fecha` de `metricas_cascada_invertida.csv`) |
 
-## El titular (semilla 42) frente a la banda
+> [!warning] Son dos corridas distintas y no se presentan mezcladas
+> Las cuatro tablas principales y la medición contrafactual de la cascada invertida (T3) **no salen
+> de la misma corrida**: llevan commit y fecha distintos, como se comprueba en las columnas `commit`
+> y `fecha` de los propios CSV. El criterio, fijado en `Implementacion/PIPELINE.md`, es que **ninguna
+> cifra de una corrida se presente junto a las de la otra sin decirlo**. Por eso el sello va separado
+> aquí y en A.3.9, y por eso la salvedad (iii) de A.3.6 reparte las celdas del titular por commit de
+> origen.
 
-**13 de 98** celdas de calidad tienen el valor de la semilla 42 **fuera** del intervalo [mín, máx] de las diez semillas del barrido. Esta cifra la calcula el agregador: no se cuenta a mano.
+**Uso previsto.** Trabajo académico de evaluación comparativa sobre un dataset público de referencia.
+**No** es un sistema desplegable: opera sobre flujos ya extraídos y preprocesados, no sobre paquetes
+en red, y no se ha evaluado frente a un adversario adaptativo (véase [[3.1 Requisitos del sistema]] y
+la sección A.3.7 de esta ficha).
 
-Cómo se decide: el valor de la 42 se toma de su tabla PUBLICADA homóloga (misma variante, mismo algoritmo, mismo texto de `alcance`, `semilla` = 42; criterio completo en el encabezado del script), y se compara con los extremos **con la precisión con la que se persistió el CSV de origen** (6 decimales), no con el `mín`/`máx` a 4 decimales que publican las tablas de abajo: esos están redondeados para leerlos y decidir con ellos daría otro recuento. Un valor **igual** a un extremo cuenta como dentro.
+---
 
-Solo el bloque de **calidad** entra: en el de máquina la banda mide carga de máquina y no el algoritmo, así que un «fuera» ahí no diría nada del sistema.
+## A.3.2 Particiones de datos
 
-**No todas esas celdas son métricas sobre D2.** De las 98 del denominador, **10 son umbrales** (8 de `umbral` · 2 de `umbral_conf_elegido`): no miden rendimiento sobre D2 sino una decisión del pipeline que se recalcula en cada semilla (el p95 sobre el 20 % de D1 y el `UMBRAL_CONF` calibrado por OOF), y se agregan a propósito porque son justo lo que el barrido pone a prueba. **No se descuentan** del titular; si se descontasen, el denominador sería **88** y la cifra habría que recontarla.
+Las tres particiones las genera `Implementacion/app/program.py` y son **idénticas en las dos
+variantes**; su descripción funcional está en [[4.3 Preprocesamiento de los datasets]].
 
-Y el descuento no sería inocuo: **3 celdas caen** en el borde exacto de su banda (122_sin_seleccion KNN `f1_u2r` (= máx) · 122_sin_seleccion RandomForest `f1_u2r` (= mín) · 122_sin_seleccion Autoencoder->RandomForest `umbral_conf_elegido` (= máx)), cuentan como **dentro** por el criterio declarado arriba y por eso deciden el recuento — y **una de ellas es un umbral**.
+| Partición | Contenido | Tamaño | Función |
+|---|---|---:|---|
+| **D1** | Solo tráfico normal (de `KDDTrain+`) | 67.343 | Entrenamiento de la etapa 1 (*one-class*) |
+| ├─ `D1_train` | 80 % de D1 | 53.874 * | Ajuste de los cuatro detectores |
+| └─ `D1_val` | 20 % de D1 | 13.469 | Cálculo del umbral (percentil 95 del *score*) |
+| **D2** | `KDDTest+` completo | 22.544 | Evaluación de extremo a extremo |
+| ├─ normales | Clase `normal` de D2 | 9.711 | Denominador del FPR y de la cascada invertida (T3) |
+| ├─ ataques de tipo conocido | Presentes también en train | 9.083 | Denominador de las métricas de la etapa 2 |
+| └─ ataques 0-day | **17 tipos** ausentes del train | 3.750 | Denominador de `recall_0day_global` |
+| **D3** | Solo ataques conocidos (de `KDDTrain+`) | 58.630 | Entrenamiento de la etapa 2 y calibración OOF del umbral de confianza |
 
-> [!warning] **Salvedad de procedencia: el titular y la banda no salen del mismo commit.** Los valores de la semilla 42 vienen de `1163c90`, `274923d-sucio` (columna `commit_semilla_42` del CSV, celda a celda) y los diez puntos de cada banda de `df30cb2` (columna `commits_origen`). Parte de la distancia que se lista abajo **podría ser deriva de código** entre esas versiones y no dispersión por semilla. No invalida ninguna cifra —cada una es el resultado real de su corrida—, pero hay que declararlo al citar «N de M». Reparto de las 98 celdas casadas por commit de origen del titular (columna `commit_semilla_42`, contado por el agregador): `1163c90` aporta **94** (13 fuera de banda) · `274923d-sucio` aporta **4** (ninguna fuera de banda).
+**\* `D1_train` = 53.874 es una cifra derivada, no medida.** Ningún artefacto de `Resultados/` la
+publica: sale de la **diferencia** entre el tamaño de D1 (67.343) y el de `D1_val` (13.469, este sí
+publicado, en `Implementacion/PIPELINE.md`). Se incluye por completitud de la tabla y se marca como
+derivada para que no se cite como salida de una corrida.
+
+Muestreos internos con semilla, empleados durante el ajuste: **5.000 filas de D3** como conjunto
+etiquetado de validación de la etapa 1 y **20.000 filas de `D1_train`** como submuestra de
+OneClassSVM (`anomalias.py:161` y `anomalias.py:244`).
+
+> [!warning] D2 no participa en ninguna decisión
+> Ni el umbral p95, ni la rejilla de hiperparámetros, ni el umbral de confianza del híbrido se
+> ajustan mirando D2. El umbral de confianza se calibra **fuera de fold sobre D3**
+> (`hibrido.py::_calibrar_umbral_conf`), no sobre el conjunto de test.
+
+---
+
+## A.3.3 Configuraciones seleccionadas (semilla 42)
+
+### Etapa 1 — detectores de anomalías
+
+Fuente: `Resultados/metricas_anomalias.csv`, columnas `config_ganadora` y `umbral`.
+
+| Variante | Algoritmo | Configuración ganadora | Umbral (p95 sobre `D1_val`) |
+|---|---|---|---:|
+| 54 | IsolationForest | `{'n_estimators': 100, 'max_samples': 1.0}` | 0,440643 |
+| 54 | OneClassSVM | `{'nu': 0.1, 'gamma': 'scale'}` | 19,186592 |
+| 54 | LocalOutlierFactor | `{'n_neighbors': 20}` | 2,186273 |
+| 54 | **Autoencoder** (publicado) | `{'hidden_layer_sizes': (64, 32, 64)}` | 0,000033 |
+| 122_sin_seleccion | IsolationForest | `{'n_estimators': 100, 'max_samples': 0.5}` | 0,409761 |
+| 122_sin_seleccion | OneClassSVM | `{'nu': 0.05, 'gamma': 'scale'}` | −0,506286 |
+| 122_sin_seleccion | LocalOutlierFactor | `{'n_neighbors': 20}` | 2,315471 |
+| 122_sin_seleccion | **Autoencoder** (publicado) | `{'hidden_layer_sizes': (64, 32, 64)}` | 0,000124 |
+
+Los umbrales **no son comparables entre algoritmos**: cada uno se aplica sobre su propia escala de
+*score*. El Autoencoder registra además el número de iteraciones del ajuste ganador: **117 de 162**
+en la variante de 54 y **66 de 128** en la de 122 (`n_iter_ganador` / `n_iter_total_grid`).
+
+### Etapa 2 — clasificador de firmas
+
+Fuente: `Resultados/metricas_firmas.csv`, columnas `balanceo` y `config_ganadora`. El eje de balanceo
+se decide **por algoritmo** (mini-experimento de 4.3.4, `firmas.py:91-96`).
+
+| Variante | Algoritmo | Balanceo ganador | Configuración ganadora |
+|---|---|---|---|
+| 54 | DecisionTree | `class_weight` | `{'max_depth': 10, 'min_samples_leaf': 1}` |
+| 54 | **RandomForest** (publicado) | `SMOTE` | `{'clf__max_depth': 10, 'clf__n_estimators': 300}` |
+| 54 | KNN | `SMOTE` | `{'clf__n_neighbors': 5, 'clf__weights': 'uniform'}` |
+| 54 | HistGradientBoosting | `SMOTE` | `{'clf__learning_rate': 0.1, 'clf__max_iter': 300}` |
+| 122_sin_seleccion | DecisionTree | `class_weight` | `{'max_depth': 10, 'min_samples_leaf': 1}` |
+| 122_sin_seleccion | **RandomForest** (publicado) | `SMOTE` | `{'clf__max_depth': None, 'clf__n_estimators': 100}` |
+| 122_sin_seleccion | KNN | `SMOTE` | `{'clf__n_neighbors': 5, 'clf__weights': 'uniform'}` |
+| 122_sin_seleccion | HistGradientBoosting | `SMOTE` | `{'clf__learning_rate': 0.05, 'clf__max_iter': 300}` |
+
+### Sistema híbrido y baseline
+
+| Elemento | 54 | 122_sin_seleccion | Fuente |
+|---|---:|---:|---|
+| Cascada publicada | Autoencoder → RandomForest | Autoencoder → RandomForest | `metricas_hibrido.csv` |
+| `umbral_conf_elegido` (calibrado OOF sobre D3) | 0,5 | 0,5 | `metricas_hibrido.csv` |
+| `tau` | 0,02 | 0,02 | `metricas_hibrido.csv` |
+| Baseline monolítico | `{'max_depth': None, 'n_estimators': 300}` | `{'max_depth': None, 'n_estimators': 300}` | `metricas_baseline.csv` |
+
+---
+
+## A.3.4 Alcance de cada métrica
+
+Cada tabla de `Resultados/` lleva una columna `alcance` que fija sobre qué población se calcula la
+fila. **Las cifras de tablas distintas no son intercambiables** aunque compartan nombre de métrica.
+
+| Artefacto | Alcance declarado | Denominador |
+|---|---|---:|
+| `metricas_anomalias.csv` | binario normal-vs-ataque (2 clases) sobre D2 completo | 22.544 |
+| `metricas_firmas.csv` | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo conocido | 9.083 |
+| `metricas_baseline.csv` | multiclase 5 clases (normal + 4 ataques) sobre D2 completo | 22.544 |
+| `metricas_hibrido.csv` | cascada extremo a extremo (5 clases + `unknown`) sobre D2 completo | 22.544 (0-day: 3.750) |
+| `metricas_cascada_invertida.csv` | medida **contrafactual** de la cascada invertida (T3): `predict_proba` del clasificador de firmas sobre las filas normales de D2 | 9.711 |
+
+Precisiones que condicionan la lectura y que están documentadas en las propias columnas `alcance`:
+
+- **`bin_fpr` del híbrido = `fpr` del Autoencoder**, por construcción y no por casualidad: en una
+  cascada anomalías → firmas, la etapa 2 no puede crear ni corregir falsos positivos binarios. El
+  desarrollo está en [[A.2 Métricas de desempeño]].
+- **La fila `__global__` de la cascada invertida es una cota inferior**, no el FPR de un sistema de
+  firmas-primero: en el sistema publicado `unknown` es alarma (decisión P-5), así que lo que cae bajo
+  umbral no queda exonerado. Valores medidos: de las 9.711 filas normales de D2, el clasificador de
+  firmas condenaría **6.558 (67,53 %)** en la variante de 54 y **3.329 (34,28 %)** en la de 122.
+- **Las columnas de tiempo** (`tiempo_s`, `latencia_ms_por_flujo`, `flujos_por_segundo`) son
+  *wall-clock* de un pase único en máquina no dedicada, miden solo el `predict`/`score` sobre
+  características ya en memoria y **no** son capacidad operativa del sistema.
+
+> [!todo] Enlace pendiente
+> El protocolo de evaluación consolidado (particiones, prohibiciones, vocabulario de reproducibilidad)
+> está **previsto** como nota propia, `5.0 Protocolo de evaluación`. A fecha de redacción de este
+> apéndice **no existe en el vault** —el capítulo 5 solo tiene 5.1-5.4— y su redacción sigue
+> pendiente. Cuando se escriba, este apartado debe remitir a ella en lugar de repetir el alcance.
+
+---
+
+## A.3.5 Infraestructura de cómputo y entorno
+
+| Elemento | Valor |
+|---|---|
+| CPU | Intel Core i7-12700H |
+| Memoria | 34 GB RAM |
+| Sistema operativo | Windows 11 Pro 10.0.26200 |
+| Aceleración | Ninguna (no se emplea GPU) |
+| Intérprete | Python 3.11 (entorno virtual `Implementacion/Imp`) |
+| Dependencias | **21 paquetes con versión fijada** en `Implementacion/requirements.txt` |
+| Versión de referencia | `scikit-learn==1.7.1` |
+
+Otras versiones fijadas relevantes para la reproducción: `numpy==2.3.2`, `pandas==2.3.1`,
+`scipy==1.16.0`, `imbalanced-learn==0.14.2`, `joblib==1.5.1`, `matplotlib==3.10.3`, `seaborn==0.13.2`.
+
+> [!warning] El *wall-clock* no es reproducible
+> Todas las corridas se hicieron en una máquina **no dedicada**. Las diferencias de tiempo entre
+> corridas alcanzan factores de varias unidades sin que cambie la calidad: el bloque de «dispersión de
+> máquina» de A.3.6 lo documenta y **no se cita como resultado**.
+
+---
+
+## A.3.6 Análisis cuantitativo: dispersión entre semillas
+
+Volcado del artefacto `Resultados/dispersion_semillas.md`, generado por
+`Implementacion/app/agregar_semillas.py` a partir de `Resultados/dispersion_semillas.csv`, que es la
+fuente. La tabla **no se edita a mano**: se regenera corriendo el agregador.
+
+Alcance exacto de este volcado, para que se sepa qué se transcribe y qué no:
+
+| Bloque del artefacto | Cómo aparece aquí |
+|---|---|
+| Tablas de dispersión (198 filas: calidad + máquina) | **Íntegras**, fila a fila |
+| Bloque «Avisos de la agregación» (19 líneas de aviso) | **Resumido** en una tabla de 6 filas, con los casos de mayor amplitud |
+
+El resumen del bloque de avisos es una selección editorial de este apéndice, no del artefacto: para
+el reparto completo semilla a semilla hay que ir al propio `dispersion_semillas.md` o a la columna
+`decisiones_no_constantes` del CSV.
+
+### Alcance y método del barrido
+
+- **Semillas agregadas (10):** 1, 2, 3, 4, 5, 6, 7, 8, 9, 10.
+- **Qué mide.** Dispersión **de los modelos sobre splits D1/D2/D3 y set de características FIJOS**.
+  **No** es «dispersión del sistema»: `program.py` **no está parametrizado por semilla** —su
+  `random_state=42` es literal y no importa `config.py`—, de modo que el barrido **no incluye
+  variabilidad del preprocesado ni de la selección de características**.
+- **Qué sí varía** entre corridas: el split 80/20 de D1 (y con él el umbral p95), la muestra de 5.000
+  de D3, la submuestra de 20.000 de OneClassSVM, los *folds* de la validación cruzada y la
+  inicialización de los modelos.
+- **`sd` es la desviación típica muestral** (`ddof=1`).
+- **Sin p-valor**, y la renuncia se declara con su razón: **10 puntos sobre un único dataset no
+  sostienen un contraste**. Declarar la renuncia cumple el ítem *statistics* del checklist de
+  [CITA: Pineau et al.]; callarla no.
+- **La semilla 42 no entra en ninguna banda**, y es deliberado: es el **titular** de
+  [[5.1 Resultados del modelo de detección de anomalías|5.1]]-[[5.3 Resultados del sistema híbrido|5.3]]
+  y un punto **independiente**, no uno de los sumandos de su propia media. Aparece **al lado** de la
+  banda para poder contar cuántas veces cae fuera sin hacerlo a mano.
+- **Por qué se conservan `tabla_origen` y `alcance`.** Sin ellas la etiqueta es ambigua:
+  «`54 · RandomForest`» nombra por igual al **clasificador de firmas** y a la **medición
+  contrafactual de la cascada invertida**, que son dos medidas distintas. El texto de `alcance` va
+  recortado a 70 caracteres para que la tabla quepa; el íntegro está en la columna homónima del CSV.
+- **Columnas que solo trae el CSV** y que hay que mirar antes de citar una banda: `commits_origen`,
+  `commit_agregador`, `decisiones_no_constantes`, `distancia_fuera_banda_42` y `commit_semilla_42`.
+
+### El titular (semilla 42) frente a la banda
+
+**13 de 98** celdas de calidad tienen el valor de la semilla 42 **fuera** del intervalo [mín, máx] de
+las diez semillas del barrido. La cifra la calcula el agregador: no se cuenta a mano. Solo entra el
+bloque de **calidad**; en el de máquina la banda mide carga de máquina y no el algoritmo.
+
+El recuento se cita **con sus tres salvedades**, y las tres son parte de la cifra:
+
+> [!warning] Salvedad (i) — el 13 depende del criterio de comparación
+> El valor de la 42 se compara con los extremos **con la precisión con la que se persistió el CSV de
+> origen** (6 decimales), no con el mín/máx a 4 decimales de las tablas de abajo, y un valor **igual**
+> a un extremo cuenta como **dentro** (criterio simétrico en ambos extremos). Con los extremos
+> redondeados a 4 decimales el recuento sería **14**, porque `f1_u2r` de RandomForest en
+> `122_sin_seleccion` tiene la 42 en **0,318182**, exactamente en el mínimo.
+>
+> **Ese 14 no lo emite ninguna corrida.** No está en `dispersion_semillas.md` ni en
+> `dispersion_semillas.csv`: es una **cuenta a mano declarada en el encabezado del agregador**
+> (`Implementacion/app/agregar_semillas.py`, bloque de documentación del criterio dentro/fuera). El
+> razonamiento es verificable —el mínimo redondeado de esa celda queda por encima del valor real de
+> la 42—, pero la cifra es prosa, no salida de un script, y así se cita. El **13** sí lo calcula el
+> agregador, que es la razón por la que se automatizó.
+
+> [!warning] Salvedad (ii) — no todas esas celdas son métricas sobre D2
+> De las 98 del denominador, **10 son umbrales** (8 de `umbral` · 2 de `umbral_conf_elegido`): no
+> miden rendimiento sobre D2 sino una decisión del pipeline que se recalcula en cada semilla (el p95
+> sobre el 20 % de D1 y el `UMBRAL_CONF` calibrado por OOF). **No se descuentan**, porque son justo lo
+> que el barrido pone a prueba; si se descontasen, el denominador sería **88** y la cifra habría que
+> recontarla. Y el descuento no sería inocuo: **3 celdas caen en el borde exacto** de su banda
+> (`122_sin_seleccion` KNN `f1_u2r` (= máx) · `122_sin_seleccion` RandomForest `f1_u2r` (= mín) ·
+> `122_sin_seleccion` Autoencoder→RandomForest `umbral_conf_elegido` (= máx)), cuentan como **dentro**
+> por el criterio de la salvedad (i) y por eso deciden el recuento — y **una de las tres es un umbral**.
+
+> [!warning] Salvedad (iii) — el titular y la banda no salen del mismo commit
+> Los valores de la semilla 42 vienen de `1163c90` y `274923d-sucio` (columna `commit_semilla_42` del
+> CSV, celda a celda) y los diez puntos de cada banda, de `df30cb2` (columna `commits_origen`). Parte
+> de la distancia listada abajo **podría ser deriva de código** entre esas versiones y no dispersión
+> por semilla. Reparto de las 98 celdas casadas por commit de origen del titular: `1163c90` aporta
+> **94** (13 fuera de banda) · `274923d-sucio` aporta **4** (ninguna fuera de banda). Es una
+> **salvedad de procedencia, no una invalidación**: cada cifra es el resultado real de su corrida.
+
+#### Celdas fuera de banda, por distancia
 
 | Tabla de origen | Variante | Algoritmo | Alcance | Métrica | Semilla 42 | Mín (10) | Máx (10) | Distancia |
 |---|---|---|---|---|---:|---:|---:|---:|
@@ -45,8 +286,7 @@ Y el descuento no sería inocuo: **3 celdas caen** en el borde exacto de su band
 | `metricas_anomalias_semillas.csv` | 122_sin_seleccion | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `fpr` | 0.0834 | 0.0819 | 0.0830 | 0.000412 |
 | `metricas_anomalias_semillas.csv` | 54 | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `roc_auc` | 0.8360 | 0.8200 | 0.8359 | 0.000097 |
 
-
-## Calidad
+#### Bloque de calidad (98 celdas)
 
 | Tabla de origen | Variante | Algoritmo | Alcance | Métrica | n | Media | sd | Mín | Máx | Semilla 42 | ¿En banda? |
 |---|---|---|---|---|---:|---:|---:|---:|---:|---:|---|
@@ -149,9 +389,12 @@ Y el descuento no sería inocuo: **3 celdas caen** en el borde exacto de su band
 | `metricas_hibrido_semillas.csv` | 54 | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `recall_0day_global` | 10 | 0.7531 | 0.0173 | 0.7232 | 0.7771 | 0.7707 | dentro |
 | `metricas_hibrido_semillas.csv` | 54 | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `umbral_conf_elegido` | 10 | 0.4800 | 0.0632 | 0.4000 | 0.6000 | 0.5000 | dentro |
 
-## Dispersión de máquina (NO es calidad y NO se cita como resultado)
+#### Bloque de máquina (NO es calidad y NO se cita como resultado)
 
-Bloque aparte a propósito: wall-clock en máquina no dedicada: su sd mide CARGA DE MÁQUINA y no el algoritmo. Medido en T1: el Autoencoder de 54 features pasó de 37,71 s a 181,91 s entre dos corridas (4,8x) con calidad idéntica al bit y con el recuento de épocas determinista (162 en 54 y 128 en 122). No es una propiedad del algoritmo y no se cita como resultado.
+Se publica aparte a propósito: es *wall-clock* en máquina no dedicada, de modo que su `sd` mide
+**carga de máquina** y no el algoritmo. Medido en T1: el Autoencoder de 54 características pasó de
+**37,71 s a 181,91 s** entre dos corridas (4,8×) con **calidad idéntica al bit** y con el recuento de
+épocas determinista (162 en 54 y 128 en 122). No es una propiedad del algoritmo.
 
 | Tabla de origen | Variante | Algoritmo | Alcance | Métrica | n | Media | sd | Mín | Máx |
 |---|---|---|---|---|---:|---:|---:|---:|---:|
@@ -256,24 +499,126 @@ Bloque aparte a propósito: wall-clock en máquina no dedicada: su sd mide CARGA
 | `metricas_hibrido_semillas.csv` | 54 | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `tiempo_inferencia_s` | 10 | 0.0658 | 0.0166 | 0.0520 | 0.0940 |
 | `metricas_hibrido_semillas.csv` | 54 | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `tiempo_s` | 10 | 12.1350 | 5.9565 | 6.9600 | 24.0800 |
 
-## Avisos de la agregación
+### Decisiones no constantes entre semillas
 
-- metricas_anomalias.csv · ('122_sin_seleccion', 'Autoencoder', 'binario normal-vs-ataque (2 clases) sobre D2 completo'): la columna de DECISIÓN 'config_ganadora' NO es constante entre las 10 semillas ({'hidden_layer_sizes': (64, 32, 64)} en 6 semilla(s) · {'hidden_layer_sizes': (32, 16, 32)} en 4 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
-- metricas_anomalias.csv · ('122_sin_seleccion', 'IsolationForest', 'binario normal-vs-ataque (2 clases) sobre D2 completo'): la columna de DECISIÓN 'config_ganadora' NO es constante entre las 10 semillas ({'n_estimators': 100, 'max_samples': 1.0} en 3 semilla(s) · {'n_estimators': 300, 'max_samples': 1.0} en 3 semilla(s) · {'n_estimators': 200, 'max_samples': 1.0} en 2 semilla(s) · {'n_estimators': 300, 'max_samples': 0.5} en 1 semilla(s) · {'n_estimators': 200, 'max_samples': 0.5} en 1 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
-- metricas_anomalias.csv · ('122_sin_seleccion', 'LocalOutlierFactor', 'binario normal-vs-ataque (2 clases) sobre D2 completo'): la columna de DECISIÓN 'config_ganadora' NO es constante entre las 10 semillas ({'n_neighbors': 20} en 9 semilla(s) · {'n_neighbors': 35} en 1 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
-- metricas_anomalias.csv · ('54', 'IsolationForest', 'binario normal-vs-ataque (2 clases) sobre D2 completo'): la columna de DECISIÓN 'config_ganadora' NO es constante entre las 10 semillas ({'n_estimators': 100, 'max_samples': 1.0} en 5 semilla(s) · {'n_estimators': 200, 'max_samples': 1.0} en 4 semilla(s) · {'n_estimators': 300, 'max_samples': 1.0} en 1 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
-- metricas_anomalias.csv · ('54', 'OneClassSVM', 'binario normal-vs-ataque (2 clases) sobre D2 completo'): la columna de DECISIÓN 'config_ganadora' NO es constante entre las 10 semillas ({'nu': 0.1, 'gamma': 'scale'} en 7 semilla(s) · {'nu': 0.05, 'gamma': 'scale'} en 3 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
-- metricas_firmas.csv · ('122_sin_seleccion', 'DecisionTree', 'multiclase 4 categorías de ataque sobre los ataques de D2 de tipo conocido'): la columna de DECISIÓN 'balanceo' NO es constante entre las 10 semillas (SMOTE en 5 semilla(s) · class_weight en 5 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
-- metricas_firmas.csv · ('122_sin_seleccion', 'DecisionTree', 'multiclase 4 categorías de ataque sobre los ataques de D2 de tipo conocido'): la columna de DECISIÓN 'config_ganadora' NO es constante entre las 10 semillas ({'clf__max_depth': 20, 'clf__min_samples_leaf': 1} en 4 semilla(s) · {'max_depth': 10, 'min_samples_leaf': 1} en 3 semilla(s) · {'max_depth': 20, 'min_samples_leaf': 1} en 2 semilla(s) · {'clf__max_depth': 10, 'clf__min_samples_leaf': 1} en 1 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
-- metricas_firmas.csv · ('122_sin_seleccion', 'HistGradientBoosting', 'multiclase 4 categorías de ataque sobre los ataques de D2 de tipo conocido'): la columna de DECISIÓN 'config_ganadora' NO es constante entre las 10 semillas ({'clf__learning_rate': 0.1, 'clf__max_iter': 100} en 7 semilla(s) · {'clf__learning_rate': 0.05, 'clf__max_iter': 300} en 2 semilla(s) · {'clf__learning_rate': 0.1, 'clf__max_iter': 300} en 1 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
-- metricas_firmas.csv · ('122_sin_seleccion', 'KNN', 'multiclase 4 categorías de ataque sobre los ataques de D2 de tipo conocido'): la columna de DECISIÓN 'config_ganadora' NO es constante entre las 10 semillas ({'clf__n_neighbors': 5, 'clf__weights': 'distance'} en 2 semilla(s) · {'clf__n_neighbors': 11, 'clf__weights': 'uniform'} en 2 semilla(s) · {'clf__n_neighbors': 3, 'clf__weights': 'distance'} en 2 semilla(s) · {'clf__n_neighbors': 11, 'clf__weights': 'distance'} en 2 semilla(s) · {'clf__n_neighbors': 3, 'clf__weights': 'uniform'} en 1 semilla(s) · {'clf__n_neighbors': 5, 'clf__weights': 'uniform'} en 1 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
-- metricas_firmas.csv · ('122_sin_seleccion', 'RandomForest', 'multiclase 4 categorías de ataque sobre los ataques de D2 de tipo conocido'): la columna de DECISIÓN 'balanceo' NO es constante entre las 10 semillas (SMOTE en 6 semilla(s) · class_weight en 4 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
-- metricas_firmas.csv · ('122_sin_seleccion', 'RandomForest', 'multiclase 4 categorías de ataque sobre los ataques de D2 de tipo conocido'): la columna de DECISIÓN 'config_ganadora' NO es constante entre las 10 semillas ({'clf__max_depth': 10, 'clf__n_estimators': 100} en 2 semilla(s) · {'clf__max_depth': None, 'clf__n_estimators': 300} en 2 semilla(s) · {'max_depth': None, 'n_estimators': 100} en 2 semilla(s) · {'clf__max_depth': 10, 'clf__n_estimators': 300} en 2 semilla(s) · {'max_depth': 10, 'n_estimators': 100} en 1 semilla(s) · {'max_depth': None, 'n_estimators': 300} en 1 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
-- metricas_firmas.csv · ('54', 'DecisionTree', 'multiclase 4 categorías de ataque sobre los ataques de D2 de tipo conocido'): la columna de DECISIÓN 'balanceo' NO es constante entre las 10 semillas (SMOTE en 7 semilla(s) · class_weight en 3 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
-- metricas_firmas.csv · ('54', 'DecisionTree', 'multiclase 4 categorías de ataque sobre los ataques de D2 de tipo conocido'): la columna de DECISIÓN 'config_ganadora' NO es constante entre las 10 semillas ({'clf__max_depth': 20, 'clf__min_samples_leaf': 1} en 4 semilla(s) · {'max_depth': 20, 'min_samples_leaf': 1} en 2 semilla(s) · {'clf__max_depth': 10, 'clf__min_samples_leaf': 5} en 2 semilla(s) · {'clf__max_depth': 10, 'clf__min_samples_leaf': 1} en 1 semilla(s) · {'max_depth': 10, 'min_samples_leaf': 1} en 1 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
-- metricas_firmas.csv · ('54', 'HistGradientBoosting', 'multiclase 4 categorías de ataque sobre los ataques de D2 de tipo conocido'): la columna de DECISIÓN 'config_ganadora' NO es constante entre las 10 semillas ({'clf__learning_rate': 0.05, 'clf__max_iter': 300} en 5 semilla(s) · {'clf__learning_rate': 0.1, 'clf__max_iter': 100} en 3 semilla(s) · {'clf__learning_rate': 0.05, 'clf__max_iter': 100} en 2 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
-- metricas_firmas.csv · ('54', 'KNN', 'multiclase 4 categorías de ataque sobre los ataques de D2 de tipo conocido'): la columna de DECISIÓN 'config_ganadora' NO es constante entre las 10 semillas ({'clf__n_neighbors': 3, 'clf__weights': 'distance'} en 4 semilla(s) · {'clf__n_neighbors': 3, 'clf__weights': 'uniform'} en 2 semilla(s) · {'clf__n_neighbors': 5, 'clf__weights': 'distance'} en 2 semilla(s) · {'clf__n_neighbors': 11, 'clf__weights': 'uniform'} en 1 semilla(s) · {'clf__n_neighbors': 11, 'clf__weights': 'distance'} en 1 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
-- metricas_firmas.csv · ('54', 'RandomForest', 'multiclase 4 categorías de ataque sobre los ataques de D2 de tipo conocido'): la columna de DECISIÓN 'balanceo' NO es constante entre las 10 semillas (SMOTE en 5 semilla(s) · class_weight en 5 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
-- metricas_firmas.csv · ('54', 'RandomForest', 'multiclase 4 categorías de ataque sobre los ataques de D2 de tipo conocido'): la columna de DECISIÓN 'config_ganadora' NO es constante entre las 10 semillas ({'max_depth': None, 'n_estimators': 100} en 3 semilla(s) · {'clf__max_depth': None, 'clf__n_estimators': 100} en 3 semilla(s) · {'clf__max_depth': 10, 'clf__n_estimators': 300} en 1 semilla(s) · {'clf__max_depth': 10, 'clf__n_estimators': 100} en 1 semilla(s) · {'max_depth': 10, 'n_estimators': 100} en 1 semilla(s) · {'max_depth': 10, 'n_estimators': 300} en 1 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
-- metricas_baseline.csv · ('122_sin_seleccion', 'RandomForest_monolitico', 'multiclase 5 clases (normal + 4 ataques) sobre D2 completo'): la columna de DECISIÓN 'config_ganadora' NO es constante entre las 10 semillas ({'max_depth': None, 'n_estimators': 300} en 5 semilla(s) · {'max_depth': None, 'n_estimators': 100} en 5 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
-- metricas_baseline.csv · ('54', 'RandomForest_monolitico', 'multiclase 5 clases (normal + 4 ataques) sobre D2 completo'): la columna de DECISIÓN 'config_ganadora' NO es constante entre las 10 semillas ({'max_depth': None, 'n_estimators': 300} en 5 semilla(s) · {'max_depth': None, 'n_estimators': 100} en 5 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
+En **15 celdas distintas** de la agregación, la columna de **decisión** (`config_ganadora` o
+`balanceo`) **no fue la misma en las diez semillas**: la media de esas celdas promedia modelos con
+decisiones distintas, y hay que declararlo al citarla. La cifra afecta a **140 de las 198 filas**
+agregadas.
+
+> [!note] 19 líneas de aviso, 15 celdas
+> El bloque «Avisos de la agregación» del artefacto tiene **19 líneas**, no 15: cuatro celdas de
+> firmas (`54 · DecisionTree`, `54 · RandomForest`, `122_sin_seleccion · DecisionTree`,
+> `122_sin_seleccion · RandomForest`) generan **dos avisos cada una**, uno por `balanceo` y otro por
+> `config_ganadora`. 19 − 4 = **15 celdas distintas**, que es la cifra que se cita aquí y la que
+> usan `Implementacion/PIPELINE.md` y `Resultados/GUIA_RESULTADOS.md`.
+
+El reparto exacto, semilla a semilla, está en la columna `decisiones_no_constantes` del CSV y en el
+bloque «Avisos de la agregación» de `Resultados/dispersion_semillas.md`. Los casos de mayor amplitud:
+
+| Tabla | Variante · Algoritmo | Columna | Reparto |
+|---|---|---|---|
+| `metricas_firmas.csv` | 54 · RandomForest | `balanceo` | SMOTE en 5 · `class_weight` en 5 |
+| `metricas_firmas.csv` | 122_sin_seleccion · RandomForest | `balanceo` | SMOTE en 6 · `class_weight` en 4 |
+| `metricas_firmas.csv` | 122_sin_seleccion · DecisionTree | `balanceo` | SMOTE en 5 · `class_weight` en 5 |
+| `metricas_firmas.csv` | 54 · DecisionTree | `balanceo` | SMOTE en 7 · `class_weight` en 3 |
+| `metricas_baseline.csv` | 54 y 122 · RandomForest_monolitico | `config_ganadora` | `n_estimators: 300` en 5 · `n_estimators: 100` en 5 |
+| `metricas_anomalias.csv` | 122_sin_seleccion · Autoencoder | `config_ganadora` | `(64, 32, 64)` en 6 · `(32, 16, 32)` en 4 |
+
+Esto **no es un error**: es material de análisis para [[5.4 Conclusiones del capítulo]].
+
+---
+
+## A.3.7 Limitaciones declaradas
+
+### Límite de reproducibilidad: rutas absolutas *hardcodeadas*
+
+`Implementacion/app/program.py` y `Implementacion/app/validacion.py` contienen **rutas absolutas** al
+árbol de trabajo de la máquina de desarrollo (`C:\Users\francisco.lopez\...`) para localizar el
+dataset crudo y escribir los resultados. En consecuencia:
+
+- **Reproducir el pipeline en otra máquina exige editar esas rutas** antes de ejecutar nada. No basta
+  con clonar el repositorio, crear el entorno virtual e instalar `requirements.txt`.
+- Los scripts de modelos (`anomalias.py`, `firmas.py`, `baseline.py`, `hibrido.py`,
+  `cascada_invertida.py`) sí resuelven sus rutas a través de `config.py`; el problema está acotado a
+  los dos ficheros citados.
+
+> [!warning] Es deuda técnica declarada, no una decisión de diseño
+> No hay ninguna razón metodológica que justifique las rutas absolutas: son una comodidad de
+> desarrollo que quedó fijada. La corrección se descartó porque su ejecución obligaba a **regenerar
+> los splits**, y los splits **no se regeneran** —toda la cadena de resultados publicados quedaría
+> desanclada—. Se documenta aquí para que quien intente reproducir el trabajo sepa exactamente qué
+> tiene que tocar, en lugar de descubrirlo con una excepción.
+
+### Otros límites del alcance evaluado
+
+- **Un solo dataset.** Todas las cifras proceden de NSL-KDD. No hay evidencia de *replicabilidad*
+  sobre otro conjunto (vocabulario de [CITA: Pineau et al.]).
+- **El barrido de semillas no cubre el preprocesado** (véase A.3.6): la dispersión medida es de los
+  modelos, no del sistema completo.
+- **Sin evaluación adversaria.** No se ha medido el comportamiento frente a un atacante que conozca el
+  modelo e intente evadirlo; el modelo de amenaza asumido está en [[3.1 Requisitos del sistema]].
+- **Sin despliegue real.** Las columnas de rendimiento miden `predict`/`score` sobre características
+  ya extraídas y en memoria: no incluyen captura de tráfico, ensamblado del flujo ni extracción de las
+  41 características, que es donde vive el coste real de un despliegue.
+
+---
+
+## A.3.8 Checklist de reproducibilidad
+
+Se rellenan los **11 ítems «FT»** del *Machine Learning Reproducibility Checklist* de
+[CITA: Pineau et al.] — el subconjunto que aplica **a toda figura o tabla con resultados empíricos**,
+de los **17** que componen el checklist completo. Los **seis restantes no se rellenan**. El detalle de
+la fuente está en [[benchmark-comparativo-nsl-kdd]].
+
+> [!todo] Qué son los seis ítems no rellenados: sin verificar
+> La fuente del proyecto ([[benchmark-comparativo-nsl-kdd]]) respalda el **total de 17** y **enumera
+> los 11 «FT»**, pero **no dice cuáles son los otros seis** ni de qué tratan. Cualquier
+> caracterización de ese resto queda pendiente de comprobar contra el checklist original de
+> [CITA: Pineau et al.]; hasta entonces este apéndice solo afirma que no se rellenan y por qué se
+> eligió el subconjunto «FT»: es el que aplica **a toda figura o tabla con resultados empíricos**,
+> que es exactamente lo que documenta esta ficha.
+
+| # | Ítem FT | Estado | Dónde se cumple |
+|---|---|---|---|
+| 1 | *Data collection* | Cumplido | NSL-KDD, `KDDTrain+` / `KDDTest+`; origen y procedencia en [[4.2 Base de datos utilizada]] |
+| 2 | *Link to data* | Cumplido | Repositorio público citado en `CLAUDE.md` y en [[4.2 Base de datos utilizada]] |
+| 3 | *Pre-processing* | Cumplido | One-hot, escalado y selección descritos en [[4.3 Preprocesamiento de los datasets]]; diagrama en `Implementacion/PIPELINE.md` |
+| 4 | *Sample allocation* | Cumplido | Particiones D1/D2/D3 con tamaños exactos en A.3.2 |
+| 5 | *Hyper-parameters* | Cumplido | `config_ganadora` persistida en cada CSV y volcada en A.3.3 |
+| 6 | *Number of runs* | Cumplido (T4) | 10 semillas (1-10) agregadas, más la 42 como titular independiente |
+| 7 | *Description* | Cumplido | Alcance por artefacto en A.3.4; protocolo en el capítulo 5 |
+| 8 | *Statistics* | Cumplido **por renuncia declarada** | Sin p-valor, con la razón explícita: 10 puntos sobre un único dataset no sostienen un contraste (A.3.6) |
+| 9 | *Error bars* | Cumplido (T4) | Mín/máx y `sd` muestral (`ddof=1`) por celda en A.3.6 |
+| 10 | *Central tendency* | Cumplido (T4) | Media de las 10 semillas por celda en A.3.6 |
+| 11 | *Computing infrastructure* | Cumplido | A.3.5 |
+
+> [!note] Alcance de los ítems 6, 9 y 10
+> Los cierra el barrido de T4, y los cierra **con la restricción de A.3.6**: la dispersión es de los
+> modelos sobre splits y set de características fijos. Un lector que espere barras de error del
+> sistema completo —preprocesado incluido— no las encontrará aquí, y por eso se dice.
+
+---
+
+## A.3.9 Procedencia de los datos de este apéndice
+
+| Bloque | Artefacto | Sello |
+|---|---|---|
+| Configuraciones y métricas de la semilla 42 | `Resultados/metricas_anomalias.csv` · `metricas_firmas.csv` · `metricas_hibrido.csv` · `metricas_baseline.csv` | `commit = 1163c90`, `2026-08-09` |
+| Cascada invertida (T3) | `Resultados/metricas_cascada_invertida.csv` | `274923d-sucio`, `2026-08-10` (columnas `commit` y `fecha` del propio CSV; coincide con `commit_semilla_42` del agregado) |
+| Tabla de dispersión (T4) | `Resultados/dispersion_semillas.md` / `.csv` | `commit_agregador = 6bb224c-sucio`, cabecera `2026-08-14T15:15:13`; filas agregadas de `df30cb2` |
+
+> [!warning] El sello del agregado es pre-commit: **re-anclaje pendiente**
+> `commit_agregador = 6bb224c-sucio` es el valor **impreso en el artefacto en disco**, estampado por
+> `config.commit_actual()` **antes** del commit que versiona el propio artefacto: por construcción, un
+> fichero no puede llevar el hash del commit que lo incluye. El **re-anclaje de este sello al commit
+> de cierre del ciclo está pendiente** y tiene ficha propia. Hasta que se haga, este apéndice cita el
+> sello impreso y no otro. **No se sustituye por un hash estimado.**
+
+---
+
+## Notas relacionadas
+
+[[A.1 Columnas del dataset NSL-KDD]] · [[A.2 Métricas de desempeño]] ·
+[[4.3 Preprocesamiento de los datasets]] · [[5.4 Conclusiones del capítulo]] ·
+[[6.1 Conclusiones]]
