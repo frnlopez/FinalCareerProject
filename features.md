@@ -40,9 +40,12 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > del capítulo 2 llevaran semanas en guion. La Fase 4 se ejecutará en **tandas de 3-4 notas en
 > paralelo**.
 >
-> **El `push` está PENDIENTE:** hay **8 commits en local sin subir** — `ea35ce3`, `dbba05e`, `ddade37`,
-> `9d4c26d`, `0fb5f2b`, `6bfc779`, `c5ceca5` y el que cierre este registro. Falla por **autenticación
-> desde el harness**, así que **lo tiene que lanzar Francisco**.
+> **El `push` está PENDIENTE.** Con hash y sin subir van **diez**: `ea35ce3`, `dbba05e`, `ddade37`,
+> `9d4c26d`, `0fb5f2b`, `6bfc779`, `c5ceca5`, `0dec53e` y los **dos de la Fase 0** — `ff54553` (el
+> contenido) y `9077500` (el estampado de sus hashes). **A esos se suma el commit de la TANDA de la
+> Fase 1**, que **todavía no existe**: se añade aquí **al estampar su hash**, no antes — en este
+> fichero no se escribe ningún hash inventado. Sigue fallando por **autenticación desde el harness**,
+> así que **el `push` lo tiene que lanzar Francisco**.
 
 **Tanda 0 — YA NO EXISTE: las ocho decisiones están tomadas (2026-08-14).** Se deja la línea para que
 nadie la busque. Lo que dejan como **precondiciones vivas de otras tandas**, y que no está en ninguna
@@ -57,16 +60,26 @@ de las tandas de abajo:
 - **La Fase 6 se lleva los tres `grill-me`** (`2.1`, revisión del profesor, `1.4`) y va **detrás de
   absolutamente todo**.
 
-**Tanda 1 — barrido de correcciones de una línea. Dos ciclos EN PARALELO, uno por track** (ficheros
-distintos, agentes distintos). Precondición: ninguna.
-- **Código** (`ml-implementador` → `auditor-ml`): `warnings.filterwarnings('ignore')` en
-  `program.py:12` y `validacion.py:57` (**no `validacion.py:21`, que es comentario**) + nota fechada
-  en `resumen-de-decisiones.md:820-821`.
-- **Informe** (`redactor-tfg`): `4.2:105`, el sello de `4.2:145`, **T20** (desbloquea T9) y, **en
-  serie y solo `researcher`**, las tres correcciones de `Bibliografía.md:32`, `:86` y
-  `Auditoría de Bibliografía.md:140` (T25).
-- **Aplicar la Decisión 1 del FPR** en sus cuatro sitios (`4.2:120`, `A.2:69`, viñetas de T9 y T11)
-  **en la misma pasada**: ya es instrucción vigente, no decisión pendiente.
+**Tanda 1 — barrido de correcciones de una línea. EJECUTADA el 2026-08-14** (Fase 1 del plan de
+cierre), en los **dos ciclos EN PARALELO** previstos, uno por track. Se deja la línea, como la Tanda 0,
+**para que nadie la vuelva a despachar**: el detalle y la evidencia están en `## Cerradas`, en las
+**ocho filas del 2026-08-14 con hash `—`** (cabecera de tanda, cinco fichas y dos hallazgos).
+- **Código — HECHO:** `warnings.filterwarnings('ignore')` retirado de `program.py:12` y
+  `validacion.py:57` (**`validacion.py:21` NO se tocó: es comentario**) + **nota fechada** en
+  `resumen-de-decisiones.md:820-821`.
+- **Informe — HECHO:** `4.2:105`, el **sello de `4.2:145`** (re-anclado a `9af842c`) y **T20**, que
+  con esto **deja desbloqueada T9**. **No volver a mandar a nadie a corregir `4.2:105`: ya está
+  corregido.**
+- **Decisión 1 del FPR — APLICADA** en sus sitios: la cifra por variante (**10,2 % en 54 · 8,5 % en
+  122**) sustituye al rango viejo en `4.2:120`, `A.2:69`, los dos comentarios de `validacion.py` y
+  `GUIA_RESULTADOS.md`.
+- **LO ÚNICO VIVO DE ESTA TANDA ES `T25`** — las tres correcciones de `Bibliografía.md:32`, `:86` y
+  `Auditoría de Bibliografía.md:140`. Va **en serie y solo `researcher`**, que es el único que escribe
+  ese fichero: **no se combina con ningún otro agente ni entra en tanda paralela.**
+- **Observación de registro, anotada y NO resuelta aquí:** **`T20` nunca tuvo ficha `- [ ]` propia** en
+  `## Abiertas` —vive como la **viñeta `3.5` dentro de T9**—, pero este bloque y el «Plan de cierre»
+  la nombran como si fuera independiente. Resolverlo es **decidir cómo se fichan las sub-tareas**, y
+  eso no se decide en un cierre: queda apuntado para que no se pierda.
 
 **Tanda 2 — `A.3` y cierre de T4.** Precondición: nada; el «13 de 98» ya está automatizado
 (`9d4c26d`). Crear **`A.3` (T7)** pegando `Resultados/dispersion_semillas.md` con sus tres
@@ -325,13 +338,24 @@ respecto a T11.
     apuntan todos al cuadrante de los árboles; más Grinsztajn et al. y Shwartz-Ziv y Armon. La
     familia tabular profunda se nombra **una vez y en positivo** (TabNet, FT-Transformer, TabPFN),
     nunca como «lo descartamos», que invita a «¿y por qué no lo probaste?». Dos apoyos duros: el
-    contraste interno (HistGradientBoosting 0,804 frente a RandomForest 0,822, y tarda más: 68,7 s
-    frente a 54,8 s — si el GBDT de la propia sklearn no despega, el argumento se sostiene solo) y
+    contraste interno de calidad (**HistGradientBoosting `f1_macro` 0,804 frente a RandomForest
+    0,822** — si el GBDT de la propia sklearn no despega, el argumento se sostiene solo) y
     **TabPFN v2 de *Nature* admite 10.000 muestras y D3 tiene 58.630**. Usar la formulación C.1 del
     informe tabular.
-    → **El par `68,7 s / 54,8 s` de esta ficha NO existe en ningún artefacto** (detectado el
-    2026-08-08 al cerrar T1). **No usarlo.** La reformulación defendible está en **T20**; esta
-    viñeta no se reescribe hasta que T20 se resuelva.
+    → **VIÑETA REFORMULADA el 2026-08-14, que es lo que RESUELVE T20** (ver `## Cerradas`). El par
+    **`68,7 s / 54,8 s`** que esta viñeta arrastraba **no existe en ningún artefacto** (detectado el
+    2026-08-08 al cerrar T1) y **queda retirado: no se usa**. Lo citable, y ni una palabra más
+    (formulación anclada en **`PIPELINE.md:493-498`**):
+    - **El coste de ENTRENAMIENTO de HistGradientBoosting es mayor que el de RandomForest en 8 de
+      los 10 pares intra-corrida medidos**, con los **dos contraejemplos ambos en la variante de
+      54** (2 de cada 5 corridas invierten ese par). **No hay horquilla en segundos que citar** y
+      **la afirmación solo es sólida en la variante de 122**: escribirla acotada así, nunca en
+      absoluto.
+    - **En INFERENCIA a 54 características el orden se invierte:** HistGradientBoosting **0,0032
+      ms/flujo** frente a RandomForest **0,0072**. Si se habla de coste, decir **de cuál**.
+    - **Lo que no se mueve es la calidad:** HistGradientBoosting sigue **sin ganar `f1_macro`**
+      (0,804 vs 0,822), y ese es el apoyo duro del argumento. **La dirección aguanta; lo que era
+      falso era la formulación.**
 
 - [ ] **T10 · Capítulo 4** · Informe · `redactor-tfg`
   - `4.2`: definición correcta de las tres particiones (KDDTrain+ 125.973 · KDDTest+ 22.544 ·
@@ -568,18 +592,6 @@ respecto a T11.
   entre corridas**, pero **el reparto interno del bloque se mueve como mucho 4,5 pp y conserva el orden
   de las ocho filas**. Es una afirmación mucho más defendible que cualquier cifra en segundos.
 
-- [ ] **T20 · Reformular el argumento de T9 («HistGB tarda más que RF»)** · Informe · `redactor-tfg`
-  El par **`68,7 / 54,8`** de la viñeta `3.5` de **T9** y del informe tabular **no existe en ningún
-  artefacto**: no se usa.
-  **Lo medido:** son **8 de 10 pares** intra-corrida en el mismo sentido, con los **dos contraejemplos
-  ambos en la variante de 54** (2 de cada 5 corridas invierten ese par), así que **no hay horquilla que
-  citar** y la afirmación **solo es sólida en la variante de 122**. Sigue siendo **coste de
-  entrenamiento**, y **en inferencia a 54 características el orden se invierte**: HistGB **0,0032
-  ms/flujo** frente a RF **0,0072**. Y sigue **sin ganar `f1_macro`** (0,804 vs 0,822).
-  **La dirección aguanta y la prosa del vault no se toca**; lo que era falso es la formulación.
-  **La formulación correcta y anclada está en `PIPELINE.md:493-498`** —el bloque que empieza «**Lo
-  citable, y ni una palabra más**»—, y es la que debe usarse.
-
 - [ ] **T21 · Declarar la mitad de P9 que T1 no cubre** · Informe · `redactor-tfg`
   `latencia_ms_por_flujo` mide **solo `predict`/`score`** sobre características ya calculadas y en
   memoria. El **coste real de despliegue** —captura, ensamblado de flujo, extracción de las 41
@@ -639,17 +651,9 @@ respecto a T11.
 > decidió ejecutarlo, no aceptarlo como deuda—: son ahora de **módulo** en `program.py:36-37` y
 > `validacion.py` las importa. **De las dos que quedaban, la de las RUTAS ABSOLUTAS se retiró el
 > 2026-08-14 por la Decisión 2 de la Fase 0** (no se regeneran los splits): ver `## Cerradas`; se
-> declara como límite conocido en `A.3`, dentro de **T7**. **Queda la ficha de abajo.**
-
-- [ ] **`warnings.filterwarnings('ignore')` global** (🟡) · Código · `ml-implementador`
-  Origen: `next-steps.md:271` (§3.2). Oculta avisos útiles durante la experimentación.
-  **ABIERTA. Verificado vivo el 2026-08-11** en `program.py:12` y **`validacion.py:57`**.
-  - **TRAMPA — no citar más `validacion.py:21`.** Esa línea (que esta ficha apuntaba antes, y antes
-    aún `:12`) **es hoy un COMENTARIO**, parte del bloque `:19-25` que documenta los efectos de
-    `import program` y que **menciona** `warnings.filterwarnings('ignore')` citando
-    `program.py:12`. Quien vaya a `:21` a «borrar la línea» **borra la documentación y deja el
-    `filterwarnings` vivo**. La llamada real es `validacion.py:57`, después de
-    `import program` (`:33`) e `import config` (`:55`).
+> declara como límite conocido en `A.3`, dentro de **T7**. **La quinta y última, la del
+> `warnings.filterwarnings('ignore')` global, se CERRÓ el 2026-08-14** en la Fase 1 del plan de
+> cierre (ver `## Cerradas`). **Esta sección queda sin fichas abiertas.**
 
 ### Residuos del despacho de `4.2` — altas del 2026-08-12
 
@@ -672,31 +676,14 @@ respecto a T11.
   - **Va ANTES de T10**, por el mismo motivo que iban sus dos fichas madre: si T10 vuelca `4.2` tal
     cual, publica una figura que no corresponde a la medición que el texto describe.
 
-- [ ] **Dos imprecisiones de una línea en `4.2` que la auditoría dejó señaladas** (🟡) · Informe · `redactor-tfg`
-  Las dos son **texto**, en la misma nota, y **no exigen re-correr nada**:
-  1. **`4.2:120` · el rango de FPR — DECISIÓN 1 APROBADA por Francisco el 2026-08-13. Es INSTRUCCIÓN
-     VIGENTE, ya no está bloqueada por ninguna decisión.**
-     - **Se retira «8,5-16 %»**: era de **otra tabla y otra columna** —`metricas_anomalias.csv`,
-       columna `fpr`, los cuatro detectores de anomalías **sueltos**, con el extremo alto puesto por
-       **LocalOutlierFactor (16,6 %), que fue DESCARTADO**—.
-     - **Se retira también el rango redondeado «8-10 %»**, que redondea **10,17 a la baja** y deja el
-       valor real fuera. Lo citable es **la cifra por variante: 10,2 % en 54 y 8,5 % en 122**
-       (`Resultados/metricas_hibrido.csv`, columna `bin_fpr`).
-     - Si además se cita la **banda entre semillas**, es **4,9-10,7 %** y va **rotulada como otra
-       cosa**, no fundida con las anteriores.
-     - **Cuatro sitios, y los cuatro en la MISMA pasada:** `4.2:120`; `A.2:69` —que además **remite a
-       `5.1`**, así que el apéndice se contradice con su propia referencia—; y las viñetas `3.4` de
-       **T9** y del KS de **T11** de este fichero, **ya aplicadas aquí**.
-     - **Texto vivo que arrastra el rango y que esta ficha de track Informe NO absorbe:**
-       `Resultados\GUIA_RESULTADOS.md:219` y los comentarios de
-       `Implementacion\app\validacion.py:548,620` — esto último es **código y exige `auditor-ml`**, por
-       su propia vía.
-     - **Congelado o registro histórico, NO se toca** (son foto de su fecha):
-       `next-steps.md:178,370,451`, `resumen-de-decisiones.md:346,580`, `EL_FUTURO.md:96`,
-       `sesion-2026-07-06.md:66`, `Guia_ML\04_los_tres_modelos.md:35` y los tres informes de
-       `Obsidian_TFG_Vault\99 Investigación\`, que **no es memoria**.
-  2. **`4.2:105`** — acota el **ranking** a la variante de **54** cuando es **idéntico en ambas**.
-     Basta con retirar la acotación.
+> **La segunda ficha de esta sección —«Dos imprecisiones de una línea en `4.2`»— se CERRÓ el
+> 2026-08-14** en la Fase 1 del plan de cierre, junto con la del sello de `4.2:145` (ver
+> `## Cerradas`). **Queda abierta solo la de las figuras de `assets\`, arriba.** El inventario de
+> **texto congelado o histórico que arrastra el rango de FPR viejo y que NO se toca** (es foto de su
+> fecha) se conserva aquí para que nadie lo «corrija»: `next-steps.md:178,370,451`,
+> `resumen-de-decisiones.md:346,580`, `EL_FUTURO.md:96`, `sesion-2026-07-06.md:66`,
+> `Guia_ML\04_los_tres_modelos.md:35` y los tres informes de
+> `Obsidian_TFG_Vault\99 Investigación\`, que **no es memoria**.
 
 ### Residuos del clúster de `PIPELINE.md` — altas del 2026-08-12
 
@@ -710,35 +697,12 @@ respecto a T11.
 > glosa del `-sucio` en **`:186-190`**, colgando de su primera aparición en **`:184`**; las tres filas
 > de la tabla de corridas en **`:369-371`**; y el bloque citable de **T20** en **`:493-498`**.
 
-- [ ] **`resumen-de-decisiones.md:820-821` sigue afirmando en presente que el aviso de re-anclaje se mantiene** (🟠) · Código · `ml-implementador`
-  Es el **punto 5 de la auditoría, el único que quedó sin aplicar**: el `ml-implementador` se declaró
-  **sin permiso para escribir en ese fichero** en esa pasada. La entrada del `2026-08-11` (procedencia,
-  residuo 5) dice «**El aviso de re-anclaje de `PIPELINE.md` se mantiene igualmente**», y **ya no se
-  mantiene**: el re-anclaje está hecho y el commit es `9af842c`.
-  - **Cómo se arregla, y solo así: nota fechada que la supera, sin reescribir el texto histórico** —
-    es la convención que el propio fichero ya usa en **`:805-808`**.
-  - **No basta con la entrada del `2026-08-12` (`:824-834`)**, que dice haber añadido «arriba, dentro
-    de la entrada de procedencia» una nota fechada: la nota que existe está en **`:657-664`**, en otra
-    sección, y **no cubre `:820-821`**.
-  - **DESBLOQUEADA el 2026-08-14 (Decisión 3 de la Fase 0):** el `ml-implementador` tiene permiso
-    **ACOTADO** sobre `resumen-de-decisiones.md` — **solo AÑADIR nota fechada, NUNCA reescribir texto
-    previo**. La aplicación del permiso en `.claude/agents/ml-implementador.md` es **andamiaje del
-    hilo principal**; hasta que esté aplicada, esta ficha la ejecuta el reparto de `c5ceca5` (el
-    implementador redacta y verifica, el hilo principal aplica con Francisco delante).
-  - **Es la enésima recaída del defecto reincidente del proyecto** (afirmar en presente algo que ya no
-    respalda el estado del repo), esta vez en su forma de **texto que no se actualizó**.
-
-- [ ] **El vault sigue diciendo «pendiente de re-anclaje» del sello `fc1c6b4-sucio`** (🟡) · Informe · `redactor-tfg`
-  `Obsidian_TFG_Vault\04 Implementación del sistema\4.2 Base de datos utilizada.md:145` conserva el
-  callout de procedencia con «**pendiente de re-anclaje al commit de cierre**». Es la **cuarta copia
-  viva** del aviso: las otras tres (`PIPELINE.md`, `GUIA_RESULTADOS.md`, `resumen-de-decisiones.md`)
-  se re-anclaron el 2026-08-12, pero esta es **track Informe** y **no se tocó en aquel ciclo**, que
-  era track Código.
-  - **El sello se cita tal cual, `fc1c6b4-sucio` — eso NO se cambia**, porque es lo que está impreso
-    dentro del artefacto. Lo que hay que añadir es **su commit de cierre, `9af842c`**, y retirar el
-    «pendiente».
-  - **Va ANTES de T10**, como sus dos fichas hermanas de esta nota: si T10 vuelca `4.2` tal cual, la
-    memoria publica un «pendiente» que ya no lo está.
+> **Las DOS fichas de esta sección se CERRARON el 2026-08-14** en la Fase 1 del plan de cierre (ver
+> `## Cerradas`): la de `resumen-de-decisiones.md:820-821` —resuelta con **nota fechada**, primera
+> aplicación del permiso ACOTADO de la Decisión 3— y la del **sello de `4.2:145`**, re-anclado a
+> **`9af842c`** conservando literal el `fc1c6b4-sucio` impreso dentro del artefacto. **Esta sección
+> queda sin fichas abiertas.** Las **anclas vigentes de `PIPELINE.md`** del recuadro de arriba **se
+> conservan**: siguen siendo la referencia de quien cite ese fichero.
 
 ### Apuntes de relectura de la memoria — alta del 2026-08-12
 
@@ -1141,6 +1105,14 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-14 | — | **FASE 1 DEL PLAN DE CIERRE, CERRADA: la Tanda 1 —barrido de correcciones de una línea— despachada en DOS CICLOS EN PARALELO, uno por track.** Las **cinco fichas** que cierra van desglosadas en las cinco filas de abajo, más **dos filas de HALLAZGO** que no cierran ficha pero no pueden perderse. **Cero cómputo, cero corridas, ninguna cifra publicada movida:** las **nueve `metricas_*.csv` verificadas intactas**, y **ningún hash inventado**. Proceso: **tres pasadas de implementación y VARIAS de `auditor-ml`** —la del cuerpo de la tanda, **APTO CON CAMBIOS** aplicados, y las de la corrección del «más del doble» que se describe abajo, una de ellas **NO APTO** antes de quedar resuelta—. **El recuento se deja así a propósito, sin número cerrado: la tanda siguió recibiendo pasadas después de escrita esta fila.** **Es el PRIMER COMMIT POR TANDA bajo la Decisión 7** de la Fase 0 — las fichas que cierra van nombradas en el cuerpo del commit. Ficheros: `Implementacion/app/program.py`, `Implementacion/app/validacion.py`, `Resultados/GUIA_RESULTADOS.md`, `resumen-de-decisiones.md`, `Obsidian_TFG_Vault/04 Implementación del sistema/4.2 Base de datos utilizada.md` y `Obsidian_TFG_Vault/Apéndices/A.2 Métricas de desempeño.md`. **Aplicada de paso la Decisión 1 del FPR en sus sitios**: el rango viejo se sustituye por la **cifra por variante — 10,2 % en 54 y 8,5 % en 122** — en los **dos comentarios de `validacion.py`**, en `GUIA_RESULTADOS.md` (**bitácora §7 actualizada**) y en **`A.2:69`**. **Imprecisión detectada en la revisión del diff y CORREGIDA DENTRO DE LA MISMA TANDA, no ficha abierta:** al sustituir el «8-10 %» quedó «**más del doble**», que **vale para 54 (10,2 / 5 = 2,04×) pero NO para 122 (8,5 / 5 = 1,7×)**. **Eran TRES sitios, no dos:** `validacion.py:551`, `GUIA_RESULTADOS.md:221` y —el que sobrevivió al primer barrido— el **docstring de `detect_data_drift_normales()`**, `Implementacion/app/validacion.py:638-639`, que es **la afirmación operativa pegada a las dos cifras que la desmienten**. **Hicieron falta DOS pasadas de corrección**, con un dictamen **NO APTO** de `auditor-ml` en medio: la primera dejó fuera el tercer sitio **y** puso una formulación que tampoco era literal —«entre 1,7 y 2 veces», cuando **0,10174 / 0,05 = 2,0348×** se sale del intervalo por arriba—. **Formulación definitiva: se abandona el rango y se cita POR VARIANTE, ≈2,0× con 54 y ≈1,7× con 122**, que es lo que la Decisión 1 exige de todas formas. **LECCIÓN DEL BARRIDO, que va a volver a pasar y por eso queda escrita: la frase estaba PARTIDA POR EL SALTO DE LÍNEA** («…sale más\\n del doble…»), así que un `grep "más del doble"` **daba limpio siendo falso**. **Se busca por el fragmento más corto que no se parta, o en multilínea** — un barrido que sale vacío sobre una expresión de varias palabras no prueba nada por sí solo | `—` |
+| 2026-08-14 | Código | **El `warnings.filterwarnings('ignore')` global, RETIRADO** — la quinta y última ficha de la migración de la deuda técnica de `next-steps.md` §3.2. Retirado de **`program.py:12`** y **`validacion.py:57`**. **`validacion.py:21` NO se tocó**: es un **comentario**, y llevaba meses mal apuntado en la propia ficha. El implementador retiró además **`import warnings`** de ambos scripts, ya sin uso, y el auditor verificó que **no queda ni una llamada a `warnings.` en todo `app/`**. Con esto la sección de la migración de §3.2 **queda sin fichas abiertas** | `—` |
+| 2026-08-14 | Código | **`resumen-de-decisiones.md:820-821` ya no afirma en presente que el aviso de re-anclaje se mantiene.** Era el **punto 5 de la auditoría**, el único que quedó sin aplicar en `97e679b` por falta de permiso de escritura. Resuelta con **nota fechada que supera el aviso obsoleto**, la convención que el propio fichero ya usa. **PRIMERA APLICACIÓN DEL PERMISO ACOTADO** que Francisco concedió al `ml-implementador` ese mismo día (**Decisión 3 de la Fase 0**): auditado que la edición **SOLO AÑADE**, sin tocar una línea de texto histórico — que es exactamente la garantía por la que el permiso se acotó | `—` |
+| 2026-08-14 | Informe | **Las dos imprecisiones de una línea de `4.2` — corregidas.** `4.2:105`: retirada la **acotación falsa del ranking a la variante de 54**. `4.2:120`: el rango de FPR pasa a la **cifra por variante (10,2 % en 54 · 8,5 % en 122)**, aplicando la Decisión 1. **El inventario de texto congelado o histórico que arrastra el rango viejo NO se toca** —es foto de su fecha— y se conserva escrito en `## Abiertas` para que nadie lo «corrija». Va **antes de T10**, como sus fichas hermanas | `—` |
+| 2026-08-14 | Informe | **El sello de `4.2:145` ya no dice «pendiente de re-anclaje»: re-anclado a `9af842c`.** Era la **cuarta copia viva** del aviso —las otras tres se re-anclaron el 2026-08-12 en un ciclo track Código que no tocaba el vault—. **Hash verificado contra `.git/logs/HEAD`, no copiado de una ficha.** **El sello impreso DENTRO del artefacto se conserva literal, `fc1c6b4-sucio`**, por la misma razón que en `97e679b`: es salida de `config.commit_actual()` y no puede llevar el hash del commit que la versiona, que tiene que existir después. Va **antes de T10** | `—` |
+| 2026-08-14 | Informe | **T20 · RESUELTA — y con ella queda DESBLOQUEADA T9.** Se resuelve **reformulando la viñeta `3.5` de T9**, que es donde vivía: el par **`68,7 s / 54,8 s` queda RETIRADO** y en su lugar va la formulación **anclada en `PIPELINE.md:493-498`**, que es el bloque citable. **Dejarlo escrito, porque es la dependencia que gobierna el orden del plan: T20 antes de T9** | `—` |
+| 2026-08-14 | Informe | **HALLAZGO (no cierra ficha) · `5.3` NO publica la variante de 122, y dos agentes remitían a ella como respaldo del FPR por variante.** Sale de la **auditoría cruzada entre los dos tracks** de la tanda —el fallo que solo se ve mirando las dos ramas juntas—: el único «**8,5 %**» que hay hoy en `5.3` es el de **OneClassSVM en 54**, así que un lector siguiendo esa remisión habría **confirmado la cifra con el alcance equivocado**. Corregido **citando el artefacto**, no `5.3`. **`5.3` NO se tocó a propósito: añadirle la fila de 122 es CONTENIDO DE T11**, y ahí queda la decisión | `—` |
+| 2026-08-14 | Informe | **HALLAZGO (no cierra ficha) · La trampa de las TRES lecturas de `0,084852`.** El mismo valor con **tres significados distintos**: (1) `bin_fpr` del **híbrido en 122**; (2) `fpr` del **Autoencoder en 122** —**el mismo por CONSTRUCCIÓN**, porque en una cascada la etapa 2 no puede crear ni corregir falsos positivos binarios—; y (3) `fpr` de **OneClassSVM en 54**, que coincide **POR AZAR** (ambas filas tienen exactamente `tn = 8887, fp = 824`). Tras esta tanda las tres quedan con **alcance explícito en el texto**. **Tiene que quedar escrito aquí**, o el próximo que lo mire «corregirá» una por otra creyendo que arregla una errata | `—` |
 | 2026-08-14 | — | **FASE 0 DEL PLAN DE CIERRE, CERRADA: las OCHO decisiones que solo podía tomar Francisco, tomadas el 2026-08-14.** Era el **cuello de botella declarado del plan**. Las ocho van desglosadas en las ocho filas de abajo, todas de esta misma fecha. **Cero cómputo, cero código, cero corridas, ninguna cifra publicada movida:** esta fila y las ocho siguientes son **registro de decisiones**, no ejecución. **Efecto sobre la Fase 0:** pasa de EN CURSO a CERRADA, y su «Tanda 0» del bloque `PRÓXIMOS PASOS` **deja de existir**. **Lo único que hereda el hilo principal**, porque es andamiaje y no lo toca ningún agente: matizar `CLAUDE.md` §Git (**precondición de la Fase 4**), el permiso acotado en `.claude/agents/ml-implementador.md` y la regla de marcado en `.claude/agents/redactor-tfg.md` | `ff54553` |
 | 2026-08-14 | Código | **Decisión 1 · El eje de balanceo de `4.3.4` NO se reabre: se DECLARA NO CONSTANTE.** Cierra la ficha «La decisión de balanceo de `4.3.4` no es constante entre semillas», que estaba **PENDIENTE DE DECISIÓN DE FRANCISCO**. **NO se toca `firmas.py` y no se mueve ninguna cifra publicada.** Se **consume en `5.4`/`4.3.4` (ficha T11)**, donde queda escrito el detalle. Verificado contra `Resultados/metricas_balanceo.csv` (16 filas, sello `1163c90`, 2026-08-09) qué ganó con la semilla 42 en el eje **SMOTE vs `class_weight`** —que solo aplica a DecisionTree y RandomForest—: 54-DecisionTree `class_weight` **0,9530 ± 0,0087** vs SMOTE **0,9350 ± 0,0165**; 54-RandomForest SMOTE **0,9736 ± 0,0079** vs `class_weight` **0,9715 ± 0,0147**; 122-DecisionTree `class_weight` **0,9568 ± 0,0118** vs SMOTE **0,9513 ± 0,0184**; 122-RandomForest SMOTE **0,9795 ± 0,0099** vs `class_weight` **0,9751 ± 0,0186**. **Con n=1 el reparto YA era 2-2** (DecisionTree para `class_weight`, RandomForest para SMOTE, en las dos variantes); a n=10 es **17 de 40 (42,5 %)**. **El barrido NO descubre que la decisión estuviera mal: confirma que ese eje nunca estuvo establecido.** **Los márgenes están dentro del ruido:** RandomForest-54 decide por **0,0021**, **~7 veces menos que su propia sd** (0,0079 y 0,0147) — es un **desempate arbitrario** y así se escribe. **ACOTACIÓN OBLIGATORIA:** el «no es constante» vale **solo** para SMOTE vs `class_weight`; **el eje SMOTE vs NADA (KNN e HistGradientBoosting) SÍ está establecido** —SMOTE gana en las **4 celdas**, y en HistGradientBoosting con holgura enorme: **0,9694 vs 0,8327** (54) y **0,9724 vs 0,8044** (122)—. Sin ella se entendería que todo `4.3.4` es arbitrario, **y no lo es**. **Configuración publicada, verificada en `firmas.py:146`** (`self.balanceo_ganador` alimenta el entrenamiento final), idéntica en las dos variantes: DecisionTree → `class_weight`; RandomForest, KNN e HistGradientBoosting → **SMOTE**. **Causa mecánica del 17 de 40, a citar al lado del recuento** (`firmas.py:40`, cabecera): cambiar la semilla cambia el `StratifiedKFold`, así que el ganador de `4.3.4` y la config del grid pueden cambiar con ella | `ff54553` |
 | 2026-08-14 | Código | **Decisión 2 · NO se regeneran los splits — y en consecuencia la ficha de las RUTAS ABSOLUTAS se retira de `## Abiertas` sin ejecutarse.** Razón de los splits: son del **2026-07-05** y de ellos cuelga **todo lo publicado** (9 tablas, 20 `.joblib`, 39 figuras, 2.320 filas del barrido); regenerar obliga a re-correr el pipeline entero **más las 2 h 29 min del barrido** y **no aporta ningún número nuevo**. Efecto sobre la ficha «Rutas absolutas hardcodeadas en `program.py` y `validacion.py`» (🟠), que estaba **bloqueada por esta decisión**: **NO se ejecuta**. Es **cosmética de portabilidad**, no afecta a ningún resultado, y **tocar `program.py` sin re-correrlo dejaría código modificado no ejecutado, que es peor que la deuda**. **No se descarta: se declara como LÍMITE CONOCIDO en `A.3`**, y ese encargo queda escrito **dentro de T7**, que es quien escribe `A.3` | `ff54553` |

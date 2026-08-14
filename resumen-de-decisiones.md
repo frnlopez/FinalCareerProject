@@ -919,6 +919,28 @@ Aplicado en `.claude/agents/ml-implementador.md` el mismo 2026-08-14.
   re-anclaje de `PIPELINE.md` se mantiene igualmente**, porque un sello `-sucio` no identifica una
   versión del código. Destraba parcialmente la ficha de rutas hardcodeadas, que
   **sigue abierta** (su bloqueo real es la decisión sobre regenerar los splits).
+
+  > **NOTA FECHADA — 2026-08-14: el aviso de re-anclaje YA NO se mantiene; el re-anclaje está
+  > hecho y su commit es `9af842c`.** La entrada de arriba se conserva **tal cual** como
+  > historial —no se reescribe ni se borra ninguna de sus líneas—; esto la **supera** en el único
+  > punto que quedó desfasado: la frase «**El aviso de re-anclaje de `PIPELINE.md` se mantiene
+  > igualmente**» describía el estado del 2026-08-11, cuando el commit de cierre aún no existía.
+  > Al día siguiente sí existió: el re-anclaje del sello `fc1c6b4-sucio` a **`9af842c`** se aplicó
+  > por vía **textual** en `Implementacion/PIPELINE.md` y `Resultados/GUIA_RESULTADOS.md`, y está
+  > registrado en la nota fechada del 2026-08-12 (dentro de la sección de procedencia) y en la
+  > entrada `2026-08-12` de esta misma bitácora, justo debajo.
+  >
+  > Lo que **no** cambia y sigue siendo cierto de la entrada original: el sello impreso **dentro**
+  > de los cuatro artefactos sigue diciendo `fc1c6b4-sucio` —es una salida generada y solo
+  > cambiaría re-corriendo `validacion.py` con el árbol limpio—, y un sello `-sucio` sigue sin
+  > identificar por sí solo una versión del código. La diferencia es dónde se resuelve: **ya no
+  > hay un aviso pendiente**, hay un anclaje escrito que dice que ese sello corresponde al estado
+  > de `validacion.py` en `9af842c`.
+  >
+  > Punto 5 de una auditoría anterior que había quedado sin aplicar porque el implementador no
+  > tenía permiso de escritura en este fichero. Permiso concedido por Francisco el 2026-08-14
+  > (Decisión 3 de la Fase 0) y **acotado a añadir nota fechada**, nunca a reescribir: por eso
+  > esto es una nota y no una corrección de la línea de arriba.
 - `2026-08-12` — **Re-anclaje del sello `fc1c6b4-sucio` a su commit de cierre, `9af842c`.** Añadida
   arriba, dentro de la entrada de procedencia, una **nota fechada** que actualiza el aviso «cuando
   exista el commit de cierre…» sin borrar el texto original: ese commit **ya existe** y es

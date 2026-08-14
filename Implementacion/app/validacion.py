@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats
 import argparse
-import warnings
 import os
 import sys
 import joblib
@@ -16,13 +15,19 @@ from datetime import datetime
 # No hay import circular (program.py no importa validacion.py, y config.py solo
 # importa la librería estándar).
 #
-# OJO — program.py SÍ TIENE EFECTOS AL IMPORTARSE. Su código de CLASE y su CLI
-# viven bajo `if __name__ == "__main__"`, pero a nivel de módulo ejecuta cuatro
-# ajustes globales del proceso: `warnings.filterwarnings('ignore')`
-# (program.py:12), el `sys.stdout/stderr.reconfigure` a UTF-8 (program.py:16-23),
-# `plt.style.use('default')` (program.py:26) y `sns.set_palette("husl")`
-# (program.py:27). Hoy es inocuo porque justo debajo validacion.py reaplica esos
-# mismos ajustes y el último en escribir gana; no porque no los haya.
+# OJO — program.py SÍ TIENE EFECTOS AL IMPORTARSE. Lo único que vive bajo
+# `if __name__ == "__main__"` es su CLI y la ejecución del pipeline
+# (program.py:1264-1289): la clase NSLKDDPreprocessor (program.py:44), las
+# funciones main() y load_specialized_splits() y las constantes canónicas están
+# a NIVEL DE MÓDULO, así que se evalúan al importar. Definirlas no tiene efectos
+# observables, pero además, a nivel de módulo, program.py ejecuta tres
+# ajustes globales del proceso: el `sys.stdout/stderr.reconfigure` a UTF-8
+# (program.py:20-27), `plt.style.use('default')` (program.py:30) y
+# `sns.set_palette("husl")` (program.py:31). Hoy es inocuo porque justo debajo
+# validacion.py reaplica esos mismos ajustes y el último en escribir gana; no
+# porque no los haya. Eran CUATRO: el `warnings.filterwarnings('ignore')` global
+# se retiró de ambos módulos —ocultaba avisos útiles durante la experimentación—,
+# así que ya no hay ningún silenciado de warnings ni aquí ni en program.py.
 #
 # CONSECUENCIA LOAD-BEARING: este `import program` DEBE QUEDAR POR ENCIMA del
 # bloque `plt.style.use` / `sns.set_palette` / `plt.rcParams` de más abajo. Si se
@@ -53,8 +58,6 @@ import program
 # bloque `plt.style.use` de más abajo no es load-bearing (la de `import program`
 # sí lo es, ver arriba).
 import config
-
-warnings.filterwarnings('ignore')
 
 # Forzar salida UTF-8 en consolas Windows: sin esto, los prints con emojis
 # cascan con el códec cp1252 salvo que exista PYTHONIOENCODING=utf-8.
@@ -545,7 +548,22 @@ class NSLKDDValidator:
     # ataques y en D1 no. (B) compara tráfico legítimo contra tráfico legítimo, así
     # que lo que mide es el desplazamiento ENTRE PARTICIONES del propio tráfico
     # normal — que es lo que puede explicar por qué un umbral p95 ajustado sobre
-    # D1_val (≈5 % de FPR prometido) rinde 8-10 % sobre D2.
+    # D1_val (≈5 % de FPR prometido) rinde sobre D2 ≈2,0× el FPR nominal con 54
+    # características y ≈1,7× con 122 (las dos cifras, justo debajo).
+    #
+    # LA CIFRA SE CITA POR VARIANTE, NUNCA COMO RANGO: el FPR del híbrido sobre D2
+    # es 10,2 % con 54 características y 8,5 % con 122 (`metricas_hibrido.csv`,
+    # columna `bin_fpr`: 0,10174 y 0,084852). Aquí se decía «8-10 %», que redondea
+    # 10,17 a la baja y deja fuera el valor real. Tampoco vale el «8,5-16 %» que
+    # circuló: ese rango era de OTRA tabla y OTRA columna (`metricas_anomalias.csv`,
+    # columna `fpr`, los cuatro detectores SUELTOS) y además CRUZABA VARIANTES —su
+    # 8,5 % era OneClassSVM de 54 y su 16,6 % LocalOutlierFactor de 122—, que es
+    # justo lo que la Decisión 1 prohíbe. Dentro de UNA variante, la de 54, el
+    # rango de esos cuatro detectores sueltos es 8,5-16,0 % (OneClassSVM 0,084852
+    # y LocalOutlierFactor 0,160437), y su extremo alto lo pone LocalOutlierFactor,
+    # que fue DESCARTADO. Si lo que se quiere citar es
+    # la dispersión entre semillas, es 4,9-10,7 % y va ROTULADA como tal: es otra
+    # medición y no se funde con la cifra por variante.
     #
     # PRECISIÓN OBLIGATORIA AL CITARLO: es desplazamiento entre particiones, NO
     # deriva temporal. NSL-KDD no tiene marca de tiempo y la afirmación temporal no
@@ -617,7 +635,11 @@ class NSLKDDValidator:
         NO puede achacarse a la presencia de ataques en el test: es desplazamiento
         del propio tráfico normal ENTRE PARTICIONES (nunca «deriva temporal»:
         NSL-KDD no tiene marca de tiempo). Es la cifra que puede explicar por qué
-        el umbral p95 fijado sobre D1_val promete ≈5 % de FPR y sobre D2 sale 8-10 %.
+        el umbral p95 fijado sobre D1_val promete ≈5 % de FPR y sobre D2 sale
+        ≈2,0× ese FPR nominal con 54 características (10,2 %) y ≈1,7× con 122
+        (8,5 %) (`bin_fpr` de
+        `metricas_hibrido.csv`). La cifra se cita POR VARIANTE, nunca como rango
+        (ver la nota de la sección 4, más arriba).
 
         NO sustituye a detect_data_drift(): son dos mediciones con dos poblaciones
         de comparación distintas y las dos se publican. Las columnas llevan sufijo

@@ -218,7 +218,18 @@ el de 54 no imprime):
   sin sustituir a la anterior. Compara D1 contra las **9.711 filas normales de D2**: tráfico
   legítimo contra tráfico legítimo, así que lo que mide **no** puede achacarse a que en el test
   haya ataques. Es la cifra que puede explicar por qué un umbral p95 ajustado en D1_val promete
-  ≈5 % de FPR y sobre D2 rinde 8-10 %.
+  ≈5 % de FPR y sobre D2 rinde **≈2,0× el FPR nominal con 54 características y ≈1,7× con 122**
+  (las dos cifras, justo debajo).
+  - **El FPR se cita POR VARIANTE, nunca como rango:** **10,2 %** con 54 características y
+    **8,5 %** con 122 (`metricas_hibrido.csv`, columna `bin_fpr`: 0,10174 y 0,084852). Aquí
+    ponía «8-10 %», que redondea 10,17 a la baja y deja fuera el valor real. El «8,5-16 %» que
+    llegó a circular era de **otra tabla y otra columna** (`metricas_anomalias.csv`, columna
+    `fpr`, los cuatro detectores **sueltos**) y además **cruzaba variantes**: su 8,5 % era
+    OneClassSVM de **54** y su 16,6 % LocalOutlierFactor de **122**, justo lo que la Decisión 1
+    prohíbe. Dentro de **una sola variante**, la de 54, ese rango de los cuatro detectores
+    sueltos es **8,5-16,0 %** (OneClassSVM 0,084852 y LocalOutlierFactor 0,160437), y su extremo
+    alto lo pone **LocalOutlierFactor, que fue descartado**. La **dispersión entre semillas** es **4,9-10,7 %** y va
+    rotulada como tal: es otra medición y no se funde con la cifra por variante.
   - **Es desplazamiento ENTRE PARTICIONES, nunca «deriva temporal»**: NSL-KDD no tiene marca de
     tiempo.
   - El informe publica además un bloque `(A) vs (B)` con `delta = (A) − (B)`. Es una
@@ -595,7 +606,37 @@ Detalle completo en `Implementacion\PIPELINE.md`, subsección «El andamiaje de 
 
 ## 7. Mantenimiento de esta guía
 
-- **Última actualización: 2026-08-13, tercera pasada** (**cero corridas de modelos, cero `fit` y cero
+- **Última actualización: 2026-08-14** (**cero corridas, cero `fit`, cero artefactos regenerados y
+  cero cifras de disco alteradas**: solo texto de esta guía, ningún script de `app\` tocado).
+  Corrige **cómo se cita el FPR del sistema híbrido** en la viñeta del drift de §3.2:
+  - El FPR pasa a citarse **por variante y nunca como rango**: **10,2 %** con 54 características y
+    **8,5 %** con 122, leídos de `metricas_hibrido.csv`, columna `bin_fpr` (0,10174 y 0,084852).
+  - Se **retiran** «8,5-16 %» y «8-10 %» como descripción del FPR del sistema: el primero venía de
+    **otra tabla y otra columna** (`metricas_anomalias.csv`, columna `fpr`, los cuatro detectores
+    **sueltos**) y además cruzaba variantes; el segundo redondeaba 10,17 a la baja.
+  - El rango de los **cuatro detectores sueltos** queda **encerrado en la variante de 54**:
+    **8,5-16,0 %**, rotulado como lo que es y sin mezclarse con la cifra del híbrido ni con la
+    dispersión entre semillas.
+  - **Corregido dentro de esta misma tanda, antes de commitear:** al retirar «8-10 %» quedó en su
+    sitio «**más del doble**», en **tres** sitios y no en dos: la viñeta de §3.2, el comentario de
+    la sección 4 de `validacion.py` y el **docstring de `detect_data_drift_normales()`** del mismo
+    fichero. No era exacto y fallaba justo en la variante de **122**: 10,2/5 = **2,04×** con 54
+    características, pero 8,5/5 = **1,70×** con 122, que no llega al doble. Era el mismo defecto que
+    esta pasada venía a corregir —una expresión agregada que no vale para las dos variantes—
+    reintroducido por otra vía.
+  - **El tercer sitio se escapó a la primera pasada**, que declaró el barrido cerrado sobre dos
+    sitios: en el docstring la frase está **partida por el salto de línea** («sale más\ndel
+    doble»), así que un `grep "más del doble"` no la encontraba. El barrido se rehace con el
+    fragmento corto `doble` (insensible a mayúsculas) sobre todo el árbol, que sí la ve.
+  - **Tampoco valía la horquilla «entre 1,7 y 2 veces más»** con la que la primera pasada sustituyó
+    la expresión: 2,0348× **se sale de [1,7 · 2,0] por arriba**, y el propio párrafo escribía
+    «2,04×» dos renglones antes. La formulación final es **cita por variante**, como exige la
+    Decisión 1 y como hace el resto del bloque: «**≈2,0× el FPR nominal con 54 características y
+    ≈1,7× con 122**», en los tres sitios, remitiendo a las cifras por variante que van justo debajo.
+    Se escribe «≈2,0× el FPR nominal» y no «2 veces más», que admite la lectura *X + 2·X*.
+  - **Sello pendiente:** el commit de cierre de esta pasada aún no existe; queda **pendiente** de
+    anclar, igual que el de la tercera pasada del agregador.
+- **Añadido el 2026-08-13, tercera pasada** (**cero corridas de modelos, cero `fit` y cero
   cifras alteradas**; solo texto y código de documentación). Pone al día lo que dejó desfasado la
   **automatización del titular «13 de 98»** en `agregar_semillas.py`:
   - §6.2 ya **no** dice que el recuento sea cálculo manual: lo emite el agregador, que **abre las

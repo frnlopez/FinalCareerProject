@@ -5,11 +5,15 @@ import seaborn as sns
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, LabelEncoder
 from sklearn.ensemble import RandomForestClassifier
 import argparse
-import warnings
 import os
 import sys
 import joblib
-warnings.filterwarnings('ignore')
+
+# NO se silencian los warnings a nivel de módulo. Antes había aquí un
+# `warnings.filterwarnings('ignore')` global que ocultaba avisos útiles durante
+# la experimentación (convergencia de sklearn, deprecaciones, divisiones por
+# cero de numpy). Retirado a propósito: si un aviso molesta, se acota al punto
+# concreto que lo emite, no a todo el proceso.
 
 # Forzar salida UTF-8 en consolas Windows: sin esto, los prints con emojis
 # cascan con el códec cp1252 salvo que exista PYTHONIOENCODING=utf-8.
