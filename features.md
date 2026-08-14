@@ -224,6 +224,42 @@ filas del 2026-08-14 de esta tanda.
   `[CITA: …]`, **cero `[n]` nuevos y ningún `[n]` preexistente renumerado**; y **Anderson 1980 ya es
   `[2]` y Denning 1987 ya es `[3]`**, así que en ese pase hay que **MAPEAR, no dar de alta**.
 
+**Tanda 5 — prosa de las 4 notas restantes del capítulo 2. EJECUTADA el 2026-08-14** (cierre de la
+**Fase 4** del plan de cierre). Se deja la línea, como las cinco anteriores, **para que nadie la
+vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-08-14 de esta tanda.
+- **Con ella el capítulo 2 queda en 8 de 8**: `2.1.6 Metodologías y buenas prácticas`,
+  `2.3.1 IA, ML y Deep Learning`, `2.3.2 La IA en ciberseguridad` y
+  `2.3.3 Límites y consideraciones éticas`. **La ficha de la prosa de las 8 notas queda CERRADA.**
+- **INCIDENTE QUE TIENE QUE QUEDAR ESCRITO, porque el patrón se repetirá: el agente que despachaba
+  la tanda MURIÓ POR LÍMITE DE SESIÓN DE LA API después de terminar la redacción y ANTES de
+  reportar.** Se retomó en un segundo ciclo. **Ninguna nota quedó truncada** —verificado
+  explícitamente por `auditor-ml`: las cuatro cierran su última sección (`2.1.6` «Relación con otras
+  notas», `2.3.1` §2.3.1.5, `2.3.2` §2.3.2.6, `2.3.3` §2.3.3.8)—. Un pase de verificación dedicado
+  murió además por un **529 del servidor**, y su cometido lo cubrió el propio `auditor-ml`. **Regla
+  que se deriva: un agente que muere por límite deja el trabajo HECHO EN DISCO y NINGÚN reporte, así
+  que lo primero al retomar es COMPROBAR TRUNCAMIENTO, no relanzar.**
+- **Lo que salió LIMPIO, que era el riesgo declarado de la tanda:** «híbrido» **no se redefine**
+  (`2.3.1:11` y `2.3.2:55` remiten al callout canónico de `2.2.3:62-63`); «semisupervisado
+  (one-class)» sin sinónimos contradictorios en las cuatro, coherente con
+  `resumen-de-decisiones.md:463-467`; el «51» no aparece; **cero `[n]` nuevos** —el único es `[3]`
+  en `2.3.2:36`, correctamente mapeado a Denning 1987, y `[9]` no reaparece—; todas las rutas y
+  cifras verificadas contra disco.
+- **La Decisión 4 NO está sobreaplicada aquí** (comprobado contra `99 Investigación/`): el problema
+  es **el contrario**, faltan marcadores en `2.3.3` y `2.3.1`. Es la asimetría de la corrección 4.
+- **SE COMMITEA CON 7 CORRECCIONES ABIERTAS, por decisión de Francisco:** el trabajo estaba escrito
+  y **sin respaldo en git tras un corte por límite**, así que se prioriza preservarlo. Las 7 están
+  dadas de alta en `## Abiertas`, en dos fichas. **Los puntos 4, 5 y 7 son CROSS-FILE y ACOPLADOS:
+  NO se paralelizan** —exigen un redactor **en serie** con las cuatro notas en contexto—. La
+  corrección se despacha **inmediatamente después** de este commit.
+- **PROCEDE AHORA el pase EN SERIE del `researcher`** para convertir los `[CITA: …]` a `[n]`: es la
+  dependencia declarada del final de cada fase, y esta fase cierra aquí.
+- **VIVO y NO cerrado: T8.** Su viñeta `2.3.3` (P9/P10 y modelo de amenaza) entra en esta tanda y
+  queda hecha, pero **`2.1.5` sigue siendo un stub sin tocar** — ver la nota en su ficha.
+- **Dato aparte, NO versionado y SIN ficha:** apareció sin trackear
+  `Obsidian_TFG_Vault/APUNTES SOBRE CS229 STANFORD ML LECTURES/` con un único `Lecture 1.md`
+  **vacío**. Material propio de Francisco; se decidió **no versionarla** (un fichero vacío no
+  preserva nada). **No se toca.**
+
 ---
 
 ## Abiertas
@@ -409,8 +445,15 @@ filas del 2026-08-14 de esta tanda.
 - [~] **T8 · Cita en el punto de la decisión — capítulo 2** · Informe · `redactor-tfg`
   - **Estado a 2026-08-14: PARCIALMENTE CERRADA — solo la parte de `2.2.3`/`2.2.4`**, escrita en la
     **Tanda 4** dentro de la misma pasada que su prosa. La **definición canónica de «híbrido»** vive
-    ya en el callout `[!important]` de `2.2.3`. **Siguen VIVAS las otras dos viñetas**: `2.1.5`/`2.1.6`
-    y `2.3.3`, ambas en la **Tanda 5**. **No se vuelve a encargar `2.2.3`/`2.2.4`.**
+    ya en el callout `[!important]` de `2.2.3`. **No se vuelve a encargar `2.2.3`/`2.2.4`.**
+  - **Estado tras la TANDA 5 (2026-08-14): CASI cerrada, pero NO del todo — y esto se verificó
+    contra disco, no se dio por bueno.** La viñeta **`2.3.3` está HECHA** (P9/P10 y el marco del
+    modelo de amenaza, presentes en `2.3.3:11,38-60,159,173-174`) y **la carga de `2.1.6` también**
+    (Chow 1970 como regla de rechazo en el callout de `2.1.6:95-98`, Arp y Pineau en `:135` y
+    `:139`). **Lo que impide cerrarla es `2.1.5`: la Tanda 5 no la tocó y sigue siendo un stub en
+    `estado: borrador`**, así que la mitad `2.1.5` de esa viñeta no tiene dónde insertarse.
+    **T8 se cierra cuando se resuelva el punto (1) de la ficha de las 7 correcciones**, que es
+    exactamente esa decisión: redactar `2.1.5` o reescribir las remisiones. **No cerrar T8 antes.**
   - `2.2.3`/`2.2.4` (**HECHA, Tanda 4**): **los 4 sentidos de «híbrido»** y cuál usa el TFG. En la literatura NSL-KDD
     «híbrido» designa con la misma frecuencia (a) anomalías + firmas —el de este TFG—, (b) selección
     de características + clasificador, (c) *clustering* + clasificador, (d) dos clasificadores
@@ -948,41 +991,56 @@ filas del 2026-08-14 de esta tanda.
 > **Recuento real del vault hoy, medido en disco: 44 notas — 31 redactadas, 8 en guion, 3 vacías**
 > (`Resumen` 120 B, `Abstract` 123 B, `6.2 Líneas futuras` 688 B).
 
-- [~] **La prosa de las 8 notas en guion del capítulo 2 no la encarga ninguna ficha** · Informe · `redactor-tfg`
-  **Estado a 2026-08-14: CERRADA PARCIALMENTE, 4 de 8.** La **Tanda 4** redactó el bloque `2.2`
-  completo —`2.2.2`, `2.2.3`, `2.2.4` y `2.2.5`—, con T8 y la Decisión 8 aplicadas en la misma
-  pasada y **dos pases de `auditor-ml` sin ningún 🔴**. **Quedan las 4 restantes, y son lo que
-  mantiene abierta esta ficha:** `2.1.6`, `2.3.1`, `2.3.2` y `2.3.3` (con la carga T8 de P9/P10 y el
-  modelo de amenaza). Van en la **Tanda 5**. **No se vuelve a encargar el bloque `2.2`.** Deja vivo
-  un `> [!todo]` en `2.2.2`: el **diagrama de bloques del NIDS**, que va a `assets/`.
-  Las **8 notas están en GUION PURO** —bullets bajo un epígrafe «Guion propuesto», **cero prosa
-  redactada**— y **todas llevan `estado: pendiente`** en el frontmatter, línea 4:
-  `2.1.6 Metodologías y buenas prácticas` (7502 B), `2.2.2 Sistemas de detección de intrusiones`
-  (3728 B), `2.2.3 Taxonomía de los IDS` (3415 B), `2.2.4 Detección por firmas frente a anomalías`
-  (4801 B), `2.2.5 Taxonomía de ataques y panorama` (4402 B), `2.3.1 IA, ML y Deep Learning`
-  (4414 B), `2.3.2 La IA en ciberseguridad` (4905 B), `2.3.3 Límites y consideraciones éticas`
-  (5220 B).
-  - **POR QUÉ ES UN HUECO REAL, y no una ficha duplicada:** **T8** solo encarga *insertar citas en el
-    punto de la decisión* en `2.1.5`, `2.1.6`, `2.2.3`, `2.2.4` y `2.3.3` — **no la prosa**. La ficha
-    **`2.1 · coherencia y densidad del guion teórico`** cubre el bloque `2.1`. Resultado: **la prosa
-    de `2.2.2`, `2.2.5`, `2.3.1` y `2.3.2` no la tiene asignada nadie**, y la de las otras cuatro
-    solo está cubierta **de refilón**, por una ficha que va a insertar citas dentro de un texto que
-    todavía no existe.
-  - **AUTORIZACIÓN YA EXISTENTE — no hace falta decisión nueva de Francisco.** La **decisión marco
-    (b) del 2026-08-06** retiró la regla «la teoría la escribe Francisco» para **todo el capítulo 2,
-    `2.1.4` incluida**, y la tabla de autoría vigente de este mismo fichero lo confirma: «Todo
-    `02 Marco Teórico` … `redactor-tfg`, condición: **ninguna**».
-  - **EJECUCIÓN RECOMENDADA: redactar la prosa E INSERTAR LAS CITAS DE T8 EN LA MISMA PASADA**, nota
-    por nota. Hacer dos pases sobre las mismas ocho notas es trabajo duplicado.
-  - **INSTRUCCIÓN PARA QUIEN REDACTE `2.2.4` (Decisión 8 de la Fase 0, Francisco, 2026-08-14).** La
-    divergencia de `resumen-de-decisiones.md:459` **no era una decisión de contenido**: el término
-    canónico **YA está fijado** — **«semisupervisado (one-class)»**, con **«no supervisado» admitido
-    como sinónimo declarado UNA SOLA VEZ, en `3.4.1`**. Así que `2.2.4` **usa el término canónico** y
-    no reintroduce «detectores no supervisados» como si fuera término propio.
-  - **Por qué se aplazó dos veces** (2026-08-09 y 2026-08-11): **se planteaba como decisión y no lo
-    era**. No lleva ciclo propio: **se resuelve dentro de una nota ya encargada aquí**.
-  - **Estimación: es la fase más larga del plan de cierre, cuatro o cinco sesiones.** Le corresponde
-    la **Fase 4**.
+> **La ficha «La prosa de las 8 notas en guion del capítulo 2 no la encarga ninguna ficha» está
+> CERRADA el 2026-08-14, 8 de 8** (Tanda 4 el bloque `2.2`, Tanda 5 las cuatro restantes): ver
+> `## Cerradas`. Se deja esta línea para que nadie la vuelva a dar de alta como hueco. **Lo que
+> dejó vivo, con ficha propia:** el `> [!todo]` del **diagrama de bloques del NIDS** en `2.2.2`
+> (mismo cuello de `assets/` que bloquea T10) y las **7 correcciones de la Tanda 5**.
+
+- [ ] **Las 7 correcciones de la auditoría de la TANDA 5 — bloque CROSS-FILE, NO paralelizable** · Informe · `redactor-tfg`
+  Alta el **2026-08-14**. `auditor-ml` dictaminó **APTO CON CAMBIOS** sobre la Tanda 5 y **se
+  commiteó igualmente con las 7 abiertas, por decisión de Francisco**: el trabajo estaba escrito y
+  **sin respaldo en git tras un corte por límite de sesión**, así que se priorizó preservarlo. Esta
+  ficha recoge **los cuatro puntos que exigen las cuatro notas en contexto**; los tres restantes van
+  en la ficha hermana de abajo.
+  - **NO SE PARALELIZAN. Un solo redactor, EN SERIE, con `2.1.6`, `2.3.1`, `2.3.2` y `2.3.3`
+    abiertas a la vez**: los puntos 4, 5 y 7 son incoherencias **entre** notas, del tipo que no se ve
+    mirando una sola. Trocearlos en agentes paralelos es garantizar que sobrevivan.
+  - **(4) La Decisión 4 se aplica de forma ASIMÉTRICA dentro de la propia tanda.** `2.1.6` y `2.3.2`
+    marcan reserva sobre **Arp**; **`2.3.3` se articula entera sobre Arp sin marcarla**. **No es
+    sobreaplicación** —comprobado contra `99 Investigación/`—: es **defecto**, faltan marcadores en
+    `2.3.3` y `2.3.1`. Es el patrón inverso al hallazgo de la Tanda 4, y por eso hay que decidir el
+    criterio una vez y aplicarlo a las cuatro.
+  - **(5) Contradicción de POLÍTICA entre dos notas de la misma tanda.** `2.1.6:175` **adelanta
+    cifras** (`f1_macro` 0,909 en validación cruzada → 0,472 sobre D2, **respaldadas** en
+    `Resultados/metricas_baseline.csv`) mientras `2.3.3:11,34,142` **prohíbe anticipar números** en
+    el capítulo 2. Hay que **elegir la política**, no parchear una de las dos.
+  - **(7) Las TRES definiciones del *semantic gap* no se cruzan entre sí:** `2.1.6:172`,
+    `2.3.2:57` y `2.3.3:47`. Igual que con «híbrido» en la Tanda 4, la salida natural es
+    **una canónica y remisiones**, no tres redacciones independientes.
+  - **(1) Tres remisiones ESCRITAS EN PRESENTE a contenido que no existe.** `2.3.3:31`, `2.3.3:139`
+    y `2.1.6:132` remiten a `2.1.5 Métricas de evaluación` para **FPR, F1 y macro/weighted**, pero
+    **`2.1.5` es un stub en `estado: borrador` que no contiene nada de eso** —verificado en disco el
+    2026-08-14: sus epígrafes son «Para algoritmos de clasificación», «…de regresión» y «…no
+    supervisados o de clustering»—. **Son dos salidas y hay que escoger: redactar `2.1.5`
+    (que es trabajo del bloque `2.1`, no de esta corrección) o reescribir las tres remisiones.**
+    **Esta viñeta es también el residuo vivo de T8** (ver su ficha).
+
+- [ ] **Las 3 correcciones LOCALES de la auditoría de la TANDA 5** · Informe · `redactor-tfg` / `researcher`
+  Alta el **2026-08-14**, misma auditoría que la ficha de arriba. **Estas tres sí son locales a un
+  fichero**, así que pueden ir sueltas — pero **el punto 6 no lo toca un redactor**.
+  - **(2) `2.3.3:50` promete un resultado que NO EXISTE.** El callout «Alcance de este trabajo»
+    anuncia una «**proyección a prevalencia realista**» como resultado **del capítulo 5**, y esa
+    proyección **no está en código, ni en `Resultados/`, ni en ninguna nota** (verificado el
+    2026-08-14). **O se retira la promesa, o se decide que la proyección se hace** —y entonces es
+    alcance nuevo, no una corrección de redacción, y la decide Francisco.
+  - **(3) `2.3.3:85` atribuye a Arp et al. un error que NO es suyo.** Ese error **no está entre sus
+    diez pitfalls verificados** (`Obsidian_TFG_Vault/99 Investigación/benchmark-comparativo-nsl-kdd.md:131`):
+    es de la línea **Pierazzi et al.** Reatribuir, no borrar.
+  - **(6) `Bibliografía.md:29` necesita actualizar «Dónde se usa»** por el nuevo uso de `[3]`
+    (Denning 1987) en `2.3.2:36`. **Es pase del `researcher`, NO del redactor** —es el único que
+    escribe ese fichero, y va **en serie**—. Encaja de forma natural en el pase de `[CITA: …]` → `[n]`
+    que toca ahora al cerrar la Fase 4.
 
 - [~] **`03 Desarrollo\` está vacía en disco y solo falta borrar la carpeta** (🟡) · Informe · `redactor-tfg`
   `00 Índice TFG.md:101-102` la marca «pendiente de borrado físico», y **además su texto afirma que
@@ -1226,6 +1284,13 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-14 | — | **TANDA 5 (CIERRE DE LA FASE 4 del plan de cierre) — CUATRO NOTAS, un fichero cada una: la prosa de las 4 notas RESTANTES del capítulo 2. Con ella el capítulo 2 queda en 8 de 8.** Ficheros (**4**): `02 Marco Teórico/2.1 Machine Learning/2.1.6 Metodologías y buenas prácticas.md`, `02 Marco Teórico/2.3 Inteligencia Artificial/2.3.1 IA, ML y Deep Learning.md`, `2.3.2 La IA en ciberseguridad.md` y `2.3.3 Límites y consideraciones éticas.md`. **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida.** **Quinto commit por tanda** bajo la Decisión 7. `auditor-ml`: **APTO CON CAMBIOS**. **SE COMMITEA CON LAS 7 CORRECCIONES ABIERTAS, por decisión de Francisco**: el trabajo estaba escrito y **sin respaldo en git tras un corte por límite de sesión**, así que se prioriza preservarlo — las 7 quedan dadas de alta en `## Abiertas`, en **dos fichas**, y **los puntos 4, 5 y 7 son CROSS-FILE y ACOPLADOS: NO se paralelizan**, exigen un redactor **en serie** con las cuatro notas en contexto. **Lo que salió LIMPIO, que era el riesgo declarado de la tanda:** «híbrido» **no se redefine** (`2.3.1:11` y `2.3.2:55` remiten al callout canónico de `2.2.3:62-63`); «semisupervisado (one-class)» sin sinónimos contradictorios en las cuatro, coherente con `resumen-de-decisiones.md:463-467`; el «51» no aparece; **cero `[n]` nuevos** —el único es `[3]` en `2.3.2:36`, correctamente **mapeado** a Denning 1987, y `[9]` no reaparece—; todas las rutas y cifras verificadas contra disco. **La Decisión 4 NO está sobreaplicada** (comprobado contra `99 Investigación/`): el defecto es **el contrario**, faltan marcadores en `2.3.3` y `2.3.1`. **CIERRA la ficha de la prosa de las 8 notas (8 de 8). NO cierra T8**: su viñeta `2.3.3` queda hecha, pero `2.1.5` sigue siendo un stub sin tocar. **PROCEDE AHORA el pase EN SERIE del `researcher`** de `[CITA: …]` → `[n]`, dependencia declarada del final de cada fase | `—` |
+| 2026-08-14 | Informe | **`2.1.6 Metodologías y buenas prácticas` — PROSA REDACTADA** desde su guion, y con ella la carga T8 de esta nota: **Chow 1970** como regla de rechazo óptima **sobre las posteriores verdaderas** —y que `predict_proba` de un RF no lo es— en el callout de `:95-98`, más **Arp et al.** (`:135`) y el **vocabulario de Pineau** (`:139`). Cierra su última sección, «Relación con otras notas». **Deja DOS de las 7 correcciones abiertas dentro de la nota**: la remisión en presente de `:132` a `2.1.5` (stub) y el adelanto de cifras de `:175` | `—` |
+| 2026-08-14 | Informe | **`2.3.1 IA, ML y Deep Learning` — PROSA REDACTADA** desde su guion: el encaje IA ⊃ ML ⊃ DL. **No redefine «híbrido»**: `:11` remite al callout canónico de `2.2.3:62-63`, que es justo el riesgo que la tanda tenía declarado. Cierra su última sección, §2.3.1.5. **Deja abierta su parte de la corrección 4**: le faltan marcadores de reserva de la Decisión 4 | `—` |
+| 2026-08-14 | Informe | **`2.3.2 La IA en ciberseguridad` — PROSA REDACTADA** desde su guion. **`:55` remite al callout canónico de «híbrido»** en vez de redefinirlo, y **`:36` usa `[3]` MAPEADO a Denning 1987 — no es un `[n]` nuevo**, que es la trampa exacta que el protocolo de citas existe para evitar. Cierra su última sección, §2.3.2.6. **Deja abierta la corrección 6**: `Bibliografía.md:29` tiene que actualizar «Dónde se usa» por ese nuevo uso de `[3]`, y **eso es pase del `researcher`, no del redactor** | `—` |
+| 2026-08-14 | Informe | **`2.3.3 Límites y consideraciones éticas` — PROSA REDACTADA, y con ella la parte de `2.3.3` de T8**: **P9 y P10** y el marco del **modelo de amenaza**. Cierra su última sección, §2.3.3.8. **Es la nota que concentra 4 de las 7 correcciones abiertas** —las remisiones en presente de `:31` y `:139`, la «proyección a prevalencia realista» de `:50` que **no existe** en código, `Resultados/` ni notas, la atribución a **Arp** de `:85` que es de la línea **Pierazzi**, y la asimetría de la Decisión 4—, y además **prohíbe anticipar números** (`:11,34,142`) mientras `2.1.6:175` los anticipa | `—` |
+| 2026-08-14 | Informe | **La ficha «La prosa de las 8 notas en guion del capítulo 2 no la encarga ninguna ficha» — CERRADA, 8 de 8.** Era **el mayor bloque de trabajo pendiente del TFG** y hasta el 2026-08-13 era **invisible en este fichero**. Se cierra en dos tandas del mismo día: la **Tanda 4** con el bloque `2.2` (`2.2.2`, `2.2.3`, `2.2.4`, `2.2.5`) y la **Tanda 5** con `2.1.6`, `2.3.1`, `2.3.2` y `2.3.3`. **Lo que NO cierra, y tiene ficha propia:** el `> [!todo]` del **diagrama de bloques del NIDS** en `2.2.2` —comparte el cuello de `assets/` que ya bloquea T10, porque el `redactor-tfg` no escribe binario—, las **7 correcciones de la Tanda 5** y **T8**. Con esto **la Fase 4 del plan de cierre queda cerrada** | `—` |
+| 2026-08-14 | — | **HALLAZGO (no cierra ficha) · El agente que despachaba la TANDA 5 murió por LÍMITE DE SESIÓN DE LA API después de terminar la redacción y ANTES de reportar.** Se retomó en un segundo ciclo. **Ninguna nota quedó truncada** —verificado **explícitamente** por `auditor-ml`: las cuatro cierran su última sección (`2.1.6` «Relación con otras notas», `2.3.1` §2.3.1.5, `2.3.2` §2.3.2.6, `2.3.3` §2.3.3.8)—. Un pase de verificación dedicado murió además por un **529 del servidor**, y su cometido lo cubrió el propio `auditor-ml`. **Queda escrito porque el patrón SE VA A REPETIR: un agente que muere por límite deja el trabajo HECHO EN DISCO y NINGÚN reporte**, así que lo primero al retomar es **comprobar truncamiento, no relanzar** — relanzar sobre trabajo ya hecho lo duplica o lo pisa. **Es también la razón por la que Francisco decidió commitear con las 7 correcciones abiertas**: prosa escrita y sin respaldo en git es exactamente lo que un segundo corte se lleva por delante | `—` |
 | 2026-08-14 | — | **TANDA 4 (arranque de la FASE 4 del plan de cierre) — CUATRO NOTAS EN PARALELO, un redactor por fichero: la prosa del bloque `2.2` COMPLETO.** Cubre **4 de las 8** notas en guion del capítulo 2, todas en `Obsidian_TFG_Vault/02 Marco Teórico/2.2 Ciberseguridad/`; lo que cierra va desglosado en las cuatro filas de abajo, más **dos filas de HALLAZGO** que no cierran ficha. **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida.** Proceso: **4 redactores en paralelo → auditoría de COHERENCIA ENTRE NOTAS → 3 correctores en paralelo → segunda auditoría → 1 corrección residual**; **dos pases de `auditor-ml`, ambos cerrados SIN NINGÚN 🔴**. Ficheros (**4**): `2.2.2 Sistemas de detección de intrusiones.md`, `2.2.3 Taxonomía de los IDS.md`, `2.2.4 Detección por firmas frente a detección por anomalías.md` y `2.2.5 Taxonomía de ataques y panorama de amenazas.md`. **Cuarto commit por tanda** bajo la Decisión 7. **Protocolo de citas respetado: CERO `[n]` nuevos y ningún `[n]` preexistente renumerado**; todas las citas nuevas quedan como `[CITA: …]`, pendientes del pase **en serie** del `researcher` al final de la fase. **Aviso que tiene que sobrevivir a ese pase: Anderson 1980 ya es `[2]` y Denning 1987 ya es `[3]` — hay que MAPEAR, no dar de alta.** **CIERRA PARCIALMENTE, no del todo:** la ficha de la prosa de las 8 notas queda en **4 de 8** y **T8** solo en su parte de `2.2.3`/`2.2.4`. **Vivos:** las **4 notas restantes** —`2.1.6`, `2.3.1`, `2.3.2` y `2.3.3`, esta con la carga T8 de P9/P10 y el modelo de amenaza—, que van en la **Tanda 5**, y el `> [!todo]` del **diagrama de bloques del NIDS** en `2.2.2` | `06eb63e` |
 | 2026-08-14 | Informe | **`2.2.2 Sistemas de detección de intrusiones` — PROSA REDACTADA** desde su guion: definición, componentes, IDS frente a IPS y ubicación en la red. **Deja vivo un `> [!todo]` DENTRO de la nota**: falta el **diagrama de bloques del NIDS**, que va a `assets/` y por tanto comparte cuello con las figuras que ya bloquean T10 — el `redactor-tfg` no escribe binario | `06eb63e` |
 | 2026-08-14 | Informe | **`2.2.3 Taxonomía de los IDS` — PROSA REDACTADA, y con ella la parte de `2.2.3` de T8.** Ejes de clasificación más la carga citada: **los cuatro sentidos de «híbrido»** en la literatura NSL-KDD y cuál usa el TFG —el **(a)**, anomalías + firmas—, que **Khraisat et al. 2019 NO taxonomiza lo híbrido**, y el **linaje ADAM 2001 / Tombini 2004**. **Fija en callout `[!important]` la DEFINICIÓN CANÓNICA de «híbrido»**, que es la que referencia el resto del capítulo: cualquier nota posterior remite a ella en vez de redefinirlo | `06eb63e` |
