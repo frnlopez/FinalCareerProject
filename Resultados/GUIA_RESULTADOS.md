@@ -21,7 +21,7 @@ Aquí se vuelca **todo lo que generan los scripts** de `Implementacion/app/`:
 | `cascada_invertida.py` | ejecutado (54 y 122) | `metricas_cascada_invertida.csv` y `figuras\cascada_invertida_<set>.png`. **No entrena nada**: carga `firma_*.joblib` y lee el umbral de `hibrido_*.joblib` |
 | `evaluacion.py` | módulo común | No deposita por sí mismo: lo usan los cuatro scripts de modelos y `cascada_invertida.py` |
 | `barrido_semillas.py` | **corrido** (T4, 2026-08-12 22:09 → 00:38, sello `df30cb2`) | Las **nueve** tablas `metricas_*_semillas.csv` (**2.320 filas** en total), a través de los cinco scripts hijos, más los artefactos sufijados `_semilla<N>` **no versionados**: **260** figuras `figuras\*_semilla*`, **20** `firmas_reglas_*_semilla*.txt` y **100** logs en `logs_barrido\`. Los `.joblib` por semilla los borra él mismo al cerrar cada semilla (en `modelos\` no queda ninguno). Además, `verificacion_semilla_joblib.txt`: la traza de que los 20 `.joblib` publicados declaran `semilla = 42` |
-| `agregar_semillas.py` | **corrido cuatro veces** (T4: **7,2 s** la primera y **1,70 s** la segunda, ambas el 2026-08-13, esta tras el arreglo de `_tabla_md()`; una tercera con el **titular automático** (2026-08-13 `19:54:48`); y una cuarta con el **reparto por commit de origen del titular** (2026-08-14 `15:15:13`). **En disco están los de la cuarta**, cabecera `2026-08-14T15:15:13`) | `dispersion_semillas.csv` y `dispersion_semillas.md` — **198 filas** (98 de *calidad* + 100 de *dispersión de máquina*) con n, media, sd muestral (`ddof=1`), mín y máx, más el valor de la semilla 42 al lado de cada banda y el recuento **«13 de 98»** fuera de banda; `commits_origen = df30cb2` único en todas las celdas y `commit_agregador = 6bb224c-sucio` — sello impreso, **pendiente de re-anclaje** y el único que lo está; los de la segunda y la tercera pasada quedaron re-anclados a `9ad971b` y a `9d4c26d` respectivamente (§6.2) |
+| `agregar_semillas.py` | **corrido cuatro veces** (T4: **7,2 s** la primera y **1,70 s** la segunda, ambas el 2026-08-13, esta tras el arreglo de `_tabla_md()`; una tercera con el **titular automático** (2026-08-13 `19:54:48`); y una cuarta con el **reparto por commit de origen del titular** (2026-08-14 `15:15:13`). **En disco están los de la cuarta**, cabecera `2026-08-14T15:15:13`) | `dispersion_semillas.csv` y `dispersion_semillas.md` — **198 filas** (98 de *calidad* + 100 de *dispersión de máquina*) con n, media, sd muestral (`ddof=1`), mín y máx, más el valor de la semilla 42 al lado de cada banda y el recuento **«13 de 98»** fuera de banda; `commits_origen = df30cb2` único en todas las celdas y `commit_agregador = 6bb224c-sucio` — sello impreso, que **queda intacto** y está **re-anclado en prosa a `1cb5c26`** (§6.2); los de la segunda y la tercera pasada quedaron re-anclados a `9ad971b` y a `9d4c26d` respectivamente. **No queda ningún re-anclaje pendiente** |
 
 **Regla de oro:** nada de esta carpeta se edita a mano. Todo se **regenera** ejecutando los
 scripts (con `random_state=42`); si un número va a la memoria, tiene que salir de aquí. Para
@@ -532,10 +532,14 @@ escribe—, así que el desajuste se resuelve **en prosa**, sello a sello y sin 
   regeneración a las `20:13:37` tras los cinco hallazgos altos del `auditor-ml`—, y la que `9d4c26d`
   dejó versionada es la segunda; para la primera, el re-anclaje apunta al mismo código antes de esos
   arreglos, que no se versionó aparte. Las 198 filas y el «13 de 98» son iguales en las dos.
-- **Cuarta pasada, PENDIENTE de re-anclaje — la única que lo está:** es la que hay en disco.
+- **Cuarta pasada, re-anclada:** `6bb224c-sucio` → **`1cb5c26`** («codigo+informe: cerrar la Fase 2 -
+  Tanda 2, ficha del sistema y reconciliacion de sellos», 2026-08-14), el commit que versiona a la vez
+  `agregar_semillas.py` y los dos ficheros de dispersión, que venían sin commitear de la sesión
+  anterior (verificado con `git log --oneline 1cb5c26` el 2026-08-14, no deducido de la prosa).
   `6bb224c` es igualmente el
   commit **anterior** al cambio, así que `6bb224c-sucio` no identifica la versión que produjo la
-  agregación; su commit de cierre no existe todavía y aquí no se inventa ningún hash.
+  agregación: la identifica `1cb5c26`. Fue el **quinto** re-anclaje del proyecto, y es la pasada que
+  hay en disco. **Con esto no queda ningún re-anclaje pendiente.**
 
 Y el `-sucio` no contamina las bandas, que las respalda `commits_origen = df30cb2` limpio. Lo que sí
 hay que declarar al citar el titular es otra cosa: **titular y banda no salen del mismo commit**
@@ -649,7 +653,10 @@ Detalle completo en `Implementacion\PIPELINE.md`, subsección «El andamiaje de 
     corridas» que `00c3c3e-sucio`.
   - **Renumeración:** los re-anclajes hechos pasan de tres a **cuatro** y el pendiente pasa de dos a
     **uno**: el de la **cuarta** pasada (`6bb224c-sucio`, 2026-08-14 `15:15:13`), cuyo commit de
-    cierre efectivamente **no existe todavía**. Ahí no se escribe ningún hash.
+    cierre efectivamente **no existe todavía**. Ahí no se escribe ningún hash. *(**Corregido el
+    2026-08-14, cuarta pasada**: ese commit de cierre ya existe, es **`1cb5c26`**, y el re-anclaje
+    `6bb224c-sucio` → `1cb5c26` —el **quinto** del proyecto— ya está hecho en §6.2 y en la tabla de
+    scripts. **No queda ningún re-anclaje pendiente.** El sello impreso sigue intacto.)*
 - **Añadido el 2026-08-14, segunda pasada del día** (**cero corridas de modelos, cero
   `fit`, cero artefactos regenerados y cero cifras alteradas**: solo texto). **Reconcilia la prosa
   con el fichero en disco** tras la **cuarta** pasada del agregador (2026-08-14 `15:15:13`), que sí
@@ -668,7 +675,10 @@ Detalle completo en `Implementacion\PIPELINE.md`, subsección «El andamiaje de 
     `9ad971b`, `fc1c6b4-sucio` → `9af842c`, `00c3c3e-sucio` → `54d1349`— **no se tocan**: cada uno
     sigue nombrando su corrida. *(**Corregido el 2026-08-14, tercera pasada**: lo dicho aquí de la
     **tercera** pasada era falso — su commit de cierre sí existía, es `9d4c26d`, y el re-anclaje ya
-    está hecho. Lo de la **cuarta** sigue vigente. Ver la entrada de arriba.)*
+    está hecho. Ver la entrada de arriba.)* *(**Corregido el 2026-08-14, cuarta pasada**: lo dicho
+    aquí de la **cuarta** pasada también ha quedado superado — su commit de cierre es **`1cb5c26`** y
+    el re-anclaje `6bb224c-sucio` → `1cb5c26` ya está hecho, así que **ninguno de los dos sellos
+    sigue pendiente**.)*
 - **Añadido el 2026-08-14, primera pasada del día** (**cero corridas, cero `fit`, cero artefactos
   regenerados y cero cifras de disco alteradas**: solo texto de esta guía, ningún script de `app\`
   tocado). Corrige **cómo se cita el FPR del sistema híbrido** en la viñeta del drift de §3.2:
@@ -700,7 +710,12 @@ Detalle completo en `Implementacion\PIPELINE.md`, subsección «El andamiaje de 
   - **Sello pendiente:** el commit de cierre de esta pasada aún no existe; queda **pendiente** de
     anclar, igual que los de la tercera y la cuarta pasada del agregador. *(**Al día el 2026-08-14,
     tercera pasada**: el de la **tercera** pasada del agregador ya no está pendiente —es `9d4c26d`—;
-    sigue pendiente el de la cuarta, y el de esta entrada.)*
+    sigue pendiente el de la cuarta, y el de esta entrada.)* *(**Al día el 2026-08-14, cuarta
+    pasada**: el de la **cuarta** pasada del agregador tampoco está ya pendiente —es **`1cb5c26`**, y
+    el re-anclaje ya está hecho—. Y **esta entrada tampoco tiene re-anclaje pendiente**: esta
+    pasada fue **solo texto** y **no estampó ningún sello en ningún artefacto**, así que no hay
+    nada que re-anclar. Por eso no se escribe hash aquí: no es un pendiente, es un **no-sello**.
+    Con esto, **no queda ningún re-anclaje pendiente** en el proyecto.)*
 - **Añadido el 2026-08-13, tercera pasada** (**cero corridas de modelos, cero `fit` y cero
   cifras alteradas**; solo texto y código de documentación). Pone al día lo que dejó desfasado la
   **automatización del titular «13 de 98»** en `agregar_semillas.py`:

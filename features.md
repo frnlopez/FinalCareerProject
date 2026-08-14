@@ -46,6 +46,12 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > dos fichas con un solo commit de tanda, y el pase de `auditor-ml` que el re-anclaje exige de todas
 > formas aprovecha para auditar la coherencia entre ambas.
 >
+> **ESTADO A 2026-08-14: las tareas 1 y 2 de esa tabla están HECHAS — se despacharon como TANDA 3, en
+> paralelo y con un solo commit** (ver `## Cerradas`). **No se vuelven a despachar.** De la tabla
+> **solo sigue viva la 3 (`T25`)**, que además **no se despacha sin que Francisco lo pida**. Lo que
+> dejan pendiente: el **borrado físico** de `03 Desarrollo/` (necesita shell) y la cifra de `:104`,
+> intacta a propósito hasta la Fase 4.
+>
 > **Dato verificado en disco el 2026-08-14, para que nadie lo repita:** `Obsidian_TFG_Vault/03 Desarrollo/`
 > **existe pero está VACÍA**, y git no la trackea (git no versiona directorios vacíos). Un `Glob` sobre
 > ella sale vacío y **eso no prueba que no exista**. Si se quiere borrar la carpeta física hace falta un
@@ -163,6 +169,25 @@ línea, como las dos anteriores, **para que nadie la vuelva a despachar**: el de
   `00 Índice TFG.md`** (pase en serie sobre el índice) y los **dos `> [!todo]` internos de `A.3`**
   —los seis ítems no-FT de Pineau y la remisión a `5.0` (T5)—, más el **quinto re-anclaje**, el del
   sello `6bb224c-sucio`, que ya **no** espera a nada: el commit de la Tanda 2 existe y es `1cb5c26`.
+- **Estado a 2026-08-14: de esos vivos, el alta de `A.3` en el índice y el quinto re-anclaje quedan
+  CERRADOS en la Tanda 3.** Siguen vivos `T25` y los dos `> [!todo]` internos de `A.3`.
+
+**Tanda 3 — alta de `A.3` en el índice + quinto re-anclaje. EJECUTADA el 2026-08-14** (Fase 3 del
+plan de cierre), **en paralelo, un track cada ficha y ficheros disjuntos**. Se deja la línea, como las
+tres anteriores, **para que nadie la vuelva a despachar**: el detalle está en `## Cerradas`, en las
+tres filas del 2026-08-14 de esta tanda.
+- **Índice (Informe) — HECHO:** `A.3` dada de alta en `00 Índice TFG.md:92-93` con el formato de
+  `A.1`/`A.2`, y corregida la frase falsa de `:101-102` sobre `03 Desarrollo/`. **El «de 43 notas» de
+  `:104` se dejó intacto a propósito** (se cuadra en la Fase 4; el auditor confirmó que además cuadra
+  con disco).
+- **Quinto re-anclaje (Código) — HECHO:** `6bb224c-sucio → 1cb5c26` en `Implementacion/PIPELINE.md`,
+  `A.3` y —**el fichero que el implementador se había dejado fuera**— `Resultados/GUIA_RESULTADOS.md`.
+  Dos pases de `auditor-ml`, **APTO** tras aplicar hallazgos.
+- **Vivos de esta tanda:** el **borrado físico** de `03 Desarrollo/` (necesita shell) y el recuento de
+  `00 Índice TFG.md:104`, ambos con ficha propia abierta.
+- **ABIERTO Y A CRITERIO DE FRANCISCO, no despachado:** el callout «**Punto actual**» de
+  `00 Índice TFG.md:8` **no menciona `A.3`**, pero está **fechado el 2026-07-16**, así que es
+  **historial** y la recomendación fue **no tocarlo**.
 
 ---
 
@@ -337,9 +362,9 @@ línea, como las dos anteriores, **para que nadie la vuelva a despachar**: el de
   `Obsidian_TFG_Vault/Apéndices/A.3 Ficha del sistema.md` existe, es la *model card* completa y pasó
   `auditor-ml` con **APTO CON CAMBIOS** (8 hallazgos, ninguno crítico, todos corregidos). **No se
   vuelve a encargar `A.3`.** Lo que quedó vivo, y solo esto:
-  - **El alta de `A.3` en `00 Índice TFG.md` no está hecha.** Es un **pase en serie**: `00 Índice
-    TFG.md` no se toca en paralelo con nadie. Cuadra con las dos fichas del índice que ya están
-    abiertas más abajo (`:101-102` y `:104`): **hacerlo en la misma pasada**, no en tres.
+  - ~~**El alta de `A.3` en `00 Índice TFG.md` no está hecha.**~~ **HECHA el 2026-08-14 en la
+    Tanda 3** (ver `## Cerradas`): `A.3` está dada de alta en `:92-93` con el formato de `A.1`/`A.2`,
+    y en la misma pasada se corrigió la frase falsa de `:101-102`. **No se vuelve a encargar.**
   - **Dos `> [!todo]` vivos DENTRO de la nota, ninguno resoluble hoy:**
     - `A.3:574` — **caracterización de los seis ítems no-FT** del checklist de Pineau. Requiere el
       **checklist original**; sin él, nombrarlos sería inventarlos. Depende de acceso a la fuente.
@@ -862,30 +887,11 @@ línea, como las dos anteriores, **para que nadie la vuelva a despachar**: el de
 > cierre, aprobada por Francisco el **2026-08-13**; ver `## Cerradas`). **Estado a 2026-08-14: las
 > dos quedan resueltas** —la de los recuentos 94/4 y la del re-anclaje `ddade37-sucio → 9d4c26d`,
 > ambas en `## Cerradas`—, pero **el re-anclaje deja descendencia**: la cuarta pasada del agregador
-> imprimió un sello nuevo, y esa es la ficha que queda abierta abajo.
-
-- [ ] **El sello `6bb224c-sucio` de los artefactos regenerados queda pendiente de re-anclaje en
-  prosa** · Código · `ml-implementador`
-  **Corregido el 2026-08-14: esta ficha citaba `ddade37-sucio`, que es el sello DESFASADO.** Ese ya
-  se re-ancló a **`9d4c26d`** (cuarto re-anclaje del proyecto, ver `## Cerradas`). El sello que hay
-  **hoy en disco** en `Resultados/dispersion_semillas.csv` y `.md` —cuarta pasada del agregador,
-  cabecera `2026-08-14T15:15:13`— es **`commit_agregador = 6bb224c-sucio`**, y vuelve a ser
-  **pre-commit**: hay que re-anclarlo en prosa (`PIPELINE.md`, `GUIA_RESULTADOS.md`, `A.3`) al commit
-  de este ciclo. **El commit YA EXISTE desde el 2026-08-14: es `1cb5c26`**, el de la Tanda 2, así que
-  el re-anclaje es **`6bb224c-sucio → 1cb5c26`** y ya no está bloqueado por nada. Los tres puntos a
-  tocar están localizados: `PIPELINE.md:1332` (tabla de corridas, dice «pendiente de re-anclaje»),
-  `PIPELINE.md:1454-1458` y `A.3:609-612`. **No inventar el hash: este está verificado con git.**
-  - **Sería el QUINTO re-anclaje del proyecto** y va **con la misma forma que los cuatro anteriores**
-    (`fc1c6b4-sucio → 9af842c`, `00c3c3e-sucio → 54d1349`, `df30cb2-sucio → 9ad971b`,
-    `ddade37-sucio → 9d4c26d`): **el sello impreso DENTRO del artefacto NO se toca** —lo estampa
-    `config.commit_actual()` y no puede llevar el hash del commit que lo versiona, porque ese commit
-    tiene que existir después—.
-  - **Los cuatro re-anclajes hechos siguen siendo válidos para lo que nombran: cada uno, su pasada.**
-    Ninguno queda superado por este; lo que cambia es cuál describe el artefacto en disco. El sitio
-    donde está contado pasada a pasada es `PIPELINE.md`, tabla de corridas del agregador y el bloque
-    «Cuarto re-anclaje de sello del proyecto, ya HECHO — y uno PENDIENTE».
-  - **Consecuencia para `A.3`: cita el sello IMPRESO (`6bb224c-sucio`) declarándolo pre-commit**, y
-    se re-ancla cuando exista el hash. Ya está redactado así en `A.3:609-612`.
+> imprimió un sello nuevo, y esa fue la ficha que quedó abierta aquí.
+>
+> **Estado a 2026-08-14: esa descendencia también queda CERRADA.** El **quinto re-anclaje**
+> (`6bb224c-sucio → 1cb5c26`) se escribió en la **Tanda 3** y está en `## Cerradas`. **Esta sección
+> queda sin fichas abiertas.**
 
 ### Huecos del informe detectados contra disco — altas del 2026-08-13
 
@@ -928,10 +934,13 @@ línea, como las dos anteriores, **para que nadie la vuelva a despachar**: el de
   - **Estimación: es la fase más larga del plan de cierre, cuatro o cinco sesiones.** Le corresponde
     la **Fase 4**.
 
-- [ ] **`03 Desarrollo\` está vacía en disco y solo falta borrar la carpeta** (🟡) · Informe · `redactor-tfg`
+- [~] **`03 Desarrollo\` está vacía en disco y solo falta borrar la carpeta** (🟡) · Informe · `redactor-tfg`
   `00 Índice TFG.md:101-102` la marca «pendiente de borrado físico», y **además su texto afirma que
   «contiene solo avisos de migración», lo que YA ES FALSO**: en disco **no hay ni un `.md`**. Son dos
   cosas: borrar la carpeta y corregir esa frase del índice.
+  - **La MITAD DE TEXTO está HECHA (2026-08-14, Tanda 3):** la frase falsa de `:101-102` quedó
+    corregida. **Queda vivo solo el BORRADO FÍSICO de la carpeta**, que el `redactor-tfg` no puede
+    hacer —no tiene shell—: necesita un agente con shell o a Francisco.
 
 - [ ] **`00 Índice TFG.md:104` declara un recuento que no cuadra con el disco** (🟡) · Informe · `redactor-tfg`
   Dice «**de 43 notas**» con un desglose (5+6 borrador, 9 teoría, 10 pendiente de volcado, 10
@@ -1167,6 +1176,9 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-14 | — | **TANDA 3 (Fase 3 del plan de cierre) — DOS FICHAS EN PARALELO, un track cada una, despachadas sobre ficheros disjuntos.** Lo que cierra va desglosado en las dos filas de abajo: el **alta de `A.3` en el índice** (Informe) y el **QUINTO re-anclaje de sello** (Código). **Cero cómputo, cero corridas, ninguna cifra publicada movida, ningún hash inventado** — `1cb5c26` está verificado con git. `auditor-ml`: **APTO** tras **dos pases**, con los hallazgos aplicados. Ficheros (**4**): `Implementacion/PIPELINE.md`, `Obsidian_TFG_Vault/00 Índice TFG.md`, `Obsidian_TFG_Vault/Apéndices/A.3 Ficha del sistema.md` y `Resultados/GUIA_RESULTADOS.md`. **Tercer commit por tanda** bajo la Decisión 7. **Queda ABIERTO y a criterio de Francisco, no despachado:** el callout «Punto actual» de `00 Índice TFG.md:8` no menciona `A.3`, pero está **fechado el 2026-07-16**, así que es **historial** y la recomendación fue **no tocarlo** | `—` |
+| 2026-08-14 | Informe | **`A.3 Ficha del sistema` DADA DE ALTA en `00 Índice TFG.md`**, en el listado de apéndices (`:92-93`), **con el mismo formato que `A.1` y `A.2`**. Cierra la viñeta viva de la ficha «Residuos de `A.3`» y el pase en serie sobre el índice que la Tanda 2 dejó pendiente. En la misma pasada, **corregida la afirmación FALSA de `:101-102`**, que decía que `03 Desarrollo/` «contiene solo avisos de migración»: en disco la carpeta **existe y está VACÍA**, sin un solo `.md`. **La cifra «de 43 notas» de `:104` se dejó INTACTA a propósito** —se cuadra en la Fase 4, cuando haya movido el reparto redactadas/guion—, y el auditor confirmó además que **cuadra con disco**. **Lo que NO cierra:** el **borrado físico** de `03 Desarrollo/` sigue abierto —exige un agente con shell, que el `redactor-tfg` no tiene— y la ficha de `:104` sigue abierta por decisión | `—` |
+| 2026-08-14 | Código | **QUINTO RE-ANCLAJE del proyecto: `6bb224c-sucio → 1cb5c26`.** Cierra la ficha homónima. Escrito en `Implementacion/PIPELINE.md` y `Obsidian_TFG_Vault/Apéndices/A.3 Ficha del sistema.md`; **hash verificado con git**, no copiado de una ficha. **El sello impreso DENTRO del artefacto NO se toca**, misma forma que los cuatro anteriores (`fc1c6b4-sucio → 9af842c`, `00c3c3e-sucio → 54d1349`, `df30cb2-sucio → 9ad971b`, `ddade37-sucio → 9d4c26d`): lo estampa `config.commit_actual()` y no puede llevar el hash del commit que lo versiona. **HALLAZGO DE AUDITORÍA, aplicado y que merece quedar escrito: el implementador había dejado FUERA `Resultados/GUIA_RESULTADOS.md`**, que según `resumen-de-decisiones.md:686-688` **forma parte de la unidad de un re-anclaje**. Sin ese arreglo, `PIPELINE.md` habría afirmado «no queda ningún re-anclaje pendiente» **mientras el runbook de `Resultados/` seguía diciendo que ese commit no existe** — exactamente el defecto reincidente del proyecto. Completado en `GUIA_RESULTADOS.md` en los **5 puntos** que declaraban pendiente la cuarta pasada, más la **cláusula que resuelve la contradicción sobre la pasada del FPR**. **El recuento inicial del implementador también estaba mal: 6 ocurrencias, no 8, y 2 de ellas eran sellos impresos que no se tocan.** Dos pases de `auditor-ml`, **APTO** tras aplicar hallazgos | `—` |
 | 2026-08-14 | — | **FASE 2 DEL PLAN DE CIERRE, CERRADA: la Tanda 2 —`A.3` más la reconciliación del trabajo que quedó colgado de la sesión anterior— despachada.** Lo que cierra va desglosado en las filas de abajo: **T7**, la reconciliación de sellos con el **cuarto re-anclaje**, el **diagnóstico de la «ejecución colgada»** y el residuo de los **recuentos 94/4**, más **una fila de HALLAZGO** que no cierra ficha. **Cero cómputo, cero corridas, ninguna cifra publicada movida** y **ningún hash inventado**. `auditor-ml`: **APTO CON CAMBIOS**, **8 hallazgos, ninguno crítico, todos corregidos**. Ficheros: `Obsidian_TFG_Vault/Apéndices/A.3 Ficha del sistema.md` (**nuevo**), `Implementacion/PIPELINE.md` y `Resultados/GUIA_RESULTADOS.md`. **El commit arrastra además tres ficheros sin commitear de sesiones anteriores**, y hay que nombrarlos en su cuerpo para que no entren de tapadillo: `Implementacion/app/agregar_semillas.py`, `Resultados/dispersion_semillas.csv` y `Resultados/dispersion_semillas.md`. **Vivos y NO despachados:** `T25`, el alta de `A.3` en `00 Índice TFG.md`, los dos `> [!todo]` internos de `A.3` y el **quinto re-anclaje** (sello `6bb224c-sucio`) | `1cb5c26` |
 | 2026-08-14 | Informe | **T7 · `A.3 Ficha del sistema` — CREADA.** `Obsidian_TFG_Vault/Apéndices/A.3 Ficha del sistema.md`, *model card* completa según Mitchell et al. 2019: particiones, semilla, configuraciones ganadoras, alcance de cada métrica, infraestructura de cómputo (i7-12700H, 34 GB RAM, Windows 11 Pro 10.0.26200, Python 3.11, 21 dependencias fijadas con `scikit-learn==1.7.1`) y la **tabla de dispersión de T4** pegada desde `Resultados/dispersion_semillas.md` (**198 filas**, `sd` muestral `ddof=1`) con `alcance` y `tabla_origen` rotulados, el **alcance declarado** —dispersión de los modelos sobre splits y set de características **FIJOS**, no «del sistema»— y las **tres salvedades del «13 de 98»**. Incluye el **encargo de la Decisión 2 de la Fase 0**: las **rutas absolutas hardcodeadas** declaradas como **límite conocido de reproducibilidad**, no disfrazadas de decisión de diseño. Checklist de Pineau: los **11 ítems FT**, declarados explícitamente como subconjunto del de 17. **El sello se cita como IMPRESO y pre-commit (`6bb224c-sucio`, `A.3:609-612`)**, pendiente del quinto re-anclaje. **No se vuelve a encargar `A.3`**: lo que queda vivo son sus residuos, con ficha propia en `## Abiertas` | `1cb5c26` |
 | 2026-08-14 | Código | **Reconciliación de sellos y CUARTO RE-ANCLAJE del proyecto (`ddade37-sucio → 9d4c26d`), escrito en `Implementacion/PIPELINE.md` y `Resultados/GUIA_RESULTADOS.md`.** Verificado **con git**, no copiado de una ficha: `9d4c26d` es el commit de cierre de ese ciclo y `ddade37` el **inmediatamente anterior** al cambio. **Los tres ficheros llevaban dos días afirmando que el re-anclaje seguía pendiente «porque el commit de cierre no existe», cuando `features.md` ya identificaba `9d4c26d` seis veces**: la divergencia iba **al contrario** de la habitual —el registro tenía el dato y la prosa lo negaba—, y por eso queda escrito. **El sello impreso DENTRO de los artefactos NO se toca**, por la razón de siempre: lo estampa `config.commit_actual()` y no puede llevar el hash del commit que lo versiona. **Deja descendencia, con ficha abierta**: la cuarta pasada del agregador imprimió `6bb224c-sucio`, que exige un **quinto** re-anclaje cuando exista el commit de este ciclo | `1cb5c26` |

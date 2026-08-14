@@ -606,14 +606,17 @@ la fuente está en [[benchmark-comparativo-nsl-kdd]].
 |---|---|---|
 | Configuraciones y métricas de la semilla 42 | `Resultados/metricas_anomalias.csv` · `metricas_firmas.csv` · `metricas_hibrido.csv` · `metricas_baseline.csv` | `commit = 1163c90`, `2026-08-09` |
 | Cascada invertida (T3) | `Resultados/metricas_cascada_invertida.csv` | `274923d-sucio`, `2026-08-10` (columnas `commit` y `fecha` del propio CSV; coincide con `commit_semilla_42` del agregado) |
-| Tabla de dispersión (T4) | `Resultados/dispersion_semillas.md` / `.csv` | `commit_agregador = 6bb224c-sucio`, cabecera `2026-08-14T15:15:13`; filas agregadas de `df30cb2` |
+| Tabla de dispersión (T4) | `Resultados/dispersion_semillas.md` / `.csv` | `commit_agregador = 6bb224c-sucio`, cabecera `2026-08-14T15:15:13`; filas agregadas de `df30cb2`. **Re-anclado en prosa a `1cb5c26`** |
 
-> [!warning] El sello del agregado es pre-commit: **re-anclaje pendiente**
+> [!info] El sello del agregado es pre-commit: **re-anclaje HECHO** (2026-08-14)
 > `commit_agregador = 6bb224c-sucio` es el valor **impreso en el artefacto en disco**, estampado por
 > `config.commit_actual()` **antes** del commit que versiona el propio artefacto: por construcción, un
-> fichero no puede llevar el hash del commit que lo incluye. El **re-anclaje de este sello al commit
-> de cierre del ciclo está pendiente** y tiene ficha propia. Hasta que se haga, este apéndice cita el
-> sello impreso y no otro. **No se sustituye por un hash estimado.**
+> fichero no puede llevar el hash del commit que lo incluye. La versión del código que produjo esa
+> agregación es **`1cb5c26`** —«codigo+informe: cerrar la Fase 2 - Tanda 2, ficha del sistema y
+> reconciliacion de sellos», del 2026-08-14, que arrastra a la vez `agregar_semillas.py` y los dos
+> artefactos de dispersión—, verificado con git y **no** estimado. El sello impreso **no se edita**:
+> el re-anclaje va **en prosa**, aquí y en `Implementacion/PIPELINE.md` (tabla de corridas y recuadro
+> de re-anclajes), que es como el proyecto ha hecho los cuatro anteriores.
 
 ---
 

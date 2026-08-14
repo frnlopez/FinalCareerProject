@@ -91,6 +91,7 @@ Mapa de contenido del TFG. Las notas MD son la fuente de verdad; el docx se rell
 
 - [[A.1 Columnas del dataset NSL-KDD]] — 📊 volcado (borrador): 41 features por grupo + etiquetas + 17 tipos 0-day marcados
 - [[A.2 Métricas de desempeño]] — borrador (2026-07-16): fórmulas de referencia + A.2.1 caso one-class
+- [[A.3 Ficha del sistema]] — 📊 volcado (borrador, 2026-08-14): *model card* del sistema — configuraciones publicadas, alcance de cada métrica, dispersión entre 10 semillas y limitaciones declaradas
 
 ## Bibliografía
 
@@ -99,6 +100,6 @@ Mapa de contenido del TFG. Las notas MD son la fuente de verdad; el docx se rell
 ---
 
 > [!warning] Carpeta obsoleta
-> `03 Desarrollo/` contiene solo avisos de migración y está **pendiente de borrado físico**. Mapeo aplicado: 3.1→3.1/3.2 Diseño · 3.2→4.2 · 3.3→4.1 · 3.4→3.4 Diseño · 3.5→3.5 Diseño · 3.6→3.3 Diseño.
+> `03 Desarrollo/` **está vacía**: no contiene ninguna nota (verificado en disco el 2026-08-14; git no versiona directorios vacíos, por lo que no aparece en el repositorio). Queda **pendiente de eliminación física** del sistema de archivos. Mapeo aplicado: 3.1→3.1/3.2 Diseño · 3.2→4.2 · 3.3→4.1 · 3.4→3.4 Diseño · 3.5→3.5 Diseño · 3.6→3.3 Diseño.
 
 **Totales:** 5 borrador (Intro) + 6 borrador (Marco 2.1–2.2) + 9 ✍ teoría (todas con guion propuesto 2026-07-15) + 10 📊 pendiente de volcado/mixto + 10 esqueleto + 2 pendiente + Bibliografía (de 43 notas).
