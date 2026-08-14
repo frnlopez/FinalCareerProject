@@ -236,8 +236,12 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
 - Se versiona el **texto plano**: código, notas del vault, `metricas_*.csv`, figuras, reglas.
   Quedan fuera (ver `.gitignore`) el venv, los `.joblib`, los CSV procesados, el dataset crudo y
   los `.doc/.docx` — todo reproducible o descargable, y suman 1,1 GB.
-- Un **commit por tarea cerrada**, mensaje en español con prefijo `codigo:` / `informe:` /
-  `harness:`.
+- Un **commit por tarea cerrada, o un commit por tanda paralela** nombrando en el cuerpo las
+  fichas que cierra; mensaje en español con prefijo `codigo:` / `informe:` / `harness:`.
+  **Por qué la tanda cuenta como unidad** (decisión de Francisco del 2026-08-14, Decisión 7 de la
+  Fase 0): bajo despacho en paralelo los 3-4 agentes de una tanda terminan sobre **el mismo estado
+  del árbol**, así que trocear su cierre en 3-4 commits sería granularidad **ficticia** — no habría
+  estados intermedios recuperables y `git log` prometería una trazabilidad que no existe.
 - **`Implementacion/` NO tiene repositorio git propio y no debe recrearse**: el repo anidado que
   había ahí se absorbió en el repo padre (commit `fb920b8`, 2026-08-01), así que su contenido se
   versiona como el resto del árbol. Nada de `git init` dentro de `Implementacion/`.

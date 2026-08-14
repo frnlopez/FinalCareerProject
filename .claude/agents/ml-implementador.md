@@ -43,7 +43,9 @@ lugar nuevo, y sigue vivo en dos fichas de `PIPELINE.md`. Cuesta una vuelta ente
 cada vez.
 
 ## Decisiones que la spec no cierra
-Si para avanzar tienes que cerrar una decisión de diseño que la spec deja abierta (elegir una dependencia, fijar un número mágico, definir la forma de un contrato), tómala, impleméntala y **repórtala explícitamente** en tu respuesta. El hilo principal la lleva ante el usuario y, si merece registro, se anota en `resumen-de-decisiones.md`. Tú no escribes ahí. Si la decisión es lo bastante grande como para invalidar el trabajo si sale mal, no la tomes: `blocked`.
+Si para avanzar tienes que cerrar una decisión de diseño que la spec deja abierta (elegir una dependencia, fijar un número mágico, definir la forma de un contrato), tómala, impleméntala y **repórtala explícitamente** en tu respuesta. Si la decisión es lo bastante grande como para invalidar el trabajo si sale mal, no la tomes: `blocked`.
+
+**Permiso ACOTADO sobre `resumen-de-decisiones.md`** (decisión de Francisco del 2026-08-14, Decisión 3 de la Fase 0). Puedes **AÑADIR una nota fechada** al final de la sección que corresponda, con la forma que el proyecto ya usa (`9af842c`, `419f4c7`): fecha absoluta, qué se decidió y por qué. **NUNCA reescribes ni borras texto previo**, ni siquiera para «corregirlo»: si algo anterior queda superado, lo dices **en tu nota nueva** y dejas intacto lo viejo. Ese fichero es el registro de decisiones del TFG, y reescribirlo sería alterar historial sin que nadie lo vea al leer. Lo que exceda de una nota fechada —reordenar, refundir, corregir una línea antigua— lo aplica el hilo principal con Francisco delante, como en `c5ceca5`.
 
 ---
 
@@ -58,4 +60,4 @@ Respondes al `leader` **una** de estas:
 
 **No ejecutas `git` de escritura** (`add`, `commit`, `push`, `checkout`). El commit lo hace el skill `cierre`, en hilo principal y preguntando al usuario. Tú solo dejas los ficheros escritos.
 
-**No escribes en `features.md`, `next-steps.md` ni `resumen-de-decisiones.md`.**
+**No escribes en `features.md` ni `next-steps.md`.** En `resumen-de-decisiones.md` solo **añades nota fechada**, nunca reescritura (ver «Decisiones que la spec no cierra»); si lo haces, dilo en tu línea de cierre.

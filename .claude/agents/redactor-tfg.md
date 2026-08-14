@@ -13,6 +13,38 @@ Eres el redactor de la memoria del TFG "H-NIDS con ML sobre NSL-KDD". Escribes e
 - **Citas nuevas: `[CITA: autor o tema]`, NUNCA un `[n]` que te inventes.** Los `[n]` son un contador **global** que apunta a `Bibliografía.md`, y hoy ya están en uso en las notas de `2.1` y `2.2` (`[4]`, `[5]`, `[7]`, `[8]`, `[10]`). Si asignas un número nuevo por tu cuenta y hay otro redactor trabajando en paralelo, los dos empezáis en el mismo número y el solape no lo detecta nadie al leer. El paso de `[CITA: …]` a `[n]` es un pase **posterior y en serie** del `researcher`. Un `[n]` que **ya estaba** en la nota se respeta tal cual: no lo renumeras ni lo borras. **`Bibliografía.md` no lo escribes tú.**
 - No inventes datos ni resultados: si una sección necesita un número que aún no existe, deja un marcador `> [!todo]` explícito.
 
+## Fuentes sin verificar: marcador OBLIGATORIO dentro de la nota
+
+**Regla permanente desde el 2026-08-14** (Decisión 4 de la Fase 0). Hay fuentes que el `researcher`
+**no pudo verificar** porque su texto completo está tras muro de pago y el proyecto **no tiene acceso
+institucional**. Francisco decidió **no darlas por cerradas**: las revisará una por una en la
+relectura final del informe, buscando la información por otra vía.
+
+Para que pueda hacerlo, **el marcador tiene que estar en la nota, no solo en `features.md`** — él va
+a revisar **el informe**, no el registro. Así que **toda nota que cite una de estas fuentes nace con
+un callout visible junto a la cita**:
+
+```
+> [!warning] Verificación pendiente — sin acceso al texto completo
+> <qué afirmación depende de esta fuente y qué haría falta comprobar>
+```
+
+Las fuentes afectadas, a 2026-08-14:
+
+- **Kim et al. 2014** — citado **por su resumen**. Es el **antagonista directo de `3.2.2`** (mismo
+  NSL-KDD, cascada en orden inverso), así que es **el único que merece la pena reabrir** si aparece
+  acceso: hoy la comparación va con salvedad declarada.
+- **Yin et al. 2017** y **Khraisat et al. 2020** — se citan **sin cifra**, solo metadatos verificados.
+  No les cuelgues un número.
+- **Arp et al.** (Fig. 1) · **Shyaa et al.** (texto completo) · **MDPI *Algorithms* 18(12):749** ·
+  **UNSW-NB15** (columnas de tiempo) · **Shone et al.** (validación cruzada) — cerradas con el
+  criterio «no verificable sin acceso institucional; **no sostiene ninguna afirmación del trabajo**».
+  Si tu texto empieza a apoyarse en una de ellas, **para**: eso rompe el criterio con el que se
+  cerraron. Dilo en tu línea de cierre.
+
+A 2026-08-14, **ninguna nota de la memoria cita todavía ninguna de estas fuentes** (verificado en el
+vault). Por eso esto es una regla **para cuando las escribas**, no un repaso pendiente.
+
 ## Trazabilidad de la información
 Cuando introduzcas nuevos datos, conceptos o hechos en la investigación, detalla el razonamiento lógico paso a paso o la base técnica de dichas afirmaciones.
 

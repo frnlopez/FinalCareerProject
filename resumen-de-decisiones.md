@@ -468,6 +468,15 @@ unificado. Aplicada en 4.3.1-4.3.5, 4.4 y 4.5 (7 fragmentos).
 - **Consecuencia pendiente (no resuelta, territorio de Francisco):** `2.2.4` del Marco Teórico aún
   dice "detectores no supervisados" → queda como divergencia a corregir por Francisco al redactar
   la teoría en prosa.
+- **Nota del 2026-08-14 — la línea anterior queda SUPERADA (Decisión 8 de la Fase 0, Francisco).**
+  Ya no es «territorio de Francisco» ni una divergencia pendiente de decidir: **no era una decisión
+  de contenido, porque el término canónico ya estaba fijado en esta misma sección**. Es una
+  **instrucción al redactor de `2.2.4`**, y `2.2.4` es una de las 8 notas del capítulo 2 que se
+  redactan de todas formas — así que **no lleva ciclo propio: se resuelve dentro de una nota ya
+  encargada**. La instrucción está escrita en la ficha de las 8 notas en guion de `features.md`, que
+  es donde la ve quien redacte. Se aplazó dos veces (2026-08-09 y 2026-08-11) precisamente por
+  plantearse como decisión sin serlo. El texto de arriba se conserva como registro de lo que se creyó
+  hasta hoy.
 
 ---
 
@@ -703,6 +712,85 @@ así que ese obstáculo desaparece. **Sigue ABIERTA**, y su parte bloqueante era
 `program.py`, y eso obliga a **decidir antes si se regeneran los splits** — decisión pendiente de
 Francisco.
 
+> **Nota del 2026-08-14 — esa decisión ya está tomada, y cierra esta ficha sin ejecutarla.** Ver
+> «Decisión 2» más abajo: **los splits NO se regeneran**, así que la ficha de las rutas absolutas
+> **se retira sin tocarse** y pasa a declararse como límite conocido en `A.3` (encargo escrito dentro
+> de T7).
+
+---
+
+## Decisiones del 2026-08-14
+
+Las tomó Francisco el **2026-08-14**, en el cierre de la **Fase 0 del plan de cierre** — las ocho
+decisiones que ningún agente podía tomar y que eran el cuello de botella declarado del plan. Aquí
+quedan las **tres de diseño**; las otras cinco son de proceso o de andamiaje y viven en `features.md`
+(Decisión 4, acceso institucional), en `CLAUDE.md` §Git (Decisión 7, commit por tanda) o en la ficha
+de las 8 notas del capítulo 2 (Decisión 8, ya anotada arriba en la sección de terminología).
+**Ninguna de las tres movió una sola cifra publicada ni tocó código.**
+
+### Decisión 1 — el eje de balanceo de `4.3.4` **no se reabre: se declara NO CONSTANTE**
+
+El barrido de 10 semillas dejó que `class_weight` ganara en **17 de 40 celdas (42,5 %)** frente a
+SMOTE, y quedaba decidir si eso obligaba a rehacer la elección publicada. **No se reabre**, por tres
+razones que se sostienen en el dato y no en el coste:
+
+- **Con n=1 el reparto YA era 2-2.** Verificado en `Resultados/metricas_balanceo.csv` (16 filas,
+  sello `1163c90`, 2026-08-09), eje SMOTE vs `class_weight` —que solo aplica a DecisionTree y
+  RandomForest—: 54-DecisionTree `class_weight` **0,9530 ± 0,0087** vs SMOTE 0,9350 ± 0,0165;
+  54-RandomForest SMOTE **0,9736 ± 0,0079** vs `class_weight` 0,9715 ± 0,0147; 122-DecisionTree
+  `class_weight` **0,9568 ± 0,0118** vs SMOTE 0,9513 ± 0,0184; 122-RandomForest SMOTE
+  **0,9795 ± 0,0099** vs `class_weight` 0,9751 ± 0,0186. Es decir: **el barrido no descubre que la
+  decisión estuviera mal, confirma que ese eje nunca estuvo establecido.** Reabrirlo no lo
+  establecería.
+- **Los márgenes están dentro del ruido.** RandomForest-54 decide por **0,0021**, unas **7 veces
+  menos que su propia `sd`** (0,0079 y 0,0147). Eso es un **desempate arbitrario**, y así se escribe
+  en la memoria.
+- **Reabrir tendría coste de invalidación, no de cómputo:** tocaría `firmas.py`, movería cifras
+  publicadas y arrastraría por cascada a `hibrido.py` y `cascada_invertida.py`, rompiendo la
+  coherencia del barrido de 10 semillas recién cerrado.
+
+**Acotación obligatoria al redactar** — sin ella se entendería que todo `4.3.4` es arbitrario, **y no
+lo es**: el «no es constante» vale **solo** para el eje SMOTE vs `class_weight`. **El eje SMOTE vs
+NADA (KNN e HistGradientBoosting) SÍ está establecido**: SMOTE gana en las **4 celdas**, y en
+HistGradientBoosting con holgura enorme — **0,9694 vs 0,8327** (54) y **0,9724 vs 0,8044** (122).
+
+**Configuración publicada**, verificada en `firmas.py:146` (`self.balanceo_ganador` alimenta el
+entrenamiento final) e **idéntica en las dos variantes**: DecisionTree → `class_weight`;
+RandomForest, KNN e HistGradientBoosting → **SMOTE**.
+
+**Causa mecánica del 17 de 40, a citar al lado del recuento** (`firmas.py:40`, cabecera): cambiar la
+semilla cambia el `StratifiedKFold`, así que el ganador de `4.3.4` y la config del grid pueden
+cambiar con ella.
+
+Se consume en `5.4` / `4.3.4` (ficha **T11**). **Cero código tocado.**
+
+### Decisión 2 — los splits **NO se regeneran**
+
+Los splits D1/D2/D3 son del **2026-07-05** y de ellos cuelga **todo lo publicado**: 9 tablas, 20
+`.joblib`, 39 figuras y las 2.320 filas del barrido de semillas. Regenerarlos obliga a re-correr el
+pipeline entero **más las 2 h 29 min del barrido** y **no aporta ningún número nuevo**.
+
+**Consecuencia sobre la ficha que bloqueaba** («Rutas absolutas hardcodeadas en `program.py` y
+`validacion.py`»): **no se ejecuta**. Es **cosmética de portabilidad**, no afecta a ningún resultado,
+y **tocar `program.py` sin re-correrlo dejaría código modificado no ejecutado, que es peor que la
+deuda**. No se descarta en silencio: **se declara como límite conocido en `A.3`**, y ese encargo
+queda escrito dentro de **T7**, que es quien redacta `A.3`.
+
+### Decisión 3 — permiso del `ml-implementador` sobre este fichero: **ACOTADO a nota fechada**
+
+El `ml-implementador` **puede añadir notas fechadas** a este documento; **no puede reescribir ni
+borrar texto previo**, ni siquiera para corregirlo. Si algo anterior queda superado, lo dice **en la
+nota nueva** y deja intacto lo viejo — la forma que este fichero ya venía usando (`9af842c`,
+`419f4c7`) y que es la de la nota que abre esta misma sección.
+
+**Por qué acotado y no general:** este documento es **el registro de decisiones del TFG**. Un permiso
+libre permitiría **reescribir historial sin que nadie lo vea al leer**, que es exactamente lo que un
+registro existe para impedir. Lo que exceda de una nota fechada —reordenar, refundir, corregir una
+línea antigua— lo sigue aplicando el hilo principal con Francisco delante, que es el reparto que ya
+funcionó en `c5ceca5`: el implementador **redacta y verifica**, el hilo principal **aplica**.
+
+Aplicado en `.claude/agents/ml-implementador.md` el mismo 2026-08-14.
+
 ---
 
 ## Bitácora de este fichero
@@ -914,3 +1002,16 @@ Francisco.
     FIJOS**, sin variabilidad de preprocesado ni de selección de features. **Consecuencia para `5.4`:
     si RF y HGB se solapan, NO se podrá concluir «son equivalentes», solo «con estos splits el orden
     no queda establecido».**
+- `2026-08-14` — **Fase 0 del plan de cierre, CERRADA: las ocho decisiones que solo podía tomar
+  Francisco.** Registradas aquí las **tres de diseño** (§«Decisiones del 2026-08-14»): **1** el eje de
+  balanceo de `4.3.4` no se reabre y se declara no constante —acotado a DecisionTree/RandomForest, con
+  el ganador de la semilla 42 verificado en `Resultados/metricas_balanceo.csv` y en `firmas.py:146`—;
+  **2** los splits no se regeneran, y la ficha de las rutas absolutas se retira sin ejecutarse hacia
+  `A.3`; **3** permiso del `ml-implementador` sobre este fichero acotado a **nota fechada**. Las otras
+  cinco no son de diseño y viven donde les toca: **4** acceso institucional —los puntos quedan
+  **marcados**, no cerrados, para la relectura final de Francisco, con la regla de marcado aplicada en
+  `.claude/agents/redactor-tfg.md`—; **5** los tres `grill-me` se aplazan a la Fase 6, detrás de todo
+  el volcado; **6** el título queda aplazado; **7** un commit por tanda paralela, aplicado en
+  `CLAUDE.md` §Git; **8** la divergencia de la terminología de `2.2.4` no era decisión sino
+  instrucción al redactor —anotada en su sección—. **Cero código tocado, cero cifras publicadas
+  movidas.**
