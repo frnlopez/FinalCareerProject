@@ -276,7 +276,7 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   `[CITA: …]` es un marcador visible que grita que falta trabajo; un `[47]` que no existe **parece
   una cita legítima** y no lo delata nada al leer. Si alguien vuelca el vault al `.docx` en este
   estado, la memoria sale con 47 referencias inventadas.
-  **Se preservó en commit a propósito** (`b6ff5b1`), en vez de revertirlo: son 47 conversiones
+  **Se preservó en commit a propósito** (`059d5f3`), en vez de revertirlo: son 47 conversiones
   hechas en serie y coherentes entre sí, caras de rehacer. Pero **no es trabajo terminado y no debe
   leerse como tal**.
   **Alcance real, mayor que el encargado:** se pidió barrer el **capítulo 2** y el pase tocó además
