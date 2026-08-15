@@ -264,6 +264,30 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 
 ## Abiertas
 
+- [ ] 🟠 **El arreglo del bloqueante de D2 está APLICADO pero SIN AUDITAR** · Informe+Código · `auditor-ml`
+  Alta el **2026-08-15**, escrita **por el hilo principal** (el límite de sesión impedía despachar al
+  `cronista`). **Verificado contra disco al escribirla, no de memoria.**
+  **Qué estaba mal:** `2.1.6:58` afirmaba «**Ninguna decisión del sistema se toma mirando D2**» y
+  `:61` que la comparación entre los cuatro detectores «**Nunca**» usa D2. Era **falso** y verificado
+  en cuatro sitios: `resumen-de-decisiones.md:231` (H-3) elige RandomForest por «f1_macro D2 =
+  0.822»; `:211-212` (H-2) da el Autoencoder por ganador por AUC-ROC/F1; `hibrido.py:16` y `:755`
+  documentan «mejor en 5.1»; y `5.1:74` apoya la elección en métricas de D2. La nota había
+  **generalizado** la regla real de `anomalias.py:18-22`, que es más estrecha —D2 intocable **para
+  hiperparámetros y umbral**— hasta convertirla en «ninguna decisión», y ahí se rompió.
+  **Qué se aplicó (commit `059d5f3`), confirmado leyendo la nota:** el callout de `2.1.6` enuncia
+  ahora la regla «con la misma extensión que tiene en el código, ni más ni menos», enumerando las
+  cinco decisiones que P-4 sí cubre; y **se añadió un callout `[!warning]` que DECLARA que la
+  elección del algoritmo ganador de cada etapa sí miró D2**, con tabla de etapa / algoritmo /
+  criterio / dónde consta, nombrándolo como ***data snooping*** y selección sesgada de parámetros.
+  Más **nota fechada de +39 líneas en `resumen-de-decisiones.md`**, solo añadido, conforme a la
+  Decisión 3.
+  **Lo que falta, y es lo único:** **el pase de `auditor-ml` no llegó a ejecutarse** — el ciclo murió
+  por límite de sesión de la API «esperando el veredicto formal del auditor». Track Código no se
+  cierra sin auditoría, así que **esto no está cerrado**.
+  **Pendiente además el barrido:** hay que comprobar si la misma afirmación falsa está **replicada en
+  otras notas** (`5.1`, `3.x`, `A.3`). Aplica la lección de `cd407b1`: la frase puede estar **partida
+  por un salto de línea**, así que un `grep` de varias palabras que sale vacío **no prueba nada**.
+
 - [ ] 🔴 **47 CITAS COLGANDO: el vault usa `[11]`–`[57]` y NINGUNA existe en `Bibliografía.md`** · Ninguno · `researcher`
   Alta el **2026-08-15**, escrita **por el hilo principal**, no por el `cronista`: el límite de sesión
   de la API impedía despacharlo, y dejar esto sin ficha era el peor resultado posible.
