@@ -47,15 +47,9 @@ dispersión y limitaciones declaradas.
 **No** es un sistema desplegable: opera sobre flujos ya extraídos y preprocesados, no sobre paquetes
 en red, y no se ha evaluado frente a un adversario adaptativo (marco conceptual en
 [[2.3.3 Límites y consideraciones éticas|2.3.3]] § *El modelo de amenaza como requisito metodológico
-(P10)*, enunciado concreto en el límite 3 de [[6.1 Conclusiones]], y sección A.3.7 de esta ficha).
-
-> [!todo] La instanciación concreta del modelo de amenaza no tiene sección propia
-> [[2.3.3 Límites y consideraciones éticas|2.3.3]] remite el modelo de amenaza **concreto** de este
-> sistema a [[3.1 Requisitos del sistema]], pero esa nota **no lo contiene** (verificado: no aparece
-> en ella ni «amenaza» ni «adversario»). Hoy el único enunciado concreto es el del límite 3 de
-> [[6.1 Conclusiones]]. Queda pendiente decidir dónde vive: o se añade el apartado a 3.1 —y entonces
-> ambas remisiones son correctas—, o se corrige la remisión de 2.3.3 para que apunte allí. **Ninguna
-> de las dos notas está en el alcance de esta pasada.**
+(P10)*, **especificación del adversario asumido en [[3.1 Requisitos del sistema]] § *3.1.5 Modelo de
+amenaza***, lectura de sus consecuencias en el límite 3 de [[6.1 Conclusiones]], y sección A.3.7 de
+esta ficha).
 
 ---
 
@@ -642,15 +636,10 @@ seguridad este patrón se cataloga como contaminación por selección sobre el t
 - **Sin evaluación adversaria.** No se ha medido el comportamiento frente a un atacante que conozca el
   modelo e intente evadirlo. El modelo de amenaza asumido tiene su marco conceptual en
   [[2.3.3 Límites y consideraciones éticas|2.3.3]] § *El modelo de amenaza como requisito
-  metodológico (P10)* y su enunciado concreto en el límite 3 de [[6.1 Conclusiones]].
-
-  > [!todo] La instanciación concreta del modelo de amenaza no tiene sección propia
-  > [[2.3.3 Límites y consideraciones éticas|2.3.3]] remite el modelo de amenaza **concreto** de
-  > este sistema a [[3.1 Requisitos del sistema]], pero esa nota **no lo contiene** (verificado: no
-  > aparece en ella ni «amenaza» ni «adversario»). Hoy el único enunciado concreto es el del límite
-  > 3 de [[6.1 Conclusiones]]. Queda pendiente decidir dónde vive: o se añade el apartado a 3.1 —y
-  > entonces ambas remisiones son correctas—, o se corrige la remisión de 2.3.3 para que apunte
-  > allí. **Ninguna de las dos notas está en el alcance de esta pasada.**
+  metodológico (P10)*, su **especificación dimensión a dimensión** —y la razón, apoyada en las
+  propiedades del NSL-KDD, de que no se realice un experimento adversario— en
+  [[3.1 Requisitos del sistema]] § *3.1.5 Modelo de amenaza*, y la lectura de sus consecuencias
+  sobre los resultados en el límite 3 de [[6.1 Conclusiones]].
 - **Sin despliegue real.** Las columnas de rendimiento miden `predict`/`score` sobre características
   ya extraídas y en memoria: no incluyen captura de tráfico, ensamblado del flujo ni extracción de las
   41 características, que es donde vive el coste real de un despliegue.
