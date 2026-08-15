@@ -200,9 +200,9 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
   de solo lectura. Un cierre por **tanda**, no por nota: una sola pasada de `cronista`.
 - **Protocolo de citas — vale para CUALQUIER agente que escriba en el vault.** Los marcadores `[n]`
   son un **contador global** que apunta a `Bibliografía.md`. **En uso hoy: `[1]`–`[8]` y
-  `[10]`–`[57]`, 56 entradas** —verificado contra `Bibliografía.md` el 2026-08-15—, y **`[9]` está
-  RETIRADA SIN RENUMERAR** (`396e283`), así que está **quemada, no libre**. **El primer número
-  disponible es el `[58]`.** **Este rango se cuenta, no se recuerda**
+  `[10]`–`[67]`, 66 entradas** —verificado contra `Bibliografía.md` el 2026-08-15 tras la Tanda 9,
+  que dio de alta `[58]`–`[67]`—, y **`[9]` está RETIRADA SIN RENUMERAR** (`396e283`), así que está
+  **quemada, no libre**. **El primer número disponible es el `[68]`.** **Este rango se cuenta, no se recuerda**
   (`grep -oE '^\| *\[[0-9]+\]' Bibliografía.md`): estuvo desfasado en `leader.md` diciendo `[11]`
   cuando ya iba por el `[57]`, y ese es justo el fichero que despacha.
   Importa porque `[2]` (Anderson 1980) y `[3]` (Denning 1987) son las que más se citan al redactar

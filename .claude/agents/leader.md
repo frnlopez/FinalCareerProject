@@ -194,15 +194,17 @@ ficheros, así que van en paralelo. Dos secciones de la *misma* nota, no.
 
 **Protocolo de citas bajo paralelismo — esto es lo que evita el destrozo.** Los marcadores `[n]`
 del vault son un **contador global** que apunta a `Bibliografía.md`. **En uso hoy: `[1]`–`[8]` y
-`[10]`–`[57]`, 56 entradas dadas de alta** —verificado contra `Bibliografía.md` el 2026-08-15—, y
-**`[9]` está RETIRADA SIN RENUMERAR (`396e283`): está quemada, no libre**. **El primer número
-disponible es el `[58]`.** Si cuatro redactores en paralelo inventan números nuevos, los cuatro
-empiezan en el mismo y se solapan en silencio.
+`[10]`–`[67]`, 66 entradas dadas de alta** —verificado contra `Bibliografía.md` el 2026-08-15 tras
+la Tanda 9, que dio de alta `[58]`–`[67]`—, y **`[9]` está RETIRADA SIN RENUMERAR (`396e283`): está
+quemada, no libre**. **El primer número disponible es el `[68]`.** Si cuatro redactores en paralelo
+inventan números nuevos, los cuatro empiezan en el mismo y se solapan en silencio.
 
-> **Este rango se VERIFICA, no se recuerda.** Hasta el 2026-08-15 este fichero decía que el primer
-> libre era el `[11]`, cuando la Tanda 6 había dado de alta hasta el `[57]`: un redactor que lo
-> leyera habría asignado números ya usados. Antes de despachar, cuéntalos con
-> `grep -oE '^\| *\[[0-9]+\]' Bibliografía.md`.
+> **Este rango se VERIFICA, no se recuerda — y ya ha ido mal DOS veces.** Hasta el 2026-08-15 este
+> fichero decía que el primer libre era el `[11]`, cuando la Tanda 6 había dado de alta hasta el
+> `[57]`; se corrigió a `[58]`, y **ese mismo día la Tanda 9 lo volvió a mover al `[68]`**. Un
+> redactor que lea un rango caducado asigna números ya usados y machaca altas existentes en
+> silencio. **Antes de despachar, cuéntalos**:
+> `grep -oE '^\| *\[[0-9]+\]' Bibliografía.md`. El número escrito aquí es una foto, no la verdad.
 
 Por eso: **un redactor en paralelo NUNCA asigna un número `[n]` nuevo.** Escribe
 `[CITA: autor o tema]`, que es la convención que el proyecto ya usa (`4.2` arrastra 6 de esos).
