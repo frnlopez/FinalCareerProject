@@ -30,10 +30,10 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > **El árbol está LIMPIO y la Tanda 2 está cerrada.** No hay nada a medias, no hay ninguna ejecución
 > colgada y no hay que relanzar nada. La sesión se cortó por presupuesto, no por un problema.
 >
-> **Lo único que tiene que hacer Francisco: `! git push origin develop`.** Van **veinte** commits
-> sin subir —**verificado con `git rev-list --count origin/develop..develop` el 2026-08-14, no contado
-> a mano**—, más el commit que estampe `06eb63e` en este fichero, que por construcción no puede
-> llevarlo aquí: **veintiuno** al terminar la Tanda 4. Falla por autenticación desde el harness, no
+> **Lo único que tiene que hacer Francisco: `! git push origin develop`.** Van **veintiocho** commits
+> sin subir —**verificado con `git rev-list --count origin/develop..develop` el 2026-08-15, no contado
+> a mano**—, **más el commit que lleva esta misma línea**, que por construcción no puede contarse a
+> sí mismo: **VEINTINUEVE al terminar la Tanda 6**. Falla por autenticación desde el harness, no
 > desde su máquina.
 >
 > **Este número se recalcula, NUNCA se incrementa a mano.** Ha ido mal dos veces (llegó a decir
@@ -117,9 +117,10 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > **verificado con `git log origin/develop..develop`, no contado a mano**. **A esos se suma
 > `1cb5c26`, el commit de la TANDA 2** (2026-08-14), **`e38429b`, `49b210b` y `6bb224c`** (los
 > estampados y el cierre de sesión de ese día) y **`cbdd084`, el commit de la TANDA 3**. **El recuento
-> vigente son DIECISIETE, verificado con `git rev-list --count origin/develop..develop` el
-> 2026-08-14**, más el commit que estampe `cbdd084`, que por construcción no puede llevarlo aquí:
-> **dieciocho**. **Las cifras «once», «trece» y «catorce» de este párrafo son la traza histórica de
+> al cerrar la Tanda 3 fueron DIECISIETE**, verificado con `git rev-list --count origin/develop..develop` el
+> 2026-08-14, más el commit que estampó `cbdd084`, que por construcción no podía llevarlo aquí:
+> **dieciocho**. **Ese «dieciocho» YA NO ES VIGENTE** —el vigente son los **veintinueve** de arriba,
+> tomados el 2026-08-15—. **Las cifras «once», «trece» y «catorce» de este párrafo son la traza histórica de
 > cómo fue creciendo, no recuentos vigentes** — el número que vale es el de arriba, y se recalcula con
 > git, nunca a mano. En este fichero no se escribe ningún hash
 > inventado. Sigue fallando por **autenticación desde el harness**, así que **el `push` lo tiene
