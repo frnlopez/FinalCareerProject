@@ -30,10 +30,10 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > **El árbol está LIMPIO y la Tanda 2 está cerrada.** No hay nada a medias, no hay ninguna ejecución
 > colgada y no hay que relanzar nada. La sesión se cortó por presupuesto, no por un problema.
 >
-> **Lo único que tiene que hacer Francisco: `! git push origin develop`.** Van **treinta y uno** commits
+> **Lo único que tiene que hacer Francisco: `! git push origin develop`.** Van **treinta y tres** commits
 > sin subir —**verificado con `git rev-list --count origin/develop..develop` el 2026-08-15, no contado
 > a mano**—, **más el commit que lleva esta misma línea**, que por construcción no puede contarse a
-> sí mismo: **TREINTA Y DOS al terminar la Tanda 7**. Falla por autenticación desde el harness, no
+> sí mismo: **TREINTA Y CUATRO al terminar la Tanda 8**. Falla por autenticación desde el harness, no
 > desde su máquina.
 >
 > **Este número se recalcula, NUNCA se incrementa a mano.** Ha ido mal dos veces (llegó a decir
@@ -64,9 +64,11 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > ella sale vacío y **eso no prueba que no exista**. Si se quiere borrar la carpeta física hace falta un
 > agente con shell: el `redactor-tfg` no tiene.
 >
-> **Lo que PARECE de minutos y no lo es** (ya medido, no volver a evaluarlo): las figuras de `assets/`
-> (necesita **dos** agentes, porque `Write` no escribe binario — pero es **dependencia dura de T10**, así
-> que va justo detrás de las tres de arriba); **T21** (sus destinos son `5.4`, territorio de T11, y el
+> **Lo que PARECE de minutos y no lo es** (ya medido, no volver a evaluarlo): ~~las figuras de
+> `assets/`~~ **HECHO Y CERRADO el 2026-08-15 (`8976944`): copiar en la Tanda 7, embeber en la
+> Tanda 8. Ya NO es dependencia de T10 ni cuello de nada** — barrido contra disco: 35 ficheros en
+> `assets/`, 23 embebidos, y las 12 restantes son las `_122_sin_seleccion`, que `4.2:120` declara
+> deliberadamente no publicadas; **T21** (sus destinos son `5.4`, territorio de T11, y el
 > inventario de T6, que no existe); **T19** (hay que regenerar cada cifra desde `Resultados/` y envolverla
 > en la salvedad de la dispersión 4,8×).
 >
@@ -119,8 +121,8 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > estampados y el cierre de sesión de ese día) y **`cbdd084`, el commit de la TANDA 3**. **El recuento
 > al cerrar la Tanda 3 fueron DIECISIETE**, verificado con `git rev-list --count origin/develop..develop` el
 > 2026-08-14, más el commit que estampó `cbdd084`, que por construcción no podía llevarlo aquí:
-> **dieciocho**. **Ese «dieciocho» YA NO ES VIGENTE** —el vigente son los **treinta y dos** de arriba,
-> tomados el 2026-08-15 al cerrar la Tanda 7—. **Las cifras «once», «trece» y «catorce» de este párrafo son la traza histórica de
+> **dieciocho**. **Ese «dieciocho» YA NO ES VIGENTE** —el vigente son los **treinta y cuatro** de arriba,
+> tomados el 2026-08-15 al cerrar la Tanda 8—. **Las cifras «once», «trece» y «catorce» de este párrafo son la traza histórica de
 > cómo fue creciendo, no recuentos vigentes** — el número que vale es el de arriba, y se recalcula con
 > git, nunca a mano. En este fichero no se escribe ningún hash
 > inventado. Sigue fallando por **autenticación desde el harness**, así que **el `push` lo tiene
@@ -220,7 +222,11 @@ filas del 2026-08-14 de esta tanda.
 - **VIVO Y CON FICHA: las 4 notas restantes del capítulo 2** — `2.1.6`, `2.3.1`, `2.3.2` y `2.3.3`
   (esta última con la carga T8 de P9/P10 y el modelo de amenaza). Van en la **Tanda 5**.
 - **VIVO dentro de `2.2.2`:** un `> [!todo]` por el **diagrama de bloques del NIDS**, que va a
-  `assets/` — mismo cuello que las figuras de `assets/` que ya bloquean T10.
+  `assets/` — ~~mismo cuello que las figuras de `assets/` que ya bloquean T10~~. **CORREGIDO el
+  2026-08-15: ese cuello YA NO EXISTE** (la ficha de las figuras de `assets/` está cerrada en
+  `8976944`). **El cuello real de este `[!todo]` es otro y hay que decirlo bien: la figura del
+  diagrama de bloques NO EXISTE todavía en `Resultados/`**, así que no es «copiar y embeber» como
+  aquellas, sino **crearla primero**. Merece ficha propia; no la hereda de una ficha ya cerrada.
 - **AVISO QUE TIENE QUE SOBREVIVIR AL PASE EN SERIE DEL `researcher`:** las citas nuevas quedan como
   `[CITA: …]`, **cero `[n]` nuevos y ningún `[n]` preexistente renumerado**; y **Anderson 1980 ya es
   `[2]` y Denning 1987 ya es `[3]`**, así que en ese pase hay que **MAPEAR, no dar de alta**.
@@ -568,6 +574,16 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
     4.3.5 es en la práctica un mecanismo de poda del one-hot de `service`.
 
 - [ ] **T11 · Capítulo 5** · Informe · `redactor-tfg`
+  - **AMPLIACIÓN del 2026-08-15, residuo declarado de la TANDA 8 — la salvedad de no-proyección a
+    prevalencia, INLINE en `5.1`/`5.2`/`5.3`. LO DECIDE FRANCISCO, no un agente.** La Tanda 8 corrigió
+    **la afirmación de `6.1`** —la salvedad se declara **una sola vez**, en el límite 2 de `6.1.4.1`,
+    como instancia del enunciado de marco de `2.3.3:53`— y **NO** sembró declaraciones por todo el
+    capítulo 5. **El razonamiento, que queda escrito para no rediscutirlo:** `6.1:66` es una
+    **metaafirmación sobre el documento**, así que sembrar la salvedad junto a cada cifra de precisión
+    sería **cambio de contenido en notas que están bajo esta ficha (T11)**, sin decisión de Francisco,
+    y **obligaría igualmente a reescribir `6.1:66`**. O sea: hacerlo por iniciativa propia no ahorraba
+    el trabajo, solo lo hacía sin permiso. Si Francisco quiere además la versión inline, **se ejecuta
+    desde aquí**, no como ficha suelta.
   - `5.2` · **dispersión de T4, YA MEDIDA: los intervalos RF/HGB SÍ se solapan, así que hay que
     escribir que el orden NO queda establecido.** `f1_macro` RF-54 **[0,7779–0,8205]** vs HGB-54
     **[0,7680–0,8327]**, y el **máximo de HGB supera la media de RF**; como observación **pareada**,
@@ -848,29 +864,11 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > cuarta observación de esa auditoría —el «~33 %» de DoS de `4.2:72`, que está sobre D2 entero y no
 > sobre sus ataques (**58,1 %**)— **no abre ficha: es preexistente y queda anclada dentro de T10**.
 
-- [~] **Las figuras de validación de `assets\` van por detrás de `Resultados\figuras\`** (🟠) · Informe · `redactor-tfg`
-  Dos mitades del **mismo** trabajo —copiar de `Resultados\figuras\` a `Obsidian_TFG_Vault\assets\` y
-  embeber—, por eso van en **una sola ficha**:
-  1. ~~`Obsidian_TFG_Vault\assets\validacion_drift_ks.png` es de una **corrida anterior** (sus rótulos
-     no llevan el «(A)») mientras el callout de la nota la da por **vigente**.~~ **HECHO el
-     2026-08-15 en la TANDA 7:** re-copiada desde `Resultados\figuras\`, ya **con el prefijo «(A)»**
-     en los rótulos.
-  2. ~~**Las figuras de (B) existen en `Resultados\figuras\` pero NO están en `assets\`**~~ **COPIADAS
-     el 2026-08-15 en la TANDA 7:** `validacion_drift_ks_comparativa.png` y
-     `validacion_drift_ks_d2_normales.png` ya están en `assets\`. Las tres son **byte-idénticas por
-     MD5** a su origen en `Resultados\figuras\`. **Copiar solo las tres del set de 54 es deliberado y
-     correcto:** `4.2:120` declara que solo se publica esa variante.
-  - **LA MITAD «COPIAR» QUEDA CERRADA; LA MITAD «EMBEBER», NO.** Sigue vivo el **`> [!todo]` de la
-    nota**, que se retira al embeber las figuras de (B) en `4.2`, no al copiarlas. **Esto es lo único
-    que mantiene la ficha abierta**, y por eso pasa a `[~]`.
-  - **Va ANTES de T10**, por el mismo motivo que iban sus dos fichas madre: si T10 vuelca `4.2` tal
-    cual, publica una figura que no corresponde a la medición que el texto describe.
-  - **Residuo detectado al copiar, con ficha propia más abajo:** `4.2:117-118` sigue afirmando que
-    las figuras **«aún no se han copiado»**, y desde el 2026-08-15 eso es **falso**.
-
 > **La segunda ficha de esta sección —«Dos imprecisiones de una línea en `4.2`»— se CERRÓ el
 > 2026-08-14** en la Fase 1 del plan de cierre, junto con la del sello de `4.2:145` (ver
-> `## Cerradas`). **Queda abierta solo la de las figuras de `assets\`, arriba.** El inventario de
+> `## Cerradas`). **La de las figuras de `assets\` se CERRÓ el 2026-08-15**, sus dos mitades, con el
+> barrido de disco que la respalda (ver `## Cerradas`): **esta sección ya no tiene fichas abiertas.**
+> El inventario de
 > **texto congelado o histórico que arrastra el rango de FPR viejo y que NO se toca** (es foto de su
 > fecha) se conserva aquí para que nadie lo «corrija»: `next-steps.md:178,370,451`,
 > `resumen-de-decisiones.md:346,580`, `EL_FUTURO.md:96`, `sesion-2026-07-06.md:66`,
@@ -1085,10 +1083,17 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
     corregida. **Queda vivo solo el BORRADO FÍSICO de la carpeta**, que el `redactor-tfg` no puede
     hacer —no tiene shell—: necesita un agente con shell o a Francisco.
 
-- [ ] **`00 Índice TFG.md:104` declara un recuento que no cuadra con el disco** (🟡) · Informe · `redactor-tfg`
+- [ ] **`00 Índice TFG.md:106` declara un recuento que no cuadra con su propio listado** (🟡) · Informe · `redactor-tfg`
   Dice «**de 43 notas**» con un desglose (5+6 borrador, 9 teoría, 10 pendiente de volcado, 10
   esqueleto, 2 pendiente) que **hoy no corresponde**: son **44 notas, 31 redactadas, 8 en guion, 3
   vacías**. Cuadrarlo al final, cuando la Fase 4 haya movido el reparto redactadas/guion.
+  - **CORREGIDA LA PROPIA FICHA el 2026-08-15, verificado contra disco: la línea es la `:106`, no la
+    `:104`.** Se desplazó dos líneas por el alta de `A.3` (Tanda 3) y el alta de `5.0` (Tanda 8).
+    **Y el descuadre está confirmado por conteo, no de oídas:** el listado del índice enumera
+    **44 wikilinks `- [[…]]`** frente al «43» que declara esa línea. **Localizar por contenido
+    («**Totales:**»), no por número de línea** — cada alta futura la vuelve a mover. Las menciones a
+    `:104` que quedan en el bloque de PRÓXIMOS PASOS y en las Tandas 2-3 son **historial**: no se
+    reescriben, pero **el número bueno es el de aquí**.
 
 - [ ] **`4.2 Base de datos utilizada.md` arrastra 6 marcadores `[CITA:` sin resolver** (🟡) · Informe · `redactor-tfg`
   Líneas **8, 18, 22, 24 (tres veces), 36 y 45**. **Alimentan a T16 y a la bibliografía de Zotero:
@@ -1125,34 +1130,15 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > API sin respaldo en git**. **Los cinco son TEXTUALES: no mueven ninguna cifra publicada ni tocan
 > código.** **Fichar no es resolver: aquí no se ha corregido nada.**
 
-- [ ] **Los 5 hallazgos 🔴 de la auditoría de la TANDA 7 — afirmaciones que los propios artefactos del proyecto DESMIENTEN** (🔴) · Informe · `redactor-tfg`
-  Alta el **2026-08-15**. **Van EN SERIE, como TANDA 8.** Lo que los une no es el fichero sino el
-  tipo de defecto, y es el peor de todos en un TFG: **el texto afirma algo que el disco del propio
-  proyecto contradice**. No son imprecisiones de estilo — un tribunal que abra el CSV los ve.
-  - **(a) `6.2:84-88` marca el 13,4 % con un `> [!todo]` diciendo que ninguna columna lo publica.
-    Es FALSO.** Está en `Resultados/metricas_hibrido_calibracion.csv:3` como
-    `d2_pct_unknown_entre_0day_det = 0,133564`, y **ya lo publican `5.3`, `5.4:39` y `6.1:85`.
-    Acción: retirar el `[!todo]`**, no reescribir la cifra.
-  - **(b) `6.1:66` dice que la ausencia de proyección a prevalencia «se declara junto a cada cifra de
-    precisión». Es FALSO:** en **todo el capítulo 5 no hay ni una** declaración así. O se escriben
-    esas declaraciones o se reescribe la frase de `6.1:66`. **Toca la corrección (2) de la Tanda 5**,
-    que ya dejó dicho que la «proyección a prevalencia realista» no existe: es el mismo agujero visto
-    desde el otro extremo del documento.
-  - **(c) `6.1:110` remite el modelo de amenaza a `3.1 Requisitos del sistema`, que NO contiene la
-    palabra «amenaza» ni «adversario».** La remisión apunta a contenido inexistente. Enlaza con
-    **T9**, que es quien tiene encargado escribir el modelo de amenaza explícito en `3.1`: o se
-    espera a T9, o se re-apunta la remisión a donde el marco sí está hoy (`2.3.3`).
-  - **(d) `6.1` afirma que ninguna cifra de recall se publica sin su FPR. Los CSV lo desmienten:**
-    `metricas_firmas.csv` **no tiene ninguna columna de FPR**, y en `metricas_anomalias.csv` la
-    columna se llama **`fpr`, no `bin_fpr`**. La afirmación es más fuerte que lo que las tablas
-    sostienen.
-  - **(e) `6.1:65` y `6.1:109` afirman que «se mide el coste de despliegue». Lo desmienten `A.3:174`,
-    `2.3.3:46` y el propio `alcance_tiempo_s` del CSV**, que declaran que esas columnas miden **solo
-    `predict`/`score`** y «no son capacidad operativa del sistema». **Es el pitfall P9 cometido
-    DENTRO de la sección que dice cubrirlo**, que es exactamente el reproche que Arp et al. hacen a
-    la literatura. **ESTO ES T21**: su ficha ya lo tenía descrito como riesgo, y aquí aparece
-    materializado en el texto. **Se resuelve con T21, no aparte** — corregir `6.1` sin escribir la
-    salvedad de T21 en `5.4` deja el defecto vivo en el otro sitio.
+- [ ] **`2.3.3:91` remite el modelo de amenaza CONCRETO a `3.1`, que está VACÍA** (🟠) · Informe · `redactor-tfg`
+  Alta el **2026-08-15**, residuo declarado de la **TANDA 8**: es **la mitad de la corrección (c) que
+  esa tanda NO resolvió**. La tanda repuntó las remisiones de `6.1` y `A.3` a `2.3.3 §2.3.3.3`, pero
+  **`2.3.3:91` sigue apuntando a `3.1`**, que no contiene ni «amenaza» ni «adversario» — con lo que
+  el reenvío es **circular**: `6.1` y `A.3` mandan a `2.3.3`, y `2.3.3` manda a una nota vacía.
+  **La contradicción queda DECLARADA con `[!todo]` en las tres notas, que es lo único que la tanda
+  podía hacer sin decidir por Francisco.** Resolverla es **una de dos**: escribir el apartado de
+  modelo de amenaza en `3.1` (es **T9**, que ya lo tiene encargado) o repuntar `2.3.3:91`. **Necesita
+  despacho propio**: no es un repunte mecánico, es decidir dónde vive el modelo de amenaza concreto.
 
 - [ ] **Los 20 marcadores `[CITA: …]` nuevos de la TANDA 7** · Informe · **solo `researcher`**
   Alta el **2026-08-15**, contados contra disco: **`5.0` = 5 · `6.1` = 7 · `6.2` = 8**. Ninguno tenía
@@ -1165,19 +1151,21 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   entradas, `[1]`–`[8]` y `[10]`–`[57]`, con `[9]` **quemada**—. No es el `[11]`: ver la fila de
   andamiaje del 2026-08-15 en `## Cerradas`.
 
-- [ ] **Seis afirmaciones del vault que la TANDA 7 dejó desfasadas** (🟡) · Informe · `redactor-tfg` / `researcher`
+- [~] **Seis afirmaciones del vault que la TANDA 7 dejó desfasadas — TRES CERRADAS en la TANDA 8, quedan TRES** (🟡) · Informe · `redactor-tfg` / `researcher`
   Alta el **2026-08-15**, **las seis verificadas contra disco**. Son residuos de coherencia, no
   trabajo de redacción: cada uno es una línea que dice que algo no existe cuando ya existe.
-  1. **`4.2:117-118` afirma que las figuras «aún no se han copiado».** Falso desde la Tanda 7: las
-     tres están en `assets\` y son byte-idénticas por MD5. **Ojo: la mitad «embeber» SÍ sigue
-     pendiente**, así que la frase se corrige, no se borra entera.
-  2. **`A.3:176-180` remite a `5.0` como inexistente.** `5.0` existe desde la Tanda 7. Este es el
-     `> [!todo]` que la ficha de residuos de `A.3` tenía anotado en `:159`, **ya desplazado**.
-  3. **`5.0` no está de alta en `00 Índice TFG.md`.** Mismo defecto que arrastró `A.3` hasta la Tanda
-     3. **Ese pase va EN SERIE sobre el índice**, nunca en paralelo. **No tocar el «de 43 notas» de
-     `:104`**: tiene ficha propia y se cuadra al final.
+  1. ~~**`4.2:117-118` afirma que las figuras «aún no se han copiado».**~~ **HECHO en la TANDA 8**
+     (2026-08-15): `[!todo]` falso retirado **y las dos KS embebidas** desde `assets/`, más el callout
+     «Fuente numérica única» acotado. **Con esto la mitad «embeber» de la ficha de figuras también
+     queda servida en `4.2`.**
+  2. ~~**`A.3:176-180` remite a `5.0` como inexistente.**~~ **HECHO en la TANDA 8** (2026-08-15):
+     remisión corregida; y de paso `A.3:48` y `:634` repuntadas a `2.3.3`.
+  3. ~~**`5.0` no está de alta en `00 Índice TFG.md`.**~~ **HECHO en la TANDA 8** (2026-08-15), en
+     serie sobre el índice. **El recuento del índice se dejó intacto a propósito**: tiene ficha propia
+     (ojo, la línea ya **no** es `:104` — ver esa ficha).
   4. **`Bibliografía.md:153` dice «propuesta, no ejecutada» sobre algo que YA está ejecutado.**
-     **Solo el `researcher` toca ese fichero.**
+     **Solo el `researcher` toca ese fichero.** **QUEDÓ EXPRESAMENTE FUERA DE LA TANDA 8**: no es
+     descuido, es que va en el **pase en serie del `researcher`**, con el resto de su carga.
   5. **Los números de línea de T25 están desplazados** por el callout que la Tanda 6 insertó en
      `Bibliografía.md`. Anotado también dentro de la propia ficha de T25: **localizar por contenido**.
   6. **`[6]` (Goodfellow) sigue HUÉRFANA en todo el vault.** No se resuelve aquí: su anclaje depende
@@ -1386,6 +1374,12 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-15 | Informe | **La ficha de las figuras de `assets\` — CERRADA ENTERA, sus dos mitades: «copiar» (TANDA 7) y «embeber» (TANDA 8).** **Se cierra sobre un CONTEO CONTRA DISCO, no sobre una impresión.** Corrige además lo que el propio registro dejó a medias al cerrar la Tanda 8: **están embebidas las TRES KS, no dos** — `4.2:115` (`validacion_drift_ks.png`), `4.2:119` (`validacion_drift_ks_d2_normales.png`) y `4.2:121` (`validacion_drift_ks_comparativa.png`), así que la «tercera PNG» que se sospechaba sin destino **sí lo tenía**. **Barrido completo, que es la evidencia que cierra la ficha:** `Obsidian_TFG_Vault/assets/` tiene **35 ficheros**; los `![[…]]` de las notas de la memoria (excluida `99 Investigación/`, que no es memoria) embeben **23**; las **12 restantes son EXACTAMENTE las `*_122_sin_seleccion*`**, que `4.2:120` declara **deliberadamente no publicadas** —solo se publica la variante de 54—. Es decir: **no falta ninguna figura por embeber, y las 12 que quedan fuera NO deben embeberse, por decisión ya tomada.** **Con esto se retira del todo el cuello de `assets/` que bloqueaba T10 por el lado del binario** | `8976944` |
+| 2026-08-15 | — | **TANDA 8 — las 5 correcciones 🔴 de la auditoría de la TANDA 7, más los residuos que caían en los mismos ficheros.** **SEIS ficheros del vault**, en serie. Proceso: **redactor → `auditor-ml` (`NO APTO`, 1 🔴 + 3 menores) → corrector → segunda auditoría (`APTO CON CAMBIOS`, cambios ya aplicados) → repunte final**. **Cero código, cero cómputo, cero corridas; ni un `[n]` nuevo, ninguna cifra publicada movida, ningún wikilink roto.** **Octavo commit por tanda** bajo la Decisión 7. Ficheros: `06 Conclusiones/6.1 Conclusiones.md`, `06 Conclusiones/6.2 Líneas futuras.md`, `Apéndices/A.3 Ficha del sistema.md`, `04 Implementación del sistema/4.2 Base de datos utilizada.md`, `00 Índice TFG.md` y `05 Evaluación/5.1 Resultados del modelo de detección de anomalías.md`. Lo que cierra va desglosado en las filas de abajo | `8976944` |
+| 2026-08-15 | Informe | **Los 5 hallazgos 🔴 de la auditoría de la TANDA 7 — CERRADOS los cinco.** **(a)** `6.2`: `[!todo]` retirado y puesta la **procedencia real del 13,4 %**. **(b)** `6.1`: la salvedad de **no-proyección a prevalencia** se declara **una sola vez**, en el límite 2 de `6.1.4.1`, como instancia del enunciado de marco de `2.3.3:53`. **(c)** `6.1`: modelo de amenaza **repuntado de `3.1` a `2.3.3 §2.3.3.3` en las tres apariciones**, con `[!todo]` por el reenvío circular. **(d)** `6.1`: la fila **P8** reescrita con los **nombres reales de columna** (`metricas_firmas.csv` no tiene columna de FPR; en `metricas_anomalias.csv` se llama `fpr`, no `bin_fpr`). **(e / T21)** `6.1:65` y `:112`: se mide coste de **inferencia**, no de despliegue, y el KS repuntado a `4.2`. **DEJA VIVO, con ficha propia: la mitad de (c) que esta tanda NO resuelve** —`2.3.3:91` sigue remitiendo el modelo de amenaza concreto a `3.1`, que está vacía— y **la ampliación de (b)**, anotada dentro de **T11** | `8976944` |
+| 2026-08-15 | Informe | **Tres de los seis residuos de la TANDA 7, absorbidos por estar en los mismos ficheros — CERRADOS.** (1) `4.2:117-118`: el `[!todo]` falso de las figuras **retirado** y **las dos KS embebidas** desde `assets/`, más el callout «Fuente numérica única» **acotado**. (2) `A.3`: remisión a `5.0` corregida, y `:48` y `:634` **repuntadas a `2.3.3`**. (3) **`5.0` dada de alta en `00 Índice TFG.md`** — **`:104` intacto, deliberadamente**: el recuento tiene ficha propia. Y de propina, `5.1:61` repuntada a `4.2`, que **cierra la cadena de remisión**. **La ficha madre de los seis residuos SIGUE ABIERTA** por los tres restantes: `Bibliografía.md:153` (del `researcher`, va en su pase en serie), los números de línea de T25 desplazados y `[6]` huérfana | `8976944` |
+| 2026-08-15 | — | **HALLAZGO (no cierra ficha) · El 🔴 de la primera auditoría de la TANDA 8 justificó por sí solo todo el pase: `A.3` remitía el modelo de amenaza a `3.1` —nota que no contiene «amenaza» ni «adversario»— CONTRADICIENDO lo que `6.1` declaraba verificado EN ESA MISMA TANDA.** Dos notas de la misma tanda afirmando cosas incompatibles, cada una coherente leída por separado. **Es exactamente el fallo que solo se ve auditando la COHERENCIA ENTRE FICHEROS**, y es la razón por la que el andamiaje exige auditar la tanda como unidad y no nota a nota | `8976944` |
+| 2026-08-15 | — | **DECISIÓN RAZONADA de la corrección (b), escrita aquí porque ACOTA T11.** Se corrigió **la afirmación de `6.1`** y **NO** se sembraron declaraciones de la salvedad por todo el capítulo 5. Motivo: `6.1:66` es una **metaafirmación sobre el documento**; sembrar la salvedad junto a cada cifra de precisión de `5.1`/`5.2`/`5.3` sería **cambio de contenido en notas bajo T11**, sin decisión de Francisco, y **obligaría igualmente a reescribir `6.1:66`**. Si Francisco quiere además la salvedad **inline**, eso es **T11** y está anotado dentro de su ficha | `8976944` |
 | 2026-08-15 | — | **ANDAMIAJE · BUG CORREGIDO en `leader.md:196`: declaraba que el primer `[n]` libre era el `[11]` cuando es el `[58]`.** Verificado **contando `Bibliografía.md`**: **56 entradas**, `[1]`–`[8]` y `[10]`–`[57]`, con **`[9]` quemada** (retirada sin renumerar, `396e283`). **No es cosmético: `leader.md` es el agente que DESPACHA**, así que un redactor que leyera esa línea asignaba números **ya usados** — el solape silencioso de `[n]` que el protocolo de citas existe justo para evitar, reintroducido por el propio andamiaje. Mismo patrón estructural que el de la prohibición de autoría derogada que seguía viva en `leader.md` (2026-08-13): **la regla vieja gana cuando vive en el fichero que reparte el trabajo.** Aplicado por el hilo principal en `CLAUDE.md`, `.claude/agents/leader.md`, `.claude/agents/researcher.md` y `.claude/agents/redactor-tfg.md` | `75f90b7` |
 | 2026-08-15 | — | **ANDAMIAJE · DECISIÓN NUEVA DE FRANCISCO (2026-08-15) — el LOCALIZADOR DE PÁGINA en el marcador de cita.** Razón de la decisión, en sus términos: **él genera el formato IEEE en Zotero**; de los agentes necesita **(1) la fuente** y **(2) el párrafo marcado que apunta a ella**. La (2) ya la cumplía el `[n]`; la (1) estaba a nivel de **obra** pero **no de página**, y en un libro de 800 páginas eso no es una referencia verificable. **Lo que cambia:** el marcador admite **localizador opcional en sintaxis IEEE nativa** (`[8, p. 45]`, `[5, cap. 1]`) que **NO consume número** del contador global —es el mismo `[n]`, no uno nuevo—; es **obligatorio solo en libros y documentos largos**: `[4]` Chio, `[5]` Géron, `[6]` Goodfellow, `[7]` Murphy, `[8]` Stallings, `[12]` Hastie y `[39]` Russell y Norvig. **DISCREPANCIA ARITMÉTICA A CUADRAR AL APLICAR, sin resolverla por iniciativa de nadie: la decisión dice «son 8» y la enumeración lista SIETE.** O falta una obra en la lista o el «8» es un desliz — mismo tipo de descuadre que arrastra T14 («siete verificaciones, 3+5»), y por eso se anota en vez de escoger. `Bibliografía.md` gana columna **«Localizador por uso»**, que **escribe solo el `researcher`**; y **la página que no se pueda establecer con honestidad se MARCA, no se inventa** — misma regla que ya rige las fuentes sin acceso institucional. Aplicado por el hilo principal en `CLAUDE.md`, `.claude/agents/leader.md`, `.claude/agents/researcher.md` y `.claude/agents/redactor-tfg.md` | `75f90b7` |
 | 2026-08-15 | — | **TANDA 7 — `5.0` (T5), el `6.1.4` de `6.1` (T6), `6.2` entera (T12) y la mitad «copiar» de la ficha de figuras.** **SE COMMITEA CON DICTAMEN `NO APTO` Y 5 🔴 ABIERTOS**, por el precedente que Francisco ratificó en la **Tanda 5** y porque **el trabajo llevaba TRES cortes de API sin respaldo en git**. **Los 5 son TEXTUALES: no mueven ninguna cifra publicada ni tocan código**, y quedan **fichados** en `## Abiertas` como **TANDA 8, en serie**. **Séptimo commit por tanda** bajo la Decisión 7. **INCIDENTE, otra vez el mismo patrón y por eso queda escrito: los agentes que produjeron la tanda MURIERON POR LÍMITE DE API antes de reportar, y su trabajo apareció HUÉRFANO EN DISCO** — sin reporte, sin registro y sin commit. **La auditoría original murió también y hubo que rehacerla.** Se aplicó la regla derivada de la Tanda 5: **comprobar truncamiento antes que relanzar**. Resultado: **todo íntegro, cero truncamiento, cero `[n]` nuevos inventados**. **Cero código ejecutado, cero cómputo, cero corridas.** Lo que cierra va desglosado en las cuatro filas de abajo | `e50eb8b` |
