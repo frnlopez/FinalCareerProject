@@ -27,6 +27,30 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 
 > ### ⚡ EMPIEZA POR AQUÍ — apunte de traspaso del 2026-08-15
 >
+> **TANDA 10 — PIEZA A HECHA Y COMMITEADA (`55ef3c6`). PIEZA B PENDIENTE, sin escribir nada.**
+>
+> **Pieza A (hecha):** `3.1.5 Modelo de amenaza` añadida —adversario en las seis dimensiones y por
+> qué no hay experimento adversario—, cerrando los tres `[!todo]` de `6.1:75`, `A.3:52` y `A.3:647`.
+> **Con esto queda desbloqueado el cierre del capítulo 2**, que remitía dos veces a `3.1`.
+> Decisión técnica delegada y registrada: **`2.3.3:91` NO se repunta al ancla `3.1.5`** —se deja el
+> wikilink a nota, que es la convención del vault—, porque **T9 va a renumerar el capítulo 3** al
+> aplicar el recorte. Se reconsidera después de T9.
+>
+> **Pieza B (PENDIENTE, murió por límite de API sin escribir):** el **análisis de datos repetidos del
+> capítulo 3**, que Francisco encarga expresamente a los agentes y que su **profesor motivó** al pedir
+> recortar y unificar «los primeros apartados del Capítulo 3». **Va ANTES de T9**, para no redactar y
+> luego tirar. Entregable: informe en `99 Investigación/` con la tabla de solapes verificados y, para
+> cada uno, si se recorta / unifica / remite y **dónde queda la versión canónica**. **No ejecuta el
+> recorte** — eso es T9.
+> **Barrido inicial ya hecho, a verificar y completar:** `3.3.4 Protocolo de evaluación común` enuncia
+> entero el *data snooping* de las tres decisiones y **lo mismo está en `4.3`, `6.1`, `5.1`, `5.2` y en
+> la nueva `5.0`** (seis sitios; **`5.0` la creamos nosotros en la Tanda 7, así que parte de la
+> duplicación es propia**) · `3.3.2` duplica `4.3.2` · `3.3.1` duplica `4.2`/`4.3` · `3.4.2` y `3.5.2`
+> anticipan `4.4`/`4.5` · `3.5.4` duplica el experimento de `4.3.4`.
+> **Criterio de reparto a contrastar:** el **cap. 3 dice QUÉ y POR QUÉ** (diseño); los **caps. 4 y 5
+> dicen CÓMO y QUÉ SALIÓ** (parámetros y cifras). Lo que en el 3 tenga detalle o números → **remisión**.
+> Modelo a imitar: **`3.1.5` ya lo hace bien** — dice «no se repite aquí» y remite a `2.3.3`.
+>
 > **El árbol está LIMPIO. Tandas 6, 7 y 8 cerradas y commiteadas.** La sesión se cortó por **límite
 > de API** (se reajusta a las 15:30, Europe/Madrid), no por ningún problema del trabajo.
 >
@@ -57,10 +81,10 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > (declarado con `[!todo]` en tres notas); y el **borrado físico de `03 Desarrollo/`**, que no tiene
 > permiso concedido.
 >
-> **Lo único que tiene que hacer Francisco: `! git push origin develop`.** Van **treinta y seis** commits
+> **Lo único que tiene que hacer Francisco: `! git push origin develop`.** Van **treinta y nueve** commits
 > sin subir —**verificado con `git rev-list --count origin/develop..develop` el 2026-08-15, no contado
 > a mano**—, **más el commit que lleva esta misma línea**, que por construcción no puede contarse a
-> sí mismo: **TREINTA Y SIETE al terminar la Tanda 9**. Falla por autenticación desde el harness, no
+> sí mismo: **CUARENTA al terminar la Tanda 10 pieza A**. Falla por autenticación desde el harness, no
 > desde su máquina.
 >
 > **Este número se recalcula, NUNCA se incrementa a mano.** Ha ido mal dos veces (llegó a decir
