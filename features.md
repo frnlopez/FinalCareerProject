@@ -25,10 +25,33 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 
 ## PRÓXIMOS PASOS — próxima sesión
 
-> ### ⚡ EMPIEZA POR AQUÍ — apunte de traspaso del 2026-08-14
+> ### ⚡ EMPIEZA POR AQUÍ — apunte de traspaso del 2026-08-15
 >
-> **El árbol está LIMPIO y la Tanda 2 está cerrada.** No hay nada a medias, no hay ninguna ejecución
-> colgada y no hay que relanzar nada. La sesión se cortó por presupuesto, no por un problema.
+> **El árbol está LIMPIO. Tandas 6, 7 y 8 cerradas y commiteadas.** La sesión se cortó por **límite
+> de API** (se reajusta a las 15:30, Europe/Madrid), no por ningún problema del trabajo.
+>
+> **LA TANDA 9 (pase de citas del `researcher`) SE DESPACHÓ PERO NO ESCRIBIÓ NADA.** Verificado al
+> cerrar: árbol limpio y el `[n]` más alto de `Bibliografía.md` sigue siendo el **`[57]`**, o sea que
+> **no se asignó ningún número**. **No hay estado a medias que limpiar y no hay nada que revertir.**
+> Se retoma desde cero, sin repetir trabajo.
+>
+> **PUNTO EXACTO DE RETOMADA — la Tanda 9, en SERIE:** convertir los `[CITA: …]` vivos a `[n]` y
+> darlos de alta. **El primer `[n]` libre es el `[58]`** —56 entradas, `[1]`–`[8]` y `[10]`–`[57]`,
+> con `[9]` quemada—, pero **cuéntalo, no lo recuerdes**:
+> `grep -oE '^\| *\[[0-9]+\]' Bibliografía.md`. Inventario a verificar contra disco: ~33 líneas con
+> marcador en las notas de la memoria, **más** los 20 de la Tanda 7 (`5.0`=5, `6.1`=7, `6.2`=8),
+> **más** los 7 de `A.3` y los 3 de `EL_FUTURO.md`. Aplica ya el **localizador de página**
+> (decisión del 2026-08-15, ver `resumen-de-decisiones.md`): columna «Localizador por uso» y
+> marcadores tipo `[8, p. 45]`, obligatorios solo en los **8 libros**. `Bibliografía.md:153`
+> («propuesta, no ejecutada» sobre algo ya ejecutado) entra en este mismo pase.
+>
+> **LO QUE ESPERA DECISIÓN DE FRANCISCO, aparcado:** las **5 citas no reconstruidas** —de `[27]`,
+> `[28]` y `[44]` no se conoce ni la obra, así que **nunca podrán llevar libro+página**, lo que
+> inclina a retirar la afirmación—; **`[6]` Goodfellow**, dada de alta pero **huérfana en todo el
+> vault** (depende de T24); **`[54]` Molnar**, con la **edición sin fijar**; la **edición de
+> Stallings `[8]`** (4.ª vs 5.ª); **`2.3.3:91`**, que remite el modelo de amenaza a `3.1`, vacía
+> (declarado con `[!todo]` en tres notas); y el **borrado físico de `03 Desarrollo/`**, que no tiene
+> permiso concedido.
 >
 > **Lo único que tiene que hacer Francisco: `! git push origin develop`.** Van **treinta y tres** commits
 > sin subir —**verificado con `git rev-list --count origin/develop..develop` el 2026-08-15, no contado
