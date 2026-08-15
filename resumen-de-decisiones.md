@@ -1149,3 +1149,41 @@ Aplicado en `.claude/agents/ml-implementador.md` el mismo 2026-08-14.
   cual no cierra la decisión, pero inclina el argumento hacia **retirar la afirmación** frente a
   buscar fuente alternativa. Aplicado en `CLAUDE.md`, `.claude/agents/leader.md`, `researcher.md` y
   `redactor-tfg.md`.
+- `2026-08-15` — **DELEGACIÓN GENERAL DE DECISIONES TÉCNICAS A LOS AGENTES. Es un cambio de régimen,
+  no una decisión puntual.** Francisco: «yo no debo ser bloqueante para nada». A partir de aquí **las
+  decisiones técnicas las toma el agente con criterio técnico**, sin devolverlas a Francisco, **con
+  dos condiciones que son las que hacen la delegación segura**: (1) **cada decisión se registra
+  fechada en este fichero**, con su porqué, y (2) **debe ser REVERSIBLE** — si deshacerla es caro o
+  imposible, no está delegada y vuelve a Francisco. **Siguen siendo SUYAS y explícitamente NO
+  delegadas:** el **título** del TFG (aplazado por él a la Fase 7), la **bibliografía final en
+  Zotero/IEEE**, la **revisión final de `6.2`**, y **cualquier borrado o acción irreversible** —el de
+  `03 Desarrollo/` incluido, que sigue necesitando permiso expreso—. **Motivo de la delegación:** el
+  cuello de botella no era la capacidad de decidir sino la **latencia** de tener que preguntar; con
+  33 fichas abiertas, doce decisiones pendientes bloqueaban ejecuciones largas que no las necesitaban
+  de verdad.
+- `2026-08-15` — **ORDEN DE TRABAJO: se va por capítulos, PERO el orden estricto 1→2→3→4→5→6 NO es
+  posible, y forzarlo produciría progreso ficticio.** Analizado contra disco. **Contenido
+  estructuralmente terminal**, que no puede cerrarse hasta que exista el resto: `Resumen`, `Abstract`,
+  el **título**, la **bibliografía final** y —el que no era obvio— **`1.4 Estructura`**, que describe
+  los capítulos 1 a 5, **no menciona el 6 ni los apéndices** y atribuye las conclusiones al capítulo 5.
+  **Por tanto el capítulo 1 NO puede cerrarse el primero.** **Dependencias cruzadas verificadas:**
+  `2.3.3:11` y `2.3.3:91` remiten **dos veces** el modelo de amenaza concreto a `3.1`, así que
+  **cerrar el capítulo 2 exige escribir antes un trozo del 3**; **T19** toca `4.4`, `5.1` y `5.2` a la
+  vez, así que **el 4 no se cierra sin el 5**; y **T21** reparte entre `6.1` y `5.4`.
+  **ORDEN APROBADO:** (0) desbloqueo — análisis de datos repetidos del cap. 3 + modelo de amenaza en
+  `3.1`; (1) capítulo 2 completo; (2) capítulo 3, ya con el recorte decidido; (3) **capítulos 4 y 5
+  juntos**; (4) capítulo 6 + `1.4` + preliminares + bibliografía.
+  **Corrección al registro:** `3.1` **NO está vacía** —tiene `3.1.1`–`3.1.4` con prosa real—; lo que
+  le falta es **una subsección** de modelo de amenaza. Añadir, no redactar de cero.
+- `2026-08-15` — **Las 5 citas no reconstruidas: BÚSQUEDA ACOTADA y, lo que no aparezca, SE RETIRA.**
+  Decisión de Francisco entre las tres opciones. El `researcher` hace **un intento acotado por cita**;
+  la afirmación cuya fuente no aparezca **se retira o se reescribe como afirmación propia sin cita**,
+  nunca se deja una cita inventada ni un `[n]` colgando. De `[27]`, `[28]` y `[44]` **no se conoce ni
+  la obra**, así que se espera que caigan por esta vía. Cierra la ficha 🔴 heredada de la Tanda 6.
+- `2026-08-15` — **`2.1.5 Métricas` se COMPLETA al nivel de `A.2`, no se degrada ni se funde.**
+  Diagnóstico verificado: son 52 líneas con las métricas enumeradas —matriz de confusión, precisión,
+  recall, MAE, RMSE, Silhouette— pero **sin las fórmulas** («TP es el número de verdaderos positivos»
+  y nunca la escribe), con una frase cortada a mitad y sin citas, mientras `A.2 Métricas de desempeño`
+  **sí tiene las fórmulas en LaTeX**. Se le añaden fórmulas, se cierra la frase rota y se le ponen
+  citas. **Desbloquea T8** y los `[!todo]` de `2.1.6:166` y `2.3.3:33`. Se descartó fundirla con `A.2`
+  porque `2.1.5` es marco teórico y `A.2` es material de consulta: la duplicación aquí es deliberada.
