@@ -79,6 +79,12 @@ hecho que **hay otros agentes escribiendo ahora mismo en otras notas del vault**
 - **Nada de ficheros compartidos**, ni para «solo añadir una línea»: `Bibliografía.md`,
   `features.md`, `00 Índice TFG.md` y `next-steps.md` están fuera de tu alcance siempre.
 - **Ni un `[n]` nuevo**, por la razón de la sección de reglas: usa `[CITA: …]`.
+- **Y en el `[CITA: …]`, di DE DÓNDE lo sacas, con página o capítulo si es un libro**:
+  `[CITA: Géron, cap. 1]`, `[CITA: Stallings, p. 45]`. Francisco genera él el formato IEEE; lo que
+  necesita de ti es **la fuente y el sitio exacto**, y eres tú quien lo sabe en el momento de
+  escribir el párrafo — recuperarlo después cuesta el triple. Si citas un `[n]` que ya existe y es
+  un libro, puedes precisarlo igual: `[8, p. 45]` **no** consume número nuevo, sigue siendo `[8]`.
+  Lo que no sepas, no lo inventes: déjalo sin localizador y dilo en tu línea de cierre.
 - Si tu nota necesita algo que está escribiendo otro agente ahora, **no lo adivines ni lo dupliques**:
   deja `> [!todo]` y dilo en el cierre.
 

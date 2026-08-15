@@ -199,9 +199,12 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
   de `auditor-ml` (va después, no a la vez). **Varios `auditor-ml` sí pueden ir en paralelo**: son
   de solo lectura. Un cierre por **tanda**, no por nota: una sola pasada de `cronista`.
 - **Protocolo de citas — vale para CUALQUIER agente que escriba en el vault.** Los marcadores `[n]`
-  son un **contador global** que apunta a `Bibliografía.md`. **En uso hoy: `[1]`–`[8]` y `[10]`**
-  —verificado contra `Bibliografía.md` el 2026-08-14—, y **`[9]` está RETIRADA SIN RENUMERAR**
-  (`396e283`), así que está **quemada, no libre**. El primer número disponible es el `[11]`.
+  son un **contador global** que apunta a `Bibliografía.md`. **En uso hoy: `[1]`–`[8]` y
+  `[10]`–`[57]`, 56 entradas** —verificado contra `Bibliografía.md` el 2026-08-15—, y **`[9]` está
+  RETIRADA SIN RENUMERAR** (`396e283`), así que está **quemada, no libre**. **El primer número
+  disponible es el `[58]`.** **Este rango se cuenta, no se recuerda**
+  (`grep -oE '^\| *\[[0-9]+\]' Bibliografía.md`): estuvo desfasado en `leader.md` diciendo `[11]`
+  cuando ya iba por el `[57]`, y ese es justo el fichero que despacha.
   Importa porque `[2]` (Anderson 1980) y `[3]` (Denning 1987) son las que más se citan al redactar
   el capítulo 2: **se MAPEAN, no se dan de alta**.
   **Nadie inventa un `[n]` nuevo**: se escribe `[CITA: autor o tema]`, convención
@@ -209,6 +212,22 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
   empezarían en el mismo y el solape no lo ve nadie al leer. La conversión de `[CITA: …]` a `[n]` y
   el alta en `Bibliografía.md` es un pase **posterior y en serie**, del `researcher`. Un `[n]` que
   ya estaba en la nota **se respeta**: no se renumera ni se borra.
+- **Localizador de página — decisión de Francisco del 2026-08-15.** Francisco **genera él el formato
+  IEEE** en Zotero; de los agentes necesita exactamente dos cosas: **(1) de qué libro o página web
+  salió cada afirmación**, y **(2) el párrafo marcado con una numeración que apunte a esa fuente**.
+  La (2) ya la cumple el `[n]`. La (1) está cubierta a nivel de **obra** pero **no de página**, y esa
+  es la única pieza que faltaba. Por tanto:
+  - **El marcador admite localizador opcional**, en sintaxis IEEE nativa: `[8, p. 45]`,
+    `[5, cap. 1]`, `[39, pp. 17-25]`. **No consume número del contador global**: `[8, p. 45]` y
+    `[8, p. 90]` son la misma entrada `[8]`. En `[CITA: …]` igual: `[CITA: Géron, cap. 1]`.
+  - **Solo es obligatorio en libros y documentos largos.** En artículos de revista o congreso, IEEE
+    no pide más que lo que `Bibliografía.md` ya registra. **Son 8 los libros afectados**: `[4]` Chio,
+    `[5]` Géron, `[6]` Goodfellow, `[7]` Murphy, `[8]` Stallings, `[12]` Hastie y `[39]` Russell y
+    Norvig. Ojo con el falso amigo: los `pp. 222-232` que ya aparecen son **el rango del artículo en
+    su revista**, metadato de la referencia, **no** el localizador de la afirmación.
+  - **`Bibliografía.md` gana una columna «Localizador por uso»**, que escribe **solo el `researcher`**.
+  - **Donde la página no se pueda establecer con honestidad, se MARCA — no se inventa.** Misma
+    disciplina que con las 47 citas reconstruidas.
 - **Auditar una tanda paralela es auditar la COHERENCIA ENTRE sus notas**, no cada nota por
   separado: dos notas que no chocan en disco sí pueden definir el mismo concepto dos veces o citar
   una cifra de dos maneras. Ese fallo solo se ve mirándolas juntas.

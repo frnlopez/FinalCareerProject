@@ -1120,3 +1120,27 @@ Aplicado en `.claude/agents/ml-implementador.md` el mismo 2026-08-14.
   `CLAUDE.md` §Git; **8** la divergencia de la terminología de `2.2.4` no era decisión sino
   instrucción al redactor —anotada en su sección—. **Cero código tocado, cero cifras publicadas
   movidas.**
+- `2026-08-15` — **Localizador de página en las citas: REFINA la decisión del 2026-07-21 (`:531`), no
+  la sustituye.** Francisco confirma que **el formato IEEE lo genera él en Zotero** —eso sigue igual—
+  y precisa **qué necesita de los agentes**: (1) **de qué libro o página web salió cada afirmación** y
+  (2) **el párrafo marcado con una numeración que apunte a esa fuente**. La (2) ya la cumplía el `[n]`
+  desde siempre. La (1) estaba cubierta **a nivel de obra pero nunca de página**, y esa era la única
+  pieza que faltaba para que él pudiera generar el formato sin volver a abrir las fuentes.
+  **Falso amigo detectado al analizarlo:** los `pp. 222-232` que ya aparecen 28 veces en
+  `Bibliografía.md` son **el rango del artículo dentro de su revista** —metadato de la referencia—,
+  **no** el localizador de la afirmación. Por eso parecía resuelto y no lo estaba.
+  **Lo acordado:** el marcador admite **localizador opcional en sintaxis IEEE nativa**
+  (`[8, p. 45]`, `[5, cap. 1]`), que **no consume número del contador global** —`[8, p. 45]` y
+  `[8, p. 90]` son la misma entrada `[8]`—; es **obligatorio solo en libros y documentos largos**,
+  que son **ocho** (`[4]` Chio, `[5]` Géron, `[6]` Goodfellow, `[7]` Murphy, `[8]` Stallings,
+  `[12]` Hastie y `[39]` Russell y Norvig), porque en artículos IEEE no pide más que lo ya
+  registrado; `Bibliografía.md` gana una columna **«Localizador por uso»** que escribe **solo el
+  `researcher`**; y **la página que no se pueda establecer con honestidad SE MARCA, no se inventa**
+  —misma disciplina que con las 47 citas reconstruidas—. El `redactor-tfg` anota la fuente dentro del
+  propio `[CITA: …]` **mientras escribe el párrafo**, que es cuando la sabe: recuperarla después
+  cuesta el triple. **El retrofit está acotado a esas 8 entradas, no son las 56.**
+  **Consecuencia sobre las 5 citas no reconstruidas, que Francisco aún debe decidir:** de `[27]`,
+  `[28]` y `[44]` no se conoce ni la obra, así que **bajo este criterio nunca serán citables** — lo
+  cual no cierra la decisión, pero inclina el argumento hacia **retirar la afirmación** frente a
+  buscar fuente alternativa. Aplicado en `CLAUDE.md`, `.claude/agents/leader.md`, `researcher.md` y
+  `redactor-tfg.md`.

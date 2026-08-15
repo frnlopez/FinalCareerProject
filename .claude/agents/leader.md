@@ -193,9 +193,16 @@ ficheros, así que van en paralelo. Dos secciones de la *misma* nota, no.
 | Notas donde una **cita a la otra** por contenido | La segunda necesita leer lo que escribió la primera |
 
 **Protocolo de citas bajo paralelismo — esto es lo que evita el destrozo.** Los marcadores `[n]`
-del vault son un **contador global** que apunta a `Bibliografía.md`. Hoy están en uso: `[4]`, `[5]`,
-`[7]`, `[8]` y `[10]` ya están puestos en las notas de `2.1` y `2.2`. Si cuatro redactores en
-paralelo inventan números nuevos, los cuatro empiezan en `[11]` y se solapan en silencio.
+del vault son un **contador global** que apunta a `Bibliografía.md`. **En uso hoy: `[1]`–`[8]` y
+`[10]`–`[57]`, 56 entradas dadas de alta** —verificado contra `Bibliografía.md` el 2026-08-15—, y
+**`[9]` está RETIRADA SIN RENUMERAR (`396e283`): está quemada, no libre**. **El primer número
+disponible es el `[58]`.** Si cuatro redactores en paralelo inventan números nuevos, los cuatro
+empiezan en el mismo y se solapan en silencio.
+
+> **Este rango se VERIFICA, no se recuerda.** Hasta el 2026-08-15 este fichero decía que el primer
+> libre era el `[11]`, cuando la Tanda 6 había dado de alta hasta el `[57]`: un redactor que lo
+> leyera habría asignado números ya usados. Antes de despachar, cuéntalos con
+> `grep -oE '^\| *\[[0-9]+\]' Bibliografía.md`.
 
 Por eso: **un redactor en paralelo NUNCA asigna un número `[n]` nuevo.** Escribe
 `[CITA: autor o tema]`, que es la convención que el proyecto ya usa (`4.2` arrastra 6 de esos).

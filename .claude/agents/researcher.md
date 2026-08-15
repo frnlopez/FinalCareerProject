@@ -106,6 +106,16 @@ ya no lo toca. Es un fichero del usuario y tu mano llega hasta aquí:
   editorial, publicación, volumen, páginas, DOI, ISBN, URL.
 - **Marcar** con un callout la entrada que no supere el nivel 1-2, o la que esté duplicada,
   explicando por qué y **proponiendo el sustituto concreto**.
+- **Rellenar la columna «Localizador por uso»**, que solo escribes tú (decisión de Francisco del
+  2026-08-15). Francisco genera el formato IEEE en Zotero; de nosotros necesita **la fuente y la
+  página**. Anota el **capítulo o página concretos donde vive cada afirmación citada**, no el rango
+  del artículo en su revista —los `pp. 222-232` que ya hay son metadato de la referencia, **no**
+  localizador—. **Obligatorio solo en libros y documentos largos**; en artículos, lo que ya hay
+  basta. Los libros son 8: `[4]` Chio, `[5]` Géron, `[6]` Goodfellow, `[7]` Murphy, `[8]` Stallings,
+  `[12]` Hastie y `[39]` Russell y Norvig. En las notas el marcador admite `[8, p. 45]` o
+  `[5, cap. 1]`, que **no consumen número nuevo**: siguen siendo la entrada `[8]` y la `[5]`.
+  **La página que no puedas establecer con honestidad, la MARCAS como no establecida. No la
+  inventas** — misma disciplina que con las 47 citas reconstruidas.
 
 **No puedes, en ningún caso:**
 
