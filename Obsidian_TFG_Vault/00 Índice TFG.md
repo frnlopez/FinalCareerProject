@@ -77,6 +77,7 @@ Mapa de contenido del TFG. Las notas MD son la fuente de verdad; el docx se rell
 
 ## 5. Evaluación
 
+- [[5.0 Protocolo de evaluación]] — borrador: particiones y función de cada una, invariantes al comparar variantes, métricas obligatorias, prohibiciones y vocabulario de reproducibilidad
 - [[5.1 Resultados del modelo de detección de anomalías]] — borrador (volcado 2026-07-16)
 - [[5.2 Resultados del modelo de detección basado en firmas]] — borrador (volcado 2026-07-16)
 - [[5.3 Resultados del sistema híbrido]] — borrador (volcado 2026-07-16)

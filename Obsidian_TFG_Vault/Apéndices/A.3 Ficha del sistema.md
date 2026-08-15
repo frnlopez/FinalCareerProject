@@ -45,8 +45,17 @@ dispersión y limitaciones declaradas.
 
 **Uso previsto.** Trabajo académico de evaluación comparativa sobre un dataset público de referencia.
 **No** es un sistema desplegable: opera sobre flujos ya extraídos y preprocesados, no sobre paquetes
-en red, y no se ha evaluado frente a un adversario adaptativo (véase [[3.1 Requisitos del sistema]] y
-la sección A.3.7 de esta ficha).
+en red, y no se ha evaluado frente a un adversario adaptativo (marco conceptual en
+[[2.3.3 Límites y consideraciones éticas|2.3.3]] § *El modelo de amenaza como requisito metodológico
+(P10)*, enunciado concreto en el límite 3 de [[6.1 Conclusiones]], y sección A.3.7 de esta ficha).
+
+> [!todo] La instanciación concreta del modelo de amenaza no tiene sección propia
+> [[2.3.3 Límites y consideraciones éticas|2.3.3]] remite el modelo de amenaza **concreto** de este
+> sistema a [[3.1 Requisitos del sistema]], pero esa nota **no lo contiene** (verificado: no aparece
+> en ella ni «amenaza» ni «adversario»). Hoy el único enunciado concreto es el del límite 3 de
+> [[6.1 Conclusiones]]. Queda pendiente decidir dónde vive: o se añade el apartado a 3.1 —y entonces
+> ambas remisiones son correctas—, o se corrige la remisión de 2.3.3 para que apunte allí. **Ninguna
+> de las dos notas está en el alcance de esta pasada.**
 
 ---
 
@@ -173,11 +182,12 @@ Precisiones que condicionan la lectura y que están documentadas en las propias 
   *wall-clock* de un pase único en máquina no dedicada, miden solo el `predict`/`score` sobre
   características ya en memoria y **no** son capacidad operativa del sistema.
 
-> [!todo] Enlace pendiente
-> El protocolo de evaluación consolidado (particiones, prohibiciones, vocabulario de reproducibilidad)
-> está **previsto** como nota propia, `5.0 Protocolo de evaluación`. A fecha de redacción de este
-> apéndice **no existe en el vault** —el capítulo 5 solo tiene 5.1-5.4— y su redacción sigue
-> pendiente. Cuando se escriba, este apartado debe remitir a ella en lugar de repetir el alcance.
+> [!note] Dónde vive el protocolo
+> El protocolo de evaluación consolidado —particiones y función de cada una, prohibiciones y
+> vocabulario de reproducibilidad— está en [[5.0 Protocolo de evaluación]], que **enuncia las
+> reglas**. Este apéndice documenta **la instancia concreta** que las cumple: tamaños exactos,
+> configuraciones ganadoras, alcance de cada artefacto y entorno de cómputo. Lo que aquí se repite
+> del protocolo es solo lo imprescindible para leer las tablas sin salir del apéndice.
 
 ---
 
@@ -630,7 +640,17 @@ seguridad este patrón se cataloga como contaminación por selección sobre el t
 - **El barrido de semillas no cubre el preprocesado** (véase A.3.6): la dispersión medida es de los
   modelos, no del sistema completo.
 - **Sin evaluación adversaria.** No se ha medido el comportamiento frente a un atacante que conozca el
-  modelo e intente evadirlo; el modelo de amenaza asumido está en [[3.1 Requisitos del sistema]].
+  modelo e intente evadirlo. El modelo de amenaza asumido tiene su marco conceptual en
+  [[2.3.3 Límites y consideraciones éticas|2.3.3]] § *El modelo de amenaza como requisito
+  metodológico (P10)* y su enunciado concreto en el límite 3 de [[6.1 Conclusiones]].
+
+  > [!todo] La instanciación concreta del modelo de amenaza no tiene sección propia
+  > [[2.3.3 Límites y consideraciones éticas|2.3.3]] remite el modelo de amenaza **concreto** de
+  > este sistema a [[3.1 Requisitos del sistema]], pero esa nota **no lo contiene** (verificado: no
+  > aparece en ella ni «amenaza» ni «adversario»). Hoy el único enunciado concreto es el del límite
+  > 3 de [[6.1 Conclusiones]]. Queda pendiente decidir dónde vive: o se añade el apartado a 3.1 —y
+  > entonces ambas remisiones son correctas—, o se corrige la remisión de 2.3.3 para que apunte
+  > allí. **Ninguna de las dos notas está en el alcance de esta pasada.**
 - **Sin despliegue real.** Las columnas de rendimiento miden `predict`/`score` sobre características
   ya extraídas y en memoria: no incluyen captura de tráfico, ensamblado del flujo ni extracción de las
   41 características, que es donde vive el coste real de un despliegue.
