@@ -62,7 +62,7 @@ train con un RF monolítico):
     El *benchmark* TabArena documenta que algunos modelos aparecen **sobrerrepresentados** en los
     conjuntos entre modelos por **sobreajuste al conjunto de validación**: si los miembros se
     escogen mirando la misma partición con la que se mide, entra el que mejor se ajusta a esa
-    partición, no el que mejor generaliza [CITA: TabArena, Erickson et al. NeurIPS 2025]. Traducido
+    partición, no el que mejor generaliza [62]. Traducido
     a este pipeline, el riesgo concreto es elegir qué detectores entran en el conjunto —o con qué
     pesos— **mirando `D1_val` o los pliegues OOF de D3**: la mejora se vería en esa medición y no se
     reproduciría en D2. La defensa correcta es la disciplina que el sistema **ya tiene** (`D1_val`
@@ -78,7 +78,7 @@ train con un RF monolítico):
   proponen un H-IDS que **no es serie ni paralelo, sino un bucle**: el detector de anomalías mina
   episodios de tráfico anómalo, un esquema de **generación de firmas ponderadas** extrae firmas de
   esos episodios y las **inserta en la base de datos de SNORT**, de modo que lo desconocido de hoy
-  es firma conocida mañana [CITA: Hwang et al. 2007, generación de firmas ponderadas]. Reportan
+  es firma conocida mañana [65]. Reportan
   60 % de detección frente al 30 % de SNORT y el 22 % de Bro con <3 % de falsas alarmas, y una
   mejora del 33 % sobre SNORT atribuida a las firmas generadas por el módulo de anomalías.
   - **Encaje con este sistema:** la pieza que faltaría es un minero de patrones sobre el subconjunto
@@ -182,8 +182,7 @@ train con un RF monolítico):
     En términos de lo que ya dice esta misma línea: la opción B no solo era «la vía correcta
     pendiente» por el dato del Autoencoder con 122; es también **la precondición** de cualquier
     experimento futuro sobre la codificación de categóricas. Decidir si eso mueve algo es de
-    Francisco; esta entrada solo lo deja anotado. [CITA: target encoding para categóricas de alta
-    cardinalidad, Micci-Barreca 2001 / Pargent et al. 2022]
+    Francisco; esta entrada solo lo deja anotado. [63], [64]
 
 ## 4. Ideas — evaluación / generalización
 

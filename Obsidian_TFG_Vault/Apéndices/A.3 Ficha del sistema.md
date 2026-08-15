@@ -7,7 +7,7 @@ estado: borrador
 # A.3 Ficha del sistema
 
 Este apéndice documenta el sistema evaluado siguiendo la plantilla de **model card** propuesta por
-[CITA: Mitchell et al. 2019]: detalles del modelo, uso previsto, particiones de datos, configuraciones
+[60]: detalles del modelo, uso previsto, particiones de datos, configuraciones
 seleccionadas, alcance exacto de cada métrica, infraestructura de cómputo, análisis cuantitativo con
 dispersión y limitaciones declaradas.
 
@@ -243,7 +243,7 @@ el reparto completo semilla a semilla hay que ir al propio `dispersion_semillas.
 - **`sd` es la desviación típica muestral** (`ddof=1`).
 - **Sin p-valor**, y la renuncia se declara con su razón: **10 puntos sobre un único dataset no
   sostienen un contraste**. Declarar la renuncia cumple el ítem *statistics* del checklist de
-  [CITA: Pineau et al.]; callarla no.
+  [20]; callarla no.
 - **La semilla 42 no entra en ninguna banda**, y es deliberado: es el **titular** de
   [[5.1 Resultados del modelo de detección de anomalías|5.1]]-[[5.3 Resultados del sistema híbrido|5.3]]
   y un punto **independiente**, no uno de los sumandos de su propia media. Aparece **al lado** de la
@@ -602,10 +602,10 @@ están **optimistamente sesgadas** en la parte que corresponde a haber escogido 
 de algoritmo (cuatro por etapa) y entre los dos sets de características— lo que mejor puntuaba en la
 propia población de evaluación. En la literatura de
 seguridad este patrón se cataloga como contaminación por selección sobre el test
-[CITA: Arp et al. — pitfalls en ML para seguridad].
+[18].
 
 > [!warning] Verificación pendiente — sin acceso al texto completo
-> La referencia a [CITA: Arp et al. — pitfalls en ML para seguridad] se usa aquí **solo como
+> La referencia [18] se usa aquí **solo como
 > etiqueta de la literatura**: el argumento del párrafo anterior no se apoya en ella y se mantiene
 > íntegro si se retira. Queda pendiente comprobar contra el texto completo la denominación exacta del
 > defecto y su numeración en la taxonomía; el proyecto no tiene acceso institucional a esa fuente y
@@ -636,7 +636,7 @@ seguridad este patrón se cataloga como contaminación por selección sobre el t
 ### Otros límites del alcance evaluado
 
 - **Un solo dataset.** Todas las cifras proceden de NSL-KDD. No hay evidencia de *replicabilidad*
-  sobre otro conjunto (vocabulario de [CITA: Pineau et al.]).
+  sobre otro conjunto (vocabulario de [20]).
 - **El barrido de semillas no cubre el preprocesado** (véase A.3.6): la dispersión medida es de los
   modelos, no del sistema completo.
 - **Sin evaluación adversaria.** No se ha medido el comportamiento frente a un atacante que conozca el
@@ -660,7 +660,7 @@ seguridad este patrón se cataloga como contaminación por selección sobre el t
 ## A.3.8 Checklist de reproducibilidad
 
 Se rellenan los **11 ítems «FT»** del *Machine Learning Reproducibility Checklist* de
-[CITA: Pineau et al.] — el subconjunto que aplica **a toda figura o tabla con resultados empíricos**,
+[20] — el subconjunto que aplica **a toda figura o tabla con resultados empíricos**,
 de los **17** que componen el checklist completo. Los **seis restantes no se rellenan**. El detalle de
 la fuente está en [[benchmark-comparativo-nsl-kdd]].
 
@@ -668,7 +668,7 @@ la fuente está en [[benchmark-comparativo-nsl-kdd]].
 > La fuente del proyecto ([[benchmark-comparativo-nsl-kdd]]) respalda el **total de 17** y **enumera
 > los 11 «FT»**, pero **no dice cuáles son los otros seis** ni de qué tratan. Cualquier
 > caracterización de ese resto queda pendiente de comprobar contra el checklist original de
-> [CITA: Pineau et al.]; hasta entonces este apéndice solo afirma que no se rellenan y por qué se
+> [20]; hasta entonces este apéndice solo afirma que no se rellenan y por qué se
 > eligió el subconjunto «FT»: es el que aplica **a toda figura o tabla con resultados empíricos**,
 > que es exactamente lo que documenta esta ficha.
 
