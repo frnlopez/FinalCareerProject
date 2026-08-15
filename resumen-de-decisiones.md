@@ -1187,3 +1187,15 @@ Aplicado en `.claude/agents/ml-implementador.md` el mismo 2026-08-14.
   **sí tiene las fórmulas en LaTeX**. Se le añaden fórmulas, se cierra la frase rota y se le ponen
   citas. **Desbloquea T8** y los `[!todo]` de `2.1.6:166` y `2.3.3:33`. Se descartó fundirla con `A.2`
   porque `2.1.5` es marco teórico y `A.2` es material de consulta: la duplicación aquí es deliberada.
+- `2026-08-15` — **La lista de sedes de la formulación canónica del *data snooping* (`:316-317`) estaba
+  INCOMPLETA: nombraba SIETE y en disco hay DIEZ.** Detectado al analizar los datos repetidos del
+  capítulo 3 (Tanda 10, pieza B, `3fadf13`). Aquella entrada listaba `2.1.6`, `3.3`, `4.3`, `4.6`,
+  `5.4`, `6.1` y `A.3`; **faltan `5.0`, `5.1` y `5.2`**. No fue un descuido: **`5.0` no existía cuando
+  se escribió** —la creó la Tanda 7— y `5.1`/`5.2` la llevan «cada una en su etapa», que es una forma
+  distinta de repetirla y por eso se coló. **La formulación canónica NO se reabre** —la decisión 4 del
+  bloque de arriba sigue vigente y es la redacción buena—; lo que se corrige es **el censo de dónde
+  vive**. Importa porque **T9 va a recortar el capítulo 3 usando ese censo**: recortar `3.3.4` creyendo
+  que quedan seis copias cuando quedan nueve no cambia la acción, pero sí cambia qué se declara como
+  sede canónica y cuántas remisiones hay que insertar. **Regla que se deriva:** este censo se cuenta
+  contra disco antes de usarlo, como el contador de `[n]`, y no se lee de memoria — es el segundo
+  inventario de este proyecto que se queda corto por escribirse una vez y no recontarse.

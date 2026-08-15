@@ -27,7 +27,11 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 
 > ### ⚡ EMPIEZA POR AQUÍ — apunte de traspaso del 2026-08-15
 >
-> **TANDA 10 — PIEZA A HECHA Y COMMITEADA (`55ef3c6`). PIEZA B PENDIENTE, sin escribir nada.**
+> **TANDA 10 — CERRADA ENTERA el 2026-08-15, sus DOS piezas: A en `55ef3c6` y B en `3fadf13`.**
+> El «PIEZA B PENDIENTE» que este bloque decía **ya no es vigente**: se escribió en el ciclo siguiente
+> al corte de API. Detalle en `## Cerradas`. **Lo que la Tanda 10 deja vivo: T9 ejecuta el recorte**
+> (instrucciones en `99 Investigación/Datos repetidos en el capítulo 3.md`, anotadas dentro de su
+> ficha) y **tres hallazgos laterales con ficha propia** en `## Abiertas`.
 >
 > **Pieza A (hecha):** `3.1.5 Modelo de amenaza` añadida —adversario en las seis dimensiones y por
 > qué no hay experimento adversario—, cerrando los tres `[!todo]` de `6.1:75`, `A.3:52` y `A.3:647`.
@@ -36,13 +40,15 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > wikilink a nota, que es la convención del vault—, porque **T9 va a renumerar el capítulo 3** al
 > aplicar el recorte. Se reconsidera después de T9.
 >
-> **Pieza B (PENDIENTE, murió por límite de API sin escribir):** el **análisis de datos repetidos del
+> **Pieza B (HECHA, `3fadf13`):** el **análisis de datos repetidos del
 > capítulo 3**, que Francisco encarga expresamente a los agentes y que su **profesor motivó** al pedir
-> recortar y unificar «los primeros apartados del Capítulo 3». **Va ANTES de T9**, para no redactar y
-> luego tirar. Entregable: informe en `99 Investigación/` con la tabla de solapes verificados y, para
-> cada uno, si se recorta / unifica / remite y **dónde queda la versión canónica**. **No ejecuta el
-> recorte** — eso es T9.
-> **Barrido inicial ya hecho, a verificar y completar:** `3.3.4 Protocolo de evaluación común` enuncia
+> recortar y unificar «los primeros apartados del Capítulo 3». **Fue ANTES de T9**, para no redactar y
+> luego tirar. Entregable, entregado: `99 Investigación/Datos repetidos en el capítulo 3.md`, **513
+> líneas**, con los **15 solapes verificados** y, para cada uno, si se recorta / unifica / remite y
+> **dónde queda la versión canónica**. **No ejecuta el recorte** — eso es T9.
+> **Barrido inicial de este bloque, YA VERIFICADO Y CORREGIDO por el informe — se queda CORTO y se lee
+> solo como historial: el *data snooping* está en 10 sitios, no 6.** Decía así:
+> `3.3.4 Protocolo de evaluación común` enuncia
 > entero el *data snooping* de las tres decisiones y **lo mismo está en `4.3`, `6.1`, `5.1`, `5.2` y en
 > la nueva `5.0`** (seis sitios; **`5.0` la creamos nosotros en la Tanda 7, así que parte de la
 > duplicación es propia**) · `3.3.2` duplica `4.3.2` · `3.3.1` duplica `4.2`/`4.3` · `3.4.2` y `3.5.2`
@@ -77,14 +83,15 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > `[28]` y `[44]` no se conoce ni la obra, así que **nunca podrán llevar libro+página**, lo que
 > inclina a retirar la afirmación—; **`[6]` Goodfellow**, dada de alta pero **huérfana en todo el
 > vault** (depende de T24); **`[54]` Molnar**, con la **edición sin fijar**; la **edición de
-> Stallings `[8]`** (4.ª vs 5.ª); **`2.3.3:91`**, que remite el modelo de amenaza a `3.1`, vacía
-> (declarado con `[!todo]` en tres notas); y el **borrado físico de `03 Desarrollo/`**, que no tiene
+> Stallings `[8]`** (4.ª vs 5.ª); ~~**`2.3.3:91`**, que remite el modelo de amenaza a `3.1`, vacía
+> (declarado con `[!todo]` en tres notas)~~ **— RESUELTO el 2026-08-15 en la TANDA 10 pieza A
+> (`55ef3c6`): `3.1.5` escrita y los tres `[!todo]` retirados**; y el **borrado físico de `03 Desarrollo/`**, que no tiene
 > permiso concedido.
 >
-> **Lo único que tiene que hacer Francisco: `! git push origin develop`.** Van **treinta y nueve** commits
+> **Lo único que tiene que hacer Francisco: `! git push origin develop`.** Van **cuarenta y uno** commits
 > sin subir —**verificado con `git rev-list --count origin/develop..develop` el 2026-08-15, no contado
 > a mano**—, **más el commit que lleva esta misma línea**, que por construcción no puede contarse a
-> sí mismo: **CUARENTA al terminar la Tanda 10 pieza A**. Falla por autenticación desde el harness, no
+> sí mismo: **CUARENTA Y DOS al terminar la Tanda 10 completa**. Falla por autenticación desde el harness, no
 > desde su máquina.
 >
 > **Este número se recalcula, NUNCA se incrementa a mano.** Ha ido mal dos veces (llegó a decir
@@ -584,6 +591,30 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
     - **Lo que no se mueve es la calidad:** HistGradientBoosting sigue **sin ganar `f1_macro`**
       (0,804 vs 0,822), y ese es el apoyo duro del argumento. **La dirección aguanta; lo que era
       falso era la formulación.**
+  - **AMPLIACIÓN del 2026-08-15 — T9 EJECUTA EL RECORTE que la TANDA 10 (pieza B) dejó ANALIZADO.**
+    El informe `Obsidian_TFG_Vault/99 Investigación/Datos repetidos en el capítulo 3.md` (513 líneas,
+    `3fadf13`) responde a la crítica del profesor y trae, para cada uno de los **15 solapes
+    verificados con línea exacta**, la acción (**recortar / unificar / remitir**), la **sede canónica**
+    y **la frase de remisión concreta** que T9 debe insertar. **Ese informe es análisis, no ejecución:
+    aquí es donde se aplica.** Cifra a sostener ante el profesor: el capítulo 3 encoge **≈20 % en
+    total** y **≈25 % en `3.1`–`3.3`** —**estimación redondeada a la decena**, sin script de conteo,
+    y así se publica—.
+    - **NO SE TOCA la sección de repetición LEGÍTIMA** que el informe valida y el auditor confirmó:
+      `3.4.1`↔`2.3.1`, la cadena `3.1.3`→`3.5.3`→`4.5` y los cierres de capítulo.
+    - **LAS TRES TRAMPAS QUE LA AUDITORÍA CAZÓ ANTES DE QUE T9 LAS PISARA, y por eso quedan escritas
+      aquí y no solo en el informe:** (1) el informe declaraba `4.3.6` «único sitio con los 17 tipos»
+      y es **FALSO** —`A.1:99-106` los enumera—, y su instrucción **habría roto una remisión buena**;
+      (2) S2 y S7 ignoraban `2.1.6:132-140`; (3) S1 creaba una **segunda redacción** del *data
+      snooping*, contra `resumen-de-decisiones.md:316-323`. **Los tres están aplicados en el informe**,
+      pero son el tipo de instrucción que se ejecuta sin releer.
+    - **El *data snooping* está en 10 sitios, no 6:** el barrido inicial de este fichero se quedaba
+      corto —faltaban `2.1.6:76-90`, `4.6:28-35`, `5.4:32` y `A.3:574-586`—. Más un solape cap. 2 ↔
+      cap. 3 (`2.2.4.5` ↔ `3.2.2`) y uno interno (`3.2.1` ↔ `3.3.3`).
+    - **HUECO DECLARADO del informe, no oculto: el barrido del capítulo 2 solo cubre `2.1.6` y
+      `2.2.4`.** Tiene ficha propia; conviene completarlo antes o durante T9.
+    - **PENDIENTE DE RECONSIDERAR DENTRO DE T9:** `2.3.3:91` **no** se repuntó al ancla `3.1.5`
+      —se dejó el wikilink a nota, convención del vault— precisamente porque T9 **renumera el
+      capítulo 3**. Al renumerar, decidir si procede el ancla.
 
 - [ ] **T10 · Capítulo 4** · Informe · `redactor-tfg`
   - `4.2`: definición correcta de las tres particiones (KDDTrain+ 125.973 · KDDTest+ 22.544 ·
@@ -1167,15 +1198,9 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > API sin respaldo en git**. **Los cinco son TEXTUALES: no mueven ninguna cifra publicada ni tocan
 > código.** **Fichar no es resolver: aquí no se ha corregido nada.**
 
-- [ ] **`2.3.3:91` remite el modelo de amenaza CONCRETO a `3.1`, que está VACÍA** (🟠) · Informe · `redactor-tfg`
-  Alta el **2026-08-15**, residuo declarado de la **TANDA 8**: es **la mitad de la corrección (c) que
-  esa tanda NO resolvió**. La tanda repuntó las remisiones de `6.1` y `A.3` a `2.3.3 §2.3.3.3`, pero
-  **`2.3.3:91` sigue apuntando a `3.1`**, que no contiene ni «amenaza» ni «adversario» — con lo que
-  el reenvío es **circular**: `6.1` y `A.3` mandan a `2.3.3`, y `2.3.3` manda a una nota vacía.
-  **La contradicción queda DECLARADA con `[!todo]` en las tres notas, que es lo único que la tanda
-  podía hacer sin decidir por Francisco.** Resolverla es **una de dos**: escribir el apartado de
-  modelo de amenaza en `3.1` (es **T9**, que ya lo tiene encargado) o repuntar `2.3.3:91`. **Necesita
-  despacho propio**: no es un repunte mecánico, es decidir dónde vive el modelo de amenaza concreto.
+> **La ficha «`2.3.3:91` remite el modelo de amenaza CONCRETO a `3.1`, que está VACÍA» (🟠) queda
+> CERRADA en la TANDA 10, pieza A** (2026-08-15, `55ef3c6`): se resolvió por la **primera** de sus dos
+> vías —escribir el apartado—, con `3.1.5 Modelo de amenaza`. Su ficha vive ya en `## Cerradas`.
 
 > **Los 20 marcadores `[CITA: …]` nuevos de la TANDA 7 (`5.0` = 5 · `6.1` = 7 · `6.2` = 8) quedan
 > CERRADOS en la TANDA 9** (2026-08-15, `e286cce`), dentro del pase en serie del `researcher`. Su
@@ -1249,6 +1274,34 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   `Bibliografía.md`, que dice «33 marcadores».** Corregir a «33 líneas con marcador» o a «36
   marcadores», el que se elija, **pero que la unidad y el número casen**.
   **No lo toca el `cronista`:** `Bibliografía.md` es del `researcher`.
+
+### Hallazgos laterales de la TANDA 10 — altas del 2026-08-15
+
+> Salen del análisis de datos repetidos del capítulo 3 (pieza B, `3fadf13`), **detectados FUERA del
+> encargo y deliberadamente SIN TOCAR**. **Ninguno es bloqueante** y **ninguno mueve una cifra
+> publicada.** **Fichar no es resolver: aquí no se ha corregido nada.**
+
+- [ ] **Los punteros al «inventario completo» de las tres decisiones apuntan a CUATRO destinos distintos** (🟡) · Informe · `redactor-tfg`
+  Alta el **2026-08-15**, verificado con línea: `4.4:17` y `4.5:17` mandan a **`4.6`**; `4.6:35` manda
+  a **`6.1`**; `5.0:99` manda a **`A.3` + `6.1`**; y `3.3:42` manda a **`4.3` + `6.1`**. Cuatro
+  destinos para el **mismo** «inventario completo», así que el lector que siga cualquiera de ellos
+  no llega al mismo sitio que el que siga otro. **Resolverlo es fijar la sede canónica y repuntar
+  las cuatro**, no elegir la más cómoda. **Encaja de forma natural en el recorte de T9**, que ya va a
+  tocar las remisiones del capítulo 3.
+
+- [ ] **`4.5:39` es INEXACTO para KNN: su `f1_macro` sí coincide entre `4.3.4` y `4.5`** (🟡) · Informe · `redactor-tfg`
+  Alta el **2026-08-15**. La afirmación de `4.5:39` no se sostiene contra los artefactos: en **KNN**
+  el `f1_macro` es **idéntico** entre `4.3.4` y `4.5` (**0,945349**). Y en **HistGradientBoosting** la
+  diferencia que se cita es **artefacto de redondeo** —**0,969377 vs 0,969391**—, no una coincidencia
+  ni una discrepancia real. **Cae en territorio de T11/T10 por fichero, pero la corrección es de una
+  línea y no espera a nada.**
+
+- [ ] **El barrido de solapes del capítulo 2 quedó INCOMPLETO: solo cubre `2.1.6` y `2.2.4`** (🟡) · Informe · `redactor-tfg`
+  Alta el **2026-08-15**, **hueco DECLARADO dentro del propio informe de la pieza B**, no descubierto
+  después. El análisis de datos repetidos barrió el capítulo 3 entero pero del capítulo 2 solo miró
+  esas dos notas, y ya con ese alcance parcial apareció **un solape cap. 2 ↔ cap. 3** (`2.2.4.5` ↔
+  `3.2.2`) y **cuatro sitios más de *data snooping***. Completarlo **antes o durante T9**: si T9
+  recorta el capítulo 3 remitiendo a un capítulo 2 sin barrer, se remite a texto que también duplica.
 
 ### Descartado — no reabrir
 
@@ -1452,6 +1505,9 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-15 | — | **TANDA 10 — dos piezas: `3.1.5 Modelo de amenaza` (pieza A) y el ANÁLISIS DE DATOS REPETIDOS del capítulo 3 (pieza B).** **Décimo commit por tanda** bajo la Decisión 7, salvo que aquí son **dos commits**, no uno: la pieza A se commiteó sola (`55ef3c6`) porque la sesión **murió por límite de API** antes de escribir la pieza B, y la B llegó en el ciclo siguiente (`3fadf13`). Ficheros: `Obsidian_TFG_Vault/03 Diseño del sistema/3.1 Requisitos del sistema.md`, `06 Conclusiones/6.1 Conclusiones.md`, `Apéndices/A.3 Ficha del sistema.md` y `99 Investigación/Datos repetidos en el capítulo 3.md` (**nuevo**). **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida, ni un `[n]` nuevo.** Lo que cierra va desglosado en las dos filas de abajo. **Deja TRES fichas nuevas abiertas** (los hallazgos laterales) y **una ampliación de T9**, que es quien ejecuta el recorte | `55ef3c6` + `3fadf13` |
+| 2026-08-15 | Informe | **`3.1.5 Modelo de amenaza` — AÑADIDA a `3.1 Requisitos del sistema`, y con ella CERRADA la ficha 🟠 «`2.3.3:91` remite el modelo de amenaza CONCRETO a `3.1`, que está VACÍA».** Fija el adversario en las **seis dimensiones** (caja negra sin observación, solo emitir tráfico, solo inferencia, estático) y sostiene **por qué NO hay experimento adversario** con **propiedades verificables del NSL-KDD** —características derivadas y agregadas, ataque en espacio de características sin correspondencia en el espacio del problema—, **no con falta de tiempo**: es un resultado, no una excusa. **DESBLOQUEA EL CIERRE DEL CAPÍTULO 2**, que remitía **dos veces** (`2.3.3:11` y `:91`) el modelo de amenaza concreto a `3.1`. **Cierra los tres `[!todo]`** que declaraban ese hueco con idéntico texto en `6.1:75`, `A.3:52` y `A.3:647`. **CORRECCIÓN AL REGISTRO, que este fichero afirmó hasta hoy: `3.1` NO estaba vacía** —tenía `3.1.1`–`3.1.4` con prosa real—, así que lo hecho es **añadir una subsección**, no redactar la nota; la ficha describía mal su propio objeto. **DECISIÓN TÉCNICA DELEGADA Y REGISTRADA: `2.3.3:91` NO se repunta al ancla `3.1.5`** — se deja el wikilink a nota, que es la convención del vault, porque **T9 va a renumerar el capítulo 3**. **Se reconsidera tras T9**, y queda anotado dentro de su ficha | `55ef3c6` |
+| 2026-08-15 | Informe | **El ANÁLISIS DE DATOS REPETIDOS del capítulo 3 — ENTREGADO: `Obsidian_TFG_Vault/99 Investigación/Datos repetidos en el capítulo 3.md`, 513 líneas.** Responde a la crítica del profesor sobre recortar y unificar «los primeros apartados del Capítulo 3». **ES ANÁLISIS, NO EJECUCIÓN: el recorte lo aplica T9**, y así queda anotado en su ficha. **15 solapes verificados con línea exacta**, cada uno con **recortar / unificar / remitir**, **sede canónica** y **la frase de remisión concreta** a insertar. **El barrido inicial que este fichero traía se quedaba corto: el *data snooping* está en 10 sitios, no 6** —faltaban `2.1.6:76-90`, `4.6:28-35`, `5.4:32` y `A.3:574-586`—, más un solape cap. 2 ↔ cap. 3 (`2.2.4.5` ↔ `3.2.2`) y uno interno (`3.2.1` ↔ `3.3.3`). **Cifra para el profesor: el capítulo 3 encoge ≈20 % en total y ≈25 % en `3.1`–`3.3`.** **Sección de repetición LEGÍTIMA, validada por el auditor, que NO se toca:** `3.4.1`↔`2.3.1`, la cadena `3.1.3`→`3.5.3`→`4.5` y los cierres de capítulo — decir qué repetición se conserva es tan parte de la respuesta como decir cuál se corta. `auditor-ml`: **APTO CON CAMBIOS**, 8 puntos, **ningún 🔴, todos aplicados**; y **los tres graves eran TRAMPAS PARA T9**, por eso quedan escritos: (1) el informe declaraba `4.3.6` «único sitio con los 17 tipos» y es **falso** —`A.1:99-106` los enumera—, con una instrucción que **habría roto una remisión buena**; (2) S2 y S7 ignoraban `2.1.6:132-140`; (3) S1 creaba una **segunda redacción** del *data snooping* contra `resumen-de-decisiones.md:316-323`. **DOS HUECOS DECLARADOS DENTRO DEL INFORME, no ocultos:** el barrido del capítulo 2 solo cubre `2.1.6` y `2.2.4` (ficha propia abierta), y los porcentajes son **estimación redondeada a la decena** —no hay script de conteo—; **decisión técnica registrada: se publican redondeados, y si algún día se cuenta con script, se sustituyen** | `3fadf13` |
 | 2026-08-15 | — | **TANDA 9 — el pase EN SERIE del `researcher`, `[CITA: …]` → `[n]`: la dependencia declarada que bloqueaba el resto del track Informe, LEVANTADA.** **23 marcadores MAPEADOS** a entradas existentes y **13 resueltos con 10 ALTAS NUEVAS, `[58]`–`[67]`**, todas verificadas contra **Crossref o la web del editor**. Ficheros: `Obsidian_TFG_Vault/Bibliografía.md`, `4.2`, `5.0`, `6.1`, `6.2`, `A.3`, `EL_FUTURO.md` y `99 Investigación/`. **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida.** **Noveno commit por tanda** bajo la Decisión 7. `auditor-ml`: **APTO CON CAMBIOS, sin ningún 🔴**. **Y esta vez EL DESASTRE DE LA TANDA 6 NO SE REPRODUJO, y queda escrito porque era el riesgo entero del pase: el hilo principal verificó los invariantes POR SU CUENTA CONTRA DISCO, sin fiarse del parte** — comparó las altas de `Bibliografía.md` contra **todos** los `[n]` usados en las notas y **no hay ni una nota apuntando a una entrada inexistente**; **`[9]` sigue QUEMADA**; **`2.2.1:32` ya está repuntada a `[8]`**; y los `[CITA:` que quedan en `4.2` y en `Bibliografía.md` son **prosa sobre la conversión, no marcadores pendientes**. **Deja 5 residuos fichados, ninguno bloqueante**, más la reapertura declarada de la corrección (6) de la Tanda 5 | `e286cce` |
 | 2026-08-15 | Informe | **La ficha «Reconciliar el contador de citas: convertir `[CITA: …]` a `[n]` y dar de alta en `Bibliografía.md`» (🟠) — CERRADA.** Abierta en el cierre de sesión del 2026-08-13 como **deuda garantizada del paralelismo**, era la última superviviente de aquellas tres altas. **Se cierra sobre conteo contra disco, no sobre el parte del agente.** **EL CONTADOR GLOBAL QUEDA ASÍ: 66 entradas, `[1]`–`[8]` y `[10]`–`[67]`, `[9]` quemada, PRIMER LIBRE EL `[68]`** — actualizado en el bloque de PRÓXIMOS PASOS, que es el único sitio de este fichero donde se mantiene esa cifra. **El rango se cuenta, no se recuerda** (`grep -oE '^\| *\[[0-9]+\]' Bibliografía.md`): **ha ido mal dos veces el mismo 2026-08-15**, y si se queda desfasado la próxima tanda arranca en el `[58]` y **machaca en silencio las diez altas de hoy**. **NO cierra dos cosas que arrastraba:** `[6]` (Goodfellow) **sigue huérfana** —depende de T24— y la **corrección (6) de la Tanda 5** sigue viva, con su omisión verificada | `e286cce` |
 | 2026-08-15 | Informe | **Los 20 marcadores `[CITA: …]` de la TANDA 7 (`5.0`=5, `6.1`=7, `6.2`=8), los 7 de `A.3`, los 3 de `EL_FUTURO.md` y los 6 de `4.2` — LAS CUATRO FICHAS, CERRADAS.** Es el **inventario entero** que este fichero había ido reuniendo a trompicones —y que hasta el 2026-08-15 estaba **incompleto**: solo registraba los 6 de `4.2`—. Se resuelven **todas en el mismo pase en serie**, que era la condición que las cuatro fichas exigían por separado. **`EL_FUTURO.md` era además dependencia de T12**, porque `6.2` se redacta desde él: queda servida. **Cero `[n]` inventados por los redactores en toda la cadena de tandas paralelas** — el protocolo de citas se cumplió de punta a punta, que era su única prueba real | `e286cce` |
