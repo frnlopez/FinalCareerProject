@@ -245,6 +245,45 @@ usa la literatura ES `baseline.py`, y ya se demostró que colapsa (recall 0-day 
 firmas es una pieza de la etapa 2; la aportación del TFG es la **cascada + detección 0-day**,
 no el algoritmo. Las vías para diferenciarse más se acumulan en `EL_FUTURO.md` (creado hoy).
 
+> **NOTA FECHADA — 2026-08-14: la elección del algoritmo ganador de cada etapa SÍ miró D2.**
+> El texto de H-2 y H-3 se conserva **tal cual** como historial; esto es un añadido que declara
+> una desviación del protocolo ideal detectada al auditar la formulación de la regla, no una
+> corrección del texto anterior.
+>
+> **1. Qué se decidió mirando D2.**
+> - **H-2 (arriba, «Contexto»):** el Autoencoder se da por ganador «por AUC-ROC/F1 en 54 y 122».
+>   Esas son métricas **de D2**, las reportadas en 5.1. El código lo documenta igual:
+>   `hibrido.py:16` («Detector por defecto = Autoencoder (mejor en 5.1)») y la ayuda del flag
+>   `--detector` en `hibrido.py:755` («por defecto Autoencoder, el mejor en 5.1; H-2»).
+> - **H-3 (arriba, «Contexto»):** RandomForest se elige porque en 54 gana con **f1_macro D2 =
+>   0.822** (frente a KNN 0.753 y RF 0.696 en 122). El criterio está enunciado sobre D2 de forma
+>   literal en la propia decisión.
+>
+> **2. Cuál es la regla realmente vigente**, y es más estrecha que la que se venía enunciando.
+> La que declara el código en `anomalias.py:18-22` es: *«D2 es INTOCABLE **para ajustar
+> hiperparámetros o el umbral**»* (y, en la línea siguiente, «Selección de hiperparámetros: […]
+> Jamás D2»). Es decir: la prohibición cubre **hiperparámetros y umbral**, no la comparación
+> final entre algoritmos. La formulación general que circulaba por las notas —«ninguna decisión
+> se toma mirando D2»— es **más amplia y falsa**, porque la elección de detector y de
+> clasificador se apoyó justamente en D2. Esa formulación se ha corregido hoy en las notas del
+> vault; a partir de aquí la que vale es la del código, con esta desviación declarada.
+>
+> **3. Qué SÍ quedó limpio** (para que esto no se lea como enmienda a la totalidad):
+> - **Selección de configuración DENTRO de cada algoritmo de la etapa 1:** por AUC-ROC sobre
+>   `D1_val` + una muestra de D3, nunca D2 (`anomalias.py:281`, `_seleccionar_config`).
+> - **Hiperparámetros de firmas:** `GridSearchCV` con `StratifiedKFold(5)` y `f1_macro` **sobre
+>   D3** (`firmas.py:16-18`, `:133`).
+> - **Umbral de anomalías:** percentil 95 sobre `D1_val`, igual para los cuatro detectores
+>   (`anomalias.py:22`).
+> - **`UMBRAL_CONF`:** calibrado con probabilidades *out-of-fold* sobre D3 vía
+>   `cross_val_predict` (`_calibrar_umbral_conf`, `hibrido.py:247`), y con **blindaje
+>   estructural**: la función **no recibe D2 en su firma** (P-4; `hibrido.py:20-23`).
+>
+> **4. Encuadre y qué se hace con ello.** Es un caso de **data snooping en la selección de
+> modelo** (P5/P3 de Arp et al.). Se **declara, no se corrige a posteriori**: rehacer la elección
+> de detector y clasificador sin mirar D2 obligaría a rehacer el capítulo 5 entero. Declararlo es
+> más defendible que negarlo, y entra en el inventario de limitaciones de **6.1**.
+
 ### H-4 — Criterio de calibración de `UMBRAL_CONF` → **presupuesto τ=2pp sobre OOF + tabla de sensibilidad en D2**
 
 **Contexto.** Q4 fijó los datos (probas OOF de D3 vía `cross_val_predict`, nunca D2) y el rango

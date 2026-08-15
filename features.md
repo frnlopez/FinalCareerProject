@@ -264,6 +264,31 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 
 ## Abiertas
 
+- [ ] 🔴 **47 CITAS COLGANDO: el vault usa `[11]`–`[57]` y NINGUNA existe en `Bibliografía.md`** · Ninguno · `researcher`
+  Alta el **2026-08-15**, escrita **por el hilo principal**, no por el `cronista`: el límite de sesión
+  de la API impedía despacharlo, y dejar esto sin ficha era el peor resultado posible.
+  **Qué pasó:** el `researcher` ejecutó el pase en serie de `[CITA: …]` → `[n]` del final de la Fase 4
+  y **murió por límite de sesión con el trabajo a medias**. Convirtió **todos** los marcadores
+  —**cero `[CITA: …]` quedan en el vault**— asignando `[11]` hasta `[57]`, **47 números nuevos**, y
+  cayó **antes de dar de alta una sola entrada en `Bibliografía.md`**, que sigue exactamente igual
+  que antes: `[1]`–`[8]` y `[10]`.
+  **Por qué es 🔴 y no una tarea más:** el estado intermedio es **peor que el de partida**. Un
+  `[CITA: …]` es un marcador visible que grita que falta trabajo; un `[47]` que no existe **parece
+  una cita legítima** y no lo delata nada al leer. Si alguien vuelca el vault al `.docx` en este
+  estado, la memoria sale con 47 referencias inventadas.
+  **Se preservó en commit a propósito** (`b6ff5b1`), en vez de revertirlo: son 47 conversiones
+  hechas en serie y coherentes entre sí, caras de rehacer. Pero **no es trabajo terminado y no debe
+  leerse como tal**.
+  **Alcance real, mayor que el encargado:** se pidió barrer el **capítulo 2** y el pase tocó además
+  `03 Diseño del sistema/3.3`, `04 Implementación/4.4`, `4.5`, `4.6`, `05 Evaluación/5.1`, `5.2`,
+  `5.4`, `06 Conclusiones/6.1` y `Apéndices/A.3`. Hay que verificar esos también.
+  **Qué hay que hacer:** reconstruir la correspondencia `[n]` → fuente leyendo cada sitio de cita
+  —el mapa solo existe implícito en el texto—, dar de alta las 47 en `Bibliografía.md` con su nivel
+  declarado, y **verificar que `[2]` (Anderson 1980) y `[3]` (Denning 1987) se mapearon y no se
+  duplicaron**, que era el riesgo declarado del encargo. Confirmar también que **`[9]` no se ha
+  reutilizado**: está retirada sin renumerar (`396e283`), o sea quemada.
+  **Va antes que cualquier redacción nueva.**
+
 - [ ] **Diagrama y README de agentes describen la arquitectura anterior** · Código · `ml-implementador`
   Detectado el 2026-08-01. `Implementacion/diagramas/README.md:10` y
   `Implementacion/diagramas/03_orquestacion_agentes.mmd` documentan el ciclo «orquestador →
@@ -471,9 +496,12 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
     envenenamiento del entrenamiento. **Y la razón citada de por qué no hay experimento adversario:**
     muchas características de NSL-KDD son derivadas y agregadas (`count`, `srv_count`, tráfico-host,
     contenido); perturbarlas libremente produce vectores que ningún atacante real puede generar —un
-    ataque en espacio de características sin correspondencia en el espacio del problema, que es otro
-    de los errores que Arp et al. documentan. **Intentar P10 a fondo con este dataset incumpliría
-    otro pitfall del mismo artículo.** Eso es un resultado, no una excusa.
+    ataque en espacio de características sin correspondencia en el espacio del problema. **Esa
+    distinción (*feature space* / *problem space*) es de Pierazzi et al., «Intriguing Properties of
+    Adversarial ML Attacks in the Problem Space», NO de Arp et al.** —mismo error ya corregido en
+    la nota `2.3.3`; no reintroducirlo. **Intentar P10 a fondo con este dataset produciría
+    exactamente ese ataque irrealizable en el espacio del problema.** Eso es un resultado, no una
+    excusa.
   - `3.2.2`: por qué anomalías primero. Tres patas: diseño (la etapa 2 no conoce `normal`), cobertura
     (Tombini et al. 2004), y el *semantic gap* de Sommer y Paxson 2010 —la etapa 2 no existe para
     detectar sino para **traducir** «esto es anómalo» en «esto es un `dos`»—. Más **Kim et al. 2014
