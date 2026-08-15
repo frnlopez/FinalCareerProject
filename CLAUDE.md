@@ -221,10 +221,15 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
     `[5, cap. 1]`, `[39, pp. 17-25]`. **No consume número del contador global**: `[8, p. 45]` y
     `[8, p. 90]` son la misma entrada `[8]`. En `[CITA: …]` igual: `[CITA: Géron, cap. 1]`.
   - **Solo es obligatorio en libros y documentos largos.** En artículos de revista o congreso, IEEE
-    no pide más que lo que `Bibliografía.md` ya registra. **Son 8 los libros afectados**: `[4]` Chio,
-    `[5]` Géron, `[6]` Goodfellow, `[7]` Murphy, `[8]` Stallings, `[12]` Hastie y `[39]` Russell y
-    Norvig. Ojo con el falso amigo: los `pp. 222-232` que ya aparecen son **el rango del artículo en
-    su revista**, metadato de la referencia, **no** el localizador de la afirmación.
+    no pide más que lo que `Bibliografía.md` ya registra. **Son 8 los libros afectados, y esta es la
+    lista completa**: `[4]` Chio, `[5]` Géron, `[6]` Goodfellow, `[7]` Murphy, `[8]` Stallings,
+    `[12]` Hastie, `[39]` Russell y Norvig, y **`[54]` Molnar**. Ojo con el falso amigo: los
+    `pp. 222-232` que ya aparecen son **el rango del artículo en su revista**, metadato de la
+    referencia, **no** el localizador de la afirmación.
+  - **Dos avisos sobre esa lista, verificados el 2026-08-15:** `[6]` Goodfellow **está huérfana en
+    todo el vault** —no la cita nadie, así que no puede recibir localizador hasta que **T24** la
+    ancle—; y `[54]` Molnar **tiene la edición sin fijar** (la web sirve hoy la 3.ª, la literatura
+    cita la 2.ª de 2022), así que su página depende de qué edición se elija.
   - **`Bibliografía.md` gana una columna «Localizador por uso»**, que escribe **solo el `researcher`**.
   - **Donde la página no se pueda establecer con honestidad, se MARCA — no se inventa.** Misma
     disciplina que con las 47 citas reconstruidas.

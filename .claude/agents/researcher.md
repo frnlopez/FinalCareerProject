@@ -111,8 +111,12 @@ ya no lo toca. Es un fichero del usuario y tu mano llega hasta aquí:
   página**. Anota el **capítulo o página concretos donde vive cada afirmación citada**, no el rango
   del artículo en su revista —los `pp. 222-232` que ya hay son metadato de la referencia, **no**
   localizador—. **Obligatorio solo en libros y documentos largos**; en artículos, lo que ya hay
-  basta. Los libros son 8: `[4]` Chio, `[5]` Géron, `[6]` Goodfellow, `[7]` Murphy, `[8]` Stallings,
-  `[12]` Hastie y `[39]` Russell y Norvig. En las notas el marcador admite `[8, p. 45]` o
+  basta. **Los libros son 8, lista completa**: `[4]` Chio, `[5]` Géron, `[6]` Goodfellow,
+  `[7]` Murphy, `[8]` Stallings, `[12]` Hastie, `[39]` Russell y Norvig, y `[54]` Molnar. **Dos de
+  ellos no los puedes cerrar todavía y no es culpa tuya:** `[6]` Goodfellow **está huérfana en todo
+  el vault** —nadie la cita, su anclaje depende de **T24**— y `[54]` Molnar **tiene la edición sin
+  fijar** (la web sirve hoy la 3.ª, la literatura cita la 2.ª de 2022), así que la página depende de
+  esa elección. Márcalos, no los fuerces. En las notas el marcador admite `[8, p. 45]` o
   `[5, cap. 1]`, que **no consumen número nuevo**: siguen siendo la entrada `[8]` y la `[5]`.
   **La página que no puedas establecer con honestidad, la MARCAS como no establecida. No la
   inventas** — misma disciplina que con las 47 citas reconstruidas.

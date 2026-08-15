@@ -30,10 +30,10 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > **El árbol está LIMPIO y la Tanda 2 está cerrada.** No hay nada a medias, no hay ninguna ejecución
 > colgada y no hay que relanzar nada. La sesión se cortó por presupuesto, no por un problema.
 >
-> **Lo único que tiene que hacer Francisco: `! git push origin develop`.** Van **veintiocho** commits
+> **Lo único que tiene que hacer Francisco: `! git push origin develop`.** Van **treinta y uno** commits
 > sin subir —**verificado con `git rev-list --count origin/develop..develop` el 2026-08-15, no contado
 > a mano**—, **más el commit que lleva esta misma línea**, que por construcción no puede contarse a
-> sí mismo: **VEINTINUEVE al terminar la Tanda 6**. Falla por autenticación desde el harness, no
+> sí mismo: **TREINTA Y DOS al terminar la Tanda 7**. Falla por autenticación desde el harness, no
 > desde su máquina.
 >
 > **Este número se recalcula, NUNCA se incrementa a mano.** Ha ido mal dos veces (llegó a decir
@@ -119,8 +119,8 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > estampados y el cierre de sesión de ese día) y **`cbdd084`, el commit de la TANDA 3**. **El recuento
 > al cerrar la Tanda 3 fueron DIECISIETE**, verificado con `git rev-list --count origin/develop..develop` el
 > 2026-08-14, más el commit que estampó `cbdd084`, que por construcción no podía llevarlo aquí:
-> **dieciocho**. **Ese «dieciocho» YA NO ES VIGENTE** —el vigente son los **veintinueve** de arriba,
-> tomados el 2026-08-15—. **Las cifras «once», «trece» y «catorce» de este párrafo son la traza histórica de
+> **dieciocho**. **Ese «dieciocho» YA NO ES VIGENTE** —el vigente son los **treinta y dos** de arriba,
+> tomados el 2026-08-15 al cerrar la Tanda 7—. **Las cifras «once», «trece» y «catorce» de este párrafo son la traza histórica de
 > cómo fue creciendo, no recuentos vigentes** — el número que vale es el de arriba, y se recalcula con
 > git, nunca a mano. En este fichero no se escribe ningún hash
 > inventado. Sigue fallando por **autenticación desde el harness**, así que **el `push` lo tiene
@@ -426,37 +426,21 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
       indicio interno para decidir; **no valen como evidencia citable en la memoria**. Las de la 42 sí
       están en disco y versionadas.
 
-- [ ] **T5 · `5.0 Protocolo de evaluación`** · Informe · `redactor-tfg`
-  Nota nueva, antes de `5.1`. Recoge junto lo que hoy está disperso en Q4, Q6, H-1…H-7 y P-1…P-5 de
-  `resumen-de-decisiones.md` (documento interno que no va a la memoria) y le pone cita de nivel 1:
-  particiones y su función, lo congelado entre variantes, métricas obligatorias, prohibiciones
-  explícitas, y el vocabulario de Pineau et al. (*reproducible* / *replicable* / *robust* /
-  *generalisable*) usado con precisión.
-  - **Los C1-C7 aparecen aquí reflexivamente**, con la frase que les da sentido: *el mismo filtro que
-    se exige a las cifras ajenas hay que pasarlo uno mismo*. Y **se cuenta el arreglo**: C3 y C6 no
-    se cumplían, el caso concreto de la columna homónima, y qué hubo que cambiar. Contar la
-    corrección —y no solo exhibir siete verdes— es lo que separa la autocrítica de la
-    autocomplacencia.
-  - Auditoría C1-C7 verificada contra disco: **C1** D2 = 22.544 exactas · **C2** D1/D3 declarados ·
-    **C3** fallaba, lo arregla T1 · **C4** `bin_fpr` en las 4 tablas (P-2) · **C5 cumple, verificado
-    línea a línea**: one-hot alineado sobre la unión D1+D3 descartando categorías exclusivas de D2
-    (`program.py:292-298`), escalador ajustado solo sobre D1+D3 (`:316`), `LabelEncoder` sobre el
-    diccionario estático `attack_mapping` (`:321-328`), RF de selección solo con train (`:500`) ·
-    **C6** fallaba, lo arregla T1 · **C7** los 17 tipos nativos.
+> **T5 — CERRADA el 2026-08-15 en la TANDA 7** (ver `## Cerradas`).
+> `Obsidian_TFG_Vault/05 Evaluación/5.0 Protocolo de evaluación.md` existe: **nota nueva de 191
+> líneas**, íntegra en disco, que cubre el encargo punto por punto **incluido el arreglo de C3/C6
+> contado**, con el caso concreto de la columna `accuracy_D2` homónima. **No se vuelve a encargar.**
+> Lo que deja vivo tiene ficha propia: **5 de los 20 `[CITA: …]` nuevos** son de esta nota, y dos de
+> los **5 hallazgos 🔴** de su auditoría. Se deja esta línea para que nadie la vuelva a despachar; el
+> encargo original vive en git.
 
-- [ ] **T6 · Apartado «Límites de lo medible con NSL-KDD» dentro de `6.1`** · Informe · `redactor-tfg`
-  En el **cuerpo, no en apéndice**: los apéndices no se leen y el argumento solo funciona si se ve.
-  Cada límite con su razón técnica, su cita, y **lo que sí se hizo en su lugar**. Inventario:
-  - Sin marca de tiempo → no hay deriva temporal ni aprendizaje continuo (ver T12).
-  - Sin despliegue real → **P9** de Arp et al., cubierto en sus dos mitades viables (T1 y T11).
-  - Sin adversario adaptativo → **P10**, cubierto por escrito (T9).
-  - Una sola semilla → resuelto por T4; lo que quede, declarado.
-  - Umbralizar un clasificador cerrado no acota el riesgo de espacio abierto → Scheirer et al.
-    explica el 13,4 % (T11).
-  - Los 0-day de NSL-KDD son ataques ausentes del train, **no amenazas actuales** → Khraisat et al.
-    2019 («los datasets KDD/DARPA ya no representan los *zero-day* contemporáneos»).
-  - **Resultado a escribir:** de los diez pitfalls de Arp et al., ocho cubiertos y dos cubiertos
-    hasta donde el dataset permite, con la razón técnica escrita. No «P9 y P10 no aplican a un TFG».
+> **T6 — CERRADA el 2026-08-15 en la TANDA 7** (ver `## Cerradas`). El apartado **`6.1.4`** existe
+> dentro de `Obsidian_TFG_Vault/06 Conclusiones/6.1 Conclusiones.md` (**+77 líneas**), en el **cuerpo
+> y no en apéndice** como pedía el encargo, con los **seis límites** y la **tabla P1-P10**. **No se
+> vuelve a encargar.** Lo que deja vivo tiene ficha propia: **7 de los 20 `[CITA: …]` nuevos** son de
+> esta nota, y **cuatro de los 5 hallazgos 🔴** de su auditoría caen dentro de ella —incluido el que
+> se enlaza con **T21**—. Se deja esta línea para que nadie la vuelva a despachar; el encargo
+> original vive en git.
 
 - [ ] **Residuos de `A.3` (T7 cerrada el 2026-08-14)** · Informe · `redactor-tfg` / `researcher`
   **T7 está CERRADA** (ver `## Cerradas`): la nota
@@ -469,8 +453,11 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   - **Dos `> [!todo]` vivos DENTRO de la nota, ninguno resoluble hoy:**
     - `A.3:574` — **caracterización de los seis ítems no-FT** del checklist de Pineau. Requiere el
       **checklist original**; sin él, nombrarlos sería inventarlos. Depende de acceso a la fuente.
-    - `A.3:159` — **remisión a `5.0`**, que **no existe todavía**: es **T5**. Se resuelve al cerrar
-      T5, no antes.
+    - ~~`A.3:159` — **remisión a `5.0`**, que **no existe todavía**: es **T5**.~~ **T5 está CERRADA
+      el 2026-08-15 y `5.0` YA EXISTE**, así que la precondición desapareció — pero **el `[!todo]`
+      sigue en disco**, ahora **desplazado a `A.3:176-180`** y **afirmando en presente que `5.0` no
+      existe**. Es una de las seis afirmaciones desmentidas por disco: ver la ficha de residuos de la
+      Tanda 7, más abajo. **Se retira allí, no aquí.**
 
 - [~] **T8 · Cita en el punto de la decisión — capítulo 2** · Informe · `redactor-tfg`
   - **Estado a 2026-08-14: PARCIALMENTE CERRADA — solo la parte de `2.2.3`/`2.2.4`**, escrita en la
@@ -668,20 +655,14 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
     citan y se interpretan. Registrado como decisión en `resumen-de-decisiones.md`
     (§ Decisiones del 2026-08-11).
 
-- [ ] **T12 · `6.2 Líneas futuras`, borrador desde `EL_FUTURO.md`** · Informe · `redactor-tfg`
-  El aprendizaje continuo aparece **fusionado en tres peldaños encadenados**, nunca como línea
-  independiente: (1) migrar a un dataset con reloj —CIC-IDS2017 tiene marca de tiempo verificada,
-  cinco días laborables consecutivos—; (2) análisis de deriva temporal con protocolo TESSERACT;
-  (3) representación de secuencia (sesión o *host* como secuencia de flujos), que conecta con algo ya
-  demostrado con datos propios: `snmpgetattack` (n=178) lo fallan los cuatro detectores en ambos sets
-  porque apenas perturba las características **por flujo**. NL solo se menciona en el peldaño 3, como
-  lo que lo volvería aplicable en sentido literal.
-  - **Prohibición de redacción 1:** no llamar «Nested Learning» a un bucle de `partial_fit` — es
-    aprendizaje incremental clásico, anterior a NL en décadas, y la parte de NL que quedaría fuera es
-    precisamente la que lo hace NL.
-  - **Prohibición de redacción 2:** no presentar un troceo de D1 o D3 como análisis de deriva —
-    sería un artefacto: la partición la elegiría el experimentador.
-  - Formulación de respaldo para el veredicto de NL: la del §E del informe de NL, **íntegra**.
+> **T12 — CERRADA el 2026-08-15 en la TANDA 7** (ver `## Cerradas`).
+> `Obsidian_TFG_Vault/06 Conclusiones/6.2 Líneas futuras.md` pasa de **placeholder** (688 B, una de
+> las tres notas vacías del recuento) a **documento entero**: **+341/-8 líneas**, redactado desde
+> `EL_FUTURO.md`. **No se vuelve a encargar.** Recordatorio para la revisión final, que sigue siendo
+> de Francisco por la decisión marco (b): **`6.2` es borrador de agente con revisión suya**, y esa
+> revisión **no** está hecha. Lo que deja vivo tiene ficha propia: **8 de los 20 `[CITA: …]` nuevos**
+> son de esta nota, y el hallazgo 🔴 **(a)** —el `[!todo]` falso del 13,4 % en `6.2:84-88`—. Se deja
+> esta línea para que nadie la vuelva a despachar; el encargo original vive en git.
 
 - [ ] **T14 · Cerrar las verificaciones pendientes** · — · `researcher`
   Francisco **no tiene acceso institucional**. **Esta es la ficha ejecutable y el inventario completo
@@ -830,6 +811,15 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
     `Bibliografía.md:32`, retirar el aviso de `Bibliografía.md:86` si ya no procede, y corregir el
     error de `Obsidian_TFG_Vault/99 Investigación/Auditoría de Bibliografía.md:140`, que afirma que
     «`[6]` se usa bien en otros sitios y se queda» — **es falso**.
+  - **AVISO DEL 2026-08-15, verificado contra disco: LOS TRES NÚMEROS DE LÍNEA DE ARRIBA ESTÁN
+    DESPLAZADOS.** El callout que la **Tanda 6** insertó en `Bibliografía.md` corrió el fichero hacia
+    abajo, así que `:32` y `:86` **ya no apuntan a lo que esta ficha dice que apuntan**. **Quien
+    ejecute T25 localiza por CONTENIDO, no por número de línea**, y de paso re-ancla las tres
+    referencias. Es el mismo defecto que este proyecto arrastra con los sellos de commit: una cita
+    por posición envejece sola.
+  - **Y confirmado el mismo día: `[6]` (Goodfellow) sigue HUÉRFANA en TODO el vault** — cero
+    ocurrencias fuera de `Bibliografía.md`. El anclaje decidido (bloque de redes neuronales de
+    `2.1.4`) **exige antes T24**, que no está hecha: **T25 no se puede cerrar sola.**
 
 ### Migración de `next-steps.md` §3.2 — altas del 2026-08-11
 
@@ -858,17 +848,25 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > cuarta observación de esa auditoría —el «~33 %» de DoS de `4.2:72`, que está sobre D2 entero y no
 > sobre sus ataques (**58,1 %**)— **no abre ficha: es preexistente y queda anclada dentro de T10**.
 
-- [ ] **Las figuras de validación de `assets\` van por detrás de `Resultados\figuras\`** (🟠) · Informe · `redactor-tfg`
+- [~] **Las figuras de validación de `assets\` van por detrás de `Resultados\figuras\`** (🟠) · Informe · `redactor-tfg`
   Dos mitades del **mismo** trabajo —copiar de `Resultados\figuras\` a `Obsidian_TFG_Vault\assets\` y
   embeber—, por eso van en **una sola ficha**:
-  1. `Obsidian_TFG_Vault\assets\validacion_drift_ks.png` es de una **corrida anterior** (sus rótulos
-     no llevan el «(A)») mientras el callout de la nota la da por **vigente**. **Las cifras coinciden,
-     así que no invalida nada de lo escrito**; hay que **re-copiarla** desde `Resultados\figuras\`.
-  2. **Las figuras de (B) existen en `Resultados\figuras\` pero NO están en `assets\`**, así que la
-     pasada del 2026-08-12 **no pudo embeberlas** y dejó un **`> [!todo]` vivo** en la nota. Ese
-     `[!todo]` se retira **al copiarlas y embeberlas**, no antes.
+  1. ~~`Obsidian_TFG_Vault\assets\validacion_drift_ks.png` es de una **corrida anterior** (sus rótulos
+     no llevan el «(A)») mientras el callout de la nota la da por **vigente**.~~ **HECHO el
+     2026-08-15 en la TANDA 7:** re-copiada desde `Resultados\figuras\`, ya **con el prefijo «(A)»**
+     en los rótulos.
+  2. ~~**Las figuras de (B) existen en `Resultados\figuras\` pero NO están en `assets\`**~~ **COPIADAS
+     el 2026-08-15 en la TANDA 7:** `validacion_drift_ks_comparativa.png` y
+     `validacion_drift_ks_d2_normales.png` ya están en `assets\`. Las tres son **byte-idénticas por
+     MD5** a su origen en `Resultados\figuras\`. **Copiar solo las tres del set de 54 es deliberado y
+     correcto:** `4.2:120` declara que solo se publica esa variante.
+  - **LA MITAD «COPIAR» QUEDA CERRADA; LA MITAD «EMBEBER», NO.** Sigue vivo el **`> [!todo]` de la
+    nota**, que se retira al embeber las figuras de (B) en `4.2`, no al copiarlas. **Esto es lo único
+    que mantiene la ficha abierta**, y por eso pasa a `[~]`.
   - **Va ANTES de T10**, por el mismo motivo que iban sus dos fichas madre: si T10 vuelca `4.2` tal
     cual, publica una figura que no corresponde a la medición que el texto describe.
+  - **Residuo detectado al copiar, con ficha propia más abajo:** `4.2:117-118` sigue afirmando que
+    las figuras **«aún no se han copiado»**, y desde el 2026-08-15 eso es **falso**.
 
 > **La segunda ficha de esta sección —«Dos imprecisiones de una línea en `4.2`»— se CERRÓ el
 > 2026-08-14** en la Fase 1 del plan de cierre, junto con la del sello de `4.2:145` (ver
@@ -1021,7 +1019,17 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > dejó vivo, con ficha propia:** el `> [!todo]` del **diagrama de bloques del NIDS** en `2.2.2`
 > (mismo cuello de `assets/` que bloquea T10) y las **7 correcciones de la Tanda 5**.
 
-- [ ] **Las 7 correcciones de la auditoría de la TANDA 5 — bloque CROSS-FILE, NO paralelizable** · Informe · `redactor-tfg`
+- [~] **Las 7 correcciones de la auditoría de la TANDA 5 — bloque CROSS-FILE, NO paralelizable** · Informe · `redactor-tfg`
+  > **VERIFICADO CONTRA DISCO EL 2026-08-15: las correcciones (2), (3), (4) y (7) YA ESTÁN HECHAS.**
+  > Las absorbió el pase de la **TANDA 6** sin registrarlo aquí, así que `features.md` iba **por
+  > detrás del disco** — esta vez **en la dirección buena**, que es la menos peligrosa de las dos
+  > pero igual de indeseable. **No se vuelven a despachar.**
+  > **SIGUEN VIVAS TRES:** la **(1)**, que es **decisión de Francisco** sobre `2.1.5` (redactarla o
+  > reescribir las tres remisiones) y por tanto **no la cierra un agente**; la **(5)**, **PARCIAL** —
+  > `2.1.6:82` **todavía adelanta el 0,822**—; y la **(6)**, que es del **`researcher`** y va en su
+  > pase en serie. **Con (4) y (7) hechas, lo que queda YA NO ES CROSS-FILE**: la (5) es local a
+  > `2.1.6` y la (1) es una decisión. El aviso de «no paralelizable» de abajo se conserva como
+  > historial de por qué se despachó en serie, **no como restricción vigente**.
   Alta el **2026-08-14**. `auditor-ml` dictaminó **APTO CON CAMBIOS** sobre la Tanda 5 y **se
   commiteó igualmente con las 7 abiertas, por decisión de Francisco**: el trabajo estaba escrito y
   **sin respaldo en git tras un corte por límite de sesión**, así que se priorizó preservarlo. Esta
@@ -1050,7 +1058,10 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
     (que es trabajo del bloque `2.1`, no de esta corrección) o reescribir las tres remisiones.**
     **Esta viñeta es también el residuo vivo de T8** (ver su ficha).
 
-- [ ] **Las 3 correcciones LOCALES de la auditoría de la TANDA 5** · Informe · `redactor-tfg` / `researcher`
+- [~] **Las 3 correcciones LOCALES de la auditoría de la TANDA 5** · Informe · `redactor-tfg` / `researcher`
+  > **VERIFICADO CONTRA DISCO EL 2026-08-15: las correcciones (2) y (3) YA ESTÁN HECHAS**, absorbidas
+  > por el pase de la **TANDA 6** sin registrarlo. **No se vuelven a despachar.** **Vive solo la
+  > (6)**, que es del **`researcher`** y entra en su pase en serie.
   Alta el **2026-08-14**, misma auditoría que la ficha de arriba. **Estas tres sí son locales a un
   fichero**, así que pueden ir sueltas — pero **el punto 6 no lo toca un redactor**.
   - **(2) `2.3.3:50` promete un resultado que NO EXISTE.** El callout «Alcance de este trabajo»
@@ -1105,6 +1116,73 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   - **Va al FINAL DE CADA FASE de redacción, no una sola vez al final del plan** — si se acumula,
     reaparece el solapamiento silencioso de `[n]` que el protocolo de citas existe para evitar.
   - Lo ejecuta **solo el `researcher`**, único que escribe `Bibliografía.md`, y **en serie**.
+
+### Residuos de la TANDA 7 — altas del 2026-08-15
+
+> Salen de la **auditoría rehecha de la TANDA 7** (la original murió por límite de API) y de la
+> verificación contra disco al cerrarla. **La tanda se commiteó con dictamen NO APTO y 5 🔴 abiertos**,
+> por el precedente que Francisco ratificó en la Tanda 5 y porque el trabajo llevaba **tres cortes de
+> API sin respaldo en git**. **Los cinco son TEXTUALES: no mueven ninguna cifra publicada ni tocan
+> código.** **Fichar no es resolver: aquí no se ha corregido nada.**
+
+- [ ] **Los 5 hallazgos 🔴 de la auditoría de la TANDA 7 — afirmaciones que los propios artefactos del proyecto DESMIENTEN** (🔴) · Informe · `redactor-tfg`
+  Alta el **2026-08-15**. **Van EN SERIE, como TANDA 8.** Lo que los une no es el fichero sino el
+  tipo de defecto, y es el peor de todos en un TFG: **el texto afirma algo que el disco del propio
+  proyecto contradice**. No son imprecisiones de estilo — un tribunal que abra el CSV los ve.
+  - **(a) `6.2:84-88` marca el 13,4 % con un `> [!todo]` diciendo que ninguna columna lo publica.
+    Es FALSO.** Está en `Resultados/metricas_hibrido_calibracion.csv:3` como
+    `d2_pct_unknown_entre_0day_det = 0,133564`, y **ya lo publican `5.3`, `5.4:39` y `6.1:85`.
+    Acción: retirar el `[!todo]`**, no reescribir la cifra.
+  - **(b) `6.1:66` dice que la ausencia de proyección a prevalencia «se declara junto a cada cifra de
+    precisión». Es FALSO:** en **todo el capítulo 5 no hay ni una** declaración así. O se escriben
+    esas declaraciones o se reescribe la frase de `6.1:66`. **Toca la corrección (2) de la Tanda 5**,
+    que ya dejó dicho que la «proyección a prevalencia realista» no existe: es el mismo agujero visto
+    desde el otro extremo del documento.
+  - **(c) `6.1:110` remite el modelo de amenaza a `3.1 Requisitos del sistema`, que NO contiene la
+    palabra «amenaza» ni «adversario».** La remisión apunta a contenido inexistente. Enlaza con
+    **T9**, que es quien tiene encargado escribir el modelo de amenaza explícito en `3.1`: o se
+    espera a T9, o se re-apunta la remisión a donde el marco sí está hoy (`2.3.3`).
+  - **(d) `6.1` afirma que ninguna cifra de recall se publica sin su FPR. Los CSV lo desmienten:**
+    `metricas_firmas.csv` **no tiene ninguna columna de FPR**, y en `metricas_anomalias.csv` la
+    columna se llama **`fpr`, no `bin_fpr`**. La afirmación es más fuerte que lo que las tablas
+    sostienen.
+  - **(e) `6.1:65` y `6.1:109` afirman que «se mide el coste de despliegue». Lo desmienten `A.3:174`,
+    `2.3.3:46` y el propio `alcance_tiempo_s` del CSV**, que declaran que esas columnas miden **solo
+    `predict`/`score`** y «no son capacidad operativa del sistema». **Es el pitfall P9 cometido
+    DENTRO de la sección que dice cubrirlo**, que es exactamente el reproche que Arp et al. hacen a
+    la literatura. **ESTO ES T21**: su ficha ya lo tenía descrito como riesgo, y aquí aparece
+    materializado en el texto. **Se resuelve con T21, no aparte** — corregir `6.1` sin escribir la
+    salvedad de T21 en `5.4` deja el defecto vivo en el otro sitio.
+
+- [ ] **Los 20 marcadores `[CITA: …]` nuevos de la TANDA 7** · Informe · **solo `researcher`**
+  Alta el **2026-08-15**, contados contra disco: **`5.0` = 5 · `6.1` = 7 · `6.2` = 8**. Ninguno tenía
+  registro en este fichero hasta hoy. **Cero `[n]` nuevos inventados por los redactores**, que era el
+  riesgo declarado del despacho en paralelo: el protocolo se cumplió.
+  Entran en el **mismo pase EN SERIE** del `researcher` que la ficha de reconciliación del contador
+  de citas, los **7 de `A.3`**, los **3 de `EL_FUTURO.md`** y los **6 de `4.2`**. **Con estos, el
+  inventario vivo de `[CITA: …]` sube a 36**, y este fichero por fin lo tiene entero.
+  **Aviso para ese pase:** el primer `[n]` libre es el **`[58]`** —`Bibliografía.md` tiene 56
+  entradas, `[1]`–`[8]` y `[10]`–`[57]`, con `[9]` **quemada**—. No es el `[11]`: ver la fila de
+  andamiaje del 2026-08-15 en `## Cerradas`.
+
+- [ ] **Seis afirmaciones del vault que la TANDA 7 dejó desfasadas** (🟡) · Informe · `redactor-tfg` / `researcher`
+  Alta el **2026-08-15**, **las seis verificadas contra disco**. Son residuos de coherencia, no
+  trabajo de redacción: cada uno es una línea que dice que algo no existe cuando ya existe.
+  1. **`4.2:117-118` afirma que las figuras «aún no se han copiado».** Falso desde la Tanda 7: las
+     tres están en `assets\` y son byte-idénticas por MD5. **Ojo: la mitad «embeber» SÍ sigue
+     pendiente**, así que la frase se corrige, no se borra entera.
+  2. **`A.3:176-180` remite a `5.0` como inexistente.** `5.0` existe desde la Tanda 7. Este es el
+     `> [!todo]` que la ficha de residuos de `A.3` tenía anotado en `:159`, **ya desplazado**.
+  3. **`5.0` no está de alta en `00 Índice TFG.md`.** Mismo defecto que arrastró `A.3` hasta la Tanda
+     3. **Ese pase va EN SERIE sobre el índice**, nunca en paralelo. **No tocar el «de 43 notas» de
+     `:104`**: tiene ficha propia y se cuadra al final.
+  4. **`Bibliografía.md:153` dice «propuesta, no ejecutada» sobre algo que YA está ejecutado.**
+     **Solo el `researcher` toca ese fichero.**
+  5. **Los números de línea de T25 están desplazados** por el callout que la Tanda 6 insertó en
+     `Bibliografía.md`. Anotado también dentro de la propia ficha de T25: **localizar por contenido**.
+  6. **`[6]` (Goodfellow) sigue HUÉRFANA en todo el vault.** No se resuelve aquí: su anclaje depende
+     de **T24** (bloque de redes neuronales de `2.1.4`). Se lista para que el recuento de huérfanas
+     no se dé por cerrado con las otras cinco.
 
 ### Descartado — no reabrir
 
@@ -1308,6 +1386,13 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-15 | — | **ANDAMIAJE · BUG CORREGIDO en `leader.md:196`: declaraba que el primer `[n]` libre era el `[11]` cuando es el `[58]`.** Verificado **contando `Bibliografía.md`**: **56 entradas**, `[1]`–`[8]` y `[10]`–`[57]`, con **`[9]` quemada** (retirada sin renumerar, `396e283`). **No es cosmético: `leader.md` es el agente que DESPACHA**, así que un redactor que leyera esa línea asignaba números **ya usados** — el solape silencioso de `[n]` que el protocolo de citas existe justo para evitar, reintroducido por el propio andamiaje. Mismo patrón estructural que el de la prohibición de autoría derogada que seguía viva en `leader.md` (2026-08-13): **la regla vieja gana cuando vive en el fichero que reparte el trabajo.** Aplicado por el hilo principal en `CLAUDE.md`, `.claude/agents/leader.md`, `.claude/agents/researcher.md` y `.claude/agents/redactor-tfg.md` | `75f90b7` |
+| 2026-08-15 | — | **ANDAMIAJE · DECISIÓN NUEVA DE FRANCISCO (2026-08-15) — el LOCALIZADOR DE PÁGINA en el marcador de cita.** Razón de la decisión, en sus términos: **él genera el formato IEEE en Zotero**; de los agentes necesita **(1) la fuente** y **(2) el párrafo marcado que apunta a ella**. La (2) ya la cumplía el `[n]`; la (1) estaba a nivel de **obra** pero **no de página**, y en un libro de 800 páginas eso no es una referencia verificable. **Lo que cambia:** el marcador admite **localizador opcional en sintaxis IEEE nativa** (`[8, p. 45]`, `[5, cap. 1]`) que **NO consume número** del contador global —es el mismo `[n]`, no uno nuevo—; es **obligatorio solo en libros y documentos largos**: `[4]` Chio, `[5]` Géron, `[6]` Goodfellow, `[7]` Murphy, `[8]` Stallings, `[12]` Hastie y `[39]` Russell y Norvig. **DISCREPANCIA ARITMÉTICA A CUADRAR AL APLICAR, sin resolverla por iniciativa de nadie: la decisión dice «son 8» y la enumeración lista SIETE.** O falta una obra en la lista o el «8» es un desliz — mismo tipo de descuadre que arrastra T14 («siete verificaciones, 3+5»), y por eso se anota en vez de escoger. `Bibliografía.md` gana columna **«Localizador por uso»**, que **escribe solo el `researcher`**; y **la página que no se pueda establecer con honestidad se MARCA, no se inventa** — misma regla que ya rige las fuentes sin acceso institucional. Aplicado por el hilo principal en `CLAUDE.md`, `.claude/agents/leader.md`, `.claude/agents/researcher.md` y `.claude/agents/redactor-tfg.md` | `75f90b7` |
+| 2026-08-15 | — | **TANDA 7 — `5.0` (T5), el `6.1.4` de `6.1` (T6), `6.2` entera (T12) y la mitad «copiar» de la ficha de figuras.** **SE COMMITEA CON DICTAMEN `NO APTO` Y 5 🔴 ABIERTOS**, por el precedente que Francisco ratificó en la **Tanda 5** y porque **el trabajo llevaba TRES cortes de API sin respaldo en git**. **Los 5 son TEXTUALES: no mueven ninguna cifra publicada ni tocan código**, y quedan **fichados** en `## Abiertas` como **TANDA 8, en serie**. **Séptimo commit por tanda** bajo la Decisión 7. **INCIDENTE, otra vez el mismo patrón y por eso queda escrito: los agentes que produjeron la tanda MURIERON POR LÍMITE DE API antes de reportar, y su trabajo apareció HUÉRFANO EN DISCO** — sin reporte, sin registro y sin commit. **La auditoría original murió también y hubo que rehacerla.** Se aplicó la regla derivada de la Tanda 5: **comprobar truncamiento antes que relanzar**. Resultado: **todo íntegro, cero truncamiento, cero `[n]` nuevos inventados**. **Cero código ejecutado, cero cómputo, cero corridas.** Lo que cierra va desglosado en las cuatro filas de abajo | `e50eb8b` |
+| 2026-08-15 | Informe | **T5 · `5.0 Protocolo de evaluación` — CERRADA.** `Obsidian_TFG_Vault/05 Evaluación/5.0 Protocolo de evaluación.md`, **NUEVA, 191 líneas, completa y verificada íntegra en disco**. Cubre el encargo punto por punto: particiones y su función, lo congelado entre variantes, métricas obligatorias, prohibiciones explícitas y el vocabulario de Pineau et al. **Y lo que era el corazón del encargo, HECHO: el arreglo de C3/C6 se CUENTA**, con el caso concreto de la **columna `accuracy_D2` homónima**. Contar la corrección en vez de exhibir siete verdes es lo que separa la autocrítica de la autocomplacencia, y era la razón de ser de la ficha. **Deja vivo:** **5 `[CITA: …]`** y dos de los 5 🔴. **Resuelve además una precondición ajena:** el `> [!todo]` de `A.3` que esperaba a que `5.0` existiera — pero **el `[!todo]` sigue escrito en disco** y se retira en la ficha de residuos, no aquí | `e50eb8b` |
+| 2026-08-15 | Informe | **T6 · «Límites de lo medible con NSL-KDD» — CERRADA.** Nuevo apartado **`6.1.4`** dentro de `Obsidian_TFG_Vault/06 Conclusiones/6.1 Conclusiones.md`, **+77 líneas**, **en el cuerpo y no en apéndice** como exigía la ficha —los apéndices no se leen y el argumento solo funciona si se ve—. Lleva **los seis límites** con su razón técnica y **la tabla P1-P10**. **Deja vivo:** **7 `[CITA: …]`** y **cuatro de los 5 🔴**, todos dentro de esta nota. **El más grave es el (e), y es de manual: la sección que declara cubrir el pitfall P9 lo COMETE**, afirmando que «se mide el coste de despliegue» cuando `A.3:174`, `2.3.3:46` y el propio `alcance_tiempo_s` dicen que solo se mide `predict`/`score`. **Se enlaza con T21**, que es su ficha natural | `e50eb8b` |
+| 2026-08-15 | Informe | **T12 · `6.2 Líneas futuras` — CERRADA.** `Obsidian_TFG_Vault/06 Conclusiones/6.2 Líneas futuras.md` pasa de **placeholder de 688 B** —una de las tres notas vacías del recuento del vault— a **documento entero: +341/-8 líneas**, redactado desde `EL_FUTURO.md`. **Queda pendiente y NO es de un agente: la revisión final de Francisco**, que la decisión marco (b) le reserva expresamente sobre `6.2`. **Deja vivo:** **8 `[CITA: …]`** —el mayor recuento de la tanda— y el 🔴 **(a)**: un `[!todo]` que afirma que **ninguna columna publica el 13,4 %** cuando está en `Resultados/metricas_hibrido_calibracion.csv:3` (`d2_pct_unknown_entre_0day_det = 0,133564`) y **ya lo publican `5.3`, `5.4:39` y `6.1:85`** | `e50eb8b` |
+| 2026-08-15 | Informe | **La MITAD «COPIAR» de la ficha de las figuras de `assets\` — CERRADA (la ficha sigue abierta por su otra mitad).** Tres PNG en `Obsidian_TFG_Vault/assets/`: `validacion_drift_ks.png` **re-copiada** —la que había era de una corrida anterior y **le faltaba el prefijo «(A)» en los rótulos**— más `validacion_drift_ks_comparativa.png` y `validacion_drift_ks_d2_normales.png`, **nuevas**. **Byte-idénticas por MD5** a `Resultados/figuras/`: no es una copia «parecida», está comprobada. **Copiar solo las tres del set de 54 es DELIBERADO y correcto** — `4.2:120` declara que solo se publica esa variante—, y se deja escrito para que nadie lo lea como un olvido. **Retira el cuello que bloqueaba T10 por el lado del binario.** **NO cierra la ficha:** la mitad **«embeber»** sigue viva y con ella el `> [!todo]` de la nota. **Deja un residuo fichado:** `4.2:117-118` sigue diciendo que las figuras «aún no se han copiado» | `e50eb8b` |
 | 2026-08-15 | — | **TANDA 6 — reparación de las 47 citas colgantes + auditoría y corrección del arreglo del bloqueante de D2 + T13.** **SEIS agentes**, **dos pases de auditoría**, **ningún 🔴**. Lo que cierra va desglosado en las tres filas de abajo. Ficheros tocados: `EL_FUTURO.md`, `resumen-de-decisiones.md`, `Obsidian_TFG_Vault/Bibliografía.md`, `Obsidian_TFG_Vault/99 Investigación/Reconstrucción de las 47 citas colgantes.md` (**nuevo**) y **once notas del vault** (`02 Marco Teórico/2.1 Machine Learning/2.1.6 Metodologías y buenas prácticas.md`, `03 Diseño del sistema/3.3 Metodología de funcionamiento del sistema.md`, `04 Implementación del sistema/4.3`, `4.4`, `4.5`, `4.6`, `05 Evaluación/5.1`, `5.2`, `5.4`, `06 Conclusiones/6.1 Conclusiones.md`, `Apéndices/A.3 Ficha del sistema.md`), más **`CLAUDE.md`** (andamiaje: la cita `firmas.py:91-96` pasa a `firmas.py:100-108`, **verificado en disco**, porque divergía de `A.3:126`). **Cero código ejecutado, cero cómputo, ninguna cifra publicada movida.** **Sexto commit por tanda** bajo la Decisión 7. **Deja TRES fichas nuevas abiertas** —las 5 citas no reconstruidas, los 7 `[CITA: …]` de `A.3` y los 3 de `EL_FUTURO.md`— y **una ampliación de T14** | `c634367` |
 | 2026-08-15 | Informe | **LAS 47 CITAS COLGANTES, REPARADAS — la ficha 🔴 queda CERRADA.** De los `[11]`–`[57]` que el pase interrumpido dejó apuntando a nada: **42 reconstruidos, verificados con DOI/URL y dados de alta en `Bibliografía.md`**; **5 NO reconstruibles, marcados como tales** (ficha propia abierta: los resuelve Francisco por criterio, retirando la afirmación o buscando fuente alternativa). Informe de trabajo en `Obsidian_TFG_Vault/99 Investigación/Reconstrucción de las 47 citas colgantes.md`. **CORRIGE UN DATO FALSO QUE ESTA FICHA AFIRMÓ HASTA HOY:** la ficha 🔴 decía que el pase había tocado **nueve notas fuera del capítulo 2** (`3.3`, `4.4`, `4.5`, `4.6`, `5.1`, `5.2`, `5.4`, `6.1`, `A.3`) y **es FALSO** — **los 47 `[n]` están SOLO en el capítulo 2**, verificado contra disco al cerrar. Aquello mandaba a verificar nueve notas que no tenían nada que verificar. **Riesgo declarado del encargo, comprobado:** `[2]` (Anderson 1980) y `[3]` (Denning 1987) **mapeados, no duplicados**, y **`[9]` sigue quemada** (retirada sin renumerar, `396e283`) | `c634367` |
 | 2026-08-15 | Informe+Código | **ARREGLO DEL BLOQUEANTE DE D2 · AUDITADO, y la auditoría encontró que el arreglo VOLVÍA A COMETER EL ERROR QUE VENÍA A CORREGIR.** El parche commiteado en `059d5f3` declaraba **menos *data snooping* del que hubo**: enumeraba las decisiones contaminadas por D2 **omitiendo la más estructural de las tres**. O sea, el mismo defecto de la afirmación original —regla enunciada más estrecha que la realidad— reaparecido dentro de su propia corrección. **Corregido en 11 ficheros del vault** más **nota fechada en `resumen-de-decisiones.md`** (solo añadido, conforme a la Decisión 3). Un **retitulado a «Validación experimental»** se propagó completo: **cero punteros colgando en todo el repo, verificado**. **Dos pases de `auditor-ml`, ambos cerrados sin ningún 🔴**, que es lo que faltaba para poder cerrar: track Código no se cierra sin auditoría. Con esto queda cubierto también el **barrido** que la ficha dejaba pendiente sobre `5.1`, `3.x` y `A.3` | `c634367` |

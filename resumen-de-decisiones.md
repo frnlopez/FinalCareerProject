@@ -1133,12 +1133,17 @@ Aplicado en `.claude/agents/ml-implementador.md` el mismo 2026-08-14.
   (`[8, p. 45]`, `[5, cap. 1]`), que **no consume número del contador global** —`[8, p. 45]` y
   `[8, p. 90]` son la misma entrada `[8]`—; es **obligatorio solo en libros y documentos largos**,
   que son **ocho** (`[4]` Chio, `[5]` Géron, `[6]` Goodfellow, `[7]` Murphy, `[8]` Stallings,
-  `[12]` Hastie y `[39]` Russell y Norvig), porque en artículos IEEE no pide más que lo ya
-  registrado; `Bibliografía.md` gana una columna **«Localizador por uso»** que escribe **solo el
+  `[12]` Hastie, `[39]` Russell y Norvig y `[54]` Molnar — **la primera redacción decía «ocho» y
+  enumeraba siete, olvidando a Molnar; corregido contra `Bibliografía.md` el mismo día**), porque en
+  artículos IEEE no pide más que lo ya registrado; `Bibliografía.md` gana una columna **«Localizador por uso»** que escribe **solo el
   `researcher`**; y **la página que no se pueda establecer con honestidad SE MARCA, no se inventa**
   —misma disciplina que con las 47 citas reconstruidas—. El `redactor-tfg` anota la fuente dentro del
   propio `[CITA: …]` **mientras escribe el párrafo**, que es cuando la sabe: recuperarla después
-  cuesta el triple. **El retrofit está acotado a esas 8 entradas, no son las 56.**
+  cuesta el triple. **El retrofit está acotado a esas 8 entradas, no son las 56.** **Dos de las ocho
+  no se pueden cerrar aún, y conviene saberlo antes de despachar el pase:** `[6]` Goodfellow **está
+  huérfana en todo el vault** —no la cita nadie, así que su localizador depende de que **T24** la
+  ancle— y `[54]` Molnar **tiene la edición sin fijar** (su web sirve hoy la 3.ª y la literatura cita
+  la 2.ª de 2022), de modo que la página depende de esa elección, que es de Francisco.
   **Consecuencia sobre las 5 citas no reconstruidas, que Francisco aún debe decidir:** de `[27]`,
   `[28]` y `[44]` no se conoce ni la obra, así que **bajo este criterio nunca serán citables** — lo
   cual no cierra la decisión, pero inclina el argumento hacia **retirar la afirmación** frente a
