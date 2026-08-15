@@ -264,54 +264,34 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 
 ## Abiertas
 
-- [ ] 🟠 **El arreglo del bloqueante de D2 está APLICADO pero SIN AUDITAR** · Informe+Código · `auditor-ml`
-  Alta el **2026-08-15**, escrita **por el hilo principal** (el límite de sesión impedía despachar al
-  `cronista`). **Verificado contra disco al escribirla, no de memoria.**
-  **Qué estaba mal:** `2.1.6:58` afirmaba «**Ninguna decisión del sistema se toma mirando D2**» y
-  `:61` que la comparación entre los cuatro detectores «**Nunca**» usa D2. Era **falso** y verificado
-  en cuatro sitios: `resumen-de-decisiones.md:231` (H-3) elige RandomForest por «f1_macro D2 =
-  0.822»; `:211-212` (H-2) da el Autoencoder por ganador por AUC-ROC/F1; `hibrido.py:16` y `:755`
-  documentan «mejor en 5.1»; y `5.1:74` apoya la elección en métricas de D2. La nota había
-  **generalizado** la regla real de `anomalias.py:18-22`, que es más estrecha —D2 intocable **para
-  hiperparámetros y umbral**— hasta convertirla en «ninguna decisión», y ahí se rompió.
-  **Qué se aplicó (commit `059d5f3`), confirmado leyendo la nota:** el callout de `2.1.6` enuncia
-  ahora la regla «con la misma extensión que tiene en el código, ni más ni menos», enumerando las
-  cinco decisiones que P-4 sí cubre; y **se añadió un callout `[!warning]` que DECLARA que la
-  elección del algoritmo ganador de cada etapa sí miró D2**, con tabla de etapa / algoritmo /
-  criterio / dónde consta, nombrándolo como ***data snooping*** y selección sesgada de parámetros.
-  Más **nota fechada de +39 líneas en `resumen-de-decisiones.md`**, solo añadido, conforme a la
-  Decisión 3.
-  **Lo que falta, y es lo único:** **el pase de `auditor-ml` no llegó a ejecutarse** — el ciclo murió
-  por límite de sesión de la API «esperando el veredicto formal del auditor». Track Código no se
-  cierra sin auditoría, así que **esto no está cerrado**.
-  **Pendiente además el barrido:** hay que comprobar si la misma afirmación falsa está **replicada en
-  otras notas** (`5.1`, `3.x`, `A.3`). Aplica la lección de `cd407b1`: la frase puede estar **partida
-  por un salto de línea**, así que un `grep` de varias palabras que sale vacío **no prueba nada**.
+- [ ] 🟠 **5 de las 47 citas colgantes NO se han podido reconstruir — falta criterio de Francisco** · Informe · **decide Francisco**, ejecuta `researcher`
+  Alta el **2026-08-15**, residuo de la reparación de las 47 citas colgantes (ver `## Cerradas`, misma
+  fecha). De los 47 `[n]` que dejó colgando el pase interrumpido, **42 quedan reconstruidos y
+  verificados con DOI/URL** y dados de alta en `Bibliografía.md`; **5 no se han podido reconstruir** y
+  quedan **marcados como tales**, con el detalle en
+  `Obsidian_TFG_Vault/99 Investigación/Reconstrucción de las 47 citas colgantes.md`.
+  **Lo que hay que decidir, y no lo decide un agente:** para cada una de las cinco, **retirar la
+  afirmación que sostienen** o **buscar una fuente alternativa** que las respalde. Hasta que se
+  decida, son referencias sin entrada verificada — el mismo defecto que hacía 🔴 a la ficha madre,
+  con la diferencia decisiva de que ahora **están marcadas y se ven al leer**.
 
-- [ ] 🔴 **47 CITAS COLGANDO: el vault usa `[11]`–`[57]` y NINGUNA existe en `Bibliografía.md`** · Ninguno · `researcher`
-  Alta el **2026-08-15**, escrita **por el hilo principal**, no por el `cronista`: el límite de sesión
-  de la API impedía despacharlo, y dejar esto sin ficha era el peor resultado posible.
-  **Qué pasó:** el `researcher` ejecutó el pase en serie de `[CITA: …]` → `[n]` del final de la Fase 4
-  y **murió por límite de sesión con el trabajo a medias**. Convirtió **todos** los marcadores
-  —**cero `[CITA: …]` quedan en el vault**— asignando `[11]` hasta `[57]`, **47 números nuevos**, y
-  cayó **antes de dar de alta una sola entrada en `Bibliografía.md`**, que sigue exactamente igual
-  que antes: `[1]`–`[8]` y `[10]`.
-  **Por qué es 🔴 y no una tarea más:** el estado intermedio es **peor que el de partida**. Un
-  `[CITA: …]` es un marcador visible que grita que falta trabajo; un `[47]` que no existe **parece
-  una cita legítima** y no lo delata nada al leer. Si alguien vuelca el vault al `.docx` en este
-  estado, la memoria sale con 47 referencias inventadas.
-  **Se preservó en commit a propósito** (`059d5f3`), en vez de revertirlo: son 47 conversiones
-  hechas en serie y coherentes entre sí, caras de rehacer. Pero **no es trabajo terminado y no debe
-  leerse como tal**.
-  **Alcance real, mayor que el encargado:** se pidió barrer el **capítulo 2** y el pase tocó además
-  `03 Diseño del sistema/3.3`, `04 Implementación/4.4`, `4.5`, `4.6`, `05 Evaluación/5.1`, `5.2`,
-  `5.4`, `06 Conclusiones/6.1` y `Apéndices/A.3`. Hay que verificar esos también.
-  **Qué hay que hacer:** reconstruir la correspondencia `[n]` → fuente leyendo cada sitio de cita
-  —el mapa solo existe implícito en el texto—, dar de alta las 47 en `Bibliografía.md` con su nivel
-  declarado, y **verificar que `[2]` (Anderson 1980) y `[3]` (Denning 1987) se mapearon y no se
-  duplicaron**, que era el riesgo declarado del encargo. Confirmar también que **`[9]` no se ha
-  reutilizado**: está retirada sin renumerar (`396e283`), o sea quemada.
-  **Va antes que cualquier redacción nueva.**
+- [ ] **7 marcadores `[CITA: …]` sin resolver en `A.3 Ficha del sistema.md`** · Informe · **solo `researcher`**
+  Alta el **2026-08-15**, detectados al reparar las 47 citas colgantes. Líneas **10, 236, 595, 598,
+  629, 643 y 651** (Mitchell et al. 2019, Arp et al. ×2 y Pineau et al. ×4) — **verificado contra
+  disco al darla de alta**.
+  **Lo que importa aquí no son los siete marcadores, sino que el INVENTARIO de `[CITA: …]` estaba
+  INCOMPLETO:** el único recuento que este fichero registraba eran los **6 de `4.2`** (ficha más
+  abajo), y estos siete no los tenía nadie. Alimentan a **T16** y a la bibliografía de Zotero igual
+  que los de `4.2`. Va en el mismo pase **en serie** del `researcher` que la ficha de reconciliación
+  del contador de citas.
+
+- [ ] **3 marcadores `[CITA: …]` sin resolver en `EL_FUTURO.md`** · Informe · **solo `researcher`**
+  Alta el **2026-08-15**, verificados contra disco. Líneas **65** (TabArena, Erickson et al. NeurIPS
+  2025), **81** (Hwang et al. 2007, generación de firmas ponderadas) y **185** (*target encoding* para
+  categóricas de alta cardinalidad). Entran con las tres entradas nuevas de **T13**.
+  **Por qué no es cosmético: es dependencia de T12** — `6.2 Líneas futuras` se redacta **desde**
+  `EL_FUTURO.md`, así que un marcador sin resolver aquí se propaga a la memoria. Mismo pase en serie
+  del `researcher`.
 
 - [ ] **Diagrama y README de agentes describen la arquitectura anterior** · Código · `ml-implementador`
   Detectado el 2026-08-01. `Implementacion/diagramas/README.md:10` y
@@ -702,21 +682,6 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
     sería un artefacto: la partición la elegiría el experimentador.
   - Formulación de respaldo para el veredicto de NL: la del §E del informe de NL, **íntegra**.
 
-- [ ] **T13 · `EL_FUTURO.md` — tres entradas nuevas y una anotación** · Informe · `redactor-tfg`
-  - **★ Vector de error de reconstrucción por característica como entrada extra de la etapa 2.** La
-    única idea del lote que **podría ayudar al recall 0-day conservando reglas legibles** (cada
-    componente lleva el nombre de una característica real: `if err_num_shells alto → u2r` sigue
-    siendo una firma). Cero dependencias nuevas. No estaba en `EL_FUTURO.md`.
-  - **Aviso de TabArena sobre sobreajuste al conjunto de validación en los *ensembles***, pegado a la
-    línea nº 1 (ensemble de detectores de la etapa 1): si los miembros se eligen mirando `D1_val` o
-    los pliegues OOF de D3, la ganancia no se reproduce en D2. Protege la línea, no la debilita.
-  - **El bucle de generación automática de firmas de Hwang et al. 2007** como respuesta publicada a
-    «¿y qué hago con un `unknown`?» — hoy el TFG termina en la etiqueta.
-  - **Anotación (no reapertura):** el *target encoding* es estructuralmente incompatible con la
-    opción A, porque la etapa 1 no tiene destino sobre el que ajustarlo (D1 es una sola clase). No
-    desmiente Q1/C —se tomó sobre one-hot y sigue siendo correcta— pero es **una razón nueva a favor
-    de la opción B**.
-
 - [ ] **T14 · Cerrar las verificaciones pendientes** · — · `researcher`
   Francisco **no tiene acceso institucional**. **Esta es la ficha ejecutable y el inventario completo
   vive solo aquí** (consolidado el 2026-08-09: la ficha de guardia «PDF sin acceso institucional»
@@ -753,6 +718,12 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
     Lectura probable (**NO verificada**): las degradadas son **2 ítems** (Yin y Khraisat en un bullet,
     Kim en otro) con **3 citas** afectadas, luego **2+5=7**. Un apéndice que **declare siete y liste
     ocho** es justo el detalle que ve un tribunal.
+  - **AÑADIDO el 2026-08-15, residuo de T13 · las cifras de Hwang et al. 2007.** «60 % / 30 % / 22 %,
+    <3 % de falsas alarmas y +33 % sobre SNORT», citadas en `EL_FUTURO.md:96`, **no están verificadas
+    contra el texto completo**; la propia entrada de `EL_FUTURO.md` lo deja marcado. Si llegan a
+    **`6.2` (T12)** sin verificar, se degradan a «reportan mejoras» **sin cifra**, igual que se hizo
+    con Yin et al. 2017 y Khraisat et al. 2020. **No entra en el recuento de «siete» de arriba**: es
+    un ítem nuevo, posterior al inventario, y por tanto **no toca la discrepancia aritmética**.
 
 - [ ] **T16 · B2: volcado de fuentes, DESPUÉS de la redacción** · — · `researcher`
   **Va después de la redacción (T8-T13): no se arranca antes.** Regla dura: **ninguna entrada sin
@@ -1336,6 +1307,10 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-15 | — | **TANDA 6 — reparación de las 47 citas colgantes + auditoría y corrección del arreglo del bloqueante de D2 + T13.** **SEIS agentes**, **dos pases de auditoría**, **ningún 🔴**. Lo que cierra va desglosado en las tres filas de abajo. Ficheros tocados: `EL_FUTURO.md`, `resumen-de-decisiones.md`, `Obsidian_TFG_Vault/Bibliografía.md`, `Obsidian_TFG_Vault/99 Investigación/Reconstrucción de las 47 citas colgantes.md` (**nuevo**) y **once notas del vault** (`02 Marco Teórico/2.1 Machine Learning/2.1.6 Metodologías y buenas prácticas.md`, `03 Diseño del sistema/3.3 Metodología de funcionamiento del sistema.md`, `04 Implementación del sistema/4.3`, `4.4`, `4.5`, `4.6`, `05 Evaluación/5.1`, `5.2`, `5.4`, `06 Conclusiones/6.1 Conclusiones.md`, `Apéndices/A.3 Ficha del sistema.md`), más **`CLAUDE.md`** (andamiaje: la cita `firmas.py:91-96` pasa a `firmas.py:100-108`, **verificado en disco**, porque divergía de `A.3:126`). **Cero código ejecutado, cero cómputo, ninguna cifra publicada movida.** **Sexto commit por tanda** bajo la Decisión 7. **Deja TRES fichas nuevas abiertas** —las 5 citas no reconstruidas, los 7 `[CITA: …]` de `A.3` y los 3 de `EL_FUTURO.md`— y **una ampliación de T14** | — |
+| 2026-08-15 | Informe | **LAS 47 CITAS COLGANTES, REPARADAS — la ficha 🔴 queda CERRADA.** De los `[11]`–`[57]` que el pase interrumpido dejó apuntando a nada: **42 reconstruidos, verificados con DOI/URL y dados de alta en `Bibliografía.md`**; **5 NO reconstruibles, marcados como tales** (ficha propia abierta: los resuelve Francisco por criterio, retirando la afirmación o buscando fuente alternativa). Informe de trabajo en `Obsidian_TFG_Vault/99 Investigación/Reconstrucción de las 47 citas colgantes.md`. **CORRIGE UN DATO FALSO QUE ESTA FICHA AFIRMÓ HASTA HOY:** la ficha 🔴 decía que el pase había tocado **nueve notas fuera del capítulo 2** (`3.3`, `4.4`, `4.5`, `4.6`, `5.1`, `5.2`, `5.4`, `6.1`, `A.3`) y **es FALSO** — **los 47 `[n]` están SOLO en el capítulo 2**, verificado contra disco al cerrar. Aquello mandaba a verificar nueve notas que no tenían nada que verificar. **Riesgo declarado del encargo, comprobado:** `[2]` (Anderson 1980) y `[3]` (Denning 1987) **mapeados, no duplicados**, y **`[9]` sigue quemada** (retirada sin renumerar, `396e283`) | — |
+| 2026-08-15 | Informe+Código | **ARREGLO DEL BLOQUEANTE DE D2 · AUDITADO, y la auditoría encontró que el arreglo VOLVÍA A COMETER EL ERROR QUE VENÍA A CORREGIR.** El parche commiteado en `059d5f3` declaraba **menos *data snooping* del que hubo**: enumeraba las decisiones contaminadas por D2 **omitiendo la más estructural de las tres**. O sea, el mismo defecto de la afirmación original —regla enunciada más estrecha que la realidad— reaparecido dentro de su propia corrección. **Corregido en 11 ficheros del vault** más **nota fechada en `resumen-de-decisiones.md`** (solo añadido, conforme a la Decisión 3). Un **retitulado a «Validación experimental»** se propagó completo: **cero punteros colgando en todo el repo, verificado**. **Dos pases de `auditor-ml`, ambos cerrados sin ningún 🔴**, que es lo que faltaba para poder cerrar: track Código no se cierra sin auditoría. Con esto queda cubierto también el **barrido** que la ficha dejaba pendiente sobre `5.1`, `3.x` y `A.3` | — |
+| 2026-08-15 | Informe | **T13 · `EL_FUTURO.md` — CERRADA: las tres entradas nuevas y la anotación, escritas.** (1) **★ Vector de error de reconstrucción por característica** como entrada extra de la etapa 2 —la única idea del lote que podría ayudar al recall 0-day **conservando reglas legibles**—; (2) **salvaguarda de TabArena** sobre sobreajuste al conjunto de validación, pegada a la línea del *ensemble* de la etapa 1; (3) **bucle de generación automática de firmas de Hwang et al. 2007** como respuesta publicada al «¿y qué hago con un `unknown`?»; y (4) la **anotación (no reapertura)** de que el *target encoding* es incompatible con la opción A —no desmiente Q1/C, es **una razón más a favor de la opción B**. **Deja dos residuos con ficha:** los **3 `[CITA: …]`** del fichero y las **cifras de Hwang et al. 2007 sin verificar**, que se suman a **T14** | — |
 | 2026-08-14 | — | **TANDA 5 (CIERRE DE LA FASE 4 del plan de cierre) — CUATRO NOTAS, un fichero cada una: la prosa de las 4 notas RESTANTES del capítulo 2. Con ella el capítulo 2 queda en 8 de 8.** Ficheros (**4**): `02 Marco Teórico/2.1 Machine Learning/2.1.6 Metodologías y buenas prácticas.md`, `02 Marco Teórico/2.3 Inteligencia Artificial/2.3.1 IA, ML y Deep Learning.md`, `2.3.2 La IA en ciberseguridad.md` y `2.3.3 Límites y consideraciones éticas.md`. **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida.** **Quinto commit por tanda** bajo la Decisión 7. `auditor-ml`: **APTO CON CAMBIOS**. **SE COMMITEA CON LAS 7 CORRECCIONES ABIERTAS, por decisión de Francisco**: el trabajo estaba escrito y **sin respaldo en git tras un corte por límite de sesión**, así que se prioriza preservarlo — las 7 quedan dadas de alta en `## Abiertas`, en **dos fichas**, y **los puntos 4, 5 y 7 son CROSS-FILE y ACOPLADOS: NO se paralelizan**, exigen un redactor **en serie** con las cuatro notas en contexto. **Lo que salió LIMPIO, que era el riesgo declarado de la tanda:** «híbrido» **no se redefine** (`2.3.1:11` y `2.3.2:55` remiten al callout canónico de `2.2.3:62-63`); «semisupervisado (one-class)» sin sinónimos contradictorios en las cuatro, coherente con `resumen-de-decisiones.md:463-467`; el «51» no aparece; **cero `[n]` nuevos** —el único es `[3]` en `2.3.2:36`, correctamente **mapeado** a Denning 1987, y `[9]` no reaparece—; todas las rutas y cifras verificadas contra disco. **La Decisión 4 NO está sobreaplicada** (comprobado contra `99 Investigación/`): el defecto es **el contrario**, faltan marcadores en `2.3.3` y `2.3.1`. **CIERRA la ficha de la prosa de las 8 notas (8 de 8). NO cierra T8**: su viñeta `2.3.3` queda hecha, pero `2.1.5` sigue siendo un stub sin tocar. **PROCEDE AHORA el pase EN SERIE del `researcher`** de `[CITA: …]` → `[n]`, dependencia declarada del final de cada fase | `7241cbd` |
 | 2026-08-14 | Informe | **`2.1.6 Metodologías y buenas prácticas` — PROSA REDACTADA** desde su guion, y con ella la carga T8 de esta nota: **Chow 1970** como regla de rechazo óptima **sobre las posteriores verdaderas** —y que `predict_proba` de un RF no lo es— en el callout de `:95-98`, más **Arp et al.** (`:135`) y el **vocabulario de Pineau** (`:139`). Cierra su última sección, «Relación con otras notas». **Deja DOS de las 7 correcciones abiertas dentro de la nota**: la remisión en presente de `:132` a `2.1.5` (stub) y el adelanto de cifras de `:175` | `7241cbd` |
 | 2026-08-14 | Informe | **`2.3.1 IA, ML y Deep Learning` — PROSA REDACTADA** desde su guion: el encaje IA ⊃ ML ⊃ DL. **No redefine «híbrido»**: `:11` remite al callout canónico de `2.2.3:62-63`, que es justo el riesgo que la tanda tenía declarado. Cierra su última sección, §2.3.1.5. **Deja abierta su parte de la corrección 4**: le faltan marcadores de reserva de la Decisión 4 | `7241cbd` |

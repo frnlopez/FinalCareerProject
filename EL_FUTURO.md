@@ -57,6 +57,47 @@ train con un RF monolítico):
   cualquier detector individual, a costa de más FPR — trade-off a cuantificar. Es un experimento
   acotado (los 4 modelos YA están entrenados y persistidos; solo hay que combinar sus salidas)
   y responde con datos a "¿por qué un solo detector?". Fuerte candidato incluso para ESTA entrega.
+  - **Salvaguarda metodológica que hay que aplicar al montar el ensemble (aviso de TabArena).** No
+    es una objeción a la línea: es la condición bajo la que su ganancia será real y no un espejismo.
+    El *benchmark* TabArena documenta que algunos modelos aparecen **sobrerrepresentados** en los
+    conjuntos entre modelos por **sobreajuste al conjunto de validación**: si los miembros se
+    escogen mirando la misma partición con la que se mide, entra el que mejor se ajusta a esa
+    partición, no el que mejor generaliza [CITA: TabArena, Erickson et al. NeurIPS 2025]. Traducido
+    a este pipeline, el riesgo concreto es elegir qué detectores entran en el conjunto —o con qué
+    pesos— **mirando `D1_val` o los pliegues OOF de D3**: la mejora se vería en esa medición y no se
+    reproduciría en D2. La defensa correcta es la disciplina que el sistema **ya tiene** (`D1_val`
+    se usa solo para fijar el percentil 95, la calibración de `UMBRAL_CONF` es *out-of-fold* sobre
+    D3 y no ve D2, P-4); el peligro es diluirla al añadir un criterio de selección más. Regla
+    práctica para el experimento: fijar la regla de combinación **a priori** (p. ej. OR de sospechas
+    o max-score normalizado, sin pesos ajustados), y si se ajustan pesos, hacerlo sobre una
+    partición reservada distinta de la que después reporte el resultado.
+- **Cerrar el bucle: generación automática de firmas a partir de los `unknown`** — es la respuesta
+  que la literatura ya publicó a la pregunta que este TFG deja abierta: **qué hacer con un
+  `unknown` una vez detectado**. Hoy el sistema termina en la etiqueta: la etapa 2 marca `unknown`
+  y ahí se acaba el recorrido; nada realimenta a la base de firmas. Hwang, Cai, Chen y Qin (2007)
+  proponen un H-IDS que **no es serie ni paralelo, sino un bucle**: el detector de anomalías mina
+  episodios de tráfico anómalo, un esquema de **generación de firmas ponderadas** extrae firmas de
+  esos episodios y las **inserta en la base de datos de SNORT**, de modo que lo desconocido de hoy
+  es firma conocida mañana [CITA: Hwang et al. 2007, generación de firmas ponderadas]. Reportan
+  60 % de detección frente al 30 % de SNORT y el 22 % de Bro con <3 % de falsas alarmas, y una
+  mejora del 33 % sobre SNORT atribuida a las firmas generadas por el módulo de anomalías.
+  - **Encaje con este sistema:** la pieza que faltaría es un minero de patrones sobre el subconjunto
+    etiquetado `unknown` en D2 que produjera reglas candidatas en el mismo formato legible que ya
+    emite `firmas.py` (`export_text` del DecisionTree, `firmas_rules.txt`), realimentando la etapa 2.
+    Conecta de forma natural con la inducción de reglas RIPPER/OneR de la §1.
+  - **Por qué es línea futura y no entrega:** exige un criterio de validación de la firma generada
+    (una firma automática mal inducida es un generador de falsos positivos permanente) y un
+    protocolo de realimentación que, tal como está el proyecto, **tocaría D2**, que es solo de
+    reporte (P-4). Es decir, no cabe sin cambiar el protocolo de evaluación.
+  - **Formulación defendible para 6.2 / 6.1:** que el sistema no cierre el bucle es un **límite
+    consciente de alcance**, no un descuido; conviene nombrarlo así y citar a Hwang et al. como la
+    vía publicada por la que se cerraría.
+  > [!warning] Verificación pendiente — sin acceso al texto completo
+  > Las cifras de Hwang et al. 2007 (60 % / 30 % / 22 %, <3 % de falsas alarmas, +33 % sobre SNORT)
+  > proceden **solo del resumen**; el texto completo está tras muro de pago y el proyecto no tiene
+  > acceso institucional. Antes de llevarlas a la memoria hay que comprobar en el texto completo
+  > sobre qué tráfico se miden y con qué definición de «tasa de detección». Si no se logra acceso,
+  > citar el mecanismo (el bucle de realimentación) **sin las cifras**.
 - **Reconocimiento de conjunto abierto (open-set recognition)** — respaldado con datos: con
   `UMBRAL_CONF=0.5`, de los 0-day que la etapa 1 SÍ caza, **solo el 13.4% se enrutan a `unknown`**;
   el ~86% restante el RandomForest los mal-etiqueta con confianza como categoría conocida (probas
@@ -69,6 +110,36 @@ train con un RF monolítico):
 
 ## 3. Ideas — representación / features
 
+- **★ Vector de error de reconstrucción por característica como entrada extra de la etapa 2** — la
+  variante *buena* de la idea de "unir las dos etapas por la representación", y la única de este
+  bloque que **podría subir el recall 0-day conservando reglas legibles**. Hoy el *score* de anomalía
+  del Autoencoder es el **MSE de reconstrucción agregado** (`anomalias.py:216-218`): un único número
+  que resume 54 errores, uno por característica. La propuesta es no agregarlo: tomar el vector de 54
+  errores `err_i = (x_i − x̂_i)²` y **concatenarlo a las 54 features originales** como entrada de la
+  etapa de firmas. Tres propiedades lo hacen preferible al espacio latente:
+  1. **Es interpretable por construcción.** Cada componente hereda el nombre de una característica
+     real, así que una regla del tipo `if err_num_shells alto → u2r` **sigue siendo una firma
+     legible**. El latente de 32 dimensiones, en cambio, no tiene nombres: cualquier regla que lo
+     use es opaca y traiciona el espíritu de la etapa de firmas.
+  2. **Conserva justo la información que discrimina.** Un error de reconstrucción grande en una
+     componente significa literalmente «este valor no se parece a nada de D1». Esa es la señal de
+     ataque, y llega a la etapa 2 **localizada** en qué característica se produjo, no promediada.
+  3. **Es la unión conceptual entre etapas, por el lado correcto.** La etapa 2 recibe *en qué* se
+     equivocó la etapa 1, no *qué comprimió* la etapa 1.
+  Es el candidato con mejor relación coste/aporte del lote: **cero dependencias nuevas** (el
+  autoencoder ya está entrenado y persistido; solo hay que exponer el error por componente antes de
+  agregarlo) y coste bajo-medio, casi todo de fontanería en el paso de la cascada. Razón de fondo
+  para esperar efecto en 0-day: un 0-day es, por definición, algo que el detector **no sabe
+  reconstruir**, así que el error por característica es la señal más directa de "no visto" que el
+  sistema produce y hoy se está tirando al agregarla.
+  - **Qué habría que medir para que cuente**: `f1_macro` de la etapa 2 con y sin el vector extra,
+    recall 0-day por tipo, **y además** cuántas de las reglas extraídas usan componentes `err_*` —
+    si el árbol las ignora, la línea no aporta; si las usa, hay que comprobar que la regla resultante
+    sigue siendo legible.
+  - Aplica aquí la misma salvaguarda de TabArena anotada en la §2: si se decide **qué componentes
+    `err_*` entran** mirando `D1_val` o los pliegues OOF de D3, la ganancia no se reproducirá en D2.
+    Lo limpio es entrar con las 54 componentes o con ninguna, y dejar que el RF decida por
+    importancia.
 - **Espacio latente del autoencoder como entrada de la etapa 2**: en vez de las 54 features
   crudas, alimentar firmas con la representación aprendida por el detector de anomalías. Une
   las dos etapas conceptualmente (una sola representación) y es un experimento acotado.
@@ -87,6 +158,32 @@ train con un RF monolítico):
   `resumen-de-decisiones.md`): con 122 el Autoencoder saca a `mailbomb` de cero (0.00 → 0.123,
   36/293) — la selección supervisada le costó al detector un tipo 0-day entero, aunque siga
   esencialmente fallado; el grueso de mailbomb solo lo caza LOF (0.82) → combina con el ensemble (§2).
+  - **Anotación a favor de la opción B, que NO reabre Q1/C.** Que quede dicho antes que nada: la
+    decisión Q1/C —**54 características para ambas etapas, opción A**
+    (`resumen-de-decisiones.md:373-389`)— **sigue siendo correcta y no se reabre aquí**. Se tomó
+    sobre codificación **one-hot**, que es la que el pipeline usa, y con la evidencia disponible
+    entonces; nada de lo que sigue la desmiente. Lo que se añade es **una razón nueva a favor de la
+    opción B**, para el día en que alguien decida moverla: si alguna vez se quisiera cambiar la
+    codificación de las categóricas de alta cardinalidad —el caso obvio es `service`, que genera 70
+    de los 84 *dummies*— por un ***target encoding***, la opción A **lo bloquea por construcción**.
+    El razonamiento es estructural, no empírico:
+    - El *target encoding* sustituye cada categoría por un estadístico del **destino** (la etiqueta)
+      condicionado a esa categoría. Necesita, por tanto, **un destino con más de un valor** sobre el
+      que ajustarse.
+    - La etapa 1 se entrena sobre **D1, que es de una sola clase** (solo tráfico normal). Ahí no hay
+      destino que codificar: el estadístico sería constante y la transformación, vacía.
+    - Bajo la opción A las dos etapas comparten **un único conjunto de características**, luego una
+      codificación válida para la etapa 2 (supervisada, 5 clases sobre D3) tendría que serlo también
+      para la etapa 1. Solo hay dos salidas, ambas malas: renunciar al *target encoding*, o ajustarlo
+      con las etiquetas de D3 e inyectar así **sesgo supervisado en un detector que debe ser
+      no supervisado** (y, de paso, contaminarlo con información de ataques).
+    - Bajo la **opción B** —sets distintos por etapa— el conflicto desaparece: la etapa 1 se queda
+      con su representación sin supervisar y la etapa 2 puede usar la codificación que le convenga.
+    En términos de lo que ya dice esta misma línea: la opción B no solo era «la vía correcta
+    pendiente» por el dato del Autoencoder con 122; es también **la precondición** de cualquier
+    experimento futuro sobre la codificación de categóricas. Decidir si eso mueve algo es de
+    Francisco; esta entrada solo lo deja anotado. [CITA: target encoding para categóricas de alta
+    cardinalidad, Micci-Barreca 2001 / Pargent et al. 2022]
 
 ## 4. Ideas — evaluación / generalización
 
@@ -115,3 +212,18 @@ train con un RF monolítico):
   los 0-day cazados se mal-etiquetan como conocidos; (3) **sets por etapa (opción B)** — las 122
   dan mejor detector pero peor firma. Añadido el punto ciego universal `snmpgetattack` (límite de
   features, no de modelo).
+- `2026-08-15` — **Nutrido desde los informes de `99 Investigación/`** (T13). Tres entradas nuevas y
+  una anotación:
+  1. **★ Vector de error de reconstrucción por característica** como entrada extra de la etapa 2
+     (§3) — nueva ★, procedente de
+     [[clasificadores-tabulares-y-arquitecturas-hibridas]] §2b: la única vía identificada que podría
+     mejorar el recall 0-day **sin perder reglas legibles**, y con cero dependencias nuevas.
+  2. **Salvaguarda de TabArena** sobre sobreajuste al conjunto de validación, pegada a la ★ nº 1
+     (§2) — protege la línea del ensemble fijando cómo elegir sus miembros; no la debilita.
+  3. **Bucle de generación automática de firmas de Hwang et al. 2007** (§2) — la respuesta publicada
+     a «¿qué hago con un `unknown`?», que hoy el sistema deja abierta al terminar en la etiqueta.
+     Fuente **solo por resumen**: sus cifras quedan marcadas como verificación pendiente.
+  4. **Anotación (no reapertura) sobre Q1/C** en la línea de la opción B (§3): el *target encoding*
+     es estructuralmente incompatible con la opción A porque la etapa 1 no tiene destino sobre el
+     que ajustarlo. **La decisión Q1/C sigue vigente y correcta**; esto solo suma un argumento a
+     favor de la opción B.

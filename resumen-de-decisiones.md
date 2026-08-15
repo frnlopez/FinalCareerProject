@@ -284,6 +284,50 @@ no el algoritmo. Las vías para diferenciarse más se acumulan en `EL_FUTURO.md`
 > de detector y clasificador sin mirar D2 obligaría a rehacer el capítulo 5 entero. Declararlo es
 > más defendible que negarlo, y entra en el inventario de limitaciones de **6.1**.
 
+> **NOTA FECHADA — 2026-08-15: la nota anterior estaba INCOMPLETA. Las decisiones tomadas
+> mirando D2 son TRES, no dos: falta el set de características (54 frente a 122).**
+> El texto de la nota del 2026-08-14 se conserva **tal cual** como historial —igual que aquella
+> conservó H-2 y H-3—; esto es un añadido que da de alta la tercera decisión omitida, no una
+> corrección del texto anterior. La nota del 2026-08-14 no dice nada falso sobre H-2 y H-3: lo
+> que hace es enumerar dos casos cuando el fichero documentaba tres.
+>
+> **1. La tercera decisión: la elección del set de 54 características frente al de 122**
+> (decisión **Q1/C** de este mismo fichero, resuelta por el experimento **H1**). Se tomó
+> midiendo **sobre D2**. Evidencia, toda en disco:
+> - `resumen-de-decisiones.md:64-68` y `:131-133` — Q1/C fija como métrica de decisión el
+>   «**recall 0-day por tipo de ataque** (los ~17 tipos de D2 ausentes del train) + **F1 macro**».
+>   Esos ~17 tipos 0-day **solo existen en D2**: la métrica de decisión es, por construcción,
+>   una métrica de test.
+> - `Obsidian_TFG_Vault\04 Implementación del sistema\4.3 Preprocesamiento de los datasets.md:197-214`
+>   — la tabla del experimento H1 se titula literalmente «**Métrica (cascada AE→RF sobre D2)**»,
+>   y `:214` concluye «se elige el set de 54 para las dos etapas».
+> - `Resultados\GUIA_RESULTADOS.md:172` — «decisión final validada por el **experimento H1**».
+>
+> **2. Es la más estructural de las tres**, porque no elige una pieza dentro de una etapa: define
+> el **espacio de características de todo el sistema publicado**, sobre el que se entrenan tanto el
+> detector de la etapa 1 como el clasificador de la etapa 2.
+>
+> **3. El defecto es de la misma familia que el que la nota anterior venía a corregir:** declarar
+> **menos** *data snooping* del que hubo. Aquella nota corrigió una formulación general y falsa
+> («ninguna decisión se toma mirando D2») enumerando dos casos; al quedarse corta en la
+> enumeración, el resultado seguía subdeclarando el alcance real. De ahí que se dé de alta aquí
+> en vez de dejarlo implícito.
+>
+> **4. Formulación canónica** — es la que se ha llevado hoy a las notas del vault (`2.1.6`, `3.3`,
+> `4.3`, `4.6`, `5.4`, `6.1`, `A.3`), y la que debe usarse en cualquier sitio donde vuelva a
+> aparecer esta salvedad, para no tener dos redacciones de lo mismo:
+>
+> > Tres decisiones del sistema se tomaron mirando D2: el detector de la etapa 1, el clasificador
+> > de la etapa 2 y **el set de características (54 frente a 122)**. Las tres son selección de
+> > modelo sobre el conjunto de test, es decir *data snooping*, y por tanto las métricas publicadas
+> > son optimistas respecto a lo que daría un test verdaderamente ciego.
+>
+> **5. Qué se hace con ello:** lo mismo que con H-2 y H-3 —**se declara, no se corrige a
+> posteriori**—, y entra en el inventario de limitaciones de **6.1** junto a las otras dos. Lo que
+> el punto 3 de la nota del 2026-08-14 daba por limpio (configuración dentro de cada algoritmo de
+> la etapa 1, hiperparámetros de firmas, umbral p95 y `UMBRAL_CONF`) **sigue limpio**: esta nota no
+> lo toca.
+
 ### H-4 — Criterio de calibración de `UMBRAL_CONF` → **presupuesto τ=2pp sobre OOF + tabla de sensibilidad en D2**
 
 **Contexto.** Q4 fijó los datos (probas OOF de D3 vía `cross_val_predict`, nunca D2) y el rango

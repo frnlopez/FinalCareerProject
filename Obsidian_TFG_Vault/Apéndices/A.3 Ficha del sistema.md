@@ -73,7 +73,8 @@ derivada para que no se cite como salida de una corrida.
 
 Muestreos internos con semilla, empleados durante el ajuste: **5.000 filas de D3** como conjunto
 etiquetado de validación de la etapa 1 y **20.000 filas de `D1_train`** como submuestra de
-OneClassSVM (`anomalias.py:161` y `anomalias.py:244`).
+OneClassSVM (`anomalias.py:163` para la muestra de D3; la submuestra de OneClassSVM se declara en
+`anomalias.py:94-97` y se aplica en `anomalias.py:249-250`).
 
 > [!warning] Qué es intocable en D2 — y qué sí lo miró
 > La regla que enuncia el código (`anomalias.py:18-22`) es **acotada**: D2 es intocable **para
@@ -89,8 +90,12 @@ OneClassSVM (`anomalias.py:161` y `anomalias.py:244`).
 > | Rejilla de hiperparámetros y eje de balanceo de la etapa 2 | `GridSearchCV` con `f1_macro` por validación cruzada **sobre D3** | `firmas.py` |
 > | `UMBRAL_CONF` del híbrido | Calibración *out-of-fold* sobre D3; el método **no recibe D2 en su firma** (decisión P-4) | `hibrido.py::_calibrar_umbral_conf` |
 >
-> **Lo que sí miró D2: la elección del algoritmo ganador de cada etapa.** Se declara expresamente en
-> A.3.7 y no se presenta como protocolo limpio.
+> **Lo que sí miró D2: tres decisiones.** El **detector de la etapa 1** (H-2), el **clasificador de
+> la etapa 2** (H-3) y **el set de características, 54 frente a 122** (Q1/C, experimento H1, decidido
+> por recall 0-day por tipo y `f1_macro` medidos sobre D2). Las tres son selección de modelo sobre el
+> conjunto de test, es decir *data snooping*, y por tanto las métricas publicadas son optimistas
+> respecto a lo que daría un test verdaderamente ciego. Se declara expresamente en A.3.7 y no se
+> presenta como protocolo limpio.
 
 ---
 
@@ -118,7 +123,7 @@ en la variante de 54 y **66 de 128** en la de 122 (`n_iter_ganador` / `n_iter_to
 ### Etapa 2 — clasificador de firmas
 
 Fuente: `Resultados/metricas_firmas.csv`, columnas `balanceo` y `config_ganadora`. El eje de balanceo
-se decide **por algoritmo** (mini-experimento de 4.3.4, `firmas.py:91-96`).
+se decide **por algoritmo** (mini-experimento de 4.3.4, `firmas.py:100-108`).
 
 | Variante | Algoritmo | Balanceo ganador | Configuración ganadora |
 |---|---|---|---|
@@ -562,23 +567,30 @@ dataset crudo y escribir los resultados. En consecuencia:
 > desanclada—. Se documenta aquí para que quien intente reproducir el trabajo sepa exactamente qué
 > tiene que tocar, en lugar de descubrirlo con una excepción.
 
-### Límite de protocolo: el algoritmo ganador de cada etapa se eligió con métricas medidas sobre D2
+### Límite de protocolo: tres decisiones del sistema se tomaron con métricas medidas sobre D2
 
-Los hiperparámetros y los umbrales del sistema se ajustaron sin mirar D2 (tabla del callout de
-A.3.2). **La selección del algoritmo publicado en cada etapa, en cambio, sí se apoyó en métricas
-calculadas sobre D2**, y se declara aquí en lugar de omitirlo:
+Los hiperparámetros, la estrategia de balanceo y los umbrales del sistema se ajustaron sin mirar D2
+(tabla del callout de A.3.2). **Tres decisiones, en cambio, sí se apoyaron en métricas calculadas
+sobre D2**, y se declaran aquí en lugar de omitirlas:
 
-| Etapa | Algoritmo publicado | Criterio de selección | Registro de la decisión |
+| Decisión | Opción publicada | Criterio de selección | Registro de la decisión |
 |---|---|---|---|
 | 1 — detección de anomalías | Autoencoder-MLP | AUC-ROC / F1, métricas cuyo alcance declarado es «binario normal-vs-ataque sobre D2 completo» (A.3.4) | Decisión H-2 en `resumen-de-decisiones.md`; `hibrido.py:16` y `:755` documentan «Detector por defecto = Autoencoder (mejor en 5.1)» |
 | 2 — clasificador de firmas | RandomForest | `f1_macro` **sobre D2** = 0,822 | Decisión H-3 en `resumen-de-decisiones.md` |
+| 3 — set de características | **54** (frente a 122) | Recall 0-day por tipo + `f1_macro`, medidos con la cascada AE→RF **sobre D2** (experimento H1) | Decisión Q1/C y sección fechada 2026-07-15 de `resumen-de-decisiones.md`; [[4.3 Preprocesamiento de los datasets]] § Decisión experimental |
+
+Las tres son selección de modelo sobre el conjunto de test, es decir *data snooping*, y por tanto las
+métricas publicadas son optimistas respecto a lo que daría un test verdaderamente ciego. La tercera
+es la más estructural, porque no elige un modelo dentro de un espacio de características dado, sino
+que **define ese espacio** para todo el sistema publicado.
 
 **Por qué se declara y no se disimula.** El razonamiento no depende de ninguna fuente externa y se
 sostiene solo: si la métrica que decide qué modelo se publica se calcula sobre la misma población que
 después se reporta como resultado, esa población ha dejado de ser un conjunto de test ciego y ha
 actuado como conjunto de selección. El efecto práctico es que las cifras de la variante publicada
-están **optimistamente sesgadas** en la parte que corresponde a haber escogido, entre ocho candidatos
-(cuatro por etapa), el que mejor puntuaba en la propia población de evaluación. En la literatura de
+están **optimistamente sesgadas** en la parte que corresponde a haber escogido —entre ocho candidatos
+de algoritmo (cuatro por etapa) y entre los dos sets de características— lo que mejor puntuaba en la
+propia población de evaluación. En la literatura de
 seguridad este patrón se cataloga como contaminación por selección sobre el test
 [CITA: Arp et al. — pitfalls en ML para seguridad].
 
@@ -590,10 +602,12 @@ seguridad este patrón se cataloga como contaminación por selección sobre el t
 > el criterio con el que se cerró fue precisamente que no sostuviera ninguna afirmación del trabajo.
 
 > [!warning] Alcance exacto de este sesgo, para no exagerarlo ni minimizarlo
-> - Afecta a **una** decisión por etapa: qué familia de algoritmo se publica. No afecta a los
->   hiperparámetros, al umbral p95 ni a `UMBRAL_CONF`, que se ajustaron sobre `D1_val` y D3.
+> - Afecta a **tres** decisiones: qué familia de algoritmo se publica en cada etapa y qué set de
+>   características usa el sistema completo. No afecta a los hiperparámetros, a la estrategia de
+>   balanceo, al umbral p95 ni a `UMBRAL_CONF`, que se ajustaron sobre `D1_val` y D3.
 > - Las métricas de **todos** los candidatos, no solo las del ganador, están publicadas en
->   `Resultados/metricas_anomalias.csv` y `metricas_firmas.csv` y volcadas en el capítulo 5: el
+>   `Resultados/metricas_anomalias.csv` y `metricas_firmas.csv` y volcadas en el capítulo 5, y la
+>   comparación 54 frente a 122 se tabula íntegra en [[4.3 Preprocesamiento de los datasets]]: el
 >   lector puede ver el margen sobre el que se decidió.
 > - **No se cuantifica cuánto sesgo introduce**: haría falta una partición de validación separada de
 >   D2, que no existe en este diseño, y no se ha medido.
@@ -603,7 +617,8 @@ seguridad este patrón se cataloga como contaminación por selección sobre el t
 > `resumen-de-decisiones.md` lo detectaría de inmediato.
 
 > [!todo] Qué faltaría para cerrarlo
-> Repetir la selección de algoritmo contra una partición de validación tallada desde `KDDTrain+` y
+> Repetir las tres selecciones —algoritmo de cada etapa y set de características— contra una
+> partición de validación tallada desde `KDDTrain+` y
 > reservar D2 exclusivamente para el reporte final. No se ha hecho: exigiría regenerar los splits, y
 > los splits **no se regeneran** (misma razón que en el límite de rutas absolutas). Queda como línea
 > futura.
@@ -645,7 +660,7 @@ la fuente está en [[benchmark-comparativo-nsl-kdd]].
 | 4 | *Sample allocation* | Cumplido | Particiones D1/D2/D3 con tamaños exactos en A.3.2 |
 | 5 | *Hyper-parameters* | Cumplido | `config_ganadora` persistida en cada CSV y volcada en A.3.3 |
 | 6 | *Number of runs* | Cumplido (T4) | 10 semillas (1-10) agregadas, más la 42 como titular independiente |
-| 7 | *Description* | Cumplido **con la salvedad de protocolo de A.3.7** | Alcance por artefacto en A.3.4; protocolo en el capítulo 5. La selección del algoritmo ganador de cada etapa se hizo con métricas medidas sobre D2, y así se declara en A.3.7 |
+| 7 | *Description* | Cumplido **con la salvedad de protocolo de A.3.7** | Alcance por artefacto en A.3.4; protocolo en el capítulo 5. Tres decisiones —el detector de la etapa 1, el clasificador de la etapa 2 y el set de características (54 frente a 122)— se tomaron con métricas medidas sobre D2, y así se declara en A.3.7 |
 | 8 | *Statistics* | Cumplido **por renuncia declarada** | Sin p-valor, con la razón explícita: 10 puntos sobre un único dataset no sostienen un contraste (A.3.6) |
 | 9 | *Error bars* | Cumplido (T4) | Mín/máx y `sd` muestral (`ddof=1`) por celda en A.3.6 |
 | 10 | *Central tendency* | Cumplido (T4) | Media de las 10 semillas por celda en A.3.6 |
