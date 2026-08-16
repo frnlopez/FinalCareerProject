@@ -138,7 +138,14 @@ K-Means, DBSCAN, HCA, One-class SVM, Isolation Forest, PCA, Kernel PCA, LLE, t-S
 Eclat, ni Isolation Forest. La cita está **apuntando al libro equivocado**.
 
 No es una baja de bibliografía —`[6]` se usa bien en otros sitios y se queda— sino un **puntero mal
-puesto en una nota de la memoria**. **Propuesta, no ejecutada:** repuntar esas dos a `[5]`.
+puesto en una nota de la memoria**. Propuesta: repuntar esas dos a `[5]`.
+
+> [!success] EJECUTADO — verificado contra disco el 2026-08-16
+> `2.1.2 Tipos de ML.md:30` y `:64` **ya citan `[5]`**. El repunte está hecho desde la Tanda 9
+> (2026-08-15). Esta línea decía «Propuesta, no ejecutada»: era texto caducado, y es la corrección
+> que **T25** encargaba sobre este fichero.
+> **Y `[6]` tampoco quedó huérfana:** T24 la reancló el 2026-08-15 (`296de24`) en `2.1.4.3` con
+> `[6, cap. 6]`, **7 ocurrencias en disco**.
 
 ### 7. Cambio de formato: `Bibliografía.md` es ya una tabla de *staging*
 
