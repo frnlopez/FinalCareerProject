@@ -6,7 +6,7 @@ estado: borrador
 
 # A.2 Métricas de desempeño
 
-Este apéndice recoge las **definiciones formales** de las métricas empleadas en la evaluación del [[5.1 Resultados del modelo de detección de anomalías|capítulo 5]]. La interpretación conceptual de cada una se trata en [[2.1.5 Métricas de evaluación]]; aquí se listan únicamente como fórmulas de referencia.
+Este apéndice documenta **cómo se instancian en este sistema** las métricas empleadas en la evaluación del [[5.1 Resultados del modelo de detección de anomalías|capítulo 5]]: la convención de signo adoptada, la forma que toma la matriz de confusión en las dos etapas, el criterio de umbral del detector de anomalías y las cifras de FPR que se obtienen con él. **La definición formal de cada métrica y la justificación de su elección no están aquí, sino en [[2.1.5 Métricas de evaluación]]**, que es su sede canónica; las fórmulas que siguen se reproducen **solo como tabla de consulta rápida**, para no obligar al lector del capítulo 5 a volver al capítulo 2.
 
 Salvo indicación contraria, se adopta la convención del sistema: **positivo = ataque (1)**, **negativo = normal (0)**.
 
@@ -21,7 +21,9 @@ Para un problema binario, la matriz de confusión enfrenta la clase real (filas)
 
 En el caso multiclase la matriz es de $k \times k$ (o $5 \times 6$ en el híbrido, al añadirse la columna `unknown`; véase [[5.3 Resultados del sistema híbrido]]), y los conteos VP/FP/FN se calculan por clase en esquema *uno-contra-el-resto*.
 
-## Métricas derivadas
+## Métricas derivadas (consulta rápida)
+
+Las fórmulas siguientes se recogen sin desarrollo: su derivación, su lectura y el motivo por el que este trabajo prioriza unas sobre otras están en 2.1.5.2 y 2.1.5.3.
 
 $$\text{Precision} = \frac{VP}{VP + FP}$$
 
