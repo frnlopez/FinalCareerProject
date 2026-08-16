@@ -699,21 +699,35 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
       de los 15 quedan sin aplicar** — `3.1` no se tocó, y hay que **confirmar** si eso es correcto
       (`3.1.5` es nueva y está exenta) en vez de darlo por bueno.
 
-- [ ] **T10 · Capítulo 4** · Informe · `redactor-tfg`
-  - `4.2`: definición correcta de las tres particiones (KDDTrain+ 125.973 · KDDTest+ 22.544 ·
+- [~] **T10 · Capítulo 4** · Informe · `redactor-tfg`
+  > **AVANZADA, NO CERRADA en la TANDA 14 (2026-08-16): hechos 2 de sus 5 bullets** —«Las tres
+  > particiones oficiales» con la vacuna sobre KDDTest-21, y la 5.ª razón de «por qué NSL-KDD» con
+  > Goldschmidt y Chudá—. **Siguen VIVOS: el «~33 %» de DoS con su denominador (`4.2:92`), la nota de
+  > procedencia del «17», y `4.3` entera.**
+  > **AVISO PARA CUANDO SE DESPACHE EL BULLET DEL «17»: la lista de sitios que da la ficha está
+  > CADUCADA.** Recontado contra disco el 2026-08-16: **`2.1.6:55` ya NO lo tiene**, y en cambio
+  > aparece en **`.gitignore`** y **`README.md`**, que la ficha no nombra. Son **18 ocurrencias en 12
+  > ficheros**, y **dos son CÓDIGO** (`baseline.py:12`, `firmas.py:157`), así que ese bullet es de
+  > **track MIXTO**, no solo Informe. **Contar antes de sustituir.**
+  > **Pendiente del `researcher`** (requiere petición explícita de Francisco): el **alta de Goldschmidt
+  > y Chudá 2025**, único `[CITA: …]` vivo de la memoria (`4.2:62`), y el **censo de `[23]` en
+  > `Bibliografía.md:126`, que dice `×3` cuando ahora son `×5`**.
+  - ~~`4.2`: definición correcta de las tres particiones (KDDTrain+ 125.973 · KDDTest+ 22.544 ·
     KDDTest-21 11.850) y **vacuna contra el error que circula por la literatura**: KDDTest-21 **no**
     es «el subconjunto con 21 tipos de ataque», es el de dificultad alta —`#successfulPrediction` ∈
     [0,21] sobre **21 máquinas aprendidas (7 algoritmos × 3 entrenamientos)**, excluyendo los
     registros que todas acertaron—. Comprobado que ese error **no está hoy en ningún fichero del
     repo**: se vacuna, no se corrige. Escribir que **D2 es KDDTest+ completo**, requisito de entrada a
     toda comparación externa. Y el matiz de los baselines canónicos: se entrenaron con **el primer
-    20 % de KDDTrain+**.
+    20 % de KDDTrain+**.~~ → **HECHO en la TANDA 14, 2026-08-16.**
   - `4.2` · **el 17**: unificar «~17» → «17» (aparece con virgulilla en `EL_FUTURO.md:20`,
     `resumen-de-decisiones.md:65,143`, `baseline.py:12`, `firmas.py:157`, `Guia_ML` ×3,
     `next-steps.md` ×3, `2.1.6:55`) y añadir la nota de procedencia: **17 contados sobre
     `metricas_hibrido_0day.csv`; la cifra 14 de Tavallaee et al. se refiere a KDD'99, no a
     NSL-KDD**. El 17 se justifica **por medición en disco, nunca por cita**.
-  - `4.2` · **por qué NSL-KDD**, con Goldschmidt y Chudá (el argumento positivo del criterio rector).
+  - ~~`4.2` · **por qué NSL-KDD**, con Goldschmidt y Chudá (el argumento positivo del criterio
+    rector).~~ → **HECHO en la TANDA 14, 2026-08-16** (5.ª razón). **Su alta bibliográfica NO está
+    hecha**: baja como `[CITA: Goldschmidt y Chudá 2025]` en `4.2:62`, y el alta es del `researcher`.
   - `4.2:72` · **el «~33 %» de DoS en D2 está mal referido** (anclado aquí el **2026-08-12**, salido de
     la auditoría del despacho de las dos fichas del `4.2`; **no abre ficha propia porque es
     preexistente y cae de lleno en el alcance de T10**). Ese ~33 % es sobre **D2 entero**, no sobre
@@ -1330,12 +1344,8 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   las cuatro**, no elegir la más cómoda. **Encaja de forma natural en el recorte de T9**, que ya va a
   tocar las remisiones del capítulo 3.
 
-- [ ] **`4.5:39` es INEXACTO para KNN: su `f1_macro` sí coincide entre `4.3.4` y `4.5`** (🟡) · Informe · `redactor-tfg`
-  Alta el **2026-08-15**. La afirmación de `4.5:39` no se sostiene contra los artefactos: en **KNN**
-  el `f1_macro` es **idéntico** entre `4.3.4` y `4.5` (**0,945349**). Y en **HistGradientBoosting** la
-  diferencia que se cita es **artefacto de redondeo** —**0,969377 vs 0,969391**—, no una coincidencia
-  ni una discrepancia real. **Cae en territorio de T11/T10 por fichero, pero la corrección es de una
-  línea y no espera a nada.**
+> **La ficha «`4.5:39` es INEXACTO para KNN» queda CERRADA el 2026-08-16 en la TANDA 14**, con las
+> cifras exactas que ella misma exigía. Detalle en `## Cerradas`.
 
 - [ ] **El barrido de solapes del capítulo 2 quedó INCOMPLETO: solo cubre `2.1.6` y `2.2.4`** (🟡) · Informe · `redactor-tfg`
   Alta el **2026-08-15**, **hueco DECLARADO dentro del propio informe de la pieza B**, no descubierto
@@ -1588,7 +1598,8 @@ prohibición de citarlo está levantada).
 Se dejan listadas para que **nadie las rompa** al reordenar:
 
 - **T16 después de T8-T13.**
-- **Figuras de `assets\` y el sello `4.2:145` antes de T10.**
+- **Figuras de `assets\` y el sello `4.2:145` antes de T10** — **SATISFECHA**: la ficha de las figuras
+  de `assets\` se cerró el **2026-08-15**, así que **despachar T10 el 2026-08-16 fue legítimo**.
 - **T20 antes de T9.**
 - **La ficha `1.4`, la última de todas.**
 - **El recorte del profesor va a `A.3`**, así que **T7 antes**.
@@ -1616,6 +1627,10 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-16 | — | **TANDA 14 — dos fichas distintas, y solo UNA cierra.** Ficheros: `Obsidian_TFG_Vault/04 Implementación del sistema/4.2 Base de datos utilizada.md` y `4.5 Entrenamiento del modelo de detección basado en firmas.md`. **(1) CERRADA**: la ficha «`4.5:39` es INEXACTO para KNN». **(2) AVANZADA, NO CERRADA: T10 · Capítulo 4** — hechos **2 de sus 5 bullets** (las tres particiones oficiales con la vacuna sobre KDDTest-21, y la 5.ª razón de «por qué NSL-KDD» con Goldschmidt y Chudá); **T10 SIGUE ABIERTA** con el «~33 %» de DoS, la nota de procedencia del «17» y `4.3` entera. **DOS pases de `auditor-ml`: NO APTO → corregido → APTO CON CAMBIOS → aplicado.** **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida, cero `[n]` inventados.** **Censo contado contra disco: INTACTO — 72 filas, primer libre el `[74]`, `[9]` sin tocar.** Queda **1 `[CITA: …]` vivo** (Goldschmidt y Chudá 2025, `4.2:62`), y es **correcto**: esa obra no está en `Bibliografía.md` y su alta es del `researcher` | `65484bb` |
+| 2026-08-16 | Informe | **La ficha «`4.5:39` es INEXACTO para KNN» — CERRADA con las cifras exactas que ella misma exigía.** En **KNN** el `f1_macro` es **idéntico** entre `4.3.4` y `4.5` (**0,945349**), y en **HistGradientBoosting** la diferencia citada era **artefacto de redondeo** (**0,969377 vs 0,969391**, **1,4e-5**) | `65484bb` |
+| 2026-08-16 | Informe | **EL PRIMER PASE DE `auditor-ml` FUE NO APTO, y queda escrito por qué: `4.5` daba una causa técnica DOBLEMENTE FALSA.** Decía «variabilidad de punto flotante entre **dos ejecuciones separadas** del mismo `StratifiedKFold`». **`firmas.py:133-135` construye UN ÚNICO `StratifiedKFold(random_state=42)` reutilizado en el mismo proceso** —no hay dos ejecuciones—, y **sí había configuración distinta**: el mini-experimento usa `max_iter=100` por defecto y la ganadora es `max_iter=300`. **La nota se contradecía con su propia tabla dos líneas antes** y, peor, **sugería no-determinismo en un pipeline que el TFG vende como reproducible**. Sustituida por la causa real | `65484bb` |
+| 2026-08-16 | Informe | **Los otros cuatro hallazgos de los dos pases de auditoría — APLICADOS.** **(1)** «cuatro milésimas de punto porcentual» era en realidad **1,4**: magnitud corregida a **1,4e-5**. **(2)** El marco «CORE A*/A 2020-2023» estaba **mal colgado** del 23 %/16 %: pertenece a **otro dato de la misma revisión**. **(3)** `4.2:18` afirmaba **en presente** que no quedaban `[CITA:]` **habiendo tres**. **(4) RIESGO DE `[74]` DUPLICADO EVITADO: Tavallaee YA TENÍA `[23]`** en `Bibliografía.md:126`, así que dejarlo como `[CITA:]` habría provocado un alta redundante en el siguiente pase del `researcher`. **Los dos marcadores mapeados a `[23]`** | `65484bb` |
 | 2026-08-16 | — | **TANDA 13 — el pase EN SERIE de citas del `researcher`, que cubre de una vez el capítulo 2 y el 3: la última dependencia declarada del track Informe sobre `Bibliografía.md`, LEVANTADA.** **36 marcadores `[CITA: …]` convertidos a `[n]`** en `2.1.1`, `2.1.3`, `2.1.4`, `2.1.5`, `2.2.4` y `3.5` (**34 del capítulo 2 + 2 del capítulo 3**): **30 MAPEADOS** a entradas existentes (`[5]` Géron ×20, `[12]` Hastie ×7) y **6 ALTAS NUEVAS, `[68]`–`[73]`**, todas con DOI. **27 de los 36 bajan CON localizador de capítulo**, cumpliendo la decisión de Francisco del 2026-08-15. Ficheros: `Obsidian_TFG_Vault/Bibliografía.md`, las seis notas citadas y `99 Investigación/Auditoría de Bibliografía.md`. **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida.** **NO procede `auditor-ml`**: no hay cifras de resultados en juego, es un pase de referencias. **Deja CUATRO fichas nuevas abiertas, y las cuatro esperan decisión de Francisco** — ninguna la forzó el agente | `df86968` |
 | 2026-08-16 | Informe | **⛔ CONTADOR GLOBAL DE CITAS — EL PRIMER `[n]` LIBRE PASA A SER EL `[74]`. Contado contra disco el 2026-08-16, no recordado.** `Bibliografía.md` pasa a **72 filas**: `[1]`–`[8]` y `[10]`–`[73]`. **`[9]` sigue QUEMADA, no libre** (retirada sin renumerar, `396e283`). **Donde este fichero diga `[68]` o «66 entradas» está DESFASADO** — el número vale solo si se cuenta (`grep -oE '^\| *\[[0-9]+\]' Bibliografía.md`), y ya ha ido mal tres veces. *(`CLAUDE.md` y `.claude/agents/leader.md` también lo dicen mal; son andamiaje y los corrige el hilo principal.)* | `df86968` |
 | 2026-08-16 | Informe | **La ficha «Pase EN SERIE del `researcher`: 33 `[CITA: …]` del capítulo 2 + 3 arreglos en `Bibliografía.md`» — CERRADA, y con 36 marcadores, no 33.** **Verificado: CERO `[CITA: …]` vivos en la memoria.** Los que quedan son **prosa sobre la convención** (`4.2` ×1, `Bibliografía.md` ×7) o **informe** (`99 Investigación/Reconstrucción…` ×11): **ninguno es marcador pendiente**. De sus tres arreglos, el **1 (`[6]` Goodfellow marcada huérfana EN FALSO en `Bibliografía.md:63`, `:75` y `:199`) queda HECHO** —las tres declaraciones retiradas, **7 ocurrencias verificadas en disco**— y el **2 (`[4]` Chio, «dónde se usa» apuntando a una imagen) también**, ya reanclado a `2.1.1 Introducción al ML`. **El arreglo 3 —corrección (6) de la Tanda 5, «Dónde se usa» de `[2]` y `[3]`— NO se cierra**: verificado el 2026-08-16, ambas filas siguen diciendo solo `1.2 Preliminares`, y vive en su ficha propia | `df86968` |
