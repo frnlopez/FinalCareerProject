@@ -876,6 +876,87 @@ Aplicado en `.claude/agents/ml-implementador.md` el mismo 2026-08-14.
 
 ---
 
+## 2026-08-16 — Decisiones técnicas de la TANDA 12 (T9, recorte del capítulo 3)
+
+Nota fechada añadida al cierre de la Tanda 12. Recoge cuatro decisiones **delegadas por Francisco en
+los agentes** durante el recorte de duplicidades del capítulo 3. Las cuatro son **reversibles** y se
+registran con su motivo; **ninguna cifra ya publicada se mueve** y no se reescribe nada de lo
+anterior de este fichero.
+
+### Decisión 1 — Renumeración **local** de `3.3`, y de nada más
+
+Al suprimir `3.3.2 Dónde se ajusta la normalización` (absorbido en `3.3.1`) y
+`3.3.3 Recorrido de un flujo por la cascada` (absorbido en `3.2.1`), la nota `3.3` queda con **dos**
+apartados:
+
+| Antes | Después | Qué ha pasado |
+|---|---|---|
+| `3.3.1` | `3.3.1` | Se mantiene, y absorbe el contenido de la antigua `3.3.2` |
+| `3.3.2 Dónde se ajusta la normalización` | — | Suprimido: absorbido en `3.3.1` |
+| `3.3.3 Recorrido de un flujo por la cascada` | — | Suprimido: absorbido en `3.2.1` |
+| `3.3.4 Protocolo de evaluación común` | `3.3.2 Protocolo de evaluación común` | Reetiquetado |
+
+**No se renumera ningún otro apartado del capítulo 3.**
+
+**Por qué es seguro renumerar aquí y solo aquí:** se comprobó con búsqueda sobre **todo el vault**
+que **ninguna nota fuera del capítulo 3 cita subapartados `3.3.x`**; las remisiones externas al
+capítulo 3 se hacen **por wikilink a nota**, no a subapartado. El renumerado es por tanto **local** a
+`3.3` y no deja ninguna remisión rota.
+
+**Reversible:** restaurar la numeración anterior exige únicamente **reetiquetar dos cabeceras**.
+
+### Decisión 2 — El paso 1 de la antigua `3.3.3` **se trasplanta, no se pierde**
+
+El informe de la Tanda 10 pieza B (`99 Investigación/Datos repetidos en el capítulo 3.md`, §S15)
+advertía que la frase «se transforma con los codificadores y el escalador persistidos» **no estaba
+presente en `3.2.1`**, y dejaba abierta la alternativa entre trasplantarla o **perderla
+deliberadamente** al suprimir el apartado.
+
+Se decide **trasplantarla** a la prosa de `3.2.1`, que pasa a ser la **sede canónica** del recorrido
+de un flujo por la cascada.
+
+**Motivo:** es **información de diseño** —el hecho de que en inferencia se reutilizan los
+transformadores ya ajustados, y no se reajustan— que **no aparece en ningún otro punto del
+capítulo**; suprimirla sería perder contenido, no eliminar una duplicidad.
+
+### Decisión 3 — `2.3.3` pasa a remitir con **ancla de sección** `(§3.1.5)`
+
+La Tanda 10 había decidido, con carácter **provisional**, dejar la remisión de `2.3.3` al modelo de
+amenaza como **wikilink a nota** sin ancla, **a la espera de la renumeración del capítulo 3 prevista
+en T9**. Cumplida esa condición, y **confirmado que `3.1.5` no se renumera** (T9 no toca `3.1`), el
+ancla es estable y **esta decisión deroga la provisional del 2026-08-15**.
+
+Formato adoptado, que **no rompe la convención de wikilink a nota** ya usada en el proyecto:
+
+```
+[[3.1 Requisitos del sistema|3.1]] (§3.1.5)
+```
+
+Aplicado a las **dos** remisiones de `2.3.3` que apuntan al modelo de amenaza (la del párrafo de
+delimitación de alcance y la del callout «Remisión» de 2.3.3.3). **Reversible:** basta con retirar el
+`(§3.1.5)` y el alias.
+
+### Decisión 4 — El titular del recorte se publica **redondeado y con «≈»**
+
+Magnitud estimada del recorte del capítulo 3:
+
+| Alcance | Reducción |
+|---|---|
+| Capítulo 3 completo | **≈20 %** |
+| `3.1`–`3.3` | **≈25 %** |
+| `3.1`–`3.3`, descontando `3.1.5 Modelo de amenaza` | **≈35 %** |
+
+`3.1.5` se descuenta en la tercera fila porque **se escribió después del comentario del profesor** y
+**no duplica nada**: es contenido nuevo, de modo que incluirlo enmascara cuánto se ha recortado
+realmente de lo que ya existía.
+
+**Estas tres cifras son estimaciones a ojo, no una medición:** **no existe script de conteo de
+palabras** en el proyecto. Por tanto, si alguna vez se trasladan a un correo al profesor o a la
+memoria, van **siempre con «≈» y con la palabra *aproximadamente***, nunca como dato exacto. Si en
+el futuro se dispone de una medición real, **estas cifras se sustituyen** por ella.
+
+---
+
 ## Bitácora de este fichero
 
 - `2026-07-06` — Creado. Reconciliado el estado real (54 features, H1-Opción1/H2/H3 hechos
