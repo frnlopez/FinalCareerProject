@@ -63,6 +63,8 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > convertidos, **cero `[CITA: …]` vivos en la memoria**, y `Bibliografía.md` tocada una sola vez,
 > absorbiendo también el Hallazgo 10 y el descuadre 36/33. Detalle en `## Cerradas`.
 >
+> > **⚠️ TRAZA HISTÓRICA — SUPERADA POR LA TANDA 13. El valor vigente es `[74]` / 72 filas, fijado
+> > más abajo en este mismo bloque. No leas de aquí el contador.**
 > > **CENSO CONTADO CONTRA DISCO AL CERRAR LA SESIÓN (2026-08-16), no recordado.** El primer `[n]`
 > > libre **sigue siendo el `[68]`** (máximo dado de alta: `[67]`) — la Tanda 12 **no dio de alta
 > > ninguna entrada**, coherente con que no se inventó ningún `[n]`.
@@ -78,6 +80,8 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > > **Bajó una al unificar la sede de Kim et al.**, no porque se convirtiera ningún marcador. **El
 > > primer `[n]` libre SIGUE SIENDO EL `[68]` y `Bibliografía.md` sigue en 66 entradas**: la Tanda 12
 > > no dio de alta ninguna. **El «37» de arriba queda como traza, no como recuento vigente.**
+> > **⚠️ Y esta actualización también quedó superada horas después: la TANDA 13 convirtió los 36 y
+> > dio de alta `[68]`–`[73]`. Vigente: `[74]` / 72 filas.**
 > >
 > > **ACTUALIZACIÓN DEL 2026-08-16, tras la TANDA 13 (pase en serie de citas) — TODO ESTE CENSO QUEDA
 > > COMO TRAZA: los 36 marcadores están CONVERTIDOS y quedan CERO `[CITA: …]` vivos en la memoria.**
@@ -433,6 +437,20 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > (2026-08-15, `e286cce`), dentro del pase en serie del `researcher`. Sus fichas viven ya en
 > `## Cerradas`.
 
+- [ ] 🟠 **El reparto por categoría de D3 (45.927 / 11.656 / 995 / 52) NO lo emite ningún script** · Código · `ml-implementador` → `auditor-ml`
+  Alta el **2026-08-16**, hallazgo **no forzado** de la auditoría de la TANDA 15. Es un **titular de la
+  memoria** —de él sale el **78,3 % de DoS en D3** (45.927/58.630) que `4.2`, `4.3.6` y `4.5`
+  publican— y **su CSV fuente no está versionado**: la cifra salió de un **recuento a mano**. Es el
+  **precedente exacto del «13 de 98»**, que se automatizó por esta misma razón (`9d4c26d`).
+  **Lo que hay que hacer:** emitir el reparto desde `program.py` o `validacion.py`, a un artefacto
+  versionado, y repuntar las notas a él. **No se resolvió en la Tanda 15 a propósito: es track
+  Código y la tanda era de prosa.**
+  **Efecto lateral que arrastra, y por eso va aquí y no en ficha aparte:** `4.6:13` afirma que
+  «ningún número que llegue a la memoria procede de una ejecución manual», **lo que este hallazgo
+  desmiente**. O se emite la cifra desde script —y entonces `4.6:13` vuelve a ser cierta— o se acota
+  la afirmación de `4.6:13`. **La corrección de `4.6:13` NO se hace antes que la emisión**, o se
+  estaría matizando algo que iba a dejar de ser falso.
+
 - [ ] **Diagrama y README de agentes describen la arquitectura anterior** · Código · `ml-implementador`
   Detectado el 2026-08-01. `Implementacion/diagramas/README.md:10` y
   `Implementacion/diagramas/03_orquestacion_agentes.mmd` documentan el ciclo «orquestador →
@@ -702,8 +720,13 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 - [~] **T10 · Capítulo 4** · Informe · `redactor-tfg`
   > **AVANZADA, NO CERRADA en la TANDA 14 (2026-08-16): hechos 2 de sus 5 bullets** —«Las tres
   > particiones oficiales» con la vacuna sobre KDDTest-21, y la 5.ª razón de «por qué NSL-KDD» con
-  > Goldschmidt y Chudá—. **Siguen VIVOS: el «~33 %» de DoS con su denominador (`4.2:92`), la nota de
-  > procedencia del «17», y `4.3` entera.**
+  > Goldschmidt y Chudá—. ~~**Siguen VIVOS: el «~33 %» de DoS con su denominador (`4.2:92`), la nota de
+  > procedencia del «17», y `4.3` entera.**~~
+  > **AVANZADA OTRA VEZ, Y SIGUE SIN CERRAR — TANDA 15 (2026-08-16): hechos el «~33 %» de DoS con sus
+  > dos denominadores y `4.3` entera** (nueva `4.3.7`, peso real del one-hot en `4.3.3`, poda de
+  > *dummies* en `4.3.5`). **De los 5 bullets quedan 4 hechos y UNO vivo: el del «17», de track
+  > MIXTO.** Se dejó fuera de la Tanda 15 **a propósito, no por olvido**: toca **2 ficheros de código**
+  > (`baseline.py:12`, `firmas.py:157`) y por tanto exige `auditor-ml` sobre código, no sobre prosa.
   > **AVISO PARA CUANDO SE DESPACHE EL BULLET DEL «17»: la lista de sitios que da la ficha está
   > CADUCADA.** Recontado contra disco el 2026-08-16: **`2.1.6:55` ya NO lo tiene**, y en cambio
   > aparece en **`.gitignore`** y **`README.md`**, que la ficha no nombra. Son **18 ocurrencias en 12
@@ -711,7 +734,10 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   > **track MIXTO**, no solo Informe. **Contar antes de sustituir.**
   > **Pendiente del `researcher`** (requiere petición explícita de Francisco): el **alta de Goldschmidt
   > y Chudá 2025**, único `[CITA: …]` vivo de la memoria (`4.2:62`), y el **censo de `[23]` en
-  > `Bibliografía.md:126`, que dice `×3` cuando ahora son `×5`**.
+  > `Bibliografía.md:126`, que dice `×3` cuando ahora son `×5`**. **AMPLIADO en la TANDA 15
+  > (2026-08-16):** añadir además `4.3` a la fila «dónde se usa» de **`[17]` Kapoor y Narayanan** y de
+  > **`[18]` Arp et al.** (`Bibliografía.md:120-121`), que la nueva `4.3.7` cita y el registro no
+  > recoge. Sigue siendo del `researcher` y sigue requiriendo petición explícita de Francisco.
   - ~~`4.2`: definición correcta de las tres particiones (KDDTrain+ 125.973 · KDDTest+ 22.544 ·
     KDDTest-21 11.850) y **vacuna contra el error que circula por la literatura**: KDDTest-21 **no**
     es «el subconjunto con 21 tipos de ataque», es el de dificultad alta —`#successfulPrediction` ∈
@@ -728,17 +754,29 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   - ~~`4.2` · **por qué NSL-KDD**, con Goldschmidt y Chudá (el argumento positivo del criterio
     rector).~~ → **HECHO en la TANDA 14, 2026-08-16** (5.ª razón). **Su alta bibliográfica NO está
     hecha**: baja como `[CITA: Goldschmidt y Chudá 2025]` en `4.2:62`, y el alta es del `researcher`.
-  - `4.2:72` · **el «~33 %» de DoS en D2 está mal referido** (anclado aquí el **2026-08-12**, salido de
+  - ~~`4.2:72` · **el «~33 %» de DoS en D2 está mal referido** (anclado aquí el **2026-08-12**, salido de
     la auditoría del despacho de las dos fichas del `4.2`; **no abre ficha propia porque es
     preexistente y cae de lleno en el alcance de T10**). Ese ~33 % es sobre **D2 entero**, no sobre
     **sus ataques**: sobre los ataques de D2 el DoS es el **58,1 %**. Al redactar, decir **sobre qué
-    denominador** se da cada porcentaje.
-  - `4.3`: C5 sin fuga con las cuatro líneas verificadas (Kapoor y Narayanan; P3/P5 de Arp et al.) y
+    denominador** se da cada porcentaje.~~ → **HECHO en la TANDA 15, 2026-08-16**, y con los **dos**
+    denominadores publicados en tabla (**58,1 % sobre los ataques de D2**, **33,1 % sobre D2
+    completo**) y su procedencia (`soporte_*` de `metricas_baseline.csv`).
+  - ~~`4.3`: C5 sin fuga con las cuatro líneas verificadas (Kapoor y Narayanan; P3/P5 de Arp et al.) y
     el peso del one-hot: **84 de 122 características (69 %) vienen de la codificación**, 70 de ellas
     de `service` sola; de las 60 eliminadas por importancia, **58 son *dummies*** → la selección de
-    4.3.5 es en la práctica un mecanismo de poda del one-hot de `service`.
+    4.3.5 es en la práctica un mecanismo de poda del one-hot de `service`.~~ → **HECHO en la TANDA 15,
+    2026-08-16**: nueva **`4.3.7 Preprocesado sin fuga de datos`** con las cuatro transformaciones
+    contrastadas contra `program.py` y las citas `[17]`/`[18]`; **84/122 = 68,9 %** en `4.3.3`
+    (`service` aporta 70); y en `4.3.5` **58 de las 60** eliminadas son *dummies* (`service` 70→15).
 
 - [ ] **T11 · Capítulo 5** · Informe · `redactor-tfg`
+  - **AMPLIACIÓN del 2026-08-16, hallazgo NO FORZADO de la auditoría de la TANDA 15 — `5.0 Protocolo
+    de evaluación.md` arrastra dos defectos que la Tanda 15 corrigió en `4.3` pero NO tocó aquí,
+    porque es fichero de esta ficha.** (1) **La misma sobreafirmación de prevalencia** en `5.0:149`,
+    que en `4.3.7` se bajó al nivel prudente. (2) **CUATRO ANCLAJES DE LÍNEA CADUCADOS** en
+    `5.0:144-147`, **dos de ellos verificados contra disco**: el `scaler.fit` está en
+    **`program.py:332`**, no en `:316`, y el `rf.fit` en **`:516`**, no en `:500`. Los otros dos **no
+    se comprobaron**: recontar los cuatro antes de repuntar, no repuntar solo los dos verificados.
   - **AMPLIACIÓN del 2026-08-15, residuo declarado de la TANDA 8 — la salvedad de no-proyección a
     prevalencia, INLINE en `5.1`/`5.2`/`5.3`. LO DECIDE FRANCISCO, no un agente.** La Tanda 8 corrigió
     **la afirmación de `6.1`** —la salvedad se declara **una sola vez**, en el límite 2 de `6.1.4.1`,
@@ -1627,6 +1665,11 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-16 | — | **TANDA 15 — avance de T10 (capítulo 4). AVANZA, NO CIERRA: T10 SIGUE ABIERTA.** Dos `redactor-tfg` en paralelo sobre ficheros **disjuntos**, un pase de `auditor-ml` de coherencia **ENTRE** las dos notas, y dos correctores en paralelo aplicando el dictamen. Ficheros: `Obsidian_TFG_Vault/04 Implementación del sistema/4.2 Base de datos utilizada.md` y `4.3 Preprocesamiento de los datasets.md`. **Dictamen: APTO CON CAMBIOS, 6 hallazgos, ninguno 🔴; 4 aplicados y 4 NO FORZADOS, registrados como abiertos.** **Cero fuga de datos, cero `[n]` inventados o renumerados, ninguna cifra publicada movida, ningún script ejecutado.** **El auditor RECONTÓ CONTRA DISCO las cifras de ambas notas y todas cuadran.** **Censo de citas INTACTO, contado contra disco: 72 filas, primer libre el `[74]`, `[9]` quemada**; sigue vivo **1 `[CITA: …]`** (Goldschmidt y Chudá, `4.2:62`) y **es correcto**. **De los 5 bullets de T10 quedan 4 hechos y UNO vivo, el del «17», de track MIXTO** (18 ocurrencias en 12 ficheros, **dos de código**: `baseline.py:12`, `firmas.py:157`) — **dejado fuera A PROPÓSITO, no por olvido** | `ba7a529` |
+| 2026-08-16 | Informe | **El «~33 %» de DoS de `4.2` — CORREGIDO, y con los DOS denominadores publicados en vez de uno.** Era el defecto que la ficha describía desde el **2026-08-12**: un porcentaje sin decir sobre qué se calcula. Queda **58,1 % sobre los ataques de D2** y **33,1 % sobre D2 completo**, con **tabla de las cuatro categorías en ambos denominadores** y su procedencia declarada (`soporte_*` de `metricas_baseline.csv`). Publicar los dos, y no elegir uno, es lo que impide que el siguiente lector repita la confusión | `ba7a529` |
+| 2026-08-16 | Informe | **`4.3` entera — HECHA: nueva `4.3.7 Preprocesado sin fuga de datos`, más el peso real del one-hot y la naturaleza de la poda.** La `4.3.7` contrasta **las cuatro transformaciones contra `program.py`** —no contra lo que la memoria decía que hacía— y cita `[17]` Kapoor y Narayanan y `[18]` Arp et al. (P3/P5). En `4.3.3`, el one-hot pesa **84/122 = 68,9 %** (`service` aporta **70** por sí sola). En `4.3.5`, **58 de las 60** características eliminadas por importancia son *dummies* y `service` pasa de **70 a 15**: la selección es, en la práctica, **un mecanismo de poda del one-hot de `service`**, que es justo lo que la ficha pedía demostrar | `ba7a529` |
+| 2026-08-16 | Informe | **Los 4 hallazgos APLICADOS de la auditoría de la TANDA 15, y el primero es del tipo que SOLO se ve auditando las dos notas juntas.** **(1) CONTRADICCIÓN ENTRE NOTAS sobre el 78 % de DoS en D3:** `4.2` lo ponía en duda con un `[!todo]` **mientras `4.3.6` y `4.5` lo publican como cerrado** — dos partes del mismo capítulo afirmando cosas incompatibles. Resuelto declarándolo **derivable: 45.927/58.630 = 78,3 %**. **(2)** La **sobreafirmación de prevalencia** atribuida a `[17]` en `4.3.7`, bajada al nivel prudente que ya usa `5.0`. **(3) EL CENSO DE SEDES DEL *DATA SNOOPING*: la nota lo daba con DOS LISTAS DISTINTAS cuando en disco son DIEZ** (`resumen-de-decisiones.md:1271-1282`) — el mismo defecto de barrido corto que ya apareció en la Tanda 10. **(4)** La declaración de **sede única** frente a `5.0`, corregida | `ba7a529` |
+| 2026-08-16 | — | **HALLAZGO (no cierra ficha) · LOS 4 NO FORZADOS DE LA TANDA 15 QUEDAN ABIERTOS, NO RESUELTOS POR INICIATIVA DEL AGENTE.** **(1) 🟠 track CÓDIGO:** el **reparto por categoría de D3 (45.927 / 11.656 / 995 / 52) no lo emite ningún script** y su CSV fuente **no está versionado** — un titular de la memoria salido de un **recuento a mano**, el **precedente exacto del «13 de 98»**; ficha propia abierta. **(2)** `5.0 Protocolo de evaluación.md` arrastra **la misma sobreafirmación** (`:149`) y **cuatro anclajes de línea caducados** (`:144-147`), **dos verificados** —`scaler.fit` en `program.py:332`, no `:316`; `rf.fit` en `:516`, no `:500`—: es fichero de **T11** y se anota dentro de ella. **(3)** Para el `researcher`: añadir `4.3` a los usos de `[17]` y `[18]` en `Bibliografía.md:120-121`; anotado dentro de T10 junto al alta de Goldschmidt y Chudá y el `[23] ×3 → ×5`. **(4)** `4.6:13` afirma que «ningún número que llegue a la memoria procede de una ejecución manual», **lo que (1) desmiente**; va atado a (1) y **no se corrige antes que él** | `ba7a529` |
 | 2026-08-16 | — | **TANDA 14 — dos fichas distintas, y solo UNA cierra.** Ficheros: `Obsidian_TFG_Vault/04 Implementación del sistema/4.2 Base de datos utilizada.md` y `4.5 Entrenamiento del modelo de detección basado en firmas.md`. **(1) CERRADA**: la ficha «`4.5:39` es INEXACTO para KNN». **(2) AVANZADA, NO CERRADA: T10 · Capítulo 4** — hechos **2 de sus 5 bullets** (las tres particiones oficiales con la vacuna sobre KDDTest-21, y la 5.ª razón de «por qué NSL-KDD» con Goldschmidt y Chudá); **T10 SIGUE ABIERTA** con el «~33 %» de DoS, la nota de procedencia del «17» y `4.3` entera. **DOS pases de `auditor-ml`: NO APTO → corregido → APTO CON CAMBIOS → aplicado.** **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida, cero `[n]` inventados.** **Censo contado contra disco: INTACTO — 72 filas, primer libre el `[74]`, `[9]` sin tocar.** Queda **1 `[CITA: …]` vivo** (Goldschmidt y Chudá 2025, `4.2:62`), y es **correcto**: esa obra no está en `Bibliografía.md` y su alta es del `researcher` | `65484bb` |
 | 2026-08-16 | Informe | **La ficha «`4.5:39` es INEXACTO para KNN» — CERRADA con las cifras exactas que ella misma exigía.** En **KNN** el `f1_macro` es **idéntico** entre `4.3.4` y `4.5` (**0,945349**), y en **HistGradientBoosting** la diferencia citada era **artefacto de redondeo** (**0,969377 vs 0,969391**, **1,4e-5**) | `65484bb` |
 | 2026-08-16 | Informe | **EL PRIMER PASE DE `auditor-ml` FUE NO APTO, y queda escrito por qué: `4.5` daba una causa técnica DOBLEMENTE FALSA.** Decía «variabilidad de punto flotante entre **dos ejecuciones separadas** del mismo `StratifiedKFold`». **`firmas.py:133-135` construye UN ÚNICO `StratifiedKFold(random_state=42)` reutilizado en el mismo proceso** —no hay dos ejecuciones—, y **sí había configuración distinta**: el mini-experimento usa `max_iter=100` por defecto y la ganadora es `max_iter=300`. **La nota se contradecía con su propia tabla dos líneas antes** y, peor, **sugería no-determinismo en un pipeline que el TFG vende como reproducible**. Sustituida por la causa real | `65484bb` |
