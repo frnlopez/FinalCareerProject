@@ -51,9 +51,19 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 >    **qué solapes de los 15 quedan sin aplicar**. `3.1` no se tocó — puede ser correcto (`3.1.5` es
 >    nueva y está exenta), pero hay que confirmarlo.
 >
-> **DESPUÉS de cerrar la 12:** el **pase en serie del `researcher`**, que cubre de una vez los 33
-> `[CITA: …]` del capítulo 2 y los que haya generado el 3. Se aplazó a propósito para **no tocar
-> `Bibliografía.md` dos veces**.
+> **DESPUÉS de cerrar la 12:** el **pase en serie del `researcher`**, que cubre de una vez los
+> `[CITA: …]` del capítulo 2 y los del 3. Se aplazó a propósito para **no tocar `Bibliografía.md`
+> dos veces**.
+>
+> > **CENSO CONTADO CONTRA DISCO AL CERRAR LA SESIÓN (2026-08-16), no recordado.** El primer `[n]`
+> > libre **sigue siendo el `[68]`** (máximo dado de alta: `[67]`) — la Tanda 12 **no dio de alta
+> > ninguna entrada**, coherente con que no se inventó ningún `[n]`.
+> > **Líneas con `[CITA: …]` pendientes: 37**, así repartidas — `2.1.1`=3, `2.1.3`=4, `2.1.4`=16,
+> > `2.1.5`=8, `2.2.4`=3 (**34 en el capítulo 2**), `3.2`=1, `3.5`=2 (**3 en el capítulo 3**).
+> > **No son 33**: esa cifra venía de antes de la Tanda 11 y ya está caducada. **Ojo**: son LÍNEAS,
+> > no marcadores —alguna línea lleva dos—, y los `[CITA:` de `4.2` (1) y `Bibliografía.md` (2) son
+> > **prosa sobre la conversión**, no marcadores pendientes: no los cuentes.
+> > **Recuéntalo antes de empezar**, no lo leas: `grep -rc "\[CITA:" --include=*.md Obsidian_TFG_Vault`.
 >
 > ---
 >
