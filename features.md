@@ -27,6 +27,20 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 
 > ### ⚡ EMPIEZA POR AQUÍ — apunte de traspaso del 2026-08-15
 >
+> **TANDA 11 — CERRADA el 2026-08-15 en DOS commits: `d31e20f` (redacción + creación de la figura) y
+> `296de24` (embebido de la figura + auditoría aplicada). CON ELLA SE CIERRA EL CAPÍTULO 2 ENTERO y
+> con él la FASE 4 del plan de cierre.** `2.1.5 Métricas` completada al nivel de `A.2` (**cierra T8**);
+> `2.1.1`–`2.1.4` y `2.2.1` pasan de apuntes a prosa de memoria; **la figura del diagrama de bloques
+> del NIDS existe, es reproducible (`Implementacion/app/figura_nids_bloques.py`) y está embebida en
+> `2.2.2`**, con lo que cae su `[!todo]`. **Cierra además T24, T25 y la ficha de las 7 correcciones de
+> la Tanda 5.** Detalle en `## Cerradas`. **Lo que deja vivo: dos fichas nuevas** —el pase en serie
+> del `researcher` (33 `[CITA: …]` + 3 arreglos en `Bibliografía.md`) y los **pies de figura de los
+> capítulos 4 y 5**— y **el recuento de `00 Índice TFG.md`, que YA SE PUEDE CUADRAR** porque su
+> condición era que acabase la Fase 4.
+>
+> **Los tres `[!todo]` que quedan en el capítulo 2 son MARCAS DELIBERADAS, no huecos: no se
+> «arreglan».** Los de `2.2.4:109`, `2.2.5:76` y `2.3.3:159` **ya no existen**.
+>
 > **TANDA 10 — CERRADA ENTERA el 2026-08-15, sus DOS piezas: A en `55ef3c6` y B en `3fadf13`.**
 > El «PIEZA B PENDIENTE» que este bloque decía **ya no es vigente**: se escribió en el ciclo siguiente
 > al corte de API. Detalle en `## Cerradas`. **Lo que la Tanda 10 deja vivo: T9 ejecuta el recorte**
@@ -88,10 +102,10 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > (`55ef3c6`): `3.1.5` escrita y los tres `[!todo]` retirados**; y el **borrado físico de `03 Desarrollo/`**, que no tiene
 > permiso concedido.
 >
-> **Lo único que tiene que hacer Francisco: `! git push origin develop`.** Van **cuarenta y uno** commits
+> **Lo único que tiene que hacer Francisco: `! git push origin develop`.** Van **cuarenta y cuatro** commits
 > sin subir —**verificado con `git rev-list --count origin/develop..develop` el 2026-08-15, no contado
 > a mano**—, **más el commit que lleva esta misma línea**, que por construcción no puede contarse a
-> sí mismo: **CUARENTA Y DOS al terminar la Tanda 10 completa**. Falla por autenticación desde el harness, no
+> sí mismo: **CUARENTA Y CINCO al terminar la Tanda 11 (capítulo 2 CERRADO)**. Falla por autenticación desde el harness, no
 > desde su máquina.
 >
 > **Este número se recalcula, NUNCA se incrementa a mano.** Ha ido mal dos veces (llegó a decir
@@ -285,6 +299,9 @@ filas del 2026-08-14 de esta tanda.
   `8976944`). **El cuello real de este `[!todo]` es otro y hay que decirlo bien: la figura del
   diagrama de bloques NO EXISTE todavía en `Resultados/`**, así que no es «copiar y embeber» como
   aquellas, sino **crearla primero**. Merece ficha propia; no la hereda de una ficha ya cerrada.
+  **CERRADO el 2026-08-15 en la TANDA 11** (`d31e20f` + `296de24`): la figura se **creó** con
+  `Implementacion/app/figura_nids_bloques.py` (reproducible), se copió a `assets/` **byte-idéntica** y
+  se **embebió en `2.2.2` con pie**, retirando el `[!todo]`. **No se vuelve a encargar.**
 - **AVISO QUE TIENE QUE SOBREVIVIR AL PASE EN SERIE DEL `researcher`:** las citas nuevas quedan como
   `[CITA: …]`, **cero `[n]` nuevos y ningún `[n]` preexistente renumerado**; y **Anderson 1980 ya es
   `[2]` y Denning 1987 ya es `[3]`**, así que en ese pase hay que **MAPEAR, no dar de alta**.
@@ -509,28 +526,13 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
       existe**. Es una de las seis afirmaciones desmentidas por disco: ver la ficha de residuos de la
       Tanda 7, más abajo. **Se retira allí, no aquí.**
 
-- [~] **T8 · Cita en el punto de la decisión — capítulo 2** · Informe · `redactor-tfg`
-  - **Estado a 2026-08-14: PARCIALMENTE CERRADA — solo la parte de `2.2.3`/`2.2.4`**, escrita en la
-    **Tanda 4** dentro de la misma pasada que su prosa. La **definición canónica de «híbrido»** vive
-    ya en el callout `[!important]` de `2.2.3`. **No se vuelve a encargar `2.2.3`/`2.2.4`.**
-  - **Estado tras la TANDA 5 (2026-08-14): CASI cerrada, pero NO del todo — y esto se verificó
-    contra disco, no se dio por bueno.** La viñeta **`2.3.3` está HECHA** (P9/P10 y el marco del
-    modelo de amenaza, presentes en `2.3.3:11,38-60,159,173-174`) y **la carga de `2.1.6` también**
-    (Chow 1970 como regla de rechazo en el callout de `2.1.6:95-98`, Arp y Pineau en `:135` y
-    `:139`). **Lo que impide cerrarla es `2.1.5`: la Tanda 5 no la tocó y sigue siendo un stub en
-    `estado: borrador`**, así que la mitad `2.1.5` de esa viñeta no tiene dónde insertarse.
-    **T8 se cierra cuando se resuelva el punto (1) de la ficha de las 7 correcciones**, que es
-    exactamente esa decisión: redactar `2.1.5` o reescribir las remisiones. **No cerrar T8 antes.**
-  - `2.2.3`/`2.2.4` (**HECHA, Tanda 4**): **los 4 sentidos de «híbrido»** y cuál usa el TFG. En la literatura NSL-KDD
-    «híbrido» designa con la misma frecuencia (a) anomalías + firmas —el de este TFG—, (b) selección
-    de características + clasificador, (c) *clustering* + clasificador, (d) dos clasificadores
-    supervisados en *ensemble*. Sin acotarlo aquí, toda comparación posterior es ruido. Añadir que la
-    revisión más citada (Khraisat et al. 2019) **no taxonomiza lo híbrido**: lo despacha en un
-    párrafo y con un ejemplo que combina dos supervisados. Más los 5 patrones y el linaje ADAM 2001 /
-    Tombini 2004.
-  - `2.1.5`/`2.1.6`: P7/P8 de Arp et al.; Chow 1970 (regla de rechazo óptima **sobre las posteriores
-    verdaderas**, y `predict_proba` de un RF no lo es); vocabulario de Pineau.
-  - `2.3.3`: P9 y P10, y el marco del modelo de amenaza.
+> **T8 — CERRADA el 2026-08-15 en la TANDA 11** (`d31e20f`, ver `## Cerradas`). Lo único que la
+> mantenía abierta era **`2.1.5`**, hoy **completada al nivel de `A.2`** (17 bloques de fórmulas,
+> frase cortada cerrada, aparato de citas): **FPR, F1 y macro/weighted ya están definidos**, así que
+> las **tres remisiones colgadas** de `2.3.3:31`, `2.3.3:139` y `2.1.6:132` dejan de apuntar a
+> contenido inexistente. Las cargas de `2.2.3`/`2.2.4` (Tanda 4) y de `2.3.3`/`2.1.6` (Tanda 5)
+> ya estaban verificadas contra disco. **No se vuelve a encargar.** El encargo original vive en git.
+
 
 - [ ] **T9 · Cita en el punto de la decisión — capítulo 3** · Informe · `redactor-tfg`
   - `3.1`: **modelo de amenaza explícito** = aplicar P10. Atacante no adaptativo, sin conocimiento
@@ -869,41 +871,14 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   **Fuera de esta ficha, ya ejecutadas:** reformular `1.1:12` al dato agregado de INCIBE, repuntar
   `2.1.2:30,64` de `[6]` a `[5]`, y `2.2.1:32` de `[9]` a `[8]`.
 
-- [ ] **T24 · `2.1.4 Algoritmos de ML` no tiene bloque de redes neuronales** · Informe · `redactor-tfg`
-  Hueco del marco teórico detectado por el `redactor-tfg` el 2026-08-09, **independiente de la
-  bibliografía**: el apartado enumera algoritmos de ML sin ningún bloque de redes neuronales, cuando
-  la etapa 1 del sistema es un Autoencoder-MLP.
-
-- [ ] **T25 · `[6]` (Goodfellow) se ha quedado sin cita en el texto** · — · `researcher`
-  Choca con la **regla dura de T16** («ninguna entrada sin cita en el texto»): tras repuntar
-  `2.1.2:30,64` a `[5]`, `[6]` no la cita nadie. Además, la columna «Dónde se usa» de
-  `Bibliografía.md:32` está **desactualizada** y el aviso de `:86` puede que ya no proceda. **Solo el
-  `researcher` toca ese fichero.**
-  **Decisión de Francisco del 2026-08-09: `[6]` NO se retira — se ancla en `2.1.4 Algoritmos de ML`**,
-  abriendo allí el bloque de redes neuronales que falta. Esto **enlaza T25 con T24**.
-  - Descartados `2.1.5`/`2.1.6`: son métricas y metodología, **no arquitecturas**.
-  - Descartado presentar el autoencoder como **red profunda** para colgarle la cita: la memoria
-    afirma lo contrario en `3.1:28`, `3.4:28` y `2.3.1:24`, y crearía una **contradicción entre
-    capítulos**.
-  - El anclaje legítimo es el **error de reconstrucción**, que el proyecto usa en `3.4.2` y `4.4`:
-    Goodfellow se cita como referencia canónica **del concepto**, **sin afirmar que el modelo del TFG
-    sea profundo**.
-  - **T25 está desbloqueada:** la prosa de `2.1.4` —incluido el bloque de redes neuronales que abre
-    **T24**— la redacta el `redactor-tfg`; `2.1.4` **no** queda exceptuada de la retirada de la regla
-    de autoría (decisión de Francisco del 2026-08-09).
-  - **Pendiente para el `researcher`, en ciclo propio:** actualizar la columna «Dónde se usa» de
-    `Bibliografía.md:32`, retirar el aviso de `Bibliografía.md:86` si ya no procede, y corregir el
-    error de `Obsidian_TFG_Vault/99 Investigación/Auditoría de Bibliografía.md:140`, que afirma que
-    «`[6]` se usa bien en otros sitios y se queda» — **es falso**.
-  - **AVISO DEL 2026-08-15, verificado contra disco: LOS TRES NÚMEROS DE LÍNEA DE ARRIBA ESTÁN
-    DESPLAZADOS.** El callout que la **Tanda 6** insertó en `Bibliografía.md` corrió el fichero hacia
-    abajo, así que `:32` y `:86` **ya no apuntan a lo que esta ficha dice que apuntan**. **Quien
-    ejecute T25 localiza por CONTENIDO, no por número de línea**, y de paso re-ancla las tres
-    referencias. Es el mismo defecto que este proyecto arrastra con los sellos de commit: una cita
-    por posición envejece sola.
-  - **Y confirmado el mismo día: `[6]` (Goodfellow) sigue HUÉRFANA en TODO el vault** — cero
-    ocurrencias fuera de `Bibliografía.md`. El anclaje decidido (bloque de redes neuronales de
-    `2.1.4`) **exige antes T24**, que no está hecha: **T25 no se puede cerrar sola.**
+> **T24 y T25 — CERRADAS el 2026-08-15 en la TANDA 11** (`d31e20f`, ver `## Cerradas`). `2.1.4` ya
+> tiene su bloque de redes neuronales y **`2.1.4.3` ancla `[6]` (Goodfellow) con `[6, cap. 6]`**,
+> aplicando la decisión de Francisco del 2026-08-09 —referencia canónica **del concepto** de error de
+> reconstrucción, **sin** afirmar que el modelo del TFG sea profundo—. **`[6] ya NO está huérfana:
+> 7 ocurrencias verificadas en disco por el hilo principal.** **No se vuelven a encargar.**
+> **Lo que dejan vivo tiene ficha propia, abajo:** `Bibliografía.md` **sigue declarando `[6]`
+> huérfana en tres sitios** (`:75`, `:63` y `:199`) y arrastra las otras dos correcciones que T25
+> encargaba — **fichero del `researcher`, y por eso no se resuelve aquí**.
 
 ### Migración de `next-steps.md` §3.2 — altas del 2026-08-11
 
@@ -1084,45 +1059,15 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > `## Cerradas`. Se deja esta línea para que nadie la vuelva a dar de alta como hueco. **Lo que
 > dejó vivo, con ficha propia:** el `> [!todo]` del **diagrama de bloques del NIDS** en `2.2.2`
 > (mismo cuello de `assets/` que bloquea T10) y las **7 correcciones de la Tanda 5**.
+> **Las DOS quedan CERRADAS el 2026-08-15 en la TANDA 11** (`d31e20f` + `296de24`): la figura existe y
+> está embebida, y de las 7 correcciones **solo sobrevive la (6)**, que es del `researcher`.
 
-- [~] **Las 7 correcciones de la auditoría de la TANDA 5 — bloque CROSS-FILE, NO paralelizable** · Informe · `redactor-tfg`
-  > **VERIFICADO CONTRA DISCO EL 2026-08-15: las correcciones (2), (3), (4) y (7) YA ESTÁN HECHAS.**
-  > Las absorbió el pase de la **TANDA 6** sin registrarlo aquí, así que `features.md` iba **por
-  > detrás del disco** — esta vez **en la dirección buena**, que es la menos peligrosa de las dos
-  > pero igual de indeseable. **No se vuelven a despachar.**
-  > **SIGUEN VIVAS TRES:** la **(1)**, que es **decisión de Francisco** sobre `2.1.5` (redactarla o
-  > reescribir las tres remisiones) y por tanto **no la cierra un agente**; la **(5)**, **PARCIAL** —
-  > `2.1.6:82` **todavía adelanta el 0,822**—; y la **(6)**, que es del **`researcher`** y va en su
-  > pase en serie. **Con (4) y (7) hechas, lo que queda YA NO ES CROSS-FILE**: la (5) es local a
-  > `2.1.6` y la (1) es una decisión. El aviso de «no paralelizable» de abajo se conserva como
-  > historial de por qué se despachó en serie, **no como restricción vigente**.
-  Alta el **2026-08-14**. `auditor-ml` dictaminó **APTO CON CAMBIOS** sobre la Tanda 5 y **se
-  commiteó igualmente con las 7 abiertas, por decisión de Francisco**: el trabajo estaba escrito y
-  **sin respaldo en git tras un corte por límite de sesión**, así que se priorizó preservarlo. Esta
-  ficha recoge **los cuatro puntos que exigen las cuatro notas en contexto**; los tres restantes van
-  en la ficha hermana de abajo.
-  - **NO SE PARALELIZAN. Un solo redactor, EN SERIE, con `2.1.6`, `2.3.1`, `2.3.2` y `2.3.3`
-    abiertas a la vez**: los puntos 4, 5 y 7 son incoherencias **entre** notas, del tipo que no se ve
-    mirando una sola. Trocearlos en agentes paralelos es garantizar que sobrevivan.
-  - **(4) La Decisión 4 se aplica de forma ASIMÉTRICA dentro de la propia tanda.** `2.1.6` y `2.3.2`
-    marcan reserva sobre **Arp**; **`2.3.3` se articula entera sobre Arp sin marcarla**. **No es
-    sobreaplicación** —comprobado contra `99 Investigación/`—: es **defecto**, faltan marcadores en
-    `2.3.3` y `2.3.1`. Es el patrón inverso al hallazgo de la Tanda 4, y por eso hay que decidir el
-    criterio una vez y aplicarlo a las cuatro.
-  - **(5) Contradicción de POLÍTICA entre dos notas de la misma tanda.** `2.1.6:175` **adelanta
-    cifras** (`f1_macro` 0,909 en validación cruzada → 0,472 sobre D2, **respaldadas** en
-    `Resultados/metricas_baseline.csv`) mientras `2.3.3:11,34,142` **prohíbe anticipar números** en
-    el capítulo 2. Hay que **elegir la política**, no parchear una de las dos.
-  - **(7) Las TRES definiciones del *semantic gap* no se cruzan entre sí:** `2.1.6:172`,
-    `2.3.2:57` y `2.3.3:47`. Igual que con «híbrido» en la Tanda 4, la salida natural es
-    **una canónica y remisiones**, no tres redacciones independientes.
-  - **(1) Tres remisiones ESCRITAS EN PRESENTE a contenido que no existe.** `2.3.3:31`, `2.3.3:139`
-    y `2.1.6:132` remiten a `2.1.5 Métricas de evaluación` para **FPR, F1 y macro/weighted**, pero
-    **`2.1.5` es un stub en `estado: borrador` que no contiene nada de eso** —verificado en disco el
-    2026-08-14: sus epígrafes son «Para algoritmos de clasificación», «…de regresión» y «…no
-    supervisados o de clustering»—. **Son dos salidas y hay que escoger: redactar `2.1.5`
-    (que es trabajo del bloque `2.1`, no de esta corrección) o reescribir las tres remisiones.**
-    **Esta viñeta es también el residuo vivo de T8** (ver su ficha).
+> **La ficha «Las 7 correcciones de la auditoría de la TANDA 5» — CERRADA ENTERA el 2026-08-15 en la
+> TANDA 11** (`d31e20f` + `296de24`, ver `## Cerradas`). La **(1)** se resolvió por la vía de
+> **redactar `2.1.5`** (con ella cae T8); la **(5)** queda resuelta —**`2.1.6` ya no adelanta el
+> `0,822`**—; y las **(2), (3), (4) y (7)** estaban hechas desde la Tanda 6. **De las siete sobrevive
+> SOLO la (6)**, que es del **`researcher`** y **vive en la ficha hermana de abajo**, no aquí. **No se
+> vuelve a despachar.**
 
 - [~] **Las 3 correcciones LOCALES de la auditoría de la TANDA 5** · Informe · `redactor-tfg` / `researcher`
   > **VERIFICADO CONTRA DISCO EL 2026-08-15: las correcciones (2) y (3) YA ESTÁN HECHAS**, absorbidas
@@ -1166,6 +1111,10 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
     («**Totales:**»), no por número de línea** — cada alta futura la vuelve a mover. Las menciones a
     `:104` que quedan en el bloque de PRÓXIMOS PASOS y en las Tandas 2-3 son **historial**: no se
     reescriben, pero **el número bueno es el de aquí**.
+  - **DESBLOQUEADA el 2026-08-15 (TANDA 11): la condición era «cuadrarlo cuando la Fase 4 haya movido
+    el reparto redactadas/guion», y LA FASE 4 ACABA AHÍ** —el capítulo 2 queda cerrado entero, así que
+    **ya no quedan notas en guion en ese capítulo**. **Ya se puede cuadrar**, y es de minutos.
+    **Verificar la línea antes de tocar: puede haberse desplazado otra vez.**
 
 > **Los 6 marcadores `[CITA:` de `4.2` quedan CERRADOS en la TANDA 9** (2026-08-15, `e286cce`),
 > convertidos en el pase en serie del `researcher`. Ficha en `## Cerradas`. **Ojo al leer `4.2` hoy:
@@ -1208,7 +1157,7 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > es el `[58]`, es el `[68]`** — ver el bloque «CONTADOR GLOBAL DE CITAS» de PRÓXIMOS PASOS, que es
 > el único sitio donde se mantiene esa cifra.
 
-- [~] **Seis afirmaciones del vault que la TANDA 7 dejó desfasadas — TRES CERRADAS en la TANDA 8 y UNA MÁS en la TANDA 9; quedan DOS** (🟡) · Informe · `redactor-tfg` / `researcher`
+- [~] **Seis afirmaciones del vault que la TANDA 7 dejó desfasadas — TRES CERRADAS en la TANDA 8, UNA en la TANDA 9 y UNA en la TANDA 11; queda UNA** (🟡) · Informe · `redactor-tfg` / `researcher`
   Alta el **2026-08-15**, **las seis verificadas contra disco**. Son residuos de coherencia, no
   trabajo de redacción: cada uno es una línea que dice que algo no existe cuando ya existe.
   1. ~~**`4.2:117-118` afirma que las figuras «aún no se han copiado».**~~ **HECHO en la TANDA 8**
@@ -1225,9 +1174,11 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
      declaraban «propuesta, no ejecutada» sobre acciones que el disco demuestra ya ejecutadas.
   5. **Los números de línea de T25 están desplazados** por el callout que la Tanda 6 insertó en
      `Bibliografía.md`. Anotado también dentro de la propia ficha de T25: **localizar por contenido**.
-  6. **`[6]` (Goodfellow) sigue HUÉRFANA en todo el vault.** No se resuelve aquí: su anclaje depende
-     de **T24** (bloque de redes neuronales de `2.1.4`). Se lista para que el recuento de huérfanas
-     no se dé por cerrado con las otras cinco.
+  6. ~~**`[6]` (Goodfellow) sigue HUÉRFANA en todo el vault.**~~ **RESUELTO en la TANDA 11**
+     (2026-08-15, `d31e20f`): `2.1.4.3` la ancla con **`[6, cap. 6]`**, **7 ocurrencias verificadas en
+     disco**. **PERO el registro bibliográfico NO se ha enterado:** `Bibliografía.md:75`, `:63` y
+     `:199` **la siguen declarando huérfana**. Esa corrección es del **`researcher`** y va en su ficha
+     propia, más abajo.
 
 ### Residuos de la TANDA 9 — altas del 2026-08-15
 
@@ -1302,6 +1253,41 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   esas dos notas, y ya con ese alcance parcial apareció **un solape cap. 2 ↔ cap. 3** (`2.2.4.5` ↔
   `3.2.2`) y **cuatro sitios más de *data snooping***. Completarlo **antes o durante T9**: si T9
   recorta el capítulo 3 remitiendo a un capítulo 2 sin barrer, se remite a texto que también duplica.
+
+### Residuos y hallazgos de la TANDA 11 — altas del 2026-08-15
+
+> Salen del cierre del **capítulo 2 entero** (`d31e20f` + `296de24`) y de sus dos pases de auditoría.
+> **Ninguno es bloqueante** y **ninguno mueve una cifra publicada.** **Fichar no es resolver: aquí no
+> se ha corregido nada.**
+
+- [ ] **Pase EN SERIE del `researcher`: 33 `[CITA: …]` del capítulo 2 + 3 arreglos en `Bibliografía.md`** · Informe · **solo `researcher`**
+  Alta el **2026-08-15**. Es el pase que el protocolo de citas exige **al final de cada fase de
+  redacción**, y esta fase es la del capítulo 2. **Requiere petición explícita de Francisco**, como
+  todo despacho del `researcher`.
+  - **33 marcadores `[CITA: …]` a convertir en `[n]`.** **El primer número libre es el `[68]`** — se
+    **cuenta, no se recuerda** (`grep -oE '^\| *\[[0-9]+\]' Bibliografía.md`); ver el bloque
+    «CONTADOR GLOBAL DE CITAS» de PRÓXIMOS PASOS, que es el único sitio donde se mantiene la cifra.
+  - **Tres arreglos en `Bibliografía.md`, todos verificados contra disco:**
+    1. **`[6]` (Goodfellow) está marcada HUÉRFANA EN FALSO** en `:75`, `:63` y `:199` — `2.1.4.3` la
+       ancla con `[6, cap. 6]` desde esta tanda, **7 ocurrencias en disco**.
+    2. **`[4]` (Chio) tiene el «dónde se usa» apuntando a una imagen.** La cita se **REANCLÓ** en
+       `2.1.1:22` en esta tanda; la columna no lo refleja.
+    3. **La corrección (6) de la Tanda 5** — «Dónde se usa» de `[3]` (Denning) y `[2]` (Anderson),
+       que omiten usos reales. Sigue viva desde la Tanda 9; **no se duplica**, vive en su ficha.
+  - **AVISO PARA ESTE PASE, salido de la auditoría:** `[CITA: Molnar, cap. 8]` **atribuye Isolation
+    Forest a un libro de interpretabilidad** cuando **la fuente original es Liu, Ting y Zhou (2008)**.
+    Se dejó **marcado y sin tocar** a propósito: resolverlo es del `researcher`, no del redactor.
+
+- [ ] **De las 27 imágenes embebidas del vault, solo las 5 del capítulo 2 llevan pie de figura** (🟡) · Informe · `redactor-tfg`
+  **HALLAZGO NUEVO del 2026-08-15**, contado en disco al cerrar la Tanda 11. Las **22 de los
+  capítulos 4 y 5 van apiladas, sin pie y sin numeración**, así que ninguna se puede citar desde el
+  texto y el volcado al `.docx` las dejaría mudas. **Es aplicable ya**, porque el criterio de
+  numeración quedó fijado en esta misma tanda: **`Figura <capítulo>.<orden>`**.
+  - **Ojo con la colisión que este criterio acaba de evitar**, que es la razón de que fuera 🔴: `2.1.1`
+    numeraba «Figura 1.1–1.4» **dentro del capítulo 2**. El mismo defecto puede estar sembrado en los
+    capítulos 4 y 5 — **contar antes de numerar**.
+  - **Toca ficheros de T10 y T11**, así que o entra dentro de ellas o se despacha con cuidado de no
+    solaparse.
 
 ### Descartado — no reabrir
 
@@ -1505,6 +1491,15 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-15 | — | **TANDA 11 — EL CAPÍTULO 2 QUEDA CERRADO ENTERO.** **Undécimo commit por tanda** bajo la Decisión 7, salvo que aquí son **dos commits**: `d31e20f` (la redacción y la creación de la figura) y `296de24` (el embebido de la figura y la auditoría aplicada). **12 ficheros tocados**: `02 Marco Teórico/` `2.1.1`–`2.1.6`, `2.2.1`, `2.2.2`, `2.2.4`, `2.2.5`, `2.3.1` y `Apéndices/A.2`, más `Implementacion/app/figura_nids_bloques.py` (**nuevo**) y su PNG en `assets/`. **Auditoría en DOS PASES PARALELOS** —coherencia conceptual y citas/cifras—, ambos **APTO CON CAMBIOS**, aplicados por **4 redactores sobre ficheros disjuntos**. **Cero cómputo sobre el dataset, cero corridas, ninguna cifra publicada movida, cero `[n]` inventados.** Lo que cierra va desglosado en las filas de abajo. **Deja abiertas DOS fichas nuevas** (el pase en serie del `researcher` y los pies de figura de los capítulos 4-5) y **desbloquea** la del recuento de `00 Índice TFG.md` | `d31e20f` + `296de24` |
+| 2026-08-15 | Informe | **T8 · «Cita en el punto de la decisión — capítulo 2» — CERRADA.** Lo único que la mantenía abierta era **`2.1.5`**, que seguía siendo un stub en `estado: borrador`. **`2.1.5 Métricas` queda COMPLETADA al nivel de `A.2` por decisión de Francisco**: **17 bloques de fórmulas LaTeX**, la **frase cortada cerrada** y aparato de citas. Con ello **FPR, F1 y macro/weighted ya están definidos**, así que **las tres remisiones colgadas de `2.3.3:31`, `2.3.3:139` y `2.1.6:132` dejan de apuntar a contenido inexistente**. Las cargas de `2.2.3`/`2.2.4` (Tanda 4), `2.3.3` y `2.1.6` (Tanda 5) ya estaban verificadas contra disco: **esta era la última pieza** | `d31e20f` |
+| 2026-08-15 | Informe | **Prosa de memoria en `2.1.1`–`2.1.4` y `2.2.1` — HECHA.** Pasan de **apuntes crudos** a texto de memoria: encabezados reales y aparato de citas. **`2.1.4` gana Isolation Forest, One-Class SVM y LOF**, que son exactamente los algoritmos de la etapa 1 del sistema y no estaban descritos en el marco teórico. **Con esto el capítulo 2 no tiene ninguna nota en apuntes** | `d31e20f` |
+| 2026-08-15 | Informe | **La FIGURA del diagrama de bloques del NIDS — CREADA, COPIADA Y EMBEBIDA; con ella se retira el `> [!todo]` de `2.2.2` que arrastraba desde la TANDA 4.** Es el caso que este fichero ya había acotado bien: **no era «copiar y embeber» como las de `assets/`, porque la figura NO EXISTÍA**. Se genera con `Implementacion/app/figura_nids_bloques.py` —**reproducible, no un binario caído del cielo**—, se copia a `Obsidian_TFG_Vault/assets/` **byte-idéntica** y se embebe en `2.2.2` **con pie de figura**. Numerada **Figura 2.5** bajo el criterio fijado en esta misma tanda | `d31e20f` + `296de24` |
+| 2026-08-15 | Informe | **T24 y T25 — CERRADAS las dos, y con ellas `[6]` (Goodfellow) DEJA DE ESTAR HUÉRFANA.** `2.1.4.3` la ancla con **`[6, cap. 6]`**, aplicando la decisión de Francisco del **2026-08-09** (anclar en el bloque de redes neuronales de `2.1.4`, **sin** afirmar que el modelo del TFG sea profundo). **Verificado por el hilo principal contra disco: 7 ocurrencias.** Cae también el localizador de página que la decisión del 2026-08-15 exigía a los 8 libros. **LO QUE NO CIERRA, y por eso se abre ficha del `researcher`: `Bibliografía.md:75`, `:63` y `:199` SIGUEN DECLARANDO `[6]` huérfana** — el disco desmiente al registro bibliográfico, y **solo el `researcher` toca ese fichero**. *(`CLAUDE.md` ya lo corrigió el hilo principal.)* | `d31e20f` |
+| 2026-08-15 | Informe | **La ficha «Las 7 correcciones de la auditoría de la TANDA 5» — CERRADA ENTERA.** La **(1)** era exactamente la decisión sobre `2.1.5`, resuelta por la vía de **redactarla** (fila de T8, arriba). La **(5)** queda resuelta: **`2.1.6` ya no adelanta el `0,822`**, así que la política de «el capítulo 2 no anticipa resultados» se aplica sin excepción. Las (2), (3), (4) y (7) estaban hechas desde la Tanda 6. **De las siete sobrevive SOLO la (6)**, que es del **`researcher`** y **vive en su ficha hermana**, no aquí | `d31e20f` + `296de24` |
+| 2026-08-15 | Informe | **Los 4 🔴 de la auditoría de la TANDA 11 — ENCONTRADOS Y CORREGIDOS, más 7 🟡 y 9 localizadores de página propagados a marcadores que habían quedado desnudos.** **(1) COLISIÓN LATENTE DE FIGURAS:** `2.1.1` numeraba «Figura 1.1–1.4» **dentro del capítulo 2** y la figura nueva era «Figura 2.1» → **al volcar al `.docx` habría habido dos «Figura 2.1»**, defecto que no se ve en Markdown y sí en el entregable. **(2) `2.2.4:74` afirmaba que `2.1.5` está «hoy en estado de borrador»**, falso desde esta misma tanda: un tribunal habría leído que una sección del propio TFG está sin acabar. **(3) `2.1.5` y `A.2` se atribuían mutuamente el mismo papel**, y `2.1.5` describía `A.2` como «cuatro tablas de resultados» que **no contiene**. **(4) Dos wikilinks rotos** introducidos en la tanda, uno de ellos **inventando un segundo nombre para `4.2`** | `296de24` |
+| 2026-08-15 | — | **DECISIONES TÉCNICAS DELEGADAS en la TANDA 11 — reversibles, y se registran para no rediscutirlas.** **(a) Criterio de numeración de figuras: `Figura <capítulo>.<orden>`**, aplicado ya a `2.1.1` (2.1–2.4) y `2.2.2` (2.5). **(b) Reparto de sede `2.1.5` / `A.2`: `2.1.5` DEFINE Y JUSTIFICA, `A.2` INSTANCIA CON CIFRAS** — antes cada una remitía a la otra. **(c) `[4]` (Chio) se REANCLA en `2.1.1:22` en vez de darse de baja**, porque la afirmación que sostenía sigue viva. **(d) `[CITA: Molnar, cap. 8]` NO se toca pero se MARCA**: atribuye Isolation Forest a un libro de interpretabilidad cuando **la fuente original es Liu, Ting y Zhou (2008)** — **aviso para el `researcher`**, que es quien resuelve el marcador | `296de24` |
+| 2026-08-15 | — | **HALLAZGO (no cierra ficha) · LO QUE SALIÓ LIMPIO, que era el riesgo declarado de reescribir 6 notas de golpe.** Se registra porque **un invariante que aguanta solo cuenta si queda escrito que se comprobó**: «híbrido» **no se redefine** —el callout de `2.2.3` sigue siendo sede única—; «semisupervisado (one-class)» **no recupera «no supervisado» como sinónimo**, y **`2.1.2.6` no redefine sino que RECONCILIA** la clasificación de los manuales con la **Decisión 8**; **cero `[n]` inventados** y **`[9]` no reaparece**; **ninguna cifra movida** y el «51» **no vuelve**; y **el capítulo 2 no anticipa ningún resultado** | `d31e20f` + `296de24` |
 | 2026-08-15 | — | **TANDA 10 — dos piezas: `3.1.5 Modelo de amenaza` (pieza A) y el ANÁLISIS DE DATOS REPETIDOS del capítulo 3 (pieza B).** **Décimo commit por tanda** bajo la Decisión 7, salvo que aquí son **dos commits**, no uno: la pieza A se commiteó sola (`55ef3c6`) porque la sesión **murió por límite de API** antes de escribir la pieza B, y la B llegó en el ciclo siguiente (`3fadf13`). Ficheros: `Obsidian_TFG_Vault/03 Diseño del sistema/3.1 Requisitos del sistema.md`, `06 Conclusiones/6.1 Conclusiones.md`, `Apéndices/A.3 Ficha del sistema.md` y `99 Investigación/Datos repetidos en el capítulo 3.md` (**nuevo**). **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida, ni un `[n]` nuevo.** Lo que cierra va desglosado en las dos filas de abajo. **Deja TRES fichas nuevas abiertas** (los hallazgos laterales) y **una ampliación de T9**, que es quien ejecuta el recorte | `55ef3c6` + `3fadf13` |
 | 2026-08-15 | Informe | **`3.1.5 Modelo de amenaza` — AÑADIDA a `3.1 Requisitos del sistema`, y con ella CERRADA la ficha 🟠 «`2.3.3:91` remite el modelo de amenaza CONCRETO a `3.1`, que está VACÍA».** Fija el adversario en las **seis dimensiones** (caja negra sin observación, solo emitir tráfico, solo inferencia, estático) y sostiene **por qué NO hay experimento adversario** con **propiedades verificables del NSL-KDD** —características derivadas y agregadas, ataque en espacio de características sin correspondencia en el espacio del problema—, **no con falta de tiempo**: es un resultado, no una excusa. **DESBLOQUEA EL CIERRE DEL CAPÍTULO 2**, que remitía **dos veces** (`2.3.3:11` y `:91`) el modelo de amenaza concreto a `3.1`. **Cierra los tres `[!todo]`** que declaraban ese hueco con idéntico texto en `6.1:75`, `A.3:52` y `A.3:647`. **CORRECCIÓN AL REGISTRO, que este fichero afirmó hasta hoy: `3.1` NO estaba vacía** —tenía `3.1.1`–`3.1.4` con prosa real—, así que lo hecho es **añadir una subsección**, no redactar la nota; la ficha describía mal su propio objeto. **DECISIÓN TÉCNICA DELEGADA Y REGISTRADA: `2.3.3:91` NO se repunta al ancla `3.1.5`** — se deja el wikilink a nota, que es la convención del vault, porque **T9 va a renumerar el capítulo 3**. **Se reconsidera tras T9**, y queda anotado dentro de su ficha | `55ef3c6` |
 | 2026-08-15 | Informe | **El ANÁLISIS DE DATOS REPETIDOS del capítulo 3 — ENTREGADO: `Obsidian_TFG_Vault/99 Investigación/Datos repetidos en el capítulo 3.md`, 513 líneas.** Responde a la crítica del profesor sobre recortar y unificar «los primeros apartados del Capítulo 3». **ES ANÁLISIS, NO EJECUCIÓN: el recorte lo aplica T9**, y así queda anotado en su ficha. **15 solapes verificados con línea exacta**, cada uno con **recortar / unificar / remitir**, **sede canónica** y **la frase de remisión concreta** a insertar. **El barrido inicial que este fichero traía se quedaba corto: el *data snooping* está en 10 sitios, no 6** —faltaban `2.1.6:76-90`, `4.6:28-35`, `5.4:32` y `A.3:574-586`—, más un solape cap. 2 ↔ cap. 3 (`2.2.4.5` ↔ `3.2.2`) y uno interno (`3.2.1` ↔ `3.3.3`). **Cifra para el profesor: el capítulo 3 encoge ≈20 % en total y ≈25 % en `3.1`–`3.3`.** **Sección de repetición LEGÍTIMA, validada por el auditor, que NO se toca:** `3.4.1`↔`2.3.1`, la cadena `3.1.3`→`3.5.3`→`4.5` y los cierres de capítulo — decir qué repetición se conserva es tan parte de la respuesta como decir cuál se corta. `auditor-ml`: **APTO CON CAMBIOS**, 8 puntos, **ningún 🔴, todos aplicados**; y **los tres graves eran TRAMPAS PARA T9**, por eso quedan escritos: (1) el informe declaraba `4.3.6` «único sitio con los 17 tipos» y es **falso** —`A.1:99-106` los enumera—, con una instrucción que **habría roto una remisión buena**; (2) S2 y S7 ignoraban `2.1.6:132-140`; (3) S1 creaba una **segunda redacción** del *data snooping* contra `resumen-de-decisiones.md:316-323`. **DOS HUECOS DECLARADOS DENTRO DEL INFORME, no ocultos:** el barrido del capítulo 2 solo cubre `2.1.6` y `2.2.4` (ficha propia abierta), y los porcentajes son **estimación redondeada a la decena** —no hay script de conteo—; **decisión técnica registrada: se publican redondeados, y si algún día se cuenta con script, se sustituyen** | `3fadf13` |

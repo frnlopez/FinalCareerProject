@@ -226,10 +226,13 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
     `[12]` Hastie, `[39]` Russell y Norvig, y **`[54]` Molnar**. Ojo con el falso amigo: los
     `pp. 222-232` que ya aparecen son **el rango del artículo en su revista**, metadato de la
     referencia, **no** el localizador de la afirmación.
-  - **Dos avisos sobre esa lista, verificados el 2026-08-15:** `[6]` Goodfellow **está huérfana en
-    todo el vault** —no la cita nadie, así que no puede recibir localizador hasta que **T24** la
-    ancle—; y `[54]` Molnar **tiene la edición sin fijar** (la web sirve hoy la 3.ª, la literatura
-    cita la 2.ª de 2022), así que su página depende de qué edición se elija.
+  - **Un aviso vivo sobre esa lista:** `[54]` Molnar **tiene la edición sin fijar** (la web sirve hoy
+    la 3.ª, la literatura cita la 2.ª de 2022), así que su página depende de qué edición se elija.
+    Decide Francisco.
+  - ~~`[6]` Goodfellow está huérfana~~ **— RESUELTO el 2026-08-16 (`296de24`). T24 la ancló:
+    `2.1.4.3` la cita con `[6, cap. 6]`, y ya lleva localizador.** El dato se contaba como vivo desde
+    el 2026-08-15; **verificar antes de repetirlo** — `Bibliografía.md` la seguía marcando huérfana
+    en tres sitios cuando ya no lo era.
   - **`Bibliografía.md` gana una columna «Localizador por uso»**, que escribe **solo el `researcher`**.
   - **Donde la página no se pueda establecer con honestidad, se MARCA — no se inventa.** Misma
     disciplina que con las 47 citas reconstruidas.
