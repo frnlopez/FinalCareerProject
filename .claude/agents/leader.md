@@ -194,20 +194,23 @@ ficheros, así que van en paralelo. Dos secciones de la *misma* nota, no.
 
 **Protocolo de citas bajo paralelismo — esto es lo que evita el destrozo.** Los marcadores `[n]`
 del vault son un **contador global** que apunta a `Bibliografía.md`. **En uso hoy: `[1]`–`[8]` y
-`[10]`–`[67]`, 66 entradas dadas de alta** —verificado contra `Bibliografía.md` el 2026-08-15 tras
-la Tanda 9, que dio de alta `[58]`–`[67]`—, y **`[9]` está RETIRADA SIN RENUMERAR (`396e283`): está
-quemada, no libre**. **El primer número disponible es el `[68]`.** Si cuatro redactores en paralelo
+`[10]`–`[73]`, 72 entradas dadas de alta** —verificado contra `Bibliografía.md` el 2026-08-16 tras
+la Tanda 13, el pase en serie de citas, que dio de alta `[68]`–`[73]`—, y **`[9]` está RETIRADA SIN
+RENUMERAR (`396e283`): está
+quemada, no libre**. **El primer número disponible es el `[74]`.** Si cuatro redactores en paralelo
 inventan números nuevos, los cuatro empiezan en el mismo y se solapan en silencio.
 
 > **Este rango se VERIFICA, no se recuerda — y ya ha ido mal DOS veces.** Hasta el 2026-08-15 este
 > fichero decía que el primer libre era el `[11]`, cuando la Tanda 6 había dado de alta hasta el
-> `[57]`; se corrigió a `[58]`, y **ese mismo día la Tanda 9 lo volvió a mover al `[68]`**. Un
+> `[57]`; se corrigió a `[58]`, y **ese mismo día la Tanda 9 lo volvió a mover al `[68]`**. El
+> 2026-08-16 la Tanda 13 lo movió otra vez, al `[74]` — esa vez no fue un fallo sino un pase de
+> citas, pero ilustra lo mismo: **el número de aquí caduca en cuanto corre el `researcher`**. Un
 > redactor que lea un rango caducado asigna números ya usados y machaca altas existentes en
 > silencio. **Antes de despachar, cuéntalos**:
 > `grep -oE '^\| *\[[0-9]+\]' Bibliografía.md`. El número escrito aquí es una foto, no la verdad.
 
 Por eso: **un redactor en paralelo NUNCA asigna un número `[n]` nuevo.** Escribe
-`[CITA: autor o tema]`, que es la convención que el proyecto ya usa (`4.2` arrastra 6 de esos).
+`[CITA: autor o tema]`, que es la convención que el proyecto ya usa.
 La conversión de `[CITA: …]` a `[n]` y el alta en `Bibliografía.md` es un **pase posterior y en
 serie**, del `researcher`. Un `[n]` que ya existía en la nota se respeta y no se renumera.
 

@@ -200,15 +200,16 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
   de solo lectura. Un cierre por **tanda**, no por nota: una sola pasada de `cronista`.
 - **Protocolo de citas — vale para CUALQUIER agente que escriba en el vault.** Los marcadores `[n]`
   son un **contador global** que apunta a `Bibliografía.md`. **En uso hoy: `[1]`–`[8]` y
-  `[10]`–`[67]`, 66 entradas** —verificado contra `Bibliografía.md` el 2026-08-15 tras la Tanda 9,
-  que dio de alta `[58]`–`[67]`—, y **`[9]` está RETIRADA SIN RENUMERAR** (`396e283`), así que está
-  **quemada, no libre**. **El primer número disponible es el `[68]`.** **Este rango se cuenta, no se recuerda**
+  `[10]`–`[73]`, 72 entradas** —verificado contra `Bibliografía.md` el 2026-08-16 tras la Tanda 13,
+  el pase en serie de citas, que dio de alta `[68]`–`[73]`—, y **`[9]` está RETIRADA SIN RENUMERAR**
+  (`396e283`), así que está
+  **quemada, no libre**. **El primer número disponible es el `[74]`.** **Este rango se cuenta, no se recuerda**
   (`grep -oE '^\| *\[[0-9]+\]' Bibliografía.md`): estuvo desfasado en `leader.md` diciendo `[11]`
   cuando ya iba por el `[57]`, y ese es justo el fichero que despacha.
   Importa porque `[2]` (Anderson 1980) y `[3]` (Denning 1987) son las que más se citan al redactar
   el capítulo 2: **se MAPEAN, no se dan de alta**.
   **Nadie inventa un `[n]` nuevo**: se escribe `[CITA: autor o tema]`, convención
-  que el proyecto ya usa (`4.2` arrastra 6). Si dos agentes en paralelo asignaran números, los dos
+  que el proyecto ya usa. Si dos agentes en paralelo asignaran números, los dos
   empezarían en el mismo y el solape no lo ve nadie al leer. La conversión de `[CITA: …]` a `[n]` y
   el alta en `Bibliografía.md` es un pase **posterior y en serie**, del `researcher`. Un `[n]` que
   ya estaba en la nota **se respeta**: no se renumera ni se borra.
@@ -228,11 +229,14 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
     referencia, **no** el localizador de la afirmación.
   - **Un aviso vivo sobre esa lista:** `[54]` Molnar **tiene la edición sin fijar** (la web sirve hoy
     la 3.ª, la literatura cita la 2.ª de 2022), así que su página depende de qué edición se elija.
-    Decide Francisco.
+    Decide Francisco. **Su alcance se redujo el 2026-08-16 (Tanda 13)**: al reasignar el Isolation
+    Forest a `[73]` Liu, Ting y Zhou (2008), Molnar ya **no bloquea ningún localizador del capítulo
+    2** — solo queda pendiente para su uso en `2.3.3`.
   - ~~`[6]` Goodfellow está huérfana~~ **— RESUELTO el 2026-08-16 (`296de24`). T24 la ancló:
     `2.1.4.3` la cita con `[6, cap. 6]`, y ya lleva localizador.** El dato se contaba como vivo desde
     el 2026-08-15; **verificar antes de repetirlo** — `Bibliografía.md` la seguía marcando huérfana
-    en tres sitios cuando ya no lo era.
+    en tres sitios cuando ya no lo era. **Esas tres declaraciones falsas se retiraron del propio
+    `Bibliografía.md` en la Tanda 13** (`:63`, `:75`, `:199`), con sus 7 ocurrencias verificadas.
   - **`Bibliografía.md` gana una columna «Localizador por uso»**, que escribe **solo el `researcher`**.
   - **Donde la página no se pueda establecer con honestidad, se MARCA — no se inventa.** Misma
     disciplina que con las 47 citas reconstruidas.

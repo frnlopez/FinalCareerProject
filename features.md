@@ -28,7 +28,8 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > ### ⚡ EMPIEZA POR AQUÍ — apunte de traspaso del 2026-08-16
 >
 > **CAPÍTULO 2: CERRADO** (Tanda 11 — `d31e20f`, `296de24`, `2c5e36e`). Prosa completa, auditado en
-> dos pases, figura del NIDS embebida. **Solo le falta el pase de citas del `researcher`.**
+> dos pases, figura del NIDS embebida. ~~**Solo le falta el pase de citas del `researcher`.**~~
+> **— HECHO el 2026-08-16 (TANDA 13). El capítulo 2 no tiene ya ningún `[CITA: …]` pendiente.**
 >
 > **TANDA 12 (capítulo 3) — PARCIAL, commiteada en `669fd9f`. NO está cerrada.**
 > Hecho: `3.3` de cuatro apartados a dos (45→34 líneas), con la formulación canónica del *data
@@ -58,7 +59,9 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 >
 > **DESPUÉS de cerrar la 12:** el **pase en serie del `researcher`**, que cubre de una vez los
 > `[CITA: …]` del capítulo 2 y los del 3. Se aplazó a propósito para **no tocar `Bibliografía.md`
-> dos veces**.
+> dos veces**. **— EJECUTADO el 2026-08-16 como TANDA 13. NO se vuelve a despachar**: 36 marcadores
+> convertidos, **cero `[CITA: …]` vivos en la memoria**, y `Bibliografía.md` tocada una sola vez,
+> absorbiendo también el Hallazgo 10 y el descuadre 36/33. Detalle en `## Cerradas`.
 >
 > > **CENSO CONTADO CONTRA DISCO AL CERRAR LA SESIÓN (2026-08-16), no recordado.** El primer `[n]`
 > > libre **sigue siendo el `[68]`** (máximo dado de alta: `[67]`) — la Tanda 12 **no dio de alta
@@ -75,6 +78,13 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > > **Bajó una al unificar la sede de Kim et al.**, no porque se convirtiera ningún marcador. **El
 > > primer `[n]` libre SIGUE SIENDO EL `[68]` y `Bibliografía.md` sigue en 66 entradas**: la Tanda 12
 > > no dio de alta ninguna. **El «37» de arriba queda como traza, no como recuento vigente.**
+> >
+> > **ACTUALIZACIÓN DEL 2026-08-16, tras la TANDA 13 (pase en serie de citas) — TODO ESTE CENSO QUEDA
+> > COMO TRAZA: los 36 marcadores están CONVERTIDOS y quedan CERO `[CITA: …]` vivos en la memoria.**
+> > `Bibliografía.md` pasa a **72 filas** y **el primer `[n]` libre es el `[74]`** — ver el bloque
+> > «CONTADOR GLOBAL DE CITAS», que es el único sitio donde se mantiene la cifra. Los `[CITA:` que
+> > queden en disco son **prosa sobre la convención** (`4.2` ×1, `Bibliografía.md` ×7) o **informe**
+> > (`99 Investigación/Reconstrucción…` ×11): **no los cuentes como pendientes.**
 >
 > ---
 >
@@ -133,7 +143,13 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 >
 > ### ⛔ CONTADOR GLOBAL DE CITAS — el dato con riesgo real de este fichero
 >
-> **Estado a 2026-08-15, después de la TANDA 9: `Bibliografía.md` tiene 66 entradas, `[1]`–`[8]` y
+> **ESTADO VIGENTE A 2026-08-16, DESPUÉS DE LA TANDA 13 — contado contra disco, no recordado:
+> `Bibliografía.md` tiene 72 FILAS, `[1]`–`[8]` y `[10]`–`[73]`, con `[9]` QUEMADA. EL PRIMER `[n]`
+> LIBRE ES EL `[74]`.** Las seis altas nuevas de la Tanda 13 son las **`[68]`–`[73]`**. **Todo lo que
+> este fichero diga más abajo sobre el `[68]` o sobre «66 entradas» es TRAZA HISTÓRICA, no recuento
+> vigente.**
+>
+> **Estado a 2026-08-15, después de la TANDA 9 — SUPERADO, se deja como traza: `Bibliografía.md` tiene 66 entradas, `[1]`–`[8]` y
 > `[10]`–`[67]`, con `[9]` QUEMADA (retirada sin renumerar, `396e283`). EL PRIMER `[n]` LIBRE ES EL
 > `[68]`.** Las diez altas nuevas de la Tanda 9 son las **`[58]`–`[67]`**.
 >
@@ -148,8 +164,11 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 >
 > **LO QUE ESPERA DECISIÓN DE FRANCISCO, aparcado:** las **5 citas no reconstruidas** —de `[27]`,
 > `[28]` y `[44]` no se conoce ni la obra, así que **nunca podrán llevar libro+página**, lo que
-> inclina a retirar la afirmación—; **`[6]` Goodfellow**, dada de alta pero **huérfana en todo el
-> vault** (depende de T24); **`[54]` Molnar**, con la **edición sin fijar**; la **edición de
+> inclina a retirar la afirmación—; ~~**`[6]` Goodfellow**, dada de alta pero **huérfana en todo el
+> vault** (depende de T24)~~ **— RESUELTO: anclada en la TANDA 11 (`296de24`) y las tres
+> declaraciones falsas de orfandad retiradas de `Bibliografía.md` en la TANDA 13 (2026-08-16)**;
+> **`[54]` Molnar**, con la **edición sin fijar** —**alcance reducido el 2026-08-16: ya no bloquea
+> ningún localizador del capítulo 2**, ficha propia en `## Abiertas`—; la **edición de
 > Stallings `[8]`** (4.ª vs 5.ª); ~~**`2.3.3:91`**, que remite el modelo de amenaza a `3.1`, vacía
 > (declarado con `[!todo]` en tres notas)~~ **— RESUELTO el 2026-08-15 en la TANDA 10 pieza A
 > (`55ef3c6`): `3.1.5` escrita y los tres `[!todo]` retirados**; y el **borrado físico de `03 Desarrollo/`**, que no tiene
@@ -1278,7 +1297,13 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   los tres callouts**, pero en el otro fichero: la corrección se aplicó donde se leía y no donde se
   auditaba. **Encaja con T25**, que ya tiene encargada una línea de ese mismo fichero (`:140`).
 
-- [ ] **La afirmación de «localizadores de página en las notas» solo es cierta para `6.2:306`** (🟡) · Informe · **solo `researcher`**
+- [~] **La afirmación de «localizadores de página en las notas» solo es cierta para `6.2:306`** (🟡) · Informe · **solo `researcher`**
+  **AVANZADA, NO CERRADA, en la TANDA 13 (2026-08-16): de los 36 marcadores convertidos, 27 bajan
+  CON localizador de capítulo**, así que el localizador ya **sí** ha llegado al texto en los
+  capítulos 2 y 3 — la afirmación de esta ficha **ya no es cierta tal como está escrita**. Queda
+  abierta porque el alcance eran **los 8 libros en todo el vault**, y las citas a libros de los
+  capítulos 4, 5, 6 y apéndices **no se han barrido**. `[54]` Molnar sigue con la **edición sin
+  fijar**, pero **ya no bloquea ningún localizador del capítulo 2** (ver la ficha de la Tanda 13).
   Alta el **2026-08-15**. La tanda estableció **5 localizadores** y marcó **5 como no establecibles**
   —disciplina correcta, se aplaude—, pero **en las notas de la memoria solo hay UN marcador con
   localizador**, `6.2:306`. O sea: el localizador está registrado en `Bibliografía.md` y **casi no ha
@@ -1287,13 +1312,9 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   `[12]`, `[39]`, `[54]`), con los avisos ya conocidos de `[6]` (huérfana, depende de T24) y `[54]`
   (edición sin fijar).
 
-- [ ] **DESCUADRE DE CIFRAS: el parte dice 36 marcadores convertidos y `Bibliografía.md:45-46` dice «33 marcadores»** (🟡) · Informe · **solo `researcher`**
-  Alta el **2026-08-15**, detectado por el hilo principal al cerrar. **Las dos cifras son defendibles
-  bajo criterios distintos** —**33 LÍNEAS con marcador** y **36 MARCADORES**, porque hay líneas que
-  llevan dos—. **Lo que NO es cierto bajo ninguno de los dos criterios es el texto literal de
-  `Bibliografía.md`, que dice «33 marcadores».** Corregir a «33 líneas con marcador» o a «36
-  marcadores», el que se elija, **pero que la unidad y el número casen**.
-  **No lo toca el `cronista`:** `Bibliografía.md` es del `researcher`.
+> **El DESCUADRE DE CIFRAS «36 marcadores vs 33»** que vivía aquí queda **CERRADO en la TANDA 13**
+> (2026-08-16): `Bibliografía.md:46-47` ya dice «36 marcadores — 33 en las notas más los 3 de
+> `EL_FUTURO.md`», con **unidad y número casando**. Su ficha vive en `## Cerradas`.
 
 ### Hallazgos laterales de la TANDA 10 — altas del 2026-08-15
 
@@ -1329,23 +1350,12 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > **Ninguno es bloqueante** y **ninguno mueve una cifra publicada.** **Fichar no es resolver: aquí no
 > se ha corregido nada.**
 
-- [ ] **Pase EN SERIE del `researcher`: 33 `[CITA: …]` del capítulo 2 + 3 arreglos en `Bibliografía.md`** · Informe · **solo `researcher`**
-  Alta el **2026-08-15**. Es el pase que el protocolo de citas exige **al final de cada fase de
-  redacción**, y esta fase es la del capítulo 2. **Requiere petición explícita de Francisco**, como
-  todo despacho del `researcher`.
-  - **33 marcadores `[CITA: …]` a convertir en `[n]`.** **El primer número libre es el `[68]`** — se
-    **cuenta, no se recuerda** (`grep -oE '^\| *\[[0-9]+\]' Bibliografía.md`); ver el bloque
-    «CONTADOR GLOBAL DE CITAS» de PRÓXIMOS PASOS, que es el único sitio donde se mantiene la cifra.
-  - **Tres arreglos en `Bibliografía.md`, todos verificados contra disco:**
-    1. **`[6]` (Goodfellow) está marcada HUÉRFANA EN FALSO** en `:75`, `:63` y `:199` — `2.1.4.3` la
-       ancla con `[6, cap. 6]` desde esta tanda, **7 ocurrencias en disco**.
-    2. **`[4]` (Chio) tiene el «dónde se usa» apuntando a una imagen.** La cita se **REANCLÓ** en
-       `2.1.1:22` en esta tanda; la columna no lo refleja.
-    3. **La corrección (6) de la Tanda 5** — «Dónde se usa» de `[3]` (Denning) y `[2]` (Anderson),
-       que omiten usos reales. Sigue viva desde la Tanda 9; **no se duplica**, vive en su ficha.
-  - **AVISO PARA ESTE PASE, salido de la auditoría:** `[CITA: Molnar, cap. 8]` **atribuye Isolation
-    Forest a un libro de interpretabilidad** cuando **la fuente original es Liu, Ting y Zhou (2008)**.
-    Se dejó **marcado y sin tocar** a propósito: resolverlo es del `researcher`, no del redactor.
+> **El «Pase EN SERIE del `researcher`: 33 `[CITA: …]` del capítulo 2 + 3 arreglos en
+> `Bibliografía.md`» queda CERRADO en la TANDA 13** (2026-08-16), y con **36 marcadores**, no 33:
+> el recuento vigente incluía ya los 2 del capítulo 3. Sus **arreglos 1 (`[6]` huérfana en falso) y
+> 2 (`[4]` Chio) están HECHOS y verificados contra disco**. **El arreglo 3 —la corrección (6) de la
+> Tanda 5, «Dónde se usa» de `[2]` y `[3]`— SIGUE VIVO en su ficha propia**, no aquí: verificado el
+> 2026-08-16, ambas filas siguen diciendo solo `1.2 Preliminares`. Detalle en `## Cerradas`.
 
 - [ ] **De las 27 imágenes embebidas del vault, solo las 5 del capítulo 2 llevan pie de figura** (🟡) · Informe · `redactor-tfg`
   **HALLAZGO NUEVO del 2026-08-15**, contado en disco al cerrar la Tanda 11. Las **22 de los
@@ -1364,17 +1374,45 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > **Nueve de los diez quedan aplicados y cerrados**; aquí vive lo que no se podía aplicar en esa
 > tanda. **Ninguno es bloqueante** y **ninguno mueve una cifra publicada.**
 
-- [ ] **Hallazgo 10 · La columna «Dónde se usa» de `Bibliografía.md` está desfasada en OCHO entradas** (🟡) · Informe · **solo `researcher`**
-  Alta el **2026-08-16**. Afecta a **`[21]`, `[32]`, `[33]`, `[41]`, `[42]`, `[52]`, `[60]` y `[61]`**:
-  la columna no refleja usos reales que ya están en disco. **Es el único de los 10 hallazgos de la
-  auditoría que NO se aplicó en la tanda**, y no por olvido: `Bibliografía.md` lo escribe solo el
-  `researcher`, y su despacho **requiere petición explícita de Francisco**.
-  - **Encaja en el pase EN SERIE que ya espera los `[CITA: …]`** (ficha propia, más arriba): mismo
-    fichero, mismo agente, **y así `Bibliografía.md` se toca UNA vez y no dos**, que es la razón por
-    la que ese pase se aplazó a propósito.
-  - **Mismo defecto de familia que la corrección (6) de la Tanda 5** —«Dónde se usa» de `[3]` y `[2]`,
-    que omiten usos reales— y que el punto 2 de la ficha del pase en serie (`[4]` Chio). **No se
-    duplican entre sí: son entradas distintas de la misma columna.**
+> **El Hallazgo 10 —«Dónde se usa» desfasada en OCHO entradas— queda CERRADO en la TANDA 13**
+> (2026-08-16), justo donde estaba previsto: dentro del pase en serie, para tocar `Bibliografía.md`
+> una sola vez. **7 de las 8 estaban desfasadas por el capítulo 3 y quedan recontadas; `[52]` era
+> CORRECTA**, así que el hallazgo sobreestimaba en una. **Sigue vivo el defecto de la misma familia
+> en `[2]` y `[3]`** —corrección (6) de la Tanda 5—, que tiene ficha propia. Detalle en
+> `## Cerradas`.
+
+### Residuos de la TANDA 13 — altas del 2026-08-16
+
+> Salen del **pase EN SERIE de citas del `researcher`** (`[CITA: …]` → `[n]`, 36 marcadores). **Las
+> cuatro ESPERAN DECISIÓN DE FRANCISCO y ninguna la forzó el agente**: en las tres primeras el
+> marcador se convirtió **sin capítulo** en vez de trasladarlo o sustituir la fuente por cuenta
+> propia, que es la disciplina acordada. **Ninguna es bloqueante** y **ninguna mueve una cifra
+> publicada.** **Fichar no es resolver: aquí no se ha decidido nada.**
+
+- [ ] **`2.1.5:114` (MAE frente a RMSE) — el capítulo del marcador NO cuadra** (🟡) · Informe · **decide Francisco**, ejecuta `researcher`
+  Alta el **2026-08-16**. El marcador decía «Géron, cap. 4» («Training Models») y la contraposición
+  MAE/RMSE de Géron vive en el **cap. 2** («Select a Performance Measure»). **Convertido a `[5]` sin
+  capítulo** en vez de trasladarlo por cuenta propia. Queda marcado como ⚠️ **NO ESTABLECIDO** en la
+  fila de `[5]` de `Bibliografía.md`. **Decidir: fijar `[5, cap. 2]` o dejarlo sin localizador.**
+
+- [ ] **`2.1.4:77` (LOF) — «Hastie, cap. 14» no trata LOF; la primaria correcta sería Breunig et al. 2000** (🟡) · Informe · **decide Francisco**, ejecuta `researcher`
+  Alta el **2026-08-16**. **Convertido a `[12]` sin capítulo.** La fuente primaria correcta es
+  **Breunig, Kriegel, Ng y Sander (2000)**, SIGMOD, DOI `10.1145/335191.335388`, **propuesta pero NO
+  dada de alta**: **sustituir una fuente por otra no lo decide un agente**. Mismo patrón que la
+  reasignación del Isolation Forest, que sí venía con encargo escrito. **Decidir: dar de alta la
+  primaria y reapuntar, o dejar `[12]` sin capítulo.**
+
+- [ ] **Reserva menor sobre `2.1.4:46` y `:51` (k-NN) apuntando a Géron cap. 3** (🟡) · Informe · **decide Francisco**, ejecuta `researcher`
+  Alta el **2026-08-16**. El cap. 3 («Classification») **usa** k-NN en sus ejercicios pero **no
+  desarrolla el aprendizaje perezoso ni las métricas de distancia** con el detalle que el texto le
+  atribuye. **Dejado como estaba** y anotado en la fila de `[5]` de `Bibliografía.md`. Es el menor de
+  los tres: la obra es correcta, lo dudoso es el capítulo.
+
+- [ ] **`[54]` Molnar sigue con la EDICIÓN SIN FIJAR — alcance REDUCIDO tras la Tanda 13** (🟡) · Informe · **decide Francisco**
+  Alta el **2026-08-16** como recorte del aviso que ya vivía en PRÓXIMOS PASOS. La web sirve hoy la
+  **3.ª edición** y la literatura cita la **2.ª de 2022**, así que su página depende de qué edición
+  se elija. **Lo que cambia: tras reasignar el Isolation Forest a `[73]` Liu, Ting y Zhou (2008), ya
+  NO bloquea ningún localizador del capítulo 2** — solo afecta a su uso en `2.3.3`.
 
 ### Descartado — no reabrir
 
@@ -1578,6 +1616,12 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-16 | — | **TANDA 13 — el pase EN SERIE de citas del `researcher`, que cubre de una vez el capítulo 2 y el 3: la última dependencia declarada del track Informe sobre `Bibliografía.md`, LEVANTADA.** **36 marcadores `[CITA: …]` convertidos a `[n]`** en `2.1.1`, `2.1.3`, `2.1.4`, `2.1.5`, `2.2.4` y `3.5` (**34 del capítulo 2 + 2 del capítulo 3**): **30 MAPEADOS** a entradas existentes (`[5]` Géron ×20, `[12]` Hastie ×7) y **6 ALTAS NUEVAS, `[68]`–`[73]`**, todas con DOI. **27 de los 36 bajan CON localizador de capítulo**, cumpliendo la decisión de Francisco del 2026-08-15. Ficheros: `Obsidian_TFG_Vault/Bibliografía.md`, las seis notas citadas y `99 Investigación/Auditoría de Bibliografía.md`. **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida.** **NO procede `auditor-ml`**: no hay cifras de resultados en juego, es un pase de referencias. **Deja CUATRO fichas nuevas abiertas, y las cuatro esperan decisión de Francisco** — ninguna la forzó el agente | `df86968` |
+| 2026-08-16 | Informe | **⛔ CONTADOR GLOBAL DE CITAS — EL PRIMER `[n]` LIBRE PASA A SER EL `[74]`. Contado contra disco el 2026-08-16, no recordado.** `Bibliografía.md` pasa a **72 filas**: `[1]`–`[8]` y `[10]`–`[73]`. **`[9]` sigue QUEMADA, no libre** (retirada sin renumerar, `396e283`). **Donde este fichero diga `[68]` o «66 entradas» está DESFASADO** — el número vale solo si se cuenta (`grep -oE '^\| *\[[0-9]+\]' Bibliografía.md`), y ya ha ido mal tres veces. *(`CLAUDE.md` y `.claude/agents/leader.md` también lo dicen mal; son andamiaje y los corrige el hilo principal.)* | `df86968` |
+| 2026-08-16 | Informe | **La ficha «Pase EN SERIE del `researcher`: 33 `[CITA: …]` del capítulo 2 + 3 arreglos en `Bibliografía.md`» — CERRADA, y con 36 marcadores, no 33.** **Verificado: CERO `[CITA: …]` vivos en la memoria.** Los que quedan son **prosa sobre la convención** (`4.2` ×1, `Bibliografía.md` ×7) o **informe** (`99 Investigación/Reconstrucción…` ×11): **ninguno es marcador pendiente**. De sus tres arreglos, el **1 (`[6]` Goodfellow marcada huérfana EN FALSO en `Bibliografía.md:63`, `:75` y `:199`) queda HECHO** —las tres declaraciones retiradas, **7 ocurrencias verificadas en disco**— y el **2 (`[4]` Chio, «dónde se usa» apuntando a una imagen) también**, ya reanclado a `2.1.1 Introducción al ML`. **El arreglo 3 —corrección (6) de la Tanda 5, «Dónde se usa» de `[2]` y `[3]`— NO se cierra**: verificado el 2026-08-16, ambas filas siguen diciendo solo `1.2 Preliminares`, y vive en su ficha propia | `df86968` |
+| 2026-08-16 | Informe | **El DESCUADRE DE CIFRAS «36 marcadores vs 33» — CERRADO, con la unidad y el número casando.** `Bibliografía.md:46-47` pasa a decir **«36 marcadores — 33 en las notas más los 3 de `EL_FUTURO.md`»**. Era el defecto que la ficha describía exactamente: las dos cifras eran defendibles bajo criterios distintos, pero **el texto literal no era cierto bajo ninguno de los dos** | `df86968` |
+| 2026-08-16 | Informe | **Hallazgo 10 de la auditoría de la TANDA 12 — «Dónde se usa» desfasada en OCHO entradas: CERRADO, y el hallazgo sobreestimaba en una.** **7 de las 8 estaban desfasadas por el capítulo 3 y quedan recontadas; `[52]` era CORRECTA.** Se resolvió **donde estaba previsto** —dentro de este pase, para tocar `Bibliografía.md` **una sola vez y no dos**—, que era la razón declarada de aplazarlo. **Lo que NO cierra**: el mismo defecto de familia en `[2]` (Anderson) y `[3]` (Denning), que tiene ficha propia desde la Tanda 5 | `df86968` |
+| 2026-08-16 | Informe | **REASIGNACIÓN DE FUENTE EJECUTADA — el Isolation Forest pasa de `[54]` Molnar a `[73]` Liu, Ting y Zhou (2008), DOI `10.1109/ICDM.2008.17` verificado.** Es el aviso que la auditoría de la Tanda 11 dejó **marcado y sin tocar**: atribuía el algoritmo a un libro de **interpretabilidad** en vez de a su fuente primaria. **Se ejecuta porque venía con ENCARGO ESCRITO EN LA PROPIA NOTA**, no por criterio del agente — el contraste con la ficha abierta de LOF/Breunig, donde no había encargo y por eso **no** se sustituyó, es justamente lo que hace defendible esta decisión. **Efecto lateral: `[54]` Molnar, con la edición sin fijar, ya NO bloquea ningún localizador del capítulo 2** | `df86968` |
 | 2026-08-16 | — | **TANDA 12 · LA AUDITORÍA DE COHERENCIA — EJECUTADA, y con ella se levanta lo que bloqueaba el cierre de la tanda.** Era el punto 1 de los cuatro que este fichero listaba: la Tanda 12 se commiteó **parcial** en `669fd9f` **sin auditoría**. Dictamen: **APTO CON CAMBIOS, 10 hallazgos, ninguno 🔴**. **9 de los 10 aplicados** por **cuatro `redactor-tfg` en paralelo sobre ficheros disjuntos**: `03 Diseño del sistema/3.2 Arquitectura del sistema.md`, `3.3 Metodología de funcionamiento del sistema.md`, `3.5 Modelo de detección basado en firmas.md`, `3.6 Conclusiones del capítulo.md` y `02 Marco Teórico/2.3 Inteligencia Artificial/2.3.3 Límites y consideraciones éticas.md`. **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida, cero `[n]` inventados** — **censo contado contra disco, no recordado: `Bibliografía.md` sigue en 66 entradas y el primer libre sigue siendo el `[68]`.** **El hallazgo 10 NO se aplica aquí**: es de `Bibliografía.md`, fichero del `researcher`, y queda con ficha propia abierta. **NO cierra T9**: siguen vivos los puntos 2 y 4 del traspaso —el barrido de solapes del capítulo 2 y la comprobación de qué solapes de los 15 quedan sin aplicar— | `4210379` |
 | 2026-08-16 | Informe | **Los tres hallazgos de fondo de la auditoría de la TANDA 12 — CORREGIDOS, y los tres son del tipo que solo se ve auditando la tanda como unidad.** **(1)** `3.2.2` insertaba la frase «no se repite aquí» **y a continuación repetía el argumento en una tabla**: el recorte enunciaba su propia regla y la incumplía en el párrafo siguiente. Reformulado al patrón **categoría/instancia**. **(2) LA TANDA PREVIA DE DES-DUPLICACIÓN HABÍA CREADO UNA DUPLICACIÓN NUEVA:** Kim et al. y su callout de verificación, **ya desarrollados en `2.2.4`**, aparecían reescritos en `3.2`. Unificados en **una sola sede**. Queda escrito porque es el riesgo propio de un pase de recorte: se des-duplica en un sitio y se siembra en otro. **(3)** `3.5` llamaba **«apoyo duro»** a un orden (**HistGradientBoosting 0,804 vs RandomForest 0,822**) que **`A.3` declara NO establecido** —bandas solapadas y la **semilla 42 de RandomForest cae fuera de su propia banda**—. Reescrito a la forma **pareada**: **RF gana en 8 de 10 semillas**, que es lo que el barrido sostiene | `4210379` |
 | 2026-08-16 | Informe | **Punto 3 del traspaso — el ancla de `2.3.3` VERIFICADA, y era CORRECTA: no había nada que repuntar.** La decisión técnica de la TANDA 10 pieza A dejó `2.3.3:91` con **wikilink a nota** en vez de ancla, a reconsiderar **después de que T9 renumerase el capítulo 3**. Comprobado: **T9 NO renumeró `3.1`** —la renumeración fue **local a `3.3`**—, así que el destino del wikilink no se movió. **Se cierra el punto declarando que la condición no se dio**, no aplicando un cambio: la reconsideración estaba pendiente, el repunte nunca fue necesario | `4210379` |
