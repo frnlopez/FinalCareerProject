@@ -39,6 +39,11 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > **Verificado a mano desde el hilo principal** (la auditoría no corrió): **cero `[n]` inventados** en
 > el capítulo 3 y **cero wikilinks rotos** — todos los destinos existen en disco.
 >
+> **ESTADO A 2026-08-16 DE ESTA LISTA DE CUATRO: los puntos 1 y 3 están HECHOS — NO se vuelven a
+> despachar.** La **auditoría corrió** (`APTO CON CAMBIOS`, 10 hallazgos, ninguno 🔴; **9 aplicados**
+> por cuatro redactores en paralelo) y el **ancla de `2.3.3` se verificó y era correcta**. **Siguen
+> vivos los puntos 2 y 4.** Detalle en `## Cerradas`, filas del 2026-08-16.
+>
 > **LO QUE FALTA PARA CERRAR LA TANDA 12, por orden:**
 > 1. **LA AUDITORÍA, que NO corrió.** Es lo que decide si el capítulo 3 es revisable. **Foco propio de
 >    un recorte, que la verificación mecánica NO cubre: que ninguna afirmación se haya quedado
@@ -64,6 +69,12 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > > no marcadores —alguna línea lleva dos—, y los `[CITA:` de `4.2` (1) y `Bibliografía.md` (2) son
 > > **prosa sobre la conversión**, no marcadores pendientes: no los cuentes.
 > > **Recuéntalo antes de empezar**, no lo leas: `grep -rc "\[CITA:" --include=*.md Obsidian_TFG_Vault`.
+> >
+> > **ACTUALIZACIÓN DEL 2026-08-16, tras aplicar la auditoría de la TANDA 12 — contado contra disco:
+> > las líneas con `[CITA: …]` bajan de 37 a 36** (**34 en el capítulo 2**, **2 en el capítulo 3**).
+> > **Bajó una al unificar la sede de Kim et al.**, no porque se convirtiera ningún marcador. **El
+> > primer `[n]` libre SIGUE SIENDO EL `[68]` y `Bibliografía.md` sigue en 66 entradas**: la Tanda 12
+> > no dio de alta ninguna. **El «37» de arriba queda como traza, no como recuento vigente.**
 >
 > ---
 >
@@ -656,9 +667,18 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
       cap. 3 (`2.2.4.5` ↔ `3.2.2`) y uno interno (`3.2.1` ↔ `3.3.3`).
     - **HUECO DECLARADO del informe, no oculto: el barrido del capítulo 2 solo cubre `2.1.6` y
       `2.2.4`.** Tiene ficha propia; conviene completarlo antes o durante T9.
-    - **PENDIENTE DE RECONSIDERAR DENTRO DE T9:** `2.3.3:91` **no** se repuntó al ancla `3.1.5`
+    - ~~**PENDIENTE DE RECONSIDERAR DENTRO DE T9:** `2.3.3:91` **no** se repuntó al ancla `3.1.5`
       —se dejó el wikilink a nota, convención del vault— precisamente porque T9 **renumera el
-      capítulo 3**. Al renumerar, decidir si procede el ancla.
+      capítulo 3**. Al renumerar, decidir si procede el ancla.~~
+      → **VERIFICADO Y CERRADO el 2026-08-16 (auditoría de la TANDA 12): el ancla era CORRECTA y no
+      había nada que repuntar.** La renumeración de T9 fue **local a `3.3`**; **`3.1` no se renumeró**,
+      así que el destino del wikilink no se movió. **La condición que motivaba la reconsideración
+      nunca llegó a darse.** Ficha en `## Cerradas`, 2026-08-16.
+    - **LO QUE SIGUE VIVO DE T9 tras la TANDA 12** (la auditoría ya corrió; ver `## Cerradas`): el
+      **barrido de solapes del capítulo 2**, que sigue cubriendo solo `2.1.6` y `2.2.4` (ficha propia),
+      y la **comprobación contra `99 Investigación/Datos repetidos en el capítulo 3.md` de qué solapes
+      de los 15 quedan sin aplicar** — `3.1` no se tocó, y hay que **confirmar** si eso es correcto
+      (`3.1.5` es nueva y está exenta) en vez de darlo por bueno.
 
 - [ ] **T10 · Capítulo 4** · Informe · `redactor-tfg`
   - `4.2`: definición correcta de las tres particiones (KDDTrain+ 125.973 · KDDTest+ 22.544 ·
@@ -737,6 +757,13 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
     - **Causa mecánica del 17 de 40, a citar AL LADO del recuento** (`firmas.py:40`, cabecera):
       cambiar la semilla cambia el `StratifiedKFold`, así que **el ganador de `4.3.4` y la config del
       grid pueden cambiar con ella**.
+    - **RESIDUO ANOTADO EL 2026-08-16, salido de la auditoría de la TANDA 12 — comprobar que `5.2` y
+      `A.3` NO repitan el par `0,804 / 0,822` como orden ESTABLECIDO.** En la Tanda 12 se cazó
+      exactamente ese defecto en `3.5`, que lo llamaba «apoyo duro» cuando `A.3` declara el orden **no
+      establecido** (bandas solapadas, y la semilla 42 de RandomForest **fuera de su propia banda**).
+      Corregido allí a la forma **pareada** —**RF gana en 8 de 10 semillas**—; **queda por verificar si
+      la misma formulación absoluta sigue viva en las notas de esta ficha**. **Es verificación, no
+      corrección presupuesta:** puede estar ya bien.
   - `5.3`: **el 13,4 % de enrutado a `unknown` explicado, no disculpado.** Scheirer et al.
     (umbralizar un clasificador de conjunto cerrado no acota el riesgo de espacio abierto), Bendale y
     Boult (OpenMax supera explícitamente al umbralizado de la salida probabilística, que es el
@@ -1331,6 +1358,24 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   - **Toca ficheros de T10 y T11**, así que o entra dentro de ellas o se despacha con cuidado de no
     solaparse.
 
+### Residuos de la TANDA 12 — altas del 2026-08-16
+
+> Salen de la auditoría de coherencia de la Tanda 12 (`APTO CON CAMBIOS`, 10 hallazgos, ninguno 🔴).
+> **Nueve de los diez quedan aplicados y cerrados**; aquí vive lo que no se podía aplicar en esa
+> tanda. **Ninguno es bloqueante** y **ninguno mueve una cifra publicada.**
+
+- [ ] **Hallazgo 10 · La columna «Dónde se usa» de `Bibliografía.md` está desfasada en OCHO entradas** (🟡) · Informe · **solo `researcher`**
+  Alta el **2026-08-16**. Afecta a **`[21]`, `[32]`, `[33]`, `[41]`, `[42]`, `[52]`, `[60]` y `[61]`**:
+  la columna no refleja usos reales que ya están en disco. **Es el único de los 10 hallazgos de la
+  auditoría que NO se aplicó en la tanda**, y no por olvido: `Bibliografía.md` lo escribe solo el
+  `researcher`, y su despacho **requiere petición explícita de Francisco**.
+  - **Encaja en el pase EN SERIE que ya espera los `[CITA: …]`** (ficha propia, más arriba): mismo
+    fichero, mismo agente, **y así `Bibliografía.md` se toca UNA vez y no dos**, que es la razón por
+    la que ese pase se aplazó a propósito.
+  - **Mismo defecto de familia que la corrección (6) de la Tanda 5** —«Dónde se usa» de `[3]` y `[2]`,
+    que omiten usos reales— y que el punto 2 de la ficha del pase en serie (`[4]` Chio). **No se
+    duplican entre sí: son entradas distintas de la misma columna.**
+
 ### Descartado — no reabrir
 
 > Descartes **cerrados en el `grill-me` del 2026-08-06**. No son tareas pendientes ni pospuestas:
@@ -1533,6 +1578,9 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-16 | — | **TANDA 12 · LA AUDITORÍA DE COHERENCIA — EJECUTADA, y con ella se levanta lo que bloqueaba el cierre de la tanda.** Era el punto 1 de los cuatro que este fichero listaba: la Tanda 12 se commiteó **parcial** en `669fd9f` **sin auditoría**. Dictamen: **APTO CON CAMBIOS, 10 hallazgos, ninguno 🔴**. **9 de los 10 aplicados** por **cuatro `redactor-tfg` en paralelo sobre ficheros disjuntos**: `03 Diseño del sistema/3.2 Arquitectura del sistema.md`, `3.3 Metodología de funcionamiento del sistema.md`, `3.5 Modelo de detección basado en firmas.md`, `3.6 Conclusiones del capítulo.md` y `02 Marco Teórico/2.3 Inteligencia Artificial/2.3.3 Límites y consideraciones éticas.md`. **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida, cero `[n]` inventados** — **censo contado contra disco, no recordado: `Bibliografía.md` sigue en 66 entradas y el primer libre sigue siendo el `[68]`.** **El hallazgo 10 NO se aplica aquí**: es de `Bibliografía.md`, fichero del `researcher`, y queda con ficha propia abierta. **NO cierra T9**: siguen vivos los puntos 2 y 4 del traspaso —el barrido de solapes del capítulo 2 y la comprobación de qué solapes de los 15 quedan sin aplicar— | `74f65cc` |
+| 2026-08-16 | Informe | **Los tres hallazgos de fondo de la auditoría de la TANDA 12 — CORREGIDOS, y los tres son del tipo que solo se ve auditando la tanda como unidad.** **(1)** `3.2.2` insertaba la frase «no se repite aquí» **y a continuación repetía el argumento en una tabla**: el recorte enunciaba su propia regla y la incumplía en el párrafo siguiente. Reformulado al patrón **categoría/instancia**. **(2) LA TANDA PREVIA DE DES-DUPLICACIÓN HABÍA CREADO UNA DUPLICACIÓN NUEVA:** Kim et al. y su callout de verificación, **ya desarrollados en `2.2.4`**, aparecían reescritos en `3.2`. Unificados en **una sola sede**. Queda escrito porque es el riesgo propio de un pase de recorte: se des-duplica en un sitio y se siembra en otro. **(3)** `3.5` llamaba **«apoyo duro»** a un orden (**HistGradientBoosting 0,804 vs RandomForest 0,822**) que **`A.3` declara NO establecido** —bandas solapadas y la **semilla 42 de RandomForest cae fuera de su propia banda**—. Reescrito a la forma **pareada**: **RF gana en 8 de 10 semillas**, que es lo que el barrido sostiene | `74f65cc` |
+| 2026-08-16 | Informe | **Punto 3 del traspaso — el ancla de `2.3.3` VERIFICADA, y era CORRECTA: no había nada que repuntar.** La decisión técnica de la TANDA 10 pieza A dejó `2.3.3:91` con **wikilink a nota** en vez de ancla, a reconsiderar **después de que T9 renumerase el capítulo 3**. Comprobado: **T9 NO renumeró `3.1`** —la renumeración fue **local a `3.3`**—, así que el destino del wikilink no se movió. **Se cierra el punto declarando que la condición no se dio**, no aplicando un cambio: la reconsideración estaba pendiente, el repunte nunca fue necesario | `74f65cc` |
 | 2026-08-15 | — | **TANDA 11 — EL CAPÍTULO 2 QUEDA CERRADO ENTERO.** **Undécimo commit por tanda** bajo la Decisión 7, salvo que aquí son **dos commits**: `d31e20f` (la redacción y la creación de la figura) y `296de24` (el embebido de la figura y la auditoría aplicada). **12 ficheros tocados**: `02 Marco Teórico/` `2.1.1`–`2.1.6`, `2.2.1`, `2.2.2`, `2.2.4`, `2.2.5`, `2.3.1` y `Apéndices/A.2`, más `Implementacion/app/figura_nids_bloques.py` (**nuevo**) y su PNG en `assets/`. **Auditoría en DOS PASES PARALELOS** —coherencia conceptual y citas/cifras—, ambos **APTO CON CAMBIOS**, aplicados por **4 redactores sobre ficheros disjuntos**. **Cero cómputo sobre el dataset, cero corridas, ninguna cifra publicada movida, cero `[n]` inventados.** Lo que cierra va desglosado en las filas de abajo. **Deja abiertas DOS fichas nuevas** (el pase en serie del `researcher` y los pies de figura de los capítulos 4-5) y **desbloquea** la del recuento de `00 Índice TFG.md` | `d31e20f` + `296de24` |
 | 2026-08-15 | Informe | **T8 · «Cita en el punto de la decisión — capítulo 2» — CERRADA.** Lo único que la mantenía abierta era **`2.1.5`**, que seguía siendo un stub en `estado: borrador`. **`2.1.5 Métricas` queda COMPLETADA al nivel de `A.2` por decisión de Francisco**: **17 bloques de fórmulas LaTeX**, la **frase cortada cerrada** y aparato de citas. Con ello **FPR, F1 y macro/weighted ya están definidos**, así que **las tres remisiones colgadas de `2.3.3:31`, `2.3.3:139` y `2.1.6:132` dejan de apuntar a contenido inexistente**. Las cargas de `2.2.3`/`2.2.4` (Tanda 4), `2.3.3` y `2.1.6` (Tanda 5) ya estaban verificadas contra disco: **esta era la última pieza** | `d31e20f` |
 | 2026-08-15 | Informe | **Prosa de memoria en `2.1.1`–`2.1.4` y `2.2.1` — HECHA.** Pasan de **apuntes crudos** a texto de memoria: encabezados reales y aparato de citas. **`2.1.4` gana Isolation Forest, One-Class SVM y LOF**, que son exactamente los algoritmos de la etapa 1 del sistema y no estaban descritos en el marco teórico. **Con esto el capítulo 2 no tiene ninguna nota en apuntes** | `d31e20f` |
