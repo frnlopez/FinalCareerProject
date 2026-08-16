@@ -25,7 +25,39 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 
 ## PRÓXIMOS PASOS — próxima sesión
 
-> ### ⚡ EMPIEZA POR AQUÍ — apunte de traspaso del 2026-08-15
+> ### ⚡ EMPIEZA POR AQUÍ — apunte de traspaso del 2026-08-16
+>
+> **CAPÍTULO 2: CERRADO** (Tanda 11 — `d31e20f`, `296de24`, `2c5e36e`). Prosa completa, auditado en
+> dos pases, figura del NIDS embebida. **Solo le falta el pase de citas del `researcher`.**
+>
+> **TANDA 12 (capítulo 3) — PARCIAL, commiteada en `669fd9f`. NO está cerrada.**
+> Hecho: `3.3` de cuatro apartados a dos (45→34 líneas), con la formulación canónica del *data
+> snooping* reproducida **literal**; `3.2`, `3.4`, `3.5` y `3.6` con recorte **y** contenido nuevo a la
+> vez —por eso **crecen en neto**, que es lo esperado—; `2.3.3` retocada; y **81 líneas de decisiones
+> técnicas** nuevas en `resumen-de-decisiones.md`, fechadas y reversibles como exige la delegación.
+>
+> **Verificado a mano desde el hilo principal** (la auditoría no corrió): **cero `[n]` inventados** en
+> el capítulo 3 y **cero wikilinks rotos** — todos los destinos existen en disco.
+>
+> **LO QUE FALTA PARA CERRAR LA TANDA 12, por orden:**
+> 1. **LA AUDITORÍA, que NO corrió.** Es lo que decide si el capítulo 3 es revisable. **Foco propio de
+>    un recorte, que la verificación mecánica NO cubre: que ninguna afirmación se haya quedado
+>    HUÉRFANA** —lo que se quita de un sitio tiene que seguir vivo en su sede canónica—.
+> 2. **Completar el barrido de solapes del capítulo 2** (sigue cubriendo solo `2.1.6` y `2.2.4`).
+>    Va **antes** de escribir remisiones del 3 al 2, o se remitirá a sitios que luego cambian.
+> 3. **Confirmar si se reconsideró el ancla de `2.3.3:91`** al renumerar el capítulo 3. Era el punto 3
+>    del encargo y no consta que se cerrara.
+> 4. Comprobar contra el informe `99 Investigación/Datos repetidos en el capítulo 3.md` (`3fadf13`)
+>    **qué solapes de los 15 quedan sin aplicar**. `3.1` no se tocó — puede ser correcto (`3.1.5` es
+>    nueva y está exenta), pero hay que confirmarlo.
+>
+> **DESPUÉS de cerrar la 12:** el **pase en serie del `researcher`**, que cubre de una vez los 33
+> `[CITA: …]` del capítulo 2 y los que haya generado el 3. Se aplazó a propósito para **no tocar
+> `Bibliografía.md` dos veces**.
+>
+> ---
+>
+> ### Apunte de traspaso anterior — del 2026-08-15
 >
 > **TANDA 11 — CERRADA el 2026-08-15 en DOS commits: `d31e20f` (redacción + creación de la figura) y
 > `296de24` (embebido de la figura + auditoría aplicada). CON ELLA SE CIERRA EL CAPÍTULO 2 ENTERO y
@@ -102,10 +134,10 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > (`55ef3c6`): `3.1.5` escrita y los tres `[!todo]` retirados**; y el **borrado físico de `03 Desarrollo/`**, que no tiene
 > permiso concedido.
 >
-> **Lo único que tiene que hacer Francisco: `! git push origin develop`.** Van **cuarenta y cuatro** commits
+> **Lo único que tiene que hacer Francisco: `! git push origin develop`.** Van **cuarenta y seis** commits
 > sin subir —**verificado con `git rev-list --count origin/develop..develop` el 2026-08-15, no contado
 > a mano**—, **más el commit que lleva esta misma línea**, que por construcción no puede contarse a
-> sí mismo: **CUARENTA Y CINCO al terminar la Tanda 11 (capítulo 2 CERRADO)**. Falla por autenticación desde el harness, no
+> sí mismo: **CUARENTA Y SIETE al cortar la Tanda 12 a medias**. Falla por autenticación desde el harness, no
 > desde su máquina.
 >
 > **Este número se recalcula, NUNCA se incrementa a mano.** Ha ido mal dos veces (llegó a decir
