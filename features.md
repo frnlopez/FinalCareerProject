@@ -478,14 +478,25 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > cierra —**ninguna está ejecutada**— y **ninguna mueve una cifra publicada.** **Fichar no es
 > resolver: aquí no se ha corregido nada.**
 
-- [ ] 🟠 **SÉPTIMO re-anclaje de sello — y lo generó el ciclo de Código de HOY** · Informe · `redactor-tfg`
-  Alta el **2026-08-17**. `4.2:269` sigue declarando **`a8c20e9-sucio`** como «sello de corrida» de los
-  dos `*_validation_report.txt`, y **`4.3:128` remite a `4.2`**, así que arrastra el mismo dato viejo.
-  **En disco esos informes llevan ya `ac36b88`** —re-anclados en `312c179`, corridas
-  `2026-08-17T20:42:19` y `20:42:33`—. Hay además un **`[!todo] Hash del commit de cierre, pendiente de
-  sellar` en `4.2:266`**. El ciclo **cerró el artefacto y dejó la prosa desanclada**: es el **séptimo
-  caso del mismo patrón**. **Va ANTES de que nadie vuelva a tocar esas dos notas.** Regla del patrón:
-  se re-ancla **la prosa**; el sello impreso **dentro** del artefacto no se retoca.
+> **El 🟠 «SÉPTIMO re-anclaje de sello — y lo generó el ciclo de Código de HOY» queda CERRADO en la
+> TANDA 20** (2026-08-17): re-anclado **en prosa** en `4.2` y `4.3`, con el sello impreso dentro de los
+> artefactos de `Resultados/` **intacto**, como manda la regla. Su ficha vive ya en `## Cerradas`.
+
+- [ ] 🟠 **`resumen-de-decisiones.md` contradicho EN SILENCIO por el ciclo de Código del 2026-08-17** · Informe · **decide Francisco**, ejecuta `redactor-tfg` o `cronista`
+  Alta el **2026-08-17**. El fichero **sigue afirmando en presente lo contrario de lo que hay en
+  disco**: `:825-826` y `:894-895` («lo que hay hoy en disco es `a8c20e9-sucio`, común a las dos
+  variantes») y `:1460` («sigue vivo el otro re-anclaje pendiente… el de la re-corrida de
+  `validacion.py`»). **En disco el sello es `ac36b88` LIMPIO y ese pendiente está CERRADO.**
+  `PIPELINE.md`, `GUIA_RESULTADOS.md` y `features.md` sí se actualizaron; **el fichero de decisiones,
+  no.** **BLOQUEADA esperando autorización de Francisco:** el permiso concedido sobre ese fichero cubre
+  **solo la línea `:103`** (el `~52`). **Vía propuesta: añadir nota fechada sin reescribir el texto
+  previo**, la misma disciplina del «~17» y del residuo de T22.
+
+- [ ] 🟡 **Imprecisión NOMINAL en `4.2`, callout de Procedencia** · Informe · `redactor-tfg`
+  Alta el **2026-08-17**, hallazgo 🟡 **no bloqueante** de la reauditoría de la TANDA 20. El callout
+  dice que los informes «llevan en su cabecera el `commit` y la `fecha`», cuando **las etiquetas
+  literales del `.txt` son `Commit del código:` y `Fecha de la corrida:`**. **No es cifra sin respaldo:
+  es nomenclatura.**
 
 - [ ] 🟠 **Deuda de CIFRA en `5.4:129` — las dos celdas de KNN del eje SMOTE-vs-nada** · Informe · `redactor-tfg`
   Alta el **2026-08-17**. Las dos celdas de KNN del eje **SMOTE vs nada** no están publicadas en `5.2`
@@ -632,6 +643,11 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   vivo es **solo el patrón**, y hoy ha vuelto a morder dos veces más: el `[!todo]` de los seis ítems
   no-FT que este registro situaba en `A.3:574` **está en `A.3:681`**, y `3.3:42`→`3.3:29`. **Tres veces
   el mismo fallo en un día.**
+  **CUARTA OCURRENCIA (2026-08-17, TANDA 20): la ficha del SÉPTIMO re-anclaje citaba `4.2:269`, y en
+  disco el contenido vive en `:264`/`:266`.** Forma canónica acordada en
+  `resumen-de-decisiones.md:834-835` y aplicada al cerrarla: **se cita por nombre de callout o de
+  campo, nunca por número de línea.** **Cuatro veces el mismo fallo en dos días.** La ficha **sigue
+  ABIERTA**: lo vivo es el patrón.
 
 > **El 🟡 «`Bibliografía.md:177` — el localizador de `[49]` apunta a `2.3.2.5`» queda CERRADO el
 > 2026-08-17** en el pase en serie del `researcher`, junto con los **tres `[CITA: …]` vivos**. Su
@@ -1952,6 +1968,7 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-17 | Informe | **🟠 SÉPTIMO re-anclaje de sello — CERRADO EN PROSA en la TANDA 20, con el sello impreso dentro de los artefactos de `Resultados/` INTACTO** (regla del patrón respetada, verificado). Re-ancladas **`4.2` y `4.3`**: la **tabla de sellos de `4.2`** y su **párrafo de Procedencia** pasan de `a8c20e9-sucio` a **`ac36b88`**, con el commit versionador **`312c179`**, y se retira el **`[!todo]` «Hash del commit de cierre, pendiente de sellar»**. **Citado por nombre de callout y de campo, no por línea** —el anclaje `4.2:269` de la propia ficha estaba desfasado (`:264`/`:266` en disco): **cuarta ocurrencia en dos días** del patrón «referencia `fichero:línea` desfasada», sumada a su ficha abierta, que **no se cierra**. **Hallazgo lateral que la ficha NO preveía:** `4.3:128` no solo repetía el hash viejo, **atribuía mal el mecanismo de sellado** —citaba los campos `Commit del código:` / `Fecha de la corrida:`, que son de los `.txt`, para un artefacto que es `specialized_nsl_kdd_vocabulario_onehot.csv`, **que sella en columnas `commit`/`fecha`**—; corregido en el mismo pase. **Auditoría: PRIMER PASE NO APTO CON DOS 🔴, corregidos y reauditados APTO.** Quedan escritos porque **son patrón**: **(a)** el arreglo afirmó un re-anclaje `a8c20e9-sucio → ac36b88` **QUE NUNCA OCURRIÓ** —el pendiente se cerró **re-corriendo `validacion.py` sobre árbol limpio**, y `ac36b88` es el **sello de la corrida**, no un commit de cierre—; **(b)** transcribió **tres marcas temporales en prosa** contra la decisión cerrada de `resumen-de-decisiones.md:892-905`, **contradiciendo además a `4.2:253-256` ocho líneas antes**. Ambos corregidos: ahora **se remite al campo del artefacto** y hay **cero timestamps en las dos notas**, verificado por `grep` | — |
 | 2026-08-17 | Informe | **PASE EN SERIE DEL `researcher` — mantenimiento de `Bibliografía.md` y conversión de los tres últimos `[CITA: …]`. Cierra SIETE fichas, y TRES de ellas describían problemas que NO EXISTÍAN: manda el disco, no el registro.** **Censo actualizado y recontado por dos vías: `Bibliografía.md` pasa a 76 FILAS, `[1]`–`[8]` y `[10]`–`[77]`, `[9]` sigue QUEMADA, PRIMER LIBRE EL `[78]`.** Altas: **`[76]`** Quiñonero-Candela *et al.* (MIT Press, 2009) y **`[77]`** Hindy *et al.* (2020). **6 ficheros**: `Bibliografía.md`, `99 Investigación/Auditoría de Bibliografía.md`, `99 Investigación/Reconstrucción de las 47 citas colgantes.md` y, en el vault, `5.0`, `5.1` y `5.4`. **NO se despachó `auditor-ml`, y con criterio: el pase no toca cifras ni afirmaciones sobre resultados, solo marcadores de cita y metadatos bibliográficos.** Deja **CUATRO decisiones para Francisco**, marcadas en vez de inventadas | `8b5ce15` |
 | 2026-08-17 | Informe | **🟡 «`Reconstrucción de las 47 citas colgantes.md:283` reserva el `[58]` para Mitchell» — CERRADA, Y EL EQUIVOCADO ERA LA FICHA.** El `[58]` de `Bibliografía.md` **estaba bien** (KDD Cup 1999 Data); quien mentía era el informe, que escribió una **previsión antes de la Tanda 9** y quedó leyéndose como un hecho. **Mitchell ya existía como `[60]` y lo citan tres notas**: no procedía ni alta ni renumeración. Corregida la reserva en el informe, sin borrar su historial | `8b5ce15` |
 | 2026-08-17 | Informe | **🟡 «`Auditoría de Bibliografía.md` contradice en CINCO líneas los ✅ EJECUTADO de `Bibliografía.md`» — CERRADA, y EL EQUIVOCADO ERA EL INFORME DE AUDITORÍA EN LAS CINCO.** Anotadas como **superadas, sin borrar el historial** del informe. Mismo patrón que la ficha de arriba: un artefacto fechado se sigue leyendo como estado vigente | `8b5ce15` |
