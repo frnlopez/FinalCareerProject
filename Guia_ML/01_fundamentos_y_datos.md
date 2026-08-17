@@ -92,7 +92,7 @@ modelos que necesitan ver cosas distintas.
   *qué tipo* de ataque es, no *si* es ataque (de eso se encarga la etapa de anomalías).
 
 > [!note] Detalle importante para el argumento 0-day
-> Los ~17 tipos de ataque que aparecen en D2 pero **no** en el train (D3) son los
+> Los 17 tipos de ataque que aparecen en D2 pero **no** en el train (D3) son los
 > "0-day" del experimento. El modelo de firmas es incapaz de clasificarlos (nunca
 > los vio); su detección recae en la etapa de anomalías. Medir cuántos de esos se
 > detectan es el resultado central del TFG (fichero 04).

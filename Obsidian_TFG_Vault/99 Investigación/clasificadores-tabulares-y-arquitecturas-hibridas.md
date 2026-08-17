@@ -177,7 +177,7 @@ baja.
 
 **Ninguno de los cinco *benchmarks* citados mide lo que este TFG mide.** Todos evalúan
 clasificación tabular cerrada: las clases del test son las del train. La seña de identidad de este
-proyecto es el **recall 0-day por tipo** sobre los ~17 tipos ausentes del train (3 750 filas de D2,
+proyecto es el **recall 0-day por tipo** sobre los 17 tipos ausentes del train (3 750 filas de D2,
 `metricas_hibrido_0day.csv`), que es un problema de **conjunto abierto**. Por tanto:
 
 - Lo que la evidencia de este bloque **sí** sostiene: que cambiar el clasificador de la etapa 2 por

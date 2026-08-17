@@ -171,8 +171,10 @@ class NSLKDDSignatureTrainer:
         self.tipos_conocidos = set(tipos_D3.unique())
 
         # --- Evaluación (5.2): SOLO filas de D2 que (a) sean ataque y (b) cuyo tipo
-        # específico exista en el train. Los ~17 tipos nuevos (0-day) se EXCLUYEN
-        # aquí: son trabajo de la etapa de anomalías y se miden en el híbrido. ---
+        # específico exista en el train. Los 17 tipos nuevos (0-day) se EXCLUYEN
+        # aquí: son trabajo de la etapa de anomalías y se miden en el híbrido.
+        # El 17 sale de contar la columna `tipo` de Resultados/metricas_hibrido_0day.csv
+        # (medición en disco, no cita: el 14 de Tavallaee et al. es de KDD'99). ---
         X_D2 = splits["D2"]["X"]
         cat_D2 = splits["D2"]["y_category"]["category_original"].astype(str)
         tipo_D2 = splits["D2"]["y_attack"]["attack_original"].astype(str)

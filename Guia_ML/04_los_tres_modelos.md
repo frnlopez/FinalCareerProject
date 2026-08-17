@@ -91,7 +91,9 @@ Decisión Q4.
 ## 4. El argumento 0-day (el corazón del TFG)
 
 Un **0-day** es un ataque de un tipo nunca visto en el entrenamiento. D2 contiene
-**~17 tipos** que no están en D3. La métrica clave: de esos tipos, ¿qué fracción marca
+**17 tipos** que no están en D3 (contados sobre la columna `tipo` de
+`Resultados/metricas_hibrido_0day.csv`, 3.750 filas de D2; el 14 de Tavallaee et al. es de
+KDD'99, no de NSL-KDD). La métrica clave: de esos tipos, ¿qué fracción marca
 la **etapa 1 (anomalías)** como sospechosa? Eso lo calcula
 `evaluacion.evaluar_0day_por_tipo(...)` → recall 0-day por tipo.
 
@@ -122,7 +124,7 @@ tenerlo es un hueco real:
 > [!important] Por qué conviene añadir el RF monolítico como control
 > - Es el número que el tribunal tiene en la cabeza ("todos sacan 99%"). Sin medirlo,
 >   no puedes responder: *¿para qué el híbrido si un RF de 20 líneas da 99%?*
-> - La respuesta es el 0-day: un RF supervisado **no puede** detectar los ~17 tipos que
+> - La respuesta es el 0-day: un RF supervisado **no puede** detectar los 17 tipos que
 >   nunca vio etiquetados; la etapa de anomalías sí. Ese contraste **es** la
 >   justificación del híbrido.
 > - Coste trivial: RF ya está implementado. Es entrenarlo sobre el train completo y

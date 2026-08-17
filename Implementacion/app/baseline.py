@@ -9,7 +9,10 @@ y evaluado sobre TODO D2. Su papel es responder en el capítulo de resultados a 
 pregunta del tribunal: "¿para qué el híbrido si un RF da ~99%?".
 
 La respuesta —y la tesis del TFG— es el 0-day: un RF supervisado solo puede predecir
-clases que vio en el train; los ~17 tipos de ataque ausentes del train no los conoce.
+clases que vio en el train; los 17 tipos de ataque ausentes del train no los conoce.
+(Los 17 tipos están CONTADOS sobre `Resultados/metricas_hibrido_0day.csv` —17 valores
+distintos de la columna `tipo`, 3.750 filas de D2—, no citados: la cifra 14 que da
+Tavallaee et al. se refiere a KDD'99, no a NSL-KDD.)
 Su única salida ante un 0-day es clasificarlo como una clase conocida (posiblemente
 'normal'). Por eso la MÉTRICA DE DECISIÓN frente al híbrido es el **recall 0-day por
 tipo** (misma tabla que el experimento H1): fracción de cada tipo nuevo que el RF marca

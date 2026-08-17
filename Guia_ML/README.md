@@ -78,8 +78,10 @@ Tenlos a mano; salen de la ejecución real de `program.py`/`validacion.py`.
 - **Features:** 122 tras el one-hot (38 numéricas + 84 dummies) → **54** tras la
   selección de características (umbral 99,9% de importancia acumulada).
 - **Desbalance de D3 (por categoría):** `dos` ~45,9k · `probe` ~11,7k · `r2l` ~1,0k · **`u2r` ~52**.
-- **0-day:** D2 contiene **~17 tipos de ataque que NO están en el train** — son el
-  argumento central del TFG (ver fichero 04).
+- **0-day:** D2 contiene **17 tipos de ataque que NO están en el train** — son el
+  argumento central del TFG (ver fichero 04). El 17 está **contado** sobre la columna
+  `tipo` de `Resultados/metricas_hibrido_0day.csv` (3.750 filas de D2), no citado: el
+  14 de Tavallaee et al. se refiere a KDD'99, no a NSL-KDD.
 - **Categorías de ataque:** `dos`, `probe`, `r2l`, `u2r` (más `normal` en el problema completo).
 
 ---

@@ -17,8 +17,10 @@ Lo que este TFG YA hace distinto del patrón dominante NSL-KDD (~99% accuracy en
 train con un RF monolítico):
 
 - **Arquitectura híbrida en cascada** (anomalía → firmas), no un clasificador único.
-- **Detección explícita de 0-day**: se mide el recall sobre los ~17 tipos de ataque que NO
-  están en el train. El RF monolítico no puede — y `baseline.py` lo demuestra con datos
+- **Detección explícita de 0-day**: se mide el recall sobre los 17 tipos de ataque que NO
+  están en el train (17 contados sobre la columna `tipo` de
+  `Resultados/metricas_hibrido_0day.csv`, 3.750 filas de D2; el 14 de Tavallaee et al. es
+  de KDD'99, no de NSL-KDD). El RF monolítico no puede — y `baseline.py` lo demuestra con datos
   (recall 0-day = 0.15, colapso CV→test 0.909→0.47).
 - **Evaluación honesta sobre el test completo** con recall 0-day por tipo, no accuracy sobre
   el train-split (que es de donde sale el "99% de todo el mundo").
