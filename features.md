@@ -422,6 +422,20 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 
 ## Abiertas
 
+- [ ] 🟡 **`PIPELINE.md:925` llama «determinista» a un recuento que se apoya en `ac496cb`** · Código · `ml-implementador` → `auditor-ml`
+  Alta el **2026-08-17** (Tanda 18). La frase es «**Como el recuento de épocas resultó ser
+  determinista** (mismos 162 y 128 en las dos corridas que lo registran…)». El problema no es el
+  dato —162 y 128 son los que hay— sino **la palabra**: «determinista» afirma reproducibilidad, y
+  **una de las dos corridas que lo sostienen, `ac496cb`, NO es reproducible desde git** —sus CSV
+  nunca se commitearon y los sobrescribió `1163c90`—. El propio `PIPELINE.md` lo marca con ⚠ nueve
+  líneas más abajo (`:939` y la tabla de `:934-937`), así que **el documento se contradice consigo
+  mismo en la misma sección**.
+  **`A.3` (`:417-431`) y `4.4` ya evitan esa palabra** y declaran la salvedad; **`PIPELINE.md` es el
+  único sitio donde queda**, y es la fuente que las dos notas citan como respaldo.
+  **Alcance: cambiar la palabra, no el dato ni la conclusión.** Basta con enunciarlo como
+  «coincidente en las dos corridas que lo registran, una de ellas no reproducible desde git». **Cero
+  `fit`, cero cifras publicadas movidas.**
+
 - [ ] 🟠 **5 de las 47 citas colgantes NO se han podido reconstruir — falta criterio de Francisco** · Informe · **decide Francisco**, ejecuta `researcher`
   Alta el **2026-08-15**, residuo de la reparación de las 47 citas colgantes (ver `## Cerradas`, misma
   fecha). De los 47 `[n]` que dejó colgando el pase interrumpido, **42 quedan reconstruidos y
@@ -500,6 +514,14 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
     consuman la banda.**
     - **Estado a 2026-08-14: T7 está CERRADA** —`A.3` ya pega la tabla con sus salvedades—, así que
       **el único consumidor vivo es T11**. **T4 no se cierra hasta que `5.2`/`5.4` estén escritos.**
+    - ✅ **DESBLOQUEADA el 2026-08-17: la condición SE CUMPLIÓ. `5.2` y `5.4` están escritos desde la
+      TANDA 17** (`9bcfe1f`), que cerró **T11** con el capítulo 5 completo. **T4 ya no espera a
+      nadie**; lo que queda es **verificar que la banda está efectivamente consumida** en `5.2`/`5.4`
+      —y no solo que las notas existan— antes de cerrarla. **Ojo al leer `5.2`:** el 🔴 de aquella
+      auditoría fue precisamente presentar como dispersión entre semillas unos `±` que eran la sd
+      **entre los 5 folds** de la semilla 42; corregido en `5.2:145-146`, pero **es el error que T4
+      existe para evitar** y hay que confirmar que la tabla que se consume es la de
+      `dispersion_semillas.csv`.
   - **Los titulares de 5.1-5.3 siguen siendo los de la semilla 42.** La dispersión (media, sd, mín,
     máx) entra como tabla nueva en `A.3` más un párrafo en `5.4`. **No se reescribe el capítulo.**
   - Cierra los ítems FT *number of runs*, *error bars* y *central tendency* de Pineau et al.
@@ -517,9 +539,11 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   - **El lanzador del barrido exige CINCO recuentos por (variante, semilla): 4/4/1/1/5** — las 5
     filas de la cascada invertida entran también (`barrido_semillas.py:107-109`).
   - **Dispersión del wall-clock:** hasta **4,8× entre corridas en máquina no dedicada** con calidad
-    idéntica al bit (Autoencoder-54: 37,71 → 181,91 s), y **con el recuento de épocas idéntico** —
-    `n_iter_total_grid` es **determinista** (162 a 54 · 128 a 122), así que es **carga de máquina, no
-    épocas**. Las columnas de tiempo de las 10 semillas **no** se leen como propiedad del algoritmo
+    idéntica al bit (Autoencoder-54: 37,71 → 181,91 s). **CORREGIDO el 2026-08-17 (Tanda 18): esta
+    ficha decía «con el recuento de épocas idéntico … así que es carga de máquina, no épocas», y era
+    FALSO.** Esas dos corridas **no registran épocas** (`PIPELINE.md:923-929`): `n_iter_total_grid`
+    solo existe en `ac496cb` y `1163c90`. La banda se declara como **magnitud observada, sin causa
+    atribuida**. Las columnas de tiempo de las 10 semillas **no** se leen como propiedad del algoritmo
     sin declarar esa dispersión.
   - **Estado del barrido verificado en disco:** corrido y **agregado** — **2.320 filas**, **20/20
     celdas** (10 semillas × 2 variantes), sello `df30cb2` único y limpio;
@@ -991,34 +1015,22 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > `.esquema-anterior.bak` son **prescindibles** y **cualquier cita a una corrida vieja debe apuntar
 > al commit, nunca al `.bak`**.
 
-- [~] **T19 · Cifras de tiempo del vault sin respaldo en ningún artefacto** · Informe · `redactor-tfg`
-  > ⛔ **ESTADO RECONTADO CONTRA DISCO AL CERRAR LA SESIÓN DEL 2026-08-17 — NO leer la lista de abajo
-  > como si siguiera entera: TRES de sus cuatro sedes YA ESTÁN RESUELTAS, y la cuarta se ha vuelto
-  > URGENTE por serlo.**
-  > - ✅ **La tabla de `5.1:44-47`** se corrigió en la **TANDA 17** (`9bcfe1f`), como 🔴 de auditoría:
-  >   los reales son **5,27 / 25,58 / 20,16 / 49,20**, y ahora se publican **los dos ratios** —×13,9
-  >   sobre el tiempo de entrenamiento y ×9,3 sobre el bloque completo— con la razón de que difieran.
-  > - ✅ **`5.1:58`** («5 s frente a los 40,6 s») — **ya no existe**, verificado por `grep`.
-  > - ✅ **`5.2:59`** («DecisionTree, el más rápido, 1,8 s») — **ya no existe**, verificado por `grep`.
-  > - ❌ **`4.4 …anomalías.md:56-61` SIGUE CON LAS CIFRAS VIEJAS**, y ahí está el problema nuevo:
-  >   su tabla publica **`5,0 s`** para IsolationForest mientras `5.1` publica ya **3,51 s de
-  >   entrenamiento y 5,27 s de bloque**. **LOS DOS CAPÍTULOS SE CONTRADICEN ENTRE SÍ**, y la
-  >   contradicción **la creó el propio arreglo de la Tanda 17** al corregir un lado y no el otro.
-  >   **Es lo que hay que hacer primero al retomar T19**, y el defecto es del tipo que un tribunal
-  >   detecta cruzando dos capítulos.
-  >
-  Detectado dentro de T1 (2026-08-06 a 2026-08-08). **Ninguna de estas cifras sale de una corrida que exista:**
-  la **columna Tiempo entera** de la tabla de `5.1 …anomalías.md:44-47` (5,04 · 28,34 · 16,42 ·
-  40,56); la frase de `5.1:58` («5 s frente a los 40,6 s del Autoencoder»); la de
-  `5.2 …firmas.md:59` («DecisionTree, el más rápido, 1,8 s»); y la tabla de
-  `4.4 …anomalías.md:56-61`. Hay que **regenerarlas desde `Resultados/`**.
-  **Advertencia dura, no opcional:** el wall-clock **dispersa hasta 4,8× entre corridas en máquina no
-  dedicada** (Autoencoder-54: 37,71 → 181,91 s, con **calidad idéntica al bit**) y **con el recuento de
-  épocas idéntico** —`n_iter_total_grid` es determinista—. Estas cifras **no deben citarse como
-  propiedad del algoritmo** sin declarar la dispersión.
-  **Lo que debe sostener el capítulo es el Hallazgo 7:** los segundos absolutos **no son reproducibles
-  entre corridas**, pero **el reparto interno del bloque se mueve como mucho 4,5 pp y conserva el orden
-  de las ocho filas**. Es una afirmación mucho más defendible que cualquier cifra en segundos.
+> **T19 — CERRADA el 2026-08-17 en la TANDA 18** (ver `## Cerradas`). Sus **cuatro** sedes están
+> resueltas: `5.1:44-47`, `5.1:58` y `5.2:59` en la Tanda 17, y **`4.4 …anomalías.md`** —la última, y
+> la que contradecía a `5.1`— en la 18. **No se vuelve a despachar.**
+>
+> ⚠️ **La ficha de T19 sembraba DOS afirmaciones FALSAS y por eso se retira su texto, no solo su
+> casilla.** Decían que la banda de **4,8×** del Autoencoder se da «con el recuento de épocas
+> idéntico» y que el reparto interno «conserva **el orden de las ocho filas**». **Las dos son
+> falsas** y llegaron a publicarse en dos notas antes de cazarse:
+> 1. Las dos corridas de la banda 4,8× (`38fdd4b` → `5516b60`) **NO registran épocas**
+>    (`PIPELINE.md:923-929`); `n_iter_total_grid` solo existe en `ac496cb` y `1163c90`. La banda se
+>    declara como **magnitud observada, SIN causa atribuida** — ni a épocas ni a carga de máquina.
+> 2. El orden se conserva **casi entero, no entero**: `IsolationForest` 122 **baja del 4.º al 6.º**
+>    puesto. Y los **4,5 pp** son del **residual**, no de «cada tramo».
+>
+> **La formulación correcta, si alguien necesita reusarla, está en `4.4` y en `A.3:417-431`**, con la
+> salvedad obligatoria de que **`ac496cb` no es reproducible desde git**.
 
 - [ ] **T21 · Declarar la mitad de P9 que T1 no cubre** · Informe · `redactor-tfg`
   `latencia_ms_por_flujo` mide **solo `predict`/`score`** sobre características ya calculadas y en
@@ -1692,6 +1704,12 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-17 | Informe | **TANDA 18 — cierra T19 y limpia la afirmación falsa que la propia ficha sembraba.** Cuatro ficheros del vault, **cero código**: `4.4 …anomalías.md`, `3.2 Arquitectura del sistema.md`, `2.3.3 Límites y consideraciones éticas.md` y `Apéndices/A.3 Ficha del sistema.md`. **Cero `[n]` nuevos, cero `[CITA: …]` nuevos, cero cifras publicadas movidas.** Auditada en **tres pases por seis correctores**, con los hallazgos aplicados. Censo de citas **intacto: 74 filas, primer libre `[76]`** | — |
+| 2026-08-17 | Informe | **T19 · CERRADA — `4.4` era la CUARTA y última sede, y la única que aún contradecía a `5.1`.** Su tabla publicaba **`5,0 s`** para IsolationForest cuando `5.1` ya publica **3,51 s de entrenamiento y 5,27 s de bloque**; la contradicción **la había creado el arreglo de la Tanda 17** al corregir un lado y no el otro. Tabla **verificada celda a celda** contra `Resultados/metricas_anomalias.csv`. Las otras tres sedes (`5.1:44-47`, `5.1:58`, `5.2:59`) se habían cerrado en la Tanda 17 (`9bcfe1f`) | — |
+| 2026-08-17 | Informe | **🔴 de método: LA FICHA T19 ERA LA FUENTE DEL ERROR, no solo su registro.** El texto de `features.md:1015-1021` afirmaba que la banda de **4,8×** se da «**con el recuento de épocas idéntico**» y que el reparto «**conserva el orden de las ocho filas**». **Las dos son falsas, y las dos se habían PROPAGADO A LAS NOTAS** —`4.4` y `A.3:417-418` publicaban la primera— porque cada redactor las copió del registro sin recontarlas. **(a)** Las dos corridas de la banda (`38fdd4b` → `5516b60`) **no registran épocas**: `n_iter_total_grid` solo existe en `ac496cb` y `1163c90`, y `PIPELINE.md:923-929` ya lo declara por escrito. La banda pasa a **magnitud observada SIN causa atribuida**. **(b)** El orden se conserva **casi entero**: `IsolationForest` 122 **baja del 4.º al 6.º**, adelantada por las dos filas de `LocalOutlierFactor`. **(c)** Los **4,5 pp** son del **residual**, no de «cada tramo». **El texto de la ficha se corrigió al retirarla, y la MISMA afirmación se corrigió también en la ficha de T4, que sigue abierta y la repetía palabra por palabra** | — |
+| 2026-08-17 | Informe | **Los otros tres hallazgos aplicados en la tanda.** **(1) 🟠 en `4.4`: equivalencia falsa con §5.1.2** que mezclaba el **AUC de validación (0,9918)** con el **AUC sobre D2 (0,923)** —son columnas distintas del mismo CSV, `auc_val` frente a `roc_auc`—; sustituida por una tabla que separa población y contenido de ataque y explica por qué la caída es esperable. **(2) 🟡 en `3.2`:** el FPR del baseline **se comparaba por variante solo en un lado**. **(3) 🟡 en `2.3.3`:** Axelsson **realineado con su sede canónica**, dentro del barrido de solapes del capítulo 2 —el punto 2 de la lista de cierre de la Tanda 12— | — |
+| 2026-08-17 | Informe | **A.3 · segundo pase de auditoría: `A.3:417-418` repetía la MISMA afirmación falsa sobre las épocas** que se acababa de retirar de `4.4`. **Es el valor de auditar la tanda como unidad**: la nota no se había despachado por ese motivo y el fallo solo aparece al cruzarla con `4.4`. Corregido, y con la **salvedad obligatoria de que `ac496cb` no es reproducible desde git** ya declarada en `:429-431` | — |
+| 2026-08-17 | Código | **T4 · DESBLOQUEADA (no cerrada).** Su única condición viva era que **`5.2`/`5.4` estuvieran escritos**, y lo están desde la **TANDA 17** (`9bcfe1f`, que cerró T11 con el capítulo 5 completo). El registro seguía dándola por bloqueada — **mismo patrón que ya ha mordido cuatro veces: una ficha sobrevive a su propio desbloqueo porque nadie la recuenta al cerrar**. Lo que queda es **verificar que la banda está consumida** en `5.2`/`5.4`, no solo que las notas existan | — |
 | 2026-08-17 | — | **TANDA 17 — el capítulo 5 COMPLETO más el cierre de T10. Siete agentes de escritura en paralelo sobre ficheros disjuntos y TRES pases de auditoría.** Cierra **dos fichas**: **T11 · capítulo 5** (`5.0`–`5.4`, cinco notas redactadas a la vez) y **el bullet del «17» de T10**, que era el último vivo de esa ficha —**con lo cual T10 QUEDA CERRADA**—. **13 ficheros**: las cinco notas de `05 Evaluación/`, `4.2`, `99 Investigación/clasificadores-tabulares-y-arquitecturas-hibridas.md`, `EL_FUTURO.md`, `Guia_ML/` ×3, `Implementacion/app/baseline.py` y `firmas.py`. **413 inserciones.** Censo de citas **intacto: 74 filas, primer libre `[76]`** | `9bcfe1f` |
 | 2026-08-17 | Informe | **🔴🔴 EL PRIMER PASE DE AUDITORÍA DEL CAPÍTULO 5 FUE NO APTO CON DOS ROJOS, Y LOS DOS ERAN CIFRAS FALSAS. Queda escrito porque son los dos errores más graves que ha cazado una auditoría en este proyecto.** **(1) `5.2` presentaba como «desviación típica a lo largo de las diez semillas» unos `±` que son la sd ENTRE LOS 5 *FOLDS* DE LA SEMILLA 42.** Es dispersión **intra-corrida** vendida como **inter-semilla**, y sostenía el argumento central del apartado: exactamente la confusión que **T4 existe para evitar**. **(2) `5.1` publicaba CUATRO TIEMPOS QUE NO EXISTEN EN NINGÚN ARTEFACTO** (5,04 / 28,34 / 16,42 / 40,56 s); los reales son **5,27 / 25,58 / 20,16 / 49,20**. De ahí salía el titular **«ocho veces menor»**, que era **×9,3 o ×13,9 según la columna**, y que **ya se había propagado a `5.4`**. **Ambos corregidos y VERIFICADOS CERRADOS en un segundo pase** | `9bcfe1f` |
 | 2026-08-17 | Informe | **Cómo se cerraron los dos rojos — no con un parche, sino declarando lo que la cifra es.** En **`5.1`** se publican ahora **LOS DOS RATIOS con su porqué**: **×13,9 sobre el tiempo de entrenamiento** (3,51 s de IsolationForest frente a 48,93 s del Autoencoder) y **×9,3 sobre el bloque completo** (5,27 s frente a 49,20 s), explicando que difieren porque en el Autoencoder casi todo el bloque es entrenamiento mientras que en IsolationForest pesa también el puntuado. En **`5.2:145-146`** el `±` queda **declarado explícitamente**: es `f1_macro_cv_std`, la sd **entre los 5 *folds* de esa misma corrida**, dispersión **intra-corrida**, y la nota dice **que NO es la dispersión entre semillas** —que vive en `metricas_balanceo_semillas.csv` y **no se mezcla ahí** | `9bcfe1f` |

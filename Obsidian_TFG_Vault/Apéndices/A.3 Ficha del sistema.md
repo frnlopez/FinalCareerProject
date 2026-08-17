@@ -413,9 +413,26 @@ El recuento se cita **con sus tres salvedades**, y las tres son parte de la cifr
 #### Bloque de máquina (NO es calidad y NO se cita como resultado)
 
 Se publica aparte a propósito: es *wall-clock* en máquina no dedicada, de modo que su `sd` mide
-**carga de máquina** y no el algoritmo. Medido en T1: el Autoencoder de 54 características pasó de
-**37,71 s a 181,91 s** entre dos corridas (4,8×) con **calidad idéntica al bit** y con el recuento de
-épocas determinista (162 en 54 y 128 en 122). No es una propiedad del algoritmo.
+**carga de máquina** y no el algoritmo. Dos observaciones distintas lo respaldan, y **no deben
+leerse juntas** porque proceden de corridas distintas:
+
+- **Dispersión del `tiempo_s`, sin causa atribuida.** El `tiempo_s` del Autoencoder de 54
+  características va de **37,71 s** (`commit 38fdd4b`) a **181,91 s** (`commit 5516b60`), un factor
+  **4,8×**, con **calidad idéntica al bit**. Ninguna de esas dos corridas registra el recuento de
+  épocas, de modo que la banda se declara como **magnitud observada** y **no se atribuye** ni a
+  épocas ni a carga de máquina.
+- **Recuento de épocas.** La columna que lo registra, `n_iter_total_grid`, existe **solo** en
+  `ac496cb` y `1163c90`; en esas dos corridas da **162** en la variante de 54 características y
+  **128** en la de 122. Esa columna **no separa causas** y no decide si una diferencia de tiempo es
+  de épocas o de carga de máquina.
+
+> [!warning] Salvedad obligatoria: `ac496cb` no es reproducible desde git
+> Los recuentos de épocas se apoyan en parte en la corrida `ac496cb`, cuyos CSV **nunca se
+> commitearon** y fueron **sobrescritos por `1163c90`**: sobreviven solo citados en
+> `Implementacion\PIPELINE.md`. **Un tercero no puede recalcular ese dato** desde el repositorio;
+> vale como observación declarada, no como evidencia verificable.
+
+En ningún caso son estos segundos una propiedad del algoritmo.
 
 | Tabla de origen | Variante | Algoritmo | Alcance | Métrica | n | Media | sd | Mín | Máx |
 |---|---|---|---|---|---:|---:|---:|---:|---:|
