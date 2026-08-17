@@ -207,9 +207,13 @@ documento, anclados al commit de su corrida. **Ninguna métrica de calidad se ve
 > artefacto. Los tres valores posibles del sello están tabulados en
 > [El sello `commit`: tres valores posibles](#el-sello-commit-tres-valores-posibles-columna-de-los-csv-y-cabecera-de-los-informes),
 > y esa tabla es la única definición: aquí no se duplica.)*
-> Los artefactos publicados **a fecha de 2026-08-16** salen de la
-> re-corrida de las dos variantes del **2026-08-16**, cuyo sello interno es **`a8c20e9-sucio`**
-> (el ciclo que añade el reparto de D3 por categoría de ataque a los informes y a dos CSV nuevos).
+> Los artefactos publicados salen de la
+> **re-corrida con el árbol limpio del 2026-08-17**, cuyo sello interno es **`ac36b88`**, sin
+> sufijo `-sucio` (el ciclo que añade el reparto de D3 por categoría de ataque a los informes y a
+> dos CSV nuevos; la primera pasada de ese ciclo, del 2026-08-16, sí salió `a8c20e9-sucio` y quedó
+> **sobrescrita**). `ac36b88` es el commit **anterior** al que versiona estos artefactos, pero al
+> estar el árbol limpio **identifica exactamente el código** que los produjo, y desde él la corrida
+> es **reproducible** — que es justo lo que un sello `-sucio` no podía dar.
 > Sus salidas, **seis artefactos versionados** más las figuras:
 >
 > | Artefacto | Cuántos | Qué cambia respecto a la corrida anterior |
@@ -241,28 +245,18 @@ documento, anclados al commit de su corrida. **Ninguna métrica de calidad se ve
 > `..._composicion_d3.csv` —que el informe reproduce en su volcado de la tabla, fila `__total__`—,
 > y así la atribuye también `Resultados/GUIA_RESULTADOS.md`.
 >
-> > [!todo] Hash del commit de cierre, pendiente de sellar
-> > Este recuadro se re-escribe en el commit de cierre de cada re-corrida, y **ese commit todavía no
-> > existe** en el momento de escribirlo: el árbol estaba sin commitear. Lo verificable hoy es el
-> > **sello de corrida** —commit `a8c20e9-sucio` en las dos variantes, y la marca temporal de cada
-> > invocación en el campo `Fecha de la corrida:` de su propio artefacto—, que es lo que va escrito
-> > arriba. **Al cerrar, sustituir este aviso por el hash del commit
-> > que versiona a la vez `validacion.py` y los seis artefactos**, con la misma fórmula que se usó
-> > con `9af842c` para el ciclo anterior. Hasta entonces, **no hay commit de cierre al que anclar
-> > estos artefactos**: no inventar uno.
+> **Por qué este sello NO necesita re-anclaje en prosa.** Los ciclos anteriores de `validacion.py`
+> se publicaron con sello `-sucio` y hubo que anclarlos a mano a su commit de cierre
+> (`fc1c6b4-sucio` → `9af842c`). Aquí el problema **desaparece en origen**: la re-corrida del
+> 2026-08-17 se hizo con el árbol de `Implementacion/` **limpio**, así que el sello impreso es
+> `ac36b88` a secas. Ese hash es el del commit **anterior** al que versionará estos ficheros, pero
+> como no había diferencias sin commitear, **es exactamente el código que los generó**: basta hacer
+> `checkout` de `ac36b88` y volver a lanzar `validacion.py` para obtenerlos. No es más que eso —no
+> dice qué commit los versiona, y eso se sigue leyendo del historial de git—, pero sí es lo único
+> que faltaba: reproducibilidad. El sello dentro del artefacto **no se edita a mano**: es una salida
+> generada.
 >
-> **Por qué el sello sale `-sucio`, y qué se hace con ello.** Al correr había cambios sin commitear
-> en `Implementacion/` —justamente los de `validacion.py` que producen el bloque nuevo—, así que
-> `a8c20e9` es el hash del commit **anterior** al código que generó los artefactos. La doctrina del
-> proyecto sobre esto está aceptada y no cambia (ver más abajo, «Qué vale y qué no vale un sello
-> `-sucio`»): el sello aporta **fecha fiable dentro del fichero** y **aviso explícito de
-> no-reproducibilidad desde ese hash**, no una versión de código. El precedente es el ciclo anterior,
-> que se publicó con `fc1c6b4-sucio` y se ancló en prosa a su commit de cierre `9af842c`; aquí se
-> repite el mismo patrón, con el anclaje pendiente del `> [!todo]` de arriba. El sello dentro del
-> artefacto **no se edita a mano**: es una salida generada, y solo cambiaría re-corriendo
-> `validacion.py` con el árbol limpio.
->
-> **El ciclo anterior, para el historial.** La corrida del **2026-08-11 a las 20:53**
+> **Los ciclos anteriores, para el historial.** La corrida del **2026-08-11 a las 20:53**
 > (`fc1c6b4-sucio`) cerró los siete residuos de `validacion.py` —rótulo del 77 como reconstrucción,
 > enteros en el CSV del vocabulario, `Recomendaciones:` vacío suprimido y el estampado de
 > `commit`+`fecha` dentro de los propios artefactos— y quedó commiteada en **`9af842c`**. Sus
@@ -279,13 +273,13 @@ documento, anclados al commit de su corrida. **Ninguna métrica de calidad se ve
 >
 > **Leer la procedencia DENTRO del fichero: resuelto en el código y ya presente en el disco.** El
 > mtime es del sistema de ficheros y git no lo versiona: tras un `clone` los artefactos llevan la
-> fecha de la copia, no la de la corrida. Los **seis** artefactos de la corrida del 2026-08-16
+> fecha de la copia, no la de la corrida. Los **seis** artefactos de la corrida del 2026-08-17
 > —cabecera de los dos `..._validation_report.txt` y las dos últimas columnas de los
 > `..._vocabulario_onehot.csv` y de los `..._composicion_d3.csv`— **imprimen `commit` y `fecha`**,
 > igual que los `metricas_*.csv`, que traen las dos columnas desde **T1**. Verificado en disco: en
 > `Resultados/specialized_nsl_kdd_validation_report.txt`, los campos de cabecera
 > `Commit del código:` y `Fecha de la corrida:` (van tras el título y antes de `Integridad:`)
-> están presentes y poblados: el commit declarado es `a8c20e9-sucio`, y la marca temporal exacta,
+> están presentes y poblados: el commit declarado es `ac36b88`, y la marca temporal exacta,
 > la que traiga el campo `Fecha de la corrida:` de ese fichero. **Se citan por su nombre de campo y
 > no por su número de línea**: la cabecera es un artefacto regenerable y cualquier re-corrida que le
 > añada o quite líneas desplazaría la referencia en silencio. **El commit es el mismo en los seis
@@ -310,27 +304,29 @@ documento, anclados al commit de su corrida. **Ninguna métrica de calidad se ve
 > ya no es independiente de `config.py`. **`program.py` sí sigue siéndolo**, y sus rutas —y las de
 > `validacion.py`— siguen hardcodeadas: esa parte de Q2 no se ha ejecutado.
 >
-> **Los artefactos se re-corrieron** (2026-08-16, sello `a8c20e9-sucio`), así que la procedencia se
-> lee dentro de cada fichero. Este recuadro sigue siendo el anclaje **canónico** de la corrida y se
-> re-escribe en el commit de cierre de cada re-corrida futura de `validacion.py`, porque el sello
-> interno de hoy es `-sucio` y por sí solo no identifica el código.
+> **Los artefactos se re-corrieron** (2026-08-17, sello limpio `ac36b88`), así que la procedencia se
+> lee dentro de cada fichero. Este recuadro sigue siendo el anclaje **canónico** de la corrida, pero
+> ya **no arrastra un re-anclaje pendiente**: al ser el sello limpio, identifica por sí solo el
+> código que produjo los seis artefactos. Se re-escribe en cada re-corrida futura de `validacion.py`.
 >
-> **Qué vale y qué no vale un sello `-sucio`.** Un sello como `a8c20e9-sucio` **NO identifica una
+> **Qué vale y qué no vale un sello `-sucio`.** *(Doctrina general del proyecto, que sigue vigente
+> para las corridas que sí salieron sucias; la de `validacion.py` que hay hoy en disco **no** es una
+> de ellas.)* Un sello como `fc1c6b4-sucio` **NO identifica una
 > versión del código**: el hash apunta al commit **anterior** al cambio, y `-sucio` solo dice
 > «el árbol de `Implementacion/` difería de ese commit, no se sabe en qué». Lo que **sí** aporta:
 > (a) una **fecha fiable dentro del fichero**, que sobrevive a un `clone` —al contrario que el
 > mtime—, y (b) el **aviso explícito de no-reproducibilidad** desde ese hash, que es precisamente
 > lo que evita citar el artefacto como si fuese reproducible. Lo que **no** aporta: saber qué
-> versión lo produjo. Eso lo da el commit de cierre, que para estos **seis** artefactos **aún está
-> por sellar** (`> [!todo]` de arriba; para el ciclo anterior fue `9af842c`), y quien lo declara es
-> este recuadro, no el fichero. La convención de los tres valores está en
+> versión lo produjo. Eso lo da el commit de cierre, y quien lo declara es este recuadro, no el
+> fichero (para el ciclo de `fc1c6b4-sucio` fue `9af842c`). **Para los seis artefactos que hay hoy
+> en disco esto ya no aplica**: su sello es limpio y sí identifica el código. La convención de los
+> tres valores está en
 > [El sello `commit`: tres valores posibles](#el-sello-commit-tres-valores-posibles-columna-de-los-csv-y-cabecera-de-los-informes)
 > y no se duplica aquí.
 >
-> Es una limitación **más leve** que la de `ac496cb` de más abajo: allí los CSV no están en git ni
-> se pueden regenerar; aquí son artefactos de texto plano **versionables y reproducibles** —quedarán
-> en git en el commit de cierre pendiente—, y lo único que no se puede leer del propio fichero es
-> **de qué versión exacta del código** salió.
+> Nada que ver con la limitación de `ac496cb` de más abajo: allí los CSV no están en git ni se
+> pueden regenerar; aquí son artefactos de texto plano **versionados y reproducibles**, y del propio
+> fichero se lee **de qué versión exacta del código** salió.
 >
 > | Figura (× 2 variantes: sin sufijo = 54, `_sin_seleccion` = 122) | Origen |
 > |---|---|
@@ -452,7 +448,8 @@ casi siempre posterior. Las corridas que existen en git:
 | `1163c90` | `8fdc421` (commit de cierre de **T18**) | **La publicada hoy.** Mismo esquema que `ac496cb`. 8 invocaciones, **222 filas** —subtotal de las ocho tablas del runbook, **no** el total de `Resultados/`—, todas con `semilla = 42` y `commit = 1163c90` limpio. |
 | `274923d-sucio` | `b1f1df2` (commit de cierre de **T3**, que versiona a la vez `cascada_invertida.py` y su CSV) | **Solo la cascada invertida (T3)**: 2 invocaciones, **10 filas** en `metricas_cascada_invertida.csv`, `semilla = 42`. No toca ninguna de las ocho tablas del runbook. El `-sucio` es correcto y previsto: la corrida es anterior al commit que versiona su propio código (`config._RUTA_SUCIEDAD` mira `Implementacion/`). |
 | `fc1c6b4-sucio` | `9af842c` (commit de cierre del ciclo de los siete residuos, que versiona a la vez `validacion.py` y sus cuatro artefactos) | **Solo `validacion.py`**, corrida del **2026-08-11 20:53** (2 invocaciones). Entra en esta tabla porque la columna `commit` rige también en los dos `*_vocabulario_onehot.csv`, que **sí están versionados**; el mismo sello va en la cabecera de los dos `*_validation_report.txt`. **No escribe en ningún `metricas_*.csv`**, así que no altera el recuento de filas de abajo. El commit es común a los cuatro artefactos; la **fecha** es la de cada invocación (`2026-08-11T20:53:27` a 54, `2026-08-11T20:53:46` a 122). El `-sucio` es previsto y **no identifica una versión del código** —el hash es el del commit **anterior** al cambio—, así que la versión que lo produjo es la de la columna de al lado, `9af842c`: el re-anclaje está hecho aquí y en el recuadro de trazabilidad de arriba. **Estos artefactos ya no son los que hay en disco**: los sobrescribió la re-corrida de `a8c20e9-sucio` (fila siguiente). Sigue nombrando su corrida, que es lo que una tabla de corridas registra. |
-| `a8c20e9-sucio` | *(pendiente: el commit de cierre de esta re-corrida **todavía no existe**; se sella en el cierre, ver el `> [!todo]` del recuadro de trazabilidad de arriba)* | **Solo `validacion.py`**, re-corrida del **2026-08-16** (2 invocaciones, exit 0, integridad **APROBADA**). **Es la que hay en disco.** Añade el bloque «Composición de D3 por categoría de ataque» a los dos informes y estrena los dos `*_composicion_d3.csv`; reescribe además los dos `*_vocabulario_onehot.csv` (**mismas cifras, solo cambia el sello**) y las 12 figuras `validacion_*.png`. **No escribe en ningún `metricas_*.csv`**, así que no altera el recuento de filas de abajo. El commit es común a los seis artefactos; la **fecha** es la de cada invocación y se lee en el campo `Fecha de la corrida:` de cada uno (esta prosa ya no la copia: caducaba en la siguiente re-corrida). El `-sucio` es previsto —el árbol tenía sin commitear el propio cambio de `validacion.py`— y **no identifica una versión del código**; el re-anclaje queda pendiente del commit de cierre. |
+| `a8c20e9-sucio` | *(ninguno: **nunca se versionó** y ya no hace falta anclarla)* | **Solo `validacion.py`**, re-corrida del **2026-08-16** (2 invocaciones, exit 0, integridad **APROBADA**). Añadía el bloque «Composición de D3 por categoría de ataque» a los dos informes y estrenaba los dos `*_composicion_d3.csv`. **No escribe en ningún `metricas_*.csv`**, así que no altera el recuento de filas de abajo. El `-sucio` era previsto —el árbol tenía sin commitear el propio cambio de `validacion.py`—, y por eso **no identificaba una versión del código**. **Estos artefactos ya no son los que hay en disco**: los sobrescribió la re-corrida limpia de `ac36b88` (fila siguiente), que trae **exactamente las mismas cifras** y resuelve el sello en origen, de modo que el re-anclaje en prosa que esta fila arrastraba **queda sin objeto**. Sigue nombrando su corrida, que es lo que una tabla de corridas registra. |
+| `ac36b88` | *(no necesita re-anclaje: el sello es **limpio** y ya identifica el código; el commit que versiona los artefactos es posterior y se lee del historial de git)* | **Solo `validacion.py`**, re-corrida con el **árbol limpio** del **2026-08-17** (2 invocaciones, exit 0, integridad **APROBADA**). **Es la que hay en disco.** Reescribe los **seis** artefactos versionados —los dos `*_validation_report.txt`, los dos `*_vocabulario_onehot.csv` y los dos `*_composicion_d3.csv`— y las 12 figuras `validacion_*.png`, con **todas las cifras idénticas** a las publicadas (D3: `dos` 45.927 · `probe` 11.656 · `r2l` 995 · `u2r` 52 · total 58.630, ratio 883,21; drift 122 **(A) 44 / (B) 31**, 54 **(A) 37 / (B) 25**): **lo único que cambió fue el sello**. **No escribe en ningún `metricas_*.csv`**, así que no altera el recuento de filas de abajo. El commit es común a los seis artefactos; la **fecha** es la de cada invocación y se lee en el campo `Fecha de la corrida:` de cada uno (esta prosa no la copia: caducaría en la siguiente re-corrida). `ac36b88` es el commit **anterior** al que versionará estos ficheros, pero al no haber cambios sin commitear **identifica exactamente el código** que los produjo y los hace **reproducibles** desde él. |
 | `00c3c3e-sucio` | `54d1349` (commit que versiona a la vez `barrido_semillas.py` y la traza que ese script produce) | **No es una corrida de modelos**: es la verificación `--solo-verificar` del **2026-08-12 15:57**, con **cero `fit`**, que solo lee los descriptores de los 20 `.joblib` publicados y escribe `Resultados/verificacion_semilla_joblib.txt`. Entra en esta tabla porque ese fichero lleva el mismo campo de cabecera `Commit del código:` y la misma convención. **No escribe en ningún `metricas_*.csv`**, así que no altera el recuento de filas de abajo. El `-sucio` es previsto: HEAD era `00c3c3e` y el código del lanzador estaba sin commitear, de modo que la versión que produjo la traza es la de la columna de al lado, `54d1349`. El sello impreso dentro del fichero **no se edita** —es salida de `config.commit_actual()`—: el re-anclaje se hace aquí y en la subsección de la traza de la semilla. **El mismo sello lo lleva otra cosa, y no es esta:** el **ensayo de humo a semilla 1** de ese mismo día (`anomalias.py --semilla 1`) corrió con el árbol igual de sucio, así que **sí hizo `fit`** (cuatro) y **sí escribió** una `metricas_*.csv` — `metricas_anomalias_semillas.csv`, que **nunca fue una de las nueve publicadas**. Ese fichero **sí existe hoy** en `Resultados/` —es una de las nueve `metricas_*_semillas.csv` del barrido, con 80 filas—, pero **el contenido que escribió el ensayo ya no está**: lo sobrescribió el barrido de `df30cb2` (el residuo del ensayo desapareció, no el fichero). Bajo la clave «una corrida se identifica por el commit del código que la produjo», este sello nombra **dos** corridas: al citarlo hay que decir cuál. |
 | `df30cb2` | `9ad971b` (commit de cierre del **cómputo de T4**, que versiona a la vez las nueve tablas del barrido y los dos artefactos de la agregación) | **El barrido de las diez semillas (T4)**, del **2026-08-12 22:09 al 2026-08-13 00:38**: 100 invocaciones (5 scripts × 2 variantes × 10 semillas) que escriben **2.320 filas** repartidas en las nueve `metricas_*_semillas.csv`, con `semilla` de 1 a 10 y `commit = df30cb2` **limpio** en todas (lo verificó el agregador: `commits_origen = df30cb2` único en sus 198 celdas). **No toca ninguna de las nueve tablas publicadas de la semilla 42**, que quedaron bit a bit idénticas. El mismo sello, con fecha `2026-08-12T22:07:10`, lo lleva `verificacion_semilla_joblib.txt`, re-sellado por el preflight del barrido. |
 | `df30cb2-sucio` | `9ad971b` (el mismo commit de cierre: versiona a la vez `agregar_semillas.py` y sus dos artefactos) | **No es una corrida de modelos**: es el **agregador** de T4 (`agregar_semillas.py`) del **2026-08-13**, con **cero `fit`** —solo lee CSV—, que escribe `dispersion_semillas.csv` y `.md` (**198 filas**) con `commit_agregador = df30cb2-sucio` y fecha `2026-08-13T07:43:40`. Entra en esta tabla porque esos dos artefactos **están versionados** y llevan la misma convención de sello. **No escribe en ningún `metricas_*.csv`**, así que no altera el recuento de filas de abajo. El `-sucio` es previsto: HEAD era `df30cb2` y el arreglo de `_tabla_md()` estaba sin commitear, de modo que la versión que produjo la agregación es la de la columna de al lado, `9ad971b`. El sello impreso dentro de los dos artefactos **no se edita** —es salida de `config.commit_actual()`—: el re-anclaje se hace aquí y en el recuadro del «tercer re-anclaje de sello del proyecto», al final de «Lo que dio la primera ejecución real». Y **el `-sucio` no contamina la cita**: lo que respalda cada banda es `commits_origen = df30cb2` limpio, no este sello. **Este sello ya no es el que hay en disco**: lo sobrescribió la tercera pasada del agregador (fila siguiente). Sigue nombrando su corrida —la segunda pasada, de las `07:43:40`—, que es lo que una tabla de corridas registra. |
@@ -473,8 +470,9 @@ sobrescribió después el barrido. **Tampoco las dos de `df30cb2`**: el barrido 
 `metricas_*_semillas.csv`, que son tablas aparte, y el agregador no escribe en ninguna
 `metricas_*.csv`). **La novena de esa lista es la última, `0276039-sucio` —la quinta pasada del
 agregador—, cuyos tres artefactos son los que hay hoy en disco**, y tampoco escribe en ninguna
-publicada. **La corrida más reciente de la tabla que aún NO está versionada es `a8c20e9-sucio`
-(2026-08-16)**, y por eso no entra en este recuento de nueve. No confundir este recuento con «las
+publicada. **La corrida más reciente de la tabla que aún NO está versionada es `ac36b88`
+(2026-08-17, la re-corrida limpia de `validacion.py`)**, y por eso no entra en este recuento de
+nueve; la de `a8c20e9-sucio` que ocupaba este hueco quedó sobrescrita sin llegar a versionarse. No confundir este recuento con «las
 cuatro corridas versionadas» de la subsección «Lo que `perf_counter` NO arregla», que designa otro
 cuarteto y se cita por su nombre y no por número de línea. Sumando esas dos, las **nueve tablas publicadas de la semilla 42** tienen hoy
 **232 filas repartidas en 9 ficheros** `metricas_*.csv`
@@ -1504,14 +1502,14 @@ semilla funcionó. Cuatro hallazgos, y los cuatro son material citable — de **
    Consecuencia práctica: **si alguna de esas tablas se mueve, el recuento no se recuenta a mano, se
    vuelve a correr el agregador**.
 
-> **Sexto re-anclaje de sello del proyecto, ya HECHO.** *(El «y ninguno PENDIENTE» que este
-> encabezado añadía fue cierto **el 2026-08-14**, y solo hasta entonces: la re-corrida de
-> `validacion.py` del **2026-08-16** —sello `a8c20e9-sucio`, con la marca temporal de cada variante
-> en su campo `Fecha de la corrida:`— publicó seis artefactos cuyo commit de cierre todavía no
-> existe, así que **hoy sí
-> hay un re-anclaje pendiente**: el del `> [!todo]` de `:244-252` de este mismo fichero. El quinto
-> re-anclaje, `6bb224c-sucio` → `1cb5c26`, sigue siendo válido; lo superado es la conclusión de que
-> no quedaba ninguno.)* Los cinco anteriores,
+> **Sexto re-anclaje de sello del proyecto, ya HECHO, y ninguno PENDIENTE (2026-08-17).** *(Este
+> encabezado dijo lo contrario entre el 2026-08-16 y el 2026-08-17, con razón: la re-corrida de
+> `validacion.py` del 2026-08-16 salió con sello `a8c20e9-sucio` y arrastraba un séptimo re-anclaje.
+> **Ese pendiente se cerró SIN re-anclaje**, que es la vía preferible: `validacion.py` se volvió a
+> correr el **2026-08-17 con el árbol limpio**, los seis artefactos llevan hoy el sello limpio
+> **`ac36b88`** con las mismas cifras, y un sello limpio no necesita anclarse a nada porque ya
+> identifica el código. El quinto re-anclaje, `6bb224c-sucio` → `1cb5c26`, sigue siendo válido.)*
+> Los cinco anteriores,
 > todos citados arriba, son `fc1c6b4-sucio` → `9af842c`, `00c3c3e-sucio` → `54d1349`, `df30cb2-sucio` →
 > `9ad971b`, `ddade37-sucio` → `9d4c26d` y `6bb224c-sucio` → `1cb5c26`.
 >
@@ -1548,10 +1546,10 @@ semilla funcionó. Cuatro hallazgos, y los cuatro son material citable — de **
 > artefactos de dispersión, que venían sin commitear de la sesión anterior—, verificado con
 > `git log --oneline 1cb5c26` el 2026-08-14, no deducido de la prosa. El sello impreso **no se toca**;
 > el re-anclaje va en prosa, aquí y en la tabla de corridas. **Con esto no quedaba ningún re-anclaje
-> pendiente *a fecha de 2026-08-14*** — afirmación acotada a esa fecha y **superada** por la
-> re-corrida de `validacion.py` del **2026-08-16** (`a8c20e9-sucio`), cuyo commit de cierre aún no
-> existe: el re-anclaje pendiente que hay hoy está declarado en el `> [!todo]` de `:244-252` de este
-> mismo fichero. Los re-anclajes anteriores **siguen siendo válidos para lo que nombran**: cada
+> pendiente *a fecha de 2026-08-14*** — afirmación acotada a esa fecha, que quedó en suspenso con la
+> re-corrida de `validacion.py` del **2026-08-16** (`a8c20e9-sucio`) y **volvió a ser cierta el
+> 2026-08-17**, cuando esa corrida se rehízo con el árbol limpio y su sello pasó a `ac36b88`, que no
+> necesita anclaje. Los re-anclajes anteriores **siguen siendo válidos para lo que nombran**: cada
 > uno, su pasada. Ninguno es un ancla huérfana ni se borra; simplemente ya no describen el fichero que
 > hay en disco, y por eso las cinco pasadas están tabuladas más arriba con el sello de cada una.
 >
@@ -1564,8 +1562,9 @@ semilla funcionó. Cuatro hallazgos, y los cuatro son material citable — de **
 > («codigo: emitir el "8 de 10" pareado desde agregar_semillas.py y corregir el residuo de T22»), que
 > versiona a la vez el cambio de `agregar_semillas.py` y los tres artefactos, verificado
 > con `git show --stat 98a0289` el 2026-08-17 y no deducido de la prosa. El sello impreso **no se
-> toca**; el re-anclaje va en prosa, aquí, en la tabla de pasadas y en la tabla de corridas. **Esto no
-> cierra el pendiente de `validacion.py`** (`a8c20e9-sucio`), que sigue esperando su commit de cierre.
+> toca**; el re-anclaje va en prosa, aquí, en la tabla de pasadas y en la tabla de corridas. **El
+> pendiente que arrastraba `validacion.py`** (`a8c20e9-sucio`) **no se cerró con este re-anclaje sino
+> re-corriendo el script con el árbol limpio** el 2026-08-17: su sello es hoy `ac36b88`, limpio.
 >
 
 > **Aviso de estado, 2026-08-14:** esa cuarta regeneración **ya se ha corrido** (2026-08-14

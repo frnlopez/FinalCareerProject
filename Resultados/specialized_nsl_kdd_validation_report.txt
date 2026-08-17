@@ -1,8 +1,8 @@
 REPORTE DE VALIDACIÓN — DIVISIONES D1/D2/D3 NSL-KDD
 ============================================================
 
-Commit del código: a8c20e9-sucio
-Fecha de la corrida: 2026-08-16T22:03:58
+Commit del código: ac36b88
+Fecha de la corrida: 2026-08-17T20:42:19
 
 Integridad:       APROBADA
 D1 (Normal):      67,343 instancias

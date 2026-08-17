@@ -1,6 +1,6 @@
 variante,split,categoria,n_instancias,porcentaje_d3,declarada_en_config,ratio_desbalance_max_min,commit,fecha
-sin_seleccion,D3,dos,45927,78.3336,True,,a8c20e9-sucio,2026-08-16T22:04:14
-sin_seleccion,D3,probe,11656,19.8806,True,,a8c20e9-sucio,2026-08-16T22:04:14
-sin_seleccion,D3,r2l,995,1.6971,True,,a8c20e9-sucio,2026-08-16T22:04:14
-sin_seleccion,D3,u2r,52,0.0887,True,,a8c20e9-sucio,2026-08-16T22:04:14
-sin_seleccion,D3,__total__,58630,100.0,,883.21,a8c20e9-sucio,2026-08-16T22:04:14
+sin_seleccion,D3,dos,45927,78.3336,True,,ac36b88,2026-08-17T20:42:33
+sin_seleccion,D3,probe,11656,19.8806,True,,ac36b88,2026-08-17T20:42:33
+sin_seleccion,D3,r2l,995,1.6971,True,,ac36b88,2026-08-17T20:42:33
+sin_seleccion,D3,u2r,52,0.0887,True,,ac36b88,2026-08-17T20:42:33
+sin_seleccion,D3,__total__,58630,100.0,,883.21,ac36b88,2026-08-17T20:42:33
