@@ -150,7 +150,7 @@ inventario**, y de ellos **6 apuntan a fuentes que este pase acaba de numerar**:
 
 | Línea de `A.3` | Marcador | Situación |
 |---|---|---|
-| 10 | `[CITA: Mitchell et al. 2019]` | *Model Cards for Model Reporting* — **sin número asignado** |
+| 10 | `[CITA: Mitchell et al. 2019]` | *Model Cards for Model Reporting* — ~~sin número asignado~~ **→ es `[60]` desde la Tanda 9 (2026-08-15)** |
 | 231, 614, 628, 636 | `[CITA: Pineau et al.]` (×4) | **Es `[20]`**, dado de alta hoy |
 | 583, 586 | `[CITA: Arp et al. — pitfalls en ML para seguridad]` (×2) | **Es `[18]`**, dado de alta hoy |
 
@@ -283,6 +283,19 @@ en las notas**.
    [[benchmark-comparativo-nsl-kdd]]), **necesita un número nuevo: sería el `[58]`**. No lo he dado
    de alta a propósito: dar de alta un `[58]` que ninguna nota cita crearía una entrada huérfana, y
    el alta debe ir junto con la conversión del marcador, en un solo pase.
+
+   > [!success] SUPERADO — verificado contra disco el 2026-08-17
+   > **Ese «sería el `[58]`» era una PREVISIÓN, y la Tanda 9 la desbordó.** Cuando el pase en serie
+   > ejecutó las altas (2026-08-15), dio de alta **diez** entradas de golpe, `[58]`-`[67]`, y el
+   > reparto real fue otro: **el `[58]` se lo llevó *KDD Cup 1999 Data*** (UCI KDD Archive, usado en
+   > `4.2`) y **Mitchell *et al.*, *Model Cards for Model Reporting*, quedó en el `[60]`**
+   > (`10.1145/3287560.3287596`), que es el número que citan hoy `5.0`, `A.3` y `3.3`.
+   > **La fila `[58]` de [[Bibliografía]] es correcta y no se toca. Mitchell no necesita alta nueva:
+   > ya existe.** Esta reserva queda **cancelada**, y el párrafo se conserva como historial: era
+   > razonable cuando se escribió, con el contador en `[57]`.
+   > **Ni la propuesta 3 ni el punto 5 de esta sección son ya accionables:** el contador global no
+   > está en «primer libre `[58]`» sino en **`[78]`** — 76 filas en uso, `[1]`-`[8]` y `[10]`-`[77]`,
+   > con `[9]` quemada, **contado contra disco el 2026-08-17**.
 4. **Cerrar la acción P1 de T15 en [[Auditoría de Bibliografía]].** Ya está aplicada en disco
    (`2.2.1` cita `[8]`, no `[9]`) y sigue figurando como pendiente. No la he tocado porque ese
    fichero está fuera de mi alcance.

@@ -32,6 +32,13 @@ puede tocar el researcher** y que hay que arreglar en las notas: repuntar `[9]`�
 la frase de `1.1` que nombra empresas concretas (INCIBE da magnitud, no nombres) y repuntar dos
 citas de `2.1.2` que atribuyen a Goodfellow unas listas que son de Géron.
 
+> [!success] Contradicción 1 de 5 — SUPERADA, verificado contra disco el 2026-08-17
+> **Las tres están hechas**, así que el párrafo de arriba es historial, no estado.
+> `2.2.1` no contiene ya **ninguna** aparición de `[9]`: cita **`[8, cap. 1]`**. `1.1 Motivación:12`
+> no nombra ninguna empresa: cita los 97.348 incidentes de INCIBE con `[1]`. `2.1.2:30` y `:64`
+> citan `[5]`. **[[Bibliografía]] tenía razón y este informe se había quedado atrás**: sus tres
+> callouts de «✅ EJECUTADO» estaban verificados y este fichero seguía diciendo que quedaban abiertas.
+
 ## Hallazgos
 
 ### 1. `[2]` Anderson 1980 — completada y verificada contra la portada
@@ -83,10 +90,17 @@ editar `2.2.1:40`, y el encargo prohíbe expresamente tocar notas del vault fuer
 `Bibliografía.md`; renumerar sin editar las notas habría dejado dos referencias apuntando a fuentes
 equivocadas, que es peor que un hueco. El hueco lo absorbe el pase a Zotero, que renumera solo.
 
-> [!warning] Acción que queda abierta en la memoria
-> `2.2.1 Introducción a la ciberseguridad.md:32` sigue citando `[9]` (frase de la autenticidad y la
+> [!warning] ~~Acción que queda abierta en la memoria~~ — CERRADA
+> ~~`2.2.1 Introducción a la ciberseguridad.md:32` sigue citando `[9]` (frase de la autenticidad y la
 > responsabilidad). Hay que **repuntarla a `[8]`** — mismo libro, mismo capítulo. La hace el
-> `redactor-tfg` o Francisco.
+> `redactor-tfg` o Francisco.~~
+
+> [!success] Contradicción 2 de 5 — SUPERADA, verificado contra disco el 2026-08-17
+> **La acción P1 está EJECUTADA.** `2.2.1 Introducción a la ciberseguridad.md` no contiene ni una
+> aparición de `[9]`; la frase de la autenticidad y la responsabilidad vive hoy en `:56` y cita
+> **`[8, cap. 1]`**, con localizador incluido. **Ojo también con el número de línea:** el `:32` de
+> este informe caducó con la redacción de la prosa del capítulo 2.
+> [[Bibliografía]] ya lo declaraba cerrado en el callout de `[9]` y este fichero lo contradecía.
 
 ### 4. `[1]` — sustituida por INCIBE, con el dato exacto
 
@@ -117,6 +131,14 @@ nota de INCIBE es de acceso libre y da la cifra en una línea citable, sin neces
 > conservar los nombres, y entonces **cada uno necesita su propia fuente** (comunicado de la
 > empresa, resolución de la AEPD), lo que son cuatro entradas nuevas y queda **fuera del alcance de
 > T15**.
+
+> [!success] Contradicción 3 de 5 — SUPERADA, verificado contra disco el 2026-08-17
+> **Francisco eligió la salida (a) y está aplicada.** `1.1 Motivación:12` **ya no nombra a Santander,
+> Telefónica, Iberdrola ni a la Complutense**: dice «durante 2024, el Instituto Nacional de
+> Ciberseguridad (INCIBE) gestionó 97.348 incidentes de ciberseguridad, un 16,6 % más que el año
+> anterior [1]», que es **exactamente** lo que la fuente sostiene. **No hacen falta las cuatro
+> entradas nuevas de la opción (b)**, y no se han dado de alta.
+> [[Bibliografía]] ya lo declaraba ejecutado en el callout de `[1]` y este fichero lo contradecía.
 
 ### 5. Las otras seis entradas: metadatos verificados y nivel asignado
 
@@ -155,6 +177,14 @@ de la regla de T16 («ninguna entrada sin cita en el texto») y documenta que, e
 están en uso**. Bajo la tabla van los **avisos por entrada** en callouts, con la reserva o la acción
 pendiente de cada una.
 
+> [!success] Contradicción 4 de 5 — SUPERADA, verificado contra disco el 2026-08-17
+> **Ya no son cinco columnas, son SEIS.** La Tanda 9 añadió **«Localizador por uso»** (decisión de
+> Francisco del 2026-08-15), que escribe solo el `researcher` y que registra **de qué capítulo o
+> página** sale cada afirmación citada. **Y ya no son 10 entradas, son 76**: `[1]`-`[8]` y
+> `[10]`-`[77]`, con `[9]` quemada. El «cinco columnas / 10 entradas» de este apartado describe el
+> estado del 2026-08-09 y se conserva como historial; **el estado vigente es el de
+> [[Bibliografía]]**, que se cuenta contra disco y no se recuerda.
+
 ## Lo que no he podido confirmar
 
 - **La edición de Stallings que usó Francisco.** El texto citado es idéntico en las ediciones 3.ª,
@@ -180,9 +210,9 @@ Ninguna de estas la puede hacer el `researcher`: todas tocan notas de la memoria
 
 | # | Dónde | Qué propongo | Por qué |
 |---|---|---|---|
-| P1 | `2.2.1 Introducción a la ciberseguridad.md:32` | Repuntar `[9]` → `[8]` | `[9]` retirada; es el mismo libro |
-| P2 | `1.1 Motivación.md:12` | Reformular hacia la cifra agregada de INCIBE, o dar fuente propia a cada empresa nombrada | INCIBE no nombra víctimas: hoy la frase quedaría sin respaldo |
-| P3 | `2.1.2 Tipos de ML.md:30` y `:64` | Repuntar `[6]` → `[5]` | Las listas son del cap. 1 de Géron, no de *Deep Learning* |
+| ~~P1~~ | `2.2.1 Introducción a la ciberseguridad.md` | ~~Repuntar `[9]` → `[8]`~~ | ✅ **EJECUTADA** (Tanda 9). Hoy cita `[8, cap. 1]` y no queda ninguna aparición de `[9]` en el vault |
+| ~~P2~~ | `1.1 Motivación.md:12` | ~~Reformular hacia la cifra agregada de INCIBE~~ | ✅ **EJECUTADA**: Francisco eligió la salida (a). La frase cita los 97.348 incidentes y no nombra empresas |
+| ~~P3~~ | `2.1.2 Tipos de ML.md:30` y `:64` | ~~Repuntar `[6]` → `[5]`~~ | ✅ **EJECUTADA** (Tanda 9). Y `[6]` **no quedó huérfana**: T24 la reancló en `2.1.4.3` con `[6, cap. 6]` |
 | P4 | `1.2 Preliminares.md:14` | Añadir aval de nivel 1 a «se considera el punto de partida para los IDS» | Es una afirmación *sobre* el informe; el informe no la sostiene |
 | P5 | `Bibliografía.md` `[8]` | Confirmar edición y, si procede, cambiar 4.ª ed. 2018 por la que corresponda | Único dato de la tabla que sigue marcado como sin confirmar |
 | P6 | `Bibliografía.md` `[10]` | Sustituir el enlace profundo al término por la referencia a la guía completa con su versión | El *deep link* con `?n=189.html` es frágil |
@@ -236,11 +266,15 @@ detalla una por una.
 - **La regla dura queda satisfecha:** ninguna afirmación de la memoria se apoya ya en una fuente de
   nivel 3. La única de nivel 2 es `[2]`, declarada, y es la fuente primaria del hecho histórico que
   sostiene.
-- **T15 no puede cerrarse del todo sin el `redactor-tfg`.** Las propuestas **P1** (repuntar `[9]`) y
+- ~~**T15 no puede cerrarse del todo sin el `redactor-tfg`.** Las propuestas **P1** (repuntar `[9]`) y
   **P2** (reformular `1.1`) son consecuencia directa de las bajas autorizadas: mientras no se
-  apliquen, `2.2.1` cita un número retirado y `1.1` nombra empresas que su fuente no menciona. Son
-  dos ediciones pequeñas y encajan de forma natural en **T8** (capítulo 2) y en la revisión del
-  capítulo 1.
+  apliquen, `2.2.1` cita un número retirado y `1.1` nombra empresas que su fuente no menciona.~~
+  > [!success] Contradicción 5 de 5 — SUPERADA, verificado contra disco el 2026-08-17
+  > **P1, P2 y P3 están aplicadas**, así que este párrafo describe un bloqueo que ya no existe:
+  > **ni `2.2.1` cita un número retirado, ni `1.1` nombra empresas.** **Lo que SÍ sigue vivo de esta
+  > tabla son P4, P5 y P6**, y no son de redacción sino decisiones de Francisco: el aval de nivel 1
+  > para la frase de `1.2 Preliminares:14`, la **edición de Stallings `[8]`** y la **versión de la
+  > CCN-STIC-401 `[10]`**. Esas tres siguen marcadas en [[Bibliografía]].
 - **T16 se apoya en el formato nuevo:** la columna «Dónde se usa» convierte la regla «ninguna
   entrada sin cita en el texto» en algo comprobable de un vistazo. Al volcar las ≈25-30 fuentes de
   los cuatro informes, **la columna se rellena o la entrada no entra**.

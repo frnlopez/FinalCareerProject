@@ -194,10 +194,11 @@ ficheros, así que van en paralelo. Dos secciones de la *misma* nota, no.
 
 **Protocolo de citas bajo paralelismo — esto es lo que evita el destrozo.** Los marcadores `[n]`
 del vault son un **contador global** que apunta a `Bibliografía.md`. **En uso hoy: `[1]`–`[8]` y
-`[10]`–`[75]`, 74 entradas dadas de alta** —verificado contra `Bibliografía.md` el 2026-08-16 tras
-el pase de la Tanda 16, que dio de alta `[74]` Goldschmidt y Chudá y `[75]` Breunig et al.—, y
+`[10]`–`[77]`, 76 entradas dadas de alta** —verificado contra `Bibliografía.md` el 2026-08-17 tras
+el pase en serie del `researcher`, que dio de alta `[76]` Quiñonero-Candela et al. (MIT Press 2009)
+y `[77]` Hindy et al. (2020)—, y
 **`[9]` está RETIRADA SIN RENUMERAR (`396e283`): está
-quemada, no libre**. **El primer número disponible es el `[76]`.** Si cuatro redactores en paralelo
+quemada, no libre**. **El primer número disponible es el `[78]`.** Si cuatro redactores en paralelo
 inventan números nuevos, los cuatro empiezan en el mismo y se solapan en silencio.
 
 > **Este rango se VERIFICA, no se recuerda — y ya ha ido mal DOS veces.** Hasta el 2026-08-15 este

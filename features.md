@@ -148,7 +148,15 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 >
 > ### ⛔ CONTADOR GLOBAL DE CITAS — el dato con riesgo real de este fichero
 >
-> **ESTADO VIGENTE A 2026-08-16, DESPUÉS DE LA TANDA 13 — contado contra disco, no recordado:
+> **ESTADO VIGENTE A 2026-08-17, DESPUÉS DEL PASE EN SERIE DEL `researcher` — contado contra disco
+> por el `researcher` y RECONTADO al cerrar, las dos cuentas coinciden: `Bibliografía.md` tiene
+> **76 FILAS**, rango `[1]`–`[8]` y `[10]`–`[77]`, con **`[9]` SIGUE QUEMADA** (retirada sin
+> renumerar). **EL PRIMER `[n]` LIBRE ES EL `[78]`.** Las dos altas nuevas del pase son
+> **`[76]`** Quiñonero-Candela *et al.* (MIT Press, 2009) y **`[77]`** Hindy *et al.* (2020).
+> **Todo lo que este fichero diga más abajo sobre «74 filas» o «primer libre `[76]`» es TRAZA
+> HISTÓRICA, no recuento vigente.**
+>
+> **Estado a 2026-08-16, después de la TANDA 13 — SUPERADO, se deja como traza: contado contra disco, no recordado:
 > `Bibliografía.md` tiene 72 FILAS, `[1]`–`[8]` y `[10]`–`[73]`, con `[9]` QUEMADA. EL PRIMER `[n]`
 > LIBRE ES EL `[74]`.** Las seis altas nuevas de la Tanda 13 son las **`[68]`–`[73]`**. **Todo lo que
 > este fichero diga más abajo sobre el `[68]` o sobre «66 entradas» es TRAZA HISTÓRICA, no recuento
@@ -179,10 +187,12 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > (`55ef3c6`): `3.1.5` escrita y los tres `[!todo]` retirados**; y el **borrado físico de `03 Desarrollo/`**, que no tiene
 > permiso concedido.
 >
-> **Lo único que tiene que hacer Francisco: `! git push origin develop`.** Van **cuarenta y seis** commits
-> sin subir —**verificado con `git rev-list --count origin/develop..develop` el 2026-08-15, no contado
+> **Lo único que tiene que hacer Francisco: `! git push origin develop`.** Van **setenta y cinco** commits
+> sin subir —**verificado con `git rev-list --count origin/develop..develop` el 2026-08-17, no contado
 > a mano**—, **más el commit que lleva esta misma línea**, que por construcción no puede contarse a
-> sí mismo: **CUARENTA Y SIETE al cortar la Tanda 12 a medias**. Falla por autenticación desde el harness, no
+> sí mismo: **SETENTA Y SEIS al cerrar el pase en serie del `researcher`**. **Esta cifra se RECALCULA, no se
+> incrementa**: estuvo congelada en «cuarenta y siete» desde el 2026-08-15 mientras el repo seguía
+> acumulando commits. Falla por autenticación desde el harness, no
 > desde su máquina.
 >
 > **Este número se recalcula, NUNCA se incrementa a mano.** Ha ido mal dos veces (llegó a decir
@@ -427,6 +437,35 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > la TANDA 19** (2026-08-17). Su ficha vive ya en `## Cerradas`. **Ojo: la palabra sigue viva FUERA
 > de `PIPELINE.md`, y eso es ficha NUEVA, más abajo.**
 
+### Altas del pase en serie del `researcher` — 2026-08-17
+
+> **CUATRO decisiones que quedan para Francisco.** El `researcher` las **marcó en vez de
+> inventarlas**, que es la disciplina correcta: la que no se puede establecer con honestidad se
+> señala, no se rellena. **Ninguna es bloqueante** y **ninguna mueve una cifra publicada.**
+> **Fichar no es resolver: aquí no se ha corregido nada.**
+
+- [ ] 🟡 **P4 · falta aval de nivel 1 para `1.2:14`** · Informe · **decide Francisco**, ejecuta `researcher`
+  Alta el **2026-08-17**. La afirmación de `1.2:14` no tiene hoy fuente primaria que la sostenga.
+  O se ancla a un aval de nivel 1, o se reformula para decir solo lo que la fuente disponible
+  respalda.
+
+- [ ] 🟡 **P5 y P6 · dos ediciones/versiones sin fijar: Stallings `[8]` y CCN-STIC-401 `[10]`** · Informe · **decide Francisco**
+  Alta el **2026-08-17**. **P5:** la edición de Stallings `[8]` sigue sin fijar (4.ª vs 5.ª) — y `[8]`
+  es uno de los 8 libros con localizador obligatorio, así que la página depende de qué edición se
+  elija. **P6:** la versión de la CCN-STIC-401 `[10]` tampoco está fijada. **Decide Francisco: no se
+  inventa ninguna de las dos.**
+
+- [ ] 🟡 **`[76]` Quiñonero-Candela *et al.* · página del cap. 1 no establecida Y reserva de AUTORÍA** · Informe · **decide Francisco**
+  Alta el **2026-08-17**, con el alta de la entrada. Son **dos cosas**: **(1)** la página exacta del
+  capítulo 1 **no se pudo establecer** —MIT Press devuelve 403—, y **se marcó, no se inventó**;
+  **(2)** la nota **atribuye el capítulo a los editores**, pero su autor es **Storkey**. Francisco
+  decide si la referencia **se desdobla como capítulo** con su autor propio.
+
+- [ ] 🟡 **`[54]` Molnar · edición sin fijar — NO SE TOCÓ en este pase** · Informe · **decide Francisco**
+  Anotado el **2026-08-17**. **No se duplica ficha: la suya vive más abajo, con el alcance ya reducido
+  tras la Tanda 13.** Se registra aquí solo para que conste que el pase en serie **la dejó
+  deliberadamente intacta**, por ser decisión de Francisco.
+
 ### Altas de la TANDA 19 — 2026-08-17
 
 > Cinco fichas, **ninguna bloqueante**, **ninguna mueve una cifra publicada**. **Fichar no es
@@ -472,10 +511,9 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   fichado como **patrón a vigilar**, no como incidencia suelta: las referencias `fichero:línea` de
   este documento **se recuentan contra disco antes de repetirlas**.
 
-- [ ] 🟡 **`Bibliografía.md:177` — el localizador de `[49]` Bendale y Boult apunta a `2.3.2.5`, y en disco está en `2.3.2.4`** · Informe · `researcher`
-  Alta el **2026-08-17**. **Va EN SERIE y merece ciclo propio**: se junta con los **tres `[CITA: …]`
-  vivos** de `5.0:160`, `5.1:86` y `5.4:78`. `Bibliografía.md` **solo la escribe el `researcher`** y
-  **nunca en paralelo**.
+> **El 🟡 «`Bibliografía.md:177` — el localizador de `[49]` apunta a `2.3.2.5`» queda CERRADO el
+> 2026-08-17** en el pase en serie del `researcher`, junto con los **tres `[CITA: …]` vivos**. Su
+> ficha vive ya en `## Cerradas`.
 
 - [ ] 🟠 **5 de las 47 citas colgantes NO se han podido reconstruir — falta criterio de Francisco** · Informe · **decide Francisco**, ejecuta `researcher`
   Alta el **2026-08-15**, residuo de la reparación de las 47 citas colgantes (ver `## Cerradas`, misma
@@ -1313,7 +1351,12 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > SOLO la (6)**, que es del **`researcher`** y **vive en la ficha hermana de abajo**, no aquí. **No se
 > vuelve a despachar.**
 
-- [~] **Las 3 correcciones LOCALES de la auditoría de la TANDA 5** · Informe · `redactor-tfg` / `researcher`
+> **«Las 3 correcciones LOCALES de la auditoría de la TANDA 5» queda CERRADA ENTERA el 2026-08-17**:
+> su última superviviente, la **(6)** («Dónde se usa» de `[2]` y `[3]`), la resolvió el pase en serie
+> del `researcher`. Su ficha vive ya en `## Cerradas`. **Se deja el texto abajo como historial, sin
+> casilla: no se vuelve a despachar.**
+
+**Las 3 correcciones LOCALES de la auditoría de la TANDA 5 — CERRADA, historial** · Informe · `redactor-tfg` / `researcher`
   > **VERIFICADO CONTRA DISCO EL 2026-08-15: las correcciones (2) y (3) YA ESTÁN HECHAS**, absorbidas
   > por el pase de la **TANDA 6** sin registrarlo. **No se vuelven a despachar.** **Vive solo la
   > (6)**, que es del **`researcher`** y entra en su pase en serie.
@@ -1434,26 +1477,35 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > **La corrección (6) de la Tanda 5 —«Dónde se usa» de `[2]` y `[3]`— también es residuo de esta
 > tanda**, pero NO se duplica aquí: está anotada dentro de su ficha original, más arriba.
 
-- [ ] **`Bibliografía.md:58` promete un `— (no es libro)` que solo existe en las filas NUEVAS** (🟡) · Informe · **solo `researcher`**
+> **Las CUATRO fichas de este bloque quedan CERRADAS el 2026-08-17** en el pase en serie del
+> `researcher` —la leyenda `— (no es libro)` de `:58`, la reserva del `[58]` para Mitchell, las cinco
+> contradicciones de la `Auditoría de Bibliografía.md` y el barrido de localizadores—. **Tres de
+> ellas describían problemas que NO EXISTÍAN**: el equivocado era el informe, no `Bibliografía.md`.
+> Sus fichas viven ya en `## Cerradas`. **El texto de abajo se deja como historial, sin casilla.**
+
+**`Bibliografía.md:58` promete un `— (no es libro)` que solo existe en las filas NUEVAS — CERRADA, historial** (🟡) · Informe · **solo `researcher`**
   Alta el **2026-08-15**. La leyenda de la columna «Localizador por uso» anuncia esa marca como
   convención del fichero, pero **solo la llevan las entradas dadas de alta en esta tanda**
   (`[58]`–`[67]`). En las anteriores la celda queda muda, así que **no se distingue «no aplica» de
   «sin rellenar»** — que es precisamente lo que la columna venía a evitar. **O se propaga la marca a
   las filas viejas, o se reescribe la leyenda para que describa lo que hay.**
 
-- [ ] **`99 Investigación/Reconstrucción de las 47 citas colgantes.md:283` sigue reservando el `[58]` para Mitchell, que acabó en el `[60]`** (🟡) · Informe · **solo `researcher`**
+**`Reconstrucción de las 47 citas colgantes.md:283` reservaba el `[58]` para Mitchell — CERRADA, historial** (🟡) · Informe · **solo `researcher`**
   Alta el **2026-08-15**. Es una **reserva de número que ya no se cumplió**: el informe apunta a un
   `[n]` distinto del que `Bibliografía.md` asignó de verdad. No rompe ninguna cita —**el informe no
   es memoria**—, pero es exactamente el tipo de número recordado en vez de contado que **ya ha
   provocado dos solapes el mismo día**. Corregir a `[60]` o retirar la reserva.
 
-- [ ] **`99 Investigación/Auditoría de Bibliografía.md` contradice en CINCO líneas los «✅ EJECUTADO» de `Bibliografía.md`** (🟡) · Informe · **solo `researcher`**
+**`Auditoría de Bibliografía.md` contradecía en CINCO líneas los «✅ EJECUTADO» — CERRADA, historial** (🟡) · Informe · **solo `researcher`**
   Alta el **2026-08-15**. El informe de auditoría (T15) sigue describiendo como pendientes acciones
   que `Bibliografía.md` ya declara ejecutadas. **Mismo defecto que la Tanda 9 acaba de corregir en
   los tres callouts**, pero en el otro fichero: la corrección se aplicó donde se leía y no donde se
   auditaba. **Encaja con T25**, que ya tiene encargada una línea de ese mismo fichero (`:140`).
 
-- [~] **La afirmación de «localizadores de página en las notas» solo es cierta para `6.2:306`** (🟡) · Informe · **solo `researcher`**
+**La afirmación de «localizadores de página en las notas» solo era cierta para `6.2:306` — CERRADA, historial** (🟡) · Informe · **solo `researcher`**
+  > **CERRADA el 2026-08-17 CON RESULTADO VACÍO, y el vacío es el resultado**: barridos los
+  > capítulos 1, 4, 5, 6 y los apéndices, **no hay ni una sola cita a un libro fuera del capítulo 2**,
+  > así que **no había nada que estampar**.
   **AVANZADA, NO CERRADA, en la TANDA 13 (2026-08-16): de los 36 marcadores convertidos, 27 bajan
   CON localizador de capítulo**, así que el localizador ya **sí** ha llegado al texto en los
   capítulos 2 y 3 — la afirmación de esta ficha **ya no es cierta tal como está escrita**. Queda
@@ -1768,6 +1820,13 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-17 | Informe | **PASE EN SERIE DEL `researcher` — mantenimiento de `Bibliografía.md` y conversión de los tres últimos `[CITA: …]`. Cierra SIETE fichas, y TRES de ellas describían problemas que NO EXISTÍAN: manda el disco, no el registro.** **Censo actualizado y recontado por dos vías: `Bibliografía.md` pasa a 76 FILAS, `[1]`–`[8]` y `[10]`–`[77]`, `[9]` sigue QUEMADA, PRIMER LIBRE EL `[78]`.** Altas: **`[76]`** Quiñonero-Candela *et al.* (MIT Press, 2009) y **`[77]`** Hindy *et al.* (2020). **6 ficheros**: `Bibliografía.md`, `99 Investigación/Auditoría de Bibliografía.md`, `99 Investigación/Reconstrucción de las 47 citas colgantes.md` y, en el vault, `5.0`, `5.1` y `5.4`. **NO se despachó `auditor-ml`, y con criterio: el pase no toca cifras ni afirmaciones sobre resultados, solo marcadores de cita y metadatos bibliográficos.** Deja **CUATRO decisiones para Francisco**, marcadas en vez de inventadas | — |
+| 2026-08-17 | Informe | **🟡 «`Reconstrucción de las 47 citas colgantes.md:283` reserva el `[58]` para Mitchell» — CERRADA, Y EL EQUIVOCADO ERA LA FICHA.** El `[58]` de `Bibliografía.md` **estaba bien** (KDD Cup 1999 Data); quien mentía era el informe, que escribió una **previsión antes de la Tanda 9** y quedó leyéndose como un hecho. **Mitchell ya existía como `[60]` y lo citan tres notas**: no procedía ni alta ni renumeración. Corregida la reserva en el informe, sin borrar su historial | — |
+| 2026-08-17 | Informe | **🟡 «`Auditoría de Bibliografía.md` contradice en CINCO líneas los ✅ EJECUTADO de `Bibliografía.md`» — CERRADA, y EL EQUIVOCADO ERA EL INFORME DE AUDITORÍA EN LAS CINCO.** Anotadas como **superadas, sin borrar el historial** del informe. Mismo patrón que la ficha de arriba: un artefacto fechado se sigue leyendo como estado vigente | — |
+| 2026-08-17 | Informe | **🟡 «Los localizadores de página solo han bajado a `6.2:306`» — CERRADA CON RESULTADO VACÍO, Y EL VACÍO ES EL RESULTADO, no un no-hacer.** Barrido de los **8 libros** (`[4]`, `[5]`, `[6]`, `[7]`, `[8]`, `[12]`, `[39]`, `[54]`) **fuera del capítulo 2**: los capítulos **1, 4, 5, 6 y los apéndices NO contienen ni una sola cita a un libro**. **No había nada que estampar.** El alcance de la ficha queda por tanto agotado | — |
+| 2026-08-17 | Informe | **🟡 TRES `[CITA: …]` VIVOS en la memoria — CERRADA: convertidos los de `5.0:160`, `5.1:86` y `5.4:78`.** Eran los primeros desde que la Tanda 16 los dejó a cero, y **estaban bien puestos**: ningún redactor inventó un `[n]`. **Recontado al cerrar: CERO marcadores `[CITA: …]` pendientes en la memoria** | — |
+| 2026-08-17 | Informe | **🟡 «`Bibliografía.md:58` promete un `— (no es libro)` que solo existe en las filas nuevas» — CERRADA**, junto con el **localizador de `[49]` Bendale y Boult** (apuntaba a `2.3.2.5`; en disco está en **`2.3.2.4`**). Dos correcciones locales del mismo fichero, del `researcher` y en serie | — |
+| 2026-08-17 | Informe | **La corrección (6) de la TANDA 5 — CERRADA, y con ella la ficha entera de «las 3 correcciones LOCALES».** El «Dónde se usa» de **`[2]` (Anderson)** y **`[3]` (Denning)** omitía usos reales —`2.3.2:36` y `2.2.2:35` entre ellos—, y **sobrevivió al pase de la Tanda 9, donde tocaba resolverla**. Las correcciones (2) y (3) de esa ficha ya estaban absorbidas por la Tanda 6. **De paso, dato falso propio de `Bibliografía.md` corregido: `[8]` declaraba DOS usos y en disco son TRES** | — |
 | 2026-08-17 | Informe | **T9 · RESUELTA — y el hallazgo es que LA FICHA IBA UN DÍA POR DETRÁS DEL DISCO.** El recorte del capítulo 3 **ya estaba ejecutado desde la TANDA 12 (2026-08-16)**, con respaldo en `resumen-de-decisiones.md:983-1049`; el `redactor-tfg` no modificó nada porque no había nada que aplicar, y los bullets «lo que sigue vivo» describían trabajo hecho la víspera. **Auditoría adversaria: APTO CON CAMBIOS, no pudo falsar el hallazgo** — S1–S13 y S15 vivos, S14 y las repeticiones legítimas intactas por diseño, `3.3` renumerada sin remisiones rotas, las once anclas del capítulo existentes, los diez `[n]` sin huérfanos, el *data snooping* enunciado una sola vez (`3.3:29`), y **`3.1` confirmada como «no procedía intervención»**. **Tres correcciones de una o dos líneas, sin tocar cifras ni citas:** aviso de estado fechado en `99 Investigación/Datos repetidos en el capítulo 3.md` (su censo afirmaba **en presente** que `3.4.5` no existe, y sí existe; análisis **no reescrito**, por ser artefacto fechado), retirada de las auto-remisiones a §3.5.2 desde dentro de §3.5.2 (`3.5:48,52`) y alta de «4.3.7 Preprocesado sin fuga de datos» en la remisión anti-*leakage* de `3.3:23`. **La cifra para el profesor se mantiene TAL CUAL y nadie la ha tocado: ≈20 % en total y ≈25 % en `3.1`–`3.3`, estimación redondeada a la decena y SIN script de conteo que la respalde.** **No marcada como aceptada: eso lo decide Francisco** | `198fab6` |
 | 2026-08-17 | Informe | **CICLO DE RECONCILIACIÓN del trabajo huérfano — 11 ficheros, cero código, cero corridas, ninguna cifra publicada movida.** Los ficheros sin commitear los habían dejado **tres agentes muertos por límite de API**; verificado contra disco, su trabajo estaba **completo, no a medias**, pero **no había pasado auditoría**, así que se auditó antes de nada. **Dos pases, ambos APTO CON CAMBIOS, ningún 🔴**; los **8 hallazgos aplicados y verificados**. Censo de citas **intacto: 74 filas, primer libre `[76]`, cero `[n]` nuevos o renumerados, cero `[CITA: …]` nuevos**. Ficheros: `Implementacion/PIPELINE.md`, `Resultados/GUIA_RESULTADOS.md`, `resumen-de-decisiones.md` y, en el vault, `2.1.6`, `4.4`, `4.5`, `5.0`, `5.2`, `5.4`, `6.1`, `A.3` | `822e4c5` |
 | 2026-08-17 | Informe | **🟡 Los punteros al «inventario completo» — CERRADO: hoy hay UNA sede canónica, `6.1`, y las NUEVE remisiones apuntan allí.** La ficha contaba cuatro destinos (`4.6`, `6.1`, `A.3`+`6.1`, `4.3`+`6.1`); resolverlo era **fijar la sede y repuntar**, no elegir la más cómoda. **El hallazgo 🟠 del pase de auditoría iba justo aquí**: `A.3.7` conservaba un **inventario rival** sin remitir a `6.1`, y **`5.0` le había quitado el puntero en silencio**. Resuelto **sin borrar la tabla**: `A.3.7` queda como **volcado tabulado con enlace recíproco a `6.1`** | `822e4c5` |
