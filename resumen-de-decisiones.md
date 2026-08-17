@@ -1395,3 +1395,50 @@ el futuro se dispone de una medición real, **estas cifras se sustituyen** por e
   sigue vigente para todo lo demás**: la excepción se agota en el dato del «~17» y no autoriza
   ninguna otra corrección en estos dos ficheros. No se tocaron los falsos positivos `~170 MB` de
   `.gitignore` y `README.md`.
+- `2026-08-17` — **Reapertura del residuo de T22: el «`n_iter_total_grid` es determinista» queda
+  SUPERADO; la banda de wall-clock pasa a magnitud OBSERVADA sin causa atribuida.** Autoriza
+  **Francisco**, expresamente, el 2026-08-17. **Nota añadida, no reescritura**: la decisión original
+  —su título en `:633`, su cuerpo en `:636` y su eco en la bitácora del `2026-08-09`, `:1154`— **se
+  deja intacta y legible**, y esta nota es la que declara qué parte de ella deja de sostenerse.
+  **Qué se supera, exactamente:** la afirmación de que el recuento de épocas es **determinista** y,
+  con ella, la **atribución** de la banda de wall-clock del Autoencoder (4,8×; también los 1,29× y
+  3,63× que cita `:636`) a **carga de máquina**. **Motivo:** los 162 (54) y 128 (122) salen iguales
+  solo en las **dos únicas** corridas que registran la columna —`ac496cb` y `1163c90`—, y **ninguna
+  de esas dos es una de las dos corridas del contraejemplo de tiempos**, que **no registran épocas**.
+  Con n=2 y sin cubrir el contraejemplo, lo medido es **constancia observada**, no determinismo, y la
+  banda **no tiene causa establecida**: no se puede afirmar que sea carga de máquina ni descartar que
+  las épocas expliquen parte. Ya estaba así en `PIPELINE.md:923-929`, en `4.4` y en `A.3`; lo que
+  faltaba era el registro aquí y en el código. **Qué NO cambia:** las columnas de tiempo siguen en
+  bloque aparte y **siguen sin citarse como resultado** —eso se sostiene por ser wall-clock en
+  máquina no dedicada, sin necesitar la atribución—, y **el eje 54-vs-122 sigue siendo indecidible
+  sin medidas repetidas**, que era la consecuencia de diseño de T22 y no depende de la parte
+  superada. **Ninguna cifra publicada se mueve.** Sedes de código corregidas en el mismo ciclo:
+  `agregar_semillas.py` (comentario de `COLUMNAS_TIEMPO` y `RAZON_BLOQUE_MAQUINA`, que **regenera**
+  `Resultados/dispersion_semillas.md`), `anomalias.py` y `config.ALCANCE_N_ITER_TOTAL`.
+- `2026-08-17` — **Los recuentos pareados entre semillas los EMITE `agregar_semillas.py`.** Decisión
+  de Francisco del 2026-08-17. Dos titulares portantes se contaban **a mano**: el «**8 de 10**»
+  (RandomForest supera a HistGradientBoosting en `f1_macro`, pareado por semilla; `5.2:107` lo declara
+  «la única formulación que debe usarse al afirmar que un algoritmo es mejor que el otro») y el
+  «**40 de 40**» del eje SMOTE vs nada (`5.2:171`, `:181`, marcado con `[!todo]` en `:173`). Pasan a
+  salir de un **artefacto nuevo**, `Resultados/comparaciones_pareadas.csv`, más una sección en
+  `dispersion_semillas.md`; mismo patrón que el «13 de 98». **Tabla NUEVA y no una de las cuatro
+  principales**, por la misma razón que la dispersión: su borrado por variante y su `CLAVE_UNICIDAD`
+  sin `semilla` no admiten estas filas. Decisiones de implementación tomadas al hilo, por si hay que
+  revisarlas: se emiten **tres** comparaciones (la de firmas y **los dos** ejes de balanceo, para que
+  se lean sobre denominadores idénticos), con fila por bloque **y** fila `__global__`; los **empates
+  no se reparten** (columna propia); el sentido «mayor es mejor» se **declara** por comparación y no
+  se asume; y el total se contrasta contra un `pares_esperados` declarado, de modo que un barrido
+  incompleto **aborta** en vez de publicar «8 de 9» rotulado como «de 10». **No se relanza el
+  barrido** (2.320 filas ya en disco) y **no se reabre ningún eje**: solo se automatiza el recuento.
+  **Aviso de homónimo:** existe otro «8 de 10» que es de **tiempos** de entrenamiento
+  (`PIPELINE.md:596-611`); son cifras distintas y no se fusionan. **Estado verificado en disco el
+  2026-08-17: el agregador YA se ha relanzado.** `Resultados/comparaciones_pareadas.csv`
+  (**13 filas de datos** más cabecera, con `decisiones_no_constantes` entre sus columnas),
+  `Resultados/dispersion_semillas.csv` y `Resultados/dispersion_semillas.md` —este último ya con la
+  sección nueva de comparaciones pareadas— están escritos con fecha **`2026-08-17T18:56:18`** y sello
+  **`commit_agregador = 0276039-sucio`**. Las tres cifras salen del artefacto y coinciden con la
+  comprobación previa: **8 de 10** en `122_sin_seleccion`, **8 de 10** en `54`, **16 de 20** global
+  (rotulado *(agregado de sus bloques)*), **40 de 40** en SMOTE vs nada, **23-17** en SMOTE vs
+  `class_weight`, **cero empates**. El sello va **sucio** porque el código del bloque pareado aún no
+  estaba commiteado cuando se corrió el agregador: queda como **re-anclaje pendiente —el sexto del
+  proyecto—**, a resolver reanclando el sello a su commit una vez cerrado.

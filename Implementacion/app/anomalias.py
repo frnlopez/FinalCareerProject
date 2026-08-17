@@ -386,9 +386,12 @@ class NSLKDDAnomalyTrainer:
         # grid entero son el denominador COHERENTE con el que
         # 'tiempo_entrenamiento_s' —que suma los fit de TODAS las
         # configuraciones— da segundos por época dentro de ESTA corrida. Ese
-        # cociente NO separa causas: el recuento de épocas es determinista con la
-        # semilla 42, así que con denominador constante el cociente es el
-        # numerador reescalado y se lleva la carga de máquina entera.
+        # cociente NO separa causas: el recuento de épocas salió IGUAL (162 en 54
+        # y 128 en 122) en las dos únicas corridas que registran la columna, así
+        # que ahí el denominador es constante y el cociente es el numerador
+        # reescalado y se lleva la carga de máquina entera. Constancia OBSERVADA
+        # con n=2, NO determinismo demostrado: ninguna de esas dos corridas es una
+        # de las dos del contraejemplo de wall-clock (que no registran épocas).
         n_iter_ganador = self._iteraciones_ajuste(algo, model)
         if n_iter_ganador is not None:
             print("   Épocas: {} el ajuste ganador · {} todo el grid (max_iter="
@@ -457,11 +460,15 @@ class NSLKDDAnomalyTrainer:
         segunda suma TODO el grid, que es el conjunto de fit que cronometra
         'tiempo_entrenamiento_s' y por tanto el denominador COHERENTE con el que
         ese tiempo se lee en segundos por época DENTRO de una corrida. Ojo con lo
-        que ese cociente NO hace: como el recuento de épocas es determinista con
-        la semilla 42 (mismos valores en las corridas que registran la columna),
-        el denominador es constante y el cociente sale ser el numerador
-        reescalado, así que absorbe la carga de máquina entera y NO decide si una
-        diferencia de tiempo entre dos filas es de épocas o de carga. Ver
+        que ese cociente NO hace: en las DOS únicas corridas que registran la
+        columna el recuento de épocas salió IGUAL (162 en 54 y 128 en 122), así
+        que ahí el denominador es constante y el cociente sale ser el numerador
+        reescalado, absorbe la carga de máquina entera y NO decide si una
+        diferencia de tiempo entre dos filas es de épocas o de carga. Esa
+        igualdad es constancia OBSERVADA con n=2 y NO determinismo demostrado:
+        las dos corridas del contraejemplo de wall-clock del Autoencoder de 54
+        features no registran épocas, así que su banda de tiempos queda como
+        magnitud observada SIN causa atribuida. Ver
         config.ALCANCE_N_ITER_TOTAL.
 
         Y con 'tiempo_s': aquí mide el BLOQUE COMPLETO del algoritmo —los fit del

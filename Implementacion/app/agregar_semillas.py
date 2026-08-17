@@ -20,9 +20,10 @@ anexo sin recalcular ni un número a mano.
 Reglas de protocolo (invalidan el TFG si se rompen)
 ---------------------------------------------------
   * CERO `fit`. Este script solo lee CSV y calcula estadísticos descriptivos.
-  * NO ESCRIBE EN NINGUNA TABLA PUBLICADA. Sus dos únicas salidas son
-    `dispersion_semillas.csv` y `dispersion_semillas.md`; se comprueba en
-    _comprobar_salidas_no_publicadas() que ni el NOMBRE ni la RUTA de esas dos
+  * NO ESCRIBE EN NINGUNA TABLA PUBLICADA. Sus tres únicas salidas son
+    `dispersion_semillas.csv`, `comparaciones_pareadas.csv` y
+    `dispersion_semillas.md`; se comprueba en
+    _comprobar_salidas_no_publicadas() que ni el NOMBRE ni la RUTA de esas tres
     salidas coincidan con los de ninguna tabla de métricas (publicada o del
     barrido). Escribir en las cuatro principales sería
     incompatible con su borrado por variante, con su `CLAVE_UNICIDAD` sin
@@ -121,13 +122,51 @@ declararla. Ese reparto va además en la COLUMNA `decisiones_no_constantes` de c
 celda del CSV, no solo en los avisos del `.md`: quien arme `A.3` desde la tabla ve
 la mezcla en la misma fila que la media que la promedia.
 
+---------------------------------------------------------------------------
+COMPARACIONES PAREADAS POR SEMILLA (añadidas el 2026-08-17)
+---------------------------------------------------------------------------
+Tercer bloque del script, con salida propia (`comparaciones_pareadas.csv`) y
+sección propia en el `.md`. Enfrenta DOS opciones dentro de la MISMA semilla y
+cuenta en cuántas gana cada una: es la formulación que sostiene «un algoritmo es
+mejor que el otro», y la que hasta hoy se contaba A MANO en dos titulares
+portantes de la memoria (el «8 de 10» de RandomForest frente a
+HistGradientBoosting en `f1_macro`, y el «40 de 40» de SMOTE frente a no
+balancear). Mismo motivo por el que el «13 de 98» dejó de contarse a mano.
+
+Qué se comprueba y por qué basta: victorias de A + victorias de B + empates =
+número de pares, cada bloque trae exactamente un par por semilla, y la fila
+`__global__` cuadra contra la suma de sus bloques. El total se contrasta además
+contra el `pares_esperados` DECLARADO en la especificación, así que un barrido
+que perdiese una celda aborta en vez de publicar «8 de 9» rotulado como «de 10».
+Los empates van en su propia columna y NO se reparten.
+
+NO ES EL «8 DE 10» DE LOS TIEMPOS. Existe un homónimo en este proyecto —8 de 10
+pares intra-corrida de TIEMPOS de entrenamiento, `PIPELINE.md:596-611`— que es
+otra cifra, de otra magnitud y de otro bloque. Este script solo parea CALIDAD.
+Desde el 2026-08-17 esa salvedad se IMPRIME en la sección del `.md` (callout ««8
+de 10» es un homónimo…»), no solo aquí: el aviso que vive únicamente en el código
+no viaja con el artefacto que se pega en `A.3`, y ese artefacto tiene el bloque de
+tiempos dos pantallas más abajo.
+
+La fila `__global__` («16 de 20») se rotula en el `.md` como AGREGADO de sus
+bloques y no como titular: es la suma de los dos «8 de 10», no una medición nueva.
+
+La tabla pareada lleva también `decisiones_no_constantes` (2026-08-17), como su
+hermana la de dispersión y sobre las mismas celdas: el `balanceo` ganador de
+RandomForest voltea entre semillas, así que «RF gana a HGB en 8 de 10» NO es una
+comparación entre dos configuraciones fijas. Se mira dentro de cada opción y se
+excluye el propio eje comparado.
+
 Salidas
 -------
   Resultados/dispersion_semillas.csv   una fila por (variante, algoritmo, alcance,
                                        métrica, bloque)
+  Resultados/comparaciones_pareadas.csv  una fila por (comparación, bloque) más la
+                                       fila `__global__` de cada comparación
   Resultados/dispersion_semillas.md    la misma tabla formateada para `A.3`, más
                                        la sección del titular con el recuento
-                                       «N de M» y las celdas que caen fuera
+                                       «N de M», las celdas que caen fuera y la
+                                       sección de comparaciones pareadas
 
 Uso
 ---
@@ -223,10 +262,20 @@ class AgregadorSemillas:
     # No entran en la tabla de calidad. Motivo, y hay que escribirlo al lado de la
     # cifra: son wall-clock en una máquina no dedicada. El dato de T1 lo mide —el
     # Autoencoder de 54 fue de 37,71 s a 181,91 s entre dos corridas, 4,8×, con
-    # calidad IDÉNTICA AL BIT y con el recuento de épocas determinista (162 en 54,
-    # 128 en 122; cierre de T22)—, así que la sd de estas columnas mide carga de
+    # calidad IDÉNTICA AL BIT—, así que la sd de estas columnas mide carga de
     # máquina y no algoritmo. Se emiten porque documentan esa dispersión, no como
     # resultado.
+    #
+    # OJO CON EL DETALLE DE LAS ÉPOCAS (corregido el 2026-08-17, reapertura del
+    # residuo de T22 autorizada por Francisco): este comentario decía que el
+    # recuento de épocas es «determinista (162 en 54, 128 en 122)» y lo daba por
+    # cerrado. No lo está. Esos 162/128 salen IGUALES en las DOS únicas corridas
+    # que registran `n_iter_total_grid` (`ac496cb` y `1163c90`), y NINGUNA de ellas
+    # es una de las dos del contraejemplo de wall-clock: las del 37,71 s → 181,91 s
+    # no registran épocas. Constancia OBSERVADA con n=2, no determinismo
+    # demostrado — y la banda de 4,8x se declara como magnitud OBSERVADA, sin
+    # causa atribuida. Que la sd de estos tiempos no sea calidad no depende de esa
+    # atribución: son wall-clock en máquina no dedicada, y con eso basta.
     #
     # 'alcance_tiempo_s' queda FUERA de esta tupla aunque la decisión la enumere
     # entre las seis columnas de tiempo: es PROSA (el texto de
@@ -241,9 +290,13 @@ class AgregadorSemillas:
     RAZON_BLOQUE_MAQUINA = (
         "wall-clock en máquina no dedicada: su sd mide CARGA DE MÁQUINA y no el "
         "algoritmo. Medido en T1: el Autoencoder de 54 features pasó de 37,71 s a "
-        "181,91 s entre dos corridas (4,8x) con calidad idéntica al bit y con el "
-        "recuento de épocas determinista (162 en 54 y 128 en 122). No es una "
-        "propiedad del algoritmo y no se cita como resultado."
+        "181,91 s entre dos corridas (4,8x) con calidad idéntica al bit. Esa banda "
+        "es una magnitud OBSERVADA y se publica SIN causa atribuida: las dos "
+        "corridas del contraejemplo no registran el recuento de épocas, así que no "
+        "se puede afirmar que sea determinista ni descartar que las épocas "
+        "expliquen parte de la banda (los 162 en 54 y 128 en 122 salen iguales "
+        "solo en las dos corridas que sí registran esa columna, y no son estas). "
+        "No es una propiedad del algoritmo y no se cita como resultado."
     )
 
     # --- DECISIONES QUE PUEDEN VOLTEAR ENTRE SEMILLAS -------------------------
@@ -326,6 +379,86 @@ class AgregadorSemillas:
 
     NOMBRE_CSV = "dispersion_semillas.csv"
     NOMBRE_MD = "dispersion_semillas.md"
+    NOMBRE_CSV_PAREADAS = "comparaciones_pareadas.csv"
+
+    # Etiqueta de la fila que agrega todos los bloques de una comparación pareada.
+    # Se reutiliza el mismo literal que ya usa la cascada invertida para su fila
+    # agregada: es la convención del proyecto para "esta fila no es un caso, es el
+    # total".
+    AMBITO_GLOBAL = "__global__"
+
+    # --- COMPARACIONES PAREADAS POR SEMILLA (2026-08-17) ----------------------
+    # POR QUÉ EXISTE ESTE BLOQUE: dos titulares portantes de la memoria —«RandomForest
+    # gana a HistGradientBoosting en 8 de las 10 semillas» (5.2.4.1, que la propia nota
+    # declara «la única formulación que debe usarse al afirmar que un algoritmo es mejor
+    # que el otro») y «SMOTE gana en 40 de 40 celdas» del eje SMOTE vs nada (5.2.4.2)—
+    # salían de un RECUENTO A MANO. La regla del proyecto lo prohíbe para cualquier cifra
+    # que vaya a la memoria, igual que obligó a que el «13 de 98» lo emitiese este script.
+    #
+    # CUIDADO CON EL HOMÓNIMO: hay otro «8 de 10» en este proyecto que es de TIEMPOS de
+    # entrenamiento (8 de 10 pares intra-corrida, PIPELINE.md:596-611). NO es esta cifra,
+    # no se fusionan y no se citan la una por la otra. Este bloque solo mide CALIDAD.
+    #
+    # Cada entrada declara: de qué tabla del barrido sale, sobre qué EJE se parea (la
+    # columna cuyas dos opciones se enfrentan), qué dos opciones, con qué métrica, en qué
+    # dirección es mejor, qué columnas forman el BLOQUE (dentro de cada bloque hay un par
+    # por semilla) y cuántos pares tiene que haber en total. 'pares_esperados' NO es
+    # decorativo: si el barrido diese otro número, el titular no se publica (aborta), que
+    # es justo la red que faltaba cuando la cifra se contaba a mano.
+    COMPARACIONES_PAREADAS = (
+        {
+            "id": "firmas_RandomForest_vs_HistGradientBoosting_f1_macro",
+            "tabla": "metricas_firmas.csv",
+            "columna_algoritmo": "algoritmo",
+            "filtro": None,
+            "eje": "algoritmo",
+            "opcion_a": "RandomForest",
+            "opcion_b": "HistGradientBoosting",
+            "metrica": "f1_macro",
+            "mayor_es_mejor": True,
+            "bloques": ("set_features",),
+            "filtro_bloque": None,
+            # 2 variantes x 10 semillas.
+            "pares_esperados": 20,
+        },
+        {
+            # Eje SMOTE vs NADA: solo KNN e HistGradientBoosting, los dos algoritmos
+            # que no admiten class_weight en scikit-learn (firmas.py:103-108).
+            "id": "balanceo_SMOTE_vs_nada_f1_macro_cv",
+            "tabla": "metricas_balanceo.csv",
+            "columna_algoritmo": "algoritmo",
+            "filtro": None,
+            "eje": "balanceo",
+            "opcion_a": "SMOTE",
+            "opcion_b": "nada",
+            "metrica": "f1_macro_cv",
+            "mayor_es_mejor": True,
+            "bloques": ("set_features", "algoritmo"),
+            "filtro_bloque": {"algoritmo": ("KNN", "HistGradientBoosting")},
+            # 2 variantes x 2 algoritmos x 10 semillas.
+            "pares_esperados": 40,
+        },
+        {
+            # Eje SMOTE vs class_weight: solo DecisionTree y RandomForest. Se emite
+            # AUNQUE su reparto ya se pudiese leer en los avisos de
+            # 'decisiones_no_constantes': el aviso solo aparece cuando la decisión
+            # NO es constante, así que un eje unánime no generaba línea — que es
+            # exactamente por lo que el 40/40 del otro eje no tenía respaldo. Los
+            # dos ejes se emiten igual y sobre denominadores idénticos.
+            "id": "balanceo_SMOTE_vs_class_weight_f1_macro_cv",
+            "tabla": "metricas_balanceo.csv",
+            "columna_algoritmo": "algoritmo",
+            "filtro": None,
+            "eje": "balanceo",
+            "opcion_a": "SMOTE",
+            "opcion_b": "class_weight",
+            "metrica": "f1_macro_cv",
+            "mayor_es_mejor": True,
+            "bloques": ("set_features", "algoritmo"),
+            "filtro_bloque": {"algoritmo": ("DecisionTree", "RandomForest")},
+            "pares_esperados": 40,
+        },
+    )
 
     def __init__(self, semillas=None):
         # Las diez semillas esperadas salen de config (lista cerrada, con sus
@@ -334,6 +467,11 @@ class AgregadorSemillas:
         self.semillas = sorted(config.SEMILLAS_BARRIDO if semillas is None
                                else semillas)
         self.filas = []        # filas de la tabla de dispersión
+        # Filas de la tabla de COMPARACIONES PAREADAS. Van a un CSV aparte y no a
+        # `self.filas`: son otra unidad de fila (un par de opciones, no una celda de
+        # banda) y mezclarlas en la tabla de dispersión obligaría a leer la mitad de
+        # sus columnas como vacías.
+        self.filas_pareadas = []
         self.avisos = []       # avisos no fatales, se imprimen y van al .md
         self.commit = None     # commit del AGREGADOR (no el de las filas de origen)
         self.fecha = None
@@ -951,6 +1089,483 @@ class AgregadorSemillas:
         return " ".join(commits)
 
     # ------------------------------------------------------------------
+    # 4-bis. Comparaciones PAREADAS por semilla
+    # ------------------------------------------------------------------
+    def _leer_para_pareadas(self, spec):
+        """
+        Tabla del barrido para una comparación pareada, sin la comprobación de
+        completitud de la agregación.
+
+        NO se reutiliza _leer()/_comprobar_completitud() a propósito: esa
+        comprobación exige UNA fila por semilla dentro de la CLAVE_AGRUPACION, y
+        aquí las tablas traen VARIAS por semilla dentro de la misma clave (dos
+        opciones del eje comparado: dos balanceos en `metricas_balanceo_semillas.csv`).
+        La completitud de estas comparaciones se comprueba con su propio criterio,
+        que es más estricto: cada bloque debe traer las DOS opciones en CADA una de
+        las semillas esperadas, y si no, se aborta.
+        """
+        ruta = self._ruta_tabla_semillas(spec["tabla"])
+        if not os.path.exists(ruta):
+            raise RuntimeError(
+                "No existe {}: la comparación pareada '{}' no se puede calcular. "
+                "Lanza 'python app\\barrido_semillas.py' antes de agregar.".format(
+                    ruta, spec["id"]))
+        df = pd.read_csv(ruta)
+        df = self._normalizar_algoritmo(df, spec, ruta)
+        df = self._aplicar_filtro(df, spec, ruta)
+        return df, ruta
+
+    def _valores_por_semilla(self, spec, grupo, ambito, ruta):
+        """
+        {semilla: (valor_a, valor_b)} de un bloque, o aborta si el pareo no cierra.
+
+        Aborta —no avisa— si a alguna semilla le falta una de las dos opciones, si
+        alguna aparece repetida, si sobra una semilla ajena a la lista o si un valor
+        no es numérico: un «gana en 8 de 10» calculado sobre 9 pares es exactamente
+        el tipo de cifra que este script existe para no publicar.
+        """
+        eje, metrica = spec["eje"], spec["metrica"]
+        opciones = (spec["opcion_a"], spec["opcion_b"])
+        pares, problemas = {}, []
+        for semilla in self.semillas:
+            filas = grupo[grupo["semilla"].astype(int) == int(semilla)]
+            valores = []
+            for opcion in opciones:
+                sel = filas[filas[eje].astype(str) == str(opcion)]
+                if len(sel) != 1:
+                    problemas.append(
+                        "semilla {} · '{}' = '{}': {} fila(s) y debe haber 1".format(
+                            semilla, eje, opcion, len(sel)))
+                    valores = None
+                    break
+                valor = pd.to_numeric(pd.Series([sel.iloc[0][metrica]]),
+                                      errors="coerce").iloc[0]
+                if valor != valor:
+                    problemas.append(
+                        "semilla {} · '{}' = '{}': '{}' no es numérico".format(
+                            semilla, eje, opcion, metrica))
+                    valores = None
+                    break
+                valores.append(float(valor))
+            if valores is not None:
+                pares[int(semilla)] = (valores[0], valores[1])
+        ajenas = sorted(set(int(s) for s in grupo["semilla"]) - set(self.semillas))
+        if ajenas:
+            problemas.append("semillas ajenas a la lista esperada: {}".format(ajenas))
+        if problemas:
+            raise RuntimeError(
+                "{} · comparación '{}' · {}: el pareo por semilla NO cierra y no se "
+                "publica un recuento incompleto. Problemas:\n     - {}".format(
+                    os.path.basename(ruta), spec["id"], ambito,
+                    "\n     - ".join(problemas)))
+        return pares
+
+    def _decisiones_no_constantes_pareada(self, spec, grupo, ambito):
+        """
+        Reparto de las COLUMNAS_CONSTANCIA que VOLTEAN entre semillas dentro de cada
+        opción del par, ya formateado para la columna 'decisiones_no_constantes'.
+
+        POR QUÉ LA TABLA PAREADA TAMBIÉN LA LLEVA (2026-08-17, hallazgo de auditoría):
+        su tabla hermana —la de dispersión— declara este reparto celda a celda, y son
+        LAS MISMAS celdas. Sin él, «RandomForest gana a HistGradientBoosting en 8 de
+        10» se lee como una comparación entre dos configuraciones FIJAS, y no lo es:
+        el `balanceo` ganador de RandomForest voltea entre semillas (es uno de los
+        avisos que el .md ya lista). Es material de 5.4, igual que allí, y por eso se
+        avisa sin abortar.
+
+        SE EXCLUYE EL PROPIO EJE de la comprobación: en el eje `balanceo` la columna
+        `balanceo` es no constante POR CONSTRUCCIÓN (son las dos opciones que se
+        enfrentan), y contarla como decisión que voltea sería un aviso vacío que
+        enseñaría a ignorar los demás. Se mira DENTRO de cada opción, no en la mezcla.
+        """
+        repartos = []
+        for opcion in (spec["opcion_a"], spec["opcion_b"]):
+            sub = grupo[grupo[spec["eje"]].astype(str) == str(opcion)]
+            for columna in self.COLUMNAS_CONSTANCIA:
+                if columna == spec["eje"] or columna not in sub.columns:
+                    continue
+                reparto = sub[columna].astype(str).value_counts()
+                if len(reparto) <= 1:
+                    continue
+                detalle = " · ".join(
+                    "{} en {} semilla(s)".format(valor, int(veces))
+                    for valor, veces in reparto.items())
+                # Sin comas: viaja como VALOR dentro del CSV (misma regla que los
+                # textos de alcance de config.py).
+                repartos.append("{} / {}: {}".format(opcion, columna, detalle))
+                self.avisos.append(
+                    "Comparación '{}' · {}: la opción '{}' NO mantiene constante la "
+                    "columna de DECISIÓN '{}' entre las {} semillas ({}). El "
+                    "recuento pareado enfrenta configuraciones que cambian de "
+                    "semilla en semilla: hay que declararlo al citar el titular "
+                    "(material de 5.4, no un error).".format(
+                        spec["id"], ambito, opcion, columna, len(self.semillas),
+                        detalle))
+        return " | ".join(repartos)
+
+    def _fila_pareada(self, spec, ambito, set_features, algoritmo, pares,
+                      alcance, commits, decisiones=""):
+        """
+        Una fila de la tabla de comparaciones pareadas a partir de {semilla: (a, b)}.
+
+        El recuento lo hace el script y se COMPRUEBA que cierre: victorias de A,
+        victorias de B y empates tienen que sumar el número de pares. Un empate
+        NO cuenta como victoria de nadie y va en su propia columna: si se repartiese
+        a favor de A, «gana en N de M» dependería de una convención invisible.
+        """
+        gana_a = gana_b = empates = 0
+        diferencias = []
+        semillas_a, semillas_b, semillas_empate = [], [], []
+        for semilla in sorted(pares):
+            valor_a, valor_b = pares[semilla]
+            # 'mayor es mejor' se declara en la ESPECIFICACIÓN y no se asume: en
+            # estas tablas conviven métricas a maximizar (f1_macro) con columnas
+            # donde menos es mejor (un fpr), y dar por hecho el sentido convertiría
+            # el titular en su contrario sin que nada lo delatase.
+            diferencia = (valor_a - valor_b if spec["mayor_es_mejor"]
+                          else valor_b - valor_a)
+            diferencias.append(diferencia)
+            if valor_a == valor_b:
+                empates += 1
+                semillas_empate.append(semilla)
+            elif diferencia > 0:
+                gana_a += 1
+                semillas_a.append(semilla)
+            else:
+                gana_b += 1
+                semillas_b.append(semilla)
+        n_pares = len(pares)
+        if gana_a + gana_b + empates != n_pares:
+            raise RuntimeError(
+                "Comparación '{}' · {}: {} + {} + {} no suma los {} pares.".format(
+                    spec["id"], ambito, gana_a, gana_b, empates, n_pares))
+        if ambito != self.AMBITO_GLOBAL and n_pares != len(self.semillas):
+            raise RuntimeError(
+                "Comparación '{}' · {}: {} pares y se esperaban {} (uno por "
+                "semilla).".format(spec["id"], ambito, n_pares,
+                                   len(self.semillas)))
+        arr = np.array(diferencias, dtype=float)
+        return {
+            "comparacion": spec["id"],
+            "tabla_origen": config.nombre_tabla_semillas(spec["tabla"]),
+            "eje": spec["eje"],
+            "opcion_a": spec["opcion_a"],
+            "opcion_b": spec["opcion_b"],
+            "metrica": spec["metrica"],
+            "mayor_es_mejor": bool(spec["mayor_es_mejor"]),
+            "ambito": ambito,
+            "set_features": set_features,
+            "algoritmo": algoritmo,
+            "n_pares": n_pares,
+            "gana_a": gana_a,
+            "gana_b": gana_b,
+            "empates": empates,
+            # El titular ya redactado, para que quien cite «8 de 10» copie la
+            # cadena del artefacto en vez de recomponerla de dos columnas.
+            "titular": "{} gana en {} de {}".format(
+                spec["opcion_a"], gana_a, n_pares),
+            "semillas_gana_a": " ".join(str(s) for s in semillas_a),
+            "semillas_gana_b": " ".join(str(s) for s in semillas_b),
+            "semillas_empate": " ".join(str(s) for s in semillas_empate),
+            # Diferencia PAREADA (a favor de A con el signo ya orientado por
+            # 'mayor_es_mejor'). Es lo que aporta el pareo sobre comparar dos
+            # bandas: media y extremos de la diferencia DENTRO de cada semilla.
+            "media_diferencia": round(float(arr.mean()),
+                                      self.DECIMALES_DISTANCIA),
+            "min_diferencia": round(float(arr.min()), self.DECIMALES_DISTANCIA),
+            "max_diferencia": round(float(arr.max()), self.DECIMALES_DISTANCIA),
+            "semillas": " ".join(str(s) for s in self.semillas),
+            # Reparto de las decisiones que VOLTEAN dentro de cada opción del par
+            # (vacío = fueron las mismas en las diez semillas). Ver
+            # _decisiones_no_constantes_pareada(): el titular «gana en N de M» no es
+            # una comparación entre dos configuraciones fijas si esta columna trae
+            # texto.
+            "decisiones_no_constantes": decisiones,
+            "alcance": alcance,
+            "commits_origen": commits,
+            "commit_agregador": self.commit,
+            "fecha": self.fecha,
+        }
+
+    def _alcance_de_grupo(self, spec, grupo, ambito):
+        """Texto de 'alcance' del bloque; avisa si no es el mismo en todas sus filas."""
+        if "alcance" not in grupo.columns:
+            return ""
+        distintos = sorted(set(grupo["alcance"].astype(str)))
+        if len(distintos) > 1:
+            self.avisos.append(
+                "Comparación '{}' · {}: la columna 'alcance' toma {} valores "
+                "distintos entre las filas pareadas; las dos opciones del eje no "
+                "declaran la misma medida.".format(
+                    spec["id"], ambito, len(distintos)))
+        return distintos[0] if distintos else ""
+
+    def _comparar_pareada(self, spec):
+        """
+        Calcula una comparación pareada: por bloque y agregada ('__global__').
+
+        POR QUÉ PAREADA Y NO POR BANDAS: las dos opciones comparadas comparten la
+        semilla, y con ella el mismo split, la misma muestra y los mismos folds del
+        StratifiedKFold. Comparar sus intervalos [mín, máx] tira esa información y
+        puede dar «no establecido» donde el pareo da una ventaja consistente: es
+        justo el par de lecturas que conviven en 5.2.4.1. La formulación pareada es
+        la única que sostiene «un algoritmo es mejor que el otro», y por eso tiene
+        que salir de un artefacto y no de un recuento a mano.
+        """
+        df, ruta = self._leer_para_pareadas(spec)
+        columnas = (spec["eje"], spec["metrica"], "semilla") + spec["bloques"]
+        faltan = [c for c in columnas if c not in df.columns]
+        if faltan:
+            raise RuntimeError(
+                "{}: no trae las columnas {} que necesita la comparación pareada "
+                "'{}'.".format(os.path.basename(ruta), faltan, spec["id"]))
+        for columna, permitidos in (spec["filtro_bloque"] or {}).items():
+            if columna not in df.columns:
+                raise RuntimeError(
+                    "{}: sin la columna '{}' del filtro de bloque de '{}'.".format(
+                        os.path.basename(ruta), columna, spec["id"]))
+            df = df[df[columna].astype(str).isin([str(v) for v in permitidos])]
+        df = df[df[spec["eje"]].astype(str).isin(
+            [str(spec["opcion_a"]), str(spec["opcion_b"])])]
+        if df.empty:
+            raise RuntimeError(
+                "{}: ninguna fila casa con la comparación '{}' (eje '{}', opciones "
+                "'{}' y '{}'): la comparación está declarada contra una tabla que "
+                "no la contiene.".format(
+                    os.path.basename(ruta), spec["id"], spec["eje"],
+                    spec["opcion_a"], spec["opcion_b"]))
+
+        filas_bloque, pares_globales, commits_todos = [], {}, set()
+        decisiones_todas = []
+        for clave, grupo in df.groupby(list(spec["bloques"]), dropna=False):
+            clave = clave if isinstance(clave, tuple) else (clave,)
+            etiquetas = dict(zip(spec["bloques"], (str(v) for v in clave)))
+            ambito = " · ".join(etiquetas[c] for c in spec["bloques"])
+            pares = self._valores_por_semilla(spec, grupo, ambito, ruta)
+            commits = ""
+            if self.COLUMNA_COMMIT in grupo.columns:
+                vistos = sorted(set(grupo[self.COLUMNA_COMMIT].astype(str)))
+                commits_todos.update(vistos)
+                self.commits_vistos.update(vistos)
+                commits = " ".join(vistos)
+            decisiones = self._decisiones_no_constantes_pareada(
+                spec, grupo, ambito)
+            if decisiones:
+                decisiones_todas.append("{} → {}".format(ambito, decisiones))
+            filas_bloque.append(self._fila_pareada(
+                spec, ambito,
+                etiquetas.get("set_features", self.AMBITO_GLOBAL),
+                etiquetas.get("algoritmo", self.AMBITO_GLOBAL),
+                pares, self._alcance_de_grupo(spec, grupo, ambito), commits,
+                decisiones))
+            # Los pares de todos los bloques, reindexados para que el recuento
+            # global sea el de TODAS las celdas (los «40 de 40» son 2 variantes x
+            # 2 algoritmos x 10 semillas, no 10).
+            for semilla, valores in pares.items():
+                pares_globales[(ambito, semilla)] = valores
+
+        esperados = len(filas_bloque) * len(self.semillas)
+        if len(pares_globales) != esperados:
+            raise RuntimeError(
+                "Comparación '{}': {} pares globales y se esperaban {} ({} bloques "
+                "x {} semillas).".format(
+                    spec["id"], len(pares_globales), esperados,
+                    len(filas_bloque), len(self.semillas)))
+        if spec["pares_esperados"] is not None \
+                and esperados != spec["pares_esperados"]:
+            raise RuntimeError(
+                "Comparación '{}': el barrido da {} pares y la ESPECIFICACIÓN "
+                "declara {}. Uno de los dos está mal y el titular no se "
+                "publica.".format(spec["id"], esperados,
+                                  spec["pares_esperados"]))
+        # La fila global arrastra el reparto de TODOS sus bloques, con el bloque
+        # delante: es la fila cuyo titular se cita ('16 de 20'), así que es donde
+        # menos puede faltar la salvedad.
+        fila_global = self._fila_pareada(
+            spec, self.AMBITO_GLOBAL, self.AMBITO_GLOBAL, self.AMBITO_GLOBAL,
+            pares_globales, "", " ".join(sorted(commits_todos)),
+            " | ".join(decisiones_todas))
+        # La fila global tiene que cuadrar con la suma de sus bloques: si no, el
+        # titular que se cita no sería el de las filas que lo acompañan.
+        for columna in ("n_pares", "gana_a", "gana_b", "empates"):
+            suma = sum(f[columna] for f in filas_bloque)
+            if suma != fila_global[columna]:
+                raise RuntimeError(
+                    "Comparación '{}': la fila '{}' da {} = {} y sus bloques suman "
+                    "{}.".format(spec["id"], self.AMBITO_GLOBAL, columna,
+                                 fila_global[columna], suma))
+        self.filas_pareadas.extend(filas_bloque + [fila_global])
+        print("   {}: comparación pareada '{}' · {} bloques x {} semillas = {} "
+              "pares · {}".format(
+                  os.path.basename(ruta), spec["id"], len(filas_bloque),
+                  len(self.semillas), fila_global["n_pares"],
+                  fila_global["titular"]))
+
+    def _escribir_csv_pareadas(self):
+        ruta = os.path.join(config.RESULTADOS_DIR, self.NOMBRE_CSV_PAREADAS)
+        df = pd.DataFrame(self.filas_pareadas)
+        # Orden estable: la fila '__global__' de cada comparación al final de su
+        # bloque, que es donde se lee el titular.
+        df["_orden"] = (df["ambito"] == self.AMBITO_GLOBAL).astype(int)
+        df = df.sort_values(
+            ["comparacion", "_orden", "set_features", "algoritmo"]
+        ).drop(columns=["_orden"])
+        df.to_csv(ruta, index=False)
+        print("   Comparaciones pareadas (CSV): {}".format(ruta))
+        return ruta
+
+    def _seccion_pareadas_md(self):
+        """Sección del .md con el titular de cada comparación y su desglose."""
+        if not self.filas_pareadas:
+            return []
+        partes = [
+            "## Comparaciones pareadas por semilla",
+            "",
+            "Cada fila enfrenta **dos opciones dentro de la MISMA semilla** —y por "
+            "tanto sobre el mismo split, la misma muestra y los mismos folds—, y "
+            "cuenta en cuántas semillas gana cada una. Los recuentos los calcula y "
+            "los CUADRA el agregador (victorias + empates = pares, y la fila "
+            "`__global__` contra la suma de sus bloques): **no se cuentan a mano**. "
+            "Tabla completa en `comparaciones_pareadas.csv`.",
+            "",
+            # CADA LÍNEA DEL CALLOUT, UN ELEMENTO DE `partes` (arreglado el
+            # 2026-08-17): escritas como literales adyacentes se concatenaban en UN
+            # solo elemento, y los '> ' de continuación acababan incrustados a mitad
+            # de frase en el .md que se pega en A.3.
+            "> [!warning] No confundir con la comparación de bandas",
+            "> Un solapamiento de los intervalos [mín, máx] de las tablas de abajo",
+            "> **no niega** una ventaja pareada consistente: comparar bandas tira la",
+            "> información de que las dos opciones comparten la semilla. La",
+            "> formulación pareada es la que sostiene «un algoritmo es mejor que el",
+            "> otro»; la de bandas solo dice que la ventaja no es una distancia fija.",
+            "",
+            # SALVEDAD DEL HOMÓNIMO EN EL ARTEFACTO, no solo en el código (hallazgo
+            # de auditoría del 2026-08-17): el aviso vivía en la cabecera de este
+            # script y en la nota de decisiones, mientras el .md imprimía «gana en 8
+            # de 10» dos veces y tenía el bloque de TIEMPOS —donde vive el otro «8 de
+            # 10»— a dos pantallas, en el MISMO documento.
+            "> [!warning] «8 de 10» es un homónimo en este proyecto",
+            "> Los recuentos de esta sección son de **CALIDAD** (`f1_macro` sobre D2",
+            "> y `f1_macro_cv` del CV de balanceo). Hay otro «8 de 10» en la memoria",
+            "> que es de **TIEMPOS de entrenamiento** (8 de 10 pares intra-corrida,",
+            "> `PIPELINE.md`, subsección de tiempos) y que además vive en el bloque",
+            "> «Dispersión de máquina» de ESTE mismo documento, más abajo. No son la",
+            "> misma cifra, no se fusionan y no se citan la una por la otra.",
+            "",
+            "| Comparación | Ámbito | Métrica | Pares | Gana A | Gana B | Empates | "
+            "Media dif. (A−B) | Titular |",
+            "|---|---|---|---:|---:|---:|---:|---:|---|",
+        ]
+        for f in self.filas_pareadas:
+            es_global = f["ambito"] == self.AMBITO_GLOBAL
+            # El titular de la fila `__global__` se rotula como lo que es —la SUMA
+            # de los bloques de encima—, no como el titular portante: «16 de 20» no
+            # es una medición nueva, son los dos «8 de 10» sumados, y sin el rótulo
+            # invita a citarlo en lugar de ellos.
+            titular = ("**{}** _(agregado de sus bloques)_".format(f["titular"])
+                       if es_global else f["titular"])
+            partes.append(
+                "| `{}` vs `{}` | {} | `{}` | {} | {} | {} | {} | {:+.6f} | {} "
+                "|".format(
+                    f["opcion_a"], f["opcion_b"],
+                    "**{}**".format(f["ambito"]) if es_global else f["ambito"],
+                    f["metrica"], f["n_pares"], f["gana_a"], f["gana_b"],
+                    f["empates"], f["media_diferencia"], titular))
+        partes += [
+            "",
+            "«Gana A» es la primera opción del par y «Gana B» la segunda. Los "
+            "empates van en su propia columna y **no se reparten**: no cuentan como "
+            "victoria de nadie. La diferencia es (A − B) ya orientada a «mayor es "
+            "mejor»; el CSV trae además su mínimo y su máximo, la lista de "
+            "semillas en que gana cada opción y la columna "
+            "`decisiones_no_constantes`.",
+            "",
+            "**La fila `__global__` no es un titular aparte:** es la suma de los "
+            "bloques de su comparación (por eso el agregador la CUADRA contra ellos). "
+            "Lo que se cita es el recuento del bloque —«8 de 10» en cada variante—; "
+            "el agregado sirve para ver si los bloques apuntan al mismo lado, no para "
+            "sustituirlos.",
+            "",
+        ]
+        partes += self._decisiones_pareadas_md()
+        partes += self._ejes_indistinguibles_md()
+        return partes
+
+    def _decisiones_pareadas_md(self):
+        """
+        Las comparaciones cuyo par NO enfrenta configuraciones fijas, listadas.
+
+        La tabla hermana (dispersión) ya declara este reparto celda a celda y son las
+        mismas celdas: si el `balanceo` ganador de una de las dos opciones voltea
+        entre semillas, «gana en N de M» no es una comparación entre dos
+        configuraciones fijas y hay que decirlo donde se lee el recuento.
+        """
+        con_reparto = [f for f in self.filas_pareadas
+                       if f["ambito"] != self.AMBITO_GLOBAL
+                       and f["decisiones_no_constantes"]]
+        if not con_reparto:
+            return []
+        partes = [
+            "> [!warning] Estos pares no enfrentan configuraciones FIJAS",
+            "> En los bloques de abajo, alguna de las dos opciones cambió de "
+            "decisión",
+            "> entre semillas (el `balanceo` ganador de 4.3.4 o el `best_params_` "
+            "del",
+            "> GridSearchCV dependen de los folds). El recuento sigue siendo válido "
+            "—cada",
+            "> par comparte semilla, split y folds—, pero **no** se puede leer como "
+            "«esta",
+            "> configuración gana a esta otra». Es material de 5.4, igual que en la "
+            "tabla",
+            "> de dispersión, que lo declara sobre estas mismas celdas.",
+        ]
+        for f in con_reparto:
+            partes.append("> - `{}` vs `{}` · {}: {}".format(
+                f["opcion_a"], f["opcion_b"], f["ambito"],
+                f["decisiones_no_constantes"]))
+        partes.append("")
+        return partes
+
+    # Umbral por debajo del cual la media de la diferencia pareada se imprime como
+    # indistinguible de cero: es la resolución con la que se publica esa columna
+    # (DECIMALES_DISTANCIA = 6), así que por debajo de media unidad del último
+    # decimal el signo del titular no lo sostiene el dato.
+    UMBRAL_DIFERENCIA_NULA = 0.5 * 10 ** -6
+
+    def _ejes_indistinguibles_md(self):
+        """
+        Avisa de los ejes cuyo agregado gana «por mayoría» con media de diferencia
+        indistinguible de cero.
+
+        POR QUÉ: `SMOTE vs class_weight` sale «SMOTE gana en 23 de 40» con media
+        +0.000000. Leído como titular diría «SMOTE gana», y no dice eso: dice que el
+        eje NO DECIDE NADA. El recuento se publica igual —silenciarlo sería elegir
+        qué resultados se ven—, pero acompañado de su magnitud.
+        """
+        sospechosos = [
+            f for f in self.filas_pareadas
+            if f["ambito"] == self.AMBITO_GLOBAL
+            and abs(float(f["media_diferencia"])) < self.UMBRAL_DIFERENCIA_NULA]
+        if not sospechosos:
+            return []
+        partes = [
+            "> [!caution] Mayoría sin magnitud: estos ejes NO DECIDEN NADA",
+            "> Ganar «en más de la mitad» de las semillas con una diferencia media "
+            "de",
+            "> +0.000000 no es ganar: es un eje indistinguible del azar a la "
+            "resolución",
+            "> con la que se publica la métrica. No se cita como «gana X».",
+        ]
+        for f in sospechosos:
+            partes.append(
+                "> - `{}` vs `{}` (`{}`): {} de {} pares, media de la diferencia "
+                "{:+.6f} · **no decide nada**".format(
+                    f["opcion_a"], f["opcion_b"], f["metrica"], f["gana_a"],
+                    f["n_pares"], f["media_diferencia"]))
+        partes.append("")
+        return partes
+
+    # ------------------------------------------------------------------
     # 5. Salidas
     # ------------------------------------------------------------------
     def _escribir_csv(self):
@@ -1285,7 +1900,8 @@ class AgregadorSemillas:
         limpia mientras escribía encima de una tabla. Comparar rutas normalizadas
         cierra ese hueco.
         """
-        for nombre in (self.NOMBRE_CSV, self.NOMBRE_MD):
+        for nombre in (self.NOMBRE_CSV, self.NOMBRE_MD,
+                       self.NOMBRE_CSV_PAREADAS):
             base = os.path.basename(nombre)
             if base.startswith("metricas_"):
                 raise RuntimeError(
@@ -1296,11 +1912,15 @@ class AgregadorSemillas:
             return os.path.normcase(os.path.abspath(ruta))
 
         prohibidas = {}
-        for spec in self.ESPECIFICACION:
+        # Las de la ESPECIFICACION y las de las COMPARACIONES PAREADAS: la de
+        # balanceo solo entra por la segunda, y dejarla fuera abriría un hueco
+        # exactamente en la tabla que este script empezó a leer el 2026-08-17.
+        for spec in self.ESPECIFICACION + self.COMPARACIONES_PAREADAS:
             for ruta in (self._ruta_tabla_publicada(spec),
                          self._ruta_tabla_semillas(spec["tabla"])):
                 prohibidas[normalizar(ruta)] = ruta
-        for nombre in (self.NOMBRE_CSV, self.NOMBRE_MD):
+        for nombre in (self.NOMBRE_CSV, self.NOMBRE_MD,
+                       self.NOMBRE_CSV_PAREADAS):
             salida = os.path.join(config.RESULTADOS_DIR, nombre)
             choque = prohibidas.get(normalizar(salida))
             if choque is not None:
@@ -1371,6 +1991,7 @@ class AgregadorSemillas:
             "",
         ]
         partes += self._seccion_titular_md()
+        partes += self._seccion_pareadas_md()
         partes += [
             "",
             "## Calidad",
@@ -1434,8 +2055,12 @@ class AgregadorSemillas:
             raise RuntimeError(
                 "No se agregó ninguna celda: revisa las tablas del barrido.")
 
+        for spec in self.COMPARACIONES_PAREADAS:
+            self._comparar_pareada(spec)
+
         print("-" * 70)
         self._escribir_csv()
+        self._escribir_csv_pareadas()
         self._escribir_md()
         for aviso in self.avisos:
             print("   [aviso] {}".format(aviso))
@@ -1462,6 +2087,15 @@ class AgregadorSemillas:
         if self.celdas_sin_casar:
             print("   ({} celda(s) de calidad SIN casar: no cuentan en ninguna de "
                   "las dos cifras — ver avisos)".format(self.celdas_sin_casar))
+        # TITULARES PAREADOS, emitidos por el script: estas cifras se contaban a
+        # mano (el «8 de 10» de firmas y el «40 de 40» del balanceo).
+        print("TITULARES PAREADOS (calidad; NO son los '8 de 10' de TIEMPOS):")
+        for fila in self.filas_pareadas:
+            if fila["ambito"] != self.AMBITO_GLOBAL:
+                continue
+            print("   {} · {} (vs {}): {} · empates {}".format(
+                fila["comparacion"], fila["titular"], fila["opcion_b"],
+                "{} pares".format(fila["n_pares"]), fila["empates"]))
         print("=" * 70)
         return self.filas
 

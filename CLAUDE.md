@@ -279,8 +279,10 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
 - Repositorio: `https://github.com/frnlopez/FinalCareerProject.git` — raíz en `Working_Directory/`.
 - Se trabaja en **`develop`**. `main` se actualiza solo en hitos y solo si el usuario lo pide.
 - Se versiona el **texto plano**: código, notas del vault, figuras, reglas y **los CSV citables**
-  —`metricas_*.csv`, `dispersion_semillas.csv`, `*_vocabulario_onehot.csv` y
-  `*_composicion_d3.csv`—.
+  —`metricas_*.csv`, `dispersion_semillas.csv`, **`comparaciones_pareadas.csv`**,
+  `*_vocabulario_onehot.csv` y `*_composicion_d3.csv`—. (`comparaciones_pareadas.csv` lo emite
+  `agregar_semillas.py` junto a `dispersion_semillas.csv`/`.md` y faltaba en esta lista hasta el
+  2026-08-17, aunque ya estaba versionado: la enumeración se contradecía con sus cuatro hermanos.)
   Quedan fuera (ver `.gitignore`) el venv, los `.joblib`, **los CSV de los splits**, el dataset
   crudo y los `.doc/.docx` — todo reproducible o descargable, y suman 1,1 GB.
   **«Los CSV no se versionan» es FALSO y lo decía este fichero hasta el 2026-08-16.** La regla real

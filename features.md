@@ -432,15 +432,9 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > Cinco fichas, **ninguna bloqueante**, **ninguna mueve una cifra publicada**. **Fichar no es
 > resolver: aquí no se ha corregido nada.**
 
-- [ ] 🟠 **El «8 de 10» PAREADO no lo emite ningún script** · Código · **decide Francisco**, ejecuta `ml-implementador` → `auditor-ml`
-  Alta el **2026-08-17**. Sedes verificadas contra disco: **`5.2:62`, `5.2:107`, `5.4:15` y
-  `3.5:40`**. Es la formulación **PORTANTE** —`5.2:107` dice literalmente que es «**la única que debe
-  usarse al afirmar que un algoritmo es mejor que el otro**»— y sale de un **conteo a mano**.
-  **Verificado cierto**, pero es el **precedente exacto del «13 de 98»**, y aquí **AGRAVADO**: quince
-  líneas más abajo, `5.2:122` argumenta que el 13 es citable **precisamente porque lo calcula el
-  agregador**. La nota se sostiene sobre un criterio que ella misma no cumple.
-  **Igual el 40/40** (`5.2:171`, `:181`), ya marcado con `[!todo]` en `5.2:173`.
-  ⛔ **Decide Francisco: o lo emite `agregar_semillas.py`, o se retira la formulación.**
+> **El 🟠 «El "8 de 10" PAREADO no lo emite ningún script» queda CERRADO el 2026-08-17**: lo emite
+> ahora `agregar_semillas.py` en `Resultados/comparaciones_pareadas.csv`. Su ficha vive ya en
+> `## Cerradas`.
 
 - [ ] 🟡 **`~52` para un número que el script ahora emite EXACTO** · Informe · `redactor-tfg`
   Alta el **2026-08-17**, **misma familia que el «~17»**. `u2r` tiene **52** muestras en D3, y desde la
@@ -453,19 +447,20 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   **Las de `resumen-de-decisiones.md` y `next-steps.md` NO se tocan sin autorización expresa de
   Francisco**, igual que hizo falta para el «~17». **Falso positivo confirmado: `4.2:131` (`~52,5 %`).**
 
-- [ ] 🟡 **La palabra «determinista» sigue viva FUERA de `PIPELINE.md`, y allí está PEOR: sin salvedad** · Código · `ml-implementador` → `auditor-ml`
-  Alta el **2026-08-17**, residuo del cierre del 🟡 de `PIPELINE.md`. Sedes: **`anomalias.py:389` y
-  `:460`**, **`agregar_semillas.py:226` y `:245`** —y esta última **regenera
-  `Resultados/dispersion_semillas.md:154`, que es artefacto citable y versionado**, así que corregir
-  la prosa sin corregir el script lo repone en la siguiente corrida—.
-  **RECONTADO CONTRA DISCO por el `cronista` al registrar: `config.py:728` NO tiene la palabra** —sus
-  únicas coincidencias son `:806` y `:825`, «suciedad **indeterminada**», que es otra cosa—. **Contar
-  antes de sustituir.** Los usos de `anomalias.py:190`, `program.py:310`/`:528`,
-  `figura_nids_bloques.py:39` y `4.3:86`/`:92` son **legítimos** (orden de vocabulario, algoritmo sin
-  `random_state`): **no se tocan**.
-  ⛔ **`resumen-de-decisiones.md:633` es el TÍTULO de una decisión cerrada** —«T22 — `n_iter_total_grid`
-  es determinista»—, con su cuerpo en `:636` y su eco en `:1154`: **corregirlo es REABRIR una
-  decisión, y eso es de Francisco, no de un agente.**
+> **El 🟡 «la palabra "determinista" sigue viva FUERA de `PIPELINE.md`» queda CERRADO el 2026-08-17**,
+> con la salvedad escrita en `agregar_semillas.py` (`:226`/`:245`) y en `anomalias.py`, y el residuo de
+> T22 registrado como **reapertura autorizada** en `resumen-de-decisiones.md` sin reescribir `:633`,
+> `:636` ni `:1154`. Su ficha vive ya en `## Cerradas`.
+
+### Altas del ciclo de Código — 2026-08-17
+
+- [ ] 🟠 **SEXTO re-anclaje de sello: `commit_agregador = 0276039-sucio`** · Código · `ml-implementador` → `auditor-ml`
+  Alta el **2026-08-17**, residuo del ciclo que emitió `comparaciones_pareadas.csv`. Los artefactos
+  del agregador salieron de **código sin commitear**, así que **`0276039` NO contiene el código que
+  los produjo** y el sello es engañoso tal cual.
+  **Orden obligatorio: commitear primero, relanzar el agregador después** — al revés vuelve a
+  estampar un sello falso. **El sello impreso DENTRO del artefacto no se reescribe a mano**: lo
+  estampa `config.commit_actual()`. Precedentes de la misma forma: **`8dddc92`** y **`6fd1ed4`**.
 
 - [ ] 🟡 **`Bibliografía.md:177` — el localizador de `[49]` Bendale y Boult apunta a `2.3.2.5`, y en disco está en `2.3.2.4`** · Informe · `researcher`
   Alta el **2026-08-17**. **Va EN SERIE y merece ciclo propio**: se junta con los **tres `[CITA: …]`
@@ -1570,10 +1565,12 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > **Estado del lote, consolidado el 2026-08-13.** Cerradas: `T0`; `T1` (`5f98d88`, 8 tablas sobre el
 > esquema nuevo, con residuos `T18`-`T22`); `T2` y `T3` (`b1f1df2`, las **dos mediciones baratas**,
 > ambas APTO); `T15` (con residuos `T23`-`T25`); `T18` y `T22` (`8fdc421`). Del track de código
-> reabierto el 2026-08-06 **solo queda `T4`**, y solo por el **consumo** de su banda en `A.3` (**T7**)
-> y en `5.2`/`5.4` (**T11**). **`T9` y `T11` siguen abiertas:** T2 y T3 no las cierran, solo las
-> alimentan —el número de la cascada invertida va a `3.2.2` (T9) y el KS separado a `5.1`/`5.4`
-> (T11)—, y sus cifras quedan anotadas dentro de cada ficha con su salvedad de uso.
+> reabierto el 2026-08-06 **solo quedaba `T4`**, y solo por el **consumo** de su banda en `A.3` (**T7**)
+> y en `5.2`/`5.4` (**T11**). **Estado corregido el 2026-08-17: `T11` está CERRADA desde la TANDA 17
+> (`9bcfe1f`, capítulo 5 completo) y `T4` CERRADA en la TANDA 19 (`b276f97`) — su casilla `- [ ]` ya
+> no existe, así que esta prosa las daba por abiertas contra el propio registro.** De aquel par solo
+> **`T9` sigue abierta**: T2 y T3 no la cierran, solo la alimentan —el número de la cascada invertida
+> va a `3.2.2`—, y sus cifras quedan anotadas dentro de la ficha con su salvedad de uso.
 
 ### Autoría de la redacción — estado vigente desde T0 (2026-08-09)
 
@@ -1746,6 +1743,12 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-17 | Código | **🟠 El «8 de 10» PAREADO — CERRADO: YA LO EMITE UN SCRIPT, y las cifras del artefacto COINCIDEN EXACTAMENTE con el conteo a mano que sustituyen.** `agregar_semillas.py` produce **`Resultados/comparaciones_pareadas.csv`** (13 filas + cabecera) con **tres comparaciones**: RF vs HGB en `f1_macro` y los **dos ejes de balanceo**. Cifras de la ejecución real: **8 de 10 en `122_sin_seleccion`** (RF pierde en las semillas **5** y **9**), **8 de 10 en `54`** (pierde en **3** y **5**), **16 de 20 global**, **`SMOTE vs nada` 40 de 40**, **`SMOTE vs class_weight` 23-17**, **cero empates**. Con esto **`5.2:107` deja de apoyar su formulación portante en un recuento a mano**, que era el agravante de la ficha: quince líneas más abajo la propia nota exigía ese criterio para el «13 de 98» | — |
+| 2026-08-17 | Código | **🟡 La palabra «determinista» FUERA de `PIPELINE.md` — CERRADA, con la salvedad escrita donde el generador la repone.** Corregida en **`agregar_semillas.py` (`:226`/`:245`)** —la sede que regenera `Resultados/dispersion_semillas.md`, artefacto citable y versionado— y en **`anomalias.py`**. **Las sedes legítimas quedaron INTACTAS, verificado**: `anomalias.py:190`, `program.py:310`/`:528`, `figura_nids_bloques.py:39` y `4.3:86`/`:92`, más las de «suciedad **indeterminada**» de `config.py`, que son otra cosa | — |
+| 2026-08-17 | Código | **El residuo de T22 — CERRADO SIN REESCRIBIR LA DECISIÓN, que era justo el ⛔ de la ficha.** Dos **notas fechadas** en `resumen-de-decisiones.md` registran la **reapertura autorizada por Francisco el 2026-08-17**; las líneas **`:633`** (título de la decisión), **`:636`** (cuerpo) y **`:1154`** (eco) quedan **INTACTAS y legibles**. Es la misma disciplina que se aplicó al «~17»: se añade nota, no se sobrescribe historia | — |
+| 2026-08-17 | Código | **Alta del CSV citable `comparaciones_pareadas.csv` en los CUATRO runbooks**: `Implementacion/PIPELINE.md`, `README.md`, `Resultados/GUIA_RESULTADOS.md` y `CLAUDE.md`. Es el barrido que en las Tandas 10, 15 y 16 se quedó corto: un artefacto nuevo sin entrada en el runbook es un artefacto que nadie sabe releer | — |
+| 2026-08-17 | Código | **Auditoría del ciclo: APTO CON CAMBIOS, 6 hallazgos, NINGUNO 🔴.** El `auditor-ml` confirmó que **el pareo es real por semilla** —no una comparación de medias disfrazada— y que **el 🔴 histórico (sd entre *folds* vendida como dispersión entre semillas) NO reapareció**. **Cinco hallazgos aplicados y verificados contra disco.** **Las cuatro tablas de métricas principales siguen con mtime del 9 de agosto: intactas** | — |
+| 2026-08-17 | — | **FALLO DE PROCESO (no de código) que merece quedar escrito: el primer pase de hallazgos reportó `done` con tres arreglos que solo existían en el `.py`.** Editó el **generador** y **no lo relanzó**, dejando los **artefactos citables con el texto viejo**. **Lección operativa: un `done ->` no prueba nada; en track Código con generadores hay que verificar el ARTEFACTO, no el script** | — |
 | 2026-08-17 | Informe | **TANDA 19 — cae el BLOQUEANTE DECLARADO DE LA FASE 5.** Cierra **cuatro fichas**: el **barrido de solapes del capítulo 2**, el **🟡 «determinista» de `PIPELINE.md`**, el **⛔ «~17»** y **T4**. Ficheros: `Implementacion/PIPELINE.md`, `resumen-de-decisiones.md`, `next-steps.md` y, en el vault, `2.1.1`, `2.2.2`, `2.2.3`, `2.3.2`, `5.2`, `5.4`. **Tres pases de auditoría, todos resueltos** (2 APTO, 2 APTO CON CAMBIOS aplicados). **Cero `[n]` nuevos o renumerados, cero cifras publicadas movidas, cero `fit`.** Censo contado contra disco: **74 filas, primer libre `[76]`** — coincide con `CLAUDE.md`. **Deja CUATRO fichas nuevas, ninguna bloqueante** | `b276f97` |
 | 2026-08-17 | Informe | **El barrido de solapes del capítulo 2 — CERRADO, y era el bloqueante declarado de la Fase 5.** Su razón de ser, escrita desde el 2026-08-15: **recortar el capítulo 3 remitiendo a un capítulo 2 sin barrer es remitir a texto que también duplica.** Revisadas **las 12 notas que faltaban** (el barrido previo solo cubría `2.1.6` y `2.2.4`); **6 solapes corregidos con sede canónica fijada y remisión**, en **`2.1.1`, `2.2.2`, `2.2.3` y `2.3.2`**. **`2.3.3` no se tocó**: ya iba en la Tanda 18 (Axelsson realineado). Auditoría de **coherencia ENTRE notas**: los 6 recortes **siguen vivos en su sede** —el fallo propio de un recorte es la afirmación huérfana—, **wikilinks y anclas verificados** | `b276f97` |
 | 2026-08-17 | Código | **🟡 `PIPELINE.md` «determinista» — CERRADA, y la auditoría cazó que la palabra SOBREVIVÍA al primer arreglo.** La ficha señalaba `:925`; el arreglo se aplicó en **`:945` y `:1379`**, y `:945` era **la frase titular en negrita, la que un tercero copiaría a la memoria**. Se cambió **la palabra, no el dato**: el **162/128**, la tabla, la conclusión y los factores quedan **intactos**. **La palabra sigue viva FUERA de `PIPELINE.md` y allí está PEOR, sin salvedad**: ficha nueva en `## Abiertas` | `b276f97` |

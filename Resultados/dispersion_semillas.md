@@ -1,7 +1,7 @@
 # Dispersión entre semillas (tarea T4)
 
 > Generado por `Implementacion/app/agregar_semillas.py`. **No se edita a mano**: se regenera corriendo el agregador.
-> Commit del **agregador** (columna `commit_agregador` del CSV: con qué versión de `agregar_semillas.py` se calcularon media y sd): `6bb224c-sucio` · Fecha: 2026-08-14T15:15:13
+> Commit del **agregador** (columna `commit_agregador` del CSV: con qué versión de `agregar_semillas.py` se calcularon media y sd): `0276039-sucio` · Fecha: 2026-08-17T18:56:18
 > Commit(s) de las **filas agregadas** (con qué versión del código se produjeron los puntos de las bandas): `df30cb2`. La columna `commits_origen` del CSV lo da por celda; si aquí hay más de uno, el bloque de avisos dice en qué celdas.
 > Semillas agregadas (10): 1, 2, 3, 4, 5, 6, 7, 8, 9, 10.
 
@@ -44,6 +44,61 @@ Y el descuento no sería inocuo: **3 celdas caen** en el borde exacto de su band
 | `metricas_anomalias_semillas.csv` | 122_sin_seleccion | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `roc_auc` | 0.9459 | 0.9473 | 0.9539 | 0.001405 |
 | `metricas_anomalias_semillas.csv` | 122_sin_seleccion | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `fpr` | 0.0834 | 0.0819 | 0.0830 | 0.000412 |
 | `metricas_anomalias_semillas.csv` | 54 | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `roc_auc` | 0.8360 | 0.8200 | 0.8359 | 0.000097 |
+
+## Comparaciones pareadas por semilla
+
+Cada fila enfrenta **dos opciones dentro de la MISMA semilla** —y por tanto sobre el mismo split, la misma muestra y los mismos folds—, y cuenta en cuántas semillas gana cada una. Los recuentos los calcula y los CUADRA el agregador (victorias + empates = pares, y la fila `__global__` contra la suma de sus bloques): **no se cuentan a mano**. Tabla completa en `comparaciones_pareadas.csv`.
+
+> [!warning] No confundir con la comparación de bandas
+> Un solapamiento de los intervalos [mín, máx] de las tablas de abajo
+> **no niega** una ventaja pareada consistente: comparar bandas tira la
+> información de que las dos opciones comparten la semilla. La
+> formulación pareada es la que sostiene «un algoritmo es mejor que el
+> otro»; la de bandas solo dice que la ventaja no es una distancia fija.
+
+> [!warning] «8 de 10» es un homónimo en este proyecto
+> Los recuentos de esta sección son de **CALIDAD** (`f1_macro` sobre D2
+> y `f1_macro_cv` del CV de balanceo). Hay otro «8 de 10» en la memoria
+> que es de **TIEMPOS de entrenamiento** (8 de 10 pares intra-corrida,
+> `PIPELINE.md`, subsección de tiempos) y que además vive en el bloque
+> «Dispersión de máquina» de ESTE mismo documento, más abajo. No son la
+> misma cifra, no se fusionan y no se citan la una por la otra.
+
+| Comparación | Ámbito | Métrica | Pares | Gana A | Gana B | Empates | Media dif. (A−B) | Titular |
+|---|---|---|---:|---:|---:|---:|---:|---|
+| `RandomForest` vs `HistGradientBoosting` | 122_sin_seleccion | `f1_macro` | 10 | 8 | 2 | 0 | +0.034839 | RandomForest gana en 8 de 10 |
+| `RandomForest` vs `HistGradientBoosting` | 54 | `f1_macro` | 10 | 8 | 2 | 0 | +0.010623 | RandomForest gana en 8 de 10 |
+| `RandomForest` vs `HistGradientBoosting` | **__global__** | `f1_macro` | 20 | 16 | 4 | 0 | +0.022731 | **RandomForest gana en 16 de 20** _(agregado de sus bloques)_ |
+| `SMOTE` vs `nada` | 122_sin_seleccion · HistGradientBoosting | `f1_macro_cv` | 10 | 10 | 0 | 0 | +0.157338 | SMOTE gana en 10 de 10 |
+| `SMOTE` vs `nada` | 122_sin_seleccion · KNN | `f1_macro_cv` | 10 | 10 | 0 | 0 | +0.020728 | SMOTE gana en 10 de 10 |
+| `SMOTE` vs `nada` | 54 · HistGradientBoosting | `f1_macro_cv` | 10 | 10 | 0 | 0 | +0.153743 | SMOTE gana en 10 de 10 |
+| `SMOTE` vs `nada` | 54 · KNN | `f1_macro_cv` | 10 | 10 | 0 | 0 | +0.015050 | SMOTE gana en 10 de 10 |
+| `SMOTE` vs `nada` | **__global__** | `f1_macro_cv` | 40 | 40 | 0 | 0 | +0.086715 | **SMOTE gana en 40 de 40** _(agregado de sus bloques)_ |
+| `SMOTE` vs `class_weight` | 122_sin_seleccion · DecisionTree | `f1_macro_cv` | 10 | 5 | 5 | 0 | -0.003601 | SMOTE gana en 5 de 10 |
+| `SMOTE` vs `class_weight` | 122_sin_seleccion · RandomForest | `f1_macro_cv` | 10 | 6 | 4 | 0 | -0.000772 | SMOTE gana en 6 de 10 |
+| `SMOTE` vs `class_weight` | 54 · DecisionTree | `f1_macro_cv` | 10 | 7 | 3 | 0 | +0.003405 | SMOTE gana en 7 de 10 |
+| `SMOTE` vs `class_weight` | 54 · RandomForest | `f1_macro_cv` | 10 | 5 | 5 | 0 | +0.000969 | SMOTE gana en 5 de 10 |
+| `SMOTE` vs `class_weight` | **__global__** | `f1_macro_cv` | 40 | 23 | 17 | 0 | +0.000000 | **SMOTE gana en 23 de 40** _(agregado de sus bloques)_ |
+
+«Gana A» es la primera opción del par y «Gana B» la segunda. Los empates van en su propia columna y **no se reparten**: no cuentan como victoria de nadie. La diferencia es (A − B) ya orientada a «mayor es mejor»; el CSV trae además su mínimo y su máximo, la lista de semillas en que gana cada opción y la columna `decisiones_no_constantes`.
+
+**La fila `__global__` no es un titular aparte:** es la suma de los bloques de su comparación (por eso el agregador la CUADRA contra ellos). Lo que se cita es el recuento del bloque —«8 de 10» en cada variante—; el agregado sirve para ver si los bloques apuntan al mismo lado, no para sustituirlos.
+
+> [!warning] Estos pares no enfrentan configuraciones FIJAS
+> En los bloques de abajo, alguna de las dos opciones cambió de decisión
+> entre semillas (el `balanceo` ganador de 4.3.4 o el `best_params_` del
+> GridSearchCV dependen de los folds). El recuento sigue siendo válido —cada
+> par comparte semilla, split y folds—, pero **no** se puede leer como «esta
+> configuración gana a esta otra». Es material de 5.4, igual que en la tabla
+> de dispersión, que lo declara sobre estas mismas celdas.
+> - `RandomForest` vs `HistGradientBoosting` · 122_sin_seleccion: RandomForest / balanceo: SMOTE en 6 semilla(s) · class_weight en 4 semilla(s) | RandomForest / config_ganadora: {'clf__max_depth': 10, 'clf__n_estimators': 100} en 2 semilla(s) · {'clf__max_depth': None, 'clf__n_estimators': 300} en 2 semilla(s) · {'max_depth': None, 'n_estimators': 100} en 2 semilla(s) · {'clf__max_depth': 10, 'clf__n_estimators': 300} en 2 semilla(s) · {'max_depth': 10, 'n_estimators': 100} en 1 semilla(s) · {'max_depth': None, 'n_estimators': 300} en 1 semilla(s) | HistGradientBoosting / config_ganadora: {'clf__learning_rate': 0.1, 'clf__max_iter': 100} en 7 semilla(s) · {'clf__learning_rate': 0.05, 'clf__max_iter': 300} en 2 semilla(s) · {'clf__learning_rate': 0.1, 'clf__max_iter': 300} en 1 semilla(s)
+> - `RandomForest` vs `HistGradientBoosting` · 54: RandomForest / balanceo: SMOTE en 5 semilla(s) · class_weight en 5 semilla(s) | RandomForest / config_ganadora: {'max_depth': None, 'n_estimators': 100} en 3 semilla(s) · {'clf__max_depth': None, 'clf__n_estimators': 100} en 3 semilla(s) · {'clf__max_depth': 10, 'clf__n_estimators': 300} en 1 semilla(s) · {'clf__max_depth': 10, 'clf__n_estimators': 100} en 1 semilla(s) · {'max_depth': 10, 'n_estimators': 100} en 1 semilla(s) · {'max_depth': 10, 'n_estimators': 300} en 1 semilla(s) | HistGradientBoosting / config_ganadora: {'clf__learning_rate': 0.05, 'clf__max_iter': 300} en 5 semilla(s) · {'clf__learning_rate': 0.1, 'clf__max_iter': 100} en 3 semilla(s) · {'clf__learning_rate': 0.05, 'clf__max_iter': 100} en 2 semilla(s)
+
+> [!caution] Mayoría sin magnitud: estos ejes NO DECIDEN NADA
+> Ganar «en más de la mitad» de las semillas con una diferencia media de
+> +0.000000 no es ganar: es un eje indistinguible del azar a la resolución
+> con la que se publica la métrica. No se cita como «gana X».
+> - `SMOTE` vs `class_weight` (`f1_macro_cv`): 23 de 40 pares, media de la diferencia +0.000000 · **no decide nada**
 
 
 ## Calidad
@@ -151,7 +206,7 @@ Y el descuento no sería inocuo: **3 celdas caen** en el borde exacto de su band
 
 ## Dispersión de máquina (NO es calidad y NO se cita como resultado)
 
-Bloque aparte a propósito: wall-clock en máquina no dedicada: su sd mide CARGA DE MÁQUINA y no el algoritmo. Medido en T1: el Autoencoder de 54 features pasó de 37,71 s a 181,91 s entre dos corridas (4,8x) con calidad idéntica al bit y con el recuento de épocas determinista (162 en 54 y 128 en 122). No es una propiedad del algoritmo y no se cita como resultado.
+Bloque aparte a propósito: wall-clock en máquina no dedicada: su sd mide CARGA DE MÁQUINA y no el algoritmo. Medido en T1: el Autoencoder de 54 features pasó de 37,71 s a 181,91 s entre dos corridas (4,8x) con calidad idéntica al bit. Esa banda es una magnitud OBSERVADA y se publica SIN causa atribuida: las dos corridas del contraejemplo no registran el recuento de épocas, así que no se puede afirmar que sea determinista ni descartar que las épocas expliquen parte de la banda (los 162 en 54 y 128 en 122 salen iguales solo en las dos corridas que sí registran esa columna, y no son estas). No es una propiedad del algoritmo y no se cita como resultado.
 
 | Tabla de origen | Variante | Algoritmo | Alcance | Métrica | n | Media | sd | Mín | Máx |
 |---|---|---|---|---|---:|---:|---:|---:|---:|
@@ -277,3 +332,9 @@ Bloque aparte a propósito: wall-clock en máquina no dedicada: su sd mide CARGA
 - metricas_firmas.csv · ('54', 'RandomForest', 'multiclase 4 categorías de ataque sobre los ataques de D2 de tipo conocido'): la columna de DECISIÓN 'config_ganadora' NO es constante entre las 10 semillas ({'max_depth': None, 'n_estimators': 100} en 3 semilla(s) · {'clf__max_depth': None, 'clf__n_estimators': 100} en 3 semilla(s) · {'clf__max_depth': 10, 'clf__n_estimators': 300} en 1 semilla(s) · {'clf__max_depth': 10, 'clf__n_estimators': 100} en 1 semilla(s) · {'max_depth': 10, 'n_estimators': 100} en 1 semilla(s) · {'max_depth': 10, 'n_estimators': 300} en 1 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
 - metricas_baseline.csv · ('122_sin_seleccion', 'RandomForest_monolitico', 'multiclase 5 clases (normal + 4 ataques) sobre D2 completo'): la columna de DECISIÓN 'config_ganadora' NO es constante entre las 10 semillas ({'max_depth': None, 'n_estimators': 300} en 5 semilla(s) · {'max_depth': None, 'n_estimators': 100} en 5 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
 - metricas_baseline.csv · ('54', 'RandomForest_monolitico', 'multiclase 5 clases (normal + 4 ataques) sobre D2 completo'): la columna de DECISIÓN 'config_ganadora' NO es constante entre las 10 semillas ({'max_depth': None, 'n_estimators': 300} en 5 semilla(s) · {'max_depth': None, 'n_estimators': 100} en 5 semilla(s)). La media de esta celda promedia modelos con decisiones distintas: hay que declararlo al citarla (material de 5.4, no un error).
+- Comparación 'firmas_RandomForest_vs_HistGradientBoosting_f1_macro' · 122_sin_seleccion: la opción 'RandomForest' NO mantiene constante la columna de DECISIÓN 'balanceo' entre las 10 semillas (SMOTE en 6 semilla(s) · class_weight en 4 semilla(s)). El recuento pareado enfrenta configuraciones que cambian de semilla en semilla: hay que declararlo al citar el titular (material de 5.4, no un error).
+- Comparación 'firmas_RandomForest_vs_HistGradientBoosting_f1_macro' · 122_sin_seleccion: la opción 'RandomForest' NO mantiene constante la columna de DECISIÓN 'config_ganadora' entre las 10 semillas ({'clf__max_depth': 10, 'clf__n_estimators': 100} en 2 semilla(s) · {'clf__max_depth': None, 'clf__n_estimators': 300} en 2 semilla(s) · {'max_depth': None, 'n_estimators': 100} en 2 semilla(s) · {'clf__max_depth': 10, 'clf__n_estimators': 300} en 2 semilla(s) · {'max_depth': 10, 'n_estimators': 100} en 1 semilla(s) · {'max_depth': None, 'n_estimators': 300} en 1 semilla(s)). El recuento pareado enfrenta configuraciones que cambian de semilla en semilla: hay que declararlo al citar el titular (material de 5.4, no un error).
+- Comparación 'firmas_RandomForest_vs_HistGradientBoosting_f1_macro' · 122_sin_seleccion: la opción 'HistGradientBoosting' NO mantiene constante la columna de DECISIÓN 'config_ganadora' entre las 10 semillas ({'clf__learning_rate': 0.1, 'clf__max_iter': 100} en 7 semilla(s) · {'clf__learning_rate': 0.05, 'clf__max_iter': 300} en 2 semilla(s) · {'clf__learning_rate': 0.1, 'clf__max_iter': 300} en 1 semilla(s)). El recuento pareado enfrenta configuraciones que cambian de semilla en semilla: hay que declararlo al citar el titular (material de 5.4, no un error).
+- Comparación 'firmas_RandomForest_vs_HistGradientBoosting_f1_macro' · 54: la opción 'RandomForest' NO mantiene constante la columna de DECISIÓN 'balanceo' entre las 10 semillas (SMOTE en 5 semilla(s) · class_weight en 5 semilla(s)). El recuento pareado enfrenta configuraciones que cambian de semilla en semilla: hay que declararlo al citar el titular (material de 5.4, no un error).
+- Comparación 'firmas_RandomForest_vs_HistGradientBoosting_f1_macro' · 54: la opción 'RandomForest' NO mantiene constante la columna de DECISIÓN 'config_ganadora' entre las 10 semillas ({'max_depth': None, 'n_estimators': 100} en 3 semilla(s) · {'clf__max_depth': None, 'clf__n_estimators': 100} en 3 semilla(s) · {'clf__max_depth': 10, 'clf__n_estimators': 300} en 1 semilla(s) · {'clf__max_depth': 10, 'clf__n_estimators': 100} en 1 semilla(s) · {'max_depth': 10, 'n_estimators': 100} en 1 semilla(s) · {'max_depth': 10, 'n_estimators': 300} en 1 semilla(s)). El recuento pareado enfrenta configuraciones que cambian de semilla en semilla: hay que declararlo al citar el titular (material de 5.4, no un error).
+- Comparación 'firmas_RandomForest_vs_HistGradientBoosting_f1_macro' · 54: la opción 'HistGradientBoosting' NO mantiene constante la columna de DECISIÓN 'config_ganadora' entre las 10 semillas ({'clf__learning_rate': 0.05, 'clf__max_iter': 300} en 5 semilla(s) · {'clf__learning_rate': 0.1, 'clf__max_iter': 100} en 3 semilla(s) · {'clf__learning_rate': 0.05, 'clf__max_iter': 100} en 2 semilla(s)). El recuento pareado enfrenta configuraciones que cambian de semilla en semilla: hay que declararlo al citar el titular (material de 5.4, no un error).

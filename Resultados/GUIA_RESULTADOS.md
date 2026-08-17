@@ -657,6 +657,20 @@ lleva** desde la cuarta pasada, verificado en el fichero el 2026-08-14. Lo que h
   propósito en el bloque de máquina, y el `.md` la sección «El titular (semilla 42) frente a la
   banda» con el recuento **13 de 98**. La 42 **no entra** en ningún estadístico: es una comparación
   al lado de la banda, no un undécimo punto.
+- **`comparaciones_pareadas.csv`** — la tabla de **recuentos pareados por semilla** (alta del
+  2026-08-17), emitida por el **mismo** `python app\agregar_semillas.py` que la anterior y en la misma
+  pasada. **13 filas**: una por bloque de cada comparación más la fila `__global__` de cada una, con
+  `n_pares`, `gana_a`, `gana_b`, `empates`, el `titular` ya redactado, las semillas en que gana cada
+  opción y la media/mín/máx de la diferencia pareada. **Qué se cita de aquí:** los «8 de 10» de
+  RandomForest frente a HistGradientBoosting en `f1_macro` (5.2.4.1) y el «40 de 40» de SMOTE frente a
+  no balancear (5.2.4.2) — antes se contaban **a mano**, y esta tabla existe para que no se vuelvan a
+  contar así. Tres salvedades al citarla: (a) la fila `__global__` es el **agregado** de sus bloques
+  («16 de 20» son los dos «8 de 10» sumados), no un titular nuevo; (b) estos recuentos son de
+  **calidad** y no son el «8 de 10» **de tiempos** de `PIPELINE.md`, que es un homónimo; y (c) la
+  columna `decisiones_no_constantes` dice si alguna de las dos opciones cambió de `balanceo` o de
+  `config_ganadora` entre semillas — cuando trae texto, el recuento **no** compara dos configuraciones
+  fijas. El eje `SMOTE vs class_weight` se emite igual y **no decide nada**: 23 de 40 con media de
+  diferencia `+0.000000`. **Se versiona** (texto plano y citable).
 - **260 figuras `*_semilla*`**, **20 `firmas_reglas_*_semilla*.txt`** y **100 logs en
   `logs_barrido\`** — **no se versionan** (ver el `.gitignore` raíz). Del barrido no se cita ninguno
   de estos ficheros: las figuras y las reglas de la memoria son las de la semilla 42.

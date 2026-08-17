@@ -1799,6 +1799,43 @@ sin borrar los `.joblib`) está en la ficha anterior; aquí solo lo operativo:
   que `agregar_semillas.py` avisará de que esa celda **mezcla commits** (`commits_origen` con más de
   un valor) — el aviso es correcto y hay que decidir si se acepta o se reejecuta la semilla entera.
 
+#### `comparaciones_pareadas.csv` — recuentos pareados por semilla (alta del 2026-08-17)
+
+**Quién lo emite.** `agregar_semillas.py`, en la misma pasada que produce `dispersion_semillas.csv` y
+`dispersion_semillas.md`. No hay que teclear nada aparte: sale del **paso 6** del runbook de arriba.
+No es una de las cuatro tablas de métricas principales (su clave lleva `semilla`, que la
+`CLAVE_UNICIDAD` de aquellas no admite), así que **no las toca ni las reescribe**.
+
+**Qué contiene.** **13 filas de datos** más la cabecera, repartidas en **tres** comparaciones
+pareadas, cada una con una fila por bloque y una fila `__global__`:
+
+| Comparación | Tabla de origen | Bloques | Filas |
+|---|---|---|---|
+| `firmas_RandomForest_vs_HistGradientBoosting_f1_macro` | `metricas_firmas_semillas.csv` | 2 sets | 2 + `__global__` |
+| `balanceo_SMOTE_vs_class_weight_f1_macro_cv` | `metricas_balanceo_semillas.csv` | 2 sets × DecisionTree/RandomForest | 4 + `__global__` |
+| `balanceo_SMOTE_vs_nada_f1_macro_cv` | `metricas_balanceo_semillas.csv` | 2 sets × KNN/HistGradientBoosting | 4 + `__global__` |
+
+Cada fila declara el sentido (`mayor_es_mejor`), `n_pares`, `gana_a`/`gana_b`/`empates` —los empates
+**no se reparten**—, las semillas concretas de cada lado, la media y los extremos de la diferencia, el
+`alcance` de la métrica, y `commits_origen` / `commit_agregador` / `fecha` como procedencia. La
+columna `decisiones_no_constantes` avisa de que el balanceo o la configuración ganadora **cambian
+entre semillas** dentro del bloque.
+
+**Qué se puede citar de él.** Las filas de la comparación de **firmas**: son `f1_macro` multiclase
+sobre los ataques de tipo conocido de D2, y son las que respaldan el «**8 de 10**» de `5.2`, `5.4` y
+`3.5` y el «**16 de 20**» global. La fila `__global__` se cita **rotulada como agregado de sus
+bloques**, no como una medida independiente.
+
+**Qué NO se puede citar.** Las dos comparaciones de **balanceo** (`40 de 40` y `23-17`): son
+`f1_macro` medio en **CV sobre D3** dentro del mini-experimento 4.3.4, criterio de **selección** y no
+resultado —así lo dice su propia columna `alcance`—. Y el «8 de 10» de esta tabla **no es** el «8 de
+10» de tiempos de entrenamiento de `:596-611`: allí está explicado por qué son cifras distintas y por
+qué no se citan la una por la otra; aquí no se repite.
+
+**Estado en disco, verificado el 2026-08-17:** escrito a las **`2026-08-17T18:56:18`** con
+`commit_agregador = 0276039-sucio`. El sello va **sucio** porque el código que emite este bloque aún
+no estaba commiteado al correr el agregador: es un **re-anclaje pendiente**, no un error de cifra.
+
 ---
 
 ## Decisión de diseño clave: ajuste del scaler
