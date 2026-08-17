@@ -45,6 +45,11 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > por cuatro redactores en paralelo) y el **ancla de `2.3.3` se verificó y era correcta**. **Siguen
 > vivos los puntos 2 y 4.** Detalle en `## Cerradas`, filas del 2026-08-16.
 >
+> **⚠️ CADUCADO EL 2026-08-17 — ESTA LISTA DE CUATRO NO DEJA NADA VIVO. NO SE VUELVE A DESPACHAR.**
+> Verificado contra disco: **los cuatro puntos están hechos.** El **2** lo cerró la **TANDA 19**; el
+> **1** y el **3**, el **2026-08-16**; y el **4 lo cerró T9 hoy, 2026-08-17** (su ficha cerrada está en
+> `## Cerradas`). Se conserva el texto **solo como historial**: no leas de aquí trabajo pendiente.
+>
 > **LO QUE FALTA PARA CERRAR LA TANDA 12, por orden:**
 > 1. **LA AUDITORÍA, que NO corrió.** Es lo que decide si el capítulo 3 es revisable. **Foco propio de
 >    un recorte, que la verificación mecánica NO cubre: que ninguna afirmación se haya quedado
@@ -64,8 +69,10 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > convertidos, **cero `[CITA: …]` vivos en la memoria**, y `Bibliografía.md` tocada una sola vez,
 > absorbiendo también el Hallazgo 10 y el descuadre 36/33. Detalle en `## Cerradas`.
 >
-> > **⚠️ TRAZA HISTÓRICA — SUPERADA POR LA TANDA 13. El valor vigente es `[74]` / 72 filas, fijado
-> > más abajo en este mismo bloque. No leas de aquí el contador.**
+> > **⚠️ TRAZA HISTÓRICA — SUPERADA. Ni el «`[68]`» de abajo ni el «`[74]` / 72 filas» de la Tanda 13
+> > son vigentes: el valor de HOY (2026-08-17, tras el pase en serie del `researcher`) es
+> > **`[1]`–`[8]` + `[10]`–`[77]`, 76 filas, `[9]` quemada, primer libre `[78]`**, contado contra
+> > `Bibliografía.md` y fijado en `CLAUDE.md`. No leas de aquí el contador.**
 > > **CENSO CONTADO CONTRA DISCO AL CERRAR LA SESIÓN (2026-08-16), no recordado.** El primer `[n]`
 > > libre **sigue siendo el `[68]`** (máximo dado de alta: `[67]`) — la Tanda 12 **no dio de alta
 > > ninguna entrada**, coherente con que no se inventó ningún `[n]`.
@@ -82,7 +89,8 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > > primer `[n]` libre SIGUE SIENDO EL `[68]` y `Bibliografía.md` sigue en 66 entradas**: la Tanda 12
 > > no dio de alta ninguna. **El «37» de arriba queda como traza, no como recuento vigente.**
 > > **⚠️ Y esta actualización también quedó superada horas después: la TANDA 13 convirtió los 36 y
-> > dio de alta `[68]`–`[73]`. Vigente: `[74]` / 72 filas.**
+> > dio de alta `[68]`–`[73]` (`[74]` / 72 filas). **Eso TAMPOCO es vigente**: hoy son 76 filas y el
+> > primer libre es el `[78]`.**
 > >
 > > **ACTUALIZACIÓN DEL 2026-08-16, tras la TANDA 13 (pase en serie de citas) — TODO ESTE CENSO QUEDA
 > > COMO TRAZA: los 36 marcadores están CONVERTIDOS y quedan CERO `[CITA: …]` vivos en la memoria.**
@@ -90,6 +98,14 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > > «CONTADOR GLOBAL DE CITAS», que es el único sitio donde se mantiene la cifra. Los `[CITA:` que
 > > queden en disco son **prosa sobre la convención** (`4.2` ×1, `Bibliografía.md` ×7) o **informe**
 > > (`99 Investigación/Reconstrucción…` ×11): **no los cuentes como pendientes.**
+> >
+> > **⚠️ AVISO PARA QUIEN VEA UNA CONTRADICCIÓN AQUÍ, PORQUE NO LA HAY.** Este «cero» del 2026-08-16
+> > es cierto **en su fecha**, y una ficha cerrada del **2026-08-17** registra el cierre de **tres
+> > `[CITA: …]` vivos**: no se contradicen. La **TANDA 17 redactó el capítulo 5** e introdujo tres
+> > marcadores nuevos (`5.0:160`, `5.1:86`, `5.4:78`) —lo correcto: ningún redactor inventó un `[n]`—
+> > y el pase en serie del `researcher` del 2026-08-17 los convirtió. **Estado de hoy, contado contra
+> > disco: CERO marcadores pendientes en la memoria.** El contador de `[CITA:` no es monótono: baja al
+> > convertir y **sube cada vez que se redacta prosa nueva**. Se recuenta, no se arrastra.
 >
 > ---
 >
@@ -111,7 +127,9 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 >
 > **TANDA 10 — CERRADA ENTERA el 2026-08-15, sus DOS piezas: A en `55ef3c6` y B en `3fadf13`.**
 > El «PIEZA B PENDIENTE» que este bloque decía **ya no es vigente**: se escribió en el ciclo siguiente
-> al corte de API. Detalle en `## Cerradas`. **Lo que la Tanda 10 deja vivo: T9 ejecuta el recorte**
+> al corte de API. Detalle en `## Cerradas`. **⚠️ CADUCADO EL 2026-08-17: T9 ESTÁ CERRADA (`198fab6`),
+> así que los dos «ejecuta / se reconsidera» que este bloque escribe EN PRESENTE ya ocurrieron.**
+> **Lo que la Tanda 10 dejó vivo (historial): T9 ejecuta el recorte**
 > (instrucciones en `99 Investigación/Datos repetidos en el capítulo 3.md`, anotadas dentro de su
 > ficha) y **tres hallazgos laterales con ficha propia** en `## Abiertas`.
 >
@@ -120,7 +138,9 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > **Con esto queda desbloqueado el cierre del capítulo 2**, que remitía dos veces a `3.1`.
 > Decisión técnica delegada y registrada: **`2.3.3:91` NO se repunta al ancla `3.1.5`** —se deja el
 > wikilink a nota, que es la convención del vault—, porque **T9 va a renumerar el capítulo 3** al
-> aplicar el recorte. Se reconsidera después de T9.
+> aplicar el recorte. Se reconsidera después de T9. **— T9 CERRADA el 2026-08-17 (`198fab6`): esa
+> reconsideración ya no está «después», está VENCIDA. Si no consta hecha, se recuenta contra disco
+> antes de darla por resuelta.**
 >
 > **Pieza B (HECHA, `3fadf13`):** el **análisis de datos repetidos del
 > capítulo 3**, que Francisco encarga expresamente a los agentes y que su **profesor motivó** al pedir
@@ -359,6 +379,9 @@ tres filas del 2026-08-14 de esta tanda.
   Dos pases de `auditor-ml`, **APTO** tras aplicar hallazgos.
 - **Vivos de esta tanda:** el **borrado físico** de `03 Desarrollo/` (necesita shell) y el recuento de
   `00 Índice TFG.md:104`, ambos con ficha propia abierta.
+  **⚠️ 2026-08-17: el borrado físico YA ESTÁ HECHO** —la carpeta no existe en disco—, así que de estos
+  dos **solo sigue vivo el recuento del índice**, y su alcance se ha **ampliado a nueve sitios** (ver
+  «Altas del pase de registro — 2026-08-17»).
 - **ABIERTO Y A CRITERIO DE FRANCISCO, no despachado:** el callout «**Punto actual**» de
   `00 Índice TFG.md:8` **no menciona `A.3`**, pero está **fechado el 2026-07-16**, así que es
   **historial** y la recomendación fue **no tocarlo**.
@@ -437,34 +460,133 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > la TANDA 19** (2026-08-17). Su ficha vive ya en `## Cerradas`. **Ojo: la palabra sigue viva FUERA
 > de `PIPELINE.md`, y eso es ficha NUEVA, más abajo.**
 
+> ### 🧾 ESTADO DEL ÁRBOL AL CERRAR EL 2026-08-17 — leer antes de buscar hashes
+>
+> **El árbol está limpio y este documento NO tiene ninguna fila esperando hash.** Los **cuatro ciclos
+> de hoy** están commiteados, cada uno con su commit de trabajo y su commit de estampado:
+> **`822e4c5`/`15665ae`** · **`198fab6`/`785fb40`** · **`8b5ce15`/`ac36b88`** · **`312c179`/`7f2645a`**.
+> Nadie tiene que ir a buscar un `—` pendiente en la tabla de `## Cerradas`.
+>
+> **Y del día anterior solo queda un 🟠 abierto:** el de **las 5 citas colgantes irreconstruibles**
+> (ficha más abajo, alta del 2026-08-15). Es **el único 🟠 que viene de antes de hoy** — los demás 🟠
+> que aparecen en `## Abiertas` nacieron el 2026-08-17.
+
+### Altas del pase de registro — 2026-08-17
+
+> **Ocho fichas que hasta ahora solo existían en la conversación.** Se ponen en disco porque hoy han
+> caído cinco agentes por límite de API: **lo que no está aquí se vuelve a preguntar.** Ninguna se
+> cierra —**ninguna está ejecutada**— y **ninguna mueve una cifra publicada.** **Fichar no es
+> resolver: aquí no se ha corregido nada.**
+
+- [ ] 🟠 **SÉPTIMO re-anclaje de sello — y lo generó el ciclo de Código de HOY** · Informe · `redactor-tfg`
+  Alta el **2026-08-17**. `4.2:269` sigue declarando **`a8c20e9-sucio`** como «sello de corrida» de los
+  dos `*_validation_report.txt`, y **`4.3:128` remite a `4.2`**, así que arrastra el mismo dato viejo.
+  **En disco esos informes llevan ya `ac36b88`** —re-anclados en `312c179`, corridas
+  `2026-08-17T20:42:19` y `20:42:33`—. Hay además un **`[!todo] Hash del commit de cierre, pendiente de
+  sellar` en `4.2:266`**. El ciclo **cerró el artefacto y dejó la prosa desanclada**: es el **séptimo
+  caso del mismo patrón**. **Va ANTES de que nadie vuelva a tocar esas dos notas.** Regla del patrón:
+  se re-ancla **la prosa**; el sello impreso **dentro** del artefacto no se retoca.
+
+- [ ] 🟠 **Deuda de CIFRA en `5.4:129` — las dos celdas de KNN del eje SMOTE-vs-nada** · Informe · `redactor-tfg`
+  Alta el **2026-08-17**. Las dos celdas de KNN del eje **SMOTE vs nada** no están publicadas en `5.2`
+  como cifra individual: hay que **volcarlas de `Resultados/metricas_balanceo.csv`**. Es la **única
+  deuda de dato real que queda en el vault** y toca el eje de balanceo de `4.3.4` (Decisión 1 de la
+  Fase 0), donde KNN e HistGradientBoosting no admiten `class_weight`.
+
+- [ ] 🟡 **El capítulo 1 es el hueco de completitud que queda, y solo está fichado EN PARTE** · Informe · `redactor-tfg`
+  Alta el **2026-08-17**. Tamaños contados en disco: **`1.0 Sinopsis` 478 B** (un único párrafo de
+  anuncio), **`1.3 Objetivo` 705 B** (cinco frases-párrafo sin hilo), `1.4 Estructura` 1,3 KB, `1.1` y
+  `1.2` ~2,1 KB cada una. Contraste: las 14 notas del capítulo 2 van de **64 a 216 líneas** y `6.2`
+  tiene **339**. **Hoy solo hay fichas para `1.4` y para `1.1:12`**: `1.0`, `1.2` y `1.3` no tienen
+  ninguna. **No se abre alcance nuevo desde aquí** — queda registrado para que Francisco decida si el
+  capítulo 1 entra como tanda propia.
+
+- [ ] 🟡 **`1.4 Estructura` omite el capítulo 6 entero y atribuye mal las conclusiones** · Informe · `redactor-tfg`
+  Alta el **2026-08-17**. Tres defectos, verificados: **(1)** enumera del **1 al 5 y se detiene** — sin
+  Conclusiones, sin Líneas futuras, sin Apéndices; **(2)** **atribuye al capítulo 5 el «sacar las
+  conclusiones»**, que es del **6**; **(3)** la frase del capítulo 4 **termina sin punto, a media idea**.
+  Anotado al margen: **todo el capítulo 1 tiene solo TRES citas** (`[1]`, `[2]` y `[3]`).
+
+- [ ] 🟡 **El campo `estado:` del frontmatter está sin mantener y MIENTE** · Informe · `redactor-tfg`
+  Alta el **2026-08-17**. Recuento contra disco: **14 `redactada`** (todas del capítulo 2), **2
+  `pendiente`** y **29 `borrador`** — y entre esos 29 están **`5.0`–`5.4`, `6.1`, `6.2`, `4.3` y los
+  tres apéndices**, que están **escritos, auditados, con cifras volcadas y citas asignadas**. Un agente
+  que se fíe del campo **concluirá que el capítulo 5 está sin hacer**. Es la **misma clase de
+  divergencia registro↔disco que ha mordido cuatro veces hoy**, pero en frontmatter.
+
+- [ ] 🟡 **AMPLIACIÓN de la ficha `00 Índice TFG.md`: está desfasado en NUEVE sitios, no en uno** · Informe · `redactor-tfg`
+  Alta el **2026-08-17**. La ficha existente (más abajo, la del recuento «43 notas» frente a **44
+  wikilinks**) **cubre solo su línea de totales**. En disco hay ocho desfases más: **`:44`, `:49-52` y
+  `:56-58`** marcan **nueve secciones** como «✍ teoría — guion propuesto» cuando en disco están
+  `estado: redactada` y en prosa; **`:72`** dice que la teoría de `4.2` está pendiente cuando **`4.2:8`
+  y `:18` declaran lo contrario**; **`:89`** marca `6.2` como borrador pendiente cuando tiene **339
+  líneas**. **El alcance es cuadrar el índice ENTERO**, no su línea de totales.
+
+- [ ] 🟡 **`A.3:648` — `[!todo]` «Qué faltaría para cerrarlo», sobre algo que NO se va a hacer** · Informe · `redactor-tfg`
+  Alta el **2026-08-17**. El `[!todo]` declara una **línea futura que no se hará**. Decisión pequeña y
+  binaria: **o se marca como límite declarado** (que es lo que de hecho es) **o se retira**. No requiere
+  medir nada.
+
+- [ ] 🟡 **Tercera nota vacía del vault, ahora CON NOMBRE: `Lecture 1.md` (0 bytes)** · — · `cronista`
+  Alta el **2026-08-17**. Es
+  **`Obsidian_TFG_Vault/APUNTES SOBRE CS229 STANFORD ML LECTURES/Lecture 1.md`, 0 bytes**: ajena al TFG
+  y **no indexada**. Es la **tercera «vacía»** que la ficha del recuento de notas contaba **sin
+  nombrar**. Registrada solo para que deje de ser anónima: **qué se hace con ella lo decide Francisco**
+  — está fuera del árbol de la memoria.
+
 ### Altas del pase en serie del `researcher` — 2026-08-17
 
 > **CUATRO decisiones que quedan para Francisco.** El `researcher` las **marcó en vez de
 > inventarlas**, que es la disciplina correcta: la que no se puede establecer con honestidad se
 > señala, no se rellena. **Ninguna es bloqueante** y **ninguna mueve una cifra publicada.**
 > **Fichar no es resolver: aquí no se ha corregido nada.**
+>
+> **LAS CUATRO ESTÁN YA RESPONDIDAS — Francisco decidió el 2026-08-17, y en las cuatro eligió la
+> opción recomendada.** Las fichas **siguen ABIERTAS**: falta **aplicarlas** en `Bibliografía.md` y en
+> las notas, y eso lo ejecuta el `researcher` en un pase en serie. **Ya no hay nada que preguntar:
+> quien las lea, las aplica.** La respuesta concreta va escrita dentro de cada ficha.
 
-- [ ] 🟡 **P4 · falta aval de nivel 1 para `1.2:14`** · Informe · **decide Francisco**, ejecuta `researcher`
+- [ ] 🟡 **P4 · falta aval de nivel 1 para `1.2:14`** · Informe · **DECIDIDO — pendiente de aplicar** · ejecuta `researcher`
   Alta el **2026-08-17**. La afirmación de `1.2:14` no tiene hoy fuente primaria que la sostenga.
   O se ancla a un aval de nivel 1, o se reformula para decir solo lo que la fuente disponible
   respalda.
+  **DECISIÓN DE FRANCISCO (2026-08-17): se ancla a la FUENTE PRIMARIA.** El párrafo de `1.2` sobre
+  Martin Roesch y Snort (1998) se respalda con el paper original: **M. Roesch, «Snort — Lightweight
+  Intrusion Detection for Networks», LISA'99, USENIX**. Razón registrada: es fuente primaria, del
+  propio autor, del año que la nota cita, y USENIX la sirve **gratis y de forma estable** — el mismo
+  criterio de nivel 1 que ya cumplen `[2]` Anderson y `[3]` Denning, **citadas en ese mismo pasaje
+  mientras Snort se quedaba sin `[n]`**. Pendiente: alta en `Bibliografía.md` y marcador en `1.2:14`.
 
-- [ ] 🟡 **P5 y P6 · dos ediciones/versiones sin fijar: Stallings `[8]` y CCN-STIC-401 `[10]`** · Informe · **decide Francisco**
+- [ ] 🟡 **P5 y P6 · dos ediciones/versiones sin fijar: Stallings `[8]` y CCN-STIC-401 `[10]`** · Informe · **DECIDIDO — pendiente de aplicar** · ejecuta `researcher`
   Alta el **2026-08-17**. **P5:** la edición de Stallings `[8]` sigue sin fijar (4.ª vs 5.ª) — y `[8]`
   es uno de los 8 libros con localizador obligatorio, así que la página depende de qué edición se
   elija. **P6:** la versión de la CCN-STIC-401 `[10]` tampoco está fijada. **Decide Francisco: no se
   inventa ninguna de las dos.**
+  **DECISIÓN DE FRANCISCO (2026-08-17): las dos se fijan A LO QUE HAY EN DISCO.** **P5:** `[8]`
+  Stallings a la **4.ª ed., Pearson, 2018** (ISBN 978-0-13-479410-5, que **ya consta** en la entrada).
+  **P6:** `[10]` **CCN-STIC-401 a la versión que sirve hoy el CCN**, con **fecha de consulta**.
+  Con esto **se desbloquea el localizador de `[8]`**, que dependía de la edición.
 
-- [ ] 🟡 **`[76]` Quiñonero-Candela *et al.* · página del cap. 1 no establecida Y reserva de AUTORÍA** · Informe · **decide Francisco**
+- [ ] 🟡 **`[76]` Quiñonero-Candela *et al.* · página del cap. 1 no establecida Y reserva de AUTORÍA** · Informe · **DECIDIDO — pendiente de aplicar** · ejecuta `researcher`
   Alta el **2026-08-17**, con el alta de la entrada. Son **dos cosas**: **(1)** la página exacta del
   capítulo 1 **no se pudo establecer** —MIT Press devuelve 403—, y **se marcó, no se inventó**;
   **(2)** la nota **atribuye el capítulo a los editores**, pero su autor es **Storkey**. Francisco
   decide si la referencia **se desdobla como capítulo** con su autor propio.
+  **DECISIÓN DE FRANCISCO (2026-08-17): SÍ, se DESDOBLA como capítulo.** Forma acordada: **A. Storkey,
+  «When Training and Test Sets Differ», en *Dataset Shift in Machine Learning*, J. Quiñonero-Candela,
+  M. Sugiyama, A. Schwaighofer y N. D. Lawrence, Eds. Cambridge, MA: MIT Press, 2009.** Razón doble:
+  es como **IEEE trata un capítulo de volumen editado**, y **el rango de páginas del capítulo sustituye
+  a la página exacta** que MIT Press no deja verificar (403). Corrige además una **atribución falsa**:
+  el capítulo lo escribió **Storkey**, no los editores.
 
-- [ ] 🟡 **`[54]` Molnar · edición sin fijar — NO SE TOCÓ en este pase** · Informe · **decide Francisco**
+- [ ] 🟡 **`[54]` Molnar · edición sin fijar — NO SE TOCÓ en este pase** · Informe · **DECIDIDO — pendiente de aplicar** · ejecuta `researcher`
   Anotado el **2026-08-17**. **No se duplica ficha: la suya vive más abajo, con el alcance ya reducido
   tras la Tanda 13.** Se registra aquí solo para que conste que el pase en serie **la dejó
   deliberadamente intacta**, por ser decisión de Francisco.
+  **DECISIÓN DE FRANCISCO (2026-08-17): se fija a la 2.ª EDICIÓN, 2022** — la que cita la literatura,
+  frente a la 3.ª que sirve hoy la web. **Con esto queda determinada su página** para el uso de
+  `2.3.3`, que era lo único que la ficha reducida dejaba pendiente. **Al aplicarla, actualizar también
+  el aviso de `CLAUDE.md` que la declara «sin fijar»** — pero eso lo decide quien mantenga ese fichero.
 
 ### Altas de la TANDA 19 — 2026-08-17
 
@@ -506,6 +628,10 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   Alta el **2026-08-17**. Referencia con línea **desfasada** dentro del propio registro. Queda
   fichado como **patrón a vigilar**, no como incidencia suelta: las referencias `fichero:línea` de
   este documento **se recuentan contra disco antes de repetirlas**.
+  **CADUCADA en su parte concreta (2026-08-17): la sede `3.3:29` está RESUELTA en disco.** Lo que sigue
+  vivo es **solo el patrón**, y hoy ha vuelto a morder dos veces más: el `[!todo]` de los seis ítems
+  no-FT que este registro situaba en `A.3:574` **está en `A.3:681`**, y `3.3:42`→`3.3:29`. **Tres veces
+  el mismo fallo en un día.**
 
 > **El 🟡 «`Bibliografía.md:177` — el localizador de `[49]` apunta a `2.3.2.5`» queda CERRADO el
 > 2026-08-17** en el pase en serie del `researcher`, junto con los **tres `[CITA: …]` vivos**. Su
@@ -709,6 +835,9 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   - **Dos `> [!todo]` vivos DENTRO de la nota, ninguno resoluble hoy:**
     - `A.3:574` — **caracterización de los seis ítems no-FT** del checklist de Pineau. Requiere el
       **checklist original**; sin él, nombrarlos sería inventarlos. Depende de acceso a la fuente.
+      **⚠️ LÍNEA DESFASADA, recontada el 2026-08-17: en disco está en `A.3:681`.** El `[!todo]` sigue
+      vivo; lo caducado es **el número de línea**. Tercera vez en el mismo día que una referencia
+      `fichero:línea` de este registro señala una línea desplazada.
     - ~~`A.3:159` — **remisión a `5.0`**, que **no existe todavía**: es **T5**.~~ **T5 está CERRADA
       el 2026-08-15 y `5.0` YA EXISTE**, así que la precondición desapareció — pero **el `[!todo]`
       sigue en disco**, ahora **desplazado a `A.3:176-180`** y **afirmando en presente que `5.0` no
@@ -1047,6 +1176,10 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
     esas fuentes.** El único hit fuera de `99 Investigación/` es «UNSW-NB15» en el **guion** de
     `2.3.2`, y es **coincidencia de cadena** (habla del panorama de datasets, no de las columnas de
     tiempo). **Kim et al. 2014 NO está en `3.2.2`**: esa cita es **trabajo pendiente de T9**.
+    **⚠️ CADUCADO EL 2026-08-17 — Y NO LO SUSTITUYAS POR SU CONTRARIO. T9 está CERRADA (`198fab6`),
+    así que «pendiente de T9» ya no dice nada; pero la Tanda 12 arrastró además un «Kim et al.
+    duplicado», así que el estado real de esa cita en `3.2.2` **hay que VERIFICARLO contra disco antes
+    de repetirlo**. No lo des por cierto ni por falso desde este registro.**
   - **Consecuencia: el marcado NO se puede hacer ahora**, porque las notas que citarán esas fuentes
     **no están escritas**. Se convierte en **REGLA PERMANENTE para el `redactor-tfg`**: toda nota que
     cite una de esas fuentes **nace con un marcador VISIBLE DENTRO de la nota** —
@@ -1382,6 +1515,9 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   - **La MITAD DE TEXTO está HECHA (2026-08-14, Tanda 3):** la frase falsa de `:101-102` quedó
     corregida. **Queda vivo solo el BORRADO FÍSICO de la carpeta**, que el `redactor-tfg` no puede
     hacer —no tiene shell—: necesita un agente con shell o a Francisco.
+  - **⚠️ CADUCADA EL 2026-08-17: `Obsidian_TFG_Vault/03 Desarrollo/` YA NO EXISTE en disco, verificado.**
+    El borrado físico que esta ficha dejaba vivo **está hecho**. No queda nada que despachar aquí; la
+    ficha se conserva para que nadie vuelva a abrir el mismo encargo. **La retira el usuario, no yo.**
 
 - [ ] **`00 Índice TFG.md:106` declara un recuento que no cuadra con su propio listado** (🟡) · Informe · `redactor-tfg`
   Dice «**de 43 notas**» con un desglose (5+6 borrador, 9 teoría, 10 pendiente de volcado, 10
