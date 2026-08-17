@@ -49,8 +49,9 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > 1. **LA AUDITORÍA, que NO corrió.** Es lo que decide si el capítulo 3 es revisable. **Foco propio de
 >    un recorte, que la verificación mecánica NO cubre: que ninguna afirmación se haya quedado
 >    HUÉRFANA** —lo que se quita de un sitio tiene que seguir vivo en su sede canónica—.
-> 2. **Completar el barrido de solapes del capítulo 2** (sigue cubriendo solo `2.1.6` y `2.2.4`).
->    Va **antes** de escribir remisiones del 3 al 2, o se remitirá a sitios que luego cambian.
+> 2. ~~**Completar el barrido de solapes del capítulo 2**~~ → **HECHO Y CERRADO en la TANDA 19
+>    (2026-08-17):** 12 notas revisadas, 6 solapes corregidos. **Ya se pueden escribir las remisiones
+>    del 3 al 2.**
 > 3. **Confirmar si se reconsideró el ancla de `2.3.3:91`** al renumerar el capítulo 3. Era el punto 3
 >    del encargo y no consta que se cerrara.
 > 4. Comprobar contra el informe `99 Investigación/Datos repetidos en el capítulo 3.md` (`3fadf13`)
@@ -422,19 +423,54 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 
 ## Abiertas
 
-- [ ] 🟡 **`PIPELINE.md:925` llama «determinista» a un recuento que se apoya en `ac496cb`** · Código · `ml-implementador` → `auditor-ml`
-  Alta el **2026-08-17** (Tanda 18). La frase es «**Como el recuento de épocas resultó ser
-  determinista** (mismos 162 y 128 en las dos corridas que lo registran…)». El problema no es el
-  dato —162 y 128 son los que hay— sino **la palabra**: «determinista» afirma reproducibilidad, y
-  **una de las dos corridas que lo sostienen, `ac496cb`, NO es reproducible desde git** —sus CSV
-  nunca se commitearon y los sobrescribió `1163c90`—. El propio `PIPELINE.md` lo marca con ⚠ nueve
-  líneas más abajo (`:939` y la tabla de `:934-937`), así que **el documento se contradice consigo
-  mismo en la misma sección**.
-  **`A.3` (`:417-431`) y `4.4` ya evitan esa palabra** y declaran la salvedad; **`PIPELINE.md` es el
-  único sitio donde queda**, y es la fuente que las dos notas citan como respaldo.
-  **Alcance: cambiar la palabra, no el dato ni la conclusión.** Basta con enunciarlo como
-  «coincidente en las dos corridas que lo registran, una de ellas no reproducible desde git». **Cero
-  `fit`, cero cifras publicadas movidas.**
+> **El 🟡 «`PIPELINE.md` llama determinista a un recuento que se apoya en `ac496cb`» queda CERRADO en
+> la TANDA 19** (2026-08-17). Su ficha vive ya en `## Cerradas`. **Ojo: la palabra sigue viva FUERA
+> de `PIPELINE.md`, y eso es ficha NUEVA, más abajo.**
+
+### Altas de la TANDA 19 — 2026-08-17
+
+> Cinco fichas, **ninguna bloqueante**, **ninguna mueve una cifra publicada**. **Fichar no es
+> resolver: aquí no se ha corregido nada.**
+
+- [ ] 🟠 **El «8 de 10» PAREADO no lo emite ningún script** · Código · **decide Francisco**, ejecuta `ml-implementador` → `auditor-ml`
+  Alta el **2026-08-17**. Sedes verificadas contra disco: **`5.2:62`, `5.2:107`, `5.4:15` y
+  `3.5:40`**. Es la formulación **PORTANTE** —`5.2:107` dice literalmente que es «**la única que debe
+  usarse al afirmar que un algoritmo es mejor que el otro**»— y sale de un **conteo a mano**.
+  **Verificado cierto**, pero es el **precedente exacto del «13 de 98»**, y aquí **AGRAVADO**: quince
+  líneas más abajo, `5.2:122` argumenta que el 13 es citable **precisamente porque lo calcula el
+  agregador**. La nota se sostiene sobre un criterio que ella misma no cumple.
+  **Igual el 40/40** (`5.2:171`, `:181`), ya marcado con `[!todo]` en `5.2:173`.
+  ⛔ **Decide Francisco: o lo emite `agregar_semillas.py`, o se retira la formulación.**
+
+- [ ] 🟡 **`~52` para un número que el script ahora emite EXACTO** · Informe · `redactor-tfg`
+  Alta el **2026-08-17**, **misma familia que el «~17»**. `u2r` tiene **52** muestras en D3, y desde la
+  Tanda 16 lo emite `specialized_nsl_kdd_composicion_d3.csv`: la virgulilla ya no tiene excusa.
+  Sedes en el vault: **`4.2:91`, `5.2:52`, `5.4:15`, `2.1.6:149`**. **`4.2` se contradice consigo
+  misma**: `:91` dice `~52` y `:114-116` publica el **52 exacto**.
+  **AMPLIACIÓN del recuento hecha por el `cronista` al registrar, contra disco: hay TRES sedes más
+  fuera del vault** —`resumen-de-decisiones.md:103`, `next-steps.md:493` y `:550`— y **una en
+  `99 Investigación/clasificadores-tabulares-y-arquitecturas-hibridas.md:93`** (informe, no memoria).
+  **Las de `resumen-de-decisiones.md` y `next-steps.md` NO se tocan sin autorización expresa de
+  Francisco**, igual que hizo falta para el «~17». **Falso positivo confirmado: `4.2:131` (`~52,5 %`).**
+
+- [ ] 🟡 **La palabra «determinista» sigue viva FUERA de `PIPELINE.md`, y allí está PEOR: sin salvedad** · Código · `ml-implementador` → `auditor-ml`
+  Alta el **2026-08-17**, residuo del cierre del 🟡 de `PIPELINE.md`. Sedes: **`anomalias.py:389` y
+  `:460`**, **`agregar_semillas.py:226` y `:245`** —y esta última **regenera
+  `Resultados/dispersion_semillas.md:154`, que es artefacto citable y versionado**, así que corregir
+  la prosa sin corregir el script lo repone en la siguiente corrida—.
+  **RECONTADO CONTRA DISCO por el `cronista` al registrar: `config.py:728` NO tiene la palabra** —sus
+  únicas coincidencias son `:806` y `:825`, «suciedad **indeterminada**», que es otra cosa—. **Contar
+  antes de sustituir.** Los usos de `anomalias.py:190`, `program.py:310`/`:528`,
+  `figura_nids_bloques.py:39` y `4.3:86`/`:92` son **legítimos** (orden de vocabulario, algoritmo sin
+  `random_state`): **no se tocan**.
+  ⛔ **`resumen-de-decisiones.md:633` es el TÍTULO de una decisión cerrada** —«T22 — `n_iter_total_grid`
+  es determinista»—, con su cuerpo en `:636` y su eco en `:1154`: **corregirlo es REABRIR una
+  decisión, y eso es de Francisco, no de un agente.**
+
+- [ ] 🟡 **`Bibliografía.md:177` — el localizador de `[49]` Bendale y Boult apunta a `2.3.2.5`, y en disco está en `2.3.2.4`** · Informe · `researcher`
+  Alta el **2026-08-17**. **Va EN SERIE y merece ciclo propio**: se junta con los **tres `[CITA: …]`
+  vivos** de `5.0:160`, `5.1:86` y `5.4:78`. `Bibliografía.md` **solo la escribe el `researcher`** y
+  **nunca en paralelo**.
 
 - [ ] 🟠 **5 de las 47 citas colgantes NO se han podido reconstruir — falta criterio de Francisco** · Informe · **decide Francisco**, ejecuta `researcher`
   Alta el **2026-08-15**, residuo de la reparación de las 47 citas colgantes (ver `## Cerradas`, misma
@@ -504,7 +540,13 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > bloqueada dejaba a medias un entregable del encargo); **la bibliografía final en Zotero/IEEE sigue
 > siendo de Francisco** (trabajo mecánico en su máquina).
 
-- [ ] **T4 · Nivel 2: 10 semillas** · Código · `ml-implementador` → `auditor-ml` → `ejecutor-experimentos`
+- [x] **T4 · Nivel 2: 10 semillas** · Código · `ml-implementador` → `auditor-ml` → `ejecutor-experimentos`
+  > ✅ **CERRADA EN LA TANDA 19 (2026-08-17).** Su última condición viva —que `5.2`/`5.4`
+  > **consumieran** la banda, no solo que existieran— se **verificó contra disco celda a celda**: la
+  > banda está genuinamente consumida y el 🔴 histórico *folds vs semillas* **NO ha reaparecido**.
+  > Veredicto **APTO**. Lo que sigue debajo es el historial de la ficha, no trabajo pendiente.
+  > **Resto ABIERTO que NO es de esta ficha:** el «8 de 10» pareado no lo emite ningún script, con
+  > fila propia en `## Abiertas`.
   10 semillas × **5 scripts** (`cascada_invertida.py` entra también) × 2 sets de características.
   **Duración medida del barrido: 2026-08-12T22:09 → 2026-08-13T00:38, ≈2 h 29 min** — es la única
   cifra de duración citable.
@@ -730,8 +772,7 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
       así que el destino del wikilink no se movió. **La condición que motivaba la reconsideración
       nunca llegó a darse.** Ficha en `## Cerradas`, 2026-08-16.
     - **LO QUE SIGUE VIVO DE T9 tras la TANDA 12** (la auditoría ya corrió; ver `## Cerradas`): el
-      **barrido de solapes del capítulo 2**, que sigue cubriendo solo `2.1.6` y `2.2.4` (ficha propia),
-      y la **comprobación contra `99 Investigación/Datos repetidos en el capítulo 3.md` de qué solapes
+      ~~**barrido de solapes del capítulo 2**~~ —**CERRADO en la TANDA 19, 2026-08-17**— y la **comprobación contra `99 Investigación/Datos repetidos en el capítulo 3.md` de qué solapes
       de los 15 quedan sin aplicar** — `3.1` no se tocó, y hay que **confirmar** si eso es correcto
       (`3.1.5` es nueva y está exenta) en vez de darlo por bueno.
 
@@ -739,10 +780,12 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   > ✅ **CERRADA EN LA TANDA 17 (2026-08-17, `9bcfe1f`).** Su último bullet vivo era el del «17», de
   > track mixto, y se cerró ahí: verificado contra disco que son **17 tipos 0-day y 3.750 filas de
   > D2**, con la ficha mintiendo en dos sitios —`firmas.py:157` era `:174`, y los supuestos «~17» de
-  > `.gitignore` y `README.md` eran **`~170 MB`**—. **Queda un resto ABIERTO que NO pertenece a esta
-  > ficha y vive en su propia fila de `## Cerradas`:** las **7 ocurrencias del «~17»** en
-  > `resumen-de-decisiones.md` (4) y `next-steps.md` (3), con la excepción **ya autorizada por
-  > Francisco** y sin aplicar porque el agente cayó por límite de API.
+  > `.gitignore` y `README.md` eran **`~170 MB`**—. ~~**Queda un resto ABIERTO** … las 7 ocurrencias
+  > del «~17».~~ → **APLICADO Y CERRADO en la TANDA 19 (2026-08-17)**: las **7 ocurrencias**
+  > (4 en `resumen-de-decisiones.md`, 3 en `next-steps.md`) están sustituidas, con la **nota fechada**
+  > registrando la excepción expresa de Francisco (`resumen-de-decisiones.md:1388-1396`). **Verificado
+  > contra disco: cero «~17» en el árbol**; los `~170 MB` de `.gitignore` y `README.md` siguen
+  > intactos, como debe ser. Ficha en `## Cerradas`.
   > Lo que sigue debajo es el historial de la ficha, no trabajo pendiente.
   >
   > **AVANZADA, NO CERRADA en la TANDA 14 (2026-08-16): hechos 2 de sus 5 bullets** —«Las tres
@@ -773,9 +816,11 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
     repo**: se vacuna, no se corrige. Escribir que **D2 es KDDTest+ completo**, requisito de entrada a
     toda comparación externa. Y el matiz de los baselines canónicos: se entrenaron con **el primer
     20 % de KDDTrain+**.~~ → **HECHO en la TANDA 14, 2026-08-16.**
-  - `4.2` · **el 17**: unificar «~17» → «17» (aparece con virgulilla en `EL_FUTURO.md:20`,
-    `resumen-de-decisiones.md:65,143`, `baseline.py:12`, `firmas.py:157`, `Guia_ML` ×3,
-    `next-steps.md` ×3, `2.1.6:55`) y añadir la nota de procedencia: **17 contados sobre
+  - ~~`4.2` · **el 17**: unificar «~17» → «17»~~ → **HECHO Y CERRADO** (Tandas 17 y 19).
+    **El censo de sedes que esta viñeta traía queda RETIRADO por caducado POR SEGUNDA VEZ**: decía
+    `resumen-de-decisiones.md:143` (era `:153`), `2.1.6:55` (ya no lo tenía) y `firmas.py:157` (era
+    `:174`). **Recontado contra disco el 2026-08-17: CERO ocurrencias de «~17» en todo el árbol.** No
+    se copia una lista nueva: si vuelve a hacer falta, se cuenta. Historial y nota de procedencia: **17 contados sobre
     `metricas_hibrido_0day.csv`; la cifra 14 de Tavallaee et al. se refiere a KDD'99, no a
     NSL-KDD**. El 17 se justifica **por medición en disco, nunca por cita**.
   - ~~`4.2` · **por qué NSL-KDD**, con Goldschmidt y Chudá (el argumento positivo del criterio
@@ -1424,12 +1469,9 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > **La ficha «`4.5:39` es INEXACTO para KNN» queda CERRADA el 2026-08-16 en la TANDA 14**, con las
 > cifras exactas que ella misma exigía. Detalle en `## Cerradas`.
 
-- [ ] **El barrido de solapes del capítulo 2 quedó INCOMPLETO: solo cubre `2.1.6` y `2.2.4`** (🟡) · Informe · `redactor-tfg`
-  Alta el **2026-08-15**, **hueco DECLARADO dentro del propio informe de la pieza B**, no descubierto
-  después. El análisis de datos repetidos barrió el capítulo 3 entero pero del capítulo 2 solo miró
-  esas dos notas, y ya con ese alcance parcial apareció **un solape cap. 2 ↔ cap. 3** (`2.2.4.5` ↔
-  `3.2.2`) y **cuatro sitios más de *data snooping***. Completarlo **antes o durante T9**: si T9
-  recorta el capítulo 3 remitiendo a un capítulo 2 sin barrer, se remite a texto que también duplica.
+> **El 🟡 «el barrido de solapes del capítulo 2 quedó INCOMPLETO» queda CERRADO en la TANDA 19**
+> (2026-08-17): revisadas las 12 notas que faltaban, 6 solapes corregidos con sede canónica y
+> remisión. Su ficha vive ya en `## Cerradas`. **Con él cae el bloqueante declarado de la Fase 5.**
 
 ### Residuos y hallazgos de la TANDA 11 — altas del 2026-08-15
 
@@ -1704,6 +1746,12 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-17 | Informe | **TANDA 19 — cae el BLOQUEANTE DECLARADO DE LA FASE 5.** Cierra **cuatro fichas**: el **barrido de solapes del capítulo 2**, el **🟡 «determinista» de `PIPELINE.md`**, el **⛔ «~17»** y **T4**. Ficheros: `Implementacion/PIPELINE.md`, `resumen-de-decisiones.md`, `next-steps.md` y, en el vault, `2.1.1`, `2.2.2`, `2.2.3`, `2.3.2`, `5.2`, `5.4`. **Tres pases de auditoría, todos resueltos** (2 APTO, 2 APTO CON CAMBIOS aplicados). **Cero `[n]` nuevos o renumerados, cero cifras publicadas movidas, cero `fit`.** Censo contado contra disco: **74 filas, primer libre `[76]`** — coincide con `CLAUDE.md`. **Deja CUATRO fichas nuevas, ninguna bloqueante** | — |
+| 2026-08-17 | Informe | **El barrido de solapes del capítulo 2 — CERRADO, y era el bloqueante declarado de la Fase 5.** Su razón de ser, escrita desde el 2026-08-15: **recortar el capítulo 3 remitiendo a un capítulo 2 sin barrer es remitir a texto que también duplica.** Revisadas **las 12 notas que faltaban** (el barrido previo solo cubría `2.1.6` y `2.2.4`); **6 solapes corregidos con sede canónica fijada y remisión**, en **`2.1.1`, `2.2.2`, `2.2.3` y `2.3.2`**. **`2.3.3` no se tocó**: ya iba en la Tanda 18 (Axelsson realineado). Auditoría de **coherencia ENTRE notas**: los 6 recortes **siguen vivos en su sede** —el fallo propio de un recorte es la afirmación huérfana—, **wikilinks y anclas verificados** | — |
+| 2026-08-17 | Código | **🟡 `PIPELINE.md` «determinista» — CERRADA, y la auditoría cazó que la palabra SOBREVIVÍA al primer arreglo.** La ficha señalaba `:925`; el arreglo se aplicó en **`:945` y `:1379`**, y `:945` era **la frase titular en negrita, la que un tercero copiaría a la memoria**. Se cambió **la palabra, no el dato**: el **162/128**, la tabla, la conclusión y los factores quedan **intactos**. **La palabra sigue viva FUERA de `PIPELINE.md` y allí está PEOR, sin salvedad**: ficha nueva en `## Abiertas` | — |
+| 2026-08-17 | — | **⛔ El «~17» — CERRADO: las 7 ocurrencias aplicadas** (4 en `resumen-de-decisiones.md`, 3 en `next-steps.md`). **Sobraba el «~», no el número: el 17 es EXACTO.** Añadida la **nota fechada** (`resumen-de-decisiones.md:1388-1396`) registrando que se reescribió texto previo **por excepción expresa de Francisco del 2026-08-16** y que **la Decisión 3 sigue vigente para todo lo demás** — sin esa nota parecería una violación de su propia regla. **Falsos positivos `~170 MB` intactos**, verificado. **Recontado contra disco al cerrar: CERO «~17» en todo el árbol** | — |
+| 2026-08-17 | Código | **T4 · CERRADA — y se cerró VERIFICANDO la condición, no dándola por buena.** Lo exigido no era que `5.2`/`5.4` existieran sino que **CONSUMIERAN la banda**: contrastado **celda a celda** contra `dispersion_semillas.csv`, **la banda SÍ está genuinamente consumida**, y el **🔴 histórico *folds vs semillas* NO ha reaparecido** —era el error que T4 existe para evitar—. De los **5 hallazgos** de su verificación se aplicaron **3**: los punteros de `5.2:146` y `5.2:184`, y la banda y la media en `5.4`. Veredicto final **APTO** | — |
+| 2026-08-17 | Código | **`PIPELINE.md:596-611` — desambiguado un HOMÓNIMO que iba a morder.** El «8 de 10» de la sección de tiempos son **pares de tiempo de ENTRENAMIENTO intra-corrida**, y el «8 de 10» del capítulo 5 son **semillas en que RandomForest gana en `f1_macro`**: **dos recuentos distintos con el mismo aspecto**. Ahora lleva `[!warning]` explícito. **No es cosmética**: la formulación pareada del capítulo 5 tiene ficha 🟠 abierta justo por no estar emitida por script, y confundirla con la de tiempos habría dado por respaldada la que no lo está | — |
 | 2026-08-17 | Informe | **TANDA 18 — cierra T19 y limpia la afirmación falsa que la propia ficha sembraba.** Cuatro ficheros del vault, **cero código**: `4.4 …anomalías.md`, `3.2 Arquitectura del sistema.md`, `2.3.3 Límites y consideraciones éticas.md` y `Apéndices/A.3 Ficha del sistema.md`. **Cero `[n]` nuevos, cero `[CITA: …]` nuevos, cero cifras publicadas movidas.** Auditada en **tres pases por seis correctores**, con los hallazgos aplicados. Censo de citas **intacto: 74 filas, primer libre `[76]`** | `e1bda55` |
 | 2026-08-17 | Informe | **T19 · CERRADA — `4.4` era la CUARTA y última sede, y la única que aún contradecía a `5.1`.** Su tabla publicaba **`5,0 s`** para IsolationForest cuando `5.1` ya publica **3,51 s de entrenamiento y 5,27 s de bloque**; la contradicción **la había creado el arreglo de la Tanda 17** al corregir un lado y no el otro. Tabla **verificada celda a celda** contra `Resultados/metricas_anomalias.csv`. Las otras tres sedes (`5.1:44-47`, `5.1:58`, `5.2:59`) se habían cerrado en la Tanda 17 (`9bcfe1f`) | `e1bda55` |
 | 2026-08-17 | Informe | **🔴 de método: LA FICHA T19 ERA LA FUENTE DEL ERROR, no solo su registro.** El texto de `features.md:1015-1021` afirmaba que la banda de **4,8×** se da «**con el recuento de épocas idéntico**» y que el reparto «**conserva el orden de las ocho filas**». **Las dos son falsas, y las dos se habían PROPAGADO A LAS NOTAS** —`4.4` y `A.3:417-418` publicaban la primera— porque cada redactor las copió del registro sin recontarlas. **(a)** Las dos corridas de la banda (`38fdd4b` → `5516b60`) **no registran épocas**: `n_iter_total_grid` solo existe en `ac496cb` y `1163c90`, y `PIPELINE.md:923-929` ya lo declara por escrito. La banda pasa a **magnitud observada SIN causa atribuida**. **(b)** El orden se conserva **casi entero**: `IsolationForest` 122 **baja del 4.º al 6.º**, adelantada por las dos filas de `LocalOutlierFactor`. **(c)** Los **4,5 pp** son del **residual**, no de «cada tramo». **El texto de la ficha se corrigió al retirarla, y la MISMA afirmación se corrigió también en la ficha de T4, que sigue abierta y la repetía palabra por palabra** | `e1bda55` |

@@ -62,7 +62,7 @@ un **0-day**. Forzar las mismas 54 al detector de anomalías puede degradar su r
   no hardcodeado. Deben poder correr sobre la variante de 54 (`specialized_nsl_kdd_*`) y
   sobre la de 122 (`specialized_nsl_kdd_sin_seleccion_*`, ya generable con `--sin-seleccion`).
 - El **experimento con/sin selección** (que ya se debe a la memoria para cerrar 4.3.5) **ES**
-  la decisión. Métrica de decisión: **recall 0-day por tipo de ataque** (los ~17 tipos de D2
+  la decisión. Métrica de decisión: **recall 0-day por tipo de ataque** (los 17 tipos de D2
   ausentes del train) + **F1 macro**, no solo F1 global.
 - Se ejecuta cuando existan los baselines mínimos (IsolationForest para anomalías, RandomForest
   para firmas). Comparar **54 vs 122** (40 queda descartado: ya no existe en disco).
@@ -150,7 +150,7 @@ selección 4.3.5, nunca como clasificador global de las 5 clases.
 **Decisión: SÍ añadirlo como baseline de control** (no como arquitectura del sistema). Es el
 número que el tribunal espera y la única forma de responder "¿para qué el híbrido si un RF da
 ~99%?". La respuesta —y la tesis del TFG— es el **0-day**: un RF supervisado no puede detectar
-los ~17 tipos de ataque ausentes del train; la etapa de anomalías sí. Ese contraste **es** la
+los 17 tipos de ataque ausentes del train; la etapa de anomalías sí. Ese contraste **es** la
 justificación del híbrido.
 
 **Ubicación: `baseline.py` aparte** (no un modo de `firmas.py`). Razón: es un experimento
@@ -295,8 +295,8 @@ no el algoritmo. Las vías para diferenciarse más se acumulan en `EL_FUTURO.md`
 > (decisión **Q1/C** de este mismo fichero, resuelta por el experimento **H1**). Se tomó
 > midiendo **sobre D2**. Evidencia, toda en disco:
 > - `resumen-de-decisiones.md:64-68` y `:131-133` — Q1/C fija como métrica de decisión el
->   «**recall 0-day por tipo de ataque** (los ~17 tipos de D2 ausentes del train) + **F1 macro**».
->   Esos ~17 tipos 0-day **solo existen en D2**: la métrica de decisión es, por construcción,
+>   «**recall 0-day por tipo de ataque** (los 17 tipos de D2 ausentes del train) + **F1 macro**».
+>   Esos 17 tipos 0-day **solo existen en D2**: la métrica de decisión es, por construcción,
 >   una métrica de test.
 > - `Obsidian_TFG_Vault\04 Implementación del sistema\4.3 Preprocesamiento de los datasets.md:197-214`
 >   — la tabla del experimento H1 se titula literalmente «**Métrica (cascada AE→RF sobre D2)**»,
@@ -1384,3 +1384,14 @@ el futuro se dispone de una medición real, **estas cifras se sustituyen** por e
   sede canónica y cuántas remisiones hay que insertar. **Regla que se deriva:** este censo se cuenta
   contra disco antes de usarlo, como el contador de `[n]`, y no se lee de memoria — es el segundo
   inventario de este proyecto que se queda corto por escribirse una vez y no recontarse.
+- `2026-08-17` — **Se reescribió texto previo de este fichero y de `next-steps.md` para quitar la
+  virgulilla del «~17» tipos 0-day.** Alcance exacto: **7 ocurrencias** —4 aquí (`:65`, `:153`,
+  `:298`, `:299`) y 3 en `next-steps.md`—, donde se sustituyó «~17» por «17». **Lo que sobraba era
+  el «~», no el número: 17 es EXACTO** (17 tipos 0-day, 3.750 filas de D2, verificado contra disco).
+  **Esto es una reescritura de texto anterior, no una nota añadida**, y se hizo al amparo de una
+  **excepción PUNTUAL Y EXPRESA que Francisco concedió el 2026-08-16**, preguntado con las
+  alternativas sobre la mesa; pesa sobre la **Decisión 3 de la Fase 0** (que solo autoriza a añadir
+  nota fechada aquí) y sobre el hecho de que **`next-steps.md` está CONGELADO**. **La Decisión 3
+  sigue vigente para todo lo demás**: la excepción se agota en el dato del «~17» y no autoriza
+  ninguna otra corrección en estos dos ficheros. No se tocaron los falsos positivos `~170 MB` de
+  `.gitignore` y `README.md`.

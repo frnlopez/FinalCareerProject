@@ -491,7 +491,7 @@ python app\validacion.py            # valida los CSVs; imprime APROBADA/FALLA y 
 **Números de referencia (NSL-KDD, aproximados — verifica con la salida de `program.py`):**
 - D1 (train normal): ~67.300 · D3 (train ataques): ~58.600 · D2 (test completo): ~22.500 (≈43% normal / 57% ataque).
 - Desbalance D3: dos ~45,9k · probe ~11,7k · r2l ~1,0k · **u2r ~52**.
-- D2 contiene **~17 tipos de ataque que NO existen en el train** (los "0-day" del experimento; `validacion.py` los lista).
+- D2 contiene **17 tipos de ataque que NO existen en el train** (los "0-day" del experimento; `validacion.py` los lista).
 
 **Estado del preprocesado actual:** One-Hot de `protocol_type/service/flag` + `MinMaxScaler` ajustado en D1+D3 (en `main()` se llama con `scaler_type='minmax'` — mantenerlo: OCSVM, KNN y el autoencoder agradecen [0,1]).
 
@@ -594,7 +594,7 @@ Las categorías que solo existen en D2 (test) se quedan fuera **a propósito**: 
    - KNN: `n_neighbors [3, 5, 11]` × `weights ['uniform', 'distance']`
    - HistGB: `learning_rate [0.05, 0.1]` × `max_iter [100, 300]`
 4. **Mini-experimento de balanceo** (ver 6.2): cada algoritmo × {SMOTE, class_weight/nada} → tabla `f1_macro` CV → sección 4.3.4.
-5. **Evaluación sobre D2 (multiclase, para 5.2):** SOLO sobre las filas de ataque de D2 cuyo tipo exista en el train (las ~17 clases nuevas se excluyen aquí: son el trabajo de la etapa de anomalías y se miden en el híbrido). Matriz de confusión 4×4 por algoritmo (→ 5.2.1), precision/recall/F1 por categoría + macro (→ 5.2.2), tabla comparativa de los 4 (→ 5.2.3).
+5. **Evaluación sobre D2 (multiclase, para 5.2):** SOLO sobre las filas de ataque de D2 cuyo tipo exista en el train (las 17 clases nuevas se excluyen aquí: son el trabajo de la etapa de anomalías y se miden en el híbrido). Matriz de confusión 4×4 por algoritmo (→ 5.2.1), precision/recall/F1 por categoría + macro (→ 5.2.2), tabla comparativa de los 4 (→ 5.2.3).
 6. **Extracción de firmas (la parte "IDS clásico" de la memoria):** con el mejor DecisionTree, `sklearn.tree.export_text(dt, feature_names=..., max_depth=5)` → reglas legibles tipo `si srv_serror_rate > 0.5 y flag_S0 = 1 → dos (neptune)`. Guardar en `Resultados/firmas_reglas.txt` y comentar 3-4 reglas en la sección 4.5 conectándolas con el ataque real que describen.
 7. **Persistir:** `Resultados/modelos/firma_<algo>.joblib`, `Resultados/metricas_firmas.csv`, figuras.
 
@@ -623,7 +623,7 @@ categoria[proba.max(axis=1) < UMBRAL_CONF] = 'unknown'   # 0-day
 - **Evaluaciones para 5.3:**
   1. **Binaria** del sistema completo (normal vs cualquier-ataque) — comparar contra el mejor detector de anomalías solo: ¿aporta la cascada?
   2. **Multiclase** 5 categorías (+unknown): las predicciones 'unknown' cuentan como acierto binario pero se reportan aparte.
-  3. **Análisis 0-day**: de los ~17 tipos de D2 ausentes del train, ¿qué % marca la etapa 1 como sospechoso? Tabla tipo→%detección. Este es el argumento central de las conclusiones del TFG.
+  3. **Análisis 0-day**: de los 17 tipos de D2 ausentes del train, ¿qué % marca la etapa 1 como sospechoso? Tabla tipo→%detección. Este es el argumento central de las conclusiones del TFG.
 - **Persistir:** `Resultados/metricas_hibrido.csv` + matriz de confusión final + tabla 0-day.
 
 ### 6.5b `evaluacion.py` — módulo común (hazlo ANTES que 6.3)

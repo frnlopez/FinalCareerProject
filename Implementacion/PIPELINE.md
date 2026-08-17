@@ -592,9 +592,17 @@ de la misma corrida** y como orden de magnitud. El resto de la tabla sí es repr
 > sobrescribió `1163c90`. Los pares que aporta al recuento no son verificables por un tercero; el
 > resto de filas de esta tabla sí lo son.
 >
+> [!warning] Homónimo peligroso: este «8 de 10» NO es el del capítulo 5
+> El «8 de 10» de esta sección es un recuento de **pares de TIEMPO DE ENTRENAMIENTO**
+> `RandomForest` vs `HistGradientBoosting`, tomado sobre **cinco corridas** (dos variantes por
+> corrida = 10 pares). **No tiene nada que ver** con el «8 de 10» que usan las notas `5.2`, `5.4`
+> y `3.5` de la memoria, que es el **recuento pareado entre las 10 semillas** de qué algoritmo
+> gana en `f1_macro`. Misma cadena, dos mediciones distintas: no se citan la una por la otra.
+>
 > **Lo citable, y ni una palabra más:** *`HistGradientBoosting` es más caro de entrenar que
-> `RandomForest` en **8 de los 10** pares intra-corrida registrados —recuento tomado sobre cinco
-> corridas, **una de ellas, `ac496cb`, no reproducible desde git**—, con grids de igual
+> `RandomForest` en **8 de los 10** pares intra-corrida de **tiempo de entrenamiento**
+> registrados —recuento tomado sobre cinco corridas, **una de ellas, `ac496cb`, no reproducible
+> desde git**; no es el recuento entre semillas del capítulo 5—, con grids de igual
 > cardinalidad; el par de 54 **se invierte en 2 de las 5 corridas**, así que la afirmación solo es
 > sólida en la variante de 122 —5 de 5, todas por encima de 2,4×—, y en ningún caso HistGB gana en
 > calidad: `f1_macro` **0,804 vs 0,822** en la variante de 54 de `1163c90`.*
@@ -608,7 +616,8 @@ de la misma corrida** y como orden de magnitud. El resto de la tabla sí es repr
 > **0,0072** en RF. Entrenar y predecir son dos costes distintos y no se citan juntos.
 >
 > Regla que queda: una dirección solo es citable si se repite en **todas** las corridas
-> disponibles; si no, se cita con el recuento de pares (**8 de 10**) y con la variante en la que
+> disponibles; si no, se cita con el recuento de pares de tiempo de entrenamiento (**8 de 10**,
+> cinco corridas — no el recuento entre semillas del capítulo 5) y con la variante en la que
 > sí aguanta, nunca con un par de segundos ni con una horquilla.
 
 > [!danger] Qué mide la latencia — y qué no (declaración exigida por P9)
@@ -922,8 +931,8 @@ detectar** —y la detección propiamente dicha no llega al 1 %—.
 >    la columna no desglosa—. No es una constante física del modelo.
 > 2. **No separa causas: no decide si una diferencia de tiempo es de épocas o de carga de
 >    máquina.** Este documento y `config.ALCANCE_N_ITER_TOTAL` lo afirmaron y era falso. **Como el
->    recuento de épocas resultó ser determinista** (mismos 162 y 128 en las dos corridas que lo
->    registran, ver más abajo), el denominador es constante y el cociente **es el numerador
+>    recuento de épocas sale igual en lo medido** —mismos 162 y 128 en las dos corridas que lo
+>    registran, una de ellas (`ac496cb`) no reproducible desde git, ver más abajo—, el denominador es constante y el cociente **es el numerador
 >    reescalado**: absorbe íntegramente la carga de máquina y no la distingue de nada. Sirve para
 >    leer el tiempo en s/época **dentro de una corrida**, no para atribuirle causa a una diferencia
 >    entre dos.
@@ -942,7 +951,7 @@ detectar** —y la detección propiamente dicha no llega al 1 %—.
 > registran» —y los factores **1,29×** y **3,63×** que salen de ella— descansa sobre una corrida
 > verificable (`1163c90`) y otra que no lo es.
 >
-> **El recuento de épocas del autoencoder sale determinista en lo medido**: 162 (54) y 128 (122)
+> **El recuento de épocas del autoencoder sale igual en lo medido**: 162 (54) y 128 (122)
 > para el grid completo, 117 y 66 para el ajuste ganador, **idénticos en las dos corridas que los
 > registran, una de ellas (`ac496cb`) no reproducible desde git**;
 > ninguno tocó `max_iter=300`, así que todos cortaron por `early_stopping`. Es lo esperable con
@@ -1376,7 +1385,9 @@ ninguno de los cinco scripts de modelos los importa.
   - Las **columnas de tiempo van en bloque aparte**, rotulado como *dispersión de máquina* y con la
     razón escrita en el propio fichero: el wall-clock dispersa hasta **4,8×** entre corridas en
     máquina no dedicada con calidad idéntica al bit (Autoencoder-54: 37,71 → 181,91 s, dato de T1) y
-    con el recuento de épocas determinista, así que su sd mide carga de máquina, no algoritmo.
+    con el recuento de épocas igual en lo medido (mismos valores en las dos corridas que lo
+    registran, una de ellas —`ac496cb`— no reproducible desde git), así que su sd mide carga de
+    máquina, no algoritmo.
     `alcance_tiempo_s` **no** se agrega —es prosa, no un número—; en su lugar se comprueba que sea
     constante dentro de cada celda.
   - **No decide nada:** no dice si dos intervalos se solapan ni calcula p-valores. Eso lo escribe T11
