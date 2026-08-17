@@ -37,19 +37,53 @@ from datetime import datetime
 # cambiarían de tamaño en silencio, sin error y sin que ninguna cifra avisara.
 import program
 
-# config.py se importa SOLO por la procedencia: `config.commit_actual()` estampa
-# el hash del código (con su sufijo '-sucio') en la cabecera de los dos informes
-# de validación y en el CSV del vocabulario del one-hot, igual que ya lo hacen
-# los `metricas_*.csv` desde T1. El mecanismo NO se duplica por copia: se reutiliza
-# el único que existe, con su misma convención de suciedad (`config._RUTA_SUCIEDAD`
-# mira solo `Implementacion/`).
+# config.py se importa por DOS motivos, no por uno:
+#
+#   (1) PROCEDENCIA. `config.commit_actual()` estampa el hash del código (con su
+#       sufijo '-sucio') en SEIS artefactos, que son TRES TIPOS por las DOS
+#       variantes (54 y 122 features): la cabecera de los dos
+#       `*_validation_report.txt`, las dos últimas columnas de los dos
+#       `*_vocabulario_onehot.csv` y esas mismas dos columnas en los dos
+#       `*_composicion_d3.csv`. Es el mismo mecanismo que ya usan los
+#       `metricas_*.csv` desde T1, y NO se duplica por copia: se
+#       reutiliza el único que existe, con su misma convención de suciedad
+#       (`config._RUTA_SUCIEDAD` mira solo `Implementacion/`).
+#
+#   (2) VOCABULARIO DE CATEGORÍAS. `config.CATEGORIAS_ATAQUE` se lee en
+#       medir_composicion_d3() (validacion.py:423-424 y :436) y esto NO es
+#       procedencia. Se usa SOLO para FIJAR EL ORDEN DE LAS FILAS del reparto de
+#       D3 —para que el CSV no dependa del orden de frecuencia— y para marcar la
+#       columna `declarada_en_config`. NUNCA para inventar recuentos: los números
+#       salen de value_counts() y de len(), y una categoría que no esté en ese
+#       vocabulario se publica igual al final en vez de perderse en silencio.
 #
 # ESTO CRUZA UNA FRONTERA que antes se documentaba como inexistente: hasta ahora
 # validacion.py no dependía de config.py. Decisión de Francisco del 2026-08-11,
 # registrada en `resumen-de-decisiones.md` (extiende el alcance de Q2 de las rutas
-# a la procedencia). `program.py` NO ha pasado a depender de config.py: solo este
-# módulo, y sus rutas siguen hardcodeadas. Actualizadas en consecuencia la cabecera
-# de config.py, `CLAUDE.md`, `PIPELINE.md` y `GUIA_RESULTADOS.md`.
+# a la procedencia). El motivo (2) la ENSANCHA otra vez, de «rutas → procedencia»
+# a «+ vocabulario de categorías»: la Q2 registrada no cubría esa extensión, y va
+# anotada como nota fechada del 2026-08-16 en `resumen-de-decisiones.md`, pendiente
+# de revisión de Francisco. `program.py` NO ha pasado a depender de config.py: solo
+# este módulo, y sus rutas siguen hardcodeadas. Precisamente por eso el reparto de
+# D3 se emite desde aquí y no desde program.py, que no podría estampar procedencia
+# sin cruzar esa frontera. Actualizados en consecuencia los CUATRO sitios que
+# enumera la nota fechada del 2026-08-16 de `resumen-de-decisiones.md` (sección de
+# procedencia, viñeta «Documentación alineada en la misma pasada»): esta cabecera,
+# el docstring de `config.py`, `PIPELINE.md` y `Resultados/GUIA_RESULTADOS.md`
+# —esta última de forma sustancial: alta de su §2.5 para los `..._composicion_d3.csv`,
+# reescritura de §2.4, y actualización de la fila de `validacion.py` en §1, de §3.2 y
+# de la entrada de §7—. Son cuatro, no tres: dar la guía por no tocada lleva a
+# re-alinearla y a duplicar o contradecir lo que ya hay.
+#
+# PENDIENTE, y por eso NO figura arriba como hecho: `CLAUDE.md` (bloque del orden
+# de ejecución, hoy en :85-89) sigue diciendo que este módulo importa config.py
+# «y solo por la procedencia», sin el motivo (2) —vocabulario de categorías— y con
+# un inventario de artefactos sellados que se queda corto frente a los SEIS
+# actuales: enumera «la cabecera de sus dos informes y … las columnas de su CSV del
+# vocabulario del one-hot», omitiendo los dos `..._composicion_d3.csv`.
+# `CLAUDE.md` es fichero de andamiaje: lo alinea el hilo principal, no un agente.
+# Este pendiente queda ADEMÁS registrado en la nota fechada del 2026-08-16 de
+# `resumen-de-decisiones.md`, para que no desaparezca al borrarse este comentario.
 #
 # A diferencia de `import program`, este import NO TIENE EFECTOS AL IMPORTARSE:
 # config.py solo define constantes y funciones —`ensure_dirs()` y `setup_utf8()`
@@ -136,6 +170,13 @@ class NSLKDDValidator:
         self.D3_y_category_original = None
 
         self.feature_names = None
+
+        # Reparto de D3 por categoría de ataque (dos / probe / r2l / u2r). Lo
+        # rellena medir_composicion_d3() desde analyze_class_distribution() y lo
+        # persisten _guardar_csv_composicion_d3() y _save_report(). Ver el
+        # docstring de medir_composicion_d3() para el motivo de que exista.
+        self.composicion_d3_df = None
+        self.composicion_d3_ratio = None
 
         # Tipos de ataque presentes en D2 y ausentes del entrenamiento (los
         # "0-day" del experimento). Se calculan en analyze_class_distribution()
@@ -370,6 +411,103 @@ class NSLKDDValidator:
     # 2. Distribución de clases
     # ─────────────────────────────────────────────────────────────────────────
 
+    def medir_composicion_d3(self):
+        """
+        Reparto de D3 por categoría de ataque: recuento absoluto, total y
+        porcentaje, DERIVADOS de las etiquetas cargadas.
+
+        POR QUÉ EXISTE (2026-08-16): las cuatro cifras del reparto de D3 y el
+        titular que sale de ellas —el porcentaje que supone la categoría
+        mayoritaria— se citan en varios capítulos de la memoria y hasta ahora NO
+        los emitía ningún script: salían de un recuento a mano sobre un CSV que
+        además está en `.gitignore` (`Resultados/*_processed_*.csv`), así que no
+        había en el repositorio ningún artefacto que los respaldara. Es el mismo
+        defecto que se cerró con el titular «N de M» de agregar_semillas.py.
+        Desde aquí las emite el código, a un CSV versionado y con procedencia.
+
+        DÓNDE SE MIDE Y POR QUÉ AQUÍ Y NO EN program.py: D3 se CONSTRUYE en
+        program.py (create_specialized_splits), que ya imprime este reparto por
+        consola. Pero program.py no depende de config.py —la decisión Q2 lo dice
+        explícitamente— y no podría estampar `commit`/`fecha` sin cruzar esa
+        frontera, y sus salidas en texto son informativas, no tablas. validacion.py
+        ya carga `D3_y_category_original`, ya importa config.py por la procedencia
+        (2026-08-11) y ya escribe un CSV versionado con este mismo patrón
+        (`_vocabulario_onehot.csv`). No se añade ninguna dependencia nueva.
+        Que sea la PUERTA DE CALIDAD y no un eslabón del pipeline no estorba: este
+        artefacto lo lee la memoria, no lo consume ningún script de modelos.
+
+        NADA DE LISTAS ESCRITAS A MANO: los recuentos salen de value_counts() y el
+        total de len(). config.CATEGORIAS_ATAQUE se usa SOLO para fijar el ORDEN de
+        las filas —para que el CSV no dependa del orden de frecuencia— y cualquier
+        categoría fuera de ese vocabulario se publica igualmente al final, marcada
+        con `declarada_en_config = False`, en lugar de perderse en silencio. Si
+        apareciera 'normal', la pureza de D3 ya habría fallado en
+        validate_data_integrity() y este CSV lo enseñaría también.
+
+        Returns
+        -------
+        pandas.DataFrame
+            Una fila por categoría presente más una fila `__total__`. Las columnas
+            de procedencia NO se añaden aquí: las pone _guardar_csv_composicion_d3().
+        """
+        serie = pd.Series(self.D3_y_category_original)
+        conteos = serie.value_counts()
+        total = int(len(serie))
+
+        ordenadas = [c for c in config.CATEGORIAS_ATAQUE if c in conteos.index]
+        extras = sorted(c for c in conteos.index if c not in config.CATEGORIAS_ATAQUE)
+
+        filas = []
+        for cat in ordenadas + extras:
+            n = int(conteos[cat])
+            filas.append({
+                'categoria': str(cat),
+                'n_instancias': n,
+                # 4 decimales: es un porcentaje para leer y citar, no una métrica
+                # de modelo (esas van a 6 en los metricas_*.csv). Los porcentajes
+                # de las categorías suman 100 SOLO hasta ese redondeo.
+                'porcentaje_d3': round(n / total * 100, 4) if total else None,
+                'declarada_en_config': cat in config.CATEGORIAS_ATAQUE,
+                'ratio_desbalance_max_min': None,
+            })
+
+        # Ratio de desbalance (mayoritaria / minoritaria). Se calcula aquí y NO en
+        # el sitio donde se imprime, para que la cifra del CSV y la de la consola
+        # no puedan divergir. Va en la fila `__total__` porque es una propiedad del
+        # reparto entero, no de ninguna categoría.
+        n_por_categoria = [f['n_instancias'] for f in filas]
+        if n_por_categoria and min(n_por_categoria) > 0:
+            ratio = max(n_por_categoria) / min(n_por_categoria)
+        else:
+            ratio = float('inf')
+        self.composicion_d3_ratio = ratio
+
+        filas.append({
+            'categoria': '__total__',
+            'n_instancias': total,
+            'porcentaje_d3': round(100.0, 4) if total else None,
+            'declarada_en_config': None,
+            'ratio_desbalance_max_min': round(ratio, 2) if np.isfinite(ratio) else None,
+        })
+
+        df = pd.DataFrame(filas, columns=['categoria', 'n_instancias',
+                                          'porcentaje_d3', 'declarada_en_config',
+                                          'ratio_desbalance_max_min'])
+
+        # Comprobación barata sobre los RECUENTOS (no sobre los porcentajes, que
+        # solo cuadran hasta el redondeo): las filas por categoría deben sumar la
+        # fila `__total__`. Es el único modo en que este artefacto podría publicar
+        # un reparto incompleto sin que se viera al leerlo.
+        suma = int(df.loc[df['categoria'] != '__total__', 'n_instancias'].sum())
+        if suma != total:
+            raise ValueError(
+                "La composición de D3 no cuadra: las categorías suman "
+                f"{suma} y D3 tiene {total} instancias"
+            )
+
+        self.composicion_d3_df = df
+        return df
+
     def analyze_class_distribution(self):
         """
         Analiza la distribución de categorías de ataque en D2 y D3,
@@ -388,14 +526,20 @@ class NSLKDDValidator:
             pct = count / len(self.D2_y_category_original) * 100
             print(f"   {cat.upper():<12}: {count:>6,}  ({pct:.2f}%)")
 
-        print("\n2. D3 — Ataques Conocidos (categorías):")
-        for cat, count in d3_cat.items():
-            pct = count / len(self.D3_y_category_original) * 100
-            print(f"   {cat.upper():<12}: {count:>6,}  ({pct:.2f}%)")
+        # El reparto de D3 se MIDE aquí una sola vez y de ahí salen tanto lo que
+        # se imprime como el CSV y el bloque del informe: la consola ya no es la
+        # única salida de estas cifras (ver medir_composicion_d3()).
+        composicion = self.medir_composicion_d3()
+        ratio = self.composicion_d3_ratio
 
-        d3_min = d3_cat.min()
-        d3_max = d3_cat.max()
-        ratio = d3_max / d3_min if d3_min > 0 else float('inf')
+        print("\n2. D3 — Ataques Conocidos (categorías):")
+        for _, fila in composicion.iterrows():
+            if fila['categoria'] == '__total__':
+                continue
+            print(f"   {str(fila['categoria']).upper():<12}: "
+                  f"{int(fila['n_instancias']):>6,}  ({fila['porcentaje_d3']:.2f}%)")
+        print(f"   {'TOTAL':<12}: {len(self.D3_y_category_original):>6,}  (100.00%)")
+
         print(f"\n   Ratio de desbalance en D3: {ratio:.1f}:1")
         if ratio > 100:
             print("   ⚠️  Alto desbalance — considera class_weight='balanced' en el modelo de firmas")
@@ -1070,6 +1214,11 @@ class NSLKDDValidator:
                                  else int(len(self.zero_day_df))),
         }
 
+        # El reparto de D3 por categoría va a un CSV propio y versionado: hasta
+        # hoy esas cuatro cifras solo vivían en prosa y en la consola
+        # (medir_composicion_d3()).
+        self._guardar_csv_composicion_d3()
+
         report_path = f'{self.base_path}_validation_report.txt'
         self._save_report(report, drift_df, d2_range_df, report_path,
                           drift_norm_df=drift_norm_df, onehot=onehot)
@@ -1115,6 +1264,31 @@ class NSLKDDValidator:
             f.write(f"Baja varianza (sobre D1+D3):    {report['low_variance_features']} características\n")
             f.write(f"Alta correlación (sobre D1+D3): {report['high_corr_pairs']} pares\n")
             f.write(f"D2 fuera de [0,1]: {report['d2_features_fuera_rango']} características (informativo)\n")
+
+            # ── Reparto de D3 por categoría. El artefacto CITABLE es el CSV
+            # hermano `<base_path>_composicion_d3.csv`; esto es la misma medición
+            # en el informe, para que se pueda leer suelto. Las dos salidas vienen
+            # del MISMO DataFrame (medir_composicion_d3()), así que no pueden
+            # divergir.
+            if self.composicion_d3_df is not None:
+                # El nombre sale de `_ruta_composicion_d3()`, la MISMA fuente que
+                # usa _guardar_csv_composicion_d3() para escribir el fichero, así
+                # que un renombrado del artefacto arrastra a esta frase. Se reduce
+                # a basename porque aquí se dice "fuente: …csv" y no una ruta.
+                nombre_csv_d3 = os.path.basename(self._ruta_composicion_d3())
+                f.write("\nComposición de D3 por categoría de ataque "
+                        f"(fuente: {nombre_csv_d3})\n")
+                f.write(self.composicion_d3_df.to_string(index=False) + "\n")
+                if self.composicion_d3_ratio is not None and np.isfinite(
+                        self.composicion_d3_ratio):
+                    f.write(f"  Ratio de desbalance (mayoritaria/minoritaria): "
+                            f"{self.composicion_d3_ratio:.1f}:1\n")
+                f.write("  Los porcentajes suman 100 solo hasta el redondeo a 4 "
+                        "decimales; los recuentos sí suman el total exacto.\n")
+                f.write("  Nota de variante: este reparto es IDÉNTICO en las dos "
+                        "variantes (54 y 122)\n")
+                f.write("  porque la selección de características no cambia las "
+                        "filas de D3 sino sus columnas.\n")
 
             if report['issues']:
                 f.write("\nProblemas detectados:\n")
@@ -1362,6 +1536,62 @@ class NSLKDDValidator:
 
         df.to_csv(ruta, index=False)
         print(f"   ✓ Vocabulario del one-hot guardado en: {ruta}")
+
+    def _ruta_composicion_d3(self):
+        """
+        FUENTE ÚNICA del nombre del CSV de composición de D3.
+
+        Lo consumen los DOS sitios que lo necesitan: `_guardar_csv_composicion_d3()`,
+        que escribe el fichero, y `_save_report()`, que cita su basename en el
+        informe. Antes el sufijo `_composicion_d3.csv` estaba escrito literalmente
+        en los dos, así que renombrar el artefacto en uno dejaba al informe
+        versionado citando un fichero inexistente sin que nada lo detectara.
+        """
+        return f'{self.base_path}_composicion_d3.csv'
+
+    def _guardar_csv_composicion_d3(self):
+        """
+        Persiste el reparto de D3 por categoría: una fila por categoría más una
+        fila `__total__`, con la procedencia de la corrida.
+
+        NOMBRE Y UBICACIÓN: `<base_path>_composicion_d3.csv`, es decir
+        `Resultados/specialized_nsl_kdd_composicion_d3.csv` (y su hermano
+        `_sin_seleccion_`). Comprobado contra el `.gitignore` de la raíz: los
+        patrones que excluyen salidas de program.py son `Resultados/*_processed_*.csv`
+        y `Resultados/*_original_*.csv`, y este nombre no casa con ninguno — el
+        artefacto QUEDA VERSIONADO, que es la razón de existir de esta emisión.
+
+        SON DOS FICHEROS CON EL MISMO CONTENIDO, uno por variante, y es deliberado:
+        el reparto de D3 no depende de la selección de características (afecta a las
+        columnas, no a las filas), así que cada invocación de validacion.py deja el
+        suyo con su propio sello, y la coincidencia entre ambos es comprobable en
+        lugar de asumida.
+        """
+        if self.composicion_d3_df is None:
+            print("   ⚠️  Composición de D3 no medida: no se escribe el CSV")
+            return
+
+        ruta = self._ruta_composicion_d3()
+        variante = 'sin_seleccion' if self.variant_suffix else 'con_seleccion'
+
+        df = self.composicion_d3_df.copy()
+        df.insert(0, 'variante', variante)
+        df.insert(1, 'split', 'D3')
+        # 'commit' y 'fecha' AL FINAL y repetidas en todas las filas, por el mismo
+        # motivo que en `_vocabulario_onehot.csv`: son procedencia y no medición, y
+        # el CSV se reescribe entero en cada corrida (no hay filas de corridas
+        # distintas mezcladas).
+        df['commit'] = self.commit
+        df['fecha'] = self.fecha
+
+        # Recuentos como ENTEROS: 'Int64' nullable para que la fila `__total__`,
+        # que deja vacío 'declarada_en_config', no promueva nada a float y el CSV
+        # no publique «45927.0 instancias».
+        df['n_instancias'] = df['n_instancias'].astype('float64').astype('Int64')
+        df['declarada_en_config'] = df['declarada_en_config'].astype('boolean')
+
+        df.to_csv(ruta, index=False)
+        print(f"   ✓ Composición de D3 por categoría guardada en: {ruta}")
 
 
 # ─────────────────────────────────────────────────────────────────────────────

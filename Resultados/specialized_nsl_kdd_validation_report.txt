@@ -1,8 +1,8 @@
 REPORTE DE VALIDACIÓN — DIVISIONES D1/D2/D3 NSL-KDD
 ============================================================
 
-Commit del código: fc1c6b4-sucio
-Fecha de la corrida: 2026-08-11T20:53:27
+Commit del código: a8c20e9-sucio
+Fecha de la corrida: 2026-08-16T22:03:58
 
 Integridad:       APROBADA
 D1 (Normal):      67,343 instancias
@@ -16,6 +16,18 @@ Outliers D1 (media entre características): 4.78%
 Baja varianza (sobre D1+D3):    0 características
 Alta correlación (sobre D1+D3): 0 pares
 D2 fuera de [0,1]: 4 características (informativo)
+
+Composición de D3 por categoría de ataque (fuente: specialized_nsl_kdd_composicion_d3.csv)
+categoria  n_instancias  porcentaje_d3 declarada_en_config  ratio_desbalance_max_min
+      dos         45927        78.3336                True                       NaN
+    probe         11656        19.8806                True                       NaN
+      r2l           995         1.6971                True                       NaN
+      u2r            52         0.0887                True                       NaN
+__total__         58630       100.0000                None                    883.21
+  Ratio de desbalance (mayoritaria/minoritaria): 883.2:1
+  Los porcentajes suman 100 solo hasta el redondeo a 4 decimales; los recuentos sí suman el total exacto.
+  Nota de variante: este reparto es IDÉNTICO en las dos variantes (54 y 122)
+  porque la selección de características no cambia las filas de D3 sino sus columnas.
 
 (A) Top 15 características con mayor drift — D1 vs D2 COMPLETO
     (D2 completo = normales + ataques: parte de este drift es

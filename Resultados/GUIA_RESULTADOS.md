@@ -13,7 +13,7 @@ Aquí se vuelca **todo lo que generan los scripts** de `Implementacion/app/`:
 | Script | Estado | Qué deposita aquí |
 |---|---|---|
 | `program.py` | funcionando | Splits D1/D2/D3 (CSVs originales y procesados), metadatos (`_mappings_and_info.txt`, `_usage_guide.txt`, `selected_features.txt`), transformadores (`.joblib`) y la figura del EDA |
-| `validacion.py` | ejecutado (54 y 122) | **Por variante**: un `..._validation_report.txt`, un `..._vocabulario_onehot.csv` (§2.4) y **6** figuras de validación (las 4 de siempre + las 2 del KS contra los normales de D2, tarea T2). Con las dos variantes: **2** informes (`specialized_nsl_kdd_validation_report.txt` y `specialized_nsl_kdd_sin_seleccion_validation_report.txt`), **2** CSV de vocabulario y **12** figuras `validacion_*` |
+| `validacion.py` | ejecutado (54 y 122) | **Por variante**: un `..._validation_report.txt`, un `..._vocabulario_onehot.csv` (§2.4), un `..._composicion_d3.csv` (§2.5) y **6** figuras de validación (las 4 de siempre + las 2 del KS contra los normales de D2, tarea T2). Con las dos variantes: **2** informes (`specialized_nsl_kdd_validation_report.txt` y `specialized_nsl_kdd_sin_seleccion_validation_report.txt`), **2** CSV de vocabulario, **2** CSV de composición de D3 y **12** figuras `validacion_*` |
 | `anomalias.py` | ejecutado (54 y 122) | `metricas_anomalias.csv`, `modelos\anomalia_*.joblib`, figuras ROC/PR y matrices 2×2 |
 | `firmas.py` | ejecutado (54 y 122) | `metricas_firmas.csv`, `metricas_balanceo.csv`, `firmas_reglas_*.txt`, `modelos\firma_*.joblib`, matrices 4×4 |
 | `baseline.py` | ejecutado (54 y 122) | `metricas_baseline.csv`, `metricas_baseline_0day.csv`, `modelos\baseline_rf_*.joblib`, `figuras\baseline_cm_*.png` |
@@ -21,7 +21,7 @@ Aquí se vuelca **todo lo que generan los scripts** de `Implementacion/app/`:
 | `cascada_invertida.py` | ejecutado (54 y 122) | `metricas_cascada_invertida.csv` y `figuras\cascada_invertida_<set>.png`. **No entrena nada**: carga `firma_*.joblib` y lee el umbral de `hibrido_*.joblib` |
 | `evaluacion.py` | módulo común | No deposita por sí mismo: lo usan los cuatro scripts de modelos y `cascada_invertida.py` |
 | `barrido_semillas.py` | **corrido** (T4, 2026-08-12 22:09 → 00:38, sello `df30cb2`) | Las **nueve** tablas `metricas_*_semillas.csv` (**2.320 filas** en total), a través de los cinco scripts hijos, más los artefactos sufijados `_semilla<N>` **no versionados**: **260** figuras `figuras\*_semilla*`, **20** `firmas_reglas_*_semilla*.txt` y **100** logs en `logs_barrido\`. Los `.joblib` por semilla los borra él mismo al cerrar cada semilla (en `modelos\` no queda ninguno). Además, `verificacion_semilla_joblib.txt`: la traza de que los 20 `.joblib` publicados declaran `semilla = 42` |
-| `agregar_semillas.py` | **corrido cuatro veces** (T4: **7,2 s** la primera y **1,70 s** la segunda, ambas el 2026-08-13, esta tras el arreglo de `_tabla_md()`; una tercera con el **titular automático** (2026-08-13 `19:54:48`); y una cuarta con el **reparto por commit de origen del titular** (2026-08-14 `15:15:13`). **En disco están los de la cuarta**, cabecera `2026-08-14T15:15:13`) | `dispersion_semillas.csv` y `dispersion_semillas.md` — **198 filas** (98 de *calidad* + 100 de *dispersión de máquina*) con n, media, sd muestral (`ddof=1`), mín y máx, más el valor de la semilla 42 al lado de cada banda y el recuento **«13 de 98»** fuera de banda; `commits_origen = df30cb2` único en todas las celdas y `commit_agregador = 6bb224c-sucio` — sello impreso, que **queda intacto** y está **re-anclado en prosa a `1cb5c26`** (§6.2); los de la segunda y la tercera pasada quedaron re-anclados a `9ad971b` y a `9d4c26d` respectivamente. **No queda ningún re-anclaje pendiente** |
+| `agregar_semillas.py` | **corrido cuatro veces** (T4: **7,2 s** la primera y **1,70 s** la segunda, ambas el 2026-08-13, esta tras el arreglo de `_tabla_md()`; una tercera con el **titular automático** (2026-08-13 `19:54:48`); y una cuarta con el **reparto por commit de origen del titular** (2026-08-14 `15:15:13`). **En disco están los de la cuarta**, cabecera `2026-08-14T15:15:13`) | `dispersion_semillas.csv` y `dispersion_semillas.md` — **198 filas** (98 de *calidad* + 100 de *dispersión de máquina*) con n, media, sd muestral (`ddof=1`), mín y máx, más el valor de la semilla 42 al lado de cada banda y el recuento **«13 de 98»** fuera de banda; `commits_origen = df30cb2` único en todas las celdas y `commit_agregador = 6bb224c-sucio` — sello impreso, que **queda intacto** y está **re-anclado en prosa a `1cb5c26`** (§6.2); los de la segunda y la tercera pasada quedaron re-anclados a `9ad971b` y a `9d4c26d` respectivamente. **Ninguna de las cuatro pasadas de este agregador tiene re-anclaje pendiente** (verificado el 2026-08-14). Ojo: eso es **solo sobre `agregar_semillas.py`** — en el proyecto **sí** hay un re-anclaje pendiente desde la re-corrida de `validacion.py` del 2026-08-16 (`a8c20e9-sucio`, ver el `> [!todo]` de §2.4) |
 
 **Regla de oro:** nada de esta carpeta se edita a mano. Todo se **regenera** ejecutando los
 scripts (con `random_state=42`); si un número va a la memoria, tiene que salir de aquí. Para
@@ -101,7 +101,7 @@ más una fila `__total__` con los agregados:
 | `recuperadas` | la diferencia: dummies que el alineamiento buggy perdía |
 | `n_numericas`, `total_solo_d1`, `total_union`, `delta_total` | agregados; **solo en la fila `__total__`**, vacíos en las demás |
 | `total_union_transformers` | contraste **independiente**: `len(feature_columns_pre_seleccion)` leído del `..._transformers.joblib` |
-| `commit`, `fecha` | procedencia de la corrida, **al final de la fila**; mismo mecanismo y misma convención `-sucio` que la columna `commit` de los `metricas_*.csv` (`config.commit_actual()`). **Presentes en el CSV que hay en disco desde la corrida del 2026-08-11 20:53** (sello `fc1c6b4-sucio`): ver el aviso de abajo sobre qué vale y qué no vale ese sello |
+| `commit`, `fecha` | procedencia de la corrida, **al final de la fila**; mismo mecanismo y misma convención `-sucio` que la columna `commit` de los `metricas_*.csv` (`config.commit_actual()`). **Presentes en el CSV desde la corrida del 2026-08-11 20:53; el que hay hoy en disco es el de la re-corrida del 2026-08-16** (sello `a8c20e9-sucio`): ver el aviso de abajo sobre qué vale y qué no vale ese sello |
 
 > El sufijo **`-sucio`** de un sello dice que al correr había cambios sin commitear en
 > `Implementacion/`, de modo que el hash es el del commit **anterior** al código que produjo el
@@ -123,31 +123,93 @@ Tres avisos para citarlo:
   `total_solo_d1` = `77` sin marca alguna. Por eso, cuando se cite el número desde el CSV hay que
   arrastrar **siempre** este aviso a mano.
 - **Los dos ficheros traen las mismas cifras**, y es correcto: la medición se hace sobre los CSV
-  `_original_*`, y la selección de características actúa **después** del one-hot. Es la única
-  salida de `validacion.py` que no depende de la variante.
+  `_original_*`, y la selección de características actúa **después** del one-hot. Es **una de las dos**
+  salidas de `validacion.py` que no dependen de la variante: la otra es el `..._composicion_d3.csv`
+  de **§2.5**, que cuenta filas de D3 y por eso tampoco cambia con el set de características.
+  *(Hasta la re-corrida del 2026-08-16 era la única; el alta de §2.5 lo dejó desfasado.)*
 - **El CSV que hay en disco YA lleva `commit` y `fecha`**, igual que los `metricas_*.csv`. El
   código las escribe desde el 2026-08-11 (`validacion.py` importa `config.py` y llama a
-  `config.commit_actual()`) y las dos variantes **ya se re-corrieron**: los ficheros publicados
-  salen de la corrida del **2026-08-11 a las 20:53**, con sello `fc1c6b4-sucio` y, en cada fila, la
-  fecha de **su propia** invocación: `2026-08-11T20:53:27` en el CSV de la variante de 54 y
-  `2026-08-11T20:53:46` en el de 122. La cabecera de los dos `..._validation_report.txt` trae **el
-  mismo commit y esa misma marca por variante** (`:27` en la de 54, `:46` en la de 122): el commit
-  sí es común a los cuatro artefactos, la fecha no, porque se captura una vez por invocación. Al
-  citar, copiar los segundos del fichero que se está citando. **Esas columnas se pueden y se deben citar**: son
+  `config.commit_actual()`) y las dos variantes **se han vuelto a correr**: los ficheros publicados
+  salen de la re-corrida del **2026-08-16**, con sello `a8c20e9-sucio` en la columna `commit` y, en
+  cada fila, la fecha de **su propia** invocación en la columna `fecha`. **Las cifras del
+  vocabulario no cambian** respecto a la
+  corrida del 2026-08-11 (`fc1c6b4-sucio`): son las mismas mediciones y **solo cambia el
+  sello**. La cabecera de los dos `..._validation_report.txt` trae **el
+  mismo commit**, y su propia marca temporal en `Fecha de la corrida:`: el commit
+  sí es común a los seis artefactos de la corrida, la fecha no, porque se captura una vez por invocación —cada
+  variante lleva la suya. **La marca temporal no se copia a la prosa**: se remite al campo del
+  artefacto, porque cualquier re-corrida futura la cambia y dejaría desfasado lo escrito aquí; el
+  `commit`, en cambio, sí se cita, porque identifica el estado del código y no cambia al re-correr.
+  **Esas columnas se pueden y se deben citar**: son
   la procedencia que viaja dentro del artefacto y sobrevive a un `clone`, al contrario que el
   mtime. Con una salvedad: un sello `-sucio` **no identifica la versión del código** —el hash es
   el del commit **anterior** al cambio y `-sucio` solo dice «difería, no se sabe en qué»—, así que
   aporta fecha fiable y aviso explícito de **no-reproducibilidad desde ese hash**, pero no permite
-  reconstruir el código que lo produjo. Para eso manda el recuadro de anclaje de
-  `Implementacion/PIPELINE.md`, que ya lo declara: el commit de cierre de ese ciclo es
-  **`9af842c`**, que versiona a la vez `validacion.py` y los cuatro artefactos y es el último que
-  toca ese script, así que el sello impreso `fc1c6b4-sucio` corresponde al estado de
-  `validacion.py` **en `9af842c`**.
+  reconstruir el código que lo produjo. En esta corrida el `-sucio` es **previsto**: el árbol tenía
+  sin commitear el propio cambio de `validacion.py` que añade el reparto de D3, así que `a8c20e9`
+  es el hash del commit **anterior** a ese código. Para saber de qué versión salió manda el recuadro
+  de anclaje de `Implementacion/PIPELINE.md`.
+
+  > [!todo] Commit de cierre de la re-corrida del 2026-08-16, pendiente
+  > **Ese commit todavía no existe**: lo verificable hoy es el sello de corrida `a8c20e9-sucio` con
+  > sus dos fechas. El precedente del proyecto es el ciclo anterior, publicado con `fc1c6b4-sucio` y
+  > re-anclado en prosa a su commit de cierre **`9af842c`**. Al cerrar, anclar aquí y en
+  > `Implementacion/PIPELINE.md` el hash que versione a la vez `validacion.py` y los seis
+  > artefactos. **No inventar un hash mientras tanto.**
 
 Son recuentos, así que se publican como **enteros** (`77`, no `77.0`).
 
 **Destino en la memoria:** **4.3.3** (codificación de variables categóricas) como respaldo del
 delta, y 4.6 / apéndices.
+
+### 2.5 Los dos `..._composicion_d3.csv` (los genera `validacion.py`)
+
+Artefacto **nuevo de la re-corrida del 2026-08-16**: pone en disco el **reparto de D3 por categoría
+de ataque**, que hasta ahora solo se citaba en prosa. Una fila por categoría (`dos`, `probe`, `r2l`,
+`u2r`) más una fila `__total__`. Su gemelo en el informe es el bloque «Composición de D3 por
+categoría de ataque», que apunta al propio CSV como fuente.
+
+| Columna | Qué es |
+|---|---|
+| `variante` | `con_seleccion` / `sin_seleccion` |
+| `split` | siempre `D3` — la columna está para que el fichero se lea suelto sin suponer el split |
+| `categoria` | la categoría de ataque, o `__total__` en la fila de agregados |
+| `n_instancias` | recuento de filas de D3 en esa categoría; **entero** |
+| `porcentaje_d3` | porcentaje sobre el total de D3, con **4 decimales** |
+| `declarada_en_config` | `True` si la categoría está entre las que declara `config.py`; **vacío en la fila `__total__`**, que no es una categoría |
+| `ratio_desbalance_max_min` | mayoritaria ÷ minoritaria; **solo en la fila `__total__`**, vacío en las demás |
+| `commit`, `fecha` | procedencia de la corrida, **al final de la fila**; mismo mecanismo y misma convención `-sucio` que en §2.4 |
+
+Cifras publicadas (**idénticas en los dos ficheros**, ver aviso abajo):
+
+| Categoría | `n_instancias` | `porcentaje_d3` |
+|---|---|---|
+| `dos` | 45.927 | 78,3336 % |
+| `probe` | 11.656 | 19,8806 % |
+| `r2l` | 995 | 1,6971 % |
+| `u2r` | 52 | 0,0887 % |
+| **`__total__`** | **58.630** | 100 % |
+
+`ratio_desbalance_max_min` = **883,21:1** (`dos` frente a `u2r`).
+
+Dos avisos para citarlo:
+
+- **Los dos ficheros traen las mismas cifras, y es correcto.** El reparto cuenta **filas** de D3, y
+  la selección de características actúa sobre las **columnas**: no puede alterar cuántas instancias
+  hay de cada categoría. Es, junto al del vocabulario (§2.4), la otra salida de `validacion.py` que
+  no depende de la variante — y el propio informe lo rotula así.
+- **Los porcentajes suman 100 solo hasta el redondeo a 4 decimales**; los recuentos sí suman el
+  total exacto (45.927 + 11.656 + 995 + 52 = 58.630). Si en la memoria se presenta la tabla, el
+  total que se cita es el de instancias, no la suma de los porcentajes.
+
+Procedencia de los ficheros en disco: corrida del **2026-08-16**, sello `a8c20e9-sucio` en la
+columna `commit` de los dos CSV; la marca temporal exacta —distinta en cada variante— la declara
+cada fichero en su columna `fecha`, y **no se reproduce aquí** para que una re-corrida no
+desfase esta guía. El commit de cierre está
+**pendiente de sellar** — mismo `> [!todo]` de §2.4.
+
+**Destino en la memoria:** **4.2.1** (análisis previo de la BD, desbalance de clases) y **4.3.4**
+(mini-experimento de balanceo), como respaldo en disco del ratio que motiva SMOTE / `class_weight`.
 
 ---
 
@@ -192,11 +254,14 @@ lo contrario, las cifras de esta guía son las del informe de 54**, que es el se
 
 **Qué contiene, por orden:** *(desde la re-corrida del 2026-08-11 20:53: dos líneas de procedencia,
 `Commit del código:` y `Fecha de la corrida:`, justo tras el título —**presentes en los dos ficheros
-que hay en disco**; el detalle, en el aviso al final de este apartado y en §2.4)* · el titular de integridad y tamaños · las dos mediciones de drift y su
+que hay en disco**; el detalle, en el aviso al final de este apartado y en §2.4)* · el titular de integridad y tamaños · **la composición de D3 por
+categoría de ataque** · las dos mediciones de drift y su
 comparación · las recomendaciones (**solo si hay alguna**) · las características de D2 fuera de
 [0,1] · **los tipos 0-day de D2 nominalmente** · **el vocabulario del one-hot (delta 77 → 122)**.
 Los dos últimos son bloques **nuevos de la re-corrida del 2026-08-11** y se describen al final de
-este apartado; el del vocabulario tiene además CSV propio (**§2.4**).
+este apartado; el del vocabulario tiene además CSV propio (**§2.4**). El de la composición de D3 es
+**nuevo de la re-corrida del 2026-08-16** y tiene también CSV propio (**§2.5**): va justo después
+del titular de tamaños y **no altera ninguna de las cifras anteriores**.
 
 Cómo leerlo (los rótulos son idénticos en ambos ficheros, salvo el bloque de recomendaciones, que
 el de 54 no imprime):
@@ -274,16 +339,22 @@ informes** porque ninguno depende del set de características:
 
 > **Los dos informes que hay en disco imprimen `commit` y `fecha` en su cabecera** (tras el
 > título, antes de `Integridad:`), igual que los `metricas_*.csv` desde T1. Los publicados salen de
-> la re-corrida del **2026-08-11 a las 20:53**: en
+> la re-corrida del **2026-08-16** (exit 0, integridad **APROBADA** en las dos variantes): en
 > `specialized_nsl_kdd_validation_report.txt`, los campos `Commit del código:` y
-> `Fecha de la corrida:` dicen `fc1c6b4-sucio` y `2026-08-11T20:53:27` (se citan **por su nombre
+> `Fecha de la corrida:` declaran, respectivamente, el commit `a8c20e9-sucio` —común a las dos
+> variantes— y la marca temporal de esa invocación, distinta en cada una. **La marca temporal no se
+> copia aquí**: se consulta en el campo, porque caduca en cuanto se vuelve a correr; el commit sí se
+> cita, porque no cambia al re-correr. Los dos campos se citan **por su nombre
 > de campo**, no por su número de línea: el informe es regenerable y una re-corrida que cambie el
-> alto de la cabecera desplazaría la referencia). **Residuo
+> alto de la cabecera desplazaría la referencia. **Residuo
 > cerrado.** Queda el límite propio del sufijo: un sello `-sucio` **no identifica la versión del
 > código** (el hash es el del commit *anterior* al cambio; `-sucio` solo dice «difería, no se sabe
-> en qué»), así que da fecha fiable y aviso de **no-reproducibilidad desde ese hash**, y de qué
-> versión salieron lo declara el recuadro de trazabilidad de `Implementacion/PIPELINE.md`: el
-> commit de cierre es **`9af842c`**, que versiona a la vez el script y sus cuatro artefactos.
+> en qué»), así que da fecha fiable y aviso de **no-reproducibilidad desde ese hash**. Aquí el
+> `-sucio` es previsto: el cambio de `validacion.py` que produce el bloque de composición de D3
+> estaba sin commitear al correr. De qué versión salieron lo declara el recuadro de trazabilidad de
+> `Implementacion/PIPELINE.md`, y **su commit de cierre está pendiente de sellar** (ver el
+> `> [!todo]` de §2.4; en el ciclo anterior ese papel lo hizo `9af842c`, que versionó a la vez el
+> script y sus cuatro artefactos).
 
 **Destino en la memoria:** **4.2.1** (análisis previo de la BD) y apoyo metodológico en 4.3.2.
 Si a la memoria va una cifra de este apartado, va con el nombre de su fichero: la variante de 122
@@ -539,7 +610,12 @@ escribe—, así que el desajuste se resuelve **en prosa**, sello a sello y sin 
   `6bb224c` es igualmente el
   commit **anterior** al cambio, así que `6bb224c-sucio` no identifica la versión que produjo la
   agregación: la identifica `1cb5c26`. Fue el **quinto** re-anclaje del proyecto, y es la pasada que
-  hay en disco. **Con esto no queda ningún re-anclaje pendiente.**
+  hay en disco. **Con esto, y a fecha 2026-08-14, no quedaba ningún re-anclaje pendiente.**
+  *(**Superado el 2026-08-16**: la re-corrida de `validacion.py` de ese día publicó seis artefactos
+  con sello `a8c20e9-sucio` cuyo commit de cierre **todavía no existe**, así que vuelve a haber **un
+  re-anclaje pendiente** en el proyecto. Ver el `> [!todo]` de §2.4. Los cinco re-anclajes que
+  enumeran las viñetas de arriba **siguen siendo ciertos**: lo que ha dejado de valer es la
+  conclusión de que no queda ninguno.)*
 
 Y el `-sucio` no contamina las bandas, que las respalda `commits_origen = df30cb2` limpio. Lo que sí
 hay que declarar al citar el titular es otra cosa: **titular y banda no salen del mismo commit**
@@ -629,7 +705,25 @@ Detalle completo en `Implementacion\PIPELINE.md`, subsección «El andamiaje de 
 
 ## 7. Mantenimiento de esta guía
 
-- **Última actualización: 2026-08-14, tercera pasada del día** (**cero corridas, cero `fit`, cero
+- **Última actualización: 2026-08-16** (**una re-corrida de `validacion.py` en las dos variantes,
+  cero `fit`, cero cifras de calidad alteradas**). `validacion.py` pasa a emitir el **reparto de D3
+  por categoría de ataque**, y con ello:
+  - **Alta de artefacto:** los dos `..._composicion_d3.csv`, inventariados en **§2.5** y añadidos a
+    la fila de `validacion.py` de §1. Bloque nuevo homónimo en los dos `..._validation_report.txt`
+    (§3.2).
+  - **Re-corrida de las dos variantes** el 2026-08-16, exit 0 e integridad **APROBADA**. Sello
+    interno `a8c20e9-sucio` en los seis artefactos; la fecha, distinta por variante, la declara cada
+    uno en su campo `Fecha de la corrida:` (informes) o su columna `fecha` (CSV). Los
+    dos `..._vocabulario_onehot.csv` se reescriben con **las mismas mediciones** (77 → 122, delta
+    45): **solo cambia el sello**. Las 12 figuras `validacion_*.png` se regeneran igual. Drift,
+    outliers y tamaños **no cambian**: (A) 37 / (B) 25 en 54 y (A) 44 / (B) 31 en 122.
+  - **Sello pendiente:** el commit de cierre de esta re-corrida **todavía no existe**; el `-sucio`
+    es previsto (el cambio de `validacion.py` estaba sin commitear al correr). Queda marcado con
+    `> [!todo]` en §2.4 de esta guía y en el recuadro de trazabilidad de
+    `Implementacion/PIPELINE.md`, que es donde se sellará. **No se escribe hash mientras tanto.**
+    Con esto vuelve a haber **un re-anclaje pendiente** en el proyecto, tras el periodo en que no
+    quedaba ninguno.
+- **Añadido el 2026-08-14, tercera pasada del día** (**cero corridas, cero `fit`, cero
   artefactos regenerados y cero cifras alteradas**: solo texto de esta guía y de
   `Implementacion\PIPELINE.md`; ningún script de `app\` tocado). **Cuarto re-anclaje de sello del
   proyecto:** `ddade37-sucio` → **`9d4c26d`**, el de la **tercera** pasada del agregador.
@@ -790,15 +884,21 @@ Detalle completo en `Implementacion\PIPELINE.md`, subsección «El andamiaje de 
   ninguna (antes salía el encabezado vacío), el **77 se rotula como RECONSTRUCCIÓN** en el informe
   y en consola, y los recuentos del CSV de vocabulario se publican como **enteros** (`77`, no
   `77.0`). El anclaje de procedencia de estos artefactos está en el recuadro «Hueco de
-  trazabilidad» de `Implementacion\PIPELINE.md`, reescrito en la misma pasada: los informes en
-  disco son de la re-corrida del **2026-08-11 a las 20:53** (sello interno `fc1c6b4-sucio`), no de
-  la de T2 del 2026-08-10. **Cerrado también** el residuo de `commit`+`fecha`: se estampan ya en la
+  trazabilidad» de `Implementacion\PIPELINE.md`, reescrito en la misma pasada: **en aquella fecha**
+  los informes en disco eran los de la re-corrida del **2026-08-11 a las 20:53** (sello interno
+  `fc1c6b4-sucio`), no los de T2 del 2026-08-10. **Eso quedó superado por la re-corrida del
+  2026-08-16**, que es la que hay hoy en disco (ver la entrada de esta misma sección fechada el
+  2026-08-16, arriba). **Cerrado también** el residuo de `commit`+`fecha`: se estampan ya en la
   cabecera de los dos informes y como dos columnas del CSV de vocabulario, y están en los ficheros
   publicados. Quedaba pendiente el **re-anclaje** —el sello es `-sucio` porque al correr el ciclo
   aún no estaba commiteado—, **resuelto el 2026-08-12 por vía textual**: el commit de cierre es
   **`9af842c`** y así lo declaran hoy el recuadro de trazabilidad y la tabla de corridas de
   `Implementacion/PIPELINE.md`, además de §2.4 y §3.2 de esta guía. El sello impreso dentro de los
-  artefactos **no se editó**: es una salida generada y sigue diciendo `fc1c6b4-sucio`.
+  artefactos **no se editó**: es una salida generada, y **hasta el 2026-08-16 decía**
+  `fc1c6b4-sucio`. La re-corrida del 2026-08-16 lo reescribió a `a8c20e9-sucio`, así que **ese
+  re-anclaje sigue siendo válido para la corrida que nombra —la del 2026-08-11— pero ya no
+  describe lo que hay en disco**; lo que hay en disco lo documenta la entrada del 2026-08-16 al
+  principio de esta sección.
 - Actualización anterior: **2026-08-10** (cuarta pasada de **T2** y **T3**, solo documentación:
   cero código de modelos y cero re-entrenamientos). Sobre lo anotado en las pasadas anteriores de
   esa misma fecha, se registra el **alta de artefactos de `validacion.py`**: al correrse por

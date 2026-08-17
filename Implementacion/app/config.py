@@ -10,13 +10,25 @@ para el código nuevo).
 program.py NO depende de este módulo: funciona y está APROBADO; solo migrará sus
 rutas aquí si en algún momento se toca (Q2).
 
-validacion.py SÍ lo importa desde el 2026-08-11, pero SOLO por la procedencia:
-llama a commit_actual() para estampar `commit` y `fecha` dentro de sus artefactos
-(la cabecera de los dos `*_validation_report.txt` y dos columnas de
-`*_vocabulario_onehot.csv`), en vez de duplicar el mecanismo por copia. Sus rutas
-siguen hardcodeadas: esa parte de Q2 continúa sin ejecutarse. La decisión está
-registrada en `resumen-de-decisiones.md` — Francisco EXTENDIÓ el alcance de Q2 de
-las rutas a la procedencia; Q2 por sí sola no autorizaba esto.
+validacion.py SÍ lo importa desde el 2026-08-11, por DOS motivos distintos:
+
+  (1) PROCEDENCIA: llama a commit_actual() para estampar `commit` y `fecha`
+      dentro de SEIS artefactos —que son TRES TIPOS × las DOS variantes, 54 y 122
+      features—: la cabecera de los dos `*_validation_report.txt`, dos columnas de
+      los dos `*_vocabulario_onehot.csv` y dos columnas de los dos
+      `*_composicion_d3.csv`. Así se evita duplicar el mecanismo por copia. El
+      recuento canónico del proyecto es SEIS ficheros: `PIPELINE.md` y la nota
+      fechada del 2026-08-16 de `resumen-de-decisiones.md` cuentan igual.
+  (2) VOCABULARIO DE CATEGORÍAS: lee CATEGORIAS_ATAQUE en medir_composicion_d3()
+      SOLO para fijar el ORDEN de las filas del reparto de D3 y marcar la columna
+      `declarada_en_config`. Nunca para inventar recuentos: esos salen de
+      value_counts()/len(), y lo que no esté en el vocabulario se publica igual.
+
+Sus rutas siguen hardcodeadas: esa parte de Q2 continúa sin ejecutarse. La
+decisión está registrada en `resumen-de-decisiones.md` — Francisco EXTENDIÓ el
+alcance de Q2 de las rutas a la procedencia; Q2 por sí sola no autorizaba esto.
+El motivo (2) lo ensancha de nuevo a «+ vocabulario de categorías» y va anotado
+como nota fechada del 2026-08-16 en ese mismo fichero, pendiente de revisión.
 
 NOTA para quien edite este fichero: al importarse NO debe tener efectos. Nada de
 llamar a ensure_dirs(), setup_utf8() ni tocar matplotlib/stdout a nivel de módulo,

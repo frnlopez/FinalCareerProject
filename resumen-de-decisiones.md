@@ -800,6 +800,110 @@ Francisco.
 > **se retira sin tocarse** y pasa a declararse como límite conocido en `A.3` (encargo escrito dentro
 > de T7).
 
+> **NOTA FECHADA — 2026-08-16: la re-corrida de hoy supera el sello, el inventario de artefactos y
+> el motivo mismo de la dependencia.** Todo el texto anterior de esta sección se conserva **tal cual**
+> como historial: esto lo **supera** en los puntos que enumero, no lo reescribe ni lo corrige. Origen:
+> el ciclo que añadió a `validacion.py` la emisión del reparto de D3 por categoría
+> (`medir_composicion_d3()` + `_guardar_csv_composicion_d3()`), auditado y con las cifras correctas,
+> y la re-corrida de las dos variantes que lo publicó.
+>
+> - **(a) Afirmaciones superadas, nombradas por línea.** Quedan describiendo un estado **anterior** y
+>   no deben citarse como estado actual: `:696-697` (enumera los artefactos de `validacion.py` como
+>   **cuatro**), `:745-748` (cita `fc1c6b4-sucio` y las fechas `2026-08-11T20:53:27` / `:46` como el
+>   sello en disco), `:763` y `:772` (el sello dentro de los artefactos «sigue diciendo
+>   `fc1c6b4-sucio`»; «los **cuatro** artefactos»), `:776-781` (la línea 4 del informe dice
+>   `fc1c6b4-sucio` y la 5 la fecha del 2026-08-11). **En la bitácora del final son otras tres, y
+>   se citan aquí por su FECHA Y SU TEXTO, no por número de línea** —la primera redacción de esta
+>   nota las apuntó por línea y erró en las tres, desplazadas exactamente las 53 líneas que ocupa
+>   la propia nota al insertarse; misma disciplina que ya se aplica a la cabecera de los informes—:
+>   en la entrada `2026-08-11` **de la procedencia** («residuo 5, opción A»), la frase «los
+>   artefactos en disco **ya llevan** el sello en la cabecera de los dos informes y en las dos
+>   columnas del CSV del vocabulario»; en su **nota fechada del 2026-08-14**, la frase «el sello
+>   impreso **dentro** de los cuatro artefactos sigue diciendo `fc1c6b4-sucio`»; y en la entrada
+>   `2026-08-12` **del re-anclaje**, el inciso «sigue diciendo `fc1c6b4-sucio`, porque es una
+>   salida generada». Las tres siguen en pie **como historial y no se reescriben allí**: se marcan
+>   desde aquí. **Lo que hay hoy en disco es
+>   `a8c20e9-sucio`**, común a las dos variantes; la marca temporal, distinta en la de **54** y en la
+>   de **122**, la declara cada artefacto en su campo `Fecha de la corrida:` (informes) o en su
+>   columna `fecha` (CSV), y **no se transcribe aquí**: caduca en cuanto se vuelve a correr, mientras
+>   que el commit identifica el estado del código y sobrevive a la re-corrida.
+>   El sello impreso **no se ha editado a mano** —lo estampa
+>   `config.commit_actual()` y solo cambiaría re-corriendo con el árbol limpio—: cambió **porque se
+>   re-corrió**. Sigue valiendo, sin matiz, la doctrina de qué vale y qué no vale un sello `-sucio`, y
+>   sigue sin existir el commit de cierre de esta re-corrida: **no se anota aquí ningún hash futuro**.
+>   La forma canónica de citar la cabecera sigue siendo **por nombre de campo**
+>   (`Commit del código:` / `Fecha de la corrida:`), nunca por número de línea.
+> - **(b) El inventario pasa de cuatro a SEIS artefactos sellados**: los dos
+>   `*_validation_report.txt` (cabecera), los dos `*_vocabulario_onehot.csv` (dos últimas columnas)
+>   y los dos `*_composicion_d3.csv` **nuevos** (mismas dos columnas). El commit es idéntico en los
+>   seis; **la fecha no**: se captura una vez por invocación en el constructor, así que cada CSV
+>   repite en todas sus filas el par de **su** variante.
+> - **(c) Decisión de diseño nueva, que nadie había registrado: el reparto de D3 se emite desde
+>   `validacion.py` y no desde `program.py`.** `program.py` es quien construye D3, así que a primera
+>   vista era su sitio natural. **No puede serlo sin romper una frontera que este mismo documento
+>   sostiene:** por la propia Q2, `program.py` **no depende de `config.py`** —y sus rutas siguen
+>   hardcodeadas—, de modo que no podría llamar a `config.commit_actual()` para estampar procedencia
+>   sin cruzarla. Un artefacto de reparto sin sello volvería a caer en el problema que esta sección
+>   resolvió. `validacion.py` **ya** ha pagado ese cruce y además es, por rol, la puerta de calidad
+>   que mide los splits: el reparto de D3 es una **medición** sobre un split ya generado, no un paso
+>   del pipeline. Se emite ahí.
+> - **Y eso ENSANCHA otra vez el motivo de la dependencia: de «rutas → procedencia» a
+>   «+ vocabulario de categorías».** `medir_composicion_d3()` lee `config.CATEGORIAS_ATAQUE`
+>   (`validacion.py:423-424` y `:436`), que **no es procedencia**. **La Q2 extendida registrada arriba
+>   NO cubre esta extensión** y no debe leerse como si la cubriera: aquella amplió el alcance de las
+>   rutas a la procedencia, y punto. **Acotación de lo que se usa:** ese vocabulario sirve **solo para
+>   fijar el ORDEN de las filas** del CSV —para que no dependa del orden de frecuencia— y para marcar
+>   la columna `declarada_en_config`; **nunca para inventar recuentos**, que salen de `value_counts()`
+>   y `len()`, con una comprobación que revienta si las categorías no suman el `__total__`, y con las
+>   categorías fuera del vocabulario publicadas igualmente al final en vez de perderse en silencio.
+> - **Reversible**: quitar la lectura de `CATEGORIAS_ATAQUE` deja el orden de las filas al de
+>   frecuencia y no mueve ninguna cifra; el `import config` seguiría en pie por la procedencia.
+> - ~~**SEÑALADA PARA REVISIÓN DE FRANCISCO.**~~ El punto (c) era una **decisión de diseño tomada por
+>   un agente**, no registrada en su momento, y su segunda mitad extendía un permiso —Q2— que solo
+>   Francisco extiende. Se anotó aquí para que se viera, no para darla por bendecida.
+>   **✅ APROBADA POR FRANCISCO EL 2026-08-16.** Preguntado explícitamente con las dos alternativas
+>   sobre la mesa —aprobar la extensión o revertirla duplicando la lista de categorías por copia—,
+>   eligió **aprobarla**. Razón que pesó: duplicar el vocabulario por copia es exactamente el
+>   problema que Q2 vino a resolver, así que revertir habría comprado pureza de acoplamiento al
+>   precio de reintroducir la avería original. **Queda por tanto registrado que la dependencia
+>   `validacion.py` → `config.py` cubre HOY tres cosas: rutas, procedencia y el vocabulario de
+>   categorías.** Lo que sigue sin cubrir, y que ningún agente debe dar por extendido: cualquier
+>   lectura de `config.py` que **produzca o altere un recuento**. Los recuentos salen de
+>   `value_counts()` y `len()`, y esa frontera no la ha movido nadie.
+> - Documentación alineada en la misma pasada, **CUATRO sitios**: cabecera de
+>   `Implementacion/app/validacion.py`, docstring de `Implementacion/app/config.py`,
+>   `Implementacion/PIPELINE.md` (que decía «dos informes + el CSV del vocabulario» y se
+>   contradecía con su propio recuadro de trazabilidad, ya correcto en seis) y
+>   `Resultados/GUIA_RESULTADOS.md`. **La guía se alineó de forma sustancial** —alta de su §2.5
+>   para los `..._composicion_d3.csv`, reescritura de §2.4, y actualización de la fila de
+>   `validacion.py` en §1, de §3.2 y de la entrada de §7 (verificado en disco el 2026-08-16)—, y
+>   la primera redacción de esta viñeta la omitía, al contrario que la entrada homóloga del ciclo
+>   anterior, que sí la listaba. Se añade aquí; aquella queda intacta.
+> - **PENDIENTE que NO está hecho: `CLAUDE.md`.** Su bloque del orden de ejecución (hoy `:85-89`)
+>   sigue diciendo que `validacion.py` importa `config.py` «y solo por la **procedencia**», sin el
+>   motivo (2) —vocabulario de categorías, ver la viñeta de arriba—, y su inventario de artefactos
+>   sellados enumera solo «la cabecera de sus dos informes y … las columnas de su CSV del
+>   vocabulario del one-hot», es decir, se queda corto frente a los **SEIS** actuales: omite los dos
+>   `*_composicion_d3.csv`. **Lo alinea el hilo principal, no un agente**, por ser fichero de
+>   andamiaje. Queda registrado aquí a propósito: hasta hoy ese pendiente vivía **solo** en un
+>   comentario de `validacion.py`, y al alinear `CLAUDE.md` ese comentario se borrará y el pendiente
+>   habría desaparecido sin dejar rastro en ningún registro.
+
+**Nota del 2026-08-16 — la marca temporal de una corrida DEJA DE CITARSE en prosa (decisión de
+Francisco).** `validacion.py` se volvió a correr ese mismo día y los seis artefactos cambiaron su
+`Fecha de la corrida:` / columna `fecha`, mientras el campo `Commit del código:` seguía diciendo
+`a8c20e9-sucio`. La prosa de `Resultados/GUIA_RESULTADOS.md` y de esta sección se quedó citando las
+marcas temporales anteriores, que ya no existían en ningún fichero. El defecto **no es de
+transcripción sino de raíz**: copiar los segundos a la documentación hace que **cada re-corrida
+futura invalide lo escrito**, sin que nada avise. Desde hoy: **el `commit` se sigue citando** —
+identifica el estado del código y no cambia al re-correr— y **la marca temporal se REMITE al campo
+del artefacto** (`Fecha de la corrida:` en los informes, columna `fecha` en los CSV) en vez de
+transcribirse. Aplicado en `Resultados/GUIA_RESULTADOS.md` (cuatro sitios) y en la viñeta (a) de
+arriba, donde **se conserva íntegra** la garantía de que el sello **no se ha editado a mano**. Lo
+anterior queda intacto como historial; en particular, **las marcas temporales que sirven para
+DISTINGUIR entre varias pasadas del mismo artefacto** —las cuatro de `agregar_semillas.py`, que solo
+se diferencian por la hora— siguen citándose: ahí la marca es identificadora, no decorativa.
+
 ---
 
 ## Decisiones del 2026-08-14
