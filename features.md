@@ -689,7 +689,15 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > ya estaban verificadas contra disco. **No se vuelve a encargar.** El encargo original vive en git.
 
 
-- [ ] **T9 · Cita en el punto de la decisión — capítulo 3** · Informe · `redactor-tfg`
+- [x] **T9 · Cita en el punto de la decisión — capítulo 3** · Informe · `redactor-tfg`
+  > ✅ **RESUELTA el 2026-08-17, sin trabajo de recorte pendiente. Ficha en `## Cerradas`.**
+  > **La ficha iba UN DÍA POR DETRÁS DEL DISCO**: el recorte que estos bullets describían como vivo
+  > **ya estaba ejecutado desde la TANDA 12 (2026-08-16)**, con respaldo en
+  > `resumen-de-decisiones.md:983-1049`. El `redactor-tfg` no modificó nada porque no había nada que
+  > aplicar. **Es la misma clase de divergencia registro/disco que ya costó un ciclo entero de
+  > reconciliación**: queda escrito que el registro mentía, no solo que la tarea se cerró.
+  > **NO está aceptada**: aceptar y retirar la ficha es decisión de Francisco.
+  > Lo que sigue debajo es el historial de la ficha, no trabajo pendiente.
   - `3.1`: **modelo de amenaza explícito** = aplicar P10. Atacante no adaptativo, sin conocimiento
     del modelo, que no intenta evadirlo; opera sobre flujos ya extraídos, no sobre paquetes; sin
     envenenamiento del entrenamiento. **Y la razón citada de por qué no hay experimento adversario:**
@@ -780,6 +788,13 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
       ~~**barrido de solapes del capítulo 2**~~ —**CERRADO en la TANDA 19, 2026-08-17**— y la **comprobación contra `99 Investigación/Datos repetidos en el capítulo 3.md` de qué solapes
       de los 15 quedan sin aplicar** — `3.1` no se tocó, y hay que **confirmar** si eso es correcto
       (`3.1.5` es nueva y está exenta) en vez de darlo por bueno.
+      → **CERRADO el 2026-08-17: la comprobación se hizo y NO quedaba nada por aplicar.** Verificado
+      **S1–S13 y S15 vivos**, `S14` y las repeticiones legítimas **intactas por diseño**, `3.3`
+      renumerada **sin remisiones rotas** en ninguna nota de memoria, las **once anclas** emitidas por
+      el capítulo 3 existentes, los **diez `[n]`** del capítulo presentes en `Bibliografía.md` sin
+      huérfanos, y el *data snooping* **enunciado una sola vez** (`3.3:29`, literal respecto a la
+      decisión registrada). **`3.1`: confirmado que NO procedía intervención** — era el único bullet
+      que esta ficha dejaba explícitamente sin resolver.
 
 - [x] **T10 · Capítulo 4** · Informe · `redactor-tfg`
   > ✅ **CERRADA EN LA TANDA 17 (2026-08-17, `9bcfe1f`).** Su último bullet vivo era el del «17», de
@@ -1753,6 +1768,7 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-17 | Informe | **T9 · RESUELTA — y el hallazgo es que LA FICHA IBA UN DÍA POR DETRÁS DEL DISCO.** El recorte del capítulo 3 **ya estaba ejecutado desde la TANDA 12 (2026-08-16)**, con respaldo en `resumen-de-decisiones.md:983-1049`; el `redactor-tfg` no modificó nada porque no había nada que aplicar, y los bullets «lo que sigue vivo» describían trabajo hecho la víspera. **Auditoría adversaria: APTO CON CAMBIOS, no pudo falsar el hallazgo** — S1–S13 y S15 vivos, S14 y las repeticiones legítimas intactas por diseño, `3.3` renumerada sin remisiones rotas, las once anclas del capítulo existentes, los diez `[n]` sin huérfanos, el *data snooping* enunciado una sola vez (`3.3:29`), y **`3.1` confirmada como «no procedía intervención»**. **Tres correcciones de una o dos líneas, sin tocar cifras ni citas:** aviso de estado fechado en `99 Investigación/Datos repetidos en el capítulo 3.md` (su censo afirmaba **en presente** que `3.4.5` no existe, y sí existe; análisis **no reescrito**, por ser artefacto fechado), retirada de las auto-remisiones a §3.5.2 desde dentro de §3.5.2 (`3.5:48,52`) y alta de «4.3.7 Preprocesado sin fuga de datos» en la remisión anti-*leakage* de `3.3:23`. **La cifra para el profesor se mantiene TAL CUAL y nadie la ha tocado: ≈20 % en total y ≈25 % en `3.1`–`3.3`, estimación redondeada a la decena y SIN script de conteo que la respalde.** **No marcada como aceptada: eso lo decide Francisco** | — |
 | 2026-08-17 | Informe | **CICLO DE RECONCILIACIÓN del trabajo huérfano — 11 ficheros, cero código, cero corridas, ninguna cifra publicada movida.** Los ficheros sin commitear los habían dejado **tres agentes muertos por límite de API**; verificado contra disco, su trabajo estaba **completo, no a medias**, pero **no había pasado auditoría**, así que se auditó antes de nada. **Dos pases, ambos APTO CON CAMBIOS, ningún 🔴**; los **8 hallazgos aplicados y verificados**. Censo de citas **intacto: 74 filas, primer libre `[76]`, cero `[n]` nuevos o renumerados, cero `[CITA: …]` nuevos**. Ficheros: `Implementacion/PIPELINE.md`, `Resultados/GUIA_RESULTADOS.md`, `resumen-de-decisiones.md` y, en el vault, `2.1.6`, `4.4`, `4.5`, `5.0`, `5.2`, `5.4`, `6.1`, `A.3` | `822e4c5` |
 | 2026-08-17 | Informe | **🟡 Los punteros al «inventario completo» — CERRADO: hoy hay UNA sede canónica, `6.1`, y las NUEVE remisiones apuntan allí.** La ficha contaba cuatro destinos (`4.6`, `6.1`, `A.3`+`6.1`, `4.3`+`6.1`); resolverlo era **fijar la sede y repuntar**, no elegir la más cómoda. **El hallazgo 🟠 del pase de auditoría iba justo aquí**: `A.3.7` conservaba un **inventario rival** sin remitir a `6.1`, y **`5.0` le había quitado el puntero en silencio**. Resuelto **sin borrar la tabla**: `A.3.7` queda como **volcado tabulado con enlace recíproco a `6.1`** | `822e4c5` |
 | 2026-08-17 | Código | **🟠 SEXTO re-anclaje de sello (`commit_agregador = 0276039-sucio`) — CERRADO EN PROSA, con el sello impreso INTACTO.** Los tres artefactos del agregador siguen llevando `0276039-sucio` **verificado en los tres**: el sello lo estampa `config.commit_actual()` y **no se reescribe a mano**, así que el re-anclaje va en el texto que lo lee. El `auditor-ml` lo dio por **correcto y sustantivo, no cosmético** | `822e4c5` |

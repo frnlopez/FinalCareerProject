@@ -94,6 +94,13 @@ obtiene contando las referencias de la propia celda, de modo que es verificable 
   la que consta en las cabeceras leídas: 3.1.1–3.1.5 (con 3.1.5.1 y 3.1.5.2), 3.2.1–3.2.3,
   3.3.1–3.3.4, 3.4.1–3.4.4, 3.5.1–3.5.5, y `3.6` sin subdivisión.
 
+> [!warning] Aviso de estado (2026-08-17): censo de numeración superado
+> El censo de apartados de la viñeta anterior refleja el estado del vault en la fecha de este
+> informe y quedó **superado por la Tanda 12 del 2026-08-16**. En particular, **`3.4.5 El coste del
+> paradigma` SÍ existe hoy** (`03 Diseño del sistema/3.4 Modelo de detección de anomalías.md:35`).
+> El análisis de solapes no se reescribe —este documento es un artefacto de investigación fechado—,
+> pero la numeración debe verificarse contra disco antes de apoyarse en ella.
+
 ---
 
 ## 2. Qué hacer con cada solape, y dónde queda la versión canónica
