@@ -20,7 +20,7 @@ Working_Directory/            ← raíz del repositorio git (rama de trabajo: de
 ├── .claude/                  ← arquitectura de agentes (ver sección propia)
 ├── TFG - Fran.docx           ← memoria en Word (no versionada)
 ├── Archivos dataset/         ← NSL-KDD crudo (no versionado)
-├── Resultados/               ← métricas y figuras versionadas; modelos y CSV, no
+├── Resultados/               ← métricas, figuras y sus CSV, versionados; modelos y splits, no
 ├── Implementacion/           ← código Python
 │   ├── app/                  ← program · validacion · anomalias · firmas ·
 │   │                           baseline · hibrido · cascada_invertida ·
@@ -82,11 +82,21 @@ pip install -r requirements.txt
 > (no tienen `__main__`): son librerías internas que importan los cuatro scripts de
 > modelos —`anomalias.py`, `firmas.py`, `baseline.py` e `hibrido.py`— **más
 > `cascada_invertida.py`**. **`program.py` no depende de ninguna de las dos.
-> `validacion.py` sí importa `config.py` desde el 2026-08-11**, y solo por la
+> `validacion.py` sí importa `config.py` desde el 2026-08-11**, en origen **solo por la
 > **procedencia**: usa `config.commit_actual()` para estampar `commit` y `fecha` en la cabecera
-> de sus dos informes y en las columnas de su CSV del vocabulario del one-hot, en vez de
+> de sus informes y en las columnas de sus CSV, en vez de
 > duplicar el mecanismo por copia (decisión de Francisco registrada en
 > `resumen-de-decisiones.md`, que extiende el alcance de Q2 de las rutas a la procedencia).
+> **Esa frontera se ENSANCHÓ el 2026-08-16, y Francisco APROBÓ la extensión ese mismo día.** Al
+> emitir el reparto de D3 por categoría, el código pasó a leer también **`config.CATEGORIAS_ATAQUE`**,
+> que **no es procedencia**: la Q2 original cubría «rutas → procedencia» y nada más. Lo decidió un
+> agente sobre la marcha, se marcó como pendiente y **Francisco lo aprobó al preguntárselo**
+> (registrado en `resumen-de-decisiones.md`). **La dependencia cubre hoy TRES cosas: rutas,
+> procedencia y el vocabulario de categorías.** Lo que **sigue sin cubrir**, y que ningún agente
+> debe dar por extendido: cualquier lectura de `config.py` que **produzca o altere un recuento**.
+> Los recuentos salen de `value_counts()` y `len()`.
+> **`validacion.py` escribe hoy SEIS artefactos, no cuatro**: los dos `*_validation_report.txt`,
+> los dos `*_vocabulario_onehot.csv` y los dos `*_composicion_d3.csv`.
 > No importa `evaluacion.py`, y el import no tiene efectos ni ciclos: `config.py` solo define
 > constantes y funciones —no llama a `ensure_dirs()` al importarse— y no importa nada del
 > proyecto. El encabezado de `config.py` está actualizado en consecuencia. El pipeline de
@@ -200,10 +210,10 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
   de solo lectura. Un cierre por **tanda**, no por nota: una sola pasada de `cronista`.
 - **Protocolo de citas — vale para CUALQUIER agente que escriba en el vault.** Los marcadores `[n]`
   son un **contador global** que apunta a `Bibliografía.md`. **En uso hoy: `[1]`–`[8]` y
-  `[10]`–`[73]`, 72 entradas** —verificado contra `Bibliografía.md` el 2026-08-16 tras la Tanda 13,
-  el pase en serie de citas, que dio de alta `[68]`–`[73]`—, y **`[9]` está RETIRADA SIN RENUMERAR**
-  (`396e283`), así que está
-  **quemada, no libre**. **El primer número disponible es el `[74]`.** **Este rango se cuenta, no se recuerda**
+  `[10]`–`[75]`, 74 entradas** —verificado contra `Bibliografía.md` el 2026-08-16 tras el pase de la
+  Tanda 16, que dio de alta `[74]` Goldschmidt y Chudá y `[75]` Breunig et al.—, y **`[9]` está
+  RETIRADA SIN RENUMERAR** (`396e283`), así que está
+  **quemada, no libre**. **El primer número disponible es el `[76]`.** **Este rango se cuenta, no se recuerda**
   (`grep -oE '^\| *\[[0-9]+\]' Bibliografía.md`): estuvo desfasado en `leader.md` diciendo `[11]`
   cuando ya iba por el `[57]`, y ese es justo el fichero que despacha.
   Importa porque `[2]` (Anderson 1980) y `[3]` (Denning 1987) son las que más se citan al redactar
@@ -268,9 +278,15 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
 
 - Repositorio: `https://github.com/frnlopez/FinalCareerProject.git` — raíz en `Working_Directory/`.
 - Se trabaja en **`develop`**. `main` se actualiza solo en hitos y solo si el usuario lo pide.
-- Se versiona el **texto plano**: código, notas del vault, `metricas_*.csv`, figuras, reglas.
-  Quedan fuera (ver `.gitignore`) el venv, los `.joblib`, los CSV procesados, el dataset crudo y
-  los `.doc/.docx` — todo reproducible o descargable, y suman 1,1 GB.
+- Se versiona el **texto plano**: código, notas del vault, figuras, reglas y **los CSV citables**
+  —`metricas_*.csv`, `dispersion_semillas.csv`, `*_vocabulario_onehot.csv` y
+  `*_composicion_d3.csv`—.
+  Quedan fuera (ver `.gitignore`) el venv, los `.joblib`, **los CSV de los splits**, el dataset
+  crudo y los `.doc/.docx` — todo reproducible o descargable, y suman 1,1 GB.
+  **«Los CSV no se versionan» es FALSO y lo decía este fichero hasta el 2026-08-16.** La regla real
+  del `.gitignore` es por patrón, no por extensión: solo excluye `Resultados/*_processed_*.csv` y
+  `Resultados/*_original_*.csv`, que son los splits —regenerables y pesados—. **Todo lo demás en
+  `Resultados/` se versiona**, y hay 20+ CSV dentro. Si dudas, `git ls-files 'Resultados/*.csv'`.
 - Un **commit por tarea cerrada, o un commit por tanda paralela** nombrando en el cuerpo las
   fichas que cierra; mensaje en español con prefijo `codigo:` / `informe:` / `harness:`.
   **Por qué la tanda cuenta como unidad** (decisión de Francisco del 2026-08-14, Decisión 7 de la
