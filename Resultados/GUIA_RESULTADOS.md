@@ -21,7 +21,7 @@ Aquí se vuelca **todo lo que generan los scripts** de `Implementacion/app/`:
 | `cascada_invertida.py` | ejecutado (54 y 122) | `metricas_cascada_invertida.csv` y `figuras\cascada_invertida_<set>.png`. **No entrena nada**: carga `firma_*.joblib` y lee el umbral de `hibrido_*.joblib` |
 | `evaluacion.py` | módulo común | No deposita por sí mismo: lo usan los cuatro scripts de modelos y `cascada_invertida.py` |
 | `barrido_semillas.py` | **corrido** (T4, 2026-08-12 22:09 → 00:38, sello `df30cb2`) | Las **nueve** tablas `metricas_*_semillas.csv` (**2.320 filas** en total), a través de los cinco scripts hijos, más los artefactos sufijados `_semilla<N>` **no versionados**: **260** figuras `figuras\*_semilla*`, **20** `firmas_reglas_*_semilla*.txt` y **100** logs en `logs_barrido\`. Los `.joblib` por semilla los borra él mismo al cerrar cada semilla (en `modelos\` no queda ninguno). Además, `verificacion_semilla_joblib.txt`: la traza de que los 20 `.joblib` publicados declaran `semilla = 42` |
-| `agregar_semillas.py` | **corrido cuatro veces** (T4: **7,2 s** la primera y **1,70 s** la segunda, ambas el 2026-08-13, esta tras el arreglo de `_tabla_md()`; una tercera con el **titular automático** (2026-08-13 `19:54:48`); y una cuarta con el **reparto por commit de origen del titular** (2026-08-14 `15:15:13`). **En disco están los de la cuarta**, cabecera `2026-08-14T15:15:13`) | `dispersion_semillas.csv` y `dispersion_semillas.md` — **198 filas** (98 de *calidad* + 100 de *dispersión de máquina*) con n, media, sd muestral (`ddof=1`), mín y máx, más el valor de la semilla 42 al lado de cada banda y el recuento **«13 de 98»** fuera de banda; `commits_origen = df30cb2` único en todas las celdas y `commit_agregador = 6bb224c-sucio` — sello impreso, que **queda intacto** y está **re-anclado en prosa a `1cb5c26`** (§6.2); los de la segunda y la tercera pasada quedaron re-anclados a `9ad971b` y a `9d4c26d` respectivamente. **Ninguna de las cuatro pasadas de este agregador tiene re-anclaje pendiente** (verificado el 2026-08-14). Ojo: eso es **solo sobre `agregar_semillas.py`** — en el proyecto **sí** hay un re-anclaje pendiente desde la re-corrida de `validacion.py` del 2026-08-16 (`a8c20e9-sucio`, ver el `> [!todo]` de §2.4) |
+| `agregar_semillas.py` | **corrido cinco veces** (T4: **7,2 s** la primera y **1,70 s** la segunda, ambas el 2026-08-13, esta tras el arreglo de `_tabla_md()`; una tercera con el **titular automático** (2026-08-13 `19:54:48`); una cuarta con el **reparto por commit de origen del titular** (2026-08-14 `15:15:13`); y una quinta con el **recuento pareado por semilla** (2026-08-17). **En disco están los de la quinta**) | `dispersion_semillas.csv`, `dispersion_semillas.md` y **`comparaciones_pareadas.csv`** — los dos primeros con **198 filas** (98 de *calidad* + 100 de *dispersión de máquina*) con n, media, sd muestral (`ddof=1`), mín y máx, más el valor de la semilla 42 al lado de cada banda y el recuento **«13 de 98»** fuera de banda; el tercero con **13 filas de datos** de recuentos pareados. `commits_origen = df30cb2` único en todas las celdas y `commit_agregador = 0276039-sucio` — sello impreso, que **queda intacto** y está **re-anclado en prosa a `98a0289`** (§6.2); las pasadas segunda, tercera y cuarta quedaron re-ancladas a `9ad971b`, `9d4c26d` y `1cb5c26` respectivamente. **Ninguna de las cinco pasadas de este agregador tiene re-anclaje pendiente** (verificado el 2026-08-17). Ojo: eso es **solo sobre `agregar_semillas.py`** — en el proyecto **sí** hay un re-anclaje pendiente desde la re-corrida de `validacion.py` del 2026-08-16 (`a8c20e9-sucio`, ver el `> [!todo]` de §2.4) |
 
 **Regla de oro:** nada de esta carpeta se edita a mano. Todo se **regenera** ejecutando los
 scripts (con `random_state=42`); si un número va a la memoria, tiene que salir de aquí. Para
@@ -574,14 +574,17 @@ anterior:
 
 **El barrido ya corrió** (2026-08-12 22:09 → 00:38, sello `commit = df30cb2` limpio; sus nueve tablas
 quedaron versionadas en `9ad971b`) y **ya se agregó**
-(2026-08-13). El agregador se ha ejecutado **cuatro veces**, todas con cero `fit` —solo lee CSV—: la
+(2026-08-13). El agregador se ha ejecutado **cinco veces**, todas con cero `fit` —solo lee CSV—: la
 primera en **7,2 s**; la segunda en **1,70 s**, con el arreglo de `_tabla_md()` que añade las
 columnas `Tabla de origen` y `Alcance` (sello `commit_agregador = df30cb2-sucio`, cabecera
 `2026-08-13T07:43:40`); la tercera con el **titular automático** —las cuatro columnas `*_42` y el
 recuento «13 de 98», que antes se calculaba a mano— (`ddade37-sucio`, `2026-08-13T19:54:48`); y la
 cuarta con el **reparto por commit de origen del titular** dentro de la salvedad de procedencia del
-`.md`. **Los dos ficheros de dispersión que hay en disco son los de la cuarta**: cabecera
-`2026-08-14T15:15:13` y `commit_agregador = 6bb224c-sucio`, verificado en disco el 2026-08-14.
+`.md` (`6bb224c-sucio`, `2026-08-14T15:15:13`); y la quinta con el **recuento pareado por semilla**,
+que estrena `comparaciones_pareadas.csv` y añade al `.md` la sección «Comparaciones pareadas por
+semilla». **Los ficheros del agregador que hay en disco son los de la quinta, y ya son TRES**:
+`commit_agregador = 0276039-sucio`, verificado en disco el 2026-08-17 (la marca temporal la declara la
+cabecera del propio artefacto).
 
 Esos sellos **no se retocan ni se regeneran** —por la razón estructural que explica
 `Implementacion\PIPELINE.md`: un artefacto que estampa `config.commit_actual()` no puede llevar el
@@ -609,13 +612,23 @@ escribe—, así que el desajuste se resuelve **en prosa**, sello a sello y sin 
   anterior (verificado con `git log --oneline 1cb5c26` el 2026-08-14, no deducido de la prosa).
   `6bb224c` es igualmente el
   commit **anterior** al cambio, así que `6bb224c-sucio` no identifica la versión que produjo la
-  agregación: la identifica `1cb5c26`. Fue el **quinto** re-anclaje del proyecto, y es la pasada que
-  hay en disco. **Con esto, y a fecha 2026-08-14, no quedaba ningún re-anclaje pendiente.**
+  agregación: la identifica `1cb5c26`. Fue el **quinto** re-anclaje del proyecto. **Ya no es la pasada
+  que hay en disco** —la sobrescribió la quinta, del 2026-08-17—, pero **sigue nombrando su pasada** y
+  no se borra. **Con esto, y a fecha 2026-08-14, no quedaba ningún re-anclaje pendiente.**
   *(**Superado el 2026-08-16**: la re-corrida de `validacion.py` de ese día publicó seis artefactos
   con sello `a8c20e9-sucio` cuyo commit de cierre **todavía no existe**, así que vuelve a haber **un
-  re-anclaje pendiente** en el proyecto. Ver el `> [!todo]` de §2.4. Los cinco re-anclajes que
-  enumeran las viñetas de arriba **siguen siendo ciertos**: lo que ha dejado de valer es la
-  conclusión de que no queda ninguno.)*
+  re-anclaje pendiente** en el proyecto. Ver el `> [!todo]` de §2.4. Cada re-anclaje enumerado en
+  las viñetas de esta lista **sigue siendo cierto**, uno por uno: lo que ha dejado de valer es la
+  conclusión de que no queda ninguno. Aquí no se cuenta cuántos son —el total lo da la **última**
+  viñeta de la lista, que es la que se actualiza al añadir uno nuevo.)*
+- **Quinta pasada, re-anclada:** `0276039-sucio` → **`98a0289`** («codigo: emitir el "8 de 10" pareado
+  desde agregar_semillas.py y corregir el residuo de T22», 2026-08-17), el commit que versiona a la vez
+  el cambio de `agregar_semillas.py` y los **tres** artefactos del agregador, que salieron de código
+  sin commitear (verificado con `git show --stat 98a0289` el 2026-08-17, no deducido de la prosa).
+  `0276039` es el commit **anterior** al cambio —y es de track *informe*, no de código—, así que
+  **`0276039-sucio` no contiene el código que produjo los artefactos**: lo contiene `98a0289`. Es el
+  **sexto** re-anclaje del proyecto, y es la pasada que hay en disco. **No cierra el pendiente de
+  `validacion.py`** (`a8c20e9-sucio`), que sigue esperando su commit de cierre.
 
 Y el `-sucio` no contamina las bandas, que las respalda `commits_origen = df30cb2` limpio. Lo que sí
 hay que declarar al citar el titular es otra cosa: **titular y banda no salen del mismo commit**
@@ -627,7 +640,8 @@ banda—, contado sobre la columna `commit_semilla_42` de `dispersion_semillas.c
 (2026-08-14). Desde el 2026-08-14 ese reparto **lo imprime el propio agregador** dentro de la
 salvedad de procedencia del `.md`, con los «fuera de banda» que aporta cada commit —`1163c90`: 94
 celdas, **13 fuera**; `274923d-sucio`: 4 celdas, **ninguna fuera**—, y **el `.md` en disco ya lo
-lleva** desde la cuarta pasada, verificado en el fichero el 2026-08-14. Lo que hay en disco:
+lleva** desde la cuarta pasada y lo sigue llevando en la quinta, verificado en el fichero el
+2026-08-17. Lo que hay en disco:
 
 - **`verificacion_semilla_joblib.txt`** — la lista de los **20** `.joblib` publicados con la semilla
   que declara cada uno. Lo genera `python app\barrido_semillas.py --solo-verificar`, que **no entrena
@@ -719,7 +733,26 @@ Detalle completo en `Implementacion\PIPELINE.md`, subsección «El andamiaje de 
 
 ## 7. Mantenimiento de esta guía
 
-- **Última actualización: 2026-08-16** (**una re-corrida de `validacion.py` en las dos variantes,
+- **Última actualización: 2026-08-17** (**cero corridas, cero `fit`, cero artefactos regenerados y
+  cero cifras alteradas**: solo texto). **Sexto re-anclaje de sello del proyecto:** `0276039-sucio` →
+  **`98a0289`**, el de la **quinta** pasada del agregador (la que estrenó `comparaciones_pareadas.csv`).
+  - `0276039` es un commit de track *informe* («informe: separar en 3.5 los dos "8 de 10" homonimos») y
+    es el **anterior** al cambio, así que **no contiene el código que produjo los artefactos**. El que
+    sí lo contiene es `98a0289` («codigo: emitir el "8 de 10" pareado desde agregar_semillas.py y
+    corregir el residuo de T22»), que versiona a la vez `agregar_semillas.py` y los tres artefactos.
+    Verificado con `git show --stat 98a0289`, no deducido de la prosa.
+  - **Reconcilia además la prosa con el fichero en disco:** §1 y §6.2 decían que en disco estaban los
+    **dos** artefactos de la **cuarta** pasada (`6bb224c-sucio`, `2026-08-14T15:15:13`), y en disco
+    están los **tres** de la quinta. Las 198 filas y el «13 de 98» **no cambian**.
+  - Se escribe en **cinco emplazamientos** —los cuatro de siempre **más `A.3`**—: §1 y §6.2 de esta
+    guía, y la tabla de corridas más
+    el recuadro de re-anclajes de `PIPELINE.md` (que gana además la fila de la 5.ª pasada y la ficha
+    del runbook de `comparaciones_pareadas.csv`), y **`A.3 Ficha del sistema`**, que también lo tiene
+    escrito y se olvida si uno cuenta cuatro. El sello impreso
+    **dentro** de los artefactos **no se toca**: lo estampa `config.commit_actual()`.
+  - **No cierra el pendiente de `validacion.py`** (`a8c20e9-sucio`), que sigue esperando su commit de
+    cierre — ver el `> [!todo]` de §2.4.
+- **Actualización anterior: 2026-08-16** (**una re-corrida de `validacion.py` en las dos variantes,
   cero `fit`, cero cifras de calidad alteradas**). `validacion.py` pasa a emitir el **reparto de D3
   por categoría de ataque**, y con ello:
   - **Alta de artefacto:** los dos `..._composicion_d3.csv`, inventariados en **§2.5** y añadidos a

@@ -454,13 +454,23 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 
 ### Altas del ciclo de Código — 2026-08-17
 
-- [ ] 🟠 **SEXTO re-anclaje de sello: `commit_agregador = 0276039-sucio`** · Código · `ml-implementador` → `auditor-ml`
-  Alta el **2026-08-17**, residuo del ciclo que emitió `comparaciones_pareadas.csv`. Los artefactos
-  del agregador salieron de **código sin commitear**, así que **`0276039` NO contiene el código que
-  los produjo** y el sello es engañoso tal cual.
-  **Orden obligatorio: commitear primero, relanzar el agregador después** — al revés vuelve a
-  estampar un sello falso. **El sello impreso DENTRO del artefacto no se reescribe a mano**: lo
-  estampa `config.commit_actual()`. Precedentes de la misma forma: **`8dddc92`** y **`6fd1ed4`**.
+> **El 🟠 «SEXTO re-anclaje de sello: `commit_agregador = 0276039-sucio`» queda CERRADO el
+> 2026-08-17**, re-anclado **en prosa** y con el sello impreso dentro de los tres artefactos
+> **intacto** (`0276039-sucio`, verificado en los tres), como manda la regla. Su ficha vive ya en
+> `## Cerradas`.
+
+- [ ] 🟠 **El re-anclaje pendiente de `validacion.py` (`a8c20e9-sucio`) NO TENÍA FICHA** · Código · `ml-implementador` → `auditor-ml`
+  Alta el **2026-08-17**, en el ciclo de reconciliación. Está **declarado en `PIPELINE.md:244-252`**
+  y el sello está **impreso en 6 artefactos versionados**, pero era **invisible en `features.md`**
+  —comprobado: cero coincidencias—. Es **trabajo pendiente que nadie ve**, que es justo lo que este
+  registro existe para evitar. **Mismo orden obligatorio que sus cinco precedentes: commitear
+  primero, relanzar `validacion.py` después**; el sello lo estampa `config.commit_actual()`, nunca
+  se reescribe a mano.
+
+- [ ] 🟡 **`features.md` citaba `3.3:42` como sede pendiente; en disco es `3.3:29` y ya está resuelta** · — · `cronista`
+  Alta el **2026-08-17**. Referencia con línea **desfasada** dentro del propio registro. Queda
+  fichado como **patrón a vigilar**, no como incidencia suelta: las referencias `fichero:línea` de
+  este documento **se recuentan contra disco antes de repetirlas**.
 
 - [ ] 🟡 **`Bibliografía.md:177` — el localizador de `[49]` Bendale y Boult apunta a `2.3.2.5`, y en disco está en `2.3.2.4`** · Informe · `researcher`
   Alta el **2026-08-17**. **Va EN SERIE y merece ciclo propio**: se junta con los **tres `[CITA: …]`
@@ -1453,13 +1463,13 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > encargo y deliberadamente SIN TOCAR**. **Ninguno es bloqueante** y **ninguno mueve una cifra
 > publicada.** **Fichar no es resolver: aquí no se ha corregido nada.**
 
-- [ ] **Los punteros al «inventario completo» de las tres decisiones apuntan a CUATRO destinos distintos** (🟡) · Informe · `redactor-tfg`
-  Alta el **2026-08-15**, verificado con línea: `4.4:17` y `4.5:17` mandan a **`4.6`**; `4.6:35` manda
-  a **`6.1`**; `5.0:99` manda a **`A.3` + `6.1`**; y `3.3:42` manda a **`4.3` + `6.1`**. Cuatro
-  destinos para el **mismo** «inventario completo», así que el lector que siga cualquiera de ellos
-  no llega al mismo sitio que el que siga otro. **Resolverlo es fijar la sede canónica y repuntar
-  las cuatro**, no elegir la más cómoda. **Encaja de forma natural en el recorte de T9**, que ya va a
-  tocar las remisiones del capítulo 3.
+> **El 🟡 «los punteros al "inventario completo" apuntan a CUATRO destinos distintos» queda CERRADO
+> el 2026-08-17**: hoy hay **exactamente una sede canónica, `6.1`**, y las **nueve remisiones**
+> apuntan allí. Su ficha vive ya en `## Cerradas`.
+
+- [ ] 🟡 **`4.3:262` enumera las diez sedes de la declaración sin decir cuál es la canónica** · Informe · `redactor-tfg`
+  Alta el **2026-08-17**, hallazgo lateral del ciclo de reconciliación. La enumeración es correcta,
+  pero **un lector no sabe a cuál ir**: sin sede canónica marcada, diez punteros son diez copias.
 
 > **La ficha «`4.5:39` es INEXACTO para KNN» queda CERRADA el 2026-08-16 en la TANDA 14**, con las
 > cifras exactas que ella misma exigía. Detalle en `## Cerradas`.
@@ -1743,6 +1753,10 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-17 | Informe | **CICLO DE RECONCILIACIÓN del trabajo huérfano — 11 ficheros, cero código, cero corridas, ninguna cifra publicada movida.** Los ficheros sin commitear los habían dejado **tres agentes muertos por límite de API**; verificado contra disco, su trabajo estaba **completo, no a medias**, pero **no había pasado auditoría**, así que se auditó antes de nada. **Dos pases, ambos APTO CON CAMBIOS, ningún 🔴**; los **8 hallazgos aplicados y verificados**. Censo de citas **intacto: 74 filas, primer libre `[76]`, cero `[n]` nuevos o renumerados, cero `[CITA: …]` nuevos**. Ficheros: `Implementacion/PIPELINE.md`, `Resultados/GUIA_RESULTADOS.md`, `resumen-de-decisiones.md` y, en el vault, `2.1.6`, `4.4`, `4.5`, `5.0`, `5.2`, `5.4`, `6.1`, `A.3` | — |
+| 2026-08-17 | Informe | **🟡 Los punteros al «inventario completo» — CERRADO: hoy hay UNA sede canónica, `6.1`, y las NUEVE remisiones apuntan allí.** La ficha contaba cuatro destinos (`4.6`, `6.1`, `A.3`+`6.1`, `4.3`+`6.1`); resolverlo era **fijar la sede y repuntar**, no elegir la más cómoda. **El hallazgo 🟠 del pase de auditoría iba justo aquí**: `A.3.7` conservaba un **inventario rival** sin remitir a `6.1`, y **`5.0` le había quitado el puntero en silencio**. Resuelto **sin borrar la tabla**: `A.3.7` queda como **volcado tabulado con enlace recíproco a `6.1`** | — |
+| 2026-08-17 | Código | **🟠 SEXTO re-anclaje de sello (`commit_agregador = 0276039-sucio`) — CERRADO EN PROSA, con el sello impreso INTACTO.** Los tres artefactos del agregador siguen llevando `0276039-sucio` **verificado en los tres**: el sello lo estampa `config.commit_actual()` y **no se reescribe a mano**, así que el re-anclaje va en el texto que lo lee. El `auditor-ml` lo dio por **correcto y sustantivo, no cosmético** | — |
+| 2026-08-17 | Informe | **Hallazgo PROPIO, fuera de la auditoría: `6.1:65` seguía publicando que la banda de 4,8× «mide carga de máquina».** Esa afirmación **la retiró la Tanda 18 de `4.4` y `A.3` por FALSA** —las dos corridas de la banda no registran épocas—, pero **nadie había revisado `6.1`**. Corregida a **«magnitud observada sin causa atribuida»**. Es el **cuarto caso del mismo patrón**: se arregla una sede y la afirmación sobrevive en otra | — |
 | 2026-08-17 | Código | **🟠 El «8 de 10» PAREADO — CERRADO: YA LO EMITE UN SCRIPT, y las cifras del artefacto COINCIDEN EXACTAMENTE con el conteo a mano que sustituyen.** `agregar_semillas.py` produce **`Resultados/comparaciones_pareadas.csv`** (13 filas + cabecera) con **tres comparaciones**: RF vs HGB en `f1_macro` y los **dos ejes de balanceo**. Cifras de la ejecución real: **8 de 10 en `122_sin_seleccion`** (RF pierde en las semillas **5** y **9**), **8 de 10 en `54`** (pierde en **3** y **5**), **16 de 20 global**, **`SMOTE vs nada` 40 de 40**, **`SMOTE vs class_weight` 23-17**, **cero empates**. Con esto **`5.2:107` deja de apoyar su formulación portante en un recuento a mano**, que era el agravante de la ficha: quince líneas más abajo la propia nota exigía ese criterio para el «13 de 98» | `98a0289` |
 | 2026-08-17 | Código | **🟡 La palabra «determinista» FUERA de `PIPELINE.md` — CERRADA, con la salvedad escrita donde el generador la repone.** Corregida en **`agregar_semillas.py` (`:226`/`:245`)** —la sede que regenera `Resultados/dispersion_semillas.md`, artefacto citable y versionado— y en **`anomalias.py`**. **Las sedes legítimas quedaron INTACTAS, verificado**: `anomalias.py:190`, `program.py:310`/`:528`, `figura_nids_bloques.py:39` y `4.3:86`/`:92`, más las de «suciedad **indeterminada**» de `config.py`, que son otra cosa | `98a0289` |
 | 2026-08-17 | Código | **El residuo de T22 — CERRADO SIN REESCRIBIR LA DECISIÓN, que era justo el ⛔ de la ficha.** Dos **notas fechadas** en `resumen-de-decisiones.md` registran la **reapertura autorizada por Francisco el 2026-08-17**; las líneas **`:633`** (título de la decisión), **`:636`** (cuerpo) y **`:1154`** (eco) quedan **INTACTAS y legibles**. Es la misma disciplina que se aplicó al «~17»: se añade nota, no se sobrescribe historia | `98a0289` |

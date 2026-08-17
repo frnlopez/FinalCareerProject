@@ -457,23 +457,26 @@ casi siempre posterior. Las corridas que existen en git:
 | `df30cb2` | `9ad971b` (commit de cierre del **cómputo de T4**, que versiona a la vez las nueve tablas del barrido y los dos artefactos de la agregación) | **El barrido de las diez semillas (T4)**, del **2026-08-12 22:09 al 2026-08-13 00:38**: 100 invocaciones (5 scripts × 2 variantes × 10 semillas) que escriben **2.320 filas** repartidas en las nueve `metricas_*_semillas.csv`, con `semilla` de 1 a 10 y `commit = df30cb2` **limpio** en todas (lo verificó el agregador: `commits_origen = df30cb2` único en sus 198 celdas). **No toca ninguna de las nueve tablas publicadas de la semilla 42**, que quedaron bit a bit idénticas. El mismo sello, con fecha `2026-08-12T22:07:10`, lo lleva `verificacion_semilla_joblib.txt`, re-sellado por el preflight del barrido. |
 | `df30cb2-sucio` | `9ad971b` (el mismo commit de cierre: versiona a la vez `agregar_semillas.py` y sus dos artefactos) | **No es una corrida de modelos**: es el **agregador** de T4 (`agregar_semillas.py`) del **2026-08-13**, con **cero `fit`** —solo lee CSV—, que escribe `dispersion_semillas.csv` y `.md` (**198 filas**) con `commit_agregador = df30cb2-sucio` y fecha `2026-08-13T07:43:40`. Entra en esta tabla porque esos dos artefactos **están versionados** y llevan la misma convención de sello. **No escribe en ningún `metricas_*.csv`**, así que no altera el recuento de filas de abajo. El `-sucio` es previsto: HEAD era `df30cb2` y el arreglo de `_tabla_md()` estaba sin commitear, de modo que la versión que produjo la agregación es la de la columna de al lado, `9ad971b`. El sello impreso dentro de los dos artefactos **no se edita** —es salida de `config.commit_actual()`—: el re-anclaje se hace aquí y en el recuadro del «tercer re-anclaje de sello del proyecto», al final de «Lo que dio la primera ejecución real». Y **el `-sucio` no contamina la cita**: lo que respalda cada banda es `commits_origen = df30cb2` limpio, no este sello. **Este sello ya no es el que hay en disco**: lo sobrescribió la tercera pasada del agregador (fila siguiente). Sigue nombrando su corrida —la segunda pasada, de las `07:43:40`—, que es lo que una tabla de corridas registra. |
 | `ddade37-sucio` | `9d4c26d` (commit de cierre de la automatización del titular «13 de 98», que versiona a la vez `agregar_semillas.py` y los dos artefactos de dispersión) | **No es una corrida de modelos**: es la **tercera pasada del agregador** de T4, del **2026-08-13 `19:54:48`**, con **cero `fit`** —solo lee CSV—, que reescribe `dispersion_semillas.csv` y `.md` (**198 filas**, las mismas cifras) añadiendo el **titular automático**: las cuatro columnas `*_42` y el recuento «13 de 98». Para eso **abre las nueve publicadas en LECTURA**, y **sigue sin escribir en ninguna `metricas_*.csv`**, así que no altera el recuento de filas de abajo. El `-sucio` es previsto: HEAD era `ddade37` y el titular automático estaba sin commitear, de modo que la versión que produjo la agregación es la de la columna de al lado, `9d4c26d`. El sello impreso dentro de los dos artefactos **no se edita** —es salida de `config.commit_actual()`—: el re-anclaje se hace aquí y en el recuadro de re-anclajes del final de «Lo que dio la primera ejecución real». **Este sello nombra DOS invocaciones, y hay que decir cuál** (mismo caso que `00c3c3e-sucio`): la de las `19:54:48`, que es la que registra esta tabla, y una **regeneración posterior a las `20:13:37`** tras aplicar los cinco hallazgos altos del `auditor-ml` — esa segunda es la que `9d4c26d` dejó versionada (verificado el 2026-08-14 con `git show 9d4c26d:Resultados/dispersion_semillas.md`, cuya cabecera dice `2026-08-13T20:13:37`). Así que el re-anclaje identifica **exactamente** el código de la corrida de las `20:13:37`, y para la de las `19:54:48` identifica ese mismo código **antes** de los arreglos del auditor, que nunca se versionó por separado. Las cifras (198 filas, «13 de 98») son las mismas en las dos. **Este sello ya no es el que hay en disco**: lo sobrescribió la cuarta pasada (fila siguiente). Ojo también a la procedencia cruzada que expone esta pasada: `commit_semilla_42` es `1163c90` / `274923d-sucio` mientras `commits_origen` es `df30cb2` — titular y banda no salen del mismo código. |
-| `6bb224c-sucio` | `1cb5c26` (commit de cierre de la **Tanda 2** de la Fase 2, del 2026-08-14, que arrastra a la vez `agregar_semillas.py` y los dos artefactos de dispersión que venían sin commitear) | **No es una corrida de modelos**: es la **cuarta pasada del agregador** de T4, del **2026-08-14 `15:15:13`**, con **cero `fit`** —solo lee CSV—, que reescribe `dispersion_semillas.csv` y `.md` (**198 filas**, las mismas cifras) añadiendo a la salvedad de procedencia del `.md` el **reparto de las 98 celdas casadas por commit de origen del titular** (`_reparto_commits_titular_md()`, contado desde `commit_semilla_42`: `1163c90` **94** con 13 fuera de banda · `274923d-sucio` **4** con ninguna fuera). **Es la que hay en disco** (verificado el 2026-08-14 en la cabecera del `.md` y en la columna `commit_agregador` del CSV). **Sigue sin escribir en ninguna `metricas_*.csv`**, así que no altera el recuento de filas de abajo. El `-sucio` es previsto: HEAD era `6bb224c` y el reparto por commit estaba sin commitear, de modo que la versión que produjo la agregación es la de la columna de al lado, `1cb5c26`. El sello impreso dentro de los dos artefactos **no se edita** —es salida de `config.commit_actual()`—: el re-anclaje se hace aquí y en el recuadro de re-anclajes del final de «Lo que dio la primera ejecución real». |
+| `6bb224c-sucio` | `1cb5c26` (commit de cierre de la **Tanda 2** de la Fase 2, del 2026-08-14, que arrastra a la vez `agregar_semillas.py` y los dos artefactos de dispersión que venían sin commitear) | **No es una corrida de modelos**: es la **cuarta pasada del agregador** de T4, del **2026-08-14 `15:15:13`**, con **cero `fit`** —solo lee CSV—, que reescribe `dispersion_semillas.csv` y `.md` (**198 filas**, las mismas cifras) añadiendo a la salvedad de procedencia del `.md` el **reparto de las 98 celdas casadas por commit de origen del titular** (`_reparto_commits_titular_md()`, contado desde `commit_semilla_42`: `1163c90` **94** con 13 fuera de banda · `274923d-sucio` **4** con ninguna fuera). **Este sello ya no es el que hay en disco**: lo sobrescribió la quinta pasada (fila siguiente). Sigue nombrando su corrida —la cuarta, de las `15:15:13`—, que es lo que una tabla de corridas registra. **Sigue sin escribir en ninguna `metricas_*.csv`**, así que no altera el recuento de filas de abajo. El `-sucio` es previsto: HEAD era `6bb224c` y el reparto por commit estaba sin commitear, de modo que la versión que produjo la agregación es la de la columna de al lado, `1cb5c26`. El sello impreso dentro de los dos artefactos **no se edita** —es salida de `config.commit_actual()`—: el re-anclaje se hace aquí y en el recuadro de re-anclajes del final de «Lo que dio la primera ejecución real». |
+| `0276039-sucio` | `98a0289` («codigo: emitir el "8 de 10" pareado desde `agregar_semillas.py` y corregir el residuo de T22», del 2026-08-17, que versiona a la vez `agregar_semillas.py` y los **tres** artefactos del agregador que venían sin commitear) | **No es una corrida de modelos**: es la **quinta pasada del agregador** de T4, del **2026-08-17**, con **cero `fit`** —solo lee CSV—, que reescribe `dispersion_semillas.csv` y `.md` (**198 filas, las mismas cifras**; en el `.md`, la sección nueva «Comparaciones pareadas por semilla») y **estrena `comparaciones_pareadas.csv`** (**13 filas de datos**). **Es la que hay en disco** (verificado en la cabecera del `.md` y en la columna `commit_agregador` del CSV). **Sigue sin escribir en ninguna `metricas_*.csv`**, así que no altera el recuento de filas de abajo. El `-sucio` es previsto: HEAD era `0276039` y el código que emite el recuento pareado estaba sin commitear, de modo que la versión que produjo la agregación es la de la columna de al lado, `98a0289`. El sello impreso dentro de los tres artefactos **no se edita** —es salida de `config.commit_actual()`—: el re-anclaje se hace aquí y en el recuadro de re-anclajes del final de «Lo que dio la primera ejecución real». |
 
-De las **ocho corridas ya versionadas de esta tabla** —`1163c90` en `8fdc421`, `274923d-sucio` en
+De las **nueve corridas versionadas de esta tabla desde `1163c90` en adelante** (las filas anteriores
+—`c7cf319`, `38fdd4b` y `5516b60`— también están versionadas, pero son de esquemas previos y quedan
+fuera de este recuento) —`1163c90` en `8fdc421`, `274923d-sucio` en
 `b1f1df2`, `fc1c6b4-sucio` en `9af842c`, `00c3c3e-sucio` en `54d1349`, las dos de `df30cb2` (limpio
-y `-sucio`) en `9ad971b`, `ddade37-sucio` en `9d4c26d` y `6bb224c-sucio` en `1cb5c26`; **la octava es esta última —la cuarta pasada del agregador—, cuyos
-dos artefactos de dispersión siguen siendo los que hay hoy en disco** y tampoco escribe en ninguna
-publicada. **La corrida más reciente de la tabla ya no es esa, sino `a8c20e9-sucio` (2026-08-16),
-que aún NO está versionada** y por eso no entra en este recuento de ocho;
-no confundir con «las cuatro
-corridas versionadas» de la subsección «Lo que `perf_counter` NO arregla», que designa otro
-cuarteto y se cita por su nombre y no por número de línea—, solo dos escriben en alguna de las
+y `-sucio`) en `9ad971b`, `ddade37-sucio` en `9d4c26d`, `6bb224c-sucio` en `1cb5c26` y
+`0276039-sucio` en `98a0289`—, solo dos escriben en alguna de las
 nueve `metricas_*.csv` **publicadas**
 (no lo hacen ni `fc1c6b4-sucio` ni la verificación de `00c3c3e-sucio`; la `metricas_anomalias_semillas.csv`
 que escribió el ensayo de humo bajo ese mismo sello no era una de las nueve, y su contenido lo
 sobrescribió después el barrido. **Tampoco las dos de `df30cb2`**: el barrido escribe **solo** en las nueve
 `metricas_*_semillas.csv`, que son tablas aparte, y el agregador no escribe en ninguna
-`metricas_*.csv`). Sumando esas dos, las **nueve tablas publicadas de la semilla 42** tienen hoy
+`metricas_*.csv`). **La novena de esa lista es la última, `0276039-sucio` —la quinta pasada del
+agregador—, cuyos tres artefactos son los que hay hoy en disco**, y tampoco escribe en ninguna
+publicada. **La corrida más reciente de la tabla que aún NO está versionada es `a8c20e9-sucio`
+(2026-08-16)**, y por eso no entra en este recuento de nueve. No confundir este recuento con «las
+cuatro corridas versionadas» de la subsección «Lo que `perf_counter` NO arregla», que designa otro
+cuarteto y se cita por su nombre y no por número de línea. Sumando esas dos, las **nueve tablas publicadas de la semilla 42** tienen hoy
 **232 filas repartidas en 9 ficheros** `metricas_*.csv`
 (222 + 10): las **ocho** tablas de la corrida `1163c90` —las cuatro principales más las cuatro
 auxiliares, como detalla la fila de `1163c90`— con `commit = 1163c90`, y la novena, la de la
@@ -1340,11 +1343,13 @@ ninguno de los cinco scripts de modelos los importa.
     columnas y recorta el `alcance` a 70 caracteres, con el texto íntegro en la columna del CSV— y el
     agregador se **re-ejecutó** a continuación, así que el `dispersion_semillas.md` que hay en disco
     **ya las lleva**: sus **198 filas** traen `Tabla de origen` y `Alcance`. Ese `.md` en disco es
-    el de la **cuarta** pasada del agregador, la del reparto por commit de origen del titular: su
-    cabecera dice `2026-08-14T15:15:13` y `commit_agregador = 6bb224c-sucio` (verificado en disco el
-    2026-08-14, no deducido del código). El histórico de las cuatro pasadas, con qué sello dejó cada una y los
-    **re-anclajes** de los sellos de la segunda, la tercera y la cuarta —`df30cb2-sucio` →
-    **`9ad971b`**, `ddade37-sucio` → **`9d4c26d`** y `6bb224c-sucio` → **`1cb5c26`**—, están más abajo, en «Lo
+    el de la **quinta** pasada del agregador, la que estrena `comparaciones_pareadas.csv`: su
+    cabecera dice `commit_agregador = 0276039-sucio` (verificado en disco el
+    2026-08-17, no deducido del código; la marca temporal la declara el propio artefacto y esta prosa
+    no la copia, que caducaría en la siguiente re-corrida). El histórico de las cinco pasadas, con qué sello dejó cada una y los
+    **re-anclajes** de los sellos de la segunda a la quinta —`df30cb2-sucio` →
+    **`9ad971b`**, `ddade37-sucio` → **`9d4c26d`**, `6bb224c-sucio` → **`1cb5c26`** y
+    `0276039-sucio` → **`98a0289`**—, están más abajo, en «Lo
     que dio la primera ejecución real», y en la tabla de corridas.
   - **Aborta** si a alguna combinación le falta alguna semilla, le sobra una ajena o le aparece
     repetida. Una media de 7 puntos rotulada como de 10 es peor que no tener tabla, y nadie la
@@ -1397,7 +1402,7 @@ ninguno de los cinco scripts de modelos los importa.
 
 El barrido corrió del **2026-08-12 22:09 al 2026-08-13 00:38** y el agregador a continuación
 (`python app\agregar_semillas.py` sin flags, desde `Implementacion/`). **El agregador se ha ejecutado
-cuatro veces**, y conviene declararlo porque cada pasada re-sella los dos artefactos y solo la última
+cinco veces**, y conviene declararlo porque cada pasada re-sella sus artefactos y solo la última
 es la que hay en disco:
 
 | Pasada | Cuándo | Qué la motivó | Sello que dejó | Estado del sello |
@@ -1405,10 +1410,11 @@ es la que hay en disco:
 | 1.ª (7,2 s) | 2026-08-13 madrugada | la agregación inicial | *(sobrescrito)* | — |
 | 2.ª (1,70 s) | 2026-08-13 `07:43:40` | el arreglo de `_tabla_md()` (columnas `Tabla de origen` y `Alcance`) | `commit_agregador = df30cb2-sucio` | **re-anclado en prosa a `9ad971b`** (recuadro del final de esta subsección y tabla de corridas) |
 | 3.ª | 2026-08-13 `19:54:48` | el **titular automático**: el agregador pasa a comparar la semilla 42 contra cada banda y a emitir «N de M» | `commit_agregador = ddade37-sucio` | **re-anclado en prosa a `9d4c26d`** (recuadro del final de esta subsección y tabla de corridas), el commit que cerró la automatización del titular. Ojo: bajo ese mismo sello hubo **dos** invocaciones —esta, de las `19:54:48`, y una regeneración a las `20:13:37` tras los arreglos del `auditor-ml`—, y la que `9d4c26d` versiona es la de las `20:13:37`. *(sobrescrito en disco por la 4.ª, pero el sello sigue nombrando esta pasada)* |
-| 4.ª | 2026-08-14 `15:15:13` | el **reparto por commit de origen del titular**: la salvedad de procedencia del `.md` pasa a decir cuántas de las 98 celdas casadas aporta cada `commit_semilla_42` y cuántos «fuera» salen de cada uno (`_reparto_commits_titular_md()`) | `commit_agregador = 6bb224c-sucio` | **re-anclado en prosa a `1cb5c26`** (recuadro del final de esta subsección y tabla de corridas) |
+| 4.ª | 2026-08-14 `15:15:13` | el **reparto por commit de origen del titular**: la salvedad de procedencia del `.md` pasa a decir cuántas de las 98 celdas casadas aporta cada `commit_semilla_42` y cuántos «fuera» salen de cada uno (`_reparto_commits_titular_md()`) | `commit_agregador = 6bb224c-sucio` | **re-anclado en prosa a `1cb5c26`** (recuadro del final de esta subsección y tabla de corridas). *(sobrescrito en disco por la 5.ª, pero el sello sigue nombrando esta pasada)* |
+| 5.ª | 2026-08-17 *(hora en la cabecera del artefacto)* | el **recuento pareado por semilla**: el agregador estrena `comparaciones_pareadas.csv` (13 filas de datos) y añade al `.md` la sección «Comparaciones pareadas por semilla» | `commit_agregador = 0276039-sucio` | **re-anclado en prosa a `98a0289`** (recuadro del final de esta subsección y tabla de corridas), el commit que versiona a la vez el código del recuento pareado y los tres artefactos |
 
-**Los dos ficheros que hay en disco son los de la cuarta** (cabecera `2026-08-14T15:15:13` y
-`commit_agregador = 6bb224c-sucio`, verificados en disco el 2026-08-14). Cero `fit` en las cuatro: el agregador solo lee CSV. Salida:
+**Los ficheros que hay en disco son los de la quinta —ya son TRES, no dos** (`commit_agregador =
+0276039-sucio`, verificado en disco el 2026-08-17; la marca temporal, en la cabecera de cada uno). Cero `fit` en las cinco: el agregador solo lee CSV. Salida:
 `dispersion_semillas.csv` y `.md`, **198 filas** = 98 de *calidad* + 100 de *dispersión de máquina*,
 con `commits_origen = df30cb2` **único** en todas las celdas (ninguna mezcla versiones del código).
 Las nueve tablas publicadas de la
@@ -1498,16 +1504,16 @@ semilla funcionó. Cuatro hallazgos, y los cuatro son material citable — de **
    Consecuencia práctica: **si alguna de esas tablas se mueve, el recuento no se recuenta a mano, se
    vuelve a correr el agregador**.
 
-> **Quinto re-anclaje de sello del proyecto, ya HECHO.** *(El «y ninguno PENDIENTE» que este
+> **Sexto re-anclaje de sello del proyecto, ya HECHO.** *(El «y ninguno PENDIENTE» que este
 > encabezado añadía fue cierto **el 2026-08-14**, y solo hasta entonces: la re-corrida de
 > `validacion.py` del **2026-08-16** —sello `a8c20e9-sucio`, con la marca temporal de cada variante
 > en su campo `Fecha de la corrida:`— publicó seis artefactos cuyo commit de cierre todavía no
 > existe, así que **hoy sí
 > hay un re-anclaje pendiente**: el del `> [!todo]` de `:244-252` de este mismo fichero. El quinto
 > re-anclaje, `6bb224c-sucio` → `1cb5c26`, sigue siendo válido; lo superado es la conclusión de que
-> no quedaba ninguno.)* Los cuatro anteriores,
+> no quedaba ninguno.)* Los cinco anteriores,
 > todos citados arriba, son `fc1c6b4-sucio` → `9af842c`, `00c3c3e-sucio` → `54d1349`, `df30cb2-sucio` →
-> `9ad971b` y `ddade37-sucio` → `9d4c26d`.
+> `9ad971b`, `ddade37-sucio` → `9d4c26d` y `6bb224c-sucio` → `1cb5c26`.
 >
 > **El tercero, hecho, es el de la SEGUNDA pasada del agregador:** `dispersion_semillas.csv`/`.md`
 > llevaron impreso `commit_agregador = df30cb2-sucio`, y ese sello **queda intacto**: el re-anclaje se
@@ -1533,7 +1539,8 @@ semilla funcionó. Cuatro hallazgos, y los cuatro son material citable — de **
 > corridas» que ya documenta `00c3c3e-sucio` en la tabla de corridas.
 >
 > **El quinto, hecho el 2026-08-14, es el de la CUARTA pasada** (2026-08-14 `15:15:13`, la del
-> reparto por commit de origen del titular), que es la que hay hoy en disco: sus dos artefactos
+> reparto por commit de origen del titular), que **fue** la que había en disco hasta la quinta pasada
+> del 2026-08-17: sus dos artefactos
 > llevan impreso `commit_agregador = 6bb224c-sucio`, y ese sello **queda intacto**. `6bb224c` es el
 > commit **anterior** al cambio y por tanto **no identifica la versión que produjo la agregación**; su
 > commit de cierre es **`1cb5c26`** —«codigo+informe: cerrar la Fase 2 - Tanda 2, ficha del sistema y
@@ -1544,10 +1551,23 @@ semilla funcionó. Cuatro hallazgos, y los cuatro son material citable — de **
 > pendiente *a fecha de 2026-08-14*** — afirmación acotada a esa fecha y **superada** por la
 > re-corrida de `validacion.py` del **2026-08-16** (`a8c20e9-sucio`), cuyo commit de cierre aún no
 > existe: el re-anclaje pendiente que hay hoy está declarado en el `> [!todo]` de `:244-252` de este
-> mismo fichero. Los cuatro re-anclajes anteriores **siguen siendo válidos para lo que nombran**: cada
+> mismo fichero. Los re-anclajes anteriores **siguen siendo válidos para lo que nombran**: cada
 > uno, su pasada. Ninguno es un ancla huérfana ni se borra; simplemente ya no describen el fichero que
-> hay en disco, y por eso las cuatro pasadas están tabuladas más arriba con el sello de cada una.
+> hay en disco, y por eso las cinco pasadas están tabuladas más arriba con el sello de cada una.
 >
+> **El sexto, hecho el 2026-08-17, es el de la QUINTA pasada** (2026-08-17, la del recuento
+> pareado por semilla), que es la que hay hoy en disco: sus **tres** artefactos —`dispersion_semillas.csv`,
+> `dispersion_semillas.md` y el nuevo `comparaciones_pareadas.csv`— llevan impreso
+> `commit_agregador = 0276039-sucio`, y ese sello **queda intacto**. `0276039` es el commit
+> **anterior** al cambio —«informe: separar en 3.5 los dos "8 de 10" homonimos»— y por tanto **no
+> contiene el código que produjo los artefactos**; el commit que sí lo contiene es **`98a0289`**
+> («codigo: emitir el "8 de 10" pareado desde agregar_semillas.py y corregir el residuo de T22»), que
+> versiona a la vez el cambio de `agregar_semillas.py` y los tres artefactos, verificado
+> con `git show --stat 98a0289` el 2026-08-17 y no deducido de la prosa. El sello impreso **no se
+> toca**; el re-anclaje va en prosa, aquí, en la tabla de pasadas y en la tabla de corridas. **Esto no
+> cierra el pendiente de `validacion.py`** (`a8c20e9-sucio`), que sigue esperando su commit de cierre.
+>
+
 > **Aviso de estado, 2026-08-14:** esa cuarta regeneración **ya se ha corrido** (2026-08-14
 > `15:15:13`) y el `.md` en disco **ya lleva** el reparto por commit de origen del titular: la
 > salvedad de procedencia dice hoy que de las 98 celdas casadas `1163c90` aporta **94** (13 fuera de
@@ -1559,20 +1579,20 @@ semilla funcionó. Cuatro hallazgos, y los cuatro son material citable — de **
 > `commit_agregador`**; esta subsección y la tabla de las pasadas se han releído **contra el fichero
 > en disco** el 2026-08-14 antes de darlas por buenas.
 >
-> **La razón es estructural, y con escribirla una vez basta para los cinco casos: un artefacto
+> **La razón es estructural, y con escribirla una vez basta para los seis casos: un artefacto
 > versionado que estampa `config.commit_actual()` no puede llevar nunca el hash del commit que lo
 > versiona, porque tiene que existir antes de ese commit.** De ahí se sigue lo demás: regenerarlo
 > después del cierre no arregla nada —volvería a salir como línea `M` del `git status` y exigiría un
 > segundo commit, que a su vez tampoco estaría en el sello—, así que no se regenera y el desajuste se
 > resuelve en el texto, no en el fichero.
 >
-> **Y el `-sucio` no contamina la cita**, en ninguna de las cuatro pasadas. Lo que respalda la
+> **Y el `-sucio` no contamina la cita**, en ninguna de las cinco pasadas. Lo que respalda la
 > banda es `commits_origen = df30cb2` **limpio** —los diez puntos de cada celda—; `commit_agregador`
 > solo dice con qué versión del agregador se calcularon media y sd. Además el sufijo está **acotado a
 > `Implementacion/`** (`config.py:783-822`, `_RUTA_SUCIEDAD`): no señala nada del dataset ni de los
 > resultados, sino exactamente el cambio de `agregar_semillas.py` todavía sin commitear cuando corrió
-> cada pasada — el arreglo de `_tabla_md()` en la segunda, el titular automático en la tercera y el
-> reparto por commit de origen del titular en la cuarta.
+> cada pasada — el arreglo de `_tabla_md()` en la segunda, el titular automático en la tercera, el
+> reparto por commit de origen del titular en la cuarta y el recuento pareado por semilla en la quinta.
 >
 > **Lo que el `-sucio` sí obliga a mirar en la tercera pasada, y es otra cosa:** el titular y la banda
 > **no salen del mismo commit**. `commits_origen` es `df30cb2` en las 198 celdas, pero
@@ -1832,9 +1852,14 @@ resultado —así lo dice su propia columna `alcance`—. Y el «8 de 10» de es
 10» de tiempos de entrenamiento de `:596-611`: allí está explicado por qué son cifras distintas y por
 qué no se citan la una por la otra; aquí no se repite.
 
-**Estado en disco, verificado el 2026-08-17:** escrito a las **`2026-08-17T18:56:18`** con
-`commit_agregador = 0276039-sucio`. El sello va **sucio** porque el código que emite este bloque aún
-no estaba commiteado al correr el agregador: es un **re-anclaje pendiente**, no un error de cifra.
+**Estado en disco, verificado el 2026-08-17:** escrito por la **quinta pasada del agregador** con
+`commit_agregador = 0276039-sucio` (la marca temporal exacta la declara la cabecera del artefacto; esta
+prosa no la copia, que caducaría en la siguiente re-corrida). El sello va **sucio** porque el código
+que emite este bloque aún no estaba commiteado al correr el agregador, así que **`0276039` no contiene
+ese código**: está **re-anclado en prosa a `98a0289`** —el commit que versiona a la vez
+`agregar_semillas.py` y los tres artefactos—, en la tabla de corridas, en la tabla de las cinco
+pasadas y en el recuadro del «sexto re-anclaje de sello del proyecto». El sello impreso dentro del
+fichero **no se edita**: es salida de `config.commit_actual()`.
 
 ---
 

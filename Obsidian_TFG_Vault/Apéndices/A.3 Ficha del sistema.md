@@ -97,8 +97,9 @@ OneClassSVM (`anomalias.py:163` para la muestra de D3; la submuestra de OneClass
 > la etapa 2** (H-3) y **el set de características, 54 frente a 122** (Q1/C, experimento H1, decidido
 > por recall 0-day por tipo y `f1_macro` medidos sobre D2). Las tres son selección de modelo sobre el
 > conjunto de test, es decir *data snooping*, y por tanto las métricas publicadas son optimistas
-> respecto a lo que daría un test verdaderamente ciego. Se declara expresamente en A.3.7 y no se
-> presenta como protocolo limpio.
+> respecto a lo que daría un test verdaderamente ciego. La declaración de referencia de esta
+> limitación es [[6.1 Conclusiones]]; el inventario tabulado de las tres decisiones, con criterio y
+> registro de cada una, está en A.3.7 de esta misma ficha. No se presenta como protocolo limpio.
 
 ---
 
@@ -592,7 +593,14 @@ dataset crudo y escribir los resultados. En consecuencia:
 
 Los hiperparámetros, la estrategia de balanceo y los umbrales del sistema se ajustaron sin mirar D2
 (tabla del callout de A.3.2). **Tres decisiones, en cambio, sí se apoyaron en métricas calculadas
-sobre D2**, y se declaran aquí en lugar de omitirlas:
+sobre D2**, y se declaran aquí en lugar de omitirlas.
+
+> [!note] Relación con el cuerpo de la memoria
+> La **sede canónica** de esta limitación es [[6.1 Conclusiones]], donde se declara como limitación
+> del trabajo. Lo que sigue es su **volcado tabulado** para consulta de ficha: la misma limitación,
+> desglosada decisión a decisión con su criterio de selección y el registro donde consta. Si ambas
+> versiones difirieran, manda la redacción de [[6.1 Conclusiones]].
+
 
 | Decisión | Opción publicada | Criterio de selección | Registro de la decisión |
 |---|---|---|---|
@@ -705,17 +713,20 @@ la fuente está en [[benchmark-comparativo-nsl-kdd]].
 |---|---|---|
 | Configuraciones y métricas de la semilla 42 | `Resultados/metricas_anomalias.csv` · `metricas_firmas.csv` · `metricas_hibrido.csv` · `metricas_baseline.csv` | `commit = 1163c90`, `2026-08-09` |
 | Cascada invertida (T3) | `Resultados/metricas_cascada_invertida.csv` | `274923d-sucio`, `2026-08-10` (columnas `commit` y `fecha` del propio CSV; coincide con `commit_semilla_42` del agregado) |
-| Tabla de dispersión (T4) | `Resultados/dispersion_semillas.md` / `.csv` | `commit_agregador = 6bb224c-sucio`, cabecera `2026-08-14T15:15:13`; filas agregadas de `df30cb2`. **Re-anclado en prosa a `1cb5c26`** |
+| Tabla de dispersión (T4) | `Resultados/dispersion_semillas.md` / `.csv` y `comparaciones_pareadas.csv` | `commit_agregador = 0276039-sucio` (quinta pasada del agregador, 2026-08-17); filas agregadas de `df30cb2`. **Re-anclado en prosa a `98a0289`** |
 
-> [!info] El sello del agregado es pre-commit: **re-anclaje HECHO** (2026-08-14)
-> `commit_agregador = 6bb224c-sucio` es el valor **impreso en el artefacto en disco**, estampado por
-> `config.commit_actual()` **antes** del commit que versiona el propio artefacto: por construcción, un
+> [!info] El sello del agregado es pre-commit: **re-anclaje HECHO** (2026-08-17)
+> `commit_agregador = 0276039-sucio` es el valor **impreso en los artefactos en disco**, estampado por
+> `config.commit_actual()` **antes** del commit que versiona los propios artefactos: por construcción, un
 > fichero no puede llevar el hash del commit que lo incluye. La versión del código que produjo esa
-> agregación es **`1cb5c26`** —«codigo+informe: cerrar la Fase 2 - Tanda 2, ficha del sistema y
-> reconciliacion de sellos», del 2026-08-14, que arrastra a la vez `agregar_semillas.py` y los dos
-> artefactos de dispersión—, verificado con git y **no** estimado. El sello impreso **no se edita**:
-> el re-anclaje va **en prosa**, aquí y en `Implementacion/PIPELINE.md` (tabla de corridas y recuadro
-> de re-anclajes), que es como el proyecto ha hecho los cuatro anteriores.
+> agregación es **`98a0289`** —«codigo: emitir el "8 de 10" pareado desde agregar_semillas.py y
+> corregir el residuo de T22», del 2026-08-17, que arrastra a la vez `agregar_semillas.py` y los tres
+> artefactos del agregador—, verificado con git y **no** estimado. `0276039` es el commit **anterior**
+> al cambio y es de track *informe*, así que **no contiene el código** que produjo las cifras. El sello
+> impreso **no se edita**: el re-anclaje va **en prosa**, aquí y en `Implementacion/PIPELINE.md` (tabla
+> de corridas, tabla de las cinco pasadas y recuadro de re-anclajes), que es como el proyecto ha hecho
+> los cinco anteriores — el de la cuarta pasada (`6bb224c-sucio` → **`1cb5c26`**, 2026-08-14) sigue
+> siendo válido para lo que nombra, aunque su artefacto ya no sea el que hay en disco.
 
 ---
 

@@ -1442,3 +1442,19 @@ el futuro se dispone de una medición real, **estas cifras se sustituyen** por e
   `class_weight`, **cero empates**. El sello va **sucio** porque el código del bloque pareado aún no
   estaba commiteado cuando se corrió el agregador: queda como **re-anclaje pendiente —el sexto del
   proyecto—**, a resolver reanclando el sello a su commit una vez cerrado.
+
+- `2026-08-17` — **El sexto re-anclaje de sello queda HECHO: `0276039-sucio` → `98a0289`.** Nota nueva,
+  que **no reescribe** la entrada de arriba: lo que allí se declara «re-anclaje pendiente» ya está
+  resuelto, y aquí queda dicho con qué hash. El commit que **sí contiene** el código que produjo
+  `comparaciones_pareadas.csv` y la re-escritura de `dispersion_semillas.csv`/`.md` es **`98a0289`**
+  («codigo: emitir el "8 de 10" pareado desde agregar_semillas.py y corregir el residuo de T22»), que
+  versiona a la vez el cambio de `agregar_semillas.py` y los **tres** artefactos; verificado con
+  `git show --stat 98a0289`. `0276039` es el commit **anterior** al cambio y además de track *informe*,
+  así que el sello impreso no identifica ninguna versión del código del agregador. **El sello impreso
+  dentro de los artefactos NO se ha tocado** —lo estampa `config.commit_actual()` y por construcción no
+  puede llevar el hash del commit que lo versiona—: el re-anclaje va **en prosa**, en la tabla canónica
+  de corridas de `PIPELINE.md`, en su tabla de las cinco pasadas del agregador, en su recuadro de
+  re-anclajes, en la ficha del runbook de `comparaciones_pareadas.csv`, en §1, §6.2 y §7 de
+  `GUIA_RESULTADOS.md`, en `A.3` y en la cita de procedencia de `5.2`. Cero corridas, cero `fit`, cero
+  cifras movidas. **Sigue vivo el otro re-anclaje pendiente del proyecto**, el de la re-corrida de
+  `validacion.py` (`a8c20e9-sucio`), que este ciclo no toca.
