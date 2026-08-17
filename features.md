@@ -468,6 +468,9 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > · **`5c2a484`/este mismo** (TANDA 20, séptimo re-anclaje de sello).
 > Nadie tiene que ir a buscar un `—` pendiente en la tabla de `## Cerradas`.
 >
+> **⚠️ YA NO ES CIERTO desde la TANDA 21 (2026-08-17): sus OCHO filas están con `—` esperando hash**, y
+> el commit **aún no existe**. Lo estampa el skill `cierre` cuando lo haya.
+>
 > **Y del día anterior solo queda un 🟠 abierto:** el de **las 5 citas colgantes irreconstruibles**
 > (ficha más abajo, alta del 2026-08-15). Es **el único 🟠 que viene de antes de hoy** — los demás 🟠
 > que aparecen en `## Abiertas` nacieron el 2026-08-17.
@@ -499,11 +502,9 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   literales del `.txt` son `Commit del código:` y `Fecha de la corrida:`**. **No es cifra sin respaldo:
   es nomenclatura.**
 
-- [ ] 🟠 **Deuda de CIFRA en `5.4:129` — las dos celdas de KNN del eje SMOTE-vs-nada** · Informe · `redactor-tfg`
-  Alta el **2026-08-17**. Las dos celdas de KNN del eje **SMOTE vs nada** no están publicadas en `5.2`
-  como cifra individual: hay que **volcarlas de `Resultados/metricas_balanceo.csv`**. Es la **única
-  deuda de dato real que queda en el vault** y toca el eje de balanceo de `4.3.4` (Decisión 1 de la
-  Fase 0), donde KNN e HistGradientBoosting no admiten `class_weight`.
+> **El 🟠 «Deuda de CIFRA en `5.4:129` — las dos celdas de KNN del eje SMOTE-vs-nada» queda CERRADO en
+> la TANDA 21** (2026-08-17): volcadas a `5.2` §5.2.4.4 desde `Resultados/metricas_balanceo.csv`. Era
+> **la última deuda de dato real del vault**. Su ficha vive ya en `## Cerradas`.
 
 - [ ] 🟡 **El capítulo 1 es el hueco de completitud que queda, y solo está fichado EN PARTE** · Informe · `redactor-tfg`
   Alta el **2026-08-17**. Tamaños contados en disco: **`1.0 Sinopsis` 478 B** (un único párrafo de
@@ -526,18 +527,13 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   que se fíe del campo **concluirá que el capítulo 5 está sin hacer**. Es la **misma clase de
   divergencia registro↔disco que ha mordido cuatro veces hoy**, pero en frontmatter.
 
-- [ ] 🟡 **AMPLIACIÓN de la ficha `00 Índice TFG.md`: está desfasado en NUEVE sitios, no en uno** · Informe · `redactor-tfg`
-  Alta el **2026-08-17**. La ficha existente (más abajo, la del recuento «43 notas» frente a **44
-  wikilinks**) **cubre solo su línea de totales**. En disco hay ocho desfases más: **`:44`, `:49-52` y
-  `:56-58`** marcan **nueve secciones** como «✍ teoría — guion propuesto» cuando en disco están
-  `estado: redactada` y en prosa; **`:72`** dice que la teoría de `4.2` está pendiente cuando **`4.2:8`
-  y `:18` declaran lo contrario**; **`:89`** marca `6.2` como borrador pendiente cuando tiene **339
-  líneas**. **El alcance es cuadrar el índice ENTERO**, no su línea de totales.
+> **El 🟡 «AMPLIACIÓN de la ficha `00 Índice TFG.md`: desfasado en NUEVE sitios» queda CERRADO en la
+> TANDA 21** (2026-08-17), y **eran QUINCE, no nueve**. Su ficha vive ya en `## Cerradas`, junto con la
+> del recuento de `:106`.
 
-- [ ] 🟡 **`A.3:648` — `[!todo]` «Qué faltaría para cerrarlo», sobre algo que NO se va a hacer** · Informe · `redactor-tfg`
-  Alta el **2026-08-17**. El `[!todo]` declara una **línea futura que no se hará**. Decisión pequeña y
-  binaria: **o se marca como límite declarado** (que es lo que de hecho es) **o se retira**. No requiere
-  medir nada.
+> **El 🟡 «`A.3:648` — `[!todo]` "Qué faltaría para cerrarlo", sobre algo que NO se va a hacer» queda
+> CERRADO en la TANDA 21** (2026-08-17): pasa a `[!warning]` de **límite declarado de alcance**. Su
+> ficha vive ya en `## Cerradas`.
 
 - [ ] 🟡 **Tercera nota vacía del vault, ahora CON NOMBRE: `Lecture 1.md` (0 bytes)** · — · `cronista`
   Alta el **2026-08-17**. Es
@@ -545,6 +541,52 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   y **no indexada**. Es la **tercera «vacía»** que la ficha del recuento de notas contaba **sin
   nombrar**. Registrada solo para que deje de ser anónima: **qué se hace con ella lo decide Francisco**
   — está fuera del árbol de la memoria.
+
+### Altas de la TANDA 21 — 2026-08-17
+
+> Siete fichas, **ninguna bloqueante**, **ninguna mueve una cifra publicada**. **Fichar no es
+> resolver: aquí no se ha corregido nada.**
+
+- [ ] 🟠 **El `~52` tiene MÁS sedes fuera del vault de las que la ficha contaba — y TRES son código** · Código/Informe · **decide Francisco**
+  Alta el **2026-08-17**. La ficha cerrada hoy cubría las cuatro sedes del vault y las tres de
+  trazabilidad autorizadas. **Quedan SIN AUTORIZAR:** `Resultados\GUIA_RESULTADOS.md:497`, **cuatro
+  líneas en `Guia_ML\*`**, `.claude\agents\ml-implementador.md`, `.claude\agents\auditor-ml.md` y
+  **tres docstrings: `program.py:427`, `firmas.py:18` y `firmas.py:110`**. **Los tres docstrings son
+  track Código sobre ficheros publicados: requieren autorización expresa de Francisco.** El permiso
+  concedido cubría **solo** las tres sedes de `resumen-de-decisiones.md`/`next-steps.md`.
+
+- [ ] 🟡 **Las nueve notas remitentes de `4.3.5` no declaran que remiten** · Informe · `redactor-tfg`
+  Alta el **2026-08-17**. Enuncian la desviación 54/122 pero **sin una línea de remisión explícita** a
+  la sede canónica fijada hoy (`4.3.5` § «Decisión experimental: 54 frente a 122 (experimento H1)»).
+  **Barata.**
+
+- [ ] 🟡 **`03 Desarrollo/` SIGUE EXISTIENDO en disco, vacía — el registro la daba por caducada** · — · **decide Francisco**
+  Alta el **2026-08-17**, verificado por el agente del índice: **la carpeta está ahí** y el aviso de
+  eliminación **sigue vigente** en `00 Índice TFG.md`. **La ficha de este mismo documento la marcaba
+  «CADUCADA el 2026-08-17» y eso es FALSO** (anotado en su sitio, más abajo). Es la **misma clase de
+  divergencia registro↔disco** que ha mordido varias veces. **El permiso de borrado concedido se
+  limitó a `Lecture 1.md`.**
+
+- [ ] 🟡 **«37 muestras en D2» mal atribuido en dos informes de `99 Investigación/`** · — · `researcher`
+  Alta el **2026-08-17**. `benchmark-comparativo-nsl-kdd.md:141` y
+  `clasificadores-tabulares-y-arquitecturas-hibridas.md:364`. En **D2 completo son 200**; **37** es el
+  soporte entre los **ataques de tipo conocido** (9.083). **No es memoria**, pero **`5.4` remite al
+  primero** como «material de respaldo con las fuentes revisadas una a una», así que la corrección de
+  la tanda **queda incompleta hacia abajo**. Esa carpeta es del `researcher`.
+
+- [ ] 🟡 **`Bibliografía.md` sigue anunciando `[76]` como primer número libre en CUATRO sitios** · Informe · `researcher`
+  Alta el **2026-08-17**. `:55`, `:61`, `:87` y `:112` dicen `[76]`, mientras `:136` y
+  `99 Investigación\Auditoría de Bibliografía.md:184` dicen **`[78]`, que es el valor real**. Es **el
+  mecanismo exacto** por el que dos agentes acabarían asignando el mismo `[n]`. **Lo toca SOLO el
+  `researcher`**, en el pase en serie.
+
+- [ ] 🟡 **`6.2` enlaza `[[aprendizaje-continuo-nested-learning]]`, que vive en `99 Investigación/`** · Informe · **confirmar con Francisco**
+  Alta el **2026-08-17**. Wikilink a un informe: **permitido**, pero al volcar a Word **apunta a algo
+  que no es memoria**. Confirmar si se quiere así.
+
+- [ ] 🟡 **`next-steps.md:493` mantiene `dos ~45,9k · probe ~11,7k · r2l ~1,0k` con virgulilla** · Informe · **decide Francisco**
+  Alta el **2026-08-17**. La autorización de Francisco cubría **el `~52` de `u2r`**, y **se respetó el
+  límite**. Ficha de una línea si quiere esa línea entera exacta (`45.927 / 11.656 / 995`).
 
 ### Altas del pase en serie del `researcher` — 2026-08-17
 
@@ -557,6 +599,15 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > opción recomendada.** Las fichas **siguen ABIERTAS**: falta **aplicarlas** en `Bibliografía.md` y en
 > las notas, y eso lo ejecuta el `researcher` en un pase en serie. **Ya no hay nada que preguntar:
 > quien las lea, las aplica.** La respuesta concreta va escrita dentro de cada ficha.
+
+> **ENCARGOS ACUMULADOS PARA ESE MISMO PASE EN SERIE — añadidos el 2026-08-17 (TANDA 21), sin abrir
+> tanda:**
+> - **Identificar los seis ítems no-FT del checklist de `[20]`.** El `[!todo]` de `A.3.8` **queda
+>   marcado a propósito**: el dato **no está en la nota** y **no se puede resolver sin inventarlo**. El
+>   redactor reescribió el bloque separando **lo establecido de lo pendiente** y dejó constancia de que
+>   **ninguna afirmación del apéndice depende de ese dato**.
+> - **El arreglo de `Bibliografía.md` (`[76]`→`[78]`)** y **el «37 en D2» de los dos informes de
+>   `99 Investigación/`** — fichas nuevas 5 y 4 de la TANDA 21, más arriba.
 
 - [ ] 🟡 **P4 · falta aval de nivel 1 para `1.2:14`** · Informe · **DECIDIDO — pendiente de aplicar** · ejecuta `researcher`
   Alta el **2026-08-17**. La afirmación de `1.2:14` no tiene hoy fuente primaria que la sostenga.
@@ -609,16 +660,10 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > ahora `agregar_semillas.py` en `Resultados/comparaciones_pareadas.csv`. Su ficha vive ya en
 > `## Cerradas`.
 
-- [ ] 🟡 **`~52` para un número que el script ahora emite EXACTO** · Informe · `redactor-tfg`
-  Alta el **2026-08-17**, **misma familia que el «~17»**. `u2r` tiene **52** muestras en D3, y desde la
-  Tanda 16 lo emite `specialized_nsl_kdd_composicion_d3.csv`: la virgulilla ya no tiene excusa.
-  Sedes en el vault: **`4.2:91`, `5.2:52`, `5.4:15`, `2.1.6:149`**. **`4.2` se contradice consigo
-  misma**: `:91` dice `~52` y `:114-116` publica el **52 exacto**.
-  **AMPLIACIÓN del recuento hecha por el `cronista` al registrar, contra disco: hay TRES sedes más
-  fuera del vault** —`resumen-de-decisiones.md:103`, `next-steps.md:493` y `:550`— y **una en
-  `99 Investigación/clasificadores-tabulares-y-arquitecturas-hibridas.md:93`** (informe, no memoria).
-  **Las de `resumen-de-decisiones.md` y `next-steps.md` NO se tocan sin autorización expresa de
-  Francisco**, igual que hizo falta para el «~17». **Falso positivo confirmado: `4.2:131` (`~52,5 %`).**
+> **El 🟡 «`~52` para un número que el script emite EXACTO» queda CERRADO en la TANDA 21**
+> (2026-08-17): resuelto en las **cuatro sedes del vault** y en las **tres de trazabilidad autorizadas
+> por Francisco**. Su ficha vive ya en `## Cerradas`. **Ojo: quedan sedes SIN AUTORIZAR fuera de ahí,
+> tres de ellas en código, y eso es ficha NUEVA, más abajo.**
 
 > **El 🟡 «la palabra "determinista" sigue viva FUERA de `PIPELINE.md`» queda CERRADO el 2026-08-17**,
 > con la salvedad escrita en `agregar_semillas.py` (`:226`/`:245`) y en `anomalias.py`, y el residuo de
@@ -649,6 +694,12 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   `resumen-de-decisiones.md:834-835` y aplicada al cerrarla: **se cita por nombre de callout o de
   campo, nunca por número de línea.** **Cuatro veces el mismo fallo en dos días.** La ficha **sigue
   ABIERTA**: lo vivo es el patrón.
+  **QUINTA OCURRENCIA (2026-08-17, TANDA 21), y esta la generó un agente EN EL MISMO TURNO, no un
+  registro viejo:** el `auditor-ml` situó el hedge de `2.1.6` en **§2.1.6.6** y el `redactor-tfg` lo
+  encontró en **§2.1.6.3**. Se apunta junto a la de la TANDA 20 (`4.2:269` → `:264`/`:266`). **Van
+  CINCO en dos días**, y con la de hoy el patrón **ya no describe un descuido del pasado: describe
+  cómo se comporta este vault.** Refuerza la forma canónica: **se cita por nombre de callout, de
+  sección o de campo, nunca por número de línea.**
 
 > **El 🟡 «`Bibliografía.md:177` — el localizador de `[49]` apunta a `2.3.2.5`» queda CERRADO el
 > 2026-08-17** en el pase en serie del `researcher`, junto con los **tres `[CITA: …]` vivos**. Su
@@ -1535,22 +1586,15 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   - **⚠️ CADUCADA EL 2026-08-17: `Obsidian_TFG_Vault/03 Desarrollo/` YA NO EXISTE en disco, verificado.**
     El borrado físico que esta ficha dejaba vivo **está hecho**. No queda nada que despachar aquí; la
     ficha se conserva para que nadie vuelva a abrir el mismo encargo. **La retira el usuario, no yo.**
+  - **⚠️ ESA «CADUCADA» ES FALSA, verificado en disco el 2026-08-17 (TANDA 21): `Obsidian_TFG_Vault/03
+    Desarrollo/` SIGUE EXISTIENDO, vacía**, y el aviso de eliminación sigue vigente en
+    `00 Índice TFG.md`. El borrado físico **NO está hecho**. La ficha queda **ABIERTA en su parte de
+    borrado**; ficha nueva de la TANDA 21 con el detalle. **Decide Francisco:** el permiso de borrado
+    concedido se limitó a `Lecture 1.md`.
 
-- [ ] **`00 Índice TFG.md:106` declara un recuento que no cuadra con su propio listado** (🟡) · Informe · `redactor-tfg`
-  Dice «**de 43 notas**» con un desglose (5+6 borrador, 9 teoría, 10 pendiente de volcado, 10
-  esqueleto, 2 pendiente) que **hoy no corresponde**: son **44 notas, 31 redactadas, 8 en guion, 3
-  vacías**. Cuadrarlo al final, cuando la Fase 4 haya movido el reparto redactadas/guion.
-  - **CORREGIDA LA PROPIA FICHA el 2026-08-15, verificado contra disco: la línea es la `:106`, no la
-    `:104`.** Se desplazó dos líneas por el alta de `A.3` (Tanda 3) y el alta de `5.0` (Tanda 8).
-    **Y el descuadre está confirmado por conteo, no de oídas:** el listado del índice enumera
-    **44 wikilinks `- [[…]]`** frente al «43» que declara esa línea. **Localizar por contenido
-    («**Totales:**»), no por número de línea** — cada alta futura la vuelve a mover. Las menciones a
-    `:104` que quedan en el bloque de PRÓXIMOS PASOS y en las Tandas 2-3 son **historial**: no se
-    reescriben, pero **el número bueno es el de aquí**.
-  - **DESBLOQUEADA el 2026-08-15 (TANDA 11): la condición era «cuadrarlo cuando la Fase 4 haya movido
-    el reparto redactadas/guion», y LA FASE 4 ACABA AHÍ** —el capítulo 2 queda cerrado entero, así que
-    **ya no quedan notas en guion en ese capítulo**. **Ya se puede cuadrar**, y es de minutos.
-    **Verificar la línea antes de tocar: puede haberse desplazado otra vez.**
+> **La ficha «`00 Índice TFG.md:106` declara un recuento que no cuadra con su propio listado» queda
+> CERRADA en la TANDA 21** (2026-08-17), **con criterio declarado**, que era lo que faltaba: **44
+> entradas indexadas = 43 notas de memoria + `Bibliografía`**. Su ficha vive ya en `## Cerradas`.
 
 > **Los 6 marcadores `[CITA:` de `4.2` quedan CERRADOS en la TANDA 9** (2026-08-15, `e286cce`),
 > convertidos en el pase en serie del `researcher`. Ficha en `## Cerradas`. **Ojo al leer `4.2` hoy:
@@ -1683,9 +1727,9 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > el 2026-08-17**: hoy hay **exactamente una sede canónica, `6.1`**, y las **nueve remisiones**
 > apuntan allí. Su ficha vive ya en `## Cerradas`.
 
-- [ ] 🟡 **`4.3:262` enumera las diez sedes de la declaración sin decir cuál es la canónica** · Informe · `redactor-tfg`
-  Alta el **2026-08-17**, hallazgo lateral del ciclo de reconciliación. La enumeración es correcta,
-  pero **un lector no sabe a cuál ir**: sin sede canónica marcada, diez punteros son diez copias.
+> **El 🟡 «`4.3:262` enumera las diez sedes sin decir cuál es la canónica» queda CERRADO en la
+> TANDA 21** (2026-08-17): canónica **`4.3.5` § «Decisión experimental: 54 frente a 122 (experimento
+> H1)»**. Su ficha vive ya en `## Cerradas`.
 
 > **La ficha «`4.5:39` es INEXACTO para KNN» queda CERRADA el 2026-08-16 en la TANDA 14**, con las
 > cifras exactas que ella misma exigía. Detalle en `## Cerradas`.
@@ -1969,6 +2013,14 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-17 | Informe | **TANDA 21 — cuatro redactores en paralelo y DOS rondas de corrección de auditoría.** Cierra **seis fichas**: el `[!todo]` de `A.3:648`, la **deuda de cifra de KNN**, el **`~52`**, la **ampliación del índice**, el **recuento de `00 Índice TFG.md:106`** y la **sede canónica de `4.3:262`**. **Ninguna cifra publicada movida sin artefacto de respaldo, cero `[n]` nuevos** (máximo en uso sigue `[77]`), **cero marcas temporales de corrida en prosa** en todo el vault, verificado en las dos rondas. Deja **SIETE fichas nuevas**, ninguna bloqueante, y **dos encargos acumulados** al pase en serie del `researcher` | `—` |
+| 2026-08-17 | Informe | **🟠 Deuda de CIFRA de KNN en el eje SMOTE-vs-nada — CERRADA, y era LA ÚLTIMA DEUDA DE DATO REAL DEL VAULT.** Volcadas a `5.2` §5.2.4.4 desde `Resultados\metricas_balanceo.csv`: **KNN-54 SMOTE 0,9453 ± 0,0058 vs nada 0,9187 ± 0,0252** (margen **0,0266**) y **KNN-122 0,9523 ± 0,0096 vs nada 0,9172 ± 0,0253** (margen **0,0351**). Añadida **columna «Margen»** y las **desviaciones que faltaban a HistGradientBoosting**. **Dato que REFUERZA la Decisión 1 de Francisco:** el margen **más estrecho** de este eje (**0,0266**) **supera al más amplio** del eje SMOTE-vs-`class_weight` (**0,0180**, DT-54), verificado contra el CSV | `—` |
+| 2026-08-17 | Informe | **🟡 El `~52` — CERRADO en las cuatro sedes del vault (`4.2`, `5.2`, `5.4`, `2.1.6`) y en las TRES de trazabilidad autorizadas EXPRESAMENTE por Francisco** (`resumen-de-decisiones.md:103`, `next-steps.md:493` y `:550`), que **citan ahora el artefacto de origen**. Corregida de paso la **autocontradicción de `4.2`** (decía `~52` en una viñeta y publicaba el **52 exacto** en su tabla), precisado el **ratio a 883,21:1** (`ratio_desbalance_max_min`) y el **`dos` a 45.927**. **Falso positivo respetado: el `~52,5 %` de `4.2` es un porcentaje.** **Las sedes NO autorizadas —tres de ellas docstrings de código— quedan en ficha nueva** | `—` |
+| 2026-08-17 | Informe | **🟡 AMPLIACIÓN del `00 Índice TFG.md` — CERRADA, y eran QUINCE sitios, no nueve.** Además de las **nueve** secciones marcadas «✍ teoría — guion propuesto» que en disco están `redactada`, había **seis entradas más del capítulo 2** (`2.1.1`–`2.1.5` y `2.2.1`) **dadas por borrador**. Corregidos también **`4.2`**, **`6.2`** (339 líneas), la **leyenda** (retirados `✍ teoría` y `esqueleto`, que **no los llevaba ninguna nota**) y la **cabecera y totales**, ahora **en tabla por estado**. **Hallazgo propio del agente: el capítulo 2 tiene 14 notas, no 12** — él mismo escribió 12 al principio y **lo corrigió contando**, que es el error exacto que produjo el desfase original | `—` |
+| 2026-08-17 | Informe | **El recuento de `00 Índice TFG.md:106` — CERRADO CON CRITERIO DECLARADO, que era lo que faltaba: 44 entradas indexadas = 43 notas de memoria + `Bibliografía`.** Aritmética **publicada en la nota**: 54 `.md` en disco − 8 de `99 Investigación/` − el propio índice − `Lecture 1.md` = **44**. Verificado: **los 44 wikilinks resuelven a fichero existente** y **ninguna nota de memoria queda sin indexar**. **El «43» anterior no estaba mal calculado, estaba SIN CRITERIO** | `—` |
+| 2026-08-17 | Informe | **🟡 `4.3:262` — CERRADA: declarada canónica `4.3.5` § «Decisión experimental: 54 frente a 122 (experimento H1)»**, por ser **la única que publica la tabla H1 y cita los artefactos generadores**. Recuento corregido a **diez remisiones / once sedes con la canónica** (decía «nueve» y enumeraba diez). Corregido de paso un **error interno**: el callout **se autodenominaba «este mismo apartado (4.3.7)»** | `—` |
+| 2026-08-17 | Informe | **🟡 El `[!todo]` de `A.3:648` — CERRADO convirtiéndolo en LÍMITE DECLARADO, que es lo que de hecho era.** En `A.3.7` § «Límite de protocolo: tres decisiones del sistema se tomaron con métricas medidas sobre D2», el callout pasa a **`[!warning] Límite declarado de alcance: la corrección no se ejecuta en este trabajo`**, con la **razón técnica** —regenerar los splits **invalidaría las cifras selladas en `A.3.9`**, coherente con la **Decisión 2 de Francisco del 2026-08-14**— y **enlaces a `6.1` y `6.2`** | `—` |
+| 2026-08-17 | Informe | **AUDITORÍA DE LA TANDA 21 — dos rondas, ambas `APTO CON CAMBIOS`, ningún 🔴.** **Ronda 1, 6 hallazgos.** El de fondo, 🟠: **`5.2` etiquetaba como «en D2» soportes que son de los 9.083 ataques de TIPO CONOCIDO de D2** (37 de `u2r`), **chocando con los 200 de `u2r` en D2 completo que publica `4.2`** — **la métrica era correcta; la población, mal etiquetada**. Corregido en **tres sedes de `5.2`**, distinguiendo **37 / 200 / 52 con procedencia**. Los otros cinco: `5.4` afirmaba **en falso** que `5.2` no publicaba las celdas de KNN **y su `[!todo]` ordenaba un trabajo ya hecho** —falso **incluso antes de la tanda**, porque `4.3` ya tabulaba KNN-54—; `4.3` decía «nueve» y enumeraba diez; `5.4` afirmaba que el detalle se publica «una sola vez, en 5.2»; y `2.1.6` seguía con «unas 52 / ~45.900». **Ronda 2, 4 hallazgos:** 🟠 `4.2` definía los soportes de `metricas_firmas.csv` como «partición interna de evaluación», **reabriendo la confusión 52/37 por la puerta de atrás** —corregido a «los ataques de D2 cuyo tipo está presente en el entrenamiento (**9.083 flujos**)»—; 🟡 la frase de sede de `5.4` era **cierta a medias** (`4.3.4` tabula **solo la variante de 54**; las **8 celdas de 122 con `±`** solo están en `5.2`), acotada; 🟡 **doble declaración de canonicidad** entre `4.3.5` y `2.1.6`, desambiguada con tabla: **`6.1` es sede del inventario como limitación, `4.3.5` del alcance y cifras de la desviación 54/122**. **NO hubo tercera auditoría completa, y fue decisión DELIBERADA del `leader`:** los tres hallazgos vivos de la ronda 2 eran **de redacción**, las cifras **ya se habían cotejado celda a celda contra los cuatro CSV en la ronda 1**, y los cuatro pasajes **se verificaron a mano en disco**. Coste evitado **~200 s de auditor para tres frases** | `—` |
 | 2026-08-17 | Informe | **🟠 SÉPTIMO re-anclaje de sello — CERRADO EN PROSA en la TANDA 20, con el sello impreso dentro de los artefactos de `Resultados/` INTACTO** (regla del patrón respetada, verificado). Re-ancladas **`4.2` y `4.3`**: la **tabla de sellos de `4.2`** y su **párrafo de Procedencia** pasan de `a8c20e9-sucio` a **`ac36b88`**, con el commit versionador **`312c179`**, y se retira el **`[!todo]` «Hash del commit de cierre, pendiente de sellar»**. **Citado por nombre de callout y de campo, no por línea** —el anclaje `4.2:269` de la propia ficha estaba desfasado (`:264`/`:266` en disco): **cuarta ocurrencia en dos días** del patrón «referencia `fichero:línea` desfasada», sumada a su ficha abierta, que **no se cierra**. **Hallazgo lateral que la ficha NO preveía:** `4.3:128` no solo repetía el hash viejo, **atribuía mal el mecanismo de sellado** —citaba los campos `Commit del código:` / `Fecha de la corrida:`, que son de los `.txt`, para un artefacto que es `specialized_nsl_kdd_vocabulario_onehot.csv`, **que sella en columnas `commit`/`fecha`**—; corregido en el mismo pase. **Auditoría: PRIMER PASE NO APTO CON DOS 🔴, corregidos y reauditados APTO.** Quedan escritos porque **son patrón**: **(a)** el arreglo afirmó un re-anclaje `a8c20e9-sucio → ac36b88` **QUE NUNCA OCURRIÓ** —el pendiente se cerró **re-corriendo `validacion.py` sobre árbol limpio**, y `ac36b88` es el **sello de la corrida**, no un commit de cierre—; **(b)** transcribió **tres marcas temporales en prosa** contra la decisión cerrada de `resumen-de-decisiones.md:892-905`, **contradiciendo además a `4.2:253-256` ocho líneas antes**. Ambos corregidos: ahora **se remite al campo del artefacto** y hay **cero timestamps en las dos notas**, verificado por `grep` | `5c2a484` |
 | 2026-08-17 | Informe | **PASE EN SERIE DEL `researcher` — mantenimiento de `Bibliografía.md` y conversión de los tres últimos `[CITA: …]`. Cierra SIETE fichas, y TRES de ellas describían problemas que NO EXISTÍAN: manda el disco, no el registro.** **Censo actualizado y recontado por dos vías: `Bibliografía.md` pasa a 76 FILAS, `[1]`–`[8]` y `[10]`–`[77]`, `[9]` sigue QUEMADA, PRIMER LIBRE EL `[78]`.** Altas: **`[76]`** Quiñonero-Candela *et al.* (MIT Press, 2009) y **`[77]`** Hindy *et al.* (2020). **6 ficheros**: `Bibliografía.md`, `99 Investigación/Auditoría de Bibliografía.md`, `99 Investigación/Reconstrucción de las 47 citas colgantes.md` y, en el vault, `5.0`, `5.1` y `5.4`. **NO se despachó `auditor-ml`, y con criterio: el pase no toca cifras ni afirmaciones sobre resultados, solo marcadores de cita y metadatos bibliográficos.** Deja **CUATRO decisiones para Francisco**, marcadas en vez de inventadas | `8b5ce15` |
 | 2026-08-17 | Informe | **🟡 «`Reconstrucción de las 47 citas colgantes.md:283` reserva el `[58]` para Mitchell» — CERRADA, Y EL EQUIVOCADO ERA LA FICHA.** El `[58]` de `Bibliografía.md` **estaba bien** (KDD Cup 1999 Data); quien mentía era el informe, que escribió una **previsión antes de la Tanda 9** y quedó leyéndose como un hecho. **Mitchell ya existía como `[60]` y lo citan tres notas**: no procedía ni alta ni renumeración. Corregida la reserva en el informe, sin borrar su historial | `8b5ce15` |

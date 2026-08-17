@@ -645,12 +645,23 @@ seguridad este patrón se cataloga como contaminación por selección sobre el t
 > **invertir** el defecto realmente cometido, y un lector que cotejase la ficha con
 > `resumen-de-decisiones.md` lo detectaría de inmediato.
 
-> [!todo] Qué faltaría para cerrarlo
-> Repetir las tres selecciones —algoritmo de cada etapa y set de características— contra una
-> partición de validación tallada desde `KDDTrain+` y
-> reservar D2 exclusivamente para el reporte final. No se ha hecho: exigiría regenerar los splits, y
-> los splits **no se regeneran** (misma razón que en el límite de rutas absolutas). Queda como línea
-> futura.
+> [!warning] Límite declarado de alcance: la corrección no se ejecuta en este trabajo
+> **Qué corregiría el defecto.** Repetir las tres selecciones —algoritmo de cada etapa y set de
+> características— contra una partición de validación tallada desde `KDDTrain+`, reservando D2
+> exclusivamente para el reporte final.
+>
+> **Por qué no se hace, y no es un olvido.** Es una **decisión de alcance tomada
+> explícitamente**, no una tarea pendiente del proyecto:
+> - Exigiría **regenerar los splits** D1/D2/D3, y los splits **no se regeneran** en este trabajo
+>   (misma razón que en el límite de rutas absolutas): toda cifra publicada en el capítulo 5 está
+>   anclada a los splits actuales, de modo que retallarlos invalidaría el conjunto completo de
+>   resultados ya medidos y sellados en A.3.9.
+> - La consecuencia se **declara** en lugar de repararse: las métricas de la variante publicada son
+>   optimistas en la parte atribuible a la selección, tal como se explica arriba, y el margen sobre
+>   el que se decidió queda a la vista del lector en los CSV de todos los candidatos.
+>
+> **Dónde vive como continuación.** Se recoge como línea futura en [[6.2 Líneas futuras]]; su lectura
+> como limitación del trabajo está en [[6.1 Conclusiones]], que es su sede canónica.
 
 ### Otros límites del alcance evaluado
 
@@ -678,13 +689,20 @@ Se rellenan los **11 ítems «FT»** del *Machine Learning Reproducibility Check
 de los **17** que componen el checklist completo. Los **seis restantes no se rellenan**. El detalle de
 la fuente está en [[benchmark-comparativo-nsl-kdd]].
 
-> [!todo] Qué son los seis ítems no rellenados: sin verificar
+> [!todo] Qué son los seis ítems no rellenados: dato pendiente, sin efecto sobre lo afirmado
 > La fuente del proyecto ([[benchmark-comparativo-nsl-kdd]]) respalda el **total de 17** y **enumera
 > los 11 «FT»**, pero **no dice cuáles son los otros seis** ni de qué tratan. Cualquier
 > caracterización de ese resto queda pendiente de comprobar contra el checklist original de
-> [20]; hasta entonces este apéndice solo afirma que no se rellenan y por qué se
-> eligió el subconjunto «FT»: es el que aplica **a toda figura o tabla con resultados empíricos**,
-> que es exactamente lo que documenta esta ficha.
+> [20], y **no se rellena por conjetura**.
+>
+> **Qué sí queda establecido sin ese dato**, de forma que el apéndice se sostiene igual:
+> - Los 11 ítems «FT» están enumerados y resueltos uno a uno en la tabla siguiente, con su sede.
+> - El criterio de elección del subconjunto es explícito: «FT» es el que aplica **a toda figura o
+>   tabla con resultados empíricos**, que es exactamente lo que documenta esta ficha.
+> - Las restricciones de los ítems 6, 9 y 10 se declaran en el callout posterior.
+>
+> Es decir, **lo único no resuelto es la identidad de los seis restantes**, y ninguna afirmación de
+> este apéndice depende de ella.
 
 | # | Ítem FT | Estado | Dónde se cumple |
 |---|---|---|---|

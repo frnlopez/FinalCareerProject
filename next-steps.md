@@ -490,7 +490,7 @@ python app\validacion.py            # valida los CSVs; imprime APROBADA/FALLA y 
 
 **Números de referencia (NSL-KDD, aproximados — verifica con la salida de `program.py`):**
 - D1 (train normal): ~67.300 · D3 (train ataques): ~58.600 · D2 (test completo): ~22.500 (≈43% normal / 57% ataque).
-- Desbalance D3: dos ~45,9k · probe ~11,7k · r2l ~1,0k · **u2r ~52**.
+- Desbalance D3: dos ~45,9k · probe ~11,7k · r2l ~1,0k · **u2r 52** (este último exacto, lo emite `Resultados\specialized_nsl_kdd_composicion_d3.csv`).
 - D2 contiene **17 tipos de ataque que NO existen en el train** (los "0-day" del experimento; `validacion.py` los lista).
 
 **Estado del preprocesado actual:** One-Hot de `protocol_type/service/flag` + `MinMaxScaler` ajustado en D1+D3 (en `main()` se llama con `scaler_type='minmax'` — mantenerlo: OCSVM, KNN y el autoencoder agradecen [0,1]).
@@ -547,7 +547,7 @@ Las categorías que solo existen en D2 (test) se quedan fuera **a propósito**: 
   from imblearn.pipeline import Pipeline as ImbPipeline
   from imblearn.over_sampling import SMOTE
   pipe = ImbPipeline([('smote', SMOTE(random_state=42, k_neighbors=5)), ('clf', modelo)])
-  # u2r tiene ~52 muestras → en folds de 5, ~41 por fold: k_neighbors=5 aún cabe, pero si peta usa k_neighbors=3
+  # u2r tiene 52 muestras (exacto, composicion_d3.csv) → en folds de 5, ~41 por fold: k_neighbors=5 aún cabe, pero si peta usa k_neighbors=3
   ```
 - Instalar antes: `pip install imbalanced-learn` y **añadirlo a `requirements.txt`**.
 - El mini-experimento decidido: por algoritmo, comparar `SMOTE` vs `class_weight='balanced'` (DT/RF lo tienen; **KNN y HistGB no** → en esos dos, SMOTE vs nada) con `f1_macro` en CV. La tabla resultante ES el contenido de la sección 4.3.4 de la memoria.

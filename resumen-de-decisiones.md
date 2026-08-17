@@ -100,7 +100,7 @@ de los CSVs como argumento, de modo que cambiar 54↔122 sea un flag, no una ree
 - El `UMBRAL_CONF` (marca "unknown/0-day" si `predict_proba` máx < umbral) se calibra sobre
   probabilidades **out-of-fold** del mismo `StratifiedKFold(5)` de `firmas.py`
   (`cross_val_predict`), NO sobre el D3 con el que se entrenó (sería in-sample → leakage) ni
-  sobre un holdout (sacrificaría las ~52 muestras de u2r). El modelo final se re-entrena en
+  sobre un holdout (sacrificaría las 52 muestras de u2r; recuento exacto en `Resultados\specialized_nsl_kdd_composicion_d3.csv`). El modelo final se re-entrena en
   todo D3 tras calibrar.
 - Explorar `UMBRAL_CONF ∈ {0.4, 0.5, 0.6}`; elegir el que preserve el recall macro de las
   clases conocidas. Los 0-day no están en D3: su detección se **mide** en D2 (etapa 1
