@@ -711,7 +711,16 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
       de los 15 quedan sin aplicar** — `3.1` no se tocó, y hay que **confirmar** si eso es correcto
       (`3.1.5` es nueva y está exenta) en vez de darlo por bueno.
 
-- [~] **T10 · Capítulo 4** · Informe · `redactor-tfg`
+- [x] **T10 · Capítulo 4** · Informe · `redactor-tfg`
+  > ✅ **CERRADA EN LA TANDA 17 (2026-08-17, `9bcfe1f`).** Su último bullet vivo era el del «17», de
+  > track mixto, y se cerró ahí: verificado contra disco que son **17 tipos 0-day y 3.750 filas de
+  > D2**, con la ficha mintiendo en dos sitios —`firmas.py:157` era `:174`, y los supuestos «~17» de
+  > `.gitignore` y `README.md` eran **`~170 MB`**—. **Queda un resto ABIERTO que NO pertenece a esta
+  > ficha y vive en su propia fila de `## Cerradas`:** las **7 ocurrencias del «~17»** en
+  > `resumen-de-decisiones.md` (4) y `next-steps.md` (3), con la excepción **ya autorizada por
+  > Francisco** y sin aplicar porque el agente cayó por límite de API.
+  > Lo que sigue debajo es el historial de la ficha, no trabajo pendiente.
+  >
   > **AVANZADA, NO CERRADA en la TANDA 14 (2026-08-16): hechos 2 de sus 5 bullets** —«Las tres
   > particiones oficiales» con la vacuna sobre KDDTest-21, y la 5.ª razón de «por qué NSL-KDD» con
   > Goldschmidt y Chudá—. ~~**Siguen VIVOS: el «~33 %» de DoS con su denominador (`4.2:92`), la nota de
@@ -763,7 +772,16 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
     contrastadas contra `program.py` y las citas `[17]`/`[18]`; **84/122 = 68,9 %** en `4.3.3`
     (`service` aporta 70); y en `4.3.5` **58 de las 60** eliminadas son *dummies* (`service` 70→15).
 
-- [ ] **T11 · Capítulo 5** · Informe · `redactor-tfg`
+- [x] **T11 · Capítulo 5** · Informe · `redactor-tfg`
+  > ✅ **CERRADA EN LA TANDA 17 (2026-08-17, `9bcfe1f`).** Las cinco notas `5.0`–`5.4` redactadas en
+  > paralelo sobre ficheros disjuntos, con **tres pases de auditoría**. **El primero fue NO APTO con
+  > dos 🔴, y los dos eran cifras falsas**: `5.2` presentaba como dispersión **entre semillas** la sd
+  > **entre los 5 folds** de la semilla 42, y `5.1` publicaba **cuatro tiempos inexistentes** de los
+  > que salía un titular ya propagado a `5.4`. Ambos corregidos y verificados cerrados.
+  > **Restos ABIERTOS que NO son de esta ficha y viven en sus propias filas de `## Cerradas`:** los
+  > **3 `[CITA: …]` vivos** (`5.0:160`, `5.1:86`, `5.4:78`) y la atribución de **`5.4:42` a `[18]`**.
+  > Lo que sigue debajo es el historial de la ficha, no trabajo pendiente.
+  >
   - **AMPLIACIÓN del 2026-08-16, hallazgo NO FORZADO de la auditoría de la TANDA 15 — `5.0 Protocolo
     de evaluación.md` arrastra dos defectos que la Tanda 15 corrigió en `4.3` pero NO tocó aquí,
     porque es fichero de esta ficha.** (1) **La misma sobreafirmación de prevalencia** en `5.0:149`,
@@ -973,7 +991,22 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > `.esquema-anterior.bak` son **prescindibles** y **cualquier cita a una corrida vieja debe apuntar
 > al commit, nunca al `.bak`**.
 
-- [ ] **T19 · Cifras de tiempo del vault sin respaldo en ningún artefacto** · Informe · `redactor-tfg`
+- [~] **T19 · Cifras de tiempo del vault sin respaldo en ningún artefacto** · Informe · `redactor-tfg`
+  > ⛔ **ESTADO RECONTADO CONTRA DISCO AL CERRAR LA SESIÓN DEL 2026-08-17 — NO leer la lista de abajo
+  > como si siguiera entera: TRES de sus cuatro sedes YA ESTÁN RESUELTAS, y la cuarta se ha vuelto
+  > URGENTE por serlo.**
+  > - ✅ **La tabla de `5.1:44-47`** se corrigió en la **TANDA 17** (`9bcfe1f`), como 🔴 de auditoría:
+  >   los reales son **5,27 / 25,58 / 20,16 / 49,20**, y ahora se publican **los dos ratios** —×13,9
+  >   sobre el tiempo de entrenamiento y ×9,3 sobre el bloque completo— con la razón de que difieran.
+  > - ✅ **`5.1:58`** («5 s frente a los 40,6 s») — **ya no existe**, verificado por `grep`.
+  > - ✅ **`5.2:59`** («DecisionTree, el más rápido, 1,8 s») — **ya no existe**, verificado por `grep`.
+  > - ❌ **`4.4 …anomalías.md:56-61` SIGUE CON LAS CIFRAS VIEJAS**, y ahí está el problema nuevo:
+  >   su tabla publica **`5,0 s`** para IsolationForest mientras `5.1` publica ya **3,51 s de
+  >   entrenamiento y 5,27 s de bloque**. **LOS DOS CAPÍTULOS SE CONTRADICEN ENTRE SÍ**, y la
+  >   contradicción **la creó el propio arreglo de la Tanda 17** al corregir un lado y no el otro.
+  >   **Es lo que hay que hacer primero al retomar T19**, y el defecto es del tipo que un tribunal
+  >   detecta cruzando dos capítulos.
+  >
   Detectado dentro de T1 (2026-08-06 a 2026-08-08). **Ninguna de estas cifras sale de una corrida que exista:**
   la **columna Tiempo entera** de la tabla de `5.1 …anomalías.md:44-47` (5,04 · 28,34 · 16,42 ·
   40,56); la frase de `5.1:58` («5 s frente a los 40,6 s del Autoencoder»); la de
