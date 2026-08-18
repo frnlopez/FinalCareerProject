@@ -5,7 +5,7 @@ estado: borrador
 
 # Índice TFG — H-NIDS con ML
 
-> [!info] Punto actual (2026-08-18): estructura ✅ · **capítulo 1 CERRADO — sus 5 notas (1.0-1.4) están `estado: redactada`** ✅ · **capítulo 2 Marco Teórico CERRADO** — sus 14 notas (2.1.1–2.1.6, 2.2.1–2.2.5, 2.3.1–2.3.3) están `estado: redactada` en prosa desde el 2026-08-15 ✅ · volcado de resultados a caps. 4-5 ✅ · Apéndice A.1 + 4.2.1 ✅ · **cap. 3 Diseño completo (3.1-3.6) ✅** · conclusiones 4.6, 5.4 y **6.1 ✅** · **4.1 Tecnologías ✅** · **A.2 Métricas ✅** · **A.3 Ficha del sistema ✅** · **4.2 completa: teoría redactada y sin marcadores `[CITA: …]` vivos ✅** · **6.2 Líneas futuras redactada (borrador extenso), pendiente solo de la revisión final de Francisco** (respaldo en `EL_FUTURO.md`) · lo único que sigue siendo de Francisco es la **bibliografía final en Zotero/IEEE** · **pendiente: Resumen y Abstract, que se redactan al final**
+> [!info] Punto actual (2026-08-18): estructura ✅ · **capítulo 1 CERRADO — sus 5 notas (1.0-1.4) están `estado: redactada`** ✅ · **capítulo 2 Marco Teórico CERRADO** — sus 14 notas (2.1.1–2.1.6, 2.2.1–2.2.5, 2.3.1–2.3.3) están `estado: redactada` en prosa desde el 2026-08-15 ✅ · volcado de resultados a caps. 4-5 ✅ · Apéndice A.1 + 4.2.1 ✅ · **cap. 3 Diseño completo (3.1-3.6) ✅** · conclusiones 4.6, 5.4 y **6.1 ✅** · **4.1 Tecnologías ✅** · **A.2 Métricas ✅** · **A.3 Ficha del sistema ✅** · **4.2 completa: teoría redactada y sin marcadores `[CITA: …]` vivos ✅** · **6.2 Líneas futuras redactada (borrador extenso), pendiente solo de la revisión final de Francisco** (respaldo en `EL_FUTURO.md`) · lo único que sigue siendo de Francisco es la **bibliografía final en Zotero/IEEE** · **Resumen y Abstract redactados (2026-08-18): las 43 notas de la memoria están `estado: redactada`** ✅
 >
 > **Actualizado el 2026-08-09 (T0):** la regla «la teoría en prosa la escribe Francisco» quedó retirada. Ver «Autoría de la redacción — estado vigente desde T0» en `features.md`.
 >
@@ -22,28 +22,36 @@ estado: borrador
 > ninguna nota de la memoria**: la única entrada que sigue en ese estado es `Bibliografía`, que no es
 > nota de memoria y se cuenta aparte.
 >
+> **Actualizado el 2026-08-18 (Tanda 27):** redactadas `Resumen` y `Abstract`, las dos últimas notas
+> que quedaban `pendiente`; su frontmatter dice ya `estado: redactada` (verificado en disco). El
+> recuento pasa a **43 `redactada` · 0 `borrador` · 0 `pendiente`**, sobre las mismas 43 notas de
+> memoria y 44 entradas indexadas. Con ello **ninguna nota de la memoria queda sin prosa**: lo que
+> sigue pendiente no es redacción, sino la revisión de Francisco sobre `4.2` («Por qué se eligió
+> NSL-KDD») y `6.2`, más la bibliografía final en Zotero/IEEE.
+>
 > **Actualizado el 2026-08-17 (Tanda 21):** este índice se cuadró entero contra disco. Las nueve secciones que figuraban como «✍ teoría — guion propuesto» estaban ya redactadas, igual que las seis del capítulo 2 marcadas como «borrador»; se corrigieron también los estados de `4.2` y `6.2` y el recuento total. **Regla de mantenimiento: el estado que publica este índice es el del campo `estado:` de la cabecera de cada nota, verificado en disco — no una anotación histórica.**
 
 Mapa de contenido del TFG. Las notas MD son la fuente de verdad; el docx se rellena al final a partir de estas notas (Word + Zotero, estilo IEEE).
 
 **Leyenda de estado:**
 
-- `redactada` — prosa terminada; es el estado de **41 de las 43 notas** de la memoria.
+- `redactada` — prosa terminada; es el estado de **las 43 notas** de la memoria.
 - `borrador` — redacción real existente pero con hueco de contenido; **hoy no lo lleva ninguna nota
   de la memoria**. La única entrada del listado en `borrador` es `Bibliografía`, que es aparato de
   apoyo y se cuenta aparte de las 43.
 - `📊 volcado` — resultados ya traídos desde `Resultados\` (mapa en `next-steps.md` §6.6).
-- `pendiente` — sin contenido.
+- `pendiente` — sin contenido; **hoy no lo lleva ninguna nota**.
 
 > [!note] Estados retirados
 > `✍ teoría` (sección con guion propuesto y prosa por escribir) ya no aplica a ninguna nota: el
-> capítulo 2 está cerrado. `esqueleto` tampoco: ninguna nota del vault está hoy en ese estado —
-> las únicas dos sin contenido son `Resumen` y `Abstract`, ambas `pendiente`.
+> capítulo 2 está cerrado. `esqueleto` tampoco. Y desde el 2026-08-18 **`pendiente` tampoco lo
+> lleva ninguna nota**: `Resumen` y `Abstract`, las dos últimas que quedaban sin contenido, están
+> redactadas.
 
 ## Preliminares
 
-- [[Abstract]] — pendiente (se redacta al final)
-- [[Resumen]] — pendiente (se redacta al final)
+- [[Abstract]] — redactada (2026-08-18)
+- [[Resumen]] — redactada (2026-08-18)
 
 ## 1. Introducción
 
@@ -136,9 +144,9 @@ cada nota del vault una a una y cruzándolo con los wikilinks de este índice.
 
 | Estado | Notas | Dónde |
 |---|---:|---|
-| `redactada` | 41 | Cap. 1 completo (5: 1.0-1.4) · Cap. 2 completo (14) · Cap. 3 (6) · Cap. 4 (6) · Cap. 5 (5) · Cap. 6 (2) · Apéndices (3) |
+| `redactada` | 43 | Preliminares (2: `Resumen`, `Abstract`) · Cap. 1 completo (5: 1.0-1.4) · Cap. 2 completo (14) · Cap. 3 (6) · Cap. 4 (6) · Cap. 5 (5) · Cap. 6 (2) · Apéndices (3) |
 | `borrador` | 0 | Ninguna nota de memoria; `Bibliografía` va aparte |
-| `pendiente` | 2 | `Resumen` y `Abstract`, que se redactan al final |
+| `pendiente` | 0 | Ninguna: `Resumen` y `Abstract` se redactaron el 2026-08-18 |
 | **Notas de memoria** | **43** | |
 | + `Bibliografía` | 1 | Nota de apoyo, la mantiene el `researcher` |
 | **Entradas indexadas** | **44** | |
