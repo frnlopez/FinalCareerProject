@@ -486,7 +486,8 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 >   **`02ff9fb`/`cb0b9e9`** (TANDA 23, estados y totales de `00 Índice TFG.md`) ·
 >   **`6ada8c2`/`0fc77c9`** (TANDA 24, tres fichas: nomenclatura de Procedencia en `4.2`, remisiones a
 >   `4.3.5` y la mitad de P9 en `5.4`) · **`babf9a6`/este mismo** (TANDA 25, pies de figura de los capítulos 4
->   y 5, cierre parcial de T23 y residuos de `A.3`).
+>   y 5, cierre parcial de T23 y residuos de `A.3`) · **`—`/pendiente de estampar** (TANDA 26, cierre de
+>   T17: bloque de decisiones en los cuatro informes de `99 Investigación/` y deriva de `evaluacion.py`).
 >
 > **Y del día anterior solo queda un 🟠 abierto:** el de **las 5 citas colgantes irreconstruibles**
 > (ficha más abajo, alta del 2026-08-15). Es **el único 🟠 que viene de antes de hoy** — los demás 🟠
@@ -540,6 +541,50 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > (2026-08-18): resincronizadas **26 notas** de `borrador` a `redactada`. Su ficha vive ya en
 > `## Cerradas`. **Efecto colateral esperado: `00 Índice TFG.md` queda desfasado — ficha nueva más
 > abajo.**
+
+### Altas de la TANDA 26 — 2026-08-18
+
+> Cinco fichas, **ninguna bloqueante**, **ninguna mueve una cifra publicada**. Salen del pase de
+> `auditor-ml` (dos hallazgos 🟠 **no aplicados, y no por descuido**) y de lo que T17 dejó vivo al
+> cerrarse. **Fichar no es resolver: aquí no se ha corregido nada.**
+
+- [ ] 🟠 **La deriva de `evaluacion.py` quedó corregida en 2 de sus 4 sedes** · Informe · **decide Francisco / hilo principal**
+  Alta el **2026-08-18**. T17 punto 2 enumeraba cuatro sedes: `CLAUDE.md`, `next-steps.md`,
+  `resumen-de-decisiones.md` y `Guia_ML`. **La TANDA 26 hizo las dos últimas citadas.** **Siguen con el
+  contrato pre-T1:** la fila de `evaluacion.py` en **`CLAUDE.md:64`** —«módulo común de métricas y
+  figuras… `guardar_metricas` (CSV acumulado)», **sin esquema, sin procedencia, sin `metricas_tiempo`**;
+  verificado: `CLAUDE.md` **no contiene** ni `metricas_tiempo` ni `COLUMNAS_MINIMAS`— y
+  **`resumen-de-decisiones.md:88-92` (Q3)**. **No se tocaron a propósito:** `CLAUDE.md` es **andamiaje del
+  hilo principal**, y sobre `resumen-de-decisiones.md` el permiso concedido **no cubre esto** (misma
+  restricción que la ficha 🟠 de `features.md:506`). **Matiz verificado que ahorra trabajo:** Q3 define la
+  superficie **por referencia a §6.5b**, que esta tanda **ya ha actualizado**, así que lo único desfasado
+  ahí es su **enumeración entre paréntesis**. Es el defecto de «barrer la primera aparición, no todas».
+
+- [ ] 🟡 **`resumen-de-decisiones.md:570-571` quedó contradicho por esta misma tanda** · Informe · **decide Francisco**
+  Alta el **2026-08-18**. Dice **en presente** que «falta el bloque "Decisiones tomadas a partir de este
+  informe" **en los cuatro informes**» y que falta la deriva de `evaluacion.py`. **Los cuatro bloques
+  existen ya en disco desde hoy.** Una decisión cerrada **no se contradice en silencio**. **Vía propuesta,
+  la de siempre: nota fechada sin reescribir el texto previo. Requiere autorización de Francisco.**
+
+- [ ] 🟡 **Asimetría de remedio entre dos informes de la misma tanda** · Informe · **informativa**
+  Alta el **2026-08-18**. Ante el mismo defecto —la frase caducada sobre `6.2`—,
+  `aprendizaje-continuo:25` **conservó** la frase y la corrigió con un callout `[!info]` encima, y
+  `clasificadores-tabulares:30-31` la **reescribió en línea**. **Las dos son honestas**; solo obliga a leer
+  dos veces. El cuerpo de `aprendizaje-continuo` sigue diciendo «material para que Francisco escriba 6.2»
+  en `:423` y `:529`, **cubierto por el callout**.
+
+- [ ] 🟡 **Anotación de MÉTODO, no defecto: cómo se verificó la intocabilidad de los artefactos** · — · **informativa**
+  Alta el **2026-08-18**. El `auditor-ml` **sigue sin poder calcular hashes** (su definición no incluye
+  Bash), así que lo verificó **por contenido y por sello de procedencia**, no por `md5`. Es la **segunda
+  vez** que se registra (la primera, TANDA 24). **Queda escrito cómo se verificó para que nadie lo lea como
+  comprobación de hash.**
+
+- [ ] 🟡 **Los cuatro informes dejan un `> [!todo]` cada uno, y son correctos** · — · **informativa**
+  Alta el **2026-08-18**. Marcan **propuestas del informe sin decisión registrada** en lugar de
+  inventarlas: la **etiqueta del `bin_accuracy` 0,8605 frente a H-6** (verificado: esa etiqueta **no está
+  decidida en ningún sitio del repo**), los **10 candidatos de la tabla B**, la **fusión de peldaños de
+  `6.2`**, el **análisis D1→D2** y la **dilución del término «híbrido»**. **No se resuelven aquí: son
+  decisiones de contenido de Francisco.**
 
 ### Altas de la TANDA 25 — 2026-08-18
 
@@ -1361,7 +1406,16 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
     MAPEAR a los números existentes, NO dar de alta entradas nuevas.** Darlas de alta duplicaría dos
     referencias que ya están en `Bibliografía.md`.
 
-- [ ] **T17 · Volcar las decisiones del grill a `resumen-de-decisiones.md`** · — · `cronista` + `redactor-tfg`
+> **T17 — CERRADA el 2026-08-18 en la TANDA 26** (ver `## Cerradas`). **La cierran sus dos puntos,
+> ejecutados hoy:** el bloque «Decisiones tomadas a partir de este informe» **en los cuatro informes** de
+> `99 Investigación/` —con las dos declaraciones caducadas sobre `6.2` corregidas en la misma pasada— y la
+> **deriva de documentación de `evaluacion.py`**, corregida en `next-steps.md` §6.5b (nota fechada, **sin
+> tocar casillas**) y en `Guia_ML/03_validacion_y_metricas.md` §7, verificadas **función a función**.
+> **Lo que deja vivo NO es T17, son fichas propias más abajo:** la deriva sigue en pie en **`CLAUDE.md:64`**
+> y en **Q3 de `resumen-de-decisiones.md`**, que un agente no toca. **No se vuelve a despachar.** Se conserva
+> su texto solo como historial.
+
+- [x] **T17 · Volcar las decisiones del grill a `resumen-de-decisiones.md`** · — · `cronista` + `redactor-tfg`
   Acompaña cada cierre del lote. **Parcialmente cubierta:** el volcado a `resumen-de-decisiones.md`
   está hecho (§ Decisiones del 2026-08-06 y del 2026-08-09, más sus dos entradas de bitácora) —
   reapertura declarada del track de código con alcance y motivo, retirada de la regla de autoría en
@@ -2107,6 +2161,11 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-18 | Informe | **TANDA 26 — cinco redactores en paralelo (un fichero cada uno), pase de `auditor-ml` de coherencia ENTRE notas y dos correctores en paralelo. Ejecuta y CIERRA T17.** **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida** — verificado contra disco: las **cuatro tablas principales** siguen con `semilla=42` y `commit=1163c90`, y `metricas_cascada_invertida.csv` con sus **10 filas** y `274923d-sucio`. **Ficheros:** los cuatro informes de `Obsidian_TFG_Vault/99 Investigación/` (`aprendizaje-continuo-nested-learning.md`, `clasificadores-tabulares-y-arquitecturas-hibridas.md`, `benchmark-comparativo-nsl-kdd.md`, `arquitecturas-hibridas-en-la-literatura.md`), más `next-steps.md` §6.5b y `Guia_ML/03_validacion_y_metricas.md` §7. **Protocolo de citas respetado: CERO `[n]` nuevos y ningún `[n]` preexistente renumerado**; único marcador nuevo, `[CITA: Goldschmidt y Chudá 2025]`. **Contador recontado hoy contra disco: 76 filas, `[1]`–`[8]` + `[10]`–`[77]`, `[9]` quemada, primer libre `[78]`.** **Líneas prohibidas intactas**, como se ordenó: el «37 muestras en D2» de `benchmark-comparativo:141` y de `clasificadores-tabulares:364`, que son del `researcher`. **Deja CINCO fichas nuevas**, ninguna bloqueante | `—` |
+| 2026-08-18 | Informe | **T17 · punto 1 — CERRADO: el bloque «Decisiones tomadas a partir de este informe» existe ya en LOS CUATRO informes** de `99 Investigación/`, con qué se convirtió en decisión y qué se descartó. Era lo que faltaba desde el **2026-08-09**. **En la misma pasada, corregidas las DOS declaraciones caducadas** de que `6.2 Líneas futuras` la redacta Francisco (`aprendizaje-continuo:25` y `clasificadores-tabulares:30`), **falsas desde la decisión marco (b) del 2026-08-06** | `—` |
+| 2026-08-18 | Informe | **T17 · punto 2 — CERRADO EN DOS DE SUS CUATRO SEDES: la deriva de documentación de `evaluacion.py`**, cuyo contrato cambió con T1. Corregidos **`next-steps.md` §6.5b** —con **nota fechada 2026-08-18 y SIN tocar ninguna casilla**: el fichero sigue congelado— y **`Guia_ML/03_validacion_y_metricas.md` §7**. **Ambos verificados FUNCIÓN A FUNCIÓN** contra `Implementacion/app/evaluacion.py`. **`CLAUDE.md:64` y `resumen-de-decisiones.md:88-92` (Q3) NO se tocaron a propósito** —andamiaje y fichero de decisiones— y quedan en ficha nueva | `—` |
+| 2026-08-18 | Informe | **AUDITORÍA DE LA TANDA 26 — `APTO CON CAMBIOS`, cuatro hallazgos 🟠, ningún 🔴; DOS aplicados en el mismo ciclo.** (1) **`clasificadores-tabulares` atribuía a *ese* informe T18, T22 y la renuncia al p-valor** (más tres descartes derivados), que **no salen de él** y **ya estaban reclamadas** en `benchmark-comparativo:267-268` — **aplicado por vía (b):** movidas a una **§ D.2-bis rotulada como contexto del lote, NO origen**, remitiendo a su sede documentada. (2) **`aprendizaje-continuo:559` clasificaba como decisión CERRADA un punto de una ficha ABIERTA** (`features.md:1541-1552`, «no duplicar la definición de aprendizaje continuo entre `2.x` y `6.2`») — **aplicado:** movido al `> [!todo]` como tercer punto pendiente. **Los otros dos hallazgos quedan como fichas nuevas.** **Método declarado: el `auditor-ml` sigue sin poder calcular hashes**, así que la intocabilidad de los artefactos la verificó **por contenido y por sello de procedencia**, no por `md5` | `—` |
+| 2026-08-18 | Informe | **T17 — CERRADA.** La cierran sus dos puntos, ejecutados hoy por la TANDA 26: el bloque de decisiones en los cuatro informes de `99 Investigación/` y la deriva de `evaluacion.py`. **Lo que deja vivo, en fichas propias:** la deriva **corregida en 2 de sus 4 sedes** (`CLAUDE.md:64` y Q3 de `resumen-de-decisiones.md`, no tocables por un agente), la **contradicción de `resumen-de-decisiones.md:570-571`**, la **asimetría de remedio entre dos informes** y los **cuatro `> [!todo]` de contenido** que quedan para Francisco. **El volcado a `resumen-de-decisiones.md` ya estaba hecho desde el 2026-08-09** | `—` |
 | 2026-08-18 | Informe | **TANDA 25 — pies de figura de los capítulos 4 y 5, más el cierre parcial de T23. Cierra DOS fichas** (los pies de figura de las 27 imágenes embebidas y los residuos de `A.3`) **y deja T23 ABIERTA a propósito**. **Seis ficheros del vault:** `1.2 Preliminares.md`, `4.2 Base de datos utilizada.md`, `4.3 Preprocesamiento de los datasets.md`, `5.1 …`, `5.2 …`, `5.3 Resultados del sistema híbrido.md`. **`A.3` NO se tocó.** **T23 · cierre PARCIAL:** P1–P3 ya estaban ejecutadas; **P4 NO aplicada — se marcó una afirmación DISTINTA de la decidida**: la decisión de Francisco era anclar el pasaje de **Roesch y Snort** al paper de **LISA'99 (USENIX)** y eso sigue sin hacerse (`1.2:27` sigue sin cita); lo aplicado en `1.2:14` fue un **`[CITA: …]` + `[!todo]`** sobre **Anderson como punto de partida de la detección de intrusiones**, que **no estaba en la ficha P4** y queda como **segunda afirmación sin aval**. **P4 SIGUE ABIERTA** (ver su ficha en `## Abiertas`); **P5 y P6 NO se aplican aquí**: caen en `Bibliografía.md` (edición de Stallings `[8]`, *deep link* de `[10]` CCN-STIC-401), son **decisión de Francisco** y van al **pase en serie del `researcher`**. **Auditoría `auditor-ml` de coherencia ENTRE notas: `APTO CON CAMBIOS`, 5 puntos, TODOS aplicados** en un pase correctivo de dos agentes en paralelo. **Deja TRES fichas nuevas**, ninguna bloqueante | `babf9a6` |
 | 2026-08-18 | Informe | **🟡 «De las 27 imágenes embebidas del vault, solo las 5 del capítulo 2 llevan pie de figura» — CERRADA.** Las **22 de los capítulos 4 y 5** (cap. 4: **9** · cap. 5: **13**) llevan ya pie numerado con el criterio **`Figura <capítulo>.<orden>`**: **4.1–4.9** y **5.1–5.13**. **Recuento verificado contra disco: 27 embebidos exactos en 7 notas de todo el vault, los 27 con pie.** **La colisión que la ficha temía YA NO EXISTÍA:** `2.1.1` numera hoy correctamente `Figura 2.1`–`2.4`, no «1.1–1.4», y **en los capítulos 4 y 5 no había ninguna numeración previa que corregir**. **Los capítulos 3 y 6, los apéndices y el índice no tienen ninguna imagen embebida**, así que el 27 es censo completo. Los **22 ficheros embebidos existen en `Obsidian_TFG_Vault/assets/`**, comprobados uno a uno: **ningún embebido roto**. **Deja UNA ficha nueva:** las dos figuras duplicadas | `babf9a6` |
 | 2026-08-18 | Informe | **«Residuos de `A.3` (T7 cerrada el 2026-08-14)» — CERRADA COMO AGOTADA, sin tocar la nota.** `A.3` tiene hoy **un único `[!todo]` vivo**, el de la **caracterización de los seis ítems no-FT del checklist de Pineau** (**`A.3:698`**), que **depende del checklist original** y no de material en disco: nombrarlos sería inventarlos. **No es resoluble por un agente**, así que deja de ser trabajo pendiente y **lo que queda es una dependencia de fuente externa**. **Referencias de línea recontadas en disco porque habían caducado tres veces:** el `[!todo]` de Pineau está en **`A.3:698`** (la ficha decía `:574`, luego `:681`) y el `[!warning]` de **límite declarado de alcance** en **`A.3:654`** (decía `:648`) | `babf9a6` |

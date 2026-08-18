@@ -22,7 +22,17 @@ docx_ref: "-"
   - **Queda fuera** (por encargo): barrido del estado del arte de *continual learning*,
     comparativa de arquitecturas de memoria, y todo lo relativo a TabNet, *benchmarks* o
     clasificadores tabulares —van en otros informes.
-- **Alimenta a:** [[6.2 Líneas futuras]] (la redacta Francisco; respaldo en `EL_FUTURO.md`).
+- **Alimenta a:** [[6.2 Líneas futuras]] (respaldo en `EL_FUTURO.md`).
+
+> [!info] Corrección del 2026-08-18 — autoría de `6.2`
+> Este informe se escribió el 2026-08-01, cuando `6.2 Líneas futuras` estaba reservada a Francisco;
+> por eso el resto del texto habla de «material para que Francisco escriba 6.2». Esa reserva
+> **caducó el 2026-08-06** con la **decisión marco (b)** del *grill* de los cuatro informes
+> (`resumen-de-decisiones.md`, § Decisiones del 2026-08-06): `6.2` pasó a **borrador redactado por
+> el `redactor-tfg` con revisión final de Francisco**. La nota se redactó así en la **Tanda 7**
+> (T12, 2026-08-15) y **la revisión final de Francisco sigue pendiente**. Se conserva la redacción
+> original del cuerpo como rastro histórico: donde dice «Francisco escribe 6.2», léase «el
+> `redactor-tfg` redacta el borrador y Francisco lo revisa».
 
 > [!warning] Este informe no es memoria
 > Es insumo citable. No entra en [[00 Índice TFG]] y su prosa no se copia a un capítulo sin que
@@ -528,3 +538,47 @@ futuras por derecho propio.*
 Lo que **no** debería escribirse en 6.2: «aplicar Nested Learning al modelo de anomalías», ni
 llamar «Nested Learning» a un bucle de `partial_fit` (§2.6), ni presentar un troceo de D1 o D3 como
 análisis de deriva (§2.5).
+
+## Decisiones tomadas a partir de este informe
+
+> [!note] Añadido el 2026-08-18 (ficha **T17, punto 1**)
+> Bloque de cierre retrospectivo. Recoge **solo** lo que está respaldado en
+> `resumen-de-decisiones.md` o en `features.md`; nada se infiere del propio informe.
+
+Este informe entró, junto con otros tres, en el `grill-me` de 13 preguntas del **2026-08-06**, que
+los convirtió en las fichas **T0-T17** de `features.md` y cuyas conclusiones se registraron el
+**2026-08-09** en `resumen-de-decisiones.md` (§ Decisiones del 2026-08-06).
+
+### A. Lo que se convirtió en decisión
+
+| Decisión | Qué dice | Dónde está registrada |
+|---|---|---|
+| **Criterio rector del lote** — «refinar el proyecto o enseñar el límite; nunca sucedáneos» | Las imposibilidades **se declaran con su razón técnica**; no se omiten ni se sustituyen por sucedáneos sintéticos. Es exactamente lo que propone §3.1 de este informe y lo que descarta §2.5 | `resumen-de-decisiones.md`, § Decisiones del 2026-08-06 |
+| **Decisión marco (b)** — retirada de la regla «lo escribe Francisco», en dos velocidades | `2.x` sin restricción para el `redactor-tfg`; **`6.2 Líneas futuras` pasa a borrador de agente con revisión final de Francisco**, por ser «el sitio natural del material de *Nested Learning*»; la bibliografía Zotero/IEEE sigue siendo de Francisco | `resumen-de-decisiones.md`, § Decisiones del 2026-08-06 y bitácora `2026-08-06` |
+| **El material de aprendizaje continuo se redacta en `6.2`** | Ejecutado en **T12** (Tanda 7, 2026-08-15): `6.2 Líneas futuras` pasa de *placeholder* a documento entero, redactado desde `EL_FUTURO.md`. **La revisión de Francisco sigue pendiente** | `features.md`, nota de cierre de T12 |
+
+### B. Lo que se descartó
+
+| Descartado | Razón registrada |
+|---|---|
+| **E-INC** — autoencoder incremental por ráfagas (§3.3 y § B de este informe) | «Viable, pero responde a una pregunta de despliegue, no a la del TFG. Complejidad innecesaria». Coincide con el propio veredicto de viabilidad de § B | `features.md`, tabla «Descartado — no reabrir» |
+| **Aprendizaje semisupervisado** | «La premisa no existe: no hay datos sin etiquetar. Cada fila de NSL-KDD trae `attack` y `level`» | `features.md`, misma tabla |
+| **Salir de scikit-learn a PyTorch** (§ C) | Los descartes de arquitecturas PyTorch del lote se cierran por «ruptura de la persistencia `.joblib` y del protocolo homogéneo» — el mismo motivo que enumera § C. El descarte está fichado sobre los clasificadores tabulares, no sobre el autoencoder | `features.md`, misma tabla (fila TabNet / FT-Transformer / SAINT / NODE / TabM / TabPFN) |
+
+> [!todo] Sin respaldo documental localizado — no se afirma
+> No he encontrado en `resumen-de-decisiones.md` ni en `features.md` una decisión explícita sobre
+> dos propuestas de este informe, así que **no las registro como decididas**:
+> 1. La **fusión de «aprendizaje continuo» con la línea de generalización cruzada** en un único
+>    bloque de tres peldaños (§ D). Falta comprobar contra el texto vigente de
+>    `6.2 Líneas futuras` si T12 la adoptó, y anotarlo aquí.
+> 2. El **análisis del desplazamiento D1→D2** como línea de mejor coste/valor (§3.2). El dato del
+>    FPR está en `resumen-de-decisiones.md`, pero no consta decisión de convertirlo en análisis.
+> 3. **Dónde se define «aprendizaje continuo»: `2.x` o `6.2`.** Es un **punto de contacto
+>    declarado** entre los apuntes de Francisco (la figura de `1.4` menciona el término sin
+>    definirlo) y T12, **sin decisión registrada**: la ficha correspondiente sigue **abierta** en
+>    `features.md` (ficha de `mis-apuntes-del-informe.md`, punto 2), donde solo consta que
+>    Francisco *propone* definirlo y que queda por **decidir** qué se define en `2.x` y qué se
+>    queda en `6.2`, evitando duplicarlo.
+
+**Sin efecto sobre `Bibliografía.md`:** la sección `## Cambios en Bibliografía.md` sigue vigente —
+este bloque **no da de alta ninguna entrada ni asigna ningún número**.

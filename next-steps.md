@@ -628,11 +628,53 @@ categoria[proba.max(axis=1) < UMBRAL_CONF] = 'unknown'   # 0-day
 
 ### 6.5b `evaluacion.py` — módulo común (hazlo ANTES que 6.3)
 
-Funciones que usan los tres scripts (evita triplicar código):
-- `evaluar_binario(y_true, y_pred, y_score=None)` → dict con precision/recall/F1/FPR/AUCs.
-- `evaluar_multiclase(y_true, y_pred, labels)` → dict + `classification_report`.
-- `plot_matriz_confusion(...)`, `plot_roc_pr(dict_de_scores)` → guardan PNG en `Resultados/figuras/` (300 dpi, títulos en español — van directas a la memoria).
-- `guardar_metricas(dict, csv_path)` → append de una fila por experimento (algoritmo, params, métricas, fecha) — ese CSV acumulado es la "tabla única" del roadmap 3.1-D.
+> [!note] Actualizado el 2026-08-18 (ficha T17, punto 2)
+> Esta subsección describía el contrato **anterior a T1** (esquema de métricas): cuatro
+> funciones, "los tres scripts" y un `guardar_metricas` que solo hacía *append*. El contrato
+> vigente es el que está en `Implementacion/app/evaluacion.py` y es el que se transcribe abajo.
+> Lo que cambió: el módulo lo consumen **cinco** scripts, `guardar_metricas()` **inyecta
+> procedencia y valida un esquema mínimo** (aborta si falta una columna), y existe un bloque
+> nuevo de constantes y comprobaciones (T1) más las tablas del barrido de semillas (T4).
+
+**Consumidores reales:** `anomalias.py`, `firmas.py`, `baseline.py`, `hibrido.py` y
+`cascada_invertida.py`. Las convenciones de clase (positivo = ataque = 1, orden de categorías)
+viven en `config.py`; aquí solo se consumen.
+
+**Funciones públicas (contrato Q3, vigente):**
+
+| Función | Devuelve |
+|---|---|
+| `evaluar_binario(y_true, y_pred, y_score=None)` | dict con `precision`/`recall`/`f1` de la clase ataque, `accuracy`, `fpr`, la matriz 2×2 desglosada (`tn`, `fp`, `fn`, `tp`) y, si hay `y_score`, `roc_auc`/`pr_auc`. **`fpr` es `NaN`, no 0,0, si no hay ningún flujo normal en `y_true`** |
+| `evaluar_multiclase(y_true, y_pred, labels=None)` | dict con `por_clase` (precision/recall/f1/soporte), `*_macro`, `*_weighted`, `accuracy`, `labels`, `matriz_confusion` y `classification_report` |
+| `evaluar_0day_por_tipo(y_tipo_real, es_sospechoso, tipos_0day)` | dict `{tipo: {n, detectados, recall}}` más la clave `__global__` con el recall agregado |
+| `plot_matriz_confusion(y_true, y_pred, labels, titulo, filename, normalizar=False)` | ruta absoluta del PNG (300 dpi, `Resultados/figuras/`) |
+| `plot_roc_pr(scores_por_algo, y_true, nombre_fig, titulo="")` | dict `{algo: {roc_auc, pr_auc}}`; genera `<base>_roc.png` y `<base>_pr.png` |
+| `metricas_tiempo(t_entrenamiento_s, t_inferencia_s, n_inferencia)` | dict con las 5 `COLUMNAS_TIEMPO`; latencia y caudal comparten guarda (o las dos, o ninguna) |
+| `guardar_metricas(fila, csv_path)` | `None`; añade una fila al CSV acumulado |
+| `validar_esquema_minimo`, `limpiar_variante_csv`, `comprobar_unicidad`, `comprobar_recuento`, `cabecera_esperada` | utilidades de esquema e idempotencia (abortan en vez de escribir algo no citable) |
+
+**Lo que `guardar_metricas()` hace hoy y no hacía antes:**
+
+1. **Inyecta procedencia** si no viene en la fila: `semilla` (de `config.RANDOM_STATE`),
+   `commit` (`config.commit_actual()`, con sufijo `-sucio` / `-suciedad_desconocida`) y `fecha`
+   (ISO-8601, segundos).
+2. **Valida el esquema mínimo** según a qué tabla escriba:
+   - `TABLAS_PRINCIPALES` (`metricas_anomalias/firmas/baseline/hibrido.csv`) → `COLUMNAS_MINIMAS`:
+     `algoritmo`, `alcance`, `set_features`, `sin_seleccion`, `n_features`, `semilla`, `commit`,
+     `fecha`, `alcance_tiempo_s`.
+   - `TABLAS_AUXILIARES` (`metricas_balanceo`, `metricas_baseline_0day`, `metricas_hibrido_0day`,
+     `metricas_hibrido_calibracion`, `metricas_cascada_invertida`) → `COLUMNAS_MINIMAS_AUXILIARES`:
+     las mismas **sin** `algoritmo` ni `alcance_tiempo_s`.
+   - Las tablas `*_semillas.csv` (T4) validan **el mismo** esquema que su tabla base.
+3. **Aborta** si la cabecera del CSV existente y las claves de la fila no coinciden como conjunto,
+   en lugar de escribir columnas desalineadas.
+
+**Constantes del esquema (T1/T4):** `CLAVE_UNICIDAD = (set_features, algoritmo, alcance)` y
+`CLAVE_UNICIDAD_SEMILLAS = CLAVE_UNICIDAD + (semilla,)`;
+`FILAS_ESPERADAS_POR_VARIANTE = 4/4/1/1` para anomalías/firmas/baseline/híbrido.
+El borrado de `limpiar_variante_csv()` es **por variante** (por *(variante, semilla)* en las tablas
+del barrido), no por clave completa: cada tabla publicada refleja el **último pase completo** de su
+variante.
 
 ---
 

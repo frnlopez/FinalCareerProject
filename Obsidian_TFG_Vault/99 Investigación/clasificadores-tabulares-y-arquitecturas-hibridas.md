@@ -27,8 +27,8 @@ docx_ref: "-"
     hermano `benchmark-comparativo-nsl-kdd.md`); aprendizaje continuo
     ([[aprendizaje-continuo-nested-learning]]); y **cualquier propuesta de código** —el track de
     código está cerrado desde el 2026-07-16.
-- **Alimenta a:** [[6.2 Líneas futuras]] (la redacta Francisco; el respaldo se acumula en
-  `EL_FUTURO.md`).
+- **Alimenta a:** [[6.2 Líneas futuras]] (**borrador del `redactor-tfg` con revisión final de
+  Francisco**, según la decisión marco (b) del 2026-08-06; el respaldo se acumula en `EL_FUTURO.md`).
 
 > [!warning] Este informe no es memoria
 > Es insumo citable. No entra en [[00 Índice TFG]], no lleva número de capítulo y su prosa no se
@@ -785,6 +785,7 @@ Redactadas para que se puedan usar tal cual, con su cita:
 
 ### D. Un aviso metodológico que conviene no perder
 
+
 TabArena documenta que algunos modelos profundos aparecen **sobrerrepresentados** en los conjuntos
 entre modelos por **sobreajuste al conjunto de validación**. Es directamente aplicable a cualquiera
 de las líneas 1, 3, 4 y 6 de la tabla B: si los miembros de un conjunto —o las características
@@ -792,3 +793,63 @@ extra— se eligen mirando `D1_val` o los pliegues OOF de D3, el que más se sob
 validación entrará, y la ganancia no se reproducirá en D2. La disciplina que el proyecto ya tiene
 (`D1_val` solo para el p95, calibración OOF que no ve D2) es la defensa correcta; el riesgo es
 diluirla al añadir un criterio de selección más.
+
+## Decisiones tomadas a partir de este informe
+
+> [!note] Qué es este bloque
+> Cierre de trazabilidad exigido por la ficha **T17, punto 1**. Recoge **solo** lo que ya está
+> registrado en `resumen-de-decisiones.md` o en `features.md`: qué se convirtió en decisión y qué se
+> descartó. Todo lo demás del apartado `## Implicaciones para el proyecto` **sigue siendo candidato**,
+> no decisión.
+
+### D.1 Lo que se convirtió en decisión
+
+| Decisión registrada | Qué dice | Dónde está registrada |
+|---|---|---|
+| **`6.2 Líneas futuras` la redacta un agente, con revisión final de Francisco** | Decisión marco (b) del 2026-08-06: se retira la regla «lo escribe Francisco» en dos velocidades. Afecta directamente a este informe, que **alimenta** esa sección | `resumen-de-decisiones.md`, § Decisiones del 2026-08-06, decisión marco (b) |
+
+### D.2 Lo que se descartó
+
+| Descartado | Motivo registrado |
+|---|---|
+| *(sin entradas propias de este informe: los descartes técnicos internos —TabNet/FT-Transformer, TabPFN, semisupervisado— están argumentados en el cuerpo, pero no elevados a decisión de proyecto; ver § D.3)* | — |
+
+### D.2-bis Contexto del lote que **no sale de este informe**
+
+> [!warning] No atribuir a este informe
+> Las decisiones de esta tabla se tomaron en el mismo lote de trabajo, pero **su sede de origen
+> documentada es [[benchmark-comparativo-nsl-kdd]]** (filas D4 y D5 de su bloque de decisiones), no
+> este informe. El alcance declarado aquí (`:26-29`) **excluye expresamente el protocolo de
+> métricas**. Se conservan como contexto de lectura, y solo con esa etiqueta.
+
+| Decisión del lote | Qué dice | Sede de origen |
+|---|---|---|
+| **T18 — el CSV publica solo lo estable** | `metricas_*.csv` publica únicamente lo estable (qué tramos de tiempo entran, cuáles no y el aviso de P9); **todos los números** de reparto viven en `PIPELINE.md`, anclados a commits y editables sin re-correr. Las dos frases empíricas que el CSV llegó a publicar salen a 0/8 y 0/8 | `resumen-de-decisiones.md`, § Decisiones del 2026-08-09 (T18); contexto en [[benchmark-comparativo-nsl-kdd]] |
+| **T22 — `n_iter_total_grid` es determinista** | 162 a 54 características y 128 a 122, idénticos entre corridas; con las épocas congeladas, la variación de *wall-clock* del Autoencoder es carga de máquina. Consecuencia: el eje 54-vs-122 es indecidible sin medidas repetidas | `resumen-de-decisiones.md`, § Decisiones del 2026-08-09 (T22); contexto en [[benchmark-comparativo-nsl-kdd]] |
+| **Renuncia declarada al p-valor sobre las 10 semillas** | Sin p-valor, con la renuncia y su razón declaradas: 10 puntos sobre un único dataset no sostienen un contraste. Si los intervalos se solapan, se dice y no se establece el orden | [[benchmark-comparativo-nsl-kdd]], fila D5; registrada en `resumen-de-decisiones.md`, § Decisiones del 2026-08-06 |
+
+Derivados de esas tres —**también contexto del lote, no descartes de este informe**: (1) diseñar las
+10 semillas de T4 para resolver la duda del número de épocas, resuelta ya por T22; (2) publicar en
+`metricas_*.csv` las dos frases empíricas sobre reparto de tiempo, que salen a 0/8 por T18; y (3)
+contrastar con p-valor el orden entre RandomForest/HistGradientBoosting y entre
+Autoencoder/IsolationForest, cubierto por la renuncia declarada.
+
+Lo que sí conecta con el cuerpo de este informe: el aviso metodológico del **§ D** (sobreajuste al
+conjunto de validación documentado por TabArena) apunta en la misma dirección que esa disciplina de
+lote — **no sobreinterpretar una dispersión pequeña** —, pero es una observación de este informe,
+no la fuente de aquellas decisiones.
+
+### D.3 Lo que este informe propone y **sigue sin ser decisión**
+
+Los diez candidatos de la **tabla B** —incluida la ★ nº 1 de este informe (vector de error de
+reconstrucción por característica) y el *target encoding* de `service`— **no tienen decisión
+registrada** ni en `resumen-de-decisiones.md` ni en `features.md`: entran en `6.2` como **líneas
+futuras**, no como trabajo comprometido. Lo mismo vale para los descartes técnicos internos del
+informe (TabNet/FT-Transformer, TabPFN, semisupervisado): están argumentados **aquí**, con su
+evidencia, pero no están elevados a decisión de proyecto.
+
+> [!todo] Respaldo pendiente
+> No consta en `resumen-de-decisiones.md` ni en `features.md` ninguna decisión formal sobre los
+> candidatos de la tabla B (ni de alta ni de descarte). Si alguno debe pasar de candidato a decisión
+> —en particular el nº 1 y el nº 2, que son los únicos sin dependencias nuevas—, hace falta una
+> entrada explícita en `resumen-de-decisiones.md`; no se escribe aquí por iniciativa propia.

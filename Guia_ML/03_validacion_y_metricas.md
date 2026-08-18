@@ -145,13 +145,41 @@ mirando D2. (Detalle en el fichero 04.)
 
 ## 7. Dónde vive esto en el código
 
-`evaluacion.py` centraliza todo para que los tres modelos midan **igual**:
-- `evaluar_binario(y_true, y_pred, y_score)` → precision/recall/F1/FPR + AUC-ROC/PR.
-- `evaluar_multiclase(y_true, y_pred, labels)` → por clase + macro/weighted + reporte.
-- `evaluar_0day_por_tipo(...)` → recall de cada tipo 0-day (fichero 04).
+`evaluacion.py` centraliza todo para que **todos los modelos midan igual**. Lo importan cinco
+scripts: `anomalias.py`, `firmas.py`, `baseline.py`, `hibrido.py` y `cascada_invertida.py`.
+
+- `evaluar_binario(y_true, y_pred, y_score=None)` → precision/recall/F1 de la clase ataque,
+  accuracy, FPR y la matriz 2×2 desglosada (`tn`, `fp`, `fn`, `tp`); con `y_score`, además
+  AUC-ROC y AUC-PR. Si en `y_true` no hay ningún flujo normal, el **FPR sale `NaN`, no 0,0**:
+  sin negativos la tasa de falsas alarmas no está definida, y un 0,0 fingiría el mejor
+  resultado posible.
+- `evaluar_multiclase(y_true, y_pred, labels=None)` → por clase (precision/recall/F1/soporte)
+  + macro/weighted + accuracy + matriz de confusión + `classification_report`.
+- `evaluar_0day_por_tipo(...)` → recall de cada tipo 0-day, más una clave `__global__` con el
+  recall agregado (fichero 04).
 - `plot_matriz_confusion(...)`, `plot_roc_pr(...)` → figuras 300 dpi a `Resultados/figuras/`.
-- `guardar_metricas(fila, csv)` → va acumulando una fila por experimento; ese CSV es la
-  tabla comparativa del capítulo de Resultados.
+- `metricas_tiempo(t_entrenamiento_s, t_inferencia_s, n_inferencia)` → las cinco columnas de
+  tiempo. La latencia y el caudal son derivadas del mismo par, así que **o se publican las dos
+  o ninguna**: un tiempo no medible deja celda vacía, nunca 0,0.
+- `guardar_metricas(fila, csv)` → acumula una fila por experimento; ese CSV es la tabla
+  comparativa del capítulo de Resultados.
+
+> [!important] Lo que cambió con T1 (esquema de métricas) — nota del 2026-08-18
+> `guardar_metricas()` ya no es un simple *append*. Antes de escribir:
+> 1. **Inyecta la procedencia** de la fila: `semilla`, `commit` (hash corto del repo) y `fecha`.
+>    Así el número viaja con la corrida que lo produjo, en vez de vivir solo en `config.py`.
+> 2. **Valida un conjunto mínimo de columnas y aborta si falta alguna.** En las cuatro tablas
+>    principales (`metricas_anomalias/firmas/baseline/hibrido.csv`) exige `algoritmo`,
+>    `alcance`, `set_features`, `sin_seleccion`, `n_features`, `semilla`, `commit`, `fecha` y
+>    `alcance_tiempo_s`; en las auxiliares, las mismas menos `algoritmo` y `alcance_tiempo_s`.
+> 3. **Aborta si la cabecera del fichero y las claves de la fila no coinciden**, en lugar de
+>    escribir columnas desalineadas en silencio.
+>
+> La columna clave para leer las tablas es **`alcance`**: dice *qué clases* y *sobre qué
+> partición* se calcula cada fila. Sin ella, dos columnas con el mismo nombre en tablas
+> distintas (`recall`, `tiempo_s`) no significan lo mismo y no se pueden comparar. El módulo
+> comprueba además la unicidad de las filas (`comprobar_unicidad`) y su recuento
+> (`comprobar_recuento`), para que la tabla publicada sea citable sin revisarla a ojo.
 
 ---
 

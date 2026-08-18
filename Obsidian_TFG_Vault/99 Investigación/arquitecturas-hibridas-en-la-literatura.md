@@ -537,9 +537,74 @@ La respuesta que sostiene este informe tiene tres patas, ninguna inventada:
    monolítico— y **lo reporta junto al recall 0-day** por decisión P-2. Reconocerlo antes de que lo
    pregunten es más fuerte que defenderlo.
 
-### E. Lo que este informe **no** propone
+### E. Lo que este informe **no** propone (a fecha de redacción, 2026-08-02)
 
 Para que nadie lo lea como catálogo de mejoras: no propongo cambiar el orden de la cascada, ni
 implementar OpenMax, ni dar clase `normal` a la etapa 2, ni cerrar el bucle de generación de firmas
 al estilo de Hwang *et al.* (2007). El sistema está construido, ejecutado y evaluado. Lo único que
 propongo es **cómo contarlo** en los capítulos 2 y 3, y **con qué citas**.
+
+---
+
+## Decisiones tomadas a partir de este informe
+
+> [!note] Bloque añadido a posteriori (ficha **T17**, punto 1)
+> Las secciones anteriores son del **2026-08-02** y están redactadas en modo «propongo, no decido».
+> Este bloque cierra el ciclo: recoge **qué se convirtió efectivamente en decisión** y **qué se
+> descartó** en el `grill-me` del **2026-08-06** y en los cierres posteriores. Fuentes de verdad:
+> `resumen-de-decisiones.md` (§ Decisiones del 2026-08-06 y del 2026-08-09) y `features.md`
+> (lote T0-T17 y su tabla «Descartado — no reabrir»). **No se añade aquí ninguna decisión que no
+> conste en esos dos ficheros.**
+
+### 1. Lo que se convirtió en decisión
+
+| Qué salió de este informe | En qué decisión cuajó | Dónde consta |
+|---|---|---|
+| El contraste con el patrón B (firmas→anomalías) y con Kim *et al.* (2014) como antagonista directo | **Medición contrafactual de la cascada invertida (ficha T3)**, una de las «dos mediciones baratas» de la **decisión marco (a)** del 2026-08-06, que reabre el track de código de forma declarada y acotada | `resumen-de-decisiones.md`, § Decisiones del 2026-08-06; `features.md` (lote T0-T17) |
+| Esa medición, ya ejecutada | `Implementacion/app/cascada_invertida.py`: **cero `fit`**, sobre modelos ya persistidos, con tabla propia (`metricas_cascada_invertida.csv`). Cerrada el **2026-08-10** con dictamen `auditor-ml` **APTO** | `features.md` (T3, cerrada en `b1f1df2`); `Implementacion/PIPELINE.md`, § «La cascada invertida (T3)» |
+| La pregunta «¿por qué no al revés, como Kim?» (§6 y §D) | **Tres patas para `3.2.2`**: diseño (la etapa 2 no conoce `normal`), cobertura (Tombini *et al.*, 2004) y *semantic gap* (Sommer y Paxson, 2010), **más el precio declarado** (FPR del híbrido frente al del baseline monolítico) y **el número de T3** | `features.md`, ficha **T9** (capítulo 3) |
+| La divergencia del §B (en ADAM la etapa 2 filtra «falsa alarma»; aquí se le prohíbe por diseño) | **Se declara, no se corrige**: matiz sobre **H-5** —correcta *dentro* de su premisa, pero no describe *toda* cascada anomalía→firmas— destinado a `3.2`/`3.6` | `features.md`, ficha **T9** |
+| El escalón 3 (*open-set recognition*) como explicación teórica del enrutado a `unknown` | **Se usa como fundamento teórico de un resultado medido**, no como propuesta de método: `unknown` es formalmente *open-set*, lo que justifica reportar la tasa de enrutado como métrica propia (decisión **H-6**) | `features.md`, ficha **T9** (`3.3`) |
+| Arp *et al.* (2022) sobre sesgos de evaluación y *baseline* inapropiado | Refuerzo de la **decisión P-2** (reportar el FPR junto al recall 0-day) y del **modelo de amenaza explícito** de `3.1` (**P10**) | `features.md`, ficha **T9** (`3.1`) |
+| El marco general de los cuatro informes del lote | **Criterio rector**: refinar el proyecto o **enseñar el límite**, nunca sucedáneos; las imposibilidades se declaran con su razón técnica | `resumen-de-decisiones.md`, § Decisiones del 2026-08-06 |
+
+**Cómo se cita el número de T3, sin excepción.** De las **9.711 filas normales de D2**, el
+clasificador de firmas condenaría **6.558 (67,53 %)** a 54 características y **3.329 (34,28 %)** a
+122. Es una **cota inferior de falsos positivos irrecuperables**, **no** «el FPR de un sistema de
+firmas-primero»: en el sistema publicado `unknown` **es alarma** (decisión **P-5**), así que lo que
+cae bajo umbral no queda exonerado. La forma exacta de citarlo está en `PIPELINE.md`.
+
+### 2. Lo que se descartó
+
+| Descartado | Razón registrada |
+|---|---|
+| **Invertir de verdad la cascada** (construir el sistema firmas→anomalías completo) | No es invertir, es **construir otro sistema**: la etapa 2 no tiene clase `normal` (`firmas.py`), así que exigiría reentrenarla a 5 clases y mover `4.5`, `5.2` y la comparabilidad de H1. Y Kim *et al.* tampoco se limita a invertir el orden. **Sustituido por la medición T3** |
+| **Dar clase `normal` a la etapa 2** para que pueda vetar a la etapa 1, como en ADAM | Queda como **divergencia declarada** en la memoria, no como cambio. Es pariente —no idéntico— de la línea «fusión por meta-clasificador» de `EL_FUTURO.md`, que tampoco se implementa |
+| **Stacking como solución al `unknown`** (patrón D, Khraisat *et al.* 2020) | No puede aprender la clase que importa: de `unknown` **no hay ni un ejemplo** en el entrenamiento (D3 son solo ataques conocidos). Es un problema de conjunto abierto y el *stacking* supervisado no es la herramienta |
+| **Implementar OpenMax / W-SVM** a partir del escalón 3 | El track de código se reabrió **acotado** a T1-T4: nada más entra. El material de *open-set* queda como explicación teórica y como línea futura |
+| **Cerrar el bucle de generación de firmas** (patrón F, Hwang *et al.* 2007) | Fuera de alcance; se **nombra como límite consciente** en la memoria en lugar de implementarse |
+| **Nota propia para «híbrido» o para la cascada invertida** | Son **párrafos dentro de notas que ya existen**. Sacarlos a nota propia es la complejidad que el criterio rector prohíbe |
+| **Experimento adversario** para P10 | Incumpliría otro *pitfall* del propio Arp *et al.*: ataque en el espacio de características sin correspondencia en el espacio del problema. **Sustituido por el modelo de amenaza escrito**. Ojo con la atribución: la distinción *feature space* / *problem space* es de **Pierazzi *et al.***, no de Arp *et al.* |
+
+### 3. Lo que quedó pendiente, y no es decisión
+
+- **Kim *et al.* (2014)** sigue citado **solo por su resumen** (muro de pago en Elsevier, sin acceso
+  institucional). Es la verificación **de mayor valor** de este informe, por ser el antagonista
+  directo de `3.2.2`, y está de guardia en `features.md` (fichas **T14** y «PDF sin acceso
+  institucional»). Toda nota de la memoria que lo cite **nace con el callout de verificación
+  pendiente**.
+- **Khraisat *et al.* (2020)** se cita **sin cifra**, solo con metadatos verificados: su topología
+  real (patrón C o D) no se pudo dirimir.
+
+> [!todo] Sin respaldo documental que citar aquí
+> Este informe **no** figura como origen de ninguna decisión registrada sobre `2.2.3`/`2.2.4` (la
+> *dilución del término «híbrido»* del §1 sigue siendo propuesta, no decisión) ni sobre `6.2`. Si
+> alguna de esas dos se cerró en algún sitio, no consta en `resumen-de-decisiones.md` ni en
+> `features.md` a fecha de esta pasada, y **no se inventa aquí**.
+
+> [!note] Corrección de autoría, en la misma pasada
+> La **decisión marco (b)** del 2026-08-06 retiró la regla «la teoría en prosa la escribe Francisco»:
+> el capítulo `2.x` lo redacta el `redactor-tfg` sin excepción (`2.1.4` incluida, confirmado al
+> cerrar **T0** el 2026-08-09) y `6.2 Líneas futuras` pasa a **borrador de agente con revisión final
+> de Francisco**. **Este informe no contenía esa afirmación desfasada** —sí la contienen dos de sus
+> hermanos, que se corrigen en sus propios ficheros—, de modo que aquí no hay nada que rectificar.

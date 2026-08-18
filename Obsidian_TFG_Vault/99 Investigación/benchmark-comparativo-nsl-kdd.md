@@ -245,3 +245,47 @@ Revisado `resumen-de-decisiones.md`. **No he encontrado nada que desmienta una d
 **`metricas_baseline.csv` no persiste `bin_accuracy`, y `metricas_hibrido.csv` sí.** El cálculo no falta: `evaluar_binario` devuelve `accuracy` (`evaluacion.py:80`); lo que falta es la columna en la fila que persiste `baseline.py`. Consecuencia práctica: **la cifra que la literatura usa para comparar no se puede leer del CSV para el baseline monolítico** — habría que derivarla de `bin_recall`, `bin_fpr` y los soportes, y un número derivado a mano en una memoria es un número que nadie vuelve a comprobar.
 
 Lo anoto como **requisito del protocolo** (conjunto mínimo obligatorio de columnas común a las cuatro tablas, más un campo `alcance` por fila), no como tarea de código: **el track de código está cerrado desde el 2026-07-16 y no propongo reabrirlo.** Si Francisco decide que la comparación externa de 5.4 necesita esa cifra para el baseline, hay dos salidas y las dos son suyas: derivarla y declararla como derivada en la memoria, o abrir ficha en `features.md`.
+
+---
+
+## Decisiones tomadas a partir de este informe
+
+> [!note] Alcance de este bloque
+> Registro **posterior** al informe, añadido el 2026-08-18 al ejecutar el punto 1 de la ficha **T17**.
+> Recoge únicamente lo que quedó **cerrado por escrito** en el `grill-me` del **2026-08-06** y sus
+> volcados —`resumen-de-decisiones.md` (§ «Decisiones del 2026-08-06» y § «Decisiones del
+> 2026-08-09») y el lote **T0-T17** de `features.md`—. Lo que este informe **propuso** y no llegó a
+> decisión registrada aparece abajo como pendiente, no como decisión.
+
+### Lo que se convirtió en decisión
+
+| # | Decisión cerrada | De dónde sale en este informe | Dónde queda registrada / aplicada |
+|---|---|---|---|
+| **D1** | **Criterio rector del lote:** nada que no refine el proyecto o no enseñe el límite; las imposibilidades se declaran con su razón técnica, sin sucedáneos sintéticos. Y **el dataset tiene argumento positivo propio**, que va **antes** de cualquier límite | A.4 (Goldschmidt y Chudá: solo el **23 %** de los datasets NIDS trae partición train/test predefinida, **16 %** desde 2020; NSL-KDD sí la trae y este TFG la respeta) | `resumen-de-decisiones.md` § 2026-08-06; **aplicado en `4.2` («por qué NSL-KDD») en la TANDA 14**, con marcador `[CITA: Goldschmidt y Chudá 2025]` |
+| **D2** | **Se REABRE el track de código**, cerrado el 2026-07-16, de forma declarada y acotada (decisión marco (a)) | B.2: la auditoría C1-C7 **no se cumplía en C3 ni en C6** — `accuracy_D2` era una columna homónima con dos alcances (0,9683 en firmas, 0,7395 en baseline) | `resumen-de-decisiones.md` § 2026-08-06 |
+| **D3** | **Nivel 1 — rediseño del esquema de métricas** (ficha **T1**): conjunto mínimo de columnas y campo de **alcance** por fila. Condición: **no mueve ningún número publicado** | B.2, puntos 1 y 5 (esquema no impuesto; `f1_macro` de firmas y `f1_macro_5_conservador` del híbrido se leen igual sin serlo) | `features.md`, lote T0-T17 |
+| **D4** | **Nivel 2 acotado — 10 semillas** (ficha **T4**), con los **titulares de 5.1-5.3 fijos en la semilla 42** y la dispersión como tabla nueva en `A.3` más un párrafo en `5.4` | B.2, punto 3, y B.1(ii): brecha frente a los ítems *number of runs*, *error bars* y *central tendency* del checklist de Pineau et al. | `resumen-de-decisiones.md` § 2026-08-06; **T4 cerrada en la TANDA 19 (2026-08-17)** |
+| **D5** | **Renuncia declarada al p-valor** sobre las 10 semillas, con su razón escrita: 10 puntos sobre un único dataset no sostienen un contraste. Si los intervalos se solapan, **se dice y no se establece el orden** | B.1(ii): declarar la renuncia **cumple** el ítem *statistics* de Pineau et al.; callarla no | `resumen-de-decisiones.md` § 2026-08-06 |
+| **D6** | **La comparación externa de `5.4` va reducida: cuatro párrafos y ninguna tabla grande de *accuracies*** — (1) criterios C1-C7; (2) tabla pequeña de supervivientes con sus **dos reservas declaradas**; (3) el descarte y su magnitud; (4) el hueco, formulado como «no se ha encontrado en la literatura revisada» | A.3, A.4 y A.5, más el pronunciamiento de «Implicaciones» | `features.md`, mapa de T13 (`5.4`) |
+| **D7** | **Hindy et al. 2020 se cita por el método, no por el número:** su 89-99 % incumple C7 y no se pone al lado de las cifras del proyecto | A.5 | `features.md`, mapa de T13 (`5.4`) |
+| **D8** | **La magnitud del descarte se apoya en el dato citable de Goldschmidt y Chudá** (NSL-KDD aparece 3 veces en la investigación NIDS de primer nivel 2020-2023) | A.4 | `features.md`, mapa de T13 (`5.4`) |
+
+### Lo que se descartó
+
+| # | Descartado | Por qué |
+|---|---|---|
+| **X1** | **Una tabla grande de *accuracies* de la literatura** en `5.4` | Con el filtro C1-C7 aplicado honestamente, casi todas las cifras se caen; una tabla así sería una colección de números indefendibles uno a uno (A.3, regla derivada; A.4) |
+| **X2** | **Meter una cifra incomparable «con nota al pie»** | Incumplir C1, C3 o C4 se salda con **descarte**, no con anotación: anotarla da apariencia de comparación donde no la hay |
+| **X3** | **Usar el ≈87 % de descarte propio como dato citable** | Es una muestra acotada de búsqueda web, no una revisión sistemática; se declara como tal y el dato publicable es el de Goldschmidt y Chudá (D8) |
+| **X4** | **Citar con número las cifras no verificadas** — Yin et al. 2017, MDPI *Algorithms* 18(12):749 y las seis cifras conocidas solo de segunda mano vía Hindy et al. | Sin acceso al texto completo no se verifican en origen; se citan **sin cifra** o no se citan |
+| **X5** | **Usar a Shone et al. como ejemplo nominal de paper descartado por C1** | La afirmación de que evalúan por validación cruzada sobre KDDTrain+ **no está verificada** |
+| **X6** | **Justificar por cita el número de tipos novedosos (17)** | Tavallaee et al. dicen 14, pero sobre KDD'99; la cifra 17 se justifica **por medición sobre disco** (`metricas_hibrido_0day.csv`) |
+| **X7** | **Reabrir el código para añadir `bin_accuracy` a `metricas_baseline.csv`** desde este informe | Queda como **requisito del protocolo**, no como tarea: la reapertura del track (D2) tiene alcance tasado y nada más entra en ella |
+
+### Lo que quedó abierto y no es decisión
+
+> [!todo] Dos propuestas de este informe sin decisión registrada
+> 1. **Etiquetar el `bin_accuracy` 0,8605 como «cifra de comparabilidad externa, no titular del sistema»** para resolver el roce con H-6 (ver «Fricciones», punto 1). El informe lo propone y lo deja explícitamente a Francisco; **no consta cerrado** en `resumen-de-decisiones.md`.
+> 2. **Declarar en `6.1` como limitaciones** la semilla única y los pitfalls **P9** (*Lab-Only Evaluation*) y **P10** (*Inappropriate Threat Model*). Es propuesta de B.1(i) y de «Fricciones», punto 2; falta el respaldo escrito que la convierta en decisión.
+>
+> Si alguna de las dos se cierra, actualizar este bloque y no darla por decidida antes.
