@@ -456,6 +456,111 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 
 ## Abiertas
 
+### 📊 TRIAJE DE LAS FICHAS ABIERTAS — por qué NO se lanzan todas (2026-08-18)
+
+**Motivo del apunte:** Francisco preguntó por qué no se despachan de golpe todas las fichas
+abiertas. La respuesta es que **no son trabajo homogéneo**. Recuento contado contra disco hoy:
+**35 fichas con `[ ]`** (`grep -c '^- \[ \]' features.md`) — pero ese recuento **infravalora el
+total**, porque solo cuenta los bullets `[ ]`. El inventario completo de `## Abiertas`, verificado,
+es de **51 bullets-ficha: 35 con `[ ]`, 2 con `[~]` y 14 con `[x]`** (ver el **apartado D**).
+Reparto de las 35:
+
+**A. Bloqueadas en una decisión de Francisco — 21 fichas. Ningún agente puede ejecutarlas.**
+Líneas `:514`, `:556`, `:581`, `:589`, `:596`, `:603`, `:610`, `:631`, `:643`, `:690`, `:703`,
+`:751`, `:766`, `:786`, `:790`, `:945`, `:1456`, `:2052`, `:2058`, `:2065`, `:2071`.
+**`:1456`/T14 entró en este grupo, no en el C.** Por la **DECISIÓN 4 de la Fase 0 (Francisco,
+2026-08-14)** la ficha cambió de naturaleza: dejó de ser «cerrar las verificaciones por criterio»
+y es hoy un **inventario de puntos que Francisco revisará él en la revisión final del informe**.
+**No está caducada y no es ejecutable por un agente.**
+Son de tres clases: (1) datos bibliográficos que **no se pueden establecer sin inventarlos**
+(ediciones de `[8]` y `[54]`, versión de la CCN-STIC-401 `[10]`, página de `[76]`, metadatos de
+`[26]`, las 5 citas colgantes irreconstruibles, los tres anclajes de `2.1.4`/`2.1.5`);
+(2) **autorizaciones de escritura** sobre ficheros cuyo permiso no está concedido
+(`resumen-de-decisiones.md`, `CLAUDE.md`, tres docstrings de código publicados,
+`next-steps.md:493`); (3) **decisiones de contenido** (figuras duplicadas, `4.6:24`,
+`03 Desarrollo/`, el wikilink de `6.2`). Despacharlas no adelantaría nada: un agente solo podría
+**inventar** el dato o **tocar sin permiso** el fichero.
+
+**B. Informativas — 4 fichas. No hay nada que ejecutar.** `:649`, `:656`, `:662`, `:709`. Son
+**anotaciones de método** (el `auditor-ml` no puede calcular `md5`, cómo se verificó la
+intocabilidad de los artefactos) y constataciones de que unos `[!todo]` son correctos. Están
+abiertas porque **solo Francisco las borra**, no porque falte trabajo.
+
+**C. Ejecutables por agente — 10 fichas, y NO todas son sustancia.** `:547` (erratas de `1.1`),
+`:618` (celda de `[76]` en `Bibliografía.md`, solo `researcher`), `:882` (`[54]` Molnar, **ya
+decidida** el 2026-08-17, pendiente de aplicar), `:921` (patrón de referencias `fichero:línea`,
+vigilancia, no acción), `:968` (diagrama de agentes, **la acepta o la retira Francisco**), `:976`
+(**Preliminares, Fase 7 — sin dependencias desde hoy**), `:1548` (bloqueada en
+acceso institucional a un PDF), `:1691`, `:1713`, `:1743`.
+**Ninguna de ellas está caducada — verificado contra disco el 2026-08-18:**
+- **`:1691`** (`1.4`, conceptos de IA): su **punto 2** (resúmenes escuetos) **sí** lo cubre la
+  Fase B, pero su **punto 1** —«qué conceptos de IA entran de verdad en el capítulo 2»— **sigue
+  vivo**, tiene **ALCANCE NO CERRADO** y es una **decisión de contenido que no puede tomar un
+  agente**. Además Francisco ordenó el **2026-08-12** que esta ficha se ejecute **LA ÚLTIMA**,
+  después de todas las demás.
+- **`:1713`** (`2.1`, coherencia y densidad): **seis puntos de contenido vivos** salidos de
+  `mis-apuntes-del-informe.md`, y **ninguno** lo resuelve el cierre del capítulo 2. Converge con
+  `:1743`, y su **punto 6 es una decisión de densidad**.
+- **`:1743`** (revisión del profesor: simplificar y desduplicar del capítulo 3 en adelante):
+  sustancia, y también con **alcance no cerrado**.
+
+**Conclusión que se registra:** «estaba todo resuelto» es **cierto en lo que importa** — los
+capítulos 1 a 6 están redactados y el track de código está cerrado. Lo que queda abierto **no es
+contenido faltante**: son **25 fichas de 35 que no son despachables por construcción**
+(21 decisiones + 4 informativas), y de las 10 restantes las **tres de sustancia real**
+—`:1691`, `:1713` y `:1743`— tienen **las tres el ALCANCE NO CERRADO** y exigen **`grill-me` con
+Francisco antes de tocar una sola nota**. Por tanto **la única ficha de sustancia despachable HOY
+sin interrogatorio previo son los Preliminares (Fase 7)**, acompañada de las tres mecánicas: las
+erratas de `1.1` (`:547`), la celda de `[76]` en `Bibliografía.md` (`:618`) y la aplicación de
+`[54]` Molnar (`:882`, ya decidida). El cuello de botella del proyecto **ya no es capacidad de
+agente: son las decisiones de Francisco y la bibliografía en Zotero.** Y ni siquiera lo ejecutable
+lo desbloquea del todo: **tres de las cuatro fichas grandes que quedan necesitan primero una
+conversación con él.**
+
+**D. Lo que el recuento de 35 NO cubría — 3 fichas más.** El triaje contó solo `[ ]`, y con eso se
+quedaron fuera dos `[~]` con trabajo vivo y una `[x]` que se declara abierta en su propio cuerpo:
+
+1. **`[~]` «`03 Desarrollo\` está vacía en disco y solo falta borrar la carpeta»:** la mitad de
+   texto está hecha; **queda vivo el borrado físico de la carpeta**, que el `redactor-tfg` **no
+   puede ejecutar porque no tiene shell**. Necesita un agente con shell o a Francisco, y **el
+   permiso de borrado concedido se limitó a `Lecture 1.md`**. Solapa con la ficha del grupo A sobre
+   esa misma carpeta. **Decide Francisco.**
+2. **`[~]` «Seis afirmaciones del vault que la TANDA 7 dejó desfasadas»:** cinco cerradas, **queda
+   viva la 5** —los números de línea de **T25** están desplazados y hay que localizarlos **por
+   contenido, no por línea**—. Es **ejecutable**, y es otra manifestación del patrón de la ficha
+   `:921`.
+3. **T23 sigue marcada `[x]` y su cuerpo se declara «CIERRE PARCIAL en la TANDA 25 — la ficha SIGUE
+   ABIERTA», pero lo que ese cuerpo alega ya NO se sostiene.** Afirma que el párrafo de Snort de
+   `1.2` sigue sin cita, y **en disco está citado con `[26]` desde el pase en serie del
+   2026-08-18**: `01 Introducción/1.2 Preliminares.md`, **línea 32**, cierra el párrafo con `[26]`,
+   y las líneas **34-39** llevan un callout `[!note] Sobre la fecha` que distingue el artículo de
+   **LISA'99 (USENIX, nov. 1999)** de la publicación de la herramienta en **1998**. `[26]` **ya
+   existía** desde la reconstrucción de las 47 citas colgantes, donde la usa `2.2.2`: se **MAPEÓ, no
+   se dio de alta**, que es la disciplina correcta. Coincide con el bloque de este mismo fichero que
+   ya declara **«P4 y P4-bis — CERRADAS el 2026-08-18»**.
+   **Lo único que mantiene viva a T23 son P5 y P6**, que son **decisiones de Francisco** (edición de
+   `[8]` Stallings y versión de la CCN-STIC-401 `[10]`) y que **ya están fichadas por separado en el
+   grupo A**. Luego **T23 no aporta trabajo nuevo: es un duplicado que apunta a dos fichas del
+   grupo A.**
+   **La lección de método es lo que vale:** el cuerpo de T23 fue la **sexta ocurrencia del patrón de
+   la ficha `:921`** —un registro que afirma en presente algo que el disco ya desmiente—, y esta vez
+   **mordió al propio triaje**. Se detectó porque **se verificó contra `1.2` antes de repetirlo**.
+
+**Consecuencia sobre el grupo C:** las fichas mecánicas que acompañan a los Preliminares **siguen
+siendo TRES** —las erratas de `1.1`, la celda de `[76]` en `Bibliografía.md` y la aplicación de
+`[54]` Molnar—: la aplicación de P4 **no se suma**, porque ya está en disco. **Una
+ficha marcada `[x]` que se declara abierta en su cuerpo es invisible a `grep '^- \[ \]'`: ese es el
+fallo de método que este addendum corrige.**
+
+**Fichar no es resolver: este addendum no corrige nada.**
+
+**Fichar no es resolver: este bloque no corrige nada.**
+
+> ⚠️ **Las referencias `fichero:línea` de este bloque apuntan al estado del documento ANTES de
+> insertarlo.** Al escribirse al inicio de `## Abiertas`, el bloque desplazó ~45 líneas hacia abajo
+> todo lo que numera, incluidas sus propias citas. Es **exactamente el patrón de la ficha `:921`**:
+> **cada ficha se localiza por su TÍTULO, no por su número de línea.**
+
 > **El 🟡 «`PIPELINE.md` llama determinista a un recuento que se apoya en `ac496cb`» queda CERRADO en
 > la TANDA 19** (2026-08-17). Su ficha vive ya en `## Cerradas`. **Ojo: la palabra sigue viva FUERA
 > de `PIPELINE.md`, y eso es ficha NUEVA, más abajo.**
@@ -1607,7 +1712,14 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   correcciones de texto que **no estaban autorizadas** en aquel encargo y por tanto no se aplicaron.
   **Fuera de esta ficha, ya ejecutadas:** reformular `1.1:12` al dato agregado de INCIBE, repuntar
   `2.1.2:30,64` de `[6]` a `[5]`, y `2.2.1:32` de `[9]` a `[8]`.
-  **CIERRE PARCIAL en la TANDA 25 (2026-08-18) — la ficha SIGUE ABIERTA:**
+  > **CUERPO CADUCADO — marcado el 2026-08-18.** Todo lo que sigue describe el estado **anterior**
+  > al pase en serie del `researcher`, y **T23 ya está CERRADA** (ver `## Cerradas`). En concreto,
+  > **el punto P4 de abajo es FALSO en disco**: el párrafo de Snort **sí tiene cita**, `1.2:32`
+  > apunta a `[26]` con un callout que explica **LISA'99 vs 1998**, y `[26]` se **mapeó** en vez de
+  > duplicarse. **Sexta ocurrencia del patrón de registro caducado.** Se conserva el texto como
+  > traza histórica; **no se ejecuta nada de aquí**.
+
+  **CIERRE PARCIAL en la TANDA 25 (2026-08-18) — ~~la ficha SIGUE ABIERTA~~ (ya cerrada):**
   - **P1–P3: ya estaban ejecutadas** (constaba en esta misma ficha).
   - **P4: NO aplicada — la Tanda 25 marcó una afirmación DISTINTA de la decidida.** La decisión de
     Francisco (2026-08-17) era anclar el pasaje de **Roesch y Snort** al paper primario de **LISA'99
@@ -2279,6 +2391,7 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-18 | Ninguno | **TRIAJE DE LAS FICHAS ABIERTAS — «por qué no se despachan de golpe todas las fichas abiertas», pregunta de Francisco. Sin ficha previa (carril Intervención).** Añadido al **inicio de `## Abiertas`** el bloque «📊 TRIAJE DE LAS FICHAS ABIERTAS — por qué NO se lanzan todas (2026-08-18)», con cuatro apartados: **21 fichas bloqueadas en una decisión de Francisco** (ejecutarlas exigiría **inventar un dato** o **escribir en un fichero sin permiso concedido**); **4 informativas**, que **solo Francisco borra**; **10 ejecutables por agente**, de las que las **3 de sustancia tienen el alcance sin cerrar y exigen `grill-me`** (`1.4` conceptos de IA, `2.1` coherencia y densidad, y la revisión del profesor del **cap. 3 en adelante**); y **4 despachables ya sin preguntar** (Preliminares Fase 7, erratas de `1.1`, celda de `[76]` en `Bibliografía.md`, aplicar `[54]` Molnar). El bloque advierte que **sus referencias se localizan por título, no por número de línea**. **Dos hallazgos de método:** (1) el recuento de «**35 fichas abiertas**» **infravaloraba el total** —contaba solo los `- [ ]`— y dejaba fuera **dos `[~]` con trabajo vivo** (el **borrado físico de `03 Desarrollo/`**, que ningún redactor puede hacer por **no tener shell**, y los **números de línea desplazados de T25**) más **T23**, marcada `[x]` pero **declarada abierta en su propio cuerpo**: invisible a cualquier `grep '^- \[ \]'`; (2) **el cuerpo de T23 está caducado** —alegaba que el párrafo de Snort de `1.2` seguía sin cita cuando **`1.2:32` ya cita `[26]`** con el callout de **LISA'99 vs 1998**, con **P4 aplicada** y `[26]` **mapeada, no duplicada**—: **sexta ocurrencia del patrón de registro caducado**, y el cuerpo queda **marcado como traza histórica** en su ficha. **Cero código, cero cómputo, ninguna cifra movida.** Fichero tocado: **únicamente `features.md`**| — |
 | 2026-08-18 | Informe | **FASE B DEL BARRIDO — EL CAPÍTULO 1. Es lo último ejecutable del barrido. Cierra TRES fichas** (el hueco de completitud del capítulo 1, los tres defectos de `1.4 Estructura` y las erratas de `1.2:14`). **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida.** Ficheros del vault: `01 Introducción/1.0 Sinopsis.md`, `1.2 Preliminares.md`, `1.3 Objetivo.md`, `1.4 Estructura.md`, más `00 Índice TFG.md` y `06 Conclusiones/6.1 Conclusiones.md` por coherencia. **`1.1 Motivación` es la única nota del capítulo que NO se toca** — queda en ficha nueva. **Protocolo de citas respetado sin excepción: CERO `[n]` nuevos y CERO `[CITA: …]` nuevos**, verificado por `grep` sobre `01 Introducción/` **después** de los dos pases; el capítulo 1 sigue usando solo `[1]`, `[2]`, `[3]` y `[26]`. **El `[CITA: …]` y el `[31]` de `1.2:19,22` viven DENTRO del callout `[!warning]` de traza histórica** que narra la atribución retirada en P4-bis: **no son marcadores vivos, así que T16 NO se reabre.** Los dos callouts que dejó la Fase A en `1.2` —**P4-bis** (Anderson/`[2]`) y el de la **fecha 1998 vs LISA'99** (`[26]`)— quedan **íntegros y pegados a sus párrafos**, como se exigió. **Las cinco notas de `01 Introducción/` están hoy `estado: redactada`**, frontmatter verificado en disco una a una. **Deja DOS fichas nuevas**, ninguna bloqueante| `3203420` |
 | 2026-08-18 | Informe | **🟡 «El capítulo 1 es el hueco de completitud que queda, y solo está fichado EN PARTE» — CERRADA.** El hueco se cierra en las tres notas que no tenían ficha propia y en la que sí: **`1.0 Sinopsis`** pasa de **478 B / un único párrafo de anuncio** a una sinopsis real de **cuatro párrafos**, con los **nueve objetivos agrupados en cinco bloques** y wikilinks a las cuatro notas hermanas; **`1.3 Objetivo`** pasa de **705 B / cinco frases-párrafo sin hilo** a **objetivo general desarrollado** (con tabla de las dos etapas de la cascada y los splits D1/D3) más **nueve objetivos específicos numerados, cada uno con su criterio de cumplimiento verificable**; **`1.2 Preliminares`** desarrolla los **cinco desafíos** que estaban como párrafos huérfanos **sin una sola frase de explicación**, y reescribe el párrafo de la **detección basada en el estado**, que colgaba del hilo cronológico; **`1.4 Estructura`** en su propia fila| `3203420` |
 | 2026-08-18 | Informe | **🟡 «`1.4 Estructura` omite el capítulo 6 entero y atribuye mal las conclusiones» — CERRADA, los TRES defectos verificados en disco:** (1) ya enumera **hasta el capítulo 6** e incluye **Apéndices y Bibliografía**; (2) las **conclusiones se atribuyen al capítulo 6** y el **5 queda como Evaluación**; (3) la **frase del capítulo 4 está completa y cerrada con punto**. **Extra sobre la ficha:** corregida la errata «una **evolución** de los resultados» → **evaluación**, y `estado:` pasado de `borrador` a **`redactada`**| `3203420` |
