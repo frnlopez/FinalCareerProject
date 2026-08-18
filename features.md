@@ -677,7 +677,7 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > de Francisco del 2026-08-17**. Lo pendiente de Snort vive en P4 y **lo ejecuta el `researcher` en
 > el pase en serie**. Quedan **dos fichas** en esta tanda.
 
-- [ ] 🟡 **`CLAUDE.md` no menciona `Obsidian_TFG_Vault/assets/` en la estructura del repo** · — · **hilo principal**
+- [x] 🟡 **`CLAUDE.md` no menciona `Obsidian_TFG_Vault/assets/` en la estructura del repo** · **CERRADA el 2026-08-18 en `2172b42`** (hilo principal). `assets/` está en el árbol y descrita con el censo verificado —**36 ficheros, 24 nombres distintos embebidos en 27 embebidos de 7 notas, 12 huérfanos, cero embebidos rotos**—, más el aviso de que las figuras se copian a mano desde `Resultados/figuras/` y por tanto **`assets/` no se regenera solo**. El «22 ficheros» que decía esta ficha era erróneo · — · **hilo principal**
   Alta el **2026-08-18**. Ahí viven los **22 ficheros de imagen** embebidos, **verificados en disco**
   durante la TANDA 25, y el árbol que documenta `CLAUDE.md` los omite: la estructura está
   **incompleta**. **Fichado, no arreglado**: `CLAUDE.md` es andamiaje y **lo toca solo el hilo
@@ -736,7 +736,7 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > CERRADO en la TANDA 21** (2026-08-17): pasa a `[!warning]` de **límite declarado de alcance**. Su
 > ficha vive ya en `## Cerradas`.
 
-- [ ] 🟡 **Tercera nota vacía del vault, ahora CON NOMBRE: `Lecture 1.md` (0 bytes)** · — · `cronista`
+- [x] 🟡 **Tercera nota vacía del vault, ahora CON NOMBRE: `Lecture 1.md` (0 bytes)** · **CERRADA el 2026-08-18: BORRADA** con `git rm`, bajo la autorización expresa de Francisco del 2026-08-17. Su carpeta `APUNTES SOBRE CS229 STANFORD ML LECTURES/` queda vacía. **`03 Desarrollo/` NO se toca**: ese borrado no está autorizado · — · `cronista`
   Alta el **2026-08-17**. Es
   **`Obsidian_TFG_Vault/APUNTES SOBRE CS229 STANFORD ML LECTURES/Lecture 1.md`, 0 bytes**: ajena al TFG
   y **no indexada**. Es la **tercera «vacía»** que la ficha del recuento de notas contaba **sin
@@ -770,14 +770,14 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   divergencia registro↔disco** que ha mordido varias veces. **El permiso de borrado concedido se
   limitó a `Lecture 1.md`.**
 
-- [ ] 🟡 **«37 muestras en D2» mal atribuido en dos informes de `99 Investigación/`** · — · `researcher`
+- [x] 🟡 **«37 muestras en D2» mal atribuido en dos informes de `99 Investigación/`** · **CERRADA el 2026-08-18 en `5ebf8f9`**. Reetiquetado a **37 u2r de tipo conocido** (denominador del `f1_u2r`) frente a **200 en D2** = 37 + 163 0-day (denominador del recall 0-day) y **52 en D3**. Verificado en disco: la única ocurrencia que queda del literal es el callout que *narra* la corrección · — · `researcher`
   Alta el **2026-08-17**. `benchmark-comparativo-nsl-kdd.md:141` y
   `clasificadores-tabulares-y-arquitecturas-hibridas.md:364`. En **D2 completo son 200**; **37** es el
   soporte entre los **ataques de tipo conocido** (9.083). **No es memoria**, pero **`5.4` remite al
   primero** como «material de respaldo con las fuentes revisadas una a una», así que la corrección de
   la tanda **queda incompleta hacia abajo**. Esa carpeta es del `researcher`.
 
-- [ ] 🟡 **`Bibliografía.md` sigue anunciando `[76]` como primer número libre en CUATRO sitios** · Informe · `researcher`
+- [x] 🟡 **`Bibliografía.md` sigue anunciando `[76]` como primer número libre en CUATRO sitios** · **CERRADA el 2026-08-18 en `5ebf8f9`**. Las cuatro quedan tachadas y corregidas al `[78]`. Contado al commitear: **76 filas, máximo `[77]`, `[9]` ausente de la tabla** · Informe · `researcher`
   Alta el **2026-08-17**. `:55`, `:61`, `:87` y `:112` dicen `[76]`, mientras `:136` y
   `99 Investigación\Auditoría de Bibliografía.md:184` dicen **`[78]`, que es el valor real**. Es **el
   mecanismo exacto** por el que dos agentes acabarían asignando el mismo `[n]`. **Lo toca SOLO el
