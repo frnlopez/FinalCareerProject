@@ -298,9 +298,9 @@ no el algoritmo. Las vías para diferenciarse más se acumulan en `EL_FUTURO.md`
 >   «**recall 0-day por tipo de ataque** (los 17 tipos de D2 ausentes del train) + **F1 macro**».
 >   Esos 17 tipos 0-day **solo existen en D2**: la métrica de decisión es, por construcción,
 >   una métrica de test.
-> - `Obsidian_TFG_Vault\04 Implementación del sistema\4.3 Preprocesamiento de los datasets.md:197-214`
+> - `Obsidian_TFG_Vault\04 Implementación del sistema\4.3 Preprocesamiento de los datasets.md:242-259`
 >   — la tabla del experimento H1 se titula literalmente «**Métrica (cascada AE→RF sobre D2)**»,
->   y `:214` concluye «se elige el set de 54 para las dos etapas».
+>   y `:259` concluye «se elige el set de 54 para las dos etapas».
 > - `Resultados\GUIA_RESULTADOS.md:172` — «decisión final validada por el **experimento H1**».
 >
 > **2. Es la más estructural de las tres**, porque no elige una pieza dentro de una etapa: define

@@ -100,6 +100,11 @@ OneClassSVM (`anomalias.py:163` para la muestra de D3; la submuestra de OneClass
 > respecto a lo que daría un test verdaderamente ciego. La declaración de referencia de esta
 > limitación es [[6.1 Conclusiones]]; el inventario tabulado de las tres decisiones, con criterio y
 > registro de cada una, está en A.3.7 de esta misma ficha. No se presenta como protocolo limpio.
+>
+> **Remisión.** El alcance y las cifras de la tercera decisión —la desviación relativa al set de
+> características, 54 frente a 122— se fijan en su sede canónica,
+> [[4.3 Preprocesamiento de los datasets|4.3.5]] § «Decisión experimental: 54 frente a 122
+> (experimento H1, medido sobre D2)»; aquí solo se enuncia, sin fijar cifras ni alcance por cuenta propia.
 
 ---
 
@@ -606,7 +611,7 @@ sobre D2**, y se declaran aquí en lugar de omitirlas.
 |---|---|---|---|
 | 1 — detección de anomalías | Autoencoder-MLP | AUC-ROC / F1, métricas cuyo alcance declarado es «binario normal-vs-ataque sobre D2 completo» (A.3.4) | Decisión H-2 en `resumen-de-decisiones.md`; `hibrido.py:16` y `:755` documentan «Detector por defecto = Autoencoder (mejor en 5.1)» |
 | 2 — clasificador de firmas | RandomForest | `f1_macro` **sobre D2** = 0,822 | Decisión H-3 en `resumen-de-decisiones.md` |
-| 3 — set de características | **54** (frente a 122) | Recall 0-day por tipo + `f1_macro`, medidos con la cascada AE→RF **sobre D2** (experimento H1) | Decisión Q1/C y sección fechada 2026-07-15 de `resumen-de-decisiones.md`; [[4.3 Preprocesamiento de los datasets]] § Decisión experimental |
+| 3 — set de características | **54** (frente a 122) | Recall 0-day por tipo + `f1_macro`, medidos con la cascada AE→RF **sobre D2** (experimento H1) | Decisión Q1/C y sección fechada 2026-07-15 de `resumen-de-decisiones.md`; [[4.3 Preprocesamiento de los datasets|4.3.5]] § Decisión experimental |
 
 Las tres son selección de modelo sobre el conjunto de test, es decir *data snooping*, y por tanto las
 métricas publicadas son optimistas respecto a lo que daría un test verdaderamente ciego. La tercera
@@ -636,7 +641,8 @@ seguridad este patrón se cataloga como contaminación por selección sobre el t
 >   balanceo, al umbral p95 ni a `UMBRAL_CONF`, que se ajustaron sobre `D1_val` y D3.
 > - Las métricas de **todos** los candidatos, no solo las del ganador, están publicadas en
 >   `Resultados/metricas_anomalias.csv` y `metricas_firmas.csv` y volcadas en el capítulo 5, y la
->   comparación 54 frente a 122 se tabula íntegra en [[4.3 Preprocesamiento de los datasets]]: el
+>   comparación del experimento H1 (54 frente a 122, cascada AE→RF) se tabula en
+>   [[4.3 Preprocesamiento de los datasets|4.3.5]]: el
 >   lector puede ver el margen sobre el que se decidió.
 > - **No se cuantifica cuánto sesgo introduce**: haría falta una partición de validación separada de
 >   D2, que no existe en este diseño, y no se ha medido.
