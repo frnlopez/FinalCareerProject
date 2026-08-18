@@ -138,7 +138,17 @@ No hay un estándar único para «protocolo de benchmarking de NIDS»; lo que ha
 | **P5 · Biased Parameter Selection** — «*the detection threshold for a NIDS may be chosen using a ROC curve obtained on the test set*» | El umbral no se elige mirando el test | Línea roja de H-4: `UMBRAL_CONF` se elige por la regla de presupuesto τ=2 pp sobre probabilidades OOF de D3; el umbral p95 se fija sobre el 20 % de D1 reservado. D2 solo reporta |
 | **P6 · Inappropriate Baseline** — «*simple models should also be considered*» | Comparar contra un baseline no trivial | `baseline.py`: RandomForest monolítico, que además **es** el patrón dominante de la literatura |
 | **P7 · Inappropriate Performance Measures** | No un valor único; precision/recall y curvas PR en clases raras | H-6 prohíbe el número único; `evaluacion.py` calcula PR-AUC además de ROC-AUC |
-| **P8 · Base Rate Fallacy** | No interpretar métricas ignorando el desbalanceo | Desglose por clase obligatorio; u2r (37 muestras en D2) se reporta aparte y no se esconde en el macro |
+| **P8 · Base Rate Fallacy** | No interpretar métricas ignorando el desbalanceo | Desglose por clase obligatorio; u2r (**37 muestras de tipo conocido en D2**, ver la corrección de abajo) se reporta aparte y no se esconde en el macro |
+
+> [!warning] Corrección verificada contra disco el 2026-08-18 — «37 muestras en D2» era una cifra mal etiquetada
+> El **37 es correcto como número, pero no es «el u2r de D2»**: es el `soporte_u2r` de
+> `Resultados/metricas_firmas.csv`, cuyo alcance declarado en la propia columna es «los ataques de
+> **D2 de tipo conocido**» (9.083 flujos). Los u2r **0-day** de D2 son otros **163** —`httptunnel` 133,
+> `ps` 15, `xterm` 13 y `sqlattack` 2, listados en
+> `Resultados/specialized_nsl_kdd_validation_report.txt`—, de modo que **D2 contiene 200 u2r en total**
+> y solo 37 llegan a la etapa de firmas. La diferencia no es cosmética: 37 es el denominador del
+> `f1_u2r`, y 200 el del recall 0-day. **No confundirlos.** (Recordatorio aparte: en D3, u2r son **52**,
+> según `specialized_nsl_kdd_composicion_d3.csv`.)
 
 Los dos pitfalls que este TFG **no** cubre son P9 (*Lab-Only Evaluation*) y P10 (*Inappropriate Threat Model*): no hay despliegue real ni adversario adaptativo. Eso no es un defecto subsanable en un TFG — es una **limitación que conviene declarar en 6.1 citando a Arp et al.**, en lugar de dejar que la detecte el tribunal.
 

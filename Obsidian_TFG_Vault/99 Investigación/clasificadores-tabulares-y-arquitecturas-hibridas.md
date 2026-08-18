@@ -361,8 +361,12 @@ prosa.
    que son ~0 en D1*». O sea: **son casi constantes en el único conjunto con el que se entrena el
    autoencoder**. Una característica constante no aporta varianza que reconstruir, y el cuello de
    botella no tiene incentivo alguno para reservarle una dirección. `u2r` tiene hoy `f1` = 0,452 con
-   37 muestras en el test (`metricas_firmas.csv`); es difícil imaginar que sobreviva a que su señal
-   se comprima con un criterio ciego a ella.
+   **37 muestras de tipo CONOCIDO en D2** (`metricas_firmas.csv`, fila RandomForest/54, columna
+   `soporte_u2r`); es difícil imaginar que sobreviva a que su señal se comprima con un criterio ciego
+   a ella. **Verificado contra disco el 2026-08-18**, con un matiz de etiqueta: decía «en el test»,
+   que se lee como «en D2», y **D2 tiene 200 u2r**; los 163 restantes son 0-day (`httptunnel` 133,
+   `ps` 15, `xterm` 13, `sqlattack` 2) y **nunca pasan por el clasificador de firmas**, así que no
+   entran en ese `f1`.
 
 3. **Destruye la extracción de reglas legibles.** `firmas.py:349` exporta el árbol con
    `feature_names=list(self.X_D3.columns)`. Con el latente, esos nombres pasan a ser dimensiones

@@ -542,6 +542,62 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > `## Cerradas`. **Efecto colateral esperado: `00 Índice TFG.md` queda desfasado — ficha nueva más
 > abajo.**
 
+### Altas del pase en serie del `researcher` — 2026-08-18
+
+> **Cinco decisiones que SOLO puede tomar Francisco, más un 🟡 de coherencia.** El `researcher`
+> **marcó en vez de inventar**, que es la disciplina correcta. **Las cinco quedan BLOQUEADAS a la
+> espera de él**: no hay nada que un agente pueda ejecutar. **Ninguna es bloqueante para el resto del
+> trabajo** y **ninguna mueve una cifra publicada.** **Fichar no es resolver: aquí no se ha corregido
+> nada.**
+>
+> **Contador verificado contra disco en el mismo pase: 76 filas antes y 76 después, `[1]`–`[8]` +
+> `[10]`–`[77]`, CERO altas, `[9]` sigue quemada, ningún `[n]` renumerado. El primer libre sigue
+> siendo el `[78]`.**
+
+- [ ] 🟡 **Edición de `[8]` Stallings: 4.ª (2018) vs 5.ª (2023)** · Informe · **BLOQUEADA — decide Francisco, con el libro delante**
+  Alta el **2026-08-18**. La entrada queda **⚠️ EDICIÓN NO ESTABLECIDA**. Las dos ediciones coexisten
+  (Pearson 2018, ISBN 978-0-13-479410-5 · Pearson 2023, ISBN 978-0-13-809167-5) y **el texto del TFG no
+  discrimina**: los tres usos de `2.2.1` viven en el **cap. 1, §1.1**, sección presente en todas las
+  ediciones. Se declaró expresamente que **no se elige la 4.ª «por ser la más difundida»**: eso sería
+  inventar un dato bibliográfico. `[8]` es uno de los 8 libros con **localizador obligatorio**, así que
+  su página depende de esta decisión.
+
+- [ ] 🟡 **Versión, fecha y URL del PDF de la CCN-STIC-401 `[10]`** · Informe · **BLOQUEADA — decide Francisco**
+  Alta el **2026-08-18**. El enlace ya **no** apunta al término suelto del visor HTML, sino a la **ficha
+  oficial de la guía**. Lo que **no se ha podido verificar, y está marcado**: `WebFetch` da **403**, el
+  navegador real da **403 contra un test anti-bot** y la ruta del PDF da **503**. **No se ha inventado
+  ninguna URL de descarga.** **Versión y fecha siguen sin fijar** (un comunicado del CCN-CERT habla de
+  1.069 términos: dato de segunda mano y sin verificar).
+
+- [ ] 🟡 **Página exacta dentro del cap. 1 de `[76]` (Storkey)** · Informe · **BLOQUEADA — decide Francisco**
+  Alta el **2026-08-18**. **El rango del capítulo SÍ está establecido y verificado: pp. 3-28**, contra el
+  registro institucional del autor (University of Edinburgh Research Explorer), coincidente con MIT
+  Press Scholarship Online. **El punto exacto de la afirmación dentro de ese rango, no**: MIT Press
+  devuelve 403. Anotado de paso: **el desdoble de `[76]` sigue disponible** si Francisco acepta
+  repuntar `5.1:86` a un `[78]` — con los datos ya en la fila es un cambio de dos líneas.
+
+- [ ] 🟡 **Metadatos de `[26]` (Roesch, LISA'99) contra la fuente viva** · Informe · **BLOQUEADA — decide Francisco**
+  Alta el **2026-08-18**. USENIX devuelve **403** a todo acceso automático, PDF e índice. **Se conservan
+  los metadatos de la reconstrucción previa y NO se han reinventado.** Anotada también la aparente
+  discrepancia de fecha, que **no es un error**: la nota dice **1998** (publicación de la herramienta) y
+  el artículo es de **1999**; ambas son correctas, y la nota lo explica en un callout sin reescribir la
+  prosa.
+
+- [ ] 🟡 **¿Recuperar la frase sobre Anderson en `1.2:14`?** · Informe · **BLOQUEADA — decide Francisco**
+  Alta el **2026-08-18**. La afirmación de que «la literatura del área señala de forma recurrente a
+  Anderson (1980) como el punto de partida de la detección de intrusiones» **se retiró del cuerpo** por
+  falta de aval de nivel 1: **Khraisat *et al.* 2019 `[31]` no menciona a Anderson** (verificado sobre
+  el PDF del editor) y **Yost 2016** (*IEEE Annals of the History of Computing*, DOI
+  10.1109/MAHC.2015.41, metadatos verificados en Crossref) **está tras muro de pago**. **Basta con
+  acceso al Yost o a otra revisión de nivel 1 para recuperarla: sería la PRIMERA ALTA del `[78]`.**
+
+- [ ] 🟡 **La celda de `[76]` en `Bibliografía.md` se contradice a sí misma** · Informe · `researcher`
+  Alta el **2026-08-18**, detectada al verificar el pase. La celda contiene **a la vez** la marca antigua
+  «⚠️ Página exacta NO ESTABLECIDA … el rango del capítulo no se ha podido verificar» **y, más abajo, el
+  rango pp. 3-28 ya verificado**. La marca vieja **no se retiró**: solo se dice al final que «decae para
+  el rango». **Ficha: retirar o reescribir la marca antigua en un próximo pase del `researcher`**, que es
+  el único agente que escribe `Bibliografía.md`.
+
 ### Altas de la TANDA 26 — 2026-08-18
 
 > Cinco fichas, **ninguna bloqueante**, **ninguna mueve una cifra publicada**. Salen del pase de
@@ -732,7 +788,13 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > - **El arreglo de `Bibliografía.md` (`[76]`→`[78]`)** y **el «37 en D2» de los dos informes de
 >   `99 Investigación/`** — fichas nuevas 5 y 4 de la TANDA 21, más arriba.
 
-- [ ] 🟡 **P4 · falta aval de nivel 1 para `1.2:14`** · Informe · **DECIDIDO — pendiente de aplicar** · ejecuta `researcher`
+> **P4 y P4-bis — CERRADAS el 2026-08-18** en el pase en serie del `researcher`. `1.2:32` queda
+> anclado a **`[26]`, que YA existía** (se MAPEÓ, no se duplicó), y la atribución historiográfica a
+> Anderson de `1.2:14` se **RETIRÓ del cuerpo** por falta de aval de nivel 1. Sus fichas viven ya en
+> `## Cerradas`. **Lo que dejan vivo son dos decisiones de Francisco**, fichadas más arriba.
+> Se conserva el texto original de la ficha, tachado, por su historial de divergencias:
+
+- [x] ~~🟡 **P4 · falta aval de nivel 1 para `1.2:14`** · Informe · **DECIDIDO — pendiente de aplicar** · ejecuta `researcher`~~
   Alta el **2026-08-17**. La afirmación de `1.2:14` no tiene hoy fuente primaria que la sostenga.
   O se ancla a un aval de nivel 1, o se reformula para decir solo lo que la fuente disponible
   respalda.
@@ -756,7 +818,15 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
     `1.2:27`. **Mismo patrón que ya ha mordido cuatro veces**: verificar la línea en disco antes de
     aplicar.
 
-- [ ] 🟡 **P5 y P6 · dos ediciones/versiones sin fijar: Stallings `[8]` y CCN-STIC-401 `[10]`** · Informe · **DECIDIDO — pendiente de aplicar** · ejecuta `researcher`
+> **P5 y P6 — CERRADAS el 2026-08-18, y NO como se había decidido: se MARCARON, no se fijaron.**
+> `[8]` Stallings queda **⚠️ EDICIÓN NO ESTABLECIDA** (la 4.ª de 2018 y la 5.ª de 2023 coexisten y el
+> texto no discrimina: los tres usos viven en el cap. 1 §1.1, presente en todas las ediciones), y el
+> enlace de `[10]` CCN-STIC-401 se sustituye por la **ficha oficial de la guía**, con lo no
+> verificable marcado (403 anti-bot incluso con navegador real, 503 en la ruta del PDF) y **sin
+> inventar ninguna URL**. Sus fichas viven ya en `## Cerradas`; **la versión y la edición pasan a ser
+> decisión de Francisco**, fichadas más arriba.
+
+- [x] ~~🟡 **P5 y P6 · dos ediciones/versiones sin fijar: Stallings `[8]` y CCN-STIC-401 `[10]`** · Informe · **DECIDIDO — pendiente de aplicar** · ejecuta `researcher`~~
   Alta el **2026-08-17**. **P5:** la edición de Stallings `[8]` sigue sin fijar (4.ª vs 5.ª) — y `[8]`
   es uno de los 8 libros con localizador obligatorio, así que la página depende de qué edición se
   elija. **P6:** la versión de la CCN-STIC-401 `[10]` tampoco está fijada. **Decide Francisco: no se
@@ -766,7 +836,14 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   **P6:** `[10]` **CCN-STIC-401 a la versión que sirve hoy el CCN**, con **fecha de consulta**.
   Con esto **se desbloquea el localizador de `[8]`**, que dependía de la edición.
 
-- [ ] 🟡 **`[76]` Quiñonero-Candela *et al.* · página del cap. 1 no establecida Y reserva de AUTORÍA** · Informe · **DECIDIDO — pendiente de aplicar** · ejecuta `researcher`
+> **`[76]` — CERRADA el 2026-08-18, y el desdoble decidido se descarta CON RAZÓN ESCRITA y con la
+> alternativa ejecutada.** Desdoblar exigiría **repuntar el marcador de `5.1:86`**, que no es mano del
+> `researcher`, y dejaría `[76]` **huérfana** —justo lo que prohíbe la regla dura de T16—. En su lugar,
+> la fila lleva ya **los datos completos del capítulo de Storkey, pp. 3-28**, verificados contra el
+> registro institucional del autor: **la página deja de estar sin establecer a nivel de capítulo**. El
+> desdoble sigue disponible si Francisco acepta repuntar `5.1:86`. Su ficha vive ya en `## Cerradas`.
+
+- [x] ~~🟡 **`[76]` Quiñonero-Candela *et al.* · página del cap. 1 no establecida Y reserva de AUTORÍA** · Informe · **DECIDIDO — pendiente de aplicar** · ejecuta `researcher`~~
   Alta el **2026-08-17**, con el alta de la entrada. Son **dos cosas**: **(1)** la página exacta del
   capítulo 1 **no se pudo establecer** —MIT Press devuelve 403—, y **se marcó, no se inventó**;
   **(2)** la nota **atribuye el capítulo a los editores**, pero su autor es **Storkey**. Francisco
@@ -1394,7 +1471,14 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
     con Yin et al. 2017 y Khraisat et al. 2020. **No entra en el recuento de «siete» de arriba**: es
     un ítem nuevo, posterior al inventario, y por tanto **no toca la discrepancia aritmética**.
 
-- [ ] **T16 · B2: volcado de fuentes, DESPUÉS de la redacción** · — · `researcher`
+> **T16 — CERRADA el 2026-08-18, SATISFECHA POR AGOTAMIENTO, no por volcado.** Contado contra disco:
+> **no queda ni un `[CITA: …]` vivo en la memoria** —el último era el de `1.2:14`, retirado en el pase
+> de hoy; las ocurrencias restantes en `4.2`, `1.2`, `00 Índice TFG.md` y los informes son **prosa
+> sobre la convención**, no marcadores—. Luego **no hay ninguna fuente citada en el texto que siga sin
+> entrada**, y volcar las **no citadas** es exactamente lo que su regla dura prohíbe. Su ficha vive ya
+> en `## Cerradas`.
+
+- [x] ~~**T16 · B2: volcado de fuentes, DESPUÉS de la redacción** · — · `researcher`~~
   **Va después de la redacción (T8-T13): no se arranca antes.** Regla dura: **ninguna entrada sin
   cita en el texto.** Los cuatro informes aportan ≈40 fuentes con datos completos y nivel asignado;
   se filtran por el mapa de T8-T12. Estimación: entran 25-30. Volcar ahora produciría una
@@ -1484,7 +1568,12 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > T15 (auditoría de `Bibliografía.md`) y T18 (rediseño de `alcance_tiempo_s`) se cerraron el
 > 2026-08-09 (ver `## Cerradas`). Estas tres fichas son lo que **quedó fuera** de esos cierres.
 
-- [ ] **T23 · Correcciones del texto que la auditoría de bibliografía dejó sin autorizar** · Informe · `redactor-tfg`
+> **T23 — CERRADA el 2026-08-18.** Su propio texto declaraba que **P5 y P6 eran lo único que la
+> mantenía abierta**, más la P4 que la TANDA 25 dejó sin aplicar. El pase en serie del `researcher`
+> del 2026-08-18 cierra las tres: P4 anclada a `[26]`, P4-bis retirada, y P5/P6 **marcadas** en
+> `Bibliografía.md`. Su ficha vive ya en `## Cerradas`.
+
+- [x] ~~**T23 · Correcciones del texto que la auditoría de bibliografía dejó sin autorizar** · Informe · `redactor-tfg`~~
   Salen del informe `Obsidian_TFG_Vault/99 Investigación/Auditoría de Bibliografía.md` (T15). Son las
   correcciones de texto que **no estaban autorizadas** en aquel encargo y por tanto no se aplicaron.
   **Fuera de esta ficha, ya ejecutadas:** reformular `1.1:12` al dato agregado de INCIBE, repuntar
