@@ -486,8 +486,13 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 >   **`02ff9fb`/`cb0b9e9`** (TANDA 23, estados y totales de `00 Índice TFG.md`) ·
 >   **`6ada8c2`/`0fc77c9`** (TANDA 24, tres fichas: nomenclatura de Procedencia en `4.2`, remisiones a
 >   `4.3.5` y la mitad de P9 en `5.4`) · **`babf9a6`/`77dd5b1`** (TANDA 25, pies de figura de los capítulos 4
->   y 5, cierre parcial de T23 y residuos de `A.3`) · **`c7ab48d`/este mismo** (TANDA 26, cierre de
->   T17: bloque de decisiones en los cuatro informes de `99 Investigación/` y deriva de `evaluacion.py`).
+>   y 5, cierre parcial de T23 y residuos de `A.3`) · **`c7ab48d`/`bcb78a7`** (TANDA 26, cierre de
+>   T17: bloque de decisiones en los cuatro informes de `99 Investigación/` y deriva de `evaluacion.py`) ·
+>   **`2172b42`** (andamiaje, hilo principal: `assets/` documentada en `CLAUDE.md` y la fila de
+>   `evaluacion.py` rehecha con las seis funciones de T1) · **`5ebf8f9`** (**FASE A — pase EN SERIE del
+>   `researcher`**: cierra P4, P4-bis, P5, P6, el desdoble de `[76]`, **T16 por agotamiento** y **T23**,
+>   con **CERO altas de `[n]`** —76 filas antes y después, primer libre `[78]`— y el «37 en D2» de los
+>   dos informes reetiquetado a **37/163/200/52**. Deja **cinco decisiones de Francisco** bloqueadas).
 >
 > **Y del día anterior solo queda un 🟠 abierto:** el de **las 5 citas colgantes irreconstruibles**
 > (ficha más abajo, alta del 2026-08-15). Es **el único 🟠 que viene de antes de hoy** — los demás 🟠
