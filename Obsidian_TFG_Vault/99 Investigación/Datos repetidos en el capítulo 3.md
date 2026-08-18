@@ -2,7 +2,7 @@
 titulo: "Datos repetidos en el capítulo 3 — diagnóstico previo al recorte"
 tipo: informe de investigación interna
 fecha: 2026-08-15
-revision: pase correctivo del 2026-08-15 tras auditoría (APTO CON CAMBIOS) — 8 correcciones aplicadas
+revision: pase correctivo del 2026-08-15 tras auditoría (APTO CON CAMBIOS) — 8 correcciones aplicadas · corrección de medida del 2026-08-18 — base del capítulo 3 contada (6.670 palabras, no ≈4.330) y titulares recalculados
 estado: cerrado
 alcance: diagnóstico. NO aplica cambios
 ---
@@ -335,23 +335,23 @@ en su lugar — no un wikilink suelto, sino una frase que dice *qué no se repit
 
 ## 3. Cuánto encoge el capítulo 3
 
-> [!warning] Cómo están medidas estas cifras — **son estimaciones, no un conteo**
-> El conteo es **por palabras estimadas a ojo sobre el texto leído**, no por líneas de fichero: en
-> Markdown un párrafo entero ocupa **una sola línea** (el caso extremo es `3.3:42`, que es un
-> apartado completo en una línea), de modo que contar líneas daría una reducción engañosa. **No
-> existe ningún script de conteo**: ni las bases (las columnas «antes»: 735, 615, 1.765…) ni las
-> columnas «después» proceden de una medición automática.
+> [!important] Corrección del 2026-08-18 — la base del capítulo es **un conteo**, no una estimación
+> La versión anterior de este informe estimaba **a ojo** el capítulo 3 en **≈ 4.330 palabras** y
+> advertía de que, en cuanto existiera una medición real, las cifras se sustituirían por las medidas.
+> **Esa medición ya existe:** el capítulo 3 —las seis notas de `03 Diseño del sistema/`, `3.1` a
+> `3.6`— suma **6.670 palabras contadas**. La base estimada estaba **corta un ~54 %**, porque no
+> recogía el crecimiento posterior de las notas (`3.2` y `3.5`, en particular, se ampliaron después
+> de la fecha de este informe).
 >
-> **Resolución del 2026-08-15.** Las cifras se redondean conforme a lo que esta advertencia promete:
-> **los titulares de §3.3 se dan a la media decena (≈ −20 %, ≈ −25 %, ≈ −35 %) y los porcentajes por
-> bloque de §3.2, a la decena.** La tabla de detalle de §3.1 conserva los valores finos, pero
-> **etiquetados como estimación** y sin valor de titular: dar −47 % o −69 % sugiere una precisión
-> que las bases no tienen. Si en algún momento se dispone de un script que cuente palabras sobre los
-> ficheros antes y después del recorte, **estas cifras se sustituyen por las medidas** y se retira
-> esta advertencia.
+> Consecuencia, aplicada más abajo: **los deltas absolutos de palabras se conservan** —salen del
+> texto que se recorta, no de la base— y **los porcentajes se recalculan sobre 6.670**. El titular
+> del capítulo completo pasa de **≈ −20 %** a **≈ −15 %**.
 >
-> Los números de **línea** de §1, en cambio, **sí son exactos**: están verificados uno a uno contra
-> disco. La imprecisión afecta solo al volumen estimado, no a la localización de los solapes.
+> Lo que **sigue siendo estimación** y así queda etiquetado: las columnas «antes»/«después» **por
+> apartado y por bloque** (§3.1 y §3.2). El conteo disponible es del **capítulo entero**, no por
+> nota, de modo que los porcentajes parciales no pueden reexpresarse con base verificada.
+>
+> Los números de **línea** de §1 son exactos: están verificados uno a uno contra disco.
 
 ### 3.1 Por apartado
 
@@ -374,39 +374,52 @@ ordenar los apartados por impacto —qué recorte rinde más—, **no para citar
 
 ### 3.2 Sobre el capítulo completo
 
-*Bases estimadas; los porcentajes se dan **a la decena**, conforme al aviso de arriba.*
+*Las filas por bloque conservan **bases estimadas** —no hay conteo por nota— y sus porcentajes se
+leen a la decena. La fila del **capítulo completo** es la única con **base contada** (6.670).*
 
-| Bloque | Palabras aprox. antes | Después | Δ % (a la decena) |
-|---|---:|---:|---:|
-| `3.1` Requisitos (incluida `3.1.5`, que **no se toca**) | ≈ 1.430 | ≈ 1.430 | 0 % |
-| `3.2` Arquitectura | ≈ 500 | ≈ 360 | ≈ −30 % |
-| `3.3` Metodología | ≈ 735 | ≈ 230 | **≈ −70 %** |
-| `3.4` Modelo de anomalías | ≈ 615 | ≈ 505 | ≈ −20 % |
-| `3.5` Modelo de firmas | ≈ 750 | ≈ 548 | ≈ −30 % |
-| `3.6` Conclusiones del capítulo | ≈ 300 | ≈ 300 | 0 % |
-| **Capítulo 3 completo** | **≈ 4.330** | **≈ 3.373** | **≈ −20 %** |
+| Bloque | Palabras antes | Después | Δ palabras | Δ % |
+|---|---:|---:|---:|---:|
+| `3.1` Requisitos (incluida `3.1.5`, que **no se toca**) | ≈ 1.430 *(est.)* | ≈ 1.430 | 0 | 0 % |
+| `3.2` Arquitectura | ≈ 500 *(est.)* | ≈ 360 | **−140** | ≈ −30 % *(est.)* |
+| `3.3` Metodología | ≈ 735 *(est.)* | ≈ 230 | **−505** | **≈ −70 %** *(est.)* |
+| `3.4` Modelo de anomalías | ≈ 615 *(est.)* | ≈ 505 | **−110** | ≈ −20 % *(est.)* |
+| `3.5` Modelo de firmas | ≈ 750 *(est.)* | ≈ 548 | **−202** | ≈ −30 % *(est.)* |
+| `3.6` Conclusiones del capítulo | ≈ 300 *(est.)* | ≈ 300 | 0 | 0 % |
+| **Capítulo 3 completo** | **6.670 (contadas)** | **5.713** | **−957** | **≈ −15 %** |
+
+> [!caution] Las bases por bloque están desfasadas y **no suman la base contada**
+> Las seis filas estimadas suman ≈ 4.330, que es justamente la base vieja: **no se han recontado**,
+> porque el conteo disponible es del capítulo entero. Sus porcentajes son, por tanto, **techos
+> optimistas** —cada bloque ha crecido desde el 2026-08-15—, y no deben citarse como resultado. Los
+> **deltas absolutos sí se mantienen**: dependen del texto que se retira, no de lo que quede alrededor.
 
 ### 3.3 La cifra que responde al profesor
 
 El profesor pide recortar **«los primeros apartados»**, que son `3.1`–`3.3`:
 
-| | Antes (estimado) | Después (estimado) | Δ |
-|---|---:|---:|---:|
-| `3.1` + `3.2` + `3.3` | ≈ 2.665 palabras | ≈ 2.020 | **≈ −645 palabras, ≈ −25 %** |
-| `3.1`–`3.3` **excluida `3.1.5`**, que es material nuevo y no duplicado | ≈ 1.765 | ≈ 1.120 | **≈ −645 palabras, ≈ −35 %** |
+| | Antes | Después | Δ palabras | Δ % |
+|---|---:|---:|---:|---:|
+| **Capítulo 3 completo** | **6.670 (contadas)** | **5.713** | **−957** | **≈ −15 %** |
+| `3.1` + `3.2` + `3.3` | ≈ 2.665 *(est. desfasada)* | ≈ 2.020 | **−645** | — *(ver aviso)* |
+| `3.1`–`3.3` **excluida `3.1.5`**, que es material nuevo y no duplicado | ≈ 1.765 *(est. desfasada)* | ≈ 1.120 | **−645** | — *(ver aviso)* |
 
-**Titular defendible:** aplicando las diez remisiones, el capítulo 3 encoge **≈ 20 %** en conjunto,
-y el bloque que el profesor señala, **≈ 25 %** — que sube a **≈ 35 %** si se descuenta
-`3.1.5 Modelo de amenaza`, escrita después de su comentario y que no duplica nada. El apartado
-`3.3`, el más afectado, se reduce **casi al tercio**.
+**Titular defendible, sobre la base contada:** aplicando las diez remisiones, el capítulo 3 encoge
+**−957 palabras, ≈ −15 %** sobre sus **6.670** palabras actuales. El titular anterior —«≈ −20 %»—
+era el **mismo recorte medido contra una base un ~54 % más corta**: el recorte no ha cambiado, ha
+cambiado el denominador. El apartado `3.3`, el más afectado, sigue siendo el que más encoge en
+términos absolutos (**−505 palabras**).
 
-> [!warning] El titular es una **estimación**, no una medición — 2026-08-15
-> Los tres porcentajes de arriba salen de un conteo de palabras **hecho a ojo sobre el texto leído**,
-> con bases igualmente estimadas (`3.3` ≈ 735, `3.4` ≈ 615, el bloque `3.1`–`3.3` sin `3.1.5`
-> ≈ 1.765). **No hay script de conteo**, así que no se dan al punto porcentual: se redondean a la
-> media decena, que es la precisión que las bases soportan. Si el titular llega a escribirse en un
-> correo al profesor o en la memoria, debe ir con el «≈» y con la palabra *aproximadamente*.
-> **En cuanto exista una medición real, estas cifras se sustituyen** y se retira este aviso.
+> [!todo] Los dos titulares del bloque `3.1`–`3.3` quedan **sin porcentaje** hasta que haya conteo por nota
+> Los antiguos **≈ −25 %** (bloque `3.1`–`3.3`) y **≈ −35 %** (el mismo bloque descontando `3.1.5`)
+> se calcularon sobre bases estimadas —2.665 y 1.765— que hoy se sabe cortas, igual que lo era la del
+> capítulo. **No se reexpresan aquí porque el conteo verificado es del capítulo entero, no por nota**,
+> y darles un porcentaje nuevo sería sustituir una estimación desfasada por otra inventada. Lo que sí
+> se sostiene sin base: el recorte de ese bloque es de **−645 palabras**, es decir, **dos tercios de
+> todo lo que se recorta en el capítulo**. Para cerrar el titular basta contar las palabras de `3.1`,
+> `3.2` y `3.3` por separado, y las de `3.1.5` dentro de `3.1`.
+>
+> **Si el titular se escribe en un correo al profesor o en la memoria**, úsese el del capítulo
+> completo —**≈ −15 % sobre 6.670 palabras**—, que es el único con base contada.
 
 ---
 
@@ -518,3 +531,10 @@ provocar un borrado equivocado en T9** —la falsa exclusividad de `4.3.6` para 
 canónica cerrada—. Lo confirmado correcto y no modificado: los diez emplazamientos del *data
 snooping*, la numeración de §1.2, la §4 de repetición legítima y la aritmética de §3 sobre sus
 bases.
+
+**Corrección de medida del 2026-08-18.** Intervención acotada a §3: se sustituye la base estimada del
+capítulo 3 (≈ 4.330 palabras, «a ojo») por su **conteo** (**6.670**), se recalcula sobre ella el
+titular del capítulo (≈ −20 % → **≈ −15 %**, con el mismo recorte absoluto de −957 palabras), se
+dejan **sin porcentaje** los dos titulares del bloque `3.1`–`3.3` por no existir conteo por nota, y
+se retiran los dos avisos `> [!warning]` que quedaban condicionados a que apareciera una medición.
+**No se han tocado las decisiones de los solapes S1–S15 ni el orden de ejecución de §6.**

@@ -1604,3 +1604,98 @@ carpeta queda vacía y fuera de git.
 
 **`03 Desarrollo/` NO entra en esta decisión.** Su borrado se autorizó aparte, el 2026-08-18, y se
 ejecutó en la Tanda 28 (`896c60f`).
+
+---
+
+## Decisiones del 2026-08-18 — `grill-me` del Grupo IV: densidad, alcance del recorte y permisos
+
+Salen del **interrogatorio del Grupo IV**, ejecutado el 2026-08-18 en hilo principal. El Grupo IV
+estaba fichado como «NO EJECUTABLE POR NINGÚN AGENTE — es un interrogatorio con Francisco»: **esa
+etiqueta queda derogada para la parte ya cerrada**, y sigue vigente solo para lo que no se preguntó.
+
+### Decisión 1 — Densidad de `2.1`: criterio **«lo que el TFG usa»**
+
+Se queda en el cuerpo de `2.1` lo que el sistema **emplea**, o lo que hace falta para leer los
+capítulos 4-5. Lo demás se comprime a una frase o **se mueve** a `A.2`/`A.3`.
+
+**Por qué se abrió el capítulo 2 cuando el profesor habló del 3:** medido el 2026-08-18, el
+capítulo 2 era **37.651 palabras**, el mayor del TFG — 5,6× el capítulo 3 que el profesor señaló
+por largo, y casi el doble del 5. La pregunta de Francisco («¿incluyo demasiada información aquí?»)
+tenía respuesta medida: sí.
+
+> **Objetivo NO alcanzado, y se registra como tal.** El objetivo orientativo era bajar `2.1` de
+> 15.415 a ~10.000 palabras. La Tanda A la dejó en **13.125 contadas** (`wc -w`), es decir
+> **−14,9 %**. Aplicado el criterio, lo que queda ya es material que el sistema usa: **apretar los
+> ~3.100 restantes exigiría un criterio NUEVO que este grill no fijó**, y por tanto es decisión
+> pendiente de Francisco. No se fuerza.
+
+### Decisión 2 — Dónde se define la IA: **en `2.3.1`**, sin renumerar
+
+`2.1.1` conserva **solo** la comparación IA/ML —Francisco confirma que ahí sí aporta perspectiva—
+con remisión a `2.3.1`, que es la nota que ya define IA y su relación con ML. **Se descartaron
+explícitamente** las dos alternativas que implicaban renumerar el capítulo 2 (crear un apartado de
+IA delante de `2.1`, o mover `2.3` al principio): el coste en remisiones cruzadas, figuras e índice
+no lo justificaba.
+
+**Corrección de una premisa falsa.** El apunte de Francisco preguntaba «¿Qué conceptos de IA estoy
+incluyendo? ¿Ninguno?». En disco `2.3 Inteligencia Artificial` son **tres notas y 10.206 palabras**.
+El bloque de IA que `1.4` promete **existe**, y eso redujo la ficha `1.4` de «hay que escribir IA» a
+«hay que realinear `1.4` tras el recorte».
+
+### Decisión 3 — Aprendizaje continuo: **definición breve en `2.x`, propuesta en `6.2`**
+
+Sin duplicar. **Ya estaba cumplido**: `2.1.1` lo define («un refinamiento adicional de este
+esquema…», con `[5, cap. 1]` y la **Figura 2.4**), y la verificación de la Tanda A confirmó que **no
+solapa** con el apartado de *Nested Learning* de `6.2`.
+
+> **Corrección de referencia:** el apunte hablaba de «la figura de `1.4`». **`1.4` no embebe ninguna
+> figura**; la que menciona el aprendizaje continuo es la **Figura 2.4**, en `2.1.1`.
+
+### Decisión 4 — Alcance del barrido de duplicación: **capítulo 3 ahora, 4-6 aparte con informe previo**
+
+El capítulo 3 se ejecuta con los **15 solapes S1–S15** que `99 Investigación/Datos repetidos en el
+capítulo 3.md` ya tiene verificados contra disco. Los capítulos **4-6** (~52.000 palabras) llevan un
+**barrido nuevo que produce su propio informe con decisiones ANTES de tocar ninguna nota**: no se
+improvisan recortes sobre 52k palabras sin verificar.
+
+**Restricción T7, sin excepción:** lo que sale del cuerpo **se MUEVE a `A.3 Ficha del sistema`**,
+nunca se borra.
+
+### Decisión 5 — Hiperparámetros y semilla 42: fuera del cuerpo **salvo cuando el número ES el argumento**
+
+Los valores concretos van a `A.3`; en el cuerpo se dice **qué se buscó y por qué**, con remisión.
+
+**Excepciones que se quedan en el cuerpo, y por qué:** el umbral **p95**, el **99,9 %** de
+importancia acumulada, y **la semilla 42 en `5.2`** — `5.2.4` la compara contra la banda de las diez
+semillas y `3.5.2` justifica RandomForest con ella, de modo que **sin nombrarla esos párrafos dejan
+de entenderse**. Se descartó por eso el barrido total que el ejemplo del profesor sugería en su
+literalidad.
+
+### Decisión 6 — Permisos de autonomía concedidos por Francisco
+
+Registrados aquí porque son decisiones de método, y su sede canónica es este fichero:
+
+- **(a) Los agentes aplican un `grill-me` ya cerrado sobre las notas sin volver a preguntar nota por
+  nota**, con un pase de **`auditor-ml` al cierre de CADA tanda**. Francisco revisa el resultado en
+  git, no cada decisión intermedia.
+- **(b) El trabajo mecánico se pliega al commit de la tanda siguiente**, sin cierre propio: un
+  commit para una corrección de minutos sería **granularidad ficticia**, el mismo argumento que ya
+  justifica que la tanda paralela —y no la nota— sea la unidad de commit.
+- **(c) El push lo sigue lanzando Francisco.** Reconfirmado. Los agentes commitean sin preguntar y
+  le reportan cuántos commits quedan sin subir.
+
+Amplían los permisos del 2026-08-16 (`researcher` sin pedirlo, commits sin preguntar) y el mandato
+de barrido en tandas seguidas del 2026-08-17.
+
+### Nota de método — **el desglose reportado no sustituye al conteo**
+
+En esta misma tanda, el desglose por nota que llegó en el reporte del recorte estaba **subestimado y
+era internamente incoherente**: sus parciales sumaban ~11.000 palabras cuando su propio total decía
+≈13.050 (real: **13.125**). Se detectó al recontar con `wc -w` antes de commitear, y **las cifras
+registradas en `features.md` son las contadas, no las reportadas**.
+
+Es el **mismo patrón** que obligó a recontar el capítulo 3, cuya estimación «a ojo» de ≈4.330
+palabras resultó ser **6.670** —base corta un ~54 %, que inflaba los titulares −20 %/−25 %/−35 %—.
+**Regla que queda:** antes de publicar un porcentaje de recorte, se cuenta; un volumen reportado por
+un agente es una pista, no una medida.
+

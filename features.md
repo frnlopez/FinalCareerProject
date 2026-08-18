@@ -518,8 +518,11 @@ del criterio: el grupo B es una categoría, no un inventario.
 **C. Ejecutables por agente, y NO todas son sustancia.** Mecánicas o de vigilancia:
 «La celda de `[76]` en `Bibliografía.md` se contradice a sí misma» (solo `researcher`); «Tercera
 sede del `52` sin tocar, y con una referencia `fichero:línea` desfasada dentro»; «Cosmético:
-`Abstract.md:15` pide guiones — «Machine-learning-based»»; «`features.md` citaba `3.3:42` como sede
-pendiente; en disco es `3.3:29` y ya está resuelta» (vigilancia del patrón, no acción); «PDF sin
+`Abstract.md:15` pide guiones — «Machine-learning-based»»; ~~«`features.md` citaba `3.3:42` como sede
+pendiente; en disco es `3.3:29` y ya está resuelta» (vigilancia del patrón, no acción)~~ **— CERRADA
+el 2026-08-18, plegada a la TANDA A del Grupo IV: el patrón dejó de necesitar ficha al convertirse en
+REGLA del proyecto («Referenciar por TÍTULO, nunca por `fichero:línea`», «Normas de trabajo» de
+`CLAUDE.md`). Se conserva tachada como ejemplo del criterio, no como pendiente**; «PDF sin
 acceso institucional — reabrir si Francisco consigue acceso» (bloqueada en el acceso, no en un
 agente). Y las **de sustancia real**, ninguna caducada — verificado contra disco:
 - **«`1.4`: qué conceptos de IA entran de verdad en el capítulo 2, y resúmenes de capítulo demasiado
@@ -539,6 +542,10 @@ desplazados y hay que localizarlos **por contenido, no por línea**—. Es **eje
 manifestación del patrón del `fichero:línea` desfasado. **Un `[~]` o un `[x]` que declara trabajo
 vivo en su cuerpo es invisible a `grep '^- \[ \]'`: ese es el fallo de método que este apartado
 cubre.**
+**ACTUALIZADO el 2026-08-18: ese residuo de T25 YA NO ESTÁ VIVO.** Quedó cerrado por verificación en
+la TANDA 31 (el trabajo estaba aplicado desde las TANDAS 11/13) y se **plegó** a la TANDA A del Grupo
+IV como residuo mecánico. **Lo que este apartado D sigue describiendo es el MÉTODO**, no un pendiente:
+un `[~]` o un `[x]` con trabajo vivo en el cuerpo no sale en el barrido.
 
 **Conclusión de método, que no cambia:** «estaba todo resuelto» es **cierto en lo que importa** —los
 capítulos 1 a 6 están redactados y el track de código está cerrado—. Lo que queda abierto **no es
@@ -557,6 +564,16 @@ vive como **viñeta dentro de su ficha madre**, salvo que se cumpla alguna de es
 y la viñeta madre pasa a **remitir a ella**. Motivo: una sub-tarea sin ficha es **invisible a
 `grep '^- \[ \]'`**, que es como se barre este fichero — y por eso **T20 estuvo contada como
 inexistente** mientras dos bloques la nombraban como tarea suelta.
+
+**Tres permisos concedidos por Francisco el 2026-08-18 — registro operativo.** Se anotan aquí porque
+gobiernan **cómo se despacha y cómo se cierra**, que es lo que este fichero registra; **la sede
+canónica de las decisiones de diseño sigue siendo `resumen-de-decisiones.md`**, y ahí las escribe el
+hilo principal, no el `cronista`:
+**(a)** los agentes **aplican un `grill-me` ya cerrado sobre las notas sin preguntar nota por nota**,
+con **`auditor-ml` al cierre de cada tanda** (así se ejecutó la TANDA A del Grupo IV);
+**(b)** el **trabajo mecánico se pliega al commit de la tanda siguiente**, **sin cierre propio** —por
+eso el `3.3:42` y el residuo de T25 no llevan commit separado—;
+**(c)** el **push lo sigue lanzando Francisco**.
 
 **Fichar no es resolver: este bloque no corrige nada.**
 
@@ -737,7 +754,7 @@ inexistente** mientras dos bloques la nombraban como tarea suelta.
   sede**: `resumen-de-decisiones.md` no la recoge. **Y ese fichero lo escribe el hilo principal con
   Francisco delante**, así que ningún agente puede trasladarla por su cuenta.
 
-- [ ] 🟠 **Grupo IV (puntos 18, 19 y 20): el `grill-me` conjunto de `1.4` + densidad de `2.1` + revisión del profesor** · Informe · **NO EJECUTABLE POR NINGÚN AGENTE — es un interrogatorio con Francisco**
+- [~] 🟠 **Grupo IV (puntos 18, 19 y 20): el `grill-me` conjunto de `1.4` + densidad de `2.1` + revisión del profesor** · Informe · **el `grill-me` YA ESTÁ EJECUTADO (2026-08-18); lo que queda SÍ es despachable a agentes**
   Alta el **2026-08-18**. Es **lo único de sustancia que queda** tras la TANDA 30. Agrupa las tres
   fichas de alcance no cerrado del grupo C del triaje —«`1.4`: qué conceptos de IA entran de verdad en
   el capítulo 2», «`2.1` · coherencia y densidad del guion teórico» y «Revisión del profesor:
@@ -750,7 +767,16 @@ inexistente** mientras dos bloques la nombraban como tarea suelta.
   > **RESTRICCIÓN DURA (T7): lo que salga del cuerpo se MUEVE a `A.3`, NO se elimina.**
   > **Dossier de entrada, ya preparado:** los **seis puntos vivos de `2.1`**, la **cita textual del
   > profesor con sus dos peticiones**, y el **punto 1 de `1.4`**.
-  > **Ningún agente puede ejecutarla: es un interrogatorio con Francisco delante.**
+  > ~~**Ningún agente puede ejecutarla: es un interrogatorio con Francisco delante.**~~
+  > **DEROGADO el 2026-08-18: el `grill-me` del Grupo IV QUEDÓ EJECUTADO ese día**, con su criterio
+  > cerrado por Francisco — «**se queda lo que el TFG usa o lo que hace falta para leer los capítulos
+  > 4-5**». La etiqueta «NO EJECUTABLE POR NINGÚN AGENTE» **ya no es cierta** para lo que el grill
+  > dejó decidido: a partir de aquí lo despachan agentes.
+  > **PARTE 1 CERRADA — TANDA A del Grupo IV (2026-08-18): la densidad de `2.1`.** Su fila vive ya en
+  > `## Cerradas`. **Lo que SIGUE ABIERTO en esta ficha son las partes (2) y (3)**, en ese orden:
+  > **(2) revisión del profesor** —ejecutar S1–S15 sobre el capítulo 3 y un **barrido nuevo de
+  > duplicación sobre los capítulos 4-6, con informe previo**— y **(3) `1.4`, LA ÚLTIMA**.
+  > **El Grupo IV como contenedor NO se cierra hasta que caigan las dos.**
 
 - [x] 🟡 **La nota del `bin_accuracy` 0,8605 quedó registrada AL FINAL DE H-6, y el `auditor-ml` dijo que no es H-6** · **CERRADA el 2026-08-18 en la TANDA 31: la nota SALE de H-6 y pasa a SECCIÓN PROPIA, `H-8`**, colocada tras H-7 en `resumen-de-decisiones.md` por el hilo principal, con el **cuerpo íntegro** salvo la frase final «y por eso se registra aquí», que ya no aplica; **en H-6 queda una remisión de una línea**. **La cifra no se toca** (`metricas_hibrido.csv`, valor real **0.860451**). Su fila vive ya en `## Cerradas` · Informe · **decidió Francisco**
   Alta el **2026-08-18**, reserva del `leader` sobre el **punto 12** de la TANDA 30. El auditor fue
@@ -1116,7 +1142,7 @@ inexistente** mientras dos bloques la nombraban como tarea suelta.
 > CERRADO el 2026-08-17**: se **ejecutó** el re-anclaje y los seis artefactos llevan ya el sello
 > **limpio `ac36b88`**. Su ficha vive ya en `## Cerradas`.
 
-- [ ] 🟡 **`features.md` citaba `3.3:42` como sede pendiente; en disco es `3.3:29` y ya está resuelta** · — · `cronista`
+- [x] 🟡 **`features.md` citaba `3.3:42` como sede pendiente; en disco es `3.3:29` y ya está resuelta** · **CERRADA el 2026-08-18, PLEGADA como residuo mecánico a la TANDA A del Grupo IV.** La parte concreta estaba resuelta en disco desde el 2026-08-17 y **el patrón ya no necesita ficha: es REGLA del proyecto** desde el punto 17 de la TANDA 30 («Referenciar por TÍTULO, nunca por `fichero:línea`», en «Normas de trabajo» de `CLAUDE.md`). Su fila vive ya en `## Cerradas` · — · `cronista`
   Alta el **2026-08-17**. Referencia con línea **desfasada** dentro del propio registro. Queda
   fichado como **patrón a vigilar**, no como incidencia suelta: las referencias `fichero:línea` de
   este documento **se recuentan contra disco antes de repetirlas**.
@@ -1197,6 +1223,27 @@ inexistente** mientras dos bloques la nombraban como tarea suelta.
     estuviera cerrado, así que es el **siguiente paso natural (Fase 7)**. **El título sigue siendo
     decisión de Francisco** (Decisión 6): un agente propone candidatos, no lo fija. Al ejecutarla hay
     que **releer `mis-apuntes-del-informe.md` entero**, que es incremental.
+
+### Altas del 2026-08-18 — `mis-apuntes-del-informe.md` ha crecido desde el 2026-08-12
+
+> **Por qué existen estas dos fichas.** Las fichas viejas de preliminares copiaron el estado de
+> `mis-apuntes-del-informe.md` a **2026-08-12**, y ese fichero es **incremental**. Al releerlo entero
+> el **2026-08-18** aparecen dos peticiones que ninguna ficha cerrada cubre. **Francisco decidió ese
+> mismo día tratarlas APARTE, cuando el Grupo IV esté cerrado.** No son bloqueantes de nada.
+
+- [x] 🟡 **`mis-apuntes-del-informe.md`, línea 5: el RESUMEN del informe no está escrito, y el abstract es ese mismo texto en inglés** · **CERRADA el 2026-08-18 POR CONSTATACIÓN, no por ejecución: en disco YA ESTÁN LOS DOS.** `00 Preliminares/Resumen.md` (`estado: redactada`, **565 palabras**, con palabras clave) y `Abstract.md` (`estado: redactada`, **523 palabras**, declarado traducción fiel del anterior). Lo desfasado es **el apunte**, anterior a la TANDA 28. Su fila vive ya en `## Cerradas` · Informe · `cronista` (verificación)
+  Alta y cierre el **2026-08-18**. Nació de releer `mis-apuntes-del-informe.md`, que es incremental
+  **pero NO se poda**: conserva puntos ya resueltos redactados en presente.
+
+- [x] 🟡 **`mis-apuntes-del-informe.md`, línea 7: falta el título del proyecto** · **CERRADA el 2026-08-18 POR CONSTATACIÓN: el título está FIJADO** — «Sistema híbrido de detección de intrusiones en red basado en aprendizaje automático: detección de anomalías y firmas en cascada sobre NSL-KDD», con su traducción inglesa en `Abstract.md`, y **ambos ficheros llevan un callout «Título fijado — 2026-08-18» que dice que Francisco cerró la elección ese día y que NO DEBE REABRIRSE**. Su fila vive ya en `## Cerradas` · Informe · `cronista` (verificación)
+  Alta y cierre el **2026-08-18**. Mismo origen y misma causa que la anterior.
+
+> ⚠️ **AVISO PARA QUIEN EJECUTE LAS FICHAS DEL GRUPO IV: `mis-apuntes-del-informe.md` CONTIENE PUNTOS
+> YA RESUELTOS.** Es la **fuente viva** de las otras dos fichas del Grupo IV —«`2.1` · coherencia y
+> densidad» y «`1.4`: qué conceptos de IA entran de verdad»— y es **incremental pero no se poda**:
+> sus líneas 5 y 7 pedían en presente el resumen, el abstract y el título cuando los tres estaban
+> hechos y cerrados desde la TANDA 28. **Cada punto de ese fichero se contrasta contra disco ANTES de
+> trabajarlo**, uno por uno. Quien no lo haga volverá a abrir trabajo inexistente, como pasó aquí.
 
 ### Lote 2026-08-06 — los 4 informes del `researcher` convertidos en tareas
 
@@ -2503,6 +2550,14 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-18 | Informe | **TANDA A DEL GRUPO IV · RECORTE DE DENSIDAD DE `2.1`, bajo el criterio que cerró el `grill-me` del Grupo IV** («se queda lo que el TFG usa o lo que hace falta para leer los capítulos 4-5»). **El `grill-me` QUEDÓ EJECUTADO el 2026-08-18: la etiqueta «NO EJECUTABLE POR NINGÚN AGENTE» deja de valer para la parte cerrada.** **CIFRAS CONTADAS CON `wc -w` SOBRE DISCO, no estimadas: `2.1` pasa de 15.415 a 13.125 palabras, −2.290 (−14,9 %).** **EL OBJETIVO ORIENTATIVO DE ~10.000 NO SE ALCANZÓ, y se registra sin maquillar:** aplicado el criterio, lo que queda ya es material que el sistema emplea, y apretar los **~3.100 restantes** exigiría **un criterio nuevo que el grill no fijó** — **PENDIENTE DE DECISIÓN DE FRANCISCO**. **Por nota (contado):** `2.1.1` 981→1.030 (**+49, crece**); `2.1.2` 1.926 **sin tocar**; `2.1.3` 1.468→1.774 (**+306, crece** por los puntos editoriales 3-5); `2.1.4` 3.029→2.685 (−344, salen regresión logística y k-means/jerárquico); `2.1.5` 2.499→2.180 (−319); **`2.1.6` 5.512→3.530 (−1.982, −36 %)**, el foco principal — **−36 %, NO el −50 % que se reportó**. **RESTRICCIÓN T7 RESPETADA Y VERIFICADA POR EL AUDITOR: nada se borró** — el excedente vive en las secciones nuevas **`A.3.10`, `A.3.11` y `A.2.2`**, con remisiones navegables desde el cuerpo. **Verificado contra `Implementacion/app/` que ningún algoritmo que el sistema usa salió del cuerpo** (`grep` de `LogisticRegression\|KMeans\|Agglomerative\|silhouette` → **cero coincidencias en el código**). **Puntos 1 y 2 del grill: verificados, SIN trabajo que hacer** —no había definición duplicada de IA (`2.1.1.1` ya era comparación IA/ML con remisión a `2.3.1`) ni solape del aprendizaje continuo con `6.2`; el reparto definición-aquí / propuesta-allí ya era correcto y **ahora se declara explícito**—. **Puntos editoriales 3, 4 y 5 de la ficha `2.1`: RESUELTOS.** **`auditor-ml`: APTO CON CAMBIOS, seis puntos, TODOS aplicados** en un pase en serie posterior (duplicación de la estratificación entre `A.3.11.3` y `2.1.6.3`; cabecera de `A.3` que declaraba «ninguna cifra se calcula aquí» y había quedado falsa al alojar marco teórico; entradilla de `2.1.5`; un `2.1.4.1.1` muerto citado desde el apéndice; dos fragmentos movidos con el arranque descolocado; y la tercera enunciación del reparto de sedes canónicas). **Cero `[n]` inventados o alterados; `[6, cap. 6]` sigue vivo en `2.1.4.3`.** **Ficheros:** `02 Marco Teórico/2.1 Machine Learning/` (`2.1.1`, `2.1.3`, `2.1.4`, `2.1.5`, `2.1.6`), `Apéndices/A.2 Métricas de desempeño.md`, `Apéndices/A.3 Ficha del sistema.md`, `99 Investigación/Datos repetidos en el capítulo 3.md`. **EL GRUPO IV NO SE CIERRA:** siguen abiertas la **revisión del profesor** (S1–S15 sobre el capítulo 3 + barrido nuevo de duplicación sobre 4-6 con informe previo) y **`1.4`, que va LA ÚLTIMA** | — |
+| 2026-08-18 | Informe | **CORRECCIÓN DE MEDIDA DEL CAPÍTULO 3 — mecánica, plegada a la TANDA A.** La estimación «a ojo» de **≈4.330 palabras era FALSA**: **contadas son 6.670**, **recontadas de forma independiente por el `auditor-ml` (6.662–6.700, error <0,6 %)**, así que **la cifra es CITABLE**. Titular del capítulo recalculado a **≈ −15 % (−957 palabras)**; los **−25 %/−35 % del bloque `3.1`–`3.3` quedan SIN PORCENTAJE**, con un `> [!todo]` que **conserva el absoluto −645**, porque el conteo es del **capítulo entero**. **Retirados los dos `[!warning]`** que el propio informe dejaba condicionados a que existiera una medición. **S1–S15 INTACTOS** | — |
+| 2026-08-18 | Ninguno | **DESFASE ENTRE LO REPORTADO Y LO CONTADO, registrado como episodio: el desglose por nota que emitió el `leader` para la TANDA A era FALSO y además INTERNAMENTE INCOHERENTE** —sus parciales sumaban ~11.000 cuando su propio total decía ≈13.050—. Se recontó con **`wc -w` sobre disco** y las cifras publicadas arriba son **las contadas**: el **total y el titular** sí eran correctos, **el desglose no** (`2.1.6` era **−36 %**, no −50 %; `2.1.1` y `2.1.3` **crecen**, `2.1.2` **no se tocó**). **Es el MISMO patrón que ya obligó a recontar el capítulo 3** el mismo día (≈4.330 estimadas vs **6.670** contadas). **Regla que confirma: un recuento se cuenta contra disco, no se recuerda ni se hereda de un informe intermedio** | — |
+| 2026-08-18 | — | **🟡 «`features.md` citaba `3.3:42` como sede pendiente; en disco es `3.3:29`» — CERRADA, PLEGADA como residuo mecánico a la TANDA A.** La parte concreta llevaba **resuelta en disco desde el 2026-08-17**, y **el patrón ya no necesita ficha: es REGLA del proyecto** desde el punto 17 de la TANDA 30 («Referenciar por TÍTULO, nunca por `fichero:línea`», en «Normas de trabajo» de `CLAUDE.md`). **Sin cierre propio ni commit separado**, por el permiso (b) de Francisco del 2026-08-18 | — |
+| 2026-08-18 | Informe | **🟡 «`mis-apuntes-del-informe.md`, línea 5: el RESUMEN del informe no está escrito» — CERRADA POR CONSTATACIÓN, NO POR EJECUCIÓN, y sin tocar un solo fichero del vault.** Verificado en disco: `00 Preliminares/Resumen.md` (`estado: redactada`, **565 palabras**, resumen completo y palabras clave) y `00 Preliminares/Abstract.md` (`estado: redactada`, **523 palabras**, declarado traducción fiel del anterior). **Lo desfasado es el APUNTE**, anterior al trabajo de la TANDA 28 | — |
+| 2026-08-18 | Informe | **🟡 «`mis-apuntes-del-informe.md`, línea 7: falta el título del proyecto» — CERRADA POR CONSTATACIÓN: EL TÍTULO ESTÁ FIJADO** — «Sistema híbrido de detección de intrusiones en red basado en aprendizaje automático: detección de anomalías y firmas en cascada sobre NSL-KDD», con su traducción inglesa en `Abstract.md`. **Ambos ficheros llevan un callout «Título fijado — 2026-08-18» que declara que Francisco cerró la elección ese día y que NO DEBE REABRIRSE.** La Decisión 6 de la Fase 0 sigue **consumida** | — |
+| 2026-08-18 | Ninguno | **AVISO DE MÉTODO REGISTRADO: `mis-apuntes-del-informe.md` CONTIENE PUNTOS YA RESUELTOS.** Es **incremental pero NO se poda**, y redacta en presente cosas hechas: sus líneas 5 y 7 pedían el resumen, el abstract y el título cuando los tres estaban cerrados desde la TANDA 28 — **dos fichas abiertas y cerradas el mismo día por eso**. Importa porque **es la fuente viva de las otras dos fichas del Grupo IV** (`2.1` densidad y `1.4`): **cada punto de ese fichero se contrasta contra disco ANTES de trabajarlo**, uno por uno. Anotado junto a las dos fichas y en el bloque del Grupo IV | — |
+| 2026-08-18 | Ninguno | **TRES PERMISOS DE FRANCISCO (2026-08-18) REGISTRADOS en el bloque de método de `features.md`: (a)** los agentes **aplican un `grill-me` ya cerrado sobre las notas sin preguntar nota por nota**, con **`auditor-ml` al cierre de cada tanda**; **(b)** el **trabajo mecánico se pliega al commit de la tanda siguiente, sin cierre propio**; **(c)** el **push lo sigue lanzando Francisco**. Se anotan aquí porque gobiernan **cómo se despacha y cómo se cierra**; **la sede canónica de las decisiones de diseño sigue siendo `resumen-de-decisiones.md`**, y ahí las escribe el hilo principal | — |
 | 2026-08-18 | Informe/Ninguno | **TANDA 31 · DEJAR EL ESTADO AUTOCONTENIDO PARA SESIONES INDEPENDIENTES. Seis ficheros tocados, verificados contra `git status`** (`Obsidian_TFG_Vault/Bibliografía.md`, `Obsidian_TFG_Vault/99 Investigación/Auditoría de Bibliografía.md`, `CLAUDE.md`, `.claude/agents/leader.md`, `resumen-de-decisiones.md`, `features.md`). **Cierra SEIS fichas.** **(1) T25 — CERRADA POR VERIFICACIÓN, no por trabajo:** ya estaba aplicada desde las TANDAS 11/13; **lo que seguía vivo era el registro**, y el triaje la arrastraba viva **por error** — **decimocuarta ocurrencia del patrón**. **(2) Las SEIS entradas sin uso de `Bibliografía.md` — RETIRADAS** por decisión de Francisco: **exactamente seis y ninguna más**, tachadas y **conservadas con razón escrita** como `[9]`; **cero altas, cero renumeraciones, cero borrados**. **(3) EL CONTADOR DE CITAS CAMBIA, y es el dato con riesgo real del proyecto:** **78 números emitidos, 71 ENTRADAS VIVAS y SIETE QUEMADAS — `[9]`, `[27]`, `[28]`, `[37]`, `[44]`, `[45]` y `[76]`; primer libre `[79]`**, contado en disco por el `researcher` **y recontado por el hilo principal, las dos cuentas coinciden**. **Falso amigo registrado: `[76]` está quemada pero `[78]` Storkey está VIVA** —nació al desdoblarla— y es el **noveno libro con localizador obligatorio**. `CLAUDE.md` y **`.claude/agents/leader.md`** declaraban «76 entradas, primer libre `[78]`»: **corregidos los dos** por el hilo principal, más la sede vigente del bloque «CONTADOR GLOBAL DE CITAS» de `features.md`. **Importa porque `leader.md` es el fichero que DESPACHA:** sin corregirlo, la próxima tanda paralela habría arrancado con un número equivocado. **(4) `resumen-de-decisiones.md`, por el hilo principal:** la nota del `bin_accuracy` **sale de H-6 y pasa a `H-8`**, y **alta de la decisión CS229**. **(5) `features.md`: convención de fichado de sub-tareas (T20)** escrita en el bloque de método del triaje. **(6) El callout «Punto actual» de `00 Índice TFG.md` — SIN CAMBIOS: ya estaba correcto.** **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida.** **PENDIENTE, y es lo único que queda del TFG:** el **`grill-me` conjunto** `2.1` (densidad) → revisión del profesor → **`1.4` la última**, con la restricción dura de **T7** (lo que salga del cuerpo se **mueve a `A.3`**) | `5149cc6` |
 | 2026-08-18 | Informe | **T25 (residuo 5 de «Seis afirmaciones del vault que la TANDA 7 dejó desfasadas») — CERRADA POR CONSTATACIÓN: el trabajo YA ESTABA APLICADO desde las TANDAS 11/13.** Localizado **por contenido**, como la propia viñeta mandaba: la tachadura de «`[6]` Goodfellow huérfana» con su «YA NO: T24 la ancló», la fila de `[6]` marcada **`YA NO ESTÁ HUÉRFANA`**, el callout final coherente, y en `Auditoría de Bibliografía.md` un `[!success] EJECUTADO` que se autodeclara «la corrección que T25 encargaba sobre este fichero», con la **fila P3 tachada**. Un `grep` de «huérfan\*» sobre **todo el vault** no devuelve **ninguna declaración falsa viva**. **Con ella la ficha madre queda cerrada entera (6/6)** | `5149cc6` |
 | 2026-08-18 | Informe | **🟡 «Seis entradas de `Bibliografía.md` quedan SIN USO en el texto» — CERRADA: RETIRADAS, por decisión de Francisco.** Identificadas **marcador a marcador en las siete carpetas de notas**: **exactamente seis y ninguna más**; las apariciones residuales son **callouts explicativos, no marcadores vivos**. Quedan **tachadas y conservadas con razón escrita**, misma forma que `[9]` — **cero altas, cero renumeraciones, cero borrados**. Actualizada la coherencia arrastrada: **cabecera**, **callout de las 47 citas**, la **excepción a T16 en `[76]`** y la **lista de libros con localizador**. **Efecto en el contador: siete números quemados y primer libre `[79]`** | `5149cc6` |

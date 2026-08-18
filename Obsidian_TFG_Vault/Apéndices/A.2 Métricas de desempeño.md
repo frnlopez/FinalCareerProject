@@ -6,7 +6,7 @@ estado: redactada
 
 # A.2 Métricas de desempeño
 
-Este apéndice documenta **cómo se instancian en este sistema** las métricas empleadas en la evaluación del [[5.1 Resultados del modelo de detección de anomalías|capítulo 5]]: la convención de signo adoptada, la forma que toma la matriz de confusión en las dos etapas, el criterio de umbral del detector de anomalías y las cifras de FPR que se obtienen con él. **La definición formal de cada métrica y la justificación de su elección no están aquí, sino en [[2.1.5 Métricas de evaluación]]**, que es su sede canónica; las fórmulas que siguen se reproducen **solo como tabla de consulta rápida**, para no obligar al lector del capítulo 5 a volver al capítulo 2.
+Este apéndice documenta **cómo se instancian en este sistema** las métricas empleadas en la evaluación del [[5.1 Resultados del modelo de detección de anomalías|capítulo 5]]: la convención de signo adoptada, la forma que toma la matriz de confusión en las dos etapas, el criterio de umbral del detector de anomalías y las cifras de FPR que se obtienen con él (A.2.1). A ello se añade un apartado de naturaleza distinta, **A.2.2**, que recoge las familias de métricas **ajenas a la clasificación** —regresión y *clustering*— que el marco teórico necesita definir pero que **ninguna tabla de resultados de este trabajo reporta**. **La definición formal de cada métrica y la justificación de su elección no están aquí, sino en [[2.1.5 Métricas de evaluación]]**, que es su sede canónica; las fórmulas que siguen se reproducen **solo como tabla de consulta rápida**, para no obligar al lector del capítulo 5 a volver al capítulo 2.
 
 Salvo indicación contraria, se adopta la convención del sistema: **positivo = ataque (1)**, **negativo = normal (0)**.
 
@@ -75,3 +75,45 @@ $$\text{umbral} = P_{95}\big(\text{score}(D1_{\text{val}})\big)$$
 
 > [!warning] Alcance de la remisión a `5.3`
 > [[5.3 Resultados del sistema híbrido]] publica **únicamente la variante de 54 características**. La cifra de la variante de 122 **no aparece allí**, y el «8,5 %» que sí figura en esa nota corresponde a la columna «OneClassSVM (FPR 8,5 %)», es decir, a **otro detector y en la variante de 54**. Para la cifra de 122, la fuente es el artefacto citado arriba.
+
+---
+
+## A.2.2 Métricas ajenas a la clasificación, no reportadas por este trabajo
+
+Las familias que siguen **no aparecen en ninguna tabla `metricas_*.csv` del capítulo 5**: se recogen aquí, y no en el cuerpo, por completitud del marco de aprendizaje automático expuesto en [[2.1.2 Tipos de ML]]. El cuerpo de [[2.1.5 Métricas de evaluación]] § 2.1.5.6 las deja enunciadas en una frase y remite a este apartado. Ninguna decisión del sistema depende de ellas.
+
+### A.2.2.1 Métricas de regresión: MAE y RMSE
+
+Aunque este trabajo aborda un problema de clasificación, dos métricas de regresión son parte del vocabulario común del aprendizaje automático y conviene fijarlas. Ambas miden la distancia entre el valor predicho $\hat{y}_i$ y el valor real $y_i$ sobre un conjunto de $n$ ejemplos.
+
+**Error absoluto medio** (MAE, *Mean Absolute Error*): el promedio del valor absoluto de cada error.
+
+$$\text{MAE} = \frac{1}{n}\sum_{i=1}^{n} |y_i - \hat{y}_i|$$
+
+**Raíz del error cuadrático medio** (RMSE, *Root Mean Square Error*): la raíz cuadrada del promedio de los errores al cuadrado.
+
+$$\text{RMSE} = \sqrt{\frac{1}{n}\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}$$
+
+La diferencia entre ambas no es solo de fórmula: al elevar al cuadrado antes de promediar, el RMSE **penaliza más los errores grandes** que los pequeños, mientras que el MAE trata cualquier error con peso proporcional a su magnitud, sin amplificarlo. Un único error muy grande —un caso atípico mal predicho— eleva el RMSE de forma desproporcionada respecto a su efecto en el MAE. La elección entre ambas depende de si el problema considera los errores grandes desproporcionadamente más costosos (RMSE) o si todos los errores deben pesar según su magnitud sin más (MAE) [5, cap. 2].
+
+> [!note] Un matiz propio de este sistema
+> El error de reconstrucción del autoencoder de la etapa 1 es formalmente un error de regresión, pero **no se reporta como métrica de regresión**: se usa como *score* de anomalía y se evalúa con las métricas de clasificación de A.2.1, tras compararlo con el umbral por percentil 95.
+
+### A.2.2.2 Métricas de *clustering*: coeficiente de silueta
+
+Cuando el algoritmo no dispone de etiquetas reales contra las que comparar —el caso del aprendizaje no supervisado por agrupamiento— las métricas anteriores no son aplicables, porque todas ellas necesitan conocer la clase verdadera de cada muestra. El **coeficiente de silueta** (*silhouette score*) evalúa en su lugar la calidad interna de la partición en grupos, sin requerir etiquetas.
+
+Para una instancia dada, sea $a$ la distancia media a las demás instancias de su propio clúster (cohesión interna) y $b$ la distancia media a las instancias del clúster más cercano distinto del propio (separación respecto al vecino más próximo). El coeficiente de silueta de esa instancia es:
+
+$$s = \frac{b - a}{\max(a, b)}$$
+
+El valor resultante está acotado en $[-1, 1]$: cercano a $+1$ indica que la instancia está bien situada dentro de su clúster y lejos de los demás; cercano a $0$, que está en el límite entre dos clústeres; cercano a $-1$, que probablemente se asignó al clúster equivocado. El **coeficiente de silueta medio** de todas las instancias del conjunto resume la calidad global de la partición [5, cap. 9].
+
+**Por qué esta métrica figura en la memoria.** El sistema implementado no emplea *clustering* en su arquitectura final —las dos etapas del H-NIDS son un detector de anomalías semisupervisado (*one-class*) y un clasificador de firmas supervisado, no un algoritmo de agrupamiento—. El coeficiente de silueta se incluye por completitud del marco teórico de ML expuesto en [[2.1.2 Tipos de ML]], no porque el capítulo 5 lo reporte. Los algoritmos de agrupamiento a los que se aplicaría —k-means y el agrupamiento jerárquico— se describen, por la misma razón y con el mismo criterio, en [[A.3 Ficha del sistema]] § A.3.10.
+
+---
+
+## Notas relacionadas
+
+[[2.1.5 Métricas de evaluación]] · [[A.3 Ficha del sistema]] ·
+[[5.1 Resultados del modelo de detección de anomalías]] · [[5.3 Resultados del sistema híbrido]]

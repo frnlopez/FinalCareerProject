@@ -6,16 +6,26 @@ estado: redactada
 
 # A.3 Ficha del sistema
 
-Este apéndice documenta el sistema evaluado siguiendo la plantilla de **model card** propuesta por
-[60]: detalles del modelo, uso previsto, particiones de datos, configuraciones
-seleccionadas, alcance exacto de cada métrica, infraestructura de cómputo, análisis cuantitativo con
-dispersión y limitaciones declaradas.
+Este apéndice tiene **dos partes de naturaleza distinta**, y conviene separarlas desde el principio:
+
+1. **Ficha del sistema (A.3.1–A.3.9).** Documenta el sistema evaluado siguiendo la plantilla de
+   **model card** propuesta por [60]: detalles del modelo, uso previsto, particiones de datos,
+   configuraciones seleccionadas, alcance exacto de cada métrica, infraestructura de cómputo,
+   análisis cuantitativo con dispersión y limitaciones declaradas.
+2. **Anexo teórico desplazado del capítulo 2 (A.3.10 y A.3.11).** Recoge el material que
+   [[2.1.4 Algoritmos de ML]] y [[2.1.6 Metodologías y buenas prácticas]] no conservan en el cuerpo,
+   por aplicárseles el criterio «lo que el sistema usa»: los algoritmos que el H-NIDS no emplea
+   (A.3.10) y el desarrollo metodológico general de las prácticas que sí emplea (A.3.11).
 
 > [!note] Naturaleza de este apéndice
-> Es un **volcado**, no una discusión. Todas las cifras se transcriben de los artefactos de
-> `Resultados/` que se citan celda a celda; la interpretación corresponde al
-> [[5.4 Conclusiones del capítulo|capítulo 5]] y a [[6.1 Conclusiones]]. Ninguna cifra de este
-> apéndice se calcula aquí.
+> **Las secciones de volcado (A.3.1–A.3.9) no son una discusión.** Todas sus cifras se transcriben de
+> los artefactos de `Resultados/` que se citan celda a celda; la interpretación corresponde al
+> [[5.4 Conclusiones del capítulo|capítulo 5]] y a [[6.1 Conclusiones]]. **Ninguna cifra de esas
+> secciones se calcula aquí.**
+>
+> **A.3.10 y A.3.11 son marco teórico**, no volcado: no transcriben ningún artefacto, no introducen
+> ninguna cifra nueva y no alteran nada de lo declarado en A.3.1–A.3.9. La disciplina del párrafo
+> anterior sigue aplicándose íntegra a las secciones de volcado.
 
 ---
 
@@ -754,8 +764,134 @@ la fuente está en [[benchmark-comparativo-nsl-kdd]].
 
 ---
 
+## A.3.10 Algoritmos del marco teórico que el sistema no emplea
+
+Material trasladado desde [[2.1.4 Algoritmos de ML]], cuyo criterio de inclusión en el cuerpo es
+«lo que el sistema usa». Las dos familias siguientes **no intervienen en ninguna etapa del H-NIDS**
+y se conservan aquí por completitud del panorama algorítmico; el cuerpo las menciona en una frase y
+remite a este apartado.
+
+### A.3.10.1 Regresión logística (excedente de [[2.1.4 Algoritmos de ML|2.1.4.1]])
+
+La regresión logística toma un vector de características numéricas y estima la probabilidad de que un ejemplo pertenezca a una clase, modelando el logaritmo de la razón de probabilidades (*log-odds*): para un evento que ocurre con probabilidad $p$, la razón de probabilidades es $p/(1-p)$, y el modelo ajusta una combinación lineal de las características a $\log(p/(1-p))$ [5, cap. 4].
+
+Es uno de los algoritmos supervisados más utilizados en la práctica por varias propiedades: se entrena de forma eficiente incluso a gran escala, se adapta bien a un número elevado de características, admite una descripción concisa —la clasificación se reduce a un producto escalar— y es **explicable**, ya que puede calcularse la contribución de cada característica a la puntuación final [5, cap. 4].
+
+Su uso está condicionado por tres supuestos que conviene tener presentes:
+
+- **Linealidad.** Asume que las características se relacionan linealmente con el logaritmo de la razón de probabilidades; si esta relación no se sostiene, el modelo pierde capacidad predictiva.
+- **Baja multicolinealidad.** Las características de entrada deben ser razonablemente independientes entre sí; la redundancia entre variables distorsiona la estimación de los coeficientes.
+- **Tamaño muestral.** La estimación por máxima verosimilitud que emplea la regresión logística es menos eficiente estadísticamente que los mínimos cuadrados de la regresión lineal, por lo que suele requerir más ejemplos de entrenamiento para alcanzar una potencia comparable [5, cap. 4].
+
+### A.3.10.2 Agrupamiento: k-means y jerárquico (excedente de 2.1.4.4)
+
+Los algoritmos de agrupamiento (*clustering*) buscan agrupar puntos de datos que resultan «cercanos» entre sí según alguna métrica, sin usar ninguna etiqueta durante el entrenamiento. Aunque este trabajo no emplea agrupamiento en su arquitectura final, se incluyen aquí por completitud del panorama de algoritmos de ML y porque delimitan, por contraste, el régimen semisupervisado (one-class) de 2.1.4.2: mientras que el agrupamiento no usa ninguna etiqueta, los detectores de anomalías de este sistema sí usan la etiqueta «normal» para decidir con qué datos entrenar.
+
+**k-means.** Es habitualmente el primer algoritmo de agrupamiento que se considera. Se aplica a vectores de valores reales cuando se conoce de antemano el número de grupos deseado, denotado $k$. El algoritmo asigna cada punto a un grupo de forma que se minimice la suma de las distancias euclidianas de cada punto al centroide de su grupo, iterando entre la asignación de puntos a centroides y la recalculación de estos hasta la convergencia [12, cap. 14].
+
+**Agrupamiento jerárquico.** A diferencia de k-means, no requiere fijar de antemano el número de grupos $k$ [12, cap. 14]:
+
+- **Aglomerativo (ascendente).** Parte de tantos grupos como puntos de datos y, en cada paso, fusiona los dos grupos más similares —según una métrica de distancia, como la euclidiana o la de Mahalanobis— hasta que queda un único grupo. El resultado se representa como un dendrograma, cuyas capas pueden recorrerse para elegir el nivel de agrupamiento más adecuado.
+- **Divisivo (descendente).** Recorre el proceso en sentido inverso: parte de un único grupo que contiene todos los puntos y lo va dividiendo sucesivamente según la métrica de distancia, hasta que cada punto queda en su propio grupo.
+
+> [!note] Métrica asociada
+> El coeficiente de silueta, métrica interna con la que se evalúa una partición en grupos, se
+> desarrolla en [[A.2 Métricas de desempeño]] § A.2.2.2, por el mismo criterio: se define, pero no
+> se reporta.
+
+---
+
+## A.3.11 Desarrollo metodológico ampliado
+
+Material trasladado desde [[2.1.6 Metodologías y buenas prácticas]], que conserva en el cuerpo
+**solo las prácticas que el sistema implementado emplea**. Lo que sigue es el desarrollo general de
+cada una: no introduce ninguna cifra nueva y no altera nada de lo declarado en A.3.1–A.3.9.
+
+### A.3.11.1 CRISP-DM: fases, carácter iterativo y mapeo completo
+
+Un proyecto de aprendizaje automático no es una sucesión lineal de tareas, sino un ciclo. El marco de referencia más extendido para ordenarlo es **CRISP-DM** (*Cross-Industry Standard Process for Data Mining*), que descompone un proyecto de minería de datos en seis fases [11]:
+
+| Fase | Pregunta que responde |
+|---|---|
+| **Comprensión del problema** | ¿Qué se quiere conseguir y cómo se sabrá si se ha conseguido? |
+| **Comprensión de los datos** | ¿Qué hay en los datos, de dónde vienen y qué defectos tienen? |
+| **Preparación de los datos** | ¿Cómo se transforman en una matriz apta para el modelado? |
+| **Modelado** | ¿Qué algoritmos se prueban y con qué configuración? |
+| **Evaluación** | ¿El modelo resuelve el problema del que se partió, no solo la métrica? |
+| **Despliegue** | ¿Cómo se pone en producción y cómo se mantiene? |
+
+Su rasgo definitorio es el **carácter iterativo**: las flechas no van solo hacia adelante. Descubrir en la fase de modelado que una variable está mal codificada devuelve el proyecto a la preparación de datos, y una evaluación que no responde a la pregunta original devuelve a la comprensión del problema. CRISP-DM se adopta aquí como **marco de ordenación del trabajo y del relato, no como corsé**: sirve para explicar por qué las cosas se hicieron en un orden y no en otro, no para imponer una secuencia rígida que el desarrollo real nunca sigue.
+
+El mapeo de las fases al trabajo realizado es directo:
+
+| Fase CRISP-DM | Materialización en este TFG |
+|---|---|
+| Comprensión del problema | Objetivos y pregunta de investigación ([[1.3 Objetivo]], [[3.1 Requisitos del sistema]]) |
+| Comprensión de los datos | EDA sobre NSL-KDD (`program.py`) y validación de los splits (`validacion.py`): integridad, distribuciones, deriva y valores atípicos |
+| Preparación de los datos | Codificación, escalado, selección de características y generación de los splits D1/D2/D3 ([[4.3 Preprocesamiento de los datasets]]) |
+| Modelado | Las dos etapas del sistema por separado: anomalías ([[4.4 Entrenamiento del modelo de detección de anomalías]]) y firmas ([[4.5 Entrenamiento del modelo de detección basado en firmas]]) |
+| Evaluación | Evaluación única de extremo a extremo sobre D2 y contraste con el baseline monolítico (capítulo [[5.3 Resultados del sistema híbrido]]) |
+| Despliegue | **Fuera del alcance del trabajo**, y así se declara en [[6.1 Conclusiones]]: el sistema es un prototipo de investigación, no un producto operativo |
+
+> [!note] Una fase que no se ejecuta también se declara
+> Dejar el despliegue fuera del alcance es una decisión legítima en un TFG, pero decirlo importa: buena parte de las críticas al aprendizaje automático aplicado a la seguridad se dirigen precisamente contra trabajos que presentan resultados de laboratorio como si fueran capacidades operativas. Este punto se retoma en 2.1.6.8 y en el inventario de límites de A.3.7.
+
+### A.3.11.2 Fundamento de la partición y desarrollo de la línea roja del test
+
+La partición de los datos es la práctica de la que dependen todas las demás. Su fundamento es sencillo: **medir el error sobre los mismos datos con los que se ajustó el modelo estima capacidad de memorización, no de generalización**. Un modelo suficientemente flexible puede reproducir su conjunto de entrenamiento casi a la perfección sin haber aprendido nada transferible a datos nuevos. La única estimación honesta del error de generalización se obtiene sobre datos que el modelo no ha visto [12, cap. 7].
+
+En cuanto una decisión —por pequeña que sea— se toma mirando el resultado sobre el test, ese conjunto deja de ser una muestra no vista y su métrica pasa a estar sesgada de forma optimista, porque el experimentador ha actuado como un canal de información desde el test hacia el modelo. El sesgo no se elimina reconociéndolo después: solo se evita no cometiéndolo. Reconocerlo, en cambio, sí cambia lo que puede afirmarse de la cifra resultante, y por eso una desviación de esta regla se declara siempre.
+
+> [!note] La tabla de la teoría; el sistema se desvió de ella en tres decisiones
+> En la tabla de 2.1.6.2, la fila **Validación** incluye el «algoritmo ganador» entre lo que corresponde decidir en validación —y lo mismo vale para la elección del espacio de características—. Esa es la práctica correcta y se mantiene enunciada así porque es la que el marco teórico debe fijar. Lo que este trabajo añade es la constatación de que **su implementación no la respetó en las tres decisiones declaradas**: la comparación entre algoritmos de cada etapa y la comparación entre los sets de 54 y 122 características se resolvieron sobre el conjunto de test. El inventario tabulado de esas tres decisiones **no se repite aquí**: está en A.3.7 § *Límite de protocolo*. La corrección —repetir las tres comparaciones sobre un conjunto de decisión independiente de D2 y volver a medir— queda recogida como línea futura en [[6.2 Líneas futuras]].
+
+Sobre la duplicidad del inventario de las tres decisiones: el mismo inventario reaparece en [[6.1 Conclusiones]], y la duplicidad es deliberada porque cada sede responde a una pregunta distinta. **En 2.1.6.2 el inventario funciona como encuadre metodológico**: sirve de ejemplo concreto de qué es el *data snooping*, en qué momento del ciclo de trabajo se cuela y por qué el perímetro de protocolo no basta para impedirlo. **En [[6.1 Conclusiones]] el mismo inventario se trata como limitación del trabajo**: allí se valora cuánto compromete la validez de las cifras publicadas en el capítulo 5 y qué haría falta para levantarlo.
+
+| Objeto | Sede canónica | Qué se decide allí |
+|---|---|---|
+| **Inventario de las tres decisiones** tomadas con métricas de D2, tratado como limitación del trabajo | [[6.1 Conclusiones]] | El recuento de decisiones y la redacción con la que se enuncian como limitación |
+| **Desviación relativa al set de características (54 frente a 122)**, la tercera de las tres | [[4.3 Preprocesamiento de los datasets\|4.3.5]] § «Decisión experimental: 54 frente a 122 (experimento H1, medido sobre D2)» | El alcance y las cifras de esa desviación concreta, por proximidad al experimento H1 que las genera |
+| **Volcado tabulado decisión a decisión**, con criterio y registro de cada una | A.3.7 § *Límite de protocolo* | La consulta de ficha |
+
+Se declara en el cuerpo, y no en una nota al pie, por una razón de fondo: **negar un fallo de protocolo es peor que cometerlo**. Una versión anterior de esa sección afirmaba que «ninguna decisión del sistema se toma mirando D2», lo que convertía un defecto acotado y auditable en una afirmación falsa sobre el propio método; una segunda versión lo redujo a una única intervención, lo que tampoco era cierto. La magnitud del sesgo no se puede cuantificar con los datos disponibles —haría falta un conjunto de decisión independiente de D2—, de modo que no se estima.
+
+### A.3.11.3 Motivación general de la validación cruzada
+
+Un único corte train/validación tiene dos inconvenientes: la estimación depende de qué muestras cayeron a cada lado —con conjuntos pequeños, la varianza es considerable— y desperdicia datos, porque la parte reservada a validar no entrena. La **validación cruzada de K particiones** (*K-fold*) resuelve ambos: los datos se dividen en K bloques, se entrena K veces dejando cada vez un bloque fuera para validar, y la estimación final es el promedio de las K medidas. Toda muestra actúa una vez como validación y K−1 veces como entrenamiento [13].
+
+Sobre la **estratificación** —exigir que cada partición conserve la proporción de clases del conjunto completo— este apéndice **no repite la justificación**: con clases equilibradas es una mejora marginal y con clases muy minoritarias es imprescindible, por un razonamiento combinatorio que se desarrolla en su sede única, [[2.1.6 Metodologías y buenas prácticas]] § 2.1.6.3, donde además se conecta con el caso medido de `u2r` en D3.
+
+### A.3.11.4 Coste de `GridSearchCV` y alternativas
+
+`GridSearchCV` recorre de forma exhaustiva una rejilla de combinaciones de hiperparámetros y evalúa cada una por validación cruzada [14]. Su coste crece como el producto de los tamaños de cada eje multiplicado por el número de particiones, lo que en la práctica obliga a decidir cuánto presupuesto se le dedica. Existen alternativas más eficientes cuando ese presupuesto es el factor limitante, como la búsqueda aleatoria [15].
+
+### A.3.11.5 Checklist de reproducibilidad: fundamento de los cuatro ítems de dispersión
+
+Un experimento que no puede repetirse no es una evidencia: es una anécdota. En aprendizaje automático la reproducibilidad no se da por supuesta, porque casi todo el proceso incorpora aleatoriedad —el reparto en particiones, la inicialización de los modelos, el muestreo interno, la generación de puntos sintéticos— y porque el resultado depende además de las versiones exactas de las bibliotecas empleadas. La comunidad ha respondido con listas de comprobación que enumeran qué debe declararse para que un resultado sea verificable [20].
+
+Declarar una única corrida como si fuera el resultado, sin ninguna medida de dispersión, es precisamente lo que esas listas piden evitar, y su vocabulario nombra los cuatro elementos que hay que declarar. **La tabla de cumplimiento no se repite aquí**: los once ítems «FT», con su estado y su sede, están en A.3.8. Lo que sigue es el fundamento de los cuatro que atañen a la dispersión, que el cuerpo de 2.1.6.7 resume en un párrafo:
+
+| Ítem | Qué exige | Cómo se cumple en este trabajo |
+|---|---|---|
+| ***Number of runs*** | Cuántas ejecuciones sostienen la cifra | **10 corridas**, con semillas 1 a 10 |
+| ***Central tendency*** | Qué resumen se publica | **Media** de las diez corridas |
+| ***Error bars*** | Qué dispersión acompaña al resumen | **Desviación típica muestral** (`ddof=1`) y banda **[mínimo, máximo]** |
+| ***Statistics*** | Qué contraste estadístico se aplica, o por qué no se aplica | **Ninguno, y la renuncia se declara con su razón**: diez puntos sobre un único conjunto de datos no sostienen un contraste de hipótesis |
+
+> [!note] Declarar la renuncia forma parte del cumplimiento
+> El ítem de estadística de la lista de comprobación no obliga a aplicar un contraste; obliga a **decir qué se hizo**. Renunciar razonadamente a un p-valor que no sostendrían los datos lo cumple; guardar silencio sobre el punto, no.
+
+Las **tres palancas** con las que este trabajo instrumenta la reproducibilidad —semilla fija, entorno congelado y artefactos persistidos, con su materialización concreta en el proyecto— **no se repiten aquí**: están tabuladas en [[2.1.6 Metodologías y buenas prácticas]] § 2.1.6.7.
+
+### A.3.11.6 Desarrollo de la deriva y las clases nunca vistas
+
+Sobre la deriva: aunque el conjunto de test contuviera solo tipos de ataque conocidos, sus características no se distribuyen igual que las del entrenamiento. Sobre las clases nunca vistas: ninguna partición de validación construida sobre el entrenamiento puede contener un solo ejemplo de ellos, luego ninguna validación cruzada puede anticipar cómo se comportará el modelo ante ellos. El fenómeno tiene una formulación clásica en el ámbito de la detección de intrusiones, donde se argumenta que la enorme variabilidad del tráfico real y el coste asimétrico de los errores explican la distancia sistemática entre los resultados de laboratorio y el rendimiento operativo [21].
+
+---
+
 ## Notas relacionadas
 
 [[A.1 Columnas del dataset NSL-KDD]] · [[A.2 Métricas de desempeño]] ·
+[[2.1.4 Algoritmos de ML]] · [[2.1.6 Metodologías y buenas prácticas]] ·
 [[4.3 Preprocesamiento de los datasets]] · [[5.4 Conclusiones del capítulo]] ·
 [[6.1 Conclusiones]]
