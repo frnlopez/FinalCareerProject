@@ -12,7 +12,7 @@ docx_ref: "Abstract"
 
 ## Title
 
-**Machine learning based hybrid network intrusion detection system: cascaded anomaly and signature detection on NSL-KDD**
+**Machine-learning-based hybrid network intrusion detection system: cascaded anomaly and signature detection on NSL-KDD**
 
 > [!note] Traducción del título fijado — 2026-08-18
 > Versión inglesa del título definitivo cerrado por Francisco el **2026-08-18** (texto español en [[Resumen]]). No reabrir la elección: cualquier ajuste aquí es de traducción, no de contenido.

@@ -90,7 +90,15 @@ maneja categóricas de forma nativa; la
 [documentación oficial de Prior Labs](https://docs.priorlabs.ai/models) declara además versiones
 posteriores (TabPFN-2.6: 100 000 × 2 000; TabPFN-3: hasta 1 M de filas). **D3 tiene 58 630 filas**,
 así que la versión de *Nature* no lo admite sin submuestrear —y submuestrear es justo lo que no se
-puede hacer con `u2r`, que tiene ~52 muestras en D3 (`firmas.py:98`).
+puede hacer con `u2r`, que tiene **52 muestras en D3** (cifra exacta: fila `con_seleccion,D3,u2r,52`
+de `Resultados/specialized_nsl_kdd_composicion_d3.csv`; la misma cifra la documenta el comentario de
+`K_SMOTE` en `firmas.py`, clase `NSLKDDSignatureTrainer` — hoy en la línea 112).
+
+> [!note] Sobre el «52» de esta línea
+> Se ha mantenido tras verificarlo contra disco: **no** es un recuento de características —el proyecto
+> trabaja con los sets de 54 y 122 features, `program.py` → `select_features()`—, sino el número de
+> muestras de la clase `u2r` en D3. La referencia `firmas.py:98`, que apuntaba a un bloque de
+> hiperparámetros, se ha sustituido por el símbolo (`K_SMOTE`) para que no vuelva a caducar.
 
 #### 1.2 El polo escéptico: la evidencia de que los árboles siguen ganando
 

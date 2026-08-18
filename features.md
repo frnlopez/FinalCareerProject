@@ -456,110 +456,122 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 
 ## Abiertas
 
-### 📊 TRIAJE DE LAS FICHAS ABIERTAS — por qué NO se lanzan todas (2026-08-18)
+### 📊 TRIAJE DE LAS FICHAS ABIERTAS — RECALCULADO el 2026-08-18 tras la TANDA 28
 
 **Motivo del apunte:** Francisco preguntó por qué no se despachan de golpe todas las fichas
-abiertas. La respuesta es que **no son trabajo homogéneo**. Recuento contado contra disco hoy:
-**35 fichas con `[ ]`** (`grep -c '^- \[ \]' features.md`) — pero ese recuento **infravalora el
-total**, porque solo cuenta los bullets `[ ]`. El inventario completo de `## Abiertas`, verificado,
-es de **51 bullets-ficha: 35 con `[ ]`, 2 con `[~]` y 14 con `[x]`** (ver el **apartado D**).
-Reparto de las 35:
+abiertas. La respuesta es que **no son trabajo homogéneo**. **Este bloque es un RECÁLCULO contra
+disco:** su versión anterior se escribió hoy mismo y quedó obsoleta en horas, porque la **TANDA 28**
+(`896c60f`, estampado `04dab7a`) cerró fichas que el bloque seguía contando como abiertas. **Las
+cifras de abajo se han recontado sobre el propio documento, no derivado de las del bloque viejo.**
 
-**A. Bloqueadas en una decisión de Francisco — 21 fichas. Ningún agente puede ejecutarlas.**
-Líneas `:514`, `:556`, `:581`, `:589`, `:596`, `:603`, `:610`, `:631`, `:643`, `:690`, `:703`,
-`:751`, `:766`, `:786`, `:790`, `:945`, `:1456`, `:2052`, `:2058`, `:2065`, `:2071`.
-**`:1456`/T14 entró en este grupo, no en el C.** Por la **DECISIÓN 4 de la Fase 0 (Francisco,
-2026-08-14)** la ficha cambió de naturaleza: dejó de ser «cerrar las verificaciones por criterio»
-y es hoy un **inventario de puntos que Francisco revisará él en la revisión final del informe**.
-**No está caducada y no es ejecutable por un agente.**
-Son de tres clases: (1) datos bibliográficos que **no se pueden establecer sin inventarlos**
-(ediciones de `[8]` y `[54]`, versión de la CCN-STIC-401 `[10]`, página de `[76]`, metadatos de
-`[26]`, las 5 citas colgantes irreconstruibles, los tres anclajes de `2.1.4`/`2.1.5`);
-(2) **autorizaciones de escritura** sobre ficheros cuyo permiso no está concedido
-(`resumen-de-decisiones.md`, `CLAUDE.md`, tres docstrings de código publicados,
-`next-steps.md:493`); (3) **decisiones de contenido** (figuras duplicadas, `4.6:24`,
-`03 Desarrollo/`, el wikilink de `6.2`). Despacharlas no adelantaría nada: un agente solo podría
-**inventar** el dato o **tocar sin permiso** el fichero.
+**Inventario de `## Abiertas`, contado bullet a bullet: 54 bullets-ficha — 27 con `[ ]`, 1 con
+`[~]` y 26 con `[x]`.** Reparto de los 27 `[ ]`:
 
-**B. Informativas — 4 fichas. No hay nada que ejecutar.** `:649`, `:656`, `:662`, `:709`. Son
-**anotaciones de método** (el `auditor-ml` no puede calcular `md5`, cómo se verificó la
-intocabilidad de los artefactos) y constataciones de que unos `[!todo]` son correctos. Están
-abiertas porque **solo Francisco las borra**, no porque falte trabajo.
+> ⚠️ **Estas cifras son del recuento tras la TANDA 28 y la TANDA 29 ya las movió** (2026-08-18): las
+> **tres altas de la TANDA 28** —tercera sede del `52`, el `.png`/`.svg` del diagrama y el cosmético
+> de `Abstract.md`— pasaron a `[x]`, así que el reparto real es **24 `[ ]` / 1 `[~]` / 29 `[x]`**, con
+> **A=14** y **C=6**. **No se reescribe el bloque:** el recuento se hace contra disco cuando se
+> necesite, no se arrastra de aquí. Es la enésima confirmación de que un inventario escrito en
+> presente **caduca en horas**.
 
-**C. Ejecutables por agente — 10 fichas, y NO todas son sustancia.** `:547` (erratas de `1.1`),
-`:618` (celda de `[76]` en `Bibliografía.md`, solo `researcher`), `:882` (`[54]` Molnar, **ya
-decidida** el 2026-08-17, pendiente de aplicar), `:921` (patrón de referencias `fichero:línea`,
-vigilancia, no acción), `:968` (diagrama de agentes, **la acepta o la retira Francisco**), `:976`
-(**Preliminares, Fase 7 — sin dependencias desde hoy**), `:1548` (bloqueada en
-acceso institucional a un PDF), `:1691`, `:1713`, `:1743`.
-**Ninguna de ellas está caducada — verificado contra disco el 2026-08-18:**
-- **`:1691`** (`1.4`, conceptos de IA): su **punto 2** (resúmenes escuetos) **sí** lo cubre la
-  Fase B, pero su **punto 1** —«qué conceptos de IA entran de verdad en el capítulo 2»— **sigue
-  vivo**, tiene **ALCANCE NO CERRADO** y es una **decisión de contenido que no puede tomar un
-  agente**. Además Francisco ordenó el **2026-08-12** que esta ficha se ejecute **LA ÚLTIMA**,
-  después de todas las demás.
-- **`:1713`** (`2.1`, coherencia y densidad): **seis puntos de contenido vivos** salidos de
-  `mis-apuntes-del-informe.md`, y **ninguno** lo resuelve el cierre del capítulo 2. Converge con
-  `:1743`, y su **punto 6 es una decisión de densidad**.
-- **`:1743`** (revisión del profesor: simplificar y desduplicar del capítulo 3 en adelante):
+**A. Bloqueadas en una decisión de Francisco (o en su máquina) — 15 fichas. Ningún agente puede
+ejecutarlas.** Por título: «Edición de `[8]` Stallings: 4.ª (2018) vs 5.ª (2023)»; «Versión, fecha y
+URL del PDF de la CCN-STIC-401 `[10]`»; «Página exacta dentro del cap. 1 de `[76]` (Storkey)»;
+«Metadatos de `[26]` (Roesch, LISA'99) contra la fuente viva»; «¿Recuperar la frase sobre Anderson
+en `1.2:14`?»; «5 de las 47 citas colgantes NO se han podido reconstruir»; «`2.1.5:114` (MAE frente
+a RMSE) — el capítulo del marcador NO cuadra»; «`2.1.4:77` (LOF) — «Hastie, cap. 14» no trata LOF»;
+«Reserva menor sobre `2.1.4:46` y `:51` (k-NN) apuntando a Géron cap. 3»; «La deriva de
+`evaluacion.py` quedó corregida en 2 de sus 4 sedes»; «`4.6:24` roza fijar alcance propio»; «`6.2`
+enlaza `[[aprendizaje-continuo-nested-learning]]`, que vive en `99 Investigación/`»; «Dos peticiones
+de Francisco de `mis-apuntes-del-informe.md` quedan RESUELTAS por esta tanda» (solo falta que él lo
+dé por bueno); ~~«`03_orquestacion_agentes.png` y `.svg` quedan DESFASADOS respecto al `.mmd`»~~
+**— YA NO PERTENECE A ESTE GRUPO: CERRADA el 2026-08-18 en la Tanda 29.** Se fichó como bloqueada
+«en la máquina de Francisco» dando por hecho que `mermaid-cli` no estaba disponible desde el
+harness; **no se comprobó, y era falso** (`npx` 10.9.2). Los dos binarios se regeneraron en 40
+segundos. Es la razón de que este bloque lleve el aviso de **verificar en disco antes de fichar**; y
+**T14 · «Cerrar las verificaciones pendientes»**.
+**T14 está en este grupo, no en el C.** Por la **DECISIÓN 4 de la Fase 0 (Francisco, 2026-08-14)**
+dejó de ser «cerrar las verificaciones por criterio» y es hoy un **inventario de puntos que
+Francisco revisará él en la revisión final del informe**. **No está caducada y no es ejecutable por
+un agente.**
+Son de cuatro clases: (1) datos bibliográficos que **no se pueden establecer sin inventarlos**;
+(2) **autorizaciones de escritura** que no están concedidas; (3) **decisiones de contenido**;
+(4) **una dependencia de herramienta ausente del harness**. Despacharlas no adelantaría nada.
+
+**B. Informativas — 4 fichas. No hay nada que ejecutar.** «Asimetría de remedio entre dos informes
+de la misma tanda»; «Anotación de MÉTODO, no defecto: cómo se verificó la intocabilidad de los
+artefactos»; «Los cuatro informes dejan un `> [!todo]` cada uno, y son correctos»; «Anotación de
+MÉTODO, no defecto: el `auditor-ml` no puede calcular `md5`». Están abiertas porque **solo Francisco
+las borra**, no porque falte trabajo.
+
+**C. Ejecutables por agente — 8 fichas, y NO todas son sustancia.** Mecánicas o de vigilancia:
+«La celda de `[76]` en `Bibliografía.md` se contradice a sí misma» (solo `researcher`); «Tercera
+sede del `52` sin tocar, y con una referencia `fichero:línea` desfasada dentro»; «Cosmético:
+`Abstract.md:15` pide guiones — «Machine-learning-based»»; «`features.md` citaba `3.3:42` como sede
+pendiente; en disco es `3.3:29` y ya está resuelta» (vigilancia del patrón, no acción); «PDF sin
+acceso institucional — reabrir si Francisco consigue acceso» (bloqueada en el acceso, no en un
+agente). Y las **tres de sustancia real**, ninguna caducada — verificado contra disco:
+- **«`1.4`: qué conceptos de IA entran de verdad en el capítulo 2, y resúmenes de capítulo demasiado
+  escuetos»:** su **punto 2** lo cubre la Fase B, pero su **punto 1** **sigue vivo**, tiene
+  **ALCANCE NO CERRADO** y es una **decisión de contenido que no puede tomar un agente**. Además
+  Francisco ordenó el **2026-08-12** que se ejecute **LA ÚLTIMA**.
+- **«`2.1` · coherencia y densidad del guion teórico»:** **seis puntos de contenido vivos** salidos
+  de `mis-apuntes-del-informe.md`, y **ninguno** lo resuelve el cierre del capítulo 2. Converge con
+  la revisión del profesor, y su **punto 6 es una decisión de densidad**.
+- **«Revisión del profesor: simplificar, unificar y desduplicar del capítulo 3 en adelante»:**
   sustancia, y también con **alcance no cerrado**.
 
-**Conclusión que se registra:** «estaba todo resuelto» es **cierto en lo que importa** — los
-capítulos 1 a 6 están redactados y el track de código está cerrado. Lo que queda abierto **no es
-contenido faltante**: son **25 fichas de 35 que no son despachables por construcción**
-(21 decisiones + 4 informativas), y de las 10 restantes las **tres de sustancia real**
-—`:1691`, `:1713` y `:1743`— tienen **las tres el ALCANCE NO CERRADO** y exigen **`grill-me` con
-Francisco antes de tocar una sola nota**. Por tanto **la única ficha de sustancia despachable HOY
-sin interrogatorio previo son los Preliminares (Fase 7)**, acompañada de las tres mecánicas: las
-erratas de `1.1` (`:547`), la celda de `[76]` en `Bibliografía.md` (`:618`) y la aplicación de
-`[54]` Molnar (`:882`, ya decidida). El cuello de botella del proyecto **ya no es capacidad de
-agente: son las decisiones de Francisco y la bibliografía en Zotero.** Y ni siquiera lo ejecutable
-lo desbloquea del todo: **tres de las cuatro fichas grandes que quedan necesitan primero una
-conversación con él.**
+**D. Lo que el recuento de `[ ]` NO cubre — 1 ficha más.** El triaje cuenta bullets `[ ]`, y con eso
+se queda fuera un `[~]` con trabajo vivo: **«Seis afirmaciones del vault que la TANDA 7 dejó
+desfasadas»** —cinco cerradas, **queda viva la 5**: los números de línea de **T25** están
+desplazados y hay que localizarlos **por contenido, no por línea**—. Es **ejecutable**, y es otra
+manifestación del patrón del `fichero:línea` desfasado. **Un `[~]` o un `[x]` que declara trabajo
+vivo en su cuerpo es invisible a `grep '^- \[ \]'`: ese es el fallo de método que este apartado
+cubre.**
 
-**D. Lo que el recuento de 35 NO cubría — 3 fichas más.** El triaje contó solo `[ ]`, y con eso se
-quedaron fuera dos `[~]` con trabajo vivo y una `[x]` que se declara abierta en su propio cuerpo:
+**Qué cifras cambiaron respecto a la versión anterior de este bloque, y por qué.** No es que el
+recuento original fuera arbitrario: **la TANDA 28 cerró seis de las fichas que contaba**, más las
+que ya había cerrado la TANDA 27 y el pase en serie del `researcher`.
+- **Total de bullets: 51 → 54.** Suben 3 porque la TANDA 28 dio de alta sus **tres residuos**
+  declarados (tercera sede del `52`, el `.png`/`.svg` del diagrama y el cosmético de `Abstract.md`).
+- **`[ ]`: 35 → 27.** Once fichas pasaron de `[ ]` a `[x]` y entraron 3 nuevas.
+- **`[~]`: 2 → 1** y **`[x]`: 14 → 26** (el recuento viejo de `[x]` estaba además corto: se ha
+  contado de nuevo, no arrastrado).
+- **Grupo A: 21 → 15.** Salen, **verificadas una a una en `## Cerradas` con el hash `896c60f`**:
+  «Dos figuras duplicadas»; «`03 Desarrollo/` SIGUE EXISTIENDO en disco, vacía»; **las dos** de
+  `resumen-de-decisiones.md` («contradicho EN SILENCIO por el ciclo de Código del 2026-08-17» y
+  «`:570-571` quedó contradicho por esta misma tanda»); y «`next-steps.md:493` mantiene
+  `dos ~45,9k · probe ~11,7k · r2l ~1,0k`». Entra el `.png`/`.svg` del diagrama.
+- **Grupo B: 4 → 4.** Sin cambios: nadie las cierra salvo Francisco.
+- **Grupo C: 10 → 8.** Se cierran «erratas de estilo en `1.1`» y **`[54]` Molnar** (TANDA 27,
+  `5e6bccc`), el **diagrama de agentes** y **Preliminares** (`896c60f`); entran las dos mecánicas
+  nuevas de la TANDA 28.
+- **Corrección de clasificación:** los **Preliminares (Fase 7)** los contaba el bloque viejo en el
+  grupo **C**, y ahí estaban bien; lo que estaba mal era darlos por pendientes. **Constan CERRADOS
+  POR COMPLETO** en `## Cerradas` con `896c60f`, título fijado incluido.
+- **Grupo D: 3 → 1.** El `[~]` de «`03 Desarrollo\` está vacía y solo falta borrar la carpeta»
+  **está cerrado** (`896c60f`: la carpeta está borrada de verdad), y **T23** también, en el pase en
+  serie del `researcher` (`5ebf8f9`). Las **seis** fichas que el encargo señalaba constan **todas**
+  cerradas en disco: **ninguna quedó sin verificar.**
 
-1. **`[~]` «`03 Desarrollo\` está vacía en disco y solo falta borrar la carpeta»:** la mitad de
-   texto está hecha; **queda vivo el borrado físico de la carpeta**, que el `redactor-tfg` **no
-   puede ejecutar porque no tiene shell**. Necesita un agente con shell o a Francisco, y **el
-   permiso de borrado concedido se limitó a `Lecture 1.md`**. Solapa con la ficha del grupo A sobre
-   esa misma carpeta. **Decide Francisco.**
-2. **`[~]` «Seis afirmaciones del vault que la TANDA 7 dejó desfasadas»:** cinco cerradas, **queda
-   viva la 5** —los números de línea de **T25** están desplazados y hay que localizarlos **por
-   contenido, no por línea**—. Es **ejecutable**, y es otra manifestación del patrón de la ficha
-   `:921`.
-3. **T23 sigue marcada `[x]` y su cuerpo se declara «CIERRE PARCIAL en la TANDA 25 — la ficha SIGUE
-   ABIERTA», pero lo que ese cuerpo alega ya NO se sostiene.** Afirma que el párrafo de Snort de
-   `1.2` sigue sin cita, y **en disco está citado con `[26]` desde el pase en serie del
-   2026-08-18**: `01 Introducción/1.2 Preliminares.md`, **línea 32**, cierra el párrafo con `[26]`,
-   y las líneas **34-39** llevan un callout `[!note] Sobre la fecha` que distingue el artículo de
-   **LISA'99 (USENIX, nov. 1999)** de la publicación de la herramienta en **1998**. `[26]` **ya
-   existía** desde la reconstrucción de las 47 citas colgantes, donde la usa `2.2.2`: se **MAPEÓ, no
-   se dio de alta**, que es la disciplina correcta. Coincide con el bloque de este mismo fichero que
-   ya declara **«P4 y P4-bis — CERRADAS el 2026-08-18»**.
-   **Lo único que mantiene viva a T23 son P5 y P6**, que son **decisiones de Francisco** (edición de
-   `[8]` Stallings y versión de la CCN-STIC-401 `[10]`) y que **ya están fichadas por separado en el
-   grupo A**. Luego **T23 no aporta trabajo nuevo: es un duplicado que apunta a dos fichas del
-   grupo A.**
-   **La lección de método es lo que vale:** el cuerpo de T23 fue la **sexta ocurrencia del patrón de
-   la ficha `:921`** —un registro que afirma en presente algo que el disco ya desmiente—, y esta vez
-   **mordió al propio triaje**. Se detectó porque **se verificó contra `1.2` antes de repetirlo**.
-
-**Consecuencia sobre el grupo C:** las fichas mecánicas que acompañan a los Preliminares **siguen
-siendo TRES** —las erratas de `1.1`, la celda de `[76]` en `Bibliografía.md` y la aplicación de
-`[54]` Molnar—: la aplicación de P4 **no se suma**, porque ya está en disco. **Una
-ficha marcada `[x]` que se declara abierta en su cuerpo es invisible a `grep '^- \[ \]'`: ese es el
-fallo de método que este addendum corrige.**
-
-**Fichar no es resolver: este addendum no corrige nada.**
+**Conclusión de método, que no cambia:** «estaba todo resuelto» es **cierto en lo que importa** —los
+capítulos 1 a 6 están redactados y el track de código está cerrado—. Lo que queda abierto **no es
+contenido faltante**: son **19 fichas de 27 que no son despachables por construcción**
+(15 decisiones + 4 informativas), y de las 8 restantes las **tres de sustancia real** tienen **las
+tres el ALCANCE NO CERRADO** y exigen **`grill-me` con Francisco antes de tocar una sola nota**. Por
+tanto lo despachable HOY sin interrogatorio previo es **solo mecánica**: la celda de `[76]` en
+`Bibliografía.md`, la tercera sede del `52`, el cosmético de `Abstract.md:15` y la ficha de
+vigilancia del `3.3:42`. El cuello de botella del proyecto **ya no es capacidad de agente: son las
+decisiones de Francisco y la bibliografía en Zotero.**
 
 **Fichar no es resolver: este bloque no corrige nada.**
 
-> ⚠️ **Las referencias `fichero:línea` de este bloque apuntan al estado del documento ANTES de
-> insertarlo.** Al escribirse al inicio de `## Abiertas`, el bloque desplazó ~45 líneas hacia abajo
-> todo lo que numera, incluidas sus propias citas. Es **exactamente el patrón de la ficha `:921`**:
-> **cada ficha se localiza por su TÍTULO, no por su número de línea.**
+> ⚠️ **Este bloque identifica cada ficha por su TÍTULO, no por `fichero:línea`, y el cambio es
+> deliberado.** Su versión anterior citaba números de línea y **nacieron desfasados +456**: al
+> insertarse al inicio de `## Abiertas` desplazó hacia abajo todo lo que numeraba, incluidas sus
+> propias citas. Fue la **OCTAVA ocurrencia del patrón del `fichero:línea` desfasado**, y la
+> primera en la que **el patrón mordió al bloque que lo denunciaba**. Regla: **cada ficha se
+> localiza por su título con `grep`, nunca por su número de línea.**
 
 > **El 🟡 «`PIPELINE.md` llama determinista a un recuento que se apoya en `ac496cb`» queda CERRADO en
 > la TANDA 19** (2026-08-17). Su ficha vive ya en `## Cerradas`. **Ojo: la palabra sigue viva FUERA
@@ -679,22 +691,39 @@ fallo de método que este addendum corrige.**
 > declarados** de la tanda: lo que no se hizo se ficha, no se da por hecho. **Fichar no es resolver:
 > aquí no se ha corregido nada.**
 
-- [ ] 🟡 **Tercera sede del `52` sin tocar, y con una referencia `fichero:línea` desfasada dentro** · Informe · `researcher`
+- [x] 🟡 **Tercera sede del `52` sin tocar, y con una referencia `fichero:línea` desfasada dentro** · Informe · `researcher`
   Alta el **2026-08-18**. `99 Investigación/clasificadores-tabulares-y-arquitecturas-hibridas.md:93`
   conserva la virgulilla del `52` **y además cita `firmas.py:98` cuando en disco es `:111`**. **No es
   memoria** (esa carpeta son informes del `researcher`), así que la **prioridad es baja**. Es la
   **séptima ocurrencia del patrón de la ficha del `fichero:línea` desfasado**: el número de línea se
   recuenta contra disco antes de repetirlo.
+  **CERRADA el 2026-08-18 (TANDA 29).** Retirada la virgulilla y anclada la cifra a
+  `Resultados/specialized_nsl_kdd_composicion_d3.csv`; **el `52` era CORRECTO y no se tocó** (muestras
+  de `u2r` en D3). La referencia se cambió por el símbolo **`K_SMOTE`** de `NSLKDDSignatureTrainer`,
+  que no se desplaza al editar el fichero: `firmas.py:98` apuntaba a hiperparámetros de HistGB, no a
+  lo que la frase afirmaba.
 
-- [ ] 🟡 **`03_orquestacion_agentes.png` y `.svg` quedan DESFASADOS respecto al `.mmd`** · Código · **necesita la máquina de Francisco**
+- [x] 🟡 **`03_orquestacion_agentes.png` y `.svg` quedan DESFASADOS respecto al `.mmd`** · Código · ~~**necesita la máquina de Francisco**~~ **NO la necesitaba: `npx` 10.9.2 estaba disponible. CERRADA el 2026-08-18 en la Tanda 29**
   Alta el **2026-08-18**, residuo declarado del cierre del diagrama de agentes. Son **binarios
   generados por `mermaid-cli`** y su regeneración exige `npx @mermaid-js/mermaid-cli`, que **no está
   disponible desde el harness**. **No se declara regenerado lo que no lo está:** el `.mmd` es hoy la
   única versión fiel de la arquitectura vigente.
+  **CERRADA el 2026-08-18 (TANDA 29), contra la previsión de que era imposible:** `npx` sí estaba
+  disponible (**10.9.2**). Regenerados desde el `.mmd` el `.svg` (**41 KB**) y el `.png` (**502 KB**,
+  **2352×5874**), verificados en disco por tipo, tamaño y fecha; el desfase se confirmó **antes** de
+  actuar (`.mmd` 14:57 vs binarios del 2026-08-01). Los diagramas `01` y `02` **no** estaban
+  desfasados. **Residuo declarado, sin ficha propia por no añadir tareas de oficio:** el PNG se
+  generó con **`-s 3`** porque la escala original era desconocida y pesa **menos** que el anterior
+  (502 vs 603 KB) aun con más contenido — **si importa la resolución del entregable, hay que fijar la
+  escala**. Decide Francisco.
 
-- [ ] 🟢 **Cosmético: `Abstract.md:15` pide guiones — «Machine-learning-based»** · Informe · `redactor-tfg`
+- [x] 🟢 **Cosmético: `Abstract.md:15` pide guiones — «Machine-learning-based»** · Informe · `redactor-tfg`
   Alta el **2026-08-18**, al aplicar el título. Es **ortografía inglesa del modificador compuesto**,
   no un problema de contenido ni de traducción: el título literal en español **no cambia**.
+  **CERRADA el 2026-08-18 (TANDA 29), y la ficha estaba ESCRITA AL REVÉS:** el texto en disco estaba
+  **sin** guiones, no con ellos. Queda **`Machine-learning-based`** (correcto en uso atributivo);
+  `signature-based` ya estaba bien. **El fichero vive en `00 Preliminares/`, no en la raíz del
+  vault.**
 
 ### Altas del pase en serie del `researcher` — 2026-08-18
 
@@ -2436,6 +2465,10 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-18 | Código/Informe | **TANDA 29 · ARREGLO DE LOS RESIDUOS DE LA TANDA 28. Cinco ficheros, verificados contra `git status`** (`features.md`, `00 Preliminares/Abstract.md`, `99 Investigación/clasificadores-tabulares-y-arquitecturas-hibridas.md`, `Implementacion/diagramas/03_orquestacion_agentes.png` y `.svg`). **Cierra las TRES fichas residuales de la TANDA 28.** **(1) Bloque «📊 TRIAJE DE LAS FICHAS ABIERTAS» RECALCULADO contra disco, no contra sí mismo:** antes **51 bullets-ficha** (35 `[ ]` / 2 `[~]` / 14 `[x]`) con grupos **A=21, B=4, C=10, D=3**; ahora **54 bullets-ficha** (**27 `[ ]` / 1 `[~]` / 26 `[x]`**) con **A=15, B=4, C=8, D=1**. Las **seis** fichas cerradas en la TANDA 28 se verificaron **una por una** en `## Cerradas` con `896c60f`. El bloque **identifica ya cada ficha por TÍTULO, no por `fichero:línea`**, y se eliminó un **duplicado literal** del «Fichar no es resolver». **(2) Tercera sede del `52`:** la cifra **era CORRECTA y no se tocó** (muestras de `u2r` en D3, no características); se le quitó el `~` y se ancló a `Resultados/specialized_nsl_kdd_composicion_d3.csv`, y la referencia `firmas.py:98` —que apuntaba a hiperparámetros de HistGB, no a lo que la frase afirmaba— pasa a citar el símbolo **`K_SMOTE`** de `NSLKDDSignatureTrainer`. **(3) `Abstract.md`:** el cosmético estaba fichado **AL REVÉS** —el texto estaba **sin** guiones—; queda `Machine-learning-based`, `signature-based` ya era correcto. **(4) Diagrama de agentes CERRADO contra la previsión de que era imposible:** `npx` **sí** estaba disponible (10.9.2); `.svg` (41 KB) y `.png` (502 KB, 2352×5874) regenerados desde el `.mmd` y verificados por tipo, tamaño y fecha, con el desfase confirmado antes de actuar (`.mmd` 14:57 vs binarios del 2026-08-01); `01` y `02` no estaban desfasados. **AVISO DE MÉTODO, registrado sin adornos:** de los tres residuos fichados al cerrar la TANDA 28, **dos describían el disco al revés** y **el tercero, dado por imposible, se resolvió en 40 segundos** — **novena y décima ocurrencia del patrón de registro caducado/falso en esta misma sesión**, y la **tercera vez hoy** que muerde. **La causa no son los agentes: se fichó sin verificar en disco.** **Cero cómputo, cero corridas, ninguna cifra publicada movida.** **Pendiente de Francisco, NO tocado:** la edición de `[8]` Stallings (4.ª 2018 vs 5.ª 2023), **III.1**, **III.3** y **III.4** (las tres sin aplicar a propósito: cambian qué afirma la memoria), `Bibliografía.md` intacta a la espera de un ciclo del `researcher`, y elevar a regla del proyecto el referenciar **por título** en vez de por `fichero:línea` (exigiría escribir en `CLAUDE.md`) | `—` |
+| 2026-08-18 | Código | **🟡 «`03_orquestacion_agentes.png` y `.svg` quedan DESFASADOS respecto al `.mmd`» — CERRADA, y la ficha daba la tarea por IMPOSIBLE.** Se fichó como bloqueada en la máquina de Francisco por suponer `mermaid-cli` ausente del harness; **`npx` estaba disponible (10.9.2)**. Regenerados desde el `.mmd` el **`.svg` (41 KB)** y el **`.png` (502 KB, 2352×5874)**, verificados en disco por tipo, tamaño y fecha, con el desfase confirmado **antes** de actuar. **Residuo declarado:** el PNG salió con **`-s 3`** por escala original desconocida y pesa **menos** que el anterior (502 vs 603 KB) aun con contenido nuevo — **fijar la escala si importa la resolución del entregable**; decide Francisco | `—` |
+| 2026-08-18 | Informe | **🟡 «Tercera sede del `52` sin tocar, y con una referencia `fichero:línea` desfasada dentro» — CERRADA, con la premisa del `52` CONFIRMADA COMO CORRECTA.** En `99 Investigación/clasificadores-tabulares-y-arquitecturas-hibridas.md` la cifra **no se tocó**: son las **muestras de `u2r` en D3**, no características. Retirada la virgulilla y anclada a `Resultados/specialized_nsl_kdd_composicion_d3.csv`. La referencia `firmas.py:98` **no apuntaba a lo que la frase afirmaba** (eran hiperparámetros de HistGB): pasa a citar el símbolo **`K_SMOTE`** de `NSLKDDSignatureTrainer`, que **no se desplaza al editar el fichero** — remedio del patrón, no solo del síntoma | `—` |
+| 2026-08-18 | Informe | **🟢 «Cosmético: `Abstract.md:15` pide guiones — “Machine-learning-based”» — CERRADA, y la ficha estaba ESCRITA AL REVÉS.** En disco el texto estaba **sin** guiones, no con ellos. Queda **`Machine-learning-based`**, correcto en **uso atributivo**; `signature-based` ya estaba bien. **El fichero vive en `00 Preliminares/`, no en la raíz del vault**, como decía la ficha. **Cero cambios de contenido ni de cifras** | `—` |
 | 2026-08-18 | Código/Informe | **TANDA 28 · GRUPO I DE PERMISOS + TÍTULO + FIGURAS DUPLICADAS. Veintiún ficheros, verificados contra `git status`. Cierra NUEVE fichas.** **ERROR DE PREMISA DEL ENCARGO, registrado porque cambia la corrección: el `~52` NO era un recuento de características** — son las **muestras de la clase `u2r` en D3**, y la cifra **es EXACTA** (`Resultados/specialized_nsl_kdd_composicion_d3.csv:5`, `u2r,52`, coincidente en la variante 122). Lo que había que quitar era **la virgulilla**, no cambiar el número, y así se hizo, **con remisión al CSV en cada sede**. **(1) Sedes del `~52`:** `Implementacion/app/firmas.py` (`:18-20`, `:111-113`) y `program.py` (`:427-429`), con **cero cambios ejecutables** —`ast.parse` OK; `K_SMOTE`, `GRIDS`, `StratifiedKFold`, `scoring` y los `random_state` intactos—, más `Guia_ML/README.md`, `02_preparacion_datos.md`, `03_validacion_y_metricas.md`, `04_los_tres_modelos.md` y `Resultados/GUIA_RESULTADOS.md`. **Falsos amigos respetados:** el ratio **`883,21:1`** y el **`52,5 %`** de cobertura de tipos; y el «**~41 por fold**» **conserva su virgulilla a propósito** (es 4/5 de 52, aproximación legítima). **`auditor-ml` sobre código: APTO CON CAMBIOS, los dos defectos remediados** —un paréntesis anidado sin cerrar y frases partidas por sustitución ciega en los tres docstrings—, más la remisión al CSV que faltaba en las cuatro guías y en **dos sedes que el encargo no listaba** (`02:75` y `03:117`). **(2) TÍTULO FIJADO por Francisco** (candidato 1, literal): «Sistema híbrido de detección de intrusiones en red basado en aprendizaje automático: detección de anomalías y firmas en cascada sobre NSL-KDD», aplicado en `Resumen.md:12` (retirado el callout de los cinco candidatos), `Abstract.md:15` (traducción) y `00 Índice TFG.md:6` + callout `:8-12` (forma corta en el H1, título literal debajo para la portada del `.docx`; retirado el título de trabajo «H-NIDS con ML»), **y volcado a `resumen-de-decisiones.md`** como nota fechada que remite **por línea** a la Decisión 6 (`:1352`) y a sus ecos (`:1391`, `:1400`), **sin reescribir texto previo**. **(3) Figuras duplicadas:** `4.3` pierde los embebidos **4.8/4.9** (duplicaban 4.1/4.2 de `4.2`) y `5.3` el **segundo `hibrido_cm_54.png`**, con el baseline renumerado **5.13→5.12**; **series contiguas y sin duplicados, 4.1–4.7 y 5.1–5.12**, cero llamadas colgantes, cero embebidos rotos y **ningún `.png` quedó huérfano**. **Ninguna cifra alterada:** recall, F1, FPR y `0.860451` contrastados contra `metricas_hibrido.csv:2` y `metricas_baseline.csv:2`. **(4) Resto del grupo I:** `resumen-de-decisiones.md` y `next-steps.md:493` (**notas fechadas** y cifras exactas `45.927 / 11.656 / 995`, **sin tocar ninguna casilla**), `CLAUDE.md`, **borrado de `Obsidian_TFG_Vault/03 Desarrollo/`** (vacía, sin wikilinks) y el **diagrama de agentes** (`Implementacion/diagramas/03_orquestacion_agentes.mmd`, su `README.md` y el `README.md` raíz). **No existía ninguna carpeta CS229/STANFORD: ya estaba fuera.** Las dos menciones en texto plano a `03 Desarrollo/` se resolvieron en `00 Índice TFG.md` y en `4.2` —aquí **reescritas, no retiradas**: el callout llevaba embebida una decisión vigente del 2026-07-02—. **Cero cómputo, cero corridas, ninguna cifra publicada movida.** **Deja pendientes fichados** (ver `## Abiertas`): la tercera sede del `52` en `99 Investigación/`, el `.png`/`.svg` del diagrama y el cosmético de `Abstract.md:15` | `896c60f` |
 | 2026-08-18 | Informe | **🟡 «Dos figuras duplicadas — decisión pendiente» — CERRADA.** `4.3` deja de embeber `eda_distribuciones_divisiones.png` y `validacion_distribucion_clases.png` (eran las **Figuras 4.1 y 4.2** de `4.2`) y `5.3` deja de embeber **`hibrido_cm_54.png` dos veces**; el baseline pasa de **5.13 a 5.12**. **Series contiguas y sin duplicados: 4.1–4.7 y 5.1–5.12**, cero llamadas colgantes a 4.8/4.9/5.13 en todo el vault, cero embebidos rotos y **los tres `.png` siguen en uso**. **Censo del vault tras el cambio, verificado por el hilo principal: 24 embebidos, los 24 distintos**, en **6 notas**. **Ninguna cifra tocada**, contrastada contra `metricas_hibrido.csv:2` y `metricas_baseline.csv:2` | `896c60f` |
 | 2026-08-18 | Código/Informe | **🟠 «El `~52` tiene MÁS sedes fuera del vault — y TRES son código» — CERRADA con las sedes que enumeraba, y con la PREMISA CORREGIDA:** el `52` es el **recuento exacto de muestras `u2r` en D3**, no un número aproximado ni un recuento de características, así que la corrección fue **quitar la virgulilla y remitir a `specialized_nsl_kdd_composicion_d3.csv`**. Hechas las **tres sedes de código** (`program.py:427-429`, `firmas.py:18-20` y `:111-113`, bajo autorización expresa de Francisco, **con cero cambios ejecutables** verificados por `ast.parse` y por inspección de `K_SMOTE`/`GRIDS`/`StratifiedKFold`/`scoring`/`random_state`), `Resultados/GUIA_RESULTADOS.md` y las **cuatro líneas de `Guia_ML/*`**. Las dos de `.claude/agents/` las hizo el **hilo principal**, que es a quien corresponde el andamiaje. **Queda UNA sede sin tocar, fichada aparte:** `99 Investigación/clasificadores-tabulares-y-arquitecturas-hibridas.md:93`, que además cita `firmas.py:98` cuando hoy es `:111` | `896c60f` |
