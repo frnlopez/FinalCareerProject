@@ -210,11 +210,12 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
   de `auditor-ml` (va después, no a la vez). **Varios `auditor-ml` sí pueden ir en paralelo**: son
   de solo lectura. Un cierre por **tanda**, no por nota: una sola pasada de `cronista`.
 - **Protocolo de citas — vale para CUALQUIER agente que escriba en el vault.** Los marcadores `[n]`
-  son un **contador global** que apunta a `Bibliografía.md`. **En uso hoy: `[1]`–`[8]` y
-  `[10]`–`[78]`, 77 entradas** —contadas en disco el 2026-08-18 tras el segundo pase en serie del
-  `researcher`, que dio de alta `[78]` Storkey (cap. 1, pp. 3-28) al desdoblar `[76]`—, y **`[9]` está
-  RETIRADA SIN RENUMERAR** (`396e283`), así que está
-  **quemada, no libre**. **El primer número disponible es el `[79]`.** **Este rango se cuenta, no se recuerda**
+  son un **contador global** que apunta a `Bibliografía.md`. **Contado en disco el 2026-08-18, al cierre de la Tanda 31:
+  se han emitido 78 números, de los que 71 son ENTRADAS VIVAS y SIETE están QUEMADAS —`[9]`,
+  `[27]`, `[28]`, `[37]`, `[44]`, `[45]` y `[76]`—.** Quemada significa **retirada SIN RENUMERAR**
+  (`[9]` lo fue en `396e283`; las otras seis, al retirarse las entradas que ya no citaba ningún
+  marcador vivo): el número **no vuelve al contador jamás**. **El primer número disponible es el
+  `[79]`.** Ojo con `[76]`: está quemada, pero **`[78]` Storkey sí está viva** — nació al desdoblarla. **Este rango se cuenta, no se recuerda**
   (`grep -oE '^\| *\[[0-9]+\]' Bibliografía.md`): estuvo desfasado en `leader.md` diciendo `[11]`
   cuando ya iba por el `[57]`, y ese es justo el fichero que despacha.
   Importa porque `[2]` (Anderson 1980) y `[3]` (Denning 1987) son las que más se citan al redactar
@@ -233,9 +234,10 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
     `[5, cap. 1]`, `[39, pp. 17-25]`. **No consume número del contador global**: `[8, p. 45]` y
     `[8, p. 90]` son la misma entrada `[8]`. En `[CITA: …]` igual: `[CITA: Géron, cap. 1]`.
   - **Solo es obligatorio en libros y documentos largos.** En artículos de revista o congreso, IEEE
-    no pide más que lo que `Bibliografía.md` ya registra. **Son 8 los libros afectados, y esta es la
-    lista completa**: `[4]` Chio, `[5]` Géron, `[6]` Goodfellow, `[7]` Murphy, `[8]` Stallings,
-    `[12]` Hastie, `[39]` Russell y Norvig, y **`[54]` Molnar**. Ojo con el falso amigo: los
+    no pide más que lo que `Bibliografía.md` ya registra. **Son 9 los libros afectados desde la Tanda 31, y esta es la
+    lista completa**: `[4]` Chio, `[5]` Géron, `[6]` Goodfellow, `[7]` Murphy, `[8]` Stallings
+    (**5.ª ed. 2023**, fijada el 2026-08-18), `[12]` Hastie, `[39]` Russell y Norvig, `[54]` Molnar y
+    **`[78]` Storkey** —el noveno, nacido al desdoblar `[76]`, que quedó quemada—. Ojo con el falso amigo: los
     `pp. 222-232` que ya aparecen son **el rango del artículo en su revista**, metadato de la
     referencia, **no** el localizador de la afirmación.
   - **Sobre `[54]` Molnar:** la edición **ya está fijada** — la declaración de «edición sin fijar» que

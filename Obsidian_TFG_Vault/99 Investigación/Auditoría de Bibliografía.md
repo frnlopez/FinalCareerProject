@@ -171,11 +171,17 @@ puesto en una nota de la memoria**. Propuesta: repuntar esas dos a `[5]`.
 
 ### 7. Cambio de formato: `Bibliografía.md` es ya una tabla de *staging*
 
-Cinco columnas: `[n]` · cita completa en estilo IEEE · **DOI o URL estable** · **nivel** ·
+Cinco columnas —**seis desde el 2026-08-15**, cuando se añadió «Localizador por uso»—: `[n]` · cita completa en estilo IEEE · **DOI o URL estable** · **nivel** ·
 **dónde se usa**. La última no estaba en el encargo y se ha añadido porque hace mecánico el control
 de la regla de T16 («ninguna entrada sin cita en el texto») y documenta que, en efecto, **las 10
 están en uso**. Bajo la tabla van los **avisos por entrada** en callouts, con la reserva o la acción
 pendiente de cada una.
+
+> [!note] Estado del contador a 2026-08-18 (fuera del alcance de T15, anotado para que este informe no quede caducado)
+> **78 filas de tabla · 71 entradas vivas · 7 números QUEMADOS: `[9]`, `[27]`, `[28]`, `[37]`,
+> `[44]`, `[45]` y `[76]`.** Los seis últimos los retiró Francisco el 2026-08-18 por **no sostener
+> ninguna afirmación del texto**; **no se renumeró nada** y **sus números no se reutilizan**.
+> **Primer número libre: `[79]`.** Detalle en [[Bibliografía]], callout previo a la tabla.
 
 > [!success] Contradicción 4 de 5 — SUPERADA, verificado contra disco el 2026-08-17
 > **Ya no son cinco columnas, son SEIS.** La Tanda 9 añadió **«Localizador por uso»** (decisión de

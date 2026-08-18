@@ -193,12 +193,13 @@ ficheros, así que van en paralelo. Dos secciones de la *misma* nota, no.
 | Notas donde una **cita a la otra** por contenido | La segunda necesita leer lo que escribió la primera |
 
 **Protocolo de citas bajo paralelismo — esto es lo que evita el destrozo.** Los marcadores `[n]`
-del vault son un **contador global** que apunta a `Bibliografía.md`. **En uso hoy: `[1]`–`[8]` y
-`[10]`–`[77]`, 76 entradas dadas de alta** —verificado contra `Bibliografía.md` el 2026-08-17 tras
-el pase en serie del `researcher`, que dio de alta `[76]` Quiñonero-Candela et al. (MIT Press 2009)
-y `[77]` Hindy et al. (2020)—, y
-**`[9]` está RETIRADA SIN RENUMERAR (`396e283`): está
-quemada, no libre**. **El primer número disponible es el `[78]`.** Si cuatro redactores en paralelo
+del vault son un **contador global** que apunta a `Bibliografía.md`. **Contado en disco el 2026-08-18, al cierre de la
+Tanda 31: se han emitido 78 números, de los que 71 son ENTRADAS VIVAS y SIETE están QUEMADAS —
+`[9]`, `[27]`, `[28]`, `[37]`, `[44]`, `[45]` y `[76]`—.** Quemada significa **retirada SIN
+RENUMERAR** (`[9]` lo fue en `396e283`; las otras seis, al retirarse las entradas que ya no citaba
+ningún marcador vivo): el número **no vuelve al contador jamás**. **El primer número disponible es
+el `[79]`.** Ojo con `[76]`: está quemada, pero **`[78]` Storkey sí está viva** — nació al
+desdoblarla. Si cuatro redactores en paralelo
 inventan números nuevos, los cuatro empiezan en el mismo y se solapan en silencio.
 
 > **Este rango se VERIFICA, no se recuerda — y ya ha ido mal DOS veces.** Hasta el 2026-08-15 este

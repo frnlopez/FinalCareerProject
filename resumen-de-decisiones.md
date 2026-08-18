@@ -437,18 +437,8 @@ mal-etiquetar un ataque nuevo como firma conocida.
 4. **Evitar explícitamente** un "f1_macro global a 5 clases" como titular del híbrido, justificando
    en la memoria por qué (castigaría el enrutado correcto a `unknown` o premiaría el mal-etiquetado).
 
-**Nota del 2026-08-18 — el `bin_accuracy` = 0,8605 es cifra de COMPARABILIDAD EXTERNA, no titular
-del sistema (decisión de Francisco).** Qué se decide: la accuracy binaria del híbrido sobre D2
-(**0,8605**) se presenta y se cita **solo** como referencia para situar el sistema frente a los
-baselines canónicos publicados sobre NSL-KDD, **nunca** como cifra de titular de los resultados.
-Por qué: el objetivo del trabajo es la **detección de 0-day**, y una accuracy binaria agregada sobre
-D2 no captura ese objetivo —un sistema puede subirla degradando justo lo que aquí se mide—, así que
-usarla de titular desplazaría el criterio de éxito. Dónde está aplicada: como callout en
-`Obsidian_TFG_Vault/05 Evaluación/5.4 Conclusiones del capítulo.md`. **Es una decisión DISTINTA de
-H-6 y no debe fundirse con ella:** H-6 rige el *scoring multiclase* del híbrido (matriz 5×6 y
-métricas por alcance, sin número único); esta nota rige el **estatus retórico de una cifra binaria
-concreta**. Son compatibles —esta nota no altera H-6 ni ninguna otra decisión previa—, pero H-6 no
-la cubría, y por eso se registra aquí.
+**Remisión (2026-08-18):** el **estatus retórico** del `bin_accuracy` binario (0,8605) **no lo
+cubre H-6**, que rige el *scoring multiclase* del híbrido. Ver **H-8**.
 
 ### H-7 — Artefactos, CLI e idempotencia de `hibrido.py` → **mismo patrón auditado que anomalias/firmas/baseline**
 
@@ -471,6 +461,23 @@ la cubría, y por eso se registra aquí.
     referencias y la decisión.
 
 ---
+
+### H-8 — Estatus retórico del `bin_accuracy` = 0,8605 → **cifra de comparabilidad externa, no titular**
+
+**Decisión de Francisco, 2026-08-18.** Qué se decide: la accuracy binaria del híbrido sobre D2
+(**0,8605**) se presenta y se cita **solo** como referencia para situar el sistema frente a los
+baselines canónicos publicados sobre NSL-KDD, **nunca** como cifra de titular de los resultados.
+Por qué: el objetivo del trabajo es la **detección de 0-day**, y una accuracy binaria agregada sobre
+D2 no captura ese objetivo —un sistema puede subirla degradando justo lo que aquí se mide—, así que
+usarla de titular desplazaría el criterio de éxito. Dónde está aplicada: como callout en
+`Obsidian_TFG_Vault/05 Evaluación/5.4 Conclusiones del capítulo.md`. **Es una decisión DISTINTA de
+H-6 y no debe fundirse con ella:** H-6 rige el *scoring multiclase* del híbrido (matriz 5×6 y
+métricas por alcance, sin número único); esta nota rige el **estatus retórico de una cifra binaria
+concreta**. Son compatibles —esta nota no altera H-6 ni ninguna otra decisión previa—, pero H-6 no
+la cubría.
+
+> Sede propia desde el 2026-08-18: el `auditor-ml` señaló que registrarla al final de H-6
+> invitaba justo a la confusión que su propio texto advierte. H-6 conserva una remisión.
 
 ## Pendientes de diseño de `hibrido.py` — RATIFICADOS 2026-07-14 (antes de escribir código)
 
@@ -1581,3 +1588,19 @@ CONSUMIDA.** Título definitivo, literal:
   que no recoge la elección deja la decisión **sin aval fuera de la propia nota** que la afirma.
 - **Alcance:** solo se registra. **Cero cifras movidas**, ningún otro fichero tocado desde esta nota
   (el cierre en `features.md` lo hace el pase de cronista).
+
+---
+
+## Nota del 2026-08-18 — la carpeta `APUNTES SOBRE CS229 STANFORD ML LECTURES/` NO se versiona
+
+**Decisión del 2026-08-16, registrada aquí el 2026-08-18** porque hasta hoy vivía **solo** en
+`## PRÓXIMOS PASOS` de `features.md` y no en este fichero, que es la sede de las decisiones de
+diseño.
+
+`Obsidian_TFG_Vault/APUNTES SOBRE CS229 STANFORD ML LECTURES/` apareció sin trackear con un único
+`Lecture 1.md` **vacío**. Es material de estudio propio de Francisco, **ajeno al TFG**, y un fichero
+vacío no preserva nada. El fichero se borró con `git rm` el 2026-08-17 bajo autorización expresa; la
+carpeta queda vacía y fuera de git.
+
+**`03 Desarrollo/` NO entra en esta decisión.** Su borrado se autorizó aparte, el 2026-08-18, y se
+ejecutó en la Tanda 28 (`896c60f`).

@@ -168,7 +168,15 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 >
 > ### ⛔ CONTADOR GLOBAL DE CITAS — el dato con riesgo real de este fichero
 >
-> **ESTADO VIGENTE A 2026-08-18, DESPUÉS DEL SEGUNDO PASE EN SERIE DEL `researcher` (TANDA 30) —
+> **ESTADO VIGENTE A 2026-08-18, AL CIERRE DE LA TANDA 31 — contado contra disco por el hilo
+> principal y por el `researcher`, las dos cuentas coinciden: se han emitido **78 NÚMEROS**, de los
+> que **71 SON ENTRADAS VIVAS** y **SIETE ESTÁN QUEMADAS**: `[9]`, `[27]`, `[28]`, `[37]`, `[44]`,
+> `[45]` y `[76]`. Quemada = **retirada SIN RENUMERAR**, el número no vuelve al contador jamás.
+> **EL PRIMER `[n]` LIBRE ES EL `[79]`.** Ojo con `[76]`: quemada, pero **`[78]` Storkey está viva**
+> — nació al desdoblarla. **Todo lo que este fichero diga más abajo sobre «77 filas», «76 filas» o
+> «primer libre `[78]`» es TRAZA HISTÓRICA.**
+>
+> **Estado a 2026-08-18, tras la Tanda 30 — SUPERADO, se deja como traza:
 > contado contra disco por el hilo principal y por el `researcher`, las dos cuentas coinciden:
 > `Bibliografía.md` tiene **77 FILAS**, rango `[1]`–`[8]` y `[10]`–`[78]`, con **`[9]` SIGUE
 > QUEMADA** (retirada sin renumerar). **EL PRIMER `[n]` LIBRE ES EL `[79]`.** El alta nueva de la
@@ -542,6 +550,14 @@ tanto lo despachable HOY sin interrogatorio previo es **solo mecánica**: la cel
 vigilancia del `3.3:42`. El cuello de botella del proyecto **ya no es capacidad de agente: son las
 decisiones de Francisco y la bibliografía en Zotero.**
 
+**Cuándo una sub-tarea gana ficha `- [ ]` propia — convención fijada el 2026-08-18.** Una sub-tarea
+vive como **viñeta dentro de su ficha madre**, salvo que se cumpla alguna de estas dos condiciones:
+**(a)** otro bloque del registro la nombra **como tarea independiente**, o **(b)** gobierna un
+**orden de ejecución** («X antes de Y»). En cualquiera de los dos casos **se le abre ficha propia**,
+y la viñeta madre pasa a **remitir a ella**. Motivo: una sub-tarea sin ficha es **invisible a
+`grep '^- \[ \]'`**, que es como se barre este fichero — y por eso **T20 estuvo contada como
+inexistente** mientras dos bloques la nombraban como tarea suelta.
+
 **Fichar no es resolver: este bloque no corrige nada.**
 
 > ⚠️ **Este bloque identifica cada ficha por su TÍTULO, no por `fichero:línea`, y el cambio es
@@ -705,18 +721,18 @@ decisiones de Francisco y la bibliografía en Zotero.**
 > más los tres residuos declarados de la tanda.** **Ninguna es bloqueante** y **ninguna mueve una
 > cifra publicada.** **Fichar no es resolver: aquí no se ha corregido nada.**
 
-- [ ] 🟡 **Cómo se fichan las sub-tareas: T20 nunca tuvo ficha propia** · Ninguno · **decide Francisco**
+- [x] 🟡 **Cómo se fichan las sub-tareas: T20 nunca tuvo ficha propia** · **CERRADA el 2026-08-18 en la TANDA 31: la CONVENCIÓN queda ESCRITA** por el hilo principal en el bloque de método del triaje de este mismo fichero — una sub-tarea vive como **viñeta dentro de su ficha madre** salvo que (a) **otro bloque la nombre como tarea independiente** o (b) **gobierne un orden de ejecución**; en esos dos casos gana **ficha propia** y la viñeta madre **remite a ella**. Motivo: una sub-tarea sin ficha es **invisible a `grep '^- \[ \]'`**, y por eso **T20 estuvo contada como inexistente** mientras dos bloques la nombraban. Su fila vive ya en `## Cerradas` · Ninguno · **decidió Francisco**
   Alta el **2026-08-18**, del barrido de `## PRÓXIMOS PASOS`. El propio fichero admite que **T20 vive
   como viñeta dentro de T9**, mientras **dos bloques distintos la nombran como tarea independiente**.
   No es un error de contenido: es que **no hay convención escrita** sobre cuándo una sub-tarea gana
   ficha propia. **Fichada, no resuelta.**
 
-- [ ] 🟡 **El callout «Punto actual» de `00 Índice TFG.md` está fechado el 2026-07-16 y no menciona `A.3`** · Informe · **decide Francisco**
+- [x] 🟡 **El callout «Punto actual» de `00 Índice TFG.md` está fechado el 2026-07-16 y no menciona `A.3`** · **CERRADA el 2026-08-18 en la TANDA 31 POR CONSTATACIÓN: en disco el callout YA ESTABA CORRECTO — la ficha describía un estado desfasado y NO HIZO FALTA TOCAR NADA.** Justo el precedente del `mermaid-cli` que la propia ficha invocaba. Su fila vive ya en `## Cerradas` · Informe · **decidió Francisco**
   Alta el **2026-08-18**, del barrido de `## PRÓXIMOS PASOS`, donde quedó «a criterio de Francisco» y
   **nunca se llevó a `## Abiertas`**. **Verificar en disco antes de actuar**, por el precedente del
   `mermaid-cli`.
 
-- [ ] 🟡 **La decisión de no versionar `APUNTES SOBRE CS229 STANFORD ML LECTURES/` solo vive en `## PRÓXIMOS PASOS`** · Ninguno · **decide Francisco**
+- [x] 🟡 **La decisión de no versionar `APUNTES SOBRE CS229 STANFORD ML LECTURES/` solo vive en `## PRÓXIMOS PASOS`** · **CERRADA el 2026-08-18 en la TANDA 31: DADA DE ALTA en `resumen-de-decisiones.md`** por el hilo principal, que es quien escribe esa sede. Queda escrito además que **`03 Desarrollo/` NO entra en esa decisión**: se autorizó aparte y se ejecutó en la TANDA 28. Su fila vive ya en `## Cerradas` · Ninguno · **decidió Francisco**
   Alta el **2026-08-18**, del barrido de `## PRÓXIMOS PASOS`. Es **una decisión de diseño fuera de su
   sede**: `resumen-de-decisiones.md` no la recoge. **Y ese fichero lo escribe el hilo principal con
   Francisco delante**, así que ningún agente puede trasladarla por su cuenta.
@@ -727,8 +743,16 @@ decisiones de Francisco y la bibliografía en Zotero.**
   el capítulo 2», «`2.1` · coherencia y densidad del guion teórico» y «Revisión del profesor:
   simplificar, unificar y desduplicar del capítulo 3 en adelante»—, que **convergen** y por eso se
   interrogan juntas. Francisco ordenó el **2026-08-12** que la de `1.4` se ejecute **la última**.
+  > **ACTUALIZADA el 2026-08-18 (TANDA 31): ES LO ÚNICO QUE QUEDA DEL TFG.** Fichada aquí completa
+  > para que **una sesión fría pueda retomarla sin releer nada más**.
+  > **ORDEN, no negociable:** (1) `grill-me` de **`2.1` (densidad)** → (2) **revisión del profesor**
+  > → (3) **`1.4` LA ÚLTIMA**.
+  > **RESTRICCIÓN DURA (T7): lo que salga del cuerpo se MUEVE a `A.3`, NO se elimina.**
+  > **Dossier de entrada, ya preparado:** los **seis puntos vivos de `2.1`**, la **cita textual del
+  > profesor con sus dos peticiones**, y el **punto 1 de `1.4`**.
+  > **Ningún agente puede ejecutarla: es un interrogatorio con Francisco delante.**
 
-- [ ] 🟡 **La nota del `bin_accuracy` 0,8605 quedó registrada AL FINAL DE H-6, y el `auditor-ml` dijo que no es H-6** · Informe · **decide Francisco**
+- [x] 🟡 **La nota del `bin_accuracy` 0,8605 quedó registrada AL FINAL DE H-6, y el `auditor-ml` dijo que no es H-6** · **CERRADA el 2026-08-18 en la TANDA 31: la nota SALE de H-6 y pasa a SECCIÓN PROPIA, `H-8`**, colocada tras H-7 en `resumen-de-decisiones.md` por el hilo principal, con el **cuerpo íntegro** salvo la frase final «y por eso se registra aquí», que ya no aplica; **en H-6 queda una remisión de una línea**. **La cifra no se toca** (`metricas_hibrido.csv`, valor real **0.860451**). Su fila vive ya en `## Cerradas` · Informe · **decidió Francisco**
   Alta el **2026-08-18**, reserva del `leader` sobre el **punto 12** de la TANDA 30. El auditor fue
   explícito en que la decisión de etiquetar el `bin_accuracy` como **cifra de comparabilidad externa,
   no de titular**, **no es H-6 y no debían fundirse**; el implementador la escribió como **nota fechada
@@ -736,7 +760,7 @@ decisiones de Francisco y la bibliografía en Zotero.**
   **Cosmético y reversible:** decide Francisco si se mueve a decisión propia. **La cifra es correcta y
   no se toca**: `metricas_hibrido.csv`, valor real **0.860451**.
 
-- [ ] 🟡 **Seis entradas de `Bibliografía.md` quedan SIN USO en el texto — rompe a propósito la dirección inversa de T16** · Informe · **decide Francisco**, ejecuta `researcher`
+- [x] 🟡 **Seis entradas de `Bibliografía.md` quedan SIN USO en el texto — rompe a propósito la dirección inversa de T16** · **CERRADA el 2026-08-18 en la TANDA 31: RETIRADAS, por decisión de Francisco.** Identificadas **marcador a marcador en las siete carpetas de notas**: salen **exactamente seis y ninguna más** —las apariciones residuales son **callouts explicativos, no marcadores vivos**—. Quedan **TACHADAS Y CONSERVADAS con razón escrita**, en la misma forma que `[9]`: **cero altas, cero renumeraciones, cero borrados**. Actualizada la coherencia arrastrada: cabecera, callout de las 47 citas, la excepción a T16 en `[76]` y la lista de libros con localizador. **CONSECUENCIA PARA EL CONTADOR — ver el bloque «CONTADOR GLOBAL DE CITAS»: 78 números emitidos, 71 entradas vivas, SIETE quemadas (`[9]`, `[27]`, `[28]`, `[37]`, `[44]`, `[45]`, `[76]`), primer libre `[79]`.** Su fila vive ya en `## Cerradas` · Informe · **decidió Francisco**, ejecutó `researcher`
   Alta el **2026-08-18**, dejada escrita por el `researcher` en su ciclo propio. Es **efecto esperado y
   declarado** de dos cosas del ciclo A: la **retirada de las cinco afirmaciones colgantes
   irreconstruibles** y el **desdoble de `[76]`**. **No es un error**: T16 se cerró por agotamiento
@@ -751,9 +775,11 @@ decisiones de Francisco y la bibliografía en Zotero.**
 > trabajo** y **ninguna mueve una cifra publicada.** **Fichar no es resolver: aquí no se ha corregido
 > nada.**
 >
-> **Contador verificado contra disco en el mismo pase: 76 filas antes y 76 después, `[1]`–`[8]` +
+> ~~**Contador verificado contra disco en el mismo pase: 76 filas antes y 76 después, `[1]`–`[8]` +
 > `[10]`–`[77]`, CERO altas, `[9]` sigue quemada, ningún `[n]` renumerado. El primer libre sigue
-> siendo el `[78]`.**
+> siendo el `[78]`.**~~ **TRAZA HISTÓRICA — caducada el 2026-08-18 (TANDA 31).** El recuento vigente
+> vive **solo** en el bloque «CONTADOR GLOBAL DE CITAS» de `## PRÓXIMOS PASOS`: **78 números
+> emitidos, 71 entradas vivas, SIETE quemadas, primer libre `[79]`.** No copies la cifra de aquí.
 
 - [x] 🟡 **Edición de `[8]` Stallings: 4.ª (2018) vs 5.ª (2023)** · **CERRADA el 2026-08-18 en la TANDA 30 (ciclo A, `researcher` en ciclo propio): APLICADA la 5.ª ed., Pearson 2023** en `Bibliografía.md`. Su fila vive ya en `## Cerradas` · Informe · **decide Francisco, con el libro delante**
   Alta el **2026-08-18**. La entrada queda **⚠️ EDICIÓN NO ESTABLECIDA**. Las dos ediciones coexisten
@@ -2093,7 +2119,7 @@ decisiones de Francisco y la bibliografía en Zotero.**
 > es el `[58]`, es el `[68]`** — ver el bloque «CONTADOR GLOBAL DE CITAS» de PRÓXIMOS PASOS, que es
 > el único sitio donde se mantiene esa cifra.
 
-- [~] **Seis afirmaciones del vault que la TANDA 7 dejó desfasadas — TRES CERRADAS en la TANDA 8, UNA en la TANDA 9 y UNA en la TANDA 11; queda UNA** (🟡) · Informe · `redactor-tfg` / `researcher`
+- [x] **Seis afirmaciones del vault que la TANDA 7 dejó desfasadas — LAS SEIS CERRADAS: tres en la TANDA 8, una en la TANDA 9, una en la TANDA 11 y la última (T25) el 2026-08-18 en la TANDA 31** (🟡) · **CERRADA POR VERIFICACIÓN, no por trabajo.** Su fila vive ya en `## Cerradas` · Informe · `redactor-tfg` / `researcher`
   Alta el **2026-08-15**, **las seis verificadas contra disco**. Son residuos de coherencia, no
   trabajo de redacción: cada uno es una línea que dice que algo no existe cuando ya existe.
   1. ~~**`4.2:117-118` afirma que las figuras «aún no se han copiado».**~~ **HECHO en la TANDA 8**
@@ -2108,8 +2134,16 @@ decisiones de Francisco y la bibliografía en Zotero.**
   4. ~~**`Bibliografía.md:153` dice «propuesta, no ejecutada» sobre algo que YA está ejecutado.**~~
      **HECHO en la TANDA 9** (2026-08-15, `e286cce`): el `researcher` corrigió **tres callouts** que
      declaraban «propuesta, no ejecutada» sobre acciones que el disco demuestra ya ejecutadas.
-  5. **Los números de línea de T25 están desplazados** por el callout que la Tanda 6 insertó en
-     `Bibliografía.md`. Anotado también dentro de la propia ficha de T25: **localizar por contenido**.
+  5. ~~**Los números de línea de T25 están desplazados** por el callout que la Tanda 6 insertó en
+     `Bibliografía.md`.~~ **CERRADO el 2026-08-18 en la TANDA 31 POR CONSTATACIÓN: el trabajo de T25
+     YA ESTABA APLICADO desde las TANDAS 11/13.** El `researcher` lo localizó **por contenido**, como
+     la propia viñeta mandaba: la tachadura de «`[6]` Goodfellow huérfana» con su «YA NO: T24 la
+     ancló», la fila de `[6]` marcada **`YA NO ESTÁ HUÉRFANA`**, el callout final coherente, y en
+     `99 Investigación/Auditoría de Bibliografía.md` un `[!success] EJECUTADO` que se autodeclara «la
+     corrección que T25 encargaba sobre este fichero», con la fila **P3 tachada**. Un `grep` de
+     «huérfan\*» sobre **todo el vault** no devuelve **ninguna declaración falsa viva**. **Lo que
+     seguía vivo era el REGISTRO, no el trabajo: el triaje arrastraba T25 como viva POR ERROR** —
+     **decimocuarta ocurrencia del patrón de registro caducado en esta sesión**.
   6. ~~**`[6]` (Goodfellow) sigue HUÉRFANA en todo el vault.**~~ **RESUELTO en la TANDA 11**
      (2026-08-15, `d31e20f`): `2.1.4.3` la ancla con **`[6, cap. 6]`**, **7 ocurrencias verificadas en
      disco**. **PERO el registro bibliográfico NO se ha enterado:** `Bibliografía.md:75`, `:63` y
@@ -2469,6 +2503,14 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-18 | Informe/Ninguno | **TANDA 31 · DEJAR EL ESTADO AUTOCONTENIDO PARA SESIONES INDEPENDIENTES. Seis ficheros tocados, verificados contra `git status`** (`Obsidian_TFG_Vault/Bibliografía.md`, `Obsidian_TFG_Vault/99 Investigación/Auditoría de Bibliografía.md`, `CLAUDE.md`, `.claude/agents/leader.md`, `resumen-de-decisiones.md`, `features.md`). **Cierra SEIS fichas.** **(1) T25 — CERRADA POR VERIFICACIÓN, no por trabajo:** ya estaba aplicada desde las TANDAS 11/13; **lo que seguía vivo era el registro**, y el triaje la arrastraba viva **por error** — **decimocuarta ocurrencia del patrón**. **(2) Las SEIS entradas sin uso de `Bibliografía.md` — RETIRADAS** por decisión de Francisco: **exactamente seis y ninguna más**, tachadas y **conservadas con razón escrita** como `[9]`; **cero altas, cero renumeraciones, cero borrados**. **(3) EL CONTADOR DE CITAS CAMBIA, y es el dato con riesgo real del proyecto:** **78 números emitidos, 71 ENTRADAS VIVAS y SIETE QUEMADAS — `[9]`, `[27]`, `[28]`, `[37]`, `[44]`, `[45]` y `[76]`; primer libre `[79]`**, contado en disco por el `researcher` **y recontado por el hilo principal, las dos cuentas coinciden**. **Falso amigo registrado: `[76]` está quemada pero `[78]` Storkey está VIVA** —nació al desdoblarla— y es el **noveno libro con localizador obligatorio**. `CLAUDE.md` y **`.claude/agents/leader.md`** declaraban «76 entradas, primer libre `[78]`»: **corregidos los dos** por el hilo principal, más la sede vigente del bloque «CONTADOR GLOBAL DE CITAS» de `features.md`. **Importa porque `leader.md` es el fichero que DESPACHA:** sin corregirlo, la próxima tanda paralela habría arrancado con un número equivocado. **(4) `resumen-de-decisiones.md`, por el hilo principal:** la nota del `bin_accuracy` **sale de H-6 y pasa a `H-8`**, y **alta de la decisión CS229**. **(5) `features.md`: convención de fichado de sub-tareas (T20)** escrita en el bloque de método del triaje. **(6) El callout «Punto actual» de `00 Índice TFG.md` — SIN CAMBIOS: ya estaba correcto.** **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida.** **PENDIENTE, y es lo único que queda del TFG:** el **`grill-me` conjunto** `2.1` (densidad) → revisión del profesor → **`1.4` la última**, con la restricción dura de **T7** (lo que salga del cuerpo se **mueve a `A.3`**) | — |
+| 2026-08-18 | Informe | **T25 (residuo 5 de «Seis afirmaciones del vault que la TANDA 7 dejó desfasadas») — CERRADA POR CONSTATACIÓN: el trabajo YA ESTABA APLICADO desde las TANDAS 11/13.** Localizado **por contenido**, como la propia viñeta mandaba: la tachadura de «`[6]` Goodfellow huérfana» con su «YA NO: T24 la ancló», la fila de `[6]` marcada **`YA NO ESTÁ HUÉRFANA`**, el callout final coherente, y en `Auditoría de Bibliografía.md` un `[!success] EJECUTADO` que se autodeclara «la corrección que T25 encargaba sobre este fichero», con la **fila P3 tachada**. Un `grep` de «huérfan\*» sobre **todo el vault** no devuelve **ninguna declaración falsa viva**. **Con ella la ficha madre queda cerrada entera (6/6)** | — |
+| 2026-08-18 | Informe | **🟡 «Seis entradas de `Bibliografía.md` quedan SIN USO en el texto» — CERRADA: RETIRADAS, por decisión de Francisco.** Identificadas **marcador a marcador en las siete carpetas de notas**: **exactamente seis y ninguna más**; las apariciones residuales son **callouts explicativos, no marcadores vivos**. Quedan **tachadas y conservadas con razón escrita**, misma forma que `[9]` — **cero altas, cero renumeraciones, cero borrados**. Actualizada la coherencia arrastrada: **cabecera**, **callout de las 47 citas**, la **excepción a T16 en `[76]`** y la **lista de libros con localizador**. **Efecto en el contador: siete números quemados y primer libre `[79]`** | — |
+| 2026-08-18 | Ninguno | **CONTADOR GLOBAL DE CITAS ACTUALIZADO EN SUS TRES SEDES — ejecutado por el HILO PRINCIPAL (andamiaje).** De «76 entradas, primer libre `[78]`» a **«78 números emitidos · 71 entradas vivas · SIETE quemadas (`[9]`, `[27]`, `[28]`, `[37]`, `[44]`, `[45]`, `[76]`) · primer libre `[79]`»**, en `CLAUDE.md`, **`.claude/agents/leader.md`** y el bloque «CONTADOR GLOBAL DE CITAS» de `features.md`, dejando lo anterior **como traza**. **Contado en disco dos veces —`researcher` e hilo principal— y coincidente.** **Quemada = retirada sin renumerar: el número no vuelve al contador jamás.** Sin corregir `leader.md`, **el fichero que despacha**, la próxima tanda paralela habría arrancado con un número equivocado | — |
+| 2026-08-18 | Informe | **🟡 «La nota del `bin_accuracy` 0,8605 quedó registrada AL FINAL DE H-6» — CERRADA: sale de H-6 y pasa a SECCIÓN PROPIA, `H-8`**, tras H-7 en `resumen-de-decisiones.md`, escrita por el hilo principal con el **cuerpo íntegro** salvo la frase final «y por eso se registra aquí», que ya no aplica; **en H-6 queda una remisión de una línea**. Motivo del `auditor-ml`: registrarla dentro de H-6 **invitaba justo a la confusión que su propio texto advierte**. **La cifra no se toca** (`metricas_hibrido.csv`, valor real **0.860451**) | — |
+| 2026-08-18 | Ninguno | **🟡 «La decisión de no versionar `APUNTES SOBRE CS229 STANFORD ML LECTURES/` solo vive en `## PRÓXIMOS PASOS`» — CERRADA: DADA DE ALTA en `resumen-de-decisiones.md`** por el hilo principal, única sede legítima de las decisiones de diseño. **Queda escrito que `03 Desarrollo/` NO entra en esa decisión:** se autorizó aparte y se ejecutó en la TANDA 28 | — |
+| 2026-08-18 | Ninguno | **🟡 «Cómo se fichan las sub-tareas: T20 nunca tuvo ficha propia» — CERRADA: CONVENCIÓN ESCRITA** en el bloque de método del triaje de `features.md`. Una sub-tarea vive como **viñeta dentro de su ficha madre** **salvo** que (a) **otro bloque la nombre como tarea independiente** o (b) **gobierne un orden de ejecución**; en esos dos casos **gana ficha propia** y la viñeta madre **remite a ella**. Motivo: una sub-tarea sin ficha es **invisible a `grep '^- \[ \]'`**, y por eso **T20 estuvo contada como inexistente** mientras dos bloques la nombraban | — |
+| 2026-08-18 | Informe | **🟡 «El callout “Punto actual” de `00 Índice TFG.md` está fechado el 2026-07-16 y no menciona `A.3`» — CERRADA POR CONSTATACIÓN, SIN TOCAR NADA: en disco YA ESTABA CORRECTO.** La desfasada era **la ficha**, no el callout. Justo el precedente del `mermaid-cli` que ella misma invocaba | — |
 | 2026-08-18 | Informe | **TANDA 30 · LAS 23 DECISIONES DE FRANCISCO, APLICADAS. Francisco aceptó TODAS las recomendaciones del listado; se ejecutaron en TRES CICLOS.** **CICLO A — Grupo I, `researcher` EN CICLO PROPIO (11 puntos de bibliografía)**, como manda la regla dura de no mezclarlo con otros agentes: `Bibliografía.md`, `1.2 Preliminares`, `2.1.4`, `2.2.2`, `2.2.5`, `2.3.2`, `5.1` y el informe `99 Investigación/pase-bibliografia-2026-08-18.md`. **CICLO B — cuatro agentes en paralelo sobre ficheros disjuntos (puntos 12-15) más `auditor-ml`**: veredicto **`APTO CON CAMBIOS`, 5 hallazgos, ningún 🔴**, los cinco aplicados en una segunda tanda paralela. **Los cuatro números auditados salieron VERDADEROS contra disco: `0,8605`** (`metricas_hibrido.csv`, valor real **0.860451**), **`0,1017`**, **`56,9 %`** y el recuento de `evaluacion.py`. **CICLO C — `cronista` sobre `features.md`** (puntos 16, 21, 22): cinco fichas cerradas y **bloque de triaje reescrito SIN CIFRAS**, solo con el criterio. **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida.** **Cierra TRECE fichas** de `## Abiertas` **y deja SEIS nuevas**, ninguna bloqueante | `4510a65` |
 | 2026-08-18 | Informe | **CICLO A de la TANDA 30 — EL PASE DE BIBLIOGRAFÍA, y EL CONTADOR NO SE SOLAPÓ, que era el riesgo.** **La tarea 4 se llevó el `[78]`** (Storkey, cap. 1, **pp. 3-28**, con `5.1` repuntada a **`[78, pp. 3-28]`**) y **la tarea 8 NO consumió número**, porque **Breunig et al. (2000) YA EXISTÍA como `[75]`** desde la Tanda 14: **el `researcher` lo detectó por su cuenta y lo verificó contra Crossref ANTES de escribir** — darla de alta habría **duplicado** la referencia. **`Bibliografía.md` queda en 77 filas: `[1]`–`[8]` + `[10]`–`[78]`, `[9]` sigue quemada, primer libre `[79]`. Contado en disco, no recordado** | `4510a65` |
 | 2026-08-18 | Informe | **CICLO B de la TANDA 30 — puntos 12 a 15, cuatro ficheros disjuntos.** **(12)** el `bin_accuracy` **0,8605** queda **etiquetado como cifra de comparabilidad externa, NO de titular**. **(13)** `4.6` reescrita, **y el primer pase se pasó de frenada**: cedía al capítulo 5 la **sede canónica** del veredicto **H1** cuando `4.3` declara que la sede es **§4.3.5** y `5.1`, `5.2` y `5.4` remiten de vuelta allí — habría creado un **bucle de remisiones**; corregido, el capítulo 5 aporta el **respaldo empírico** y **la sede sigue en 4.3.5**. **(14)** wikilink de `6.2` a `[[aprendizaje-continuo-nested-learning]]` retirado y el párrafo autocontenido, **y el `auditor-ml` encontró el MISMO defecto en `5.4`** (`[[benchmark-comparativo-nsl-kdd]]`), igualmente retirado: **ese fallo solo se ve auditando las notas juntas**, que es para lo que existe la auditoría de tanda paralela. **(15)** **Q3 de `resumen-de-decisiones.md` puesta al día por NOTA FECHADA**, y **la otra sede, `CLAUDE.md`, YA ESTABA CORRECTA en disco** —su fila de `evaluacion.py` ya describía el contrato post-T1 con `metricas_tiempo` y la maquinaria de esquema—, verificado por el hilo principal: **decimotercera ocurrencia del patrón de registro caducado en la sesión** | `4510a65` |
