@@ -1,7 +1,7 @@
 ---
 titulo: "Apéndice A.3 — Ficha del sistema (model card)"
 numero: "A.3"
-estado: borrador
+estado: redactada
 ---
 
 # A.3 Ficha del sistema

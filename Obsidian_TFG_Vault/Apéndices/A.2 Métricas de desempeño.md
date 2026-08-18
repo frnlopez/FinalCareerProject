@@ -1,7 +1,7 @@
 ---
 titulo: "Apéndice A.2 — Métricas de desempeño"
 numero: "A.2"
-estado: borrador
+estado: redactada
 ---
 
 # A.2 Métricas de desempeño

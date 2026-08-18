@@ -1,7 +1,7 @@
 ---
 titulo: "Apéndice A.1 — Columnas del dataset NSL-KDD"
 numero: "A.1"
-estado: borrador
+estado: redactada
 ---
 
 # A.1 Columnas del dataset NSL-KDD

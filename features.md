@@ -530,12 +530,19 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   conclusiones»**, que es del **6**; **(3)** la frase del capítulo 4 **termina sin punto, a media idea**.
   Anotado al margen: **todo el capítulo 1 tiene solo TRES citas** (`[1]`, `[2]` y `[3]`).
 
-- [ ] 🟡 **El campo `estado:` del frontmatter está sin mantener y MIENTE** · Informe · `redactor-tfg`
-  Alta el **2026-08-17**. Recuento contra disco: **14 `redactada`** (todas del capítulo 2), **2
-  `pendiente`** y **29 `borrador`** — y entre esos 29 están **`5.0`–`5.4`, `6.1`, `6.2`, `4.3` y los
-  tres apéndices**, que están **escritos, auditados, con cifras volcadas y citas asignadas**. Un agente
-  que se fíe del campo **concluirá que el capítulo 5 está sin hacer**. Es la **misma clase de
-  divergencia registro↔disco que ha mordido cuatro veces hoy**, pero en frontmatter.
+> **El 🟡 «El campo `estado:` del frontmatter está sin mantener y MIENTE» queda CERRADO en la TANDA 22**
+> (2026-08-18): resincronizadas **26 notas** de `borrador` a `redactada`. Su ficha vive ya en
+> `## Cerradas`. **Efecto colateral esperado: `00 Índice TFG.md` queda desfasado — ficha nueva más
+> abajo.**
+
+### Altas de la TANDA 22 — 2026-08-18
+
+- [ ] 🟡 **`00 Índice TFG.md` publica estados desfasados tras la resincronización del frontmatter** · Informe · `redactor-tfg`
+  Alta el **2026-08-18**, **primer punto de la TANDA 23**. Es **efecto colateral esperado** de la
+  TANDA 22, no defecto nuevo: el índice dice `borrador` en **27 notas** y su tabla de totales publica
+  **14/27/2**, cuando el recuento real en disco es **40 `redactada` / 1 `borrador` / 2 `pendiente`**.
+  **Matiz que importa para no romper nada: el índice se acababa de sanear en la TANDA 21**, así que
+  esta corrección va **sobre la versión ya arreglada**, no sobre la vieja.
 
 > **El 🟡 «AMPLIACIÓN de la ficha `00 Índice TFG.md`: desfasado en NUEVE sitios» queda CERRADO en la
 > TANDA 21** (2026-08-17), y **eran QUINCE, no nueve**. Su ficha vive ya en `## Cerradas`, junto con la
@@ -2023,6 +2030,7 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-18 | Informe | **TANDA 22 — barrido de resincronización del campo `estado:` del frontmatter contra el estado real en disco. Cierra la ficha 🟡 «el campo `estado:` está sin mantener y MIENTE».** **26 notas** pasan de `borrador` a `redactada`, **verificadas abriendo cada nota una por una**: `01 Introducción/1.0`, `1.1`, `1.2`, `1.3` · `03 Diseño del sistema/3.1`–`3.6` · `04 Implementación del sistema/4.1`–`4.6` · `05 Evaluación/5.0`–`5.4` · `06 Conclusiones/6.1`, `6.2` · `Apéndices/A.1`, `A.2`, `A.3`. **Solo el valor de `estado:`, ni una línea más** — verificado: **26 ficheros, 26 inserciones, 26 supresiones, cero líneas ajenas al campo**. **Recuento final del vault: 40 `redactada`, 1 `borrador`, 2 `pendiente`.** **`1.4 Estructura.md` se queda en `borrador` A PROPÓSITO**: tiene hueco real de contenido y es justo la ficha viva de `features.md:527` — **no es un olvido de esta tanda**. `Resumen.md` y `Abstract.md` siguen en `pendiente`, **correctamente**. **Fuera de alcance y sin tocar:** `00 Índice TFG.md` y `Bibliografía.md`. Las **8 notas de `99 Investigación/`** usan **vocabulario de estado propio** (`informe`, `permanente`, `cerrado`) y quedaron **intactas con criterio, no por descuido**. Confirmado de paso: `APUNTES SOBRE CS229 STANFORD ML LECTURES/Lecture 1.md` **no tiene frontmatter (0 bytes)** — es la que Francisco autorizó borrar, y **sigue sin borrar**. **Deja UNA ficha nueva**, efecto colateral esperado: `00 Índice TFG.md` publica ahora estados desfasados | `—` |
 | 2026-08-17 | Informe | **TANDA 21 — cuatro redactores en paralelo y DOS rondas de corrección de auditoría.** Cierra **seis fichas**: el `[!todo]` de `A.3:648`, la **deuda de cifra de KNN**, el **`~52`**, la **ampliación del índice**, el **recuento de `00 Índice TFG.md:106`** y la **sede canónica de `4.3:262`**. **Ninguna cifra publicada movida sin artefacto de respaldo, cero `[n]` nuevos** (máximo en uso sigue `[77]`), **cero marcas temporales de corrida en prosa** en todo el vault, verificado en las dos rondas. Deja **SIETE fichas nuevas**, ninguna bloqueante, y **dos encargos acumulados** al pase en serie del `researcher` | `1075dfd` |
 | 2026-08-17 | Informe | **🟠 Deuda de CIFRA de KNN en el eje SMOTE-vs-nada — CERRADA, y era LA ÚLTIMA DEUDA DE DATO REAL DEL VAULT.** Volcadas a `5.2` §5.2.4.4 desde `Resultados\metricas_balanceo.csv`: **KNN-54 SMOTE 0,9453 ± 0,0058 vs nada 0,9187 ± 0,0252** (margen **0,0266**) y **KNN-122 0,9523 ± 0,0096 vs nada 0,9172 ± 0,0253** (margen **0,0351**). Añadida **columna «Margen»** y las **desviaciones que faltaban a HistGradientBoosting**. **Dato que REFUERZA la Decisión 1 de Francisco:** el margen **más estrecho** de este eje (**0,0266**) **supera al más amplio** del eje SMOTE-vs-`class_weight` (**0,0180**, DT-54), verificado contra el CSV | `1075dfd` |
 | 2026-08-17 | Informe | **🟡 El `~52` — CERRADO en las cuatro sedes del vault (`4.2`, `5.2`, `5.4`, `2.1.6`) y en las TRES de trazabilidad autorizadas EXPRESAMENTE por Francisco** (`resumen-de-decisiones.md:103`, `next-steps.md:493` y `:550`), que **citan ahora el artefacto de origen**. Corregida de paso la **autocontradicción de `4.2`** (decía `~52` en una viñeta y publicaba el **52 exacto** en su tabla), precisado el **ratio a 883,21:1** (`ratio_desbalance_max_min`) y el **`dos` a 45.927**. **Falso positivo respetado: el `~52,5 %` de `4.2` es un porcentaje.** **Las sedes NO autorizadas —tres de ellas docstrings de código— quedan en ficha nueva** | `1075dfd` |
