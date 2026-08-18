@@ -5,14 +5,22 @@ estado: borrador
 
 # Índice TFG — H-NIDS con ML
 
-> [!info] Punto actual (2026-08-17): estructura ✅ · **capítulo 2 Marco Teórico CERRADO** — sus 14 notas (2.1.1–2.1.6, 2.2.1–2.2.5, 2.3.1–2.3.3) están `estado: redactada` en prosa desde el 2026-08-15 ✅ · volcado de resultados a caps. 4-5 ✅ · Apéndice A.1 + 4.2.1 ✅ · **cap. 3 Diseño completo (3.1-3.6) ✅** · conclusiones 4.6, 5.4 y **6.1 ✅** · **4.1 Tecnologías ✅** · **A.2 Métricas ✅** · **A.3 Ficha del sistema ✅** · **4.2 completa: teoría redactada y sin marcadores `[CITA: …]` vivos ✅** · **6.2 Líneas futuras redactada (borrador extenso), pendiente solo de la revisión final de Francisco** (respaldo en `EL_FUTURO.md`) · lo único que sigue siendo de Francisco es la **bibliografía final en Zotero/IEEE** · **pendiente: Resumen y Abstract, que se redactan al final**
+> [!info] Punto actual (2026-08-18): estructura ✅ · **capítulo 1 CERRADO — sus 5 notas (1.0-1.4) están `estado: redactada`** ✅ · **capítulo 2 Marco Teórico CERRADO** — sus 14 notas (2.1.1–2.1.6, 2.2.1–2.2.5, 2.3.1–2.3.3) están `estado: redactada` en prosa desde el 2026-08-15 ✅ · volcado de resultados a caps. 4-5 ✅ · Apéndice A.1 + 4.2.1 ✅ · **cap. 3 Diseño completo (3.1-3.6) ✅** · conclusiones 4.6, 5.4 y **6.1 ✅** · **4.1 Tecnologías ✅** · **A.2 Métricas ✅** · **A.3 Ficha del sistema ✅** · **4.2 completa: teoría redactada y sin marcadores `[CITA: …]` vivos ✅** · **6.2 Líneas futuras redactada (borrador extenso), pendiente solo de la revisión final de Francisco** (respaldo en `EL_FUTURO.md`) · lo único que sigue siendo de Francisco es la **bibliografía final en Zotero/IEEE** · **pendiente: Resumen y Abstract, que se redactan al final**
 >
 > **Actualizado el 2026-08-09 (T0):** la regla «la teoría en prosa la escribe Francisco» quedó retirada. Ver «Autoría de la redacción — estado vigente desde T0» en `features.md`.
 >
 > **Actualizado el 2026-08-18:** resincronizados los estados publicados con el frontmatter real. La
 > tanda anterior pasó 26 notas de `borrador` a `redactada` en disco y este índice seguía publicando
-> los valores viejos (decía 14/27/2). El recuento real, verificado nota a nota, es **40 `redactada` ·
-> 1 `borrador` · 2 `pendiente`**.
+> los valores viejos (decía 14/27/2). El recuento real de ese momento, verificado nota a nota, fue
+> **40 `redactada` · 1 `borrador` · 2 `pendiente`**.
+>
+> **Actualizado el 2026-08-18 (tanda del capítulo 1):** reescritas `1.0`, `1.2`, `1.3` y `1.4`, con lo
+> que **el capítulo 1 queda redactado por completo**: las cinco notas (1.0-1.4) están `estado:
+> redactada` en su frontmatter, verificado en disco. `1.4 Estructura` cerró su hueco de contenido y
+> deja de ser `borrador`. El recuento pasa a **41 `redactada` · 0 `borrador` · 2 `pendiente`**, sobre
+> las mismas 43 notas de memoria y 44 entradas indexadas. Con ello **`borrador` no se aplica a
+> ninguna nota de la memoria**: la única entrada que sigue en ese estado es `Bibliografía`, que no es
+> nota de memoria y se cuenta aparte.
 >
 > **Actualizado el 2026-08-17 (Tanda 21):** este índice se cuadró entero contra disco. Las nueve secciones que figuraban como «✍ teoría — guion propuesto» estaban ya redactadas, igual que las seis del capítulo 2 marcadas como «borrador»; se corrigieron también los estados de `4.2` y `6.2` y el recuento total. **Regla de mantenimiento: el estado que publica este índice es el del campo `estado:` de la cabecera de cada nota, verificado en disco — no una anotación histórica.**
 
@@ -20,8 +28,10 @@ Mapa de contenido del TFG. Las notas MD son la fuente de verdad; el docx se rell
 
 **Leyenda de estado:**
 
-- `redactada` — prosa terminada; es el estado de **40 de las 43 notas** de la memoria.
-- `borrador` — redacción real existente pero con hueco de contenido; hoy solo `1.4 Estructura`.
+- `redactada` — prosa terminada; es el estado de **41 de las 43 notas** de la memoria.
+- `borrador` — redacción real existente pero con hueco de contenido; **hoy no lo lleva ninguna nota
+  de la memoria**. La única entrada del listado en `borrador` es `Bibliografía`, que es aparato de
+  apoyo y se cuenta aparte de las 43.
 - `📊 volcado` — resultados ya traídos desde `Resultados\` (mapa en `next-steps.md` §6.6).
 - `pendiente` — sin contenido.
 
@@ -41,7 +51,7 @@ Mapa de contenido del TFG. Las notas MD son la fuente de verdad; el docx se rell
 - [[1.1 Motivación]] — redactada
 - [[1.2 Preliminares]] — redactada
 - [[1.3 Objetivo]] — redactada
-- [[1.4 Estructura]] — borrador (única `borrador` legítima del vault: le queda hueco real de contenido, con ficha viva propia)
+- [[1.4 Estructura]] — redactada
 
 ## 2. Marco Teórico
 
@@ -126,8 +136,8 @@ cada nota del vault una a una y cruzándolo con los wikilinks de este índice.
 
 | Estado | Notas | Dónde |
 |---|---:|---|
-| `redactada` | 40 | Cap. 1 (4: 1.0-1.3) · Cap. 2 completo (14) · Cap. 3 (6) · Cap. 4 (6) · Cap. 5 (5) · Cap. 6 (2) · Apéndices (3) |
-| `borrador` | 1 | `1.4 Estructura`, con hueco real de contenido |
+| `redactada` | 41 | Cap. 1 completo (5: 1.0-1.4) · Cap. 2 completo (14) · Cap. 3 (6) · Cap. 4 (6) · Cap. 5 (5) · Cap. 6 (2) · Apéndices (3) |
+| `borrador` | 0 | Ninguna nota de memoria; `Bibliografía` va aparte |
 | `pendiente` | 2 | `Resumen` y `Abstract`, que se redactan al final |
 | **Notas de memoria** | **43** | |
 | + `Bibliografía` | 1 | Nota de apoyo, la mantiene el `researcher` |

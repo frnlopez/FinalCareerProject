@@ -528,19 +528,36 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > la TANDA 21** (2026-08-17): volcadas a `5.2` §5.2.4.4 desde `Resultados/metricas_balanceo.csv`. Era
 > **la última deuda de dato real del vault**. Su ficha vive ya en `## Cerradas`.
 
-- [ ] 🟡 **El capítulo 1 es el hueco de completitud que queda, y solo está fichado EN PARTE** · Informe · `redactor-tfg`
-  Alta el **2026-08-17**. Tamaños contados en disco: **`1.0 Sinopsis` 478 B** (un único párrafo de
-  anuncio), **`1.3 Objetivo` 705 B** (cinco frases-párrafo sin hilo), `1.4 Estructura` 1,3 KB, `1.1` y
-  `1.2` ~2,1 KB cada una. Contraste: las 14 notas del capítulo 2 van de **64 a 216 líneas** y `6.2`
-  tiene **339**. **Hoy solo hay fichas para `1.4` y para `1.1:12`**: `1.0`, `1.2` y `1.3` no tienen
-  ninguna. **No se abre alcance nuevo desde aquí** — queda registrado para que Francisco decida si el
-  capítulo 1 entra como tanda propia.
+> **El 🟡 «El capítulo 1 es el hueco de completitud que queda, y solo está fichado EN PARTE» queda
+> CERRADO en la FASE B DEL BARRIDO — CAPÍTULO 1** (2026-08-18): reescritas `1.0 Sinopsis` y
+> `1.3 Objetivo`, desarrollados los cinco desafíos de `1.2 Preliminares` y rehecha `1.4 Estructura`.
+> Su ficha vive ya en `## Cerradas`.
 
-- [ ] 🟡 **`1.4 Estructura` omite el capítulo 6 entero y atribuye mal las conclusiones** · Informe · `redactor-tfg`
-  Alta el **2026-08-17**. Tres defectos, verificados: **(1)** enumera del **1 al 5 y se detiene** — sin
-  Conclusiones, sin Líneas futuras, sin Apéndices; **(2)** **atribuye al capítulo 5 el «sacar las
-  conclusiones»**, que es del **6**; **(3)** la frase del capítulo 4 **termina sin punto, a media idea**.
-  Anotado al margen: **todo el capítulo 1 tiene solo TRES citas** (`[1]`, `[2]` y `[3]`).
+> **El 🟡 «`1.4 Estructura` omite el capítulo 6 entero y atribuye mal las conclusiones» queda CERRADO
+> en la FASE B DEL BARRIDO — CAPÍTULO 1** (2026-08-18): los tres defectos verificados en disco, más
+> la errata «evolución»→«evaluación» y el `estado:` a `redactada`. Su ficha vive ya en `## Cerradas`.
+
+### Altas de la FASE B del barrido — capítulo 1 · 2026-08-18
+
+> Dos fichas, **ninguna bloqueante**, **ninguna mueve una cifra publicada**. **Fichar no es resolver:
+> aquí no se ha corregido nada.**
+
+- [ ] 🟡 **Erratas de estilo en `1.1 Motivación`** · Informe · `redactor-tfg`
+  Alta el **2026-08-18**. `1.1` es la **única nota del capítulo 1 que no se ha tocado** en esta tanda
+  (su única ficha, la del dato agregado de INCIBE en `1.1:12`, ya estaba ejecutada). Erratas
+  verificadas: **`:10`** «dominan **las** titulares» (concordancia: *los* titulares); **`:14`** «por
+  **consecuente**» (debe ser *por consiguiente*); **`:18`** «**En cuestión al** objetivo de este
+  proyecto» (giro incorrecto) y «mejoran la capacidad de detección de ataques **y a que** cada vez sea
+  más fácil» (sintaxis rota). **Fichada, no arreglada**: no estaba en el alcance de la Fase B y **no se
+  abre alcance por cuenta propia**.
+
+- [ ] 🟢 **Dos peticiones de Francisco de `mis-apuntes-del-informe.md` quedan RESUELTAS por esta tanda** · Informe · **verificar con Francisco**
+  Alta el **2026-08-18**. `mis-apuntes-del-informe.md:11` («ese resumen de cada capítulo es
+  excesivamente escueto, ofrecer una propuesta más completa») lo cumple la **reescritura de `1.4`**; y
+  `:9` («en el 1.4 digo que el capítulo 2 son 3 bloques… ¿qué conceptos de IA estoy incluyendo?
+  ¿ninguno?») queda contestado: **`1.4:14` nombra ya los tres bloques** y el vault **sí tiene** el
+  bloque de IA, con `2.3.1`, `2.3.2` y `2.3.3`. **Queda para que Francisco lo dé por bueno**: no se
+  marca aceptada.
 
 > **El 🟡 «El campo `estado:` del frontmatter está sin mantener y MIENTE» queda CERRADO en la TANDA 22**
 > (2026-08-18): resincronizadas **26 notas** de `borrador` a `redactada`. Su ficha vive ya en
@@ -664,9 +681,9 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   **incompleta**. **Fichado, no arreglado**: `CLAUDE.md` es andamiaje y **lo toca solo el hilo
   principal**.
 
-- [ ] 🟡 **Erratas en `1.2:14`** · Informe · `redactor-tfg`
-  Alta el **2026-08-18**. «trackeados» y «de como» sin tilde. **Trivial**, pero es **capítulo 1**, y el
-  capítulo 1 va **al final del barrido**.
+> **El 🟡 «Erratas en `1.2:14`» queda CERRADO en la FASE B DEL BARRIDO — CAPÍTULO 1** (2026-08-18):
+> «trackeados» → «monitorizados y registrados» y «de como» → «de cómo», con **cero ocurrencias** de
+> ambas en todo el vault verificado por `grep`. Su ficha vive ya en `## Cerradas`.
 
 - [ ] 🟡 **Dos figuras duplicadas — decisión pendiente** · Informe · **decide Francisco**
   Alta el **2026-08-18**. `[!todo]` en **`4.3:306`** —las **Figuras 4.8 y 4.9** embeben los mismos
@@ -968,6 +985,11 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
     preliminares se redactan al final por decisión ya registrada, y fijar el título antes de que
     existan el capítulo 2 y las conclusiones es fijarlo con menos información. Sigue siendo suyo.
     **No se pide todavía lista de candidatos**: se pedirá dentro de esta misma ficha, en la Fase 7.
+  - **ESTA FICHA QUEDA SIN DEPENDENCIAS el 2026-08-18**, al cerrarse el **capítulo 1** en la FASE B
+    del barrido (lo último ejecutable del barrido). Era lo que esperaba a que el resto de capítulos
+    estuviera cerrado, así que es el **siguiente paso natural (Fase 7)**. **El título sigue siendo
+    decisión de Francisco** (Decisión 6): un agente propone candidatos, no lo fija. Al ejecutarla hay
+    que **releer `mis-apuntes-del-informe.md` entero**, que es incremental.
 
 ### Lote 2026-08-06 — los 4 informes del `researcher` convertidos en tareas
 
@@ -2255,6 +2277,11 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-18 | Informe | **FASE B DEL BARRIDO — EL CAPÍTULO 1. Es lo último ejecutable del barrido. Cierra TRES fichas** (el hueco de completitud del capítulo 1, los tres defectos de `1.4 Estructura` y las erratas de `1.2:14`). **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida.** Ficheros del vault: `01 Introducción/1.0 Sinopsis.md`, `1.2 Preliminares.md`, `1.3 Objetivo.md`, `1.4 Estructura.md`, más `00 Índice TFG.md` y `06 Conclusiones/6.1 Conclusiones.md` por coherencia. **`1.1 Motivación` es la única nota del capítulo que NO se toca** — queda en ficha nueva. **Protocolo de citas respetado sin excepción: CERO `[n]` nuevos y CERO `[CITA: …]` nuevos**, verificado por `grep` sobre `01 Introducción/` **después** de los dos pases; el capítulo 1 sigue usando solo `[1]`, `[2]`, `[3]` y `[26]`. **El `[CITA: …]` y el `[31]` de `1.2:19,22` viven DENTRO del callout `[!warning]` de traza histórica** que narra la atribución retirada en P4-bis: **no son marcadores vivos, así que T16 NO se reabre.** Los dos callouts que dejó la Fase A en `1.2` —**P4-bis** (Anderson/`[2]`) y el de la **fecha 1998 vs LISA'99** (`[26]`)— quedan **íntegros y pegados a sus párrafos**, como se exigió. **Las cinco notas de `01 Introducción/` están hoy `estado: redactada`**, frontmatter verificado en disco una a una. **Deja DOS fichas nuevas**, ninguna bloqueante | `—` |
+| 2026-08-18 | Informe | **🟡 «El capítulo 1 es el hueco de completitud que queda, y solo está fichado EN PARTE» — CERRADA.** El hueco se cierra en las tres notas que no tenían ficha propia y en la que sí: **`1.0 Sinopsis`** pasa de **478 B / un único párrafo de anuncio** a una sinopsis real de **cuatro párrafos**, con los **nueve objetivos agrupados en cinco bloques** y wikilinks a las cuatro notas hermanas; **`1.3 Objetivo`** pasa de **705 B / cinco frases-párrafo sin hilo** a **objetivo general desarrollado** (con tabla de las dos etapas de la cascada y los splits D1/D3) más **nueve objetivos específicos numerados, cada uno con su criterio de cumplimiento verificable**; **`1.2 Preliminares`** desarrolla los **cinco desafíos** que estaban como párrafos huérfanos **sin una sola frase de explicación**, y reescribe el párrafo de la **detección basada en el estado**, que colgaba del hilo cronológico; **`1.4 Estructura`** en su propia fila | `—` |
+| 2026-08-18 | Informe | **🟡 «`1.4 Estructura` omite el capítulo 6 entero y atribuye mal las conclusiones» — CERRADA, los TRES defectos verificados en disco:** (1) ya enumera **hasta el capítulo 6** e incluye **Apéndices y Bibliografía**; (2) las **conclusiones se atribuyen al capítulo 6** y el **5 queda como Evaluación**; (3) la **frase del capítulo 4 está completa y cerrada con punto**. **Extra sobre la ficha:** corregida la errata «una **evolución** de los resultados» → **evaluación**, y `estado:` pasado de `borrador` a **`redactada`** | `—` |
+| 2026-08-18 | Informe | **🟡 «Erratas en `1.2:14`» — CERRADA.** «trackeados» → «**monitorizados y registrados**»; «de como» → «**de cómo**». **Verificado con `grep` en el vault entero: cero ocurrencias de ambas** | `—` |
+| 2026-08-18 | Informe | **AUDITORÍA DE LA FASE B — coherencia ENTRE las cinco notas del capítulo 1, no nota por nota. Veredicto `NO APTO`, OCHO hallazgos, LOS OCHO APLICADOS y verificados en disco** en un segundo pase paralelo. **🔴** `1.0:14` anunciaba los **cuatro objetivos antiguos** cuando `1.3` tiene **nueve**, omitiendo justo el **baseline de control**, el **recall 0-day por tipo**, la **validación de splits** y las **reglas legibles**, y daba el objetivo general como «implementar» frente al «**diseñar, implementar y evaluar**» de `1.3` — corregido. **🔴** `1.3:25` atribuía a `[[1.1 Motivación]]` el razonamiento del híbrido, que está en **`1.2:49`** y así lo atribuye `1.0:12` — repuntado a `[[1.2 Preliminares]]`. **🟠** `1.4:20` describía un capítulo 5 **sin el baseline monolítico ni el recall 0-day desagregado**, que son el resultado central de la memoria — añadidos, **sin colar ninguna cifra**. **🟠 `00 Índice TFG.md` publicaba un estado falso** — actualizado: `1.4` a `redactada`, retirada la frase «única `borrador` legítima del vault» de `:24` y `:44`, y **recuento de 40/1/2 a 41 `redactada` · 0 `borrador` · 2 `pendiente`**, sobre las mismas **43 notas de memoria y 44 entradas indexadas** (suma verificada): **`borrador` ya no se aplica a ninguna nota de la memoria**, la única entrada en ese estado es `Bibliografía`, que se cuenta aparte. **🟠 `6.1 Conclusiones.md` evaluaba el cumplimiento contra la lista vieja de cuatro objetivos** — realineada `6.1.1` a los **nueve**, agrupados en **cuatro bloques A-D que declaran qué objetivos numerados cubre cada uno**; **ni una cifra tocada:** `6.1.2` y `6.1.3` intactas, con el **0.771 vs 0.150**, el desplome **0.909→0.472**, el **FPR ~10 % / ~5 %**, las tres decisiones **H-2/H-3/Q1-C** y **`snmpgetattack`** verificados en disco tras la edición. **🟡** `1.3` obj. 4: el criterio insinuaba una garantía anti-*leakage* más amplia de la real — acotado para distinguir que **el umbral se fija sin ver D2, pero la elección del detector sí se resolvió mirando D2** (decisión **H-2**), remitiendo a `6.1.3`: **la limitación no se ha diluido**. **🟡** `1.0:16` describía una `1.4` incompleta (sin capítulo 6, apéndices ni bibliografía) — corregido. **🟡** `1.3` obj. 2: el criterio anclaba el pipeline en «capítulos 3 y 4»; está solo en el **4** (4.2 y 4.3) — corregido | `—` |
 | 2026-08-18 | Informe | **TANDA 26 — cinco redactores en paralelo (un fichero cada uno), pase de `auditor-ml` de coherencia ENTRE notas y dos correctores en paralelo. Ejecuta y CIERRA T17.** **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida** — verificado contra disco: las **cuatro tablas principales** siguen con `semilla=42` y `commit=1163c90`, y `metricas_cascada_invertida.csv` con sus **10 filas** y `274923d-sucio`. **Ficheros:** los cuatro informes de `Obsidian_TFG_Vault/99 Investigación/` (`aprendizaje-continuo-nested-learning.md`, `clasificadores-tabulares-y-arquitecturas-hibridas.md`, `benchmark-comparativo-nsl-kdd.md`, `arquitecturas-hibridas-en-la-literatura.md`), más `next-steps.md` §6.5b y `Guia_ML/03_validacion_y_metricas.md` §7. **Protocolo de citas respetado: CERO `[n]` nuevos y ningún `[n]` preexistente renumerado**; único marcador nuevo, `[CITA: Goldschmidt y Chudá 2025]`. **Contador recontado hoy contra disco: 76 filas, `[1]`–`[8]` + `[10]`–`[77]`, `[9]` quemada, primer libre `[78]`.** **Líneas prohibidas intactas**, como se ordenó: el «37 muestras en D2» de `benchmark-comparativo:141` y de `clasificadores-tabulares:364`, que son del `researcher`. **Deja CINCO fichas nuevas**, ninguna bloqueante| `c7ab48d` |
 | 2026-08-18 | Informe | **T17 · punto 1 — CERRADO: el bloque «Decisiones tomadas a partir de este informe» existe ya en LOS CUATRO informes** de `99 Investigación/`, con qué se convirtió en decisión y qué se descartó. Era lo que faltaba desde el **2026-08-09**. **En la misma pasada, corregidas las DOS declaraciones caducadas** de que `6.2 Líneas futuras` la redacta Francisco (`aprendizaje-continuo:25` y `clasificadores-tabulares:30`), **falsas desde la decisión marco (b) del 2026-08-06**| `c7ab48d` |
 | 2026-08-18 | Informe | **T17 · punto 2 — CERRADO EN DOS DE SUS CUATRO SEDES: la deriva de documentación de `evaluacion.py`**, cuyo contrato cambió con T1. Corregidos **`next-steps.md` §6.5b** —con **nota fechada 2026-08-18 y SIN tocar ninguna casilla**: el fichero sigue congelado— y **`Guia_ML/03_validacion_y_metricas.md` §7**. **Ambos verificados FUNCIÓN A FUNCIÓN** contra `Implementacion/app/evaluacion.py`. **`CLAUDE.md:64` y `resumen-de-decisiones.md:88-92` (Q3) NO se tocaron a propósito** —andamiaje y fichero de decisiones— y quedan en ficha nueva| `c7ab48d` |
