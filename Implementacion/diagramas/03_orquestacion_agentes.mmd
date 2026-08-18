@@ -1,54 +1,65 @@
 flowchart TB
-    U["👤 Usuario\nElige UNA tarea del roadmap\n(regla 6.7 de next-steps.md)"]
+    U["👤 Francisco\nMensaje de usuario"]
 
-    ORQ["🎯 Sesión principal de Claude — ORQUESTADOR\nDescompone la tarea · delega en subagentes\nresume al usuario: qué se hizo, números clave, qué queda"]
+    HOOK["🪝 Hook UserPromptSubmit\n.claude/hooks/leader-gate.sh\nInyecta regla de enrutado + git status"]
 
-    NS[("📋 next-steps.md\nRoadmap vivo · estado compartido\nSpecs (sección 6) · decisiones · bitácora")]
+    HILO["🧵 Hilo principal\nNO responde: delega siempre en leader\n(única excepción: configurar el propio\nandamiaje — settings.json, hooks,\n.claude/agents/, skills, .mcp.json)"]
+
+    LEADER["🎯 leader\nClasifica en CARRIL + TRACK\nDespacha lo que no requiere conversación\nNUNCA escribe código ni notas"]
+
+    subgraph CARRILES["Carriles (interroga? · ficha? · cierre?)"]
+        direction LR
+        C1["Consulta\nPregunta sobre estado/resultados/decisión\nNo interroga · sin ficha · sin cierre"]
+        C2["Intervención\nCambio pequeño y entendido\nNo interroga · sin ficha · SÍ cierre"]
+        C3["Tarea\nAlcance nuevo a definir\ngrill-me · SÍ ficha · SÍ cierre"]
+        C4["Investigación\nPedir investigar algo que no está en disco\nInterroga salvo encargo ya cerrado\nsin ficha · sin cierre"]
+    end
 
     subgraph COD["⚙️ Track CÓDIGO"]
         direction TB
-        IMP["🔨 ml-implementador\nEscribe Python según spec\nsklearn · random_state=42\ncomentarios en español"]
-
-        subgraph VERIF["Verificación en paralelo"]
-            direction LR
-            AUD["🔍 auditor-ml (solo lectura)\nLeakage · protocolo · métricas\nVeredicto APTO / NO APTO"]
-            EJE["▶️ ejecutor-experimentos\nvenv Imp → python app\\*.py\nAPROBADA / FALLA · métricas clave"]
-        end
-
-        IMP -->|"3 · diff"| AUD
-        IMP -->|"3 · scripts"| EJE
-        AUD -.->|"NO APTO 🔴🟠\ncorregir hallazgos"| IMP
-        EJE -.->|"FALLA\ndiagnóstico"| IMP
+        IMP["🔨 ml-implementador\nEscribe/modifica program · validacion ·\nanomalias · firmas · baseline · hibrido ·\ncascada_invertida · config · evaluacion"]
+        AUD["🔍 auditor-ml (OBLIGATORIO, solo lectura)\nQuien escribe no puede auditar\nPase separado, instrucción adversaria"]
+        EJE["▶️ ejecutor-experimentos\nCorre los scripts, valida salidas,\nreporta métricas clave"]
+        IMP -->|"diff"| AUD
+        IMP -.->|"NO APTO: corregir"| IMP
+        IMP -->|"ejecutar"| EJE
     end
-
-    R1["📁 Resultados/\nmodelos/*.joblib · metricas_*.csv\nfiguras/*.png · firmas_reglas.txt"]
 
     subgraph INF["✍️ Track INFORME"]
-        RED["redactor-tfg\nObsidian_TFG_Vault/\nRegistro académico en español\nMapa artefacto → sección (6.6)"]
+        RED["redactor-tfg\nRedacta/reestructura notas en\nObsidian_TFG_Vault/"]
     end
 
-    CRO["📝 cronista\nCasillas ☐ → ☑ · bitácora AAAA-MM-DD\nAvisa de incoherencias código ↔ roadmap"]
+    subgraph SINTRACK["Sin track"]
+        direction LR
+        RES["researcher\nInvestiga y verifica fuentes\nSOLO si el usuario lo pide explícitamente,\ncon encargo cerrado\nÚnico que edita Bibliografía.md"]
+        CRO["cronista\nMantiene features.md\n(tareas abiertas ↔ cerradas)"]
+    end
 
-    %% Ciclo principal (1→6)
-    U <-->|"1 · petición\n6 · resumen final"| ORQ
-    ORQ -.->|"0 · lee specs\ny decisiones"| NS
-    ORQ -->|"2a · tarea de código"| IMP
-    ORQ -->|"2b · tarea de informe"| RED
+    CIERRE["🔒 skill cierre\nÚNICO que ejecuta git de escritura\n(add/commit/push) — siempre pregunta"]
 
-    EJE -->|"APROBADA"| R1
-    R1 -.->|"artefactos con datos reales\n(nunca cifras inventadas)"| RED
+    U --> HOOK --> HILO --> LEADER
+    LEADER --> CARRILES
+    C3 --> COD
+    C3 --> INF
+    LEADER -.->|"track código"| COD
+    LEADER -.->|"track informe"| INF
+    C2 -.->|"tras el cambio"| CIERRE
+    C3 -.->|"al cerrar la ficha"| CIERRE
+    AUD -->|"APTO"| CIERRE
+    RED -->|"notas escritas"| CIERRE
+    CIERRE -->|"actualiza"| CRO
 
-    AUD -->|"4 · APTO"| CRO
-    RED -->|"4 · notas escritas"| CRO
-    CRO -->|"5 · edición quirúrgica\n☑ + entrada en bitácora"| NS
+    NOTE["🧩 Despacho en paralelo (desde 2026-08-13)\nUnidad = FICHERO, no tema\nNunca en paralelo: misma nota, Bibliografía.md,\nfeatures.md, 00 Índice TFG.md, numeración [n],\nel pase de auditor-ml (va después)\nSí en paralelo: varios auditor-ml (solo lectura)"]
 
-    %% Estilos
     style U fill:#e8d5f0,stroke:#8e44ad,color:#000
-    style ORQ fill:#d6eaf8,stroke:#2d6ea0,color:#000
-    style NS fill:#fffbe6,stroke:#e0a800,color:#000
+    style HOOK fill:#fff2cc,stroke:#b38f00,color:#000
+    style HILO fill:#f0f0f0,stroke:#666,color:#000
+    style LEADER fill:#d6eaf8,stroke:#2d6ea0,color:#000
     style IMP fill:#90EE90,stroke:#2d8a2d,color:#000
     style AUD fill:#FFB6C1,stroke:#c0392b,color:#000
     style EJE fill:#87CEEB,stroke:#2d6ea0,color:#000
     style RED fill:#ffe4b5,stroke:#d2691e,color:#000
     style CRO fill:#d5f5e3,stroke:#1e8449,color:#000
-    style VERIF fill:#fdf2f2,stroke:#c0392b,stroke-dasharray:5 5
+    style RES fill:#e8daef,stroke:#7d3c98,color:#000
+    style CIERRE fill:#f5b7b1,stroke:#943126,color:#000
+    style NOTE fill:#fdf2f2,stroke:#c0392b,stroke-dasharray:5 5,color:#000

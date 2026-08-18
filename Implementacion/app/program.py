@@ -424,8 +424,9 @@ class NSLKDDPreprocessor:
            El umbral por defecto es el 99.9% (no el 99%): el corte al 99%
            eliminaba indicadores de ataques no vistos (num_failed_logins,
            flag_REJ, flag_SH, num_shells...) que son ~0 en D1 y que el RF
-           supervisado infravalora (u2r tiene solo ~52 muestras y el criterio
-           de impureza está sesgado contra las dummies binarias raras). El
+           supervisado infravalora: u2r tiene solo 52 muestras —cifra exacta,
+           ver Resultados/specialized_nsl_kdd_composicion_d3.csv— y el criterio
+           de impureza está sesgado contra las dummies binarias raras. El
            umbral definitivo se justificará con el experimento 40 vs 54 vs 122
            features midiendo el recall 0-day por tipo de ataque cuando existan
            los baselines (hallazgo H1 de la auditoría de 4.3.5, next-steps.md).

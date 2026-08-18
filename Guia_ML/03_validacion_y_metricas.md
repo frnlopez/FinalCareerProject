@@ -44,7 +44,8 @@ rondas distintas). Tu 2.1.3 ya lo menciona: "validación cruzada N-fold calculan
 media y la desviación estándar".
 
 ### StratifiedKFold (el que usamos, K=5)
-Un K-fold normal podría dejar un fold sin ninguna muestra de u2r (solo hay ~52). El
+Un K-fold normal podría dejar un fold sin ninguna muestra de u2r (solo hay 52, según
+`Resultados/specialized_nsl_kdd_composicion_d3.csv`). El
 **estratificado** mantiene en cada fold la **misma proporción de clases** que el total.
 Imprescindible con desbalance. En el código: `StratifiedKFold(5, shuffle=True,
 random_state=42)`, el mismo objeto para los 4 algoritmos → comparación justa.

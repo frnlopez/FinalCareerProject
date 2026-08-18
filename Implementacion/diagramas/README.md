@@ -7,7 +7,7 @@ para poder verlos y exportarlos a imagen fácilmente (p. ej. para la memoria en 
 |---|---|
 | `01_pipeline_completo.mmd` | Flujo completo: `program.py` (preprocesado + splits D1/D2/D3) → `validacion.py` → capa de modelos (`anomalias.py` · `firmas.py` · `baseline.py` · `hibrido.py`), implementada al completo desde el 2026-07-16 |
 | `02_mapeo_ataques.mmd` | Mapeo de los tipos de ataque NSL-KDD → 5 categorías (normal, dos, probe, r2l, u2r) |
-| `03_orquestacion_agentes.mmd` | Ciclo de trabajo multiagente (`.claude/agents/`): orquestador → implementador → auditor/ejecutor → redactor → cronista → `next-steps.md` |
+| `03_orquestacion_agentes.mmd` | Arquitectura de agentes vigente (`.claude/agents/`): hook `UserPromptSubmit` → hilo principal (delega, no responde) → `leader` (carril + track) → tracks Código (`ml-implementador` → `auditor-ml` obligatorio · `ejecutor-experimentos`) e Informe (`redactor-tfg`), agentes sin track (`researcher`, `cronista`) y el skill `cierre` como único ejecutor de `git` de escritura. Fuente autoritativa: `CLAUDE.md`, sección «Arquitectura de agentes» |
 
 ## Cómo verlos / exportarlos
 

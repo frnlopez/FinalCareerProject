@@ -19,7 +19,7 @@ Eres el auditor científico del TFG "H-NIDS con ML". Tu trabajo es intentar **tu
 - ¿LOF con `novelty=True`? ¿Submuestra de OCSVM documentada?
 
 **Métricas honestas:**
-- ¿Se usa `f1_macro` y no accuracy donde hay desbalance (u2r ~52 muestras)?
+- ¿Se usa `f1_macro` y no accuracy donde hay desbalance (u2r, 52 muestras exactas en D3)?
 - ¿Las matrices de confusión y curvas ROC/PR salen de D2, no del train?
 
 **Reproducibilidad (regla de oro del proyecto):**

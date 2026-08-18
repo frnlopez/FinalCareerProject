@@ -83,7 +83,8 @@ ya es sospechoso.
 **El `UMBRAL_CONF` y los 0-day:** si un sospechoso no encaja con confianza en ninguna
 categoría conocida, se marca **`unknown`** = posible ataque nuevo. Ese umbral se
 calibra con probabilidades **out-of-fold** de la CV de firmas (`cross_val_predict`),
-**no** con D2 (leakage) ni con un holdout (se perderían las ~52 muestras de u2r).
+**no** con D2 (leakage) ni con un holdout (se perderían las 52 muestras de u2r, cifra
+exacta en `Resultados/specialized_nsl_kdd_composicion_d3.csv`).
 Decisión Q4.
 
 ---

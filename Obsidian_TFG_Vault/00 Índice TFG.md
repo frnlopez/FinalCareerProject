@@ -3,7 +3,12 @@ titulo: "Índice TFG"
 estado: borrador
 ---
 
-# Índice TFG — H-NIDS con ML
+# Índice TFG — Sistema híbrido de detección de intrusiones en red con ML
+
+> [!info] Título del TFG (fijado el 2026-08-18)
+> **Sistema híbrido de detección de intrusiones en red basado en aprendizaje automático: detección de anomalías y firmas en cascada sobre NSL-KDD**
+>
+> El encabezado de esta nota es una forma abreviada del título por legibilidad; el título válido para la memoria es el de arriba, literal.
 
 > [!info] Punto actual (2026-08-18): estructura ✅ · **capítulo 1 CERRADO — sus 5 notas (1.0-1.4) están `estado: redactada`** ✅ · **capítulo 2 Marco Teórico CERRADO** — sus 14 notas (2.1.1–2.1.6, 2.2.1–2.2.5, 2.3.1–2.3.3) están `estado: redactada` en prosa desde el 2026-08-15 ✅ · volcado de resultados a caps. 4-5 ✅ · Apéndice A.1 + 4.2.1 ✅ · **cap. 3 Diseño completo (3.1-3.6) ✅** · conclusiones 4.6, 5.4 y **6.1 ✅** · **4.1 Tecnologías ✅** · **A.2 Métricas ✅** · **A.3 Ficha del sistema ✅** · **4.2 completa: teoría redactada y sin marcadores `[CITA: …]` vivos ✅** · **6.2 Líneas futuras redactada (borrador extenso), pendiente solo de la revisión final de Francisco** (respaldo en `EL_FUTURO.md`) · lo único que sigue siendo de Francisco es la **bibliografía final en Zotero/IEEE** · **Resumen y Abstract redactados (2026-08-18): las 43 notas de la memoria están `estado: redactada`** ✅
 >
@@ -133,9 +138,6 @@ Mapa de contenido del TFG. Las notas MD son la fuente de verdad; el docx se rell
 - [[Bibliografía]] — borrador (lista cruda; formateo IEEE con Zotero al final)
 
 ---
-
-> [!warning] Carpeta obsoleta
-> `03 Desarrollo/` **está vacía**: no contiene ninguna nota (verificado en disco el 2026-08-14; git no versiona directorios vacíos, por lo que no aparece en el repositorio). Queda **pendiente de eliminación física** del sistema de archivos. Mapeo aplicado: 3.1→3.1/3.2 Diseño · 3.2→4.2 · 3.3→4.1 · 3.4→3.4 Diseño · 3.5→3.5 Diseño · 3.6→3.3 Diseño.
 
 ## Totales
 

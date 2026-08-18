@@ -22,7 +22,7 @@ Lee la especificación de tu tarea en `next-steps.md` (sección 6: cada script t
 - **D2 (test) es intocable** para ajustar nada: ni umbrales, ni hiperparámetros, ni scaler, ni SMOTE.
 - Umbral de anomalías: percentil 95 del score sobre el 20% de D1 reservado como validación. Igual para los 4 algoritmos.
 - SMOTE **solo dentro de cada fold** del CV (`imblearn.pipeline.Pipeline`), nunca antes del split.
-- Scoring de firmas: `f1_macro` (u2r tiene ~52 muestras; el accuracy miente).
+- Scoring de firmas: `f1_macro` (u2r tiene 52 muestras exactas en D3; el accuracy miente).
 - Mismo protocolo para todos los algoritmos comparados: mismo split, misma semilla, mismas métricas.
 
 ## No documentes en presente lo que aún no has corrido

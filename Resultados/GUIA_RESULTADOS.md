@@ -494,7 +494,7 @@ Resumen de la narrativa del preprocesado (con su artefacto de origen):
    *(`selected_features.txt` → 4.3.5.)*
 3. **Splits finales:** D1 67.343×54 · D2 22.544×54 · D3 58.630×54, integridad APROBADA.
    *(`specialized_nsl_kdd_validation_report.txt` → 4.3.6.)*
-4. **Desbalance extremo en D3:** dos ~45,9k vs u2r ~52 → ratio ≈ **883:1**. Motiva el
+4. **Desbalance extremo en D3:** dos ~45,9k vs u2r 52 (exacto, `specialized_nsl_kdd_composicion_d3.csv`) → ratio ≈ **883:1**. Motiva el
    mini-experimento SMOTE vs `class_weight` (4.3.4) y el uso de `f1_macro`.
    *(Visible en el EDA y en `validacion_distribucion_clases.png`.)*
 5. **17 tipos de ataque de D2 no existen en el train** (el 42,5 % de los tipos del test, panel

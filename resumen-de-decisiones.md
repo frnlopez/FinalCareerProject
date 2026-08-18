@@ -95,6 +95,26 @@ de los CSVs como argumento, de modo que cambiar 54↔122 sea un flag, no una ree
 - Fuera de alcance (evitar sobre-ingeniería): intervalos de confianza por bootstrap,
   calibración de probabilidades más allá del umbral del híbrido, logging estructurado.
 
+**Nota del 2026-08-18 — la enumeración entre paréntesis de esta Q3 está DESFASADA; la decisión, no.**
+La superficie real de `Implementacion/app/evaluacion.py` en disco hoy son **trece funciones públicas**,
+no las seis que enumera la viñeta: además de `evaluar_binario`, `evaluar_multiclase`,
+`plot_matriz_confusion`, `plot_roc_pr`, `guardar_metricas` y `evaluar_0day_por_tipo`, expone
+`metricas_tiempo` y **toda la maquinaria de esquema que trajo T1** —`validar_esquema_minimo`,
+`cabecera_esperada`, `limpiar_variante_csv` (con su auxiliar `_respaldar_csv`), `comprobar_unicidad` y
+`comprobar_recuento`—. **Lo que NO está superado:** la Q3 fija la superficie **por referencia a la
+§6.5b de `next-steps.md`**, y esa referencia sigue siendo el contrato válido —ya actualizada—; lo
+desfasado es solo su paréntesis, que ahora se lee como **la foto de 2026-08-06**, no como límite
+vigente. Las **convenciones de clase** de la viñeta siguiente y el **fuera de alcance** siguen intactos
+y verificados: `evaluacion.py` **no** contiene intervalos de confianza por bootstrap, ni calibración
+más allá del umbral del híbrido, ni logging estructurado. **No se re-litiga ninguna decisión: solo se
+deja constancia de que la lista dejó de ser exhaustiva.**
+
+> [!todo] Sin establecer: **de qué decisión cuelga `metricas_tiempo`.** Las seis funciones de esquema
+> se atribuyen a **T1** (esquema de métricas, lote de reapertura del 2026-08-06) con respaldo en la
+> ficha y en la descripción de `CLAUDE.md`. Para `metricas_tiempo` **no se ha encontrado en el repo
+> ninguna decisión registrada que amplíe la Q3 para admitirla**: entró sin quedar anotada. No se
+> inventa aquí una justificación; lo decide Francisco si quiere cerrarlo.
+
 ### Q4 — calibración de `UMBRAL_CONF` del híbrido → **`cross_val_predict` OOF, sin leakage**
 
 - El `UMBRAL_CONF` (marca "unknown/0-day" si `predict_proba` máx < umbral) se calibra sobre
@@ -570,6 +590,18 @@ Cerradas en el `grill-me` de 13 preguntas del **2026-08-06**, que convirtió los
 **2026-08-09** (volcado parcial de T17: falta el bloque «Decisiones tomadas a partir de este informe»
 en los cuatro informes y la deriva de documentación de `evaluacion.py`).
 
+**Nota del 2026-08-18 — el paréntesis «volcado parcial de T17» ya no describe el disco: los cuatro
+bloques EXISTEN.** El texto de arriba se conserva y **no se reescribe**, pero su primera mitad quedó
+contradicha por la tanda de informes del 2026-08-18: `## Decisiones tomadas a partir de este informe`
+está hoy en los **cuatro** informes de `Obsidian_TFG_Vault/99 Investigación/`, verificado en disco
+(`aprendizaje-continuo-nested-learning.md`, `arquitecturas-hibridas-en-la-literatura.md`,
+`benchmark-comparativo-nsl-kdd.md` y `clasificadores-tabulares-y-arquitecturas-hibridas.md`). La
+segunda mitad —la **deriva de documentación de `evaluacion.py`**— está **cerrada solo en parte**: la
+enumeración desfasada de la Q3 la repara la nota fechada de hoy en esa misma sección, y **sigue
+pendiente `CLAUDE.md:64`**, que describe `evaluacion.py` con el contrato pre-T1 (sin esquema, sin
+procedencia, sin `metricas_tiempo`). Ese resto **lo alinea el hilo principal**, por ser fichero de
+andamiaje. **Ninguna decisión de diseño cambia aquí.**
+
 ### Criterio rector del lote → **refinar el proyecto o enseñar el límite; nunca sucedáneos**
 
 Nada que no refine el proyecto o no ayude al lector a ver que **con NSL-KDD se hizo todo lo
@@ -903,6 +935,22 @@ arriba, donde **se conserva íntegra** la garantía de que el sello **no se ha e
 anterior queda intacto como historial; en particular, **las marcas temporales que sirven para
 DISTINGUIR entre varias pasadas del mismo artefacto** —las cuatro de `agregar_semillas.py`, que solo
 se diferencian por la hora— siguen citándose: ahí la marca es identificadora, no decorativa.
+
+**Nota del 2026-08-18 — el sello `a8c20e9-sucio` que esta sección cita en presente está CADUCADO;
+en disco es `ac36b88` LIMPIO.** Afecta a dos frases que se conservan íntegras como historial y **no se
+reescriben**: la de la viñeta (a) «**lo que hay hoy en disco es `a8c20e9-sucio`**, común a las dos
+variantes», y la del párrafo anterior «el campo `Commit del código:` seguía diciendo
+`a8c20e9-sucio`». **`validacion.py` se volvió a correr en el ciclo de Código del 2026-08-17, esta vez
+con el árbol limpio**, y hoy los **seis** artefactos sellados declaran **`ac36b88`**, idéntico en los
+seis —verificado leyendo el campo `Commit del código:` de los dos `*_validation_report.txt` y la
+columna `commit` de los dos `*_vocabulario_onehot.csv` y los dos `*_composicion_d3.csv`—. Lo demás de
+la viñeta (a) **sigue valiendo sin matiz**: el sello **no se ha editado a mano** —lo estampa
+`config.commit_actual()`— y cambió **porque se re-corrió**; la forma canónica de citarlo sigue siendo
+**por nombre de campo**, nunca por número de línea; y la marca temporal **se remite al artefacto**, no
+se transcribe. Lo que **sí cambia de estado** es la coletilla «sigue sin existir el commit de cierre de
+esta re-corrida»: al ser `ac36b88` un sello limpio, **ya existe** ese estado versionado. La doctrina de
+qué vale y qué no vale un sello `-sucio` **no se toca**: sigue vigente para cualquier corrida futura
+sobre árbol sucio.
 
 ---
 
@@ -1458,3 +1506,50 @@ el futuro se dispone de una medición real, **estas cifras se sustituyen** por e
   `GUIA_RESULTADOS.md`, en `A.3` y en la cita de procedencia de `5.2`. Cero corridas, cero `fit`, cero
   cifras movidas. **Sigue vivo el otro re-anclaje pendiente del proyecto**, el de la re-corrida de
   `validacion.py` (`a8c20e9-sucio`), que este ciclo no toca.
+
+**Nota del 2026-08-18 — el re-anclaje de la re-corrida de `validacion.py` YA NO ESTÁ VIVO: quedó
+CERRADO por el ciclo de Código del 2026-08-17.** La frase de arriba —«sigue vivo el otro re-anclaje
+pendiente del proyecto… (`a8c20e9-sucio`)»— se conserva como historial y no se reescribe, pero
+**dejó de ser verdad en presente**. Verificado en disco hoy: el campo `Commit del código:` de los dos
+`Resultados/*_validation_report.txt` dice **`ac36b88`**, y la columna `commit` de los dos
+`*_vocabulario_onehot.csv` y de los dos `*_composicion_d3.csv` dice lo mismo. **`ac36b88` es un sello
+LIMPIO** —sin sufijo `-sucio`—, así que identifica un estado versionado del código y no hay nada que
+re-anclar en prosa: es justo lo que el re-anclaje pendiente esperaba. La marca temporal **no se
+transcribe aquí**, por la nota del 2026-08-16: se remite al campo `Fecha de la corrida:` de los
+informes y a la columna `fecha` de los CSV. `PIPELINE.md`, `GUIA_RESULTADOS.md` y `features.md` sí
+recogieron el cambio el 2026-08-17; **este fichero no**, y esa omisión silenciosa es lo que esta nota
+repara. **Cero cifras movidas, cero criterios cambiados.**
+
+**Nota del 2026-08-18 — TÍTULO DEL TFG FIJADO por Francisco. La Decisión 6 de la Fase 0 queda
+CONSUMIDA.** Título definitivo, literal:
+
+> **Sistema híbrido de detección de intrusiones en red basado en aprendizaje automático: detección de
+> anomalías y firmas en cascada sobre NSL-KDD**
+
+- **Quién y cuándo:** lo eligió **Francisco el 2026-08-18**, entre los **5 candidatos** que un agente
+  propuso en `00 Preliminares/Resumen.md` durante la **Tanda 27**. Escogió el **candidato 1**, el más
+  técnico y completo: nombra **arquitectura** (híbrido en cascada), **técnica** (anomalías + firmas
+  con aprendizaje automático) y **dataset** (NSL-KDD).
+- **Aplicado ya en tres sedes**, verificadas al registrar esta nota:
+
+| Sede | Dónde | Qué se hizo |
+|---|---|---|
+| `00 Preliminares/Resumen.md` | `:12` | Título literal; **retirado** el callout con los cinco candidatos |
+| `00 Preliminares/Abstract.md` | `:15` | Traducción al inglés del título fijado |
+| `00 Índice TFG.md` | `:6` + callout en `:8-12` | **Forma corta** en el encabezado y **título literal declarado debajo** |
+
+- **Por qué la forma corta en el índice:** 20 palabras son ilegibles como `H1`. El encabezado lleva la
+  versión corta y el **literal** queda declarado en el callout inmediato, que es de donde el volcado
+  al `.docx` debe tomar la **portada**. En las tres sedes se **retiró** el título de trabajo
+  «H-NIDS con ML».
+- **Estado de la Decisión 6 (Fase 0, 2026-08-14, `:1352`):** decía que **el título quedaba aplazado**
+  y que un agente podría **proponer candidatos pero no fijarlo**. Se cumplió exactamente así —el
+  agente propuso en la Tanda 27, Francisco eligió hoy—, de modo que **ya no está vigente**. Su texto
+  original **no se reescribe**: es la traza de por qué se hizo en dos pasos. Lo mismo aplica a las
+  menciones del título como decisión **no delegada** (`:1391`, `:1400`): siguen siendo historial
+  correcto, pero **el punto ya está resuelto por su titular**.
+- **Por qué importa registrarlo aquí:** hasta esta nota, el único respaldo de que Francisco eligió el
+  título era la **autoafirmación de un callout dentro de `Resumen.md`**. Un registro de decisiones
+  que no recoge la elección deja la decisión **sin aval fuera de la propia nota** que la afirma.
+- **Alcance:** solo se registra. **Cero cifras movidas**, ningún otro fichero tocado desde esta nota
+  (el cierre en `features.md` lo hace el pase de cronista).

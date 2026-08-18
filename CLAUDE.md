@@ -61,7 +61,7 @@ pip install -r requirements.txt
 |---|---|---|
 | `app/program.py` | `NSLKDDPreprocessor` | Carga el dataset, EDA, preprocesamiento y generación de splits D1/D2/D3; expone `load_specialized_splits()`, que usan todos los scripts de modelos |
 | `app/validacion.py` | `NSLKDDValidator` | Valida los splits D1/D2/D3 ya generados: integridad, distribuciones, drift y outliers. El drift son **dos** mediciones separadas y no intercambiables (T2): (A) D1 vs D2 completo y (B) D1 vs las 9.711 filas normales de D2. El informe publica `delta = (A) − (B)` como **comparación**, nunca como descomposición: el KS no es aditivo sobre una mezcla (`validacion.py`, cabecera de la sección 4) |
-| `app/config.py` | — | Módulo de configuración central: semilla 42, rutas de salida, `base_path()` para elegir el set de 54 o 122 features y las convenciones de clase (0=normal, 1=ataque, orden de categorías) |
+| `app/config.py` | — | Módulo de configuración central: rutas de salida, `base_path()` para elegir el set de 54 o 122 features, las convenciones de clase (0=normal, 1=ataque, `CATEGORIAS_ATAQUE`/`CATEGORIAS_MULTICLASE`) y la procedencia (`commit_actual()`). **La semilla ya no es «semilla 42» a secas:** 42 es `SEMILLA_POR_DEFECTO` y sigue siendo la de todo lo publicado, pero T4 añadió override por CLI (`fijar_semilla()`, `--semilla`), el barrido `SEMILLAS_BARRIDO = [1..10]` —que excluye la 42 a propósito— y el desvío de nombres de artefactos y tablas (`sufijo_semilla()`, `sufijo_artefactos()`, `nombre_tabla_semillas()`), con sufijo vacío cuando la semilla es 42 para no pisar lo publicado |
 | `app/evaluacion.py` | — | Módulo común de métricas, figuras **y esquema de las tablas**. **Métricas:** `evaluar_binario`, `evaluar_multiclase`, `evaluar_0day_por_tipo` y `metricas_tiempo` (entrenamiento, latencia por flujo y flujos/s). **Figuras:** `plot_matriz_confusion` y `plot_roc_pr`. **Escritura:** `guardar_metricas` (CSV acumulado). **Y toda la maquinaria de esquema que trajo T1**, que esta fila omitía: `validar_esquema_minimo`, `cabecera_esperada`, `limpiar_variante_csv` (con `_respaldar_csv`), `comprobar_unicidad` y `comprobar_recuento`. Son la razón de que las tablas tengan recuento y unicidad verificables, así que no son un detalle interno: descríbelas al hablar del esquema |
 | `app/anomalias.py` | `NSLKDDAnomalyTrainer` | Etapa 1: entrena sobre D1 y compara IsolationForest, OneClassSVM, LocalOutlierFactor y Autoencoder-MLP con score unificado y umbral percentil 95 sobre D1_val |
 | `app/firmas.py` | `NSLKDDSignatureTrainer` | Etapa 2: clasificador multiclase de ataques conocidos sobre D3 (DecisionTree, RandomForest, KNN, HistGradientBoosting) con GridSearchCV `f1_macro`, balanceo intra-fold y extracción de reglas legibles. El eje de balanceo depende del algoritmo (`firmas.py:100-108`): SMOTE vs `class_weight` en DecisionTree y RandomForest; SMOTE vs nada en KNN e HistGradientBoosting, que no admiten `class_weight` en sklearn |
@@ -239,9 +239,8 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
     `[12]` Hastie, `[39]` Russell y Norvig, y **`[54]` Molnar**. Ojo con el falso amigo: los
     `pp. 222-232` que ya aparecen son **el rango del artículo en su revista**, metadato de la
     referencia, **no** el localizador de la afirmación.
-  - **Un aviso vivo sobre esa lista:** `[54]` Molnar **tiene la edición sin fijar** (la web sirve hoy
-    la 3.ª, la literatura cita la 2.ª de 2022), así que su página depende de qué edición se elija.
-    Decide Francisco. **Su alcance se redujo el 2026-08-16 (Tanda 13)**: al reasignar el Isolation
+  - **Sobre `[54]` Molnar:** la edición **ya está fijada** — la declaración de «edición sin fijar» que
+    había aquí es FALSA desde el 2026-08-18 y se retira; no la reintroduzcas. **Su alcance se redujo el 2026-08-16 (Tanda 13)**: al reasignar el Isolation
     Forest a `[73]` Liu, Ting y Zhou (2008), Molnar ya **no bloquea ningún localizador del capítulo
     2** — solo queda pendiente para su uso en `2.3.3`.
   - ~~`[6]` Goodfellow está huérfana~~ **— RESUELTO el 2026-08-16 (`296de24`). T24 la ancló:
@@ -318,11 +317,13 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
 - **Notas Obsidian:** cuando el usuario pida crear o editar una nota, escribirla directamente en `Obsidian_TFG_Vault/` con Markdown estándar compatible con Obsidian (wikilinks `[[enlace]]`, callouts `> [!note]`, etc.).
 - **Imágenes del vault — `Obsidian_TFG_Vault/assets/`.** Ahí viven **todos** los ficheros que las notas
   embeben con `![[nombre.png]]`; no hay imágenes en ninguna otra carpeta del vault. **Censo verificado el
-  2026-08-18:** **36 ficheros en la carpeta**, **24 nombres distintos embebidos** en **27 embebidos** de
-  **7 notas** (el desfase 27 vs 24 son figuras repetidas, con ficha abierta), y **12 ficheros huérfanos**
+  2026-08-18:** **36 ficheros en la carpeta**, **24 nombres distintos embebidos** en **24 embebidos** de
+  **6 notas** (el desfase 27 vs 24 que hubo hasta la Tanda 28 eran figuras repetidas: 4.8/4.9 duplicaban
+  4.1/4.2 y 5.11/5.12 eran el mismo `.png`; **retiradas el 2026-08-18**, hoy no hay ningún duplicado), y **12 ficheros huérfanos**
   que no embebe nadie. **Ningún embebido roto:** los 24 existen en disco. Las figuras las genera el código
   en `Resultados/figuras/` y se copian aquí a mano, así que **`assets/` no se regenera solo**: si una
-  figura se rehace, hay que volver a copiarla. **Los 27 embebidos llevan pie numerado** con el criterio
-  `Figura <capítulo>.<orden>` (`2.1`–`2.4`, `4.1`–`4.9`, `5.1`–`5.13`) y **se llaman por número desde la
+  figura se rehace, hay que volver a copiarla. **Los 24 embebidos llevan pie numerado** con el criterio
+  `Figura <capítulo>.<orden>`, en series **contiguas y sin duplicados**: `2.1`–`2.5`, `4.1`–`4.7` y
+  `5.1`–`5.12` (el `2.1`–`2.4` que decía este fichero **ya era falso antes** de la Tanda 28) y **se llaman por número desde la
   prosa**, que es lo que les da referencia cruzada al volcarlas al `.docx`.
 - **No inventar rutas:** si se necesita una ruta al dataset o a los resultados, usar las hardcodeadas en los scripts o preguntar al usuario.

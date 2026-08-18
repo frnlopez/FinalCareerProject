@@ -52,7 +52,8 @@ grande. El escalado las lleva a un rango común.
 ## 2. Desbalance de clases y balanceo
 
 ### El problema
-D3 está brutalmente desbalanceado: `dos` ~45.900 muestras frente a **`u2r` ~52**.
+D3 está brutalmente desbalanceado: `dos` ~45.900 muestras frente a **`u2r` 52**
+(cifra exacta, en `Resultados/specialized_nsl_kdd_composicion_d3.csv`).
 Un modelo que solo quiera acertar mucho aprende a decir siempre "dos" e ignorar u2r:
 tendría un *accuracy* altísimo y sería **inútil** para lo que importa (detectar los
 ataques raros, que suelen ser los más peligrosos).

@@ -15,7 +15,9 @@ algoritmos supervisados de scikit-learn bajo protocolo idéntico:
 Protocolo (igual para los 4):
   * GridSearchCV con StratifiedKFold(5, shuffle=True,
     random_state=config.RANDOM_STATE) y
-    scoring='f1_macro' (u2r tiene ~52 muestras: el accuracy miente, la macro no).
+    scoring='f1_macro': u2r tiene 52 muestras (cifra exacta, ver
+    Resultados/specialized_nsl_kdd_composicion_d3.csv), así que el accuracy
+    miente y la macro no.
   * Mini-experimento de balanceo 4.3.4: SMOTE (dentro de cada fold, vía ImbPipeline)
     vs class_weight='balanced' (DT/RF) o vs nada (KNN/HistGB). El balanceo ganador
     por f1_macro CV se usa para el GridSearch final de ese algoritmo.
@@ -107,7 +109,8 @@ class NSLKDDSignatureTrainer:
         "HistGradientBoosting": ["SMOTE", "nada"],
     }
 
-    # k_neighbors de SMOTE. u2r tiene ~52 muestras en D3 (~41 por fold de train), de
+    # k_neighbors de SMOTE. u2r tiene 52 muestras en D3 (cifra exacta, ver
+    # Resultados/specialized_nsl_kdd_composicion_d3.csv; ~41 por fold de train), de
     # sobra para k=5. Si alguna clase pequeña lo hiciera fallar, bajar a 3 (spec §6.4.4).
     K_SMOTE = 5
 

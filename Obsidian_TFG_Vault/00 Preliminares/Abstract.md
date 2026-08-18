@@ -10,6 +10,15 @@ docx_ref: "Abstract"
 > [!note] Traducción fiel de [[Resumen]]
 > Este texto es la versión inglesa del mismo resumen, no un texto distinto. Cualquier cambio en `Resumen.md` debe replicarse aquí.
 
+## Title
+
+**Machine learning based hybrid network intrusion detection system: cascaded anomaly and signature detection on NSL-KDD**
+
+> [!note] Traducción del título fijado — 2026-08-18
+> Versión inglesa del título definitivo cerrado por Francisco el **2026-08-18** (texto español en [[Resumen]]). No reabrir la elección: cualquier ajuste aquí es de traducción, no de contenido.
+
+## Abstract
+
 Network intrusion detection systems (NIDS) rely largely on signatures of known attacks, an approach that is accurate on catalogued threats but structurally blind to novel (*0-day*) attacks. This Bachelor's Thesis designs, implements and evaluates a **hybrid network intrusion detection system (H-NIDS)** that cascades an anomaly detection stage —trained solely on legitimate traffic— with a second, signature-based multiclass classification stage learned from known attacks. The aim is to retain the ability to name a known attack without giving up the detection of unknown ones, which are labelled as an actionable `unknown` category instead of being forced into an existing class.
 
 The work is carried out on the **NSL-KDD** dataset, from which three specialised partitions are derived: D1 (normal traffic only, for the anomaly stage), D3 (known attack types only, for the signature stage) and D2 (the complete official test set, reserved for evaluation). Four anomaly detectors (Isolation Forest, One-Class SVM, Local Outlier Factor and an autoencoder) and four supervised classifiers (decision tree, random forest, k-nearest neighbours and histogram-based gradient boosting) are compared, each group under the protocol proper to its stage: a threshold at the 95th percentile of the anomaly scores on a validation partition of D1 for the first stage, and a grid search with cross-validation on `f1_macro` with within-fold class balancing for the second. As a control, a **monolithic five-class random forest** is trained, representative of the dominant pattern in the literature on this dataset. The stability of the results is assessed through a ten-seed sweep with paired comparisons.
