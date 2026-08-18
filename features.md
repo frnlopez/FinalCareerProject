@@ -485,7 +485,8 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > - **2026-08-18:** **`7029873`/`6f75fa2`** (TANDA 22, campo `estado:` en 26 notas) ·
 >   **`02ff9fb`/`cb0b9e9`** (TANDA 23, estados y totales de `00 Índice TFG.md`) ·
 >   **`6ada8c2`/este mismo** (TANDA 24, tres fichas: nomenclatura de Procedencia en `4.2`, remisiones a
->   `4.3.5` y la mitad de P9 en `5.4`).
+>   `4.3.5` y la mitad de P9 en `5.4`) · **`—`/pendiente** (TANDA 25, pies de figura de los capítulos 4
+>   y 5, cierre parcial de T23 y residuos de `A.3`).
 >
 > **Y del día anterior solo queda un 🟠 abierto:** el de **las 5 citas colgantes irreconstruibles**
 > (ficha más abajo, alta del 2026-08-15). Es **el único 🟠 que viene de antes de hoy** — los demás 🟠
@@ -539,6 +540,35 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > (2026-08-18): resincronizadas **26 notas** de `borrador` a `redactada`. Su ficha vive ya en
 > `## Cerradas`. **Efecto colateral esperado: `00 Índice TFG.md` queda desfasado — ficha nueva más
 > abajo.**
+
+### Altas de la TANDA 25 — 2026-08-18
+
+> Tres fichas, **ninguna bloqueante**, **ninguna mueve una cifra publicada**. **Fichar no es resolver:
+> aquí no se ha corregido nada.**
+>
+> **RETIRADA el 2026-08-18 (misma fecha del alta): el alta sobre «`1.2:27` atribuye Snort a Roesch
+> (1998) sin ninguna cita» era DUPLICADA, no un hallazgo nuevo.** Ya estaba fichada como **P4**
+> (más abajo, «Altas del pase en serie del `researcher` — 2026-08-17»), que además tiene **decisión
+> de Francisco del 2026-08-17**. Lo pendiente de Snort vive en P4 y **lo ejecuta el `researcher` en
+> el pase en serie**. Quedan **dos fichas** en esta tanda.
+
+- [ ] 🟡 **`CLAUDE.md` no menciona `Obsidian_TFG_Vault/assets/` en la estructura del repo** · — · **hilo principal**
+  Alta el **2026-08-18**. Ahí viven los **22 ficheros de imagen** embebidos, **verificados en disco**
+  durante la TANDA 25, y el árbol que documenta `CLAUDE.md` los omite: la estructura está
+  **incompleta**. **Fichado, no arreglado**: `CLAUDE.md` es andamiaje y **lo toca solo el hilo
+  principal**.
+
+- [ ] 🟡 **Erratas en `1.2:14`** · Informe · `redactor-tfg`
+  Alta el **2026-08-18**. «trackeados» y «de como» sin tilde. **Trivial**, pero es **capítulo 1**, y el
+  capítulo 1 va **al final del barrido**.
+
+- [ ] 🟡 **Dos figuras duplicadas — decisión pendiente** · Informe · **decide Francisco**
+  Alta el **2026-08-18**. `[!todo]` en **`4.3:306`** —las **Figuras 4.8 y 4.9** embeben los mismos
+  ficheros que las **4.1 y 4.2** de `4.2`: `eda_distribuciones_divisiones.png` y
+  `validacion_distribucion_clases.png`— y en **`5.3:155`** —`hibrido_cm_54.png` embebido **dos veces**,
+  Figuras **5.11 y 5.12**—. Se numeraron como **instancias propias** para que ningún embebido quedara
+  sin pie, pero **en el volcado al `.docx` la misma imagen aparecería dos veces con dos números
+  distintos**. Resolverlo implica **tocar la prosa de dos notas**, y **excedía el alcance del pase**.
 
 ### Altas de la TANDA 24 — 2026-08-18
 
@@ -667,6 +697,19 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   propio autor, del año que la nota cita, y USENIX la sirve **gratis y de forma estable** — el mismo
   criterio de nivel 1 que ya cumplen `[2]` Anderson y `[3]` Denning, **citadas en ese mismo pasaje
   mientras Snort se quedaba sin `[n]`**. Pendiente: alta en `Bibliografía.md` y marcador en `1.2:14`.
+  **DIVERGENCIA REGISTRADA el 2026-08-18 (TANDA 25) — P4 SIGUE ABIERTA.** El agente de la Tanda 25
+  **aplicó P4 sobre una afirmación distinta de la decidida**: en vez del pasaje de Roesch y Snort,
+  avaló la de **Anderson como punto de partida de la detección de intrusiones**, dejando en `1.2:14`
+  un `[CITA: revisión o survey del área que atribuya a Anderson (1980) el origen de los IDS]` con su
+  `[!todo]`. Consecuencias:
+  - **Lo aplicado NO es lo que Francisco decidió**; el anclaje al paper de Roesch **sigue sin hacerse**.
+  - **El párrafo de Snort, hoy en `1.2:27`, sigue SIN NINGUNA CITA** — que era justo el objeto de la
+    decisión.
+  - Queda **una segunda afirmación sin aval** (la de Anderson), ya marcada con `[CITA: …]`, que **no
+    estaba en ninguna ficha**. **Las dos** van al **pase en serie del `researcher`**.
+  - **Referencia de línea desfasada:** la ficha apunta a `1.2:14` y el pasaje de Snort está en
+    `1.2:27`. **Mismo patrón que ya ha mordido cuatro veces**: verificar la línea en disco antes de
+    aplicar.
 
 - [ ] 🟡 **P5 y P6 · dos ediciones/versiones sin fijar: Stallings `[8]` y CCN-STIC-401 `[10]`** · Informe · **DECIDIDO — pendiente de aplicar** · ejecuta `researcher`
   Alta el **2026-08-17**. **P5:** la edición de Stallings `[8]` sigue sin fijar (4.ª vs 5.ª) — y `[8]`
@@ -940,25 +983,14 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > se enlaza con **T21**—. Se deja esta línea para que nadie la vuelva a despachar; el encargo
 > original vive en git.
 
-- [ ] **Residuos de `A.3` (T7 cerrada el 2026-08-14)** · Informe · `redactor-tfg` / `researcher`
-  **T7 está CERRADA** (ver `## Cerradas`): la nota
-  `Obsidian_TFG_Vault/Apéndices/A.3 Ficha del sistema.md` existe, es la *model card* completa y pasó
-  `auditor-ml` con **APTO CON CAMBIOS** (8 hallazgos, ninguno crítico, todos corregidos). **No se
-  vuelve a encargar `A.3`.** Lo que quedó vivo, y solo esto:
-  - ~~**El alta de `A.3` en `00 Índice TFG.md` no está hecha.**~~ **HECHA el 2026-08-14 en la
-    Tanda 3** (ver `## Cerradas`): `A.3` está dada de alta en `:92-93` con el formato de `A.1`/`A.2`,
-    y en la misma pasada se corrigió la frase falsa de `:101-102`. **No se vuelve a encargar.**
-  - **Dos `> [!todo]` vivos DENTRO de la nota, ninguno resoluble hoy:**
-    - `A.3:574` — **caracterización de los seis ítems no-FT** del checklist de Pineau. Requiere el
-      **checklist original**; sin él, nombrarlos sería inventarlos. Depende de acceso a la fuente.
-      **⚠️ LÍNEA DESFASADA, recontada el 2026-08-17: en disco está en `A.3:681`.** El `[!todo]` sigue
-      vivo; lo caducado es **el número de línea**. Tercera vez en el mismo día que una referencia
-      `fichero:línea` de este registro señala una línea desplazada.
-    - ~~`A.3:159` — **remisión a `5.0`**, que **no existe todavía**: es **T5**.~~ **T5 está CERRADA
-      el 2026-08-15 y `5.0` YA EXISTE**, así que la precondición desapareció — pero **el `[!todo]`
-      sigue en disco**, ahora **desplazado a `A.3:176-180`** y **afirmando en presente que `5.0` no
-      existe**. Es una de las seis afirmaciones desmentidas por disco: ver la ficha de residuos de la
-      Tanda 7, más abajo. **Se retira allí, no aquí.**
+> **Los «Residuos de `A.3` (T7 cerrada el 2026-08-14)» quedan CERRADOS COMO AGOTADOS en la TANDA 25**
+> (2026-08-18), **sin tocar la nota**. En disco queda **un único `[!todo]` vivo** en `A.3`, el de la
+> caracterización de los seis ítems no-FT del checklist de Pineau (**`A.3:698`**), y **no es
+> resoluble por un agente**: depende del **checklist original**, fuente externa que no está en disco
+> — nombrarlos sería inventarlos. Deja de ser trabajo pendiente y pasa a ser **dependencia de fuente
+> externa**. El `[!warning]` de límite declarado de alcance está en **`A.3:654`**. Su ficha vive ya en
+> `## Cerradas`. **Texto original conservado abajo solo como historial: no leas de ahí trabajo
+> pendiente, y sus números de línea (`:574`, `:681`, `:648`) estaban CADUCADOS.**
 
 > **T8 — CERRADA el 2026-08-15 en la TANDA 11** (`d31e20f`, ver `## Cerradas`). Lo único que la
 > mantenía abierta era **`2.1.5`**, hoy **completada al nivel de `A.2`** (17 bloques de fórmulas,
@@ -1403,6 +1435,18 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
   correcciones de texto que **no estaban autorizadas** en aquel encargo y por tanto no se aplicaron.
   **Fuera de esta ficha, ya ejecutadas:** reformular `1.1:12` al dato agregado de INCIBE, repuntar
   `2.1.2:30,64` de `[6]` a `[5]`, y `2.2.1:32` de `[9]` a `[8]`.
+  **CIERRE PARCIAL en la TANDA 25 (2026-08-18) — la ficha SIGUE ABIERTA:**
+  - **P1–P3: ya estaban ejecutadas** (constaba en esta misma ficha).
+  - **P4: NO aplicada — la Tanda 25 marcó una afirmación DISTINTA de la decidida.** La decisión de
+    Francisco (2026-08-17) era anclar el pasaje de **Roesch y Snort** al paper primario de **LISA'99
+    (USENIX)**, y **eso sigue sin hacerse**: el pasaje de Snort, hoy en `1.2:27`, **no tiene ninguna
+    cita**. Lo que sí se aplicó en `1.2:14` fue un **`[CITA: …]` + `[!todo]`** sobre la afirmación de
+    **Anderson como punto de partida de la detección de intrusiones** —que **no estaba en la ficha
+    P4**— y que queda como **segunda afirmación sin aval**. **P4 SIGUE ABIERTA**: ver la divergencia
+    registrada en su propia ficha (`features.md:700`, «P4 · falta aval de nivel 1 para `1.2:14`»).
+  - **P5 y P6: NO se aplican aquí.** Caen en `Bibliografía.md` —edición de Stallings `[8]` y *deep
+    link* de `[10]` CCN-STIC-401— y son **decisión de Francisco**. Van al **pase en serie del
+    `researcher`** del final del barrido. **Es lo único que mantiene abierta T23.**
 
 > **T24 y T25 — CERRADAS el 2026-08-15 en la TANDA 11** (`d31e20f`, ver `## Cerradas`). `2.1.4` ya
 > tiene su bloque de redes neuronales y **`2.1.4.3` ancla `[6]` (Goodfellow) con `[6, cap. 6]`**,
@@ -1805,16 +1849,12 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 > Tanda 5, «Dónde se usa» de `[2]` y `[3]`— SIGUE VIVO en su ficha propia**, no aquí: verificado el
 > 2026-08-16, ambas filas siguen diciendo solo `1.2 Preliminares`. Detalle en `## Cerradas`.
 
-- [ ] **De las 27 imágenes embebidas del vault, solo las 5 del capítulo 2 llevan pie de figura** (🟡) · Informe · `redactor-tfg`
-  **HALLAZGO NUEVO del 2026-08-15**, contado en disco al cerrar la Tanda 11. Las **22 de los
-  capítulos 4 y 5 van apiladas, sin pie y sin numeración**, así que ninguna se puede citar desde el
-  texto y el volcado al `.docx` las dejaría mudas. **Es aplicable ya**, porque el criterio de
-  numeración quedó fijado en esta misma tanda: **`Figura <capítulo>.<orden>`**.
-  - **Ojo con la colisión que este criterio acaba de evitar**, que es la razón de que fuera 🔴: `2.1.1`
-    numeraba «Figura 1.1–1.4» **dentro del capítulo 2**. El mismo defecto puede estar sembrado en los
-    capítulos 4 y 5 — **contar antes de numerar**.
-  - **Toca ficheros de T10 y T11**, así que o entra dentro de ellas o se despacha con cuidado de no
-    solaparse.
+> **El 🟡 «De las 27 imágenes embebidas del vault, solo las 5 del capítulo 2 llevan pie de figura»
+> queda CERRADO en la TANDA 25** (2026-08-18): las **22 de los capítulos 4 y 5** (cap. 4: 9 · cap. 5:
+> 13) llevan ya pie numerado con el criterio `Figura <capítulo>.<orden>` — **4.1–4.9** y **5.1–5.13**.
+> Su ficha vive ya en `## Cerradas`. **La colisión que esta ficha temía NO existía**: `2.1.1` numera
+> hoy `Figura 2.1`–`2.4`, no «1.1–1.4», y en los capítulos 4 y 5 no había numeración previa que
+> corregir. **Deja UNA ficha nueva**, la de las dos figuras duplicadas.
 
 ### Residuos de la TANDA 12 — altas del 2026-08-16
 
@@ -2067,6 +2107,10 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-18 | Informe | **TANDA 25 — pies de figura de los capítulos 4 y 5, más el cierre parcial de T23. Cierra DOS fichas** (los pies de figura de las 27 imágenes embebidas y los residuos de `A.3`) **y deja T23 ABIERTA a propósito**. **Seis ficheros del vault:** `1.2 Preliminares.md`, `4.2 Base de datos utilizada.md`, `4.3 Preprocesamiento de los datasets.md`, `5.1 …`, `5.2 …`, `5.3 Resultados del sistema híbrido.md`. **`A.3` NO se tocó.** **T23 · cierre PARCIAL:** P1–P3 ya estaban ejecutadas; **P4 NO aplicada — se marcó una afirmación DISTINTA de la decidida**: la decisión de Francisco era anclar el pasaje de **Roesch y Snort** al paper de **LISA'99 (USENIX)** y eso sigue sin hacerse (`1.2:27` sigue sin cita); lo aplicado en `1.2:14` fue un **`[CITA: …]` + `[!todo]`** sobre **Anderson como punto de partida de la detección de intrusiones**, que **no estaba en la ficha P4** y queda como **segunda afirmación sin aval**. **P4 SIGUE ABIERTA** (ver su ficha en `## Abiertas`); **P5 y P6 NO se aplican aquí**: caen en `Bibliografía.md` (edición de Stallings `[8]`, *deep link* de `[10]` CCN-STIC-401), son **decisión de Francisco** y van al **pase en serie del `researcher`**. **Auditoría `auditor-ml` de coherencia ENTRE notas: `APTO CON CAMBIOS`, 5 puntos, TODOS aplicados** en un pase correctivo de dos agentes en paralelo. **Deja TRES fichas nuevas**, ninguna bloqueante | `—` |
+| 2026-08-18 | Informe | **🟡 «De las 27 imágenes embebidas del vault, solo las 5 del capítulo 2 llevan pie de figura» — CERRADA.** Las **22 de los capítulos 4 y 5** (cap. 4: **9** · cap. 5: **13**) llevan ya pie numerado con el criterio **`Figura <capítulo>.<orden>`**: **4.1–4.9** y **5.1–5.13**. **Recuento verificado contra disco: 27 embebidos exactos en 7 notas de todo el vault, los 27 con pie.** **La colisión que la ficha temía YA NO EXISTÍA:** `2.1.1` numera hoy correctamente `Figura 2.1`–`2.4`, no «1.1–1.4», y **en los capítulos 4 y 5 no había ninguna numeración previa que corregir**. **Los capítulos 3 y 6, los apéndices y el índice no tienen ninguna imagen embebida**, así que el 27 es censo completo. Los **22 ficheros embebidos existen en `Obsidian_TFG_Vault/assets/`**, comprobados uno a uno: **ningún embebido roto**. **Deja UNA ficha nueva:** las dos figuras duplicadas | `—` |
+| 2026-08-18 | Informe | **«Residuos de `A.3` (T7 cerrada el 2026-08-14)» — CERRADA COMO AGOTADA, sin tocar la nota.** `A.3` tiene hoy **un único `[!todo]` vivo**, el de la **caracterización de los seis ítems no-FT del checklist de Pineau** (**`A.3:698`**), que **depende del checklist original** y no de material en disco: nombrarlos sería inventarlos. **No es resoluble por un agente**, así que deja de ser trabajo pendiente y **lo que queda es una dependencia de fuente externa**. **Referencias de línea recontadas en disco porque habían caducado tres veces:** el `[!todo]` de Pineau está en **`A.3:698`** (la ficha decía `:574`, luego `:681`) y el `[!warning]` de **límite declarado de alcance** en **`A.3:654`** (decía `:648`) | `—` |
+| 2026-08-18 | Informe | **AUDITORÍA DE LA TANDA 25 — `APTO CON CAMBIOS`, 5 puntos, todos aplicados. Los dos de fondo, de la clase que solo se ve mirando las notas juntas:** (1) **🟠 ninguna de las 22 figuras nuevas se llamaba por número desde la prosa, y las 5 del capítulo 2 sí** — al volcar al `.docx` habrían quedado **sin *cross-reference***, huérfanas del texto; corregido con **7 llamadas en el cap. 4** y **5 llamadas por bloque en el cap. 5**, con la convención de `2.1.1:16`. (2) **Cuatro pies afirmaban más de lo que la figura muestra, verificado contra el CÓDIGO GENERADOR**: las **Figuras 4.4 y 4.5** omitían el **segundo panel** (histograma de p-valores con línea `p = 0,01`, `validacion.py:836-890`) y el «top 20»; la **4.7** decía «por característica» cuando `validacion.py:960-975` solo pinta el **top 15 en D1**; y «**confirma** la pureza de D1» era **falso** —en `validacion.py:587-603` ese panel es **una barra única rotulada `normal` con `len(self.D1_X)` hardcodeada**: dibuja la pureza **por construcción**, no la verifica—, así que ahora dice «**ilustra**» y remite la confirmación a `specialized_nsl_kdd_validation_report.txt` | `—` |
 | 2026-08-18 | Informe | **TANDA 24 — nueve notas del vault en paralelo y DOS vueltas de `auditor-ml` sobre la COHERENCIA ENTRE ellas. Cierra TRES fichas**: la imprecisión nominal del callout de Procedencia de `4.2`, las remisiones a la sede canónica `4.3.5` y **T21** (la mitad de P9 que T1 no cubre). Ficheros del vault (11): `2.1.6`, `3.3`, `4.2`, `4.3`, `4.6`, `5.0`, `5.1`, `5.2`, `5.4`, `6.1`, `A.3`; registro: `features.md` y `resumen-de-decisiones.md`. **Ronda 1 de auditoría: `APTO CON CAMBIOS`, 9 puntos. Ronda 2: los 8 aplicados verificados y 3 hallazgos nuevos, ya corregidos.** **Cero `[n]` nuevos** (máximo en uso sigue `[77]`). **Corrección de dato en el propio registro:** retirado de `features.md:1366` el «**4,4 millones de flujos/s**», cifra **sin origen en ningún artefacto de disco** —el auditor verificó que **su única aparición en todo el repo era esa ficha**—, sustituido por el valor real **4.196.350,2 flujos/s** con latencia **0,000238 ms** (DecisionTree, `set_features=54`, `semilla=42`, `commit=1163c90`, `Resultados/metricas_firmas.csv:2`). Mismo patrón que el precedente del «13 de 98». **Deja DOS fichas nuevas**, ninguna bloqueante | `6ada8c2` |
 | 2026-08-18 | Informe | **🟡 Imprecisión NOMINAL en `4.2`, callout de Procedencia — CERRADA.** La nota cita ya las **etiquetas literales** de los informes, `Commit del código:` y `Fecha de la corrida:`, en vez de «el `commit` y la `fecha`». **Verificadas contra las cabeceras de los dos `Resultados/*_validation_report.txt`** (sello **`ac36b88`**). **No era cifra sin respaldo: era nomenclatura** | `6ada8c2` |
 | 2026-08-18 | Informe | **🟡 Las notas remitentes de `4.3.5` no declaraban que remiten — CERRADA, con DOS correcciones a su propio enunciado.** (1) La lista canónica de `4.3:266` da **diez sedes de remisión** —once contando la canónica—, **no nueve**: la décima, **`4.3.7`**, vive **dentro de la propia nota sede**. (2) **`2.1.6` ya declaraba la remisión** en `:94`, así que **no se le añadió línea**, para no duplicar. Líneas de remisión añadidas en **7 notas**: `3.3:31`, `4.6:39`, `5.0:123`, `5.1:135`, `5.2:71`, `6.1:42`, `A.3:106`, todas con la **grafía normalizada** `[[4.3 Preprocesamiento de los datasets\|4.3.5]]` § «Decisión experimental: 54 frente a 122 (**experimento H1, medido sobre D2**)» | `6ada8c2` |
