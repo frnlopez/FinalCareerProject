@@ -9,14 +9,19 @@ estado: borrador
 >
 > **Actualizado el 2026-08-09 (T0):** la regla «la teoría en prosa la escribe Francisco» quedó retirada. Ver «Autoría de la redacción — estado vigente desde T0» en `features.md`.
 >
+> **Actualizado el 2026-08-18:** resincronizados los estados publicados con el frontmatter real. La
+> tanda anterior pasó 26 notas de `borrador` a `redactada` en disco y este índice seguía publicando
+> los valores viejos (decía 14/27/2). El recuento real, verificado nota a nota, es **40 `redactada` ·
+> 1 `borrador` · 2 `pendiente`**.
+>
 > **Actualizado el 2026-08-17 (Tanda 21):** este índice se cuadró entero contra disco. Las nueve secciones que figuraban como «✍ teoría — guion propuesto» estaban ya redactadas, igual que las seis del capítulo 2 marcadas como «borrador»; se corrigieron también los estados de `4.2` y `6.2` y el recuento total. **Regla de mantenimiento: el estado que publica este índice es el del campo `estado:` de la cabecera de cada nota, verificado en disco — no una anotación histórica.**
 
 Mapa de contenido del TFG. Las notas MD son la fuente de verdad; el docx se rellena al final a partir de estas notas (Word + Zotero, estilo IEEE).
 
 **Leyenda de estado:**
 
-- `redactada` — prosa terminada; es el estado de las 14 notas del capítulo 2.
-- `borrador` — redacción real existente, pendiente de revisión.
+- `redactada` — prosa terminada; es el estado de **40 de las 43 notas** de la memoria.
+- `borrador` — redacción real existente pero con hueco de contenido; hoy solo `1.4 Estructura`.
 - `📊 volcado` — resultados ya traídos desde `Resultados\` (mapa en `next-steps.md` §6.6).
 - `pendiente` — sin contenido.
 
@@ -32,11 +37,11 @@ Mapa de contenido del TFG. Las notas MD son la fuente de verdad; el docx se rell
 
 ## 1. Introducción
 
-- [[1.0 Sinopsis]] — borrador
-- [[1.1 Motivación]] — borrador
-- [[1.2 Preliminares]] — borrador
-- [[1.3 Objetivo]] — borrador
-- [[1.4 Estructura]] — borrador
+- [[1.0 Sinopsis]] — redactada
+- [[1.1 Motivación]] — redactada
+- [[1.2 Preliminares]] — redactada
+- [[1.3 Objetivo]] — redactada
+- [[1.4 Estructura]] — borrador (única `borrador` legítima del vault: le queda hueco real de contenido, con ficha viva propia)
 
 ## 2. Marco Teórico
 
@@ -70,40 +75,40 @@ Mapa de contenido del TFG. Las notas MD son la fuente de verdad; el docx se rell
 
 ## 3. Diseño del sistema
 
-- [[3.1 Requisitos del sistema]] — borrador (2026-07-16)
-- [[3.2 Arquitectura del sistema]] — borrador (2026-07-16, incl. diagrama de cascada)
-- [[3.3 Metodología de funcionamiento del sistema]] — borrador (2026-07-16)
-- [[03 Diseño del sistema/3.4 Modelo de detección de anomalías|3.4 Modelo de detección de anomalías]] — borrador (2026-07-16)
-- [[3.5 Modelo de detección basado en firmas]] — borrador (2026-07-16)
-- [[03 Diseño del sistema/3.6 Conclusiones del capítulo|3.6 Conclusiones del capítulo]] — borrador (2026-07-16)
+- [[3.1 Requisitos del sistema]] — redactada
+- [[3.2 Arquitectura del sistema]] — redactada (incl. diagrama de cascada)
+- [[3.3 Metodología de funcionamiento del sistema]] — redactada
+- [[03 Diseño del sistema/3.4 Modelo de detección de anomalías|3.4 Modelo de detección de anomalías]] — redactada
+- [[3.5 Modelo de detección basado en firmas]] — redactada
+- [[03 Diseño del sistema/3.6 Conclusiones del capítulo|3.6 Conclusiones del capítulo]] — redactada
 
 ## 4. Implementación del sistema
 
-- [[4.1 Tecnologías utilizadas]] — borrador (2026-07-16)
-- [[4.2 Base de datos utilizada]] — borrador **completo**: 📊 4.2.1 análisis previo volcado + parte teórica ya redactada («Origen», «Las 41 características» y «Por qué se eligió NSL-KDD», 2026-07-21). Sin marcadores `[CITA: …]` vivos tras los pases del `researcher` del 2026-08-15 y 2026-08-16. **Único resto pendiente: la reserva de revisión de Francisco sobre el bloque «Por qué se eligió NSL-KDD»**, declarada en la propia nota
-- [[4.3 Preprocesamiento de los datasets]] — borrador (volcado 2026-07-16)
-- [[4.4 Entrenamiento del modelo de detección de anomalías]] — borrador (volcado 2026-07-16)
-- [[4.5 Entrenamiento del modelo de detección basado en firmas]] — borrador (volcado 2026-07-16)
-- [[04 Implementación del sistema/4.6 Conclusiones del capítulo|4.6 Conclusiones del capítulo]] — borrador
+- [[4.1 Tecnologías utilizadas]] — redactada
+- [[4.2 Base de datos utilizada]] — redactada: 📊 4.2.1 análisis previo volcado + parte teórica ya redactada («Origen», «Las 41 características» y «Por qué se eligió NSL-KDD», 2026-07-21). Sin marcadores `[CITA: …]` vivos tras los pases del `researcher` del 2026-08-15 y 2026-08-16. **Único resto pendiente: la reserva de revisión de Francisco sobre el bloque «Por qué se eligió NSL-KDD»**, declarada en la propia nota
+- [[4.3 Preprocesamiento de los datasets]] — redactada (📊 volcado 2026-07-16)
+- [[4.4 Entrenamiento del modelo de detección de anomalías]] — redactada (📊 volcado 2026-07-16)
+- [[4.5 Entrenamiento del modelo de detección basado en firmas]] — redactada (📊 volcado 2026-07-16)
+- [[04 Implementación del sistema/4.6 Conclusiones del capítulo|4.6 Conclusiones del capítulo]] — redactada
 
 ## 5. Evaluación
 
-- [[5.0 Protocolo de evaluación]] — borrador: particiones y función de cada una, invariantes al comparar variantes, métricas obligatorias, prohibiciones y vocabulario de reproducibilidad
-- [[5.1 Resultados del modelo de detección de anomalías]] — borrador (volcado 2026-07-16)
-- [[5.2 Resultados del modelo de detección basado en firmas]] — borrador (volcado 2026-07-16)
-- [[5.3 Resultados del sistema híbrido]] — borrador (volcado 2026-07-16)
-- [[05 Evaluación/5.4 Conclusiones del capítulo|5.4 Conclusiones del capítulo]] — borrador
+- [[5.0 Protocolo de evaluación]] — redactada: particiones y función de cada una, invariantes al comparar variantes, métricas obligatorias, prohibiciones y vocabulario de reproducibilidad
+- [[5.1 Resultados del modelo de detección de anomalías]] — redactada (📊 volcado 2026-07-16)
+- [[5.2 Resultados del modelo de detección basado en firmas]] — redactada (📊 volcado 2026-07-16)
+- [[5.3 Resultados del sistema híbrido]] — redactada (📊 volcado 2026-07-16)
+- [[05 Evaluación/5.4 Conclusiones del capítulo|5.4 Conclusiones del capítulo]] — redactada
 
 ## 6. Conclusiones
 
-- [[6.1 Conclusiones]] — borrador (2026-07-16): cumplimiento de objetivos + validación de la tesis + limitaciones
-- [[6.2 Líneas futuras]] — borrador **redactado y extenso** (339 líneas), con criterio de admisión declarado: solo entra lo respaldado por una medición del trabajo o por una limitación estructural verificada. Fuente: `EL_FUTURO.md` e informes de `99 Investigación/`. **Pendiente solo de la revisión final de Francisco** (orden de prioridad y formulación de cada línea)
+- [[6.1 Conclusiones]] — redactada: cumplimiento de objetivos + validación de la tesis + limitaciones
+- [[6.2 Líneas futuras]] — redactada, extensa (339 líneas), con criterio de admisión declarado: solo entra lo respaldado por una medición del trabajo o por una limitación estructural verificada. Fuente: `EL_FUTURO.md` e informes de `99 Investigación/`. **Pendiente solo de la revisión final de Francisco** (orden de prioridad y formulación de cada línea)
 
 ## Apéndices
 
-- [[A.1 Columnas del dataset NSL-KDD]] — 📊 volcado (borrador): 41 features por grupo + etiquetas + 17 tipos 0-day marcados
-- [[A.2 Métricas de desempeño]] — borrador (2026-07-16): fórmulas de referencia + A.2.1 caso one-class
-- [[A.3 Ficha del sistema]] — 📊 volcado (borrador, 2026-08-14): *model card* del sistema — configuraciones publicadas, alcance de cada métrica, dispersión entre 10 semillas y limitaciones declaradas
+- [[A.1 Columnas del dataset NSL-KDD]] — redactada (📊 volcado): 41 features por grupo + etiquetas + 17 tipos 0-day marcados
+- [[A.2 Métricas de desempeño]] — redactada: fórmulas de referencia + A.2.1 caso one-class
+- [[A.3 Ficha del sistema]] — redactada (📊 volcado, 2026-08-14): *model card* del sistema — configuraciones publicadas, alcance de cada métrica, dispersión entre 10 semillas y limitaciones declaradas
 
 ## Bibliografía
 
@@ -116,13 +121,13 @@ Mapa de contenido del TFG. Las notas MD son la fuente de verdad; el docx se rell
 
 ## Totales
 
-Recuento verificado contra disco el **2026-08-17**, contando los wikilinks de este índice uno a uno
-y cruzándolos con los ficheros `.md` del vault.
+Recuento verificado contra disco el **2026-08-18**, leyendo el campo `estado:` del frontmatter de
+cada nota del vault una a una y cruzándolo con los wikilinks de este índice.
 
 | Estado | Notas | Dónde |
 |---|---:|---|
-| `redactada` | 14 | Capítulo 2 completo (2.1.1–2.1.6, 2.2.1–2.2.5, 2.3.1–2.3.3) |
-| `borrador` | 27 | Cap. 1 (5) · Cap. 3 (6) · Cap. 4 (6) · Cap. 5 (5) · Cap. 6 (2) · Apéndices (3) |
+| `redactada` | 40 | Cap. 1 (4: 1.0-1.3) · Cap. 2 completo (14) · Cap. 3 (6) · Cap. 4 (6) · Cap. 5 (5) · Cap. 6 (2) · Apéndices (3) |
+| `borrador` | 1 | `1.4 Estructura`, con hueco real de contenido |
 | `pendiente` | 2 | `Resumen` y `Abstract`, que se redactan al final |
 | **Notas de memoria** | **43** | |
 | + `Bibliografía` | 1 | Nota de apoyo, la mantiene el `researcher` |
