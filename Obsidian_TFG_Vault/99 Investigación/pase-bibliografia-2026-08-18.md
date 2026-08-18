@@ -165,3 +165,56 @@ aquí como manda el protocolo.** **Cero altas: el primer número libre sigue sie
 4. **La corrección del «37» toca cifras que la memoria puede estar usando.** Aquí solo se han
    corregido los **dos informes** de `99 Investigación/`; **si el capítulo 5 repite ese «37 en D2»,
    hay que revisarlo aparte** — queda fuera de este encargo y no se ha inspeccionado.
+
+---
+
+# Adenda — SEGUNDO pase en serie del 2026-08-18: las 11 decisiones de Francisco
+
+Los tres puntos que este informe dejaba «pendientes de Francisco» (implicaciones 1, 2 y 3) **los ha
+decidido él ese mismo día**, junto con ocho más. Este segundo pase **no investiga: ejecuta**.
+
+- **Contador:** 76 filas antes, **77 después**. **Una sola alta, `[78]`.** `[9]` sigue quemada,
+  ningún `[n]` preexistente renumerado. **El primer libre pasa a ser el `[79]`** — donde este informe
+  dice `[78]` como «primer libre», está caducado.
+- **`[8]` Stallings — edición FIJADA:** 5.ª ed., Pearson, 2023, ISBN 978-0-13-809167-5. Cae la marca
+  de P5. La **página** sigue sin establecerse: no hay acceso al texto paginado de esa edición.
+- **`[10]` CCN-STIC-401 —** se cita **la ficha oficial, sin versión ni fecha**, y eso es la forma de
+  cita decidida, no un pendiente. **El «1.069 términos» queda retirado** por ser de segunda mano;
+  comprobado en disco que no aparecía en ninguna nota de la memoria.
+- **`[26]` Roesch —** metadatos reconstruidos **aceptados tal cual**; se retira el «⚠️ identidad
+  inferida del contexto» e **incidencia cerrada**.
+- **`[76]` DESDOBLADA.** Alta de **`[78]` A. Storkey, «When Training and Test Sets Are Different:
+  Characterizing Learning Transfer», cap. 1, en *Dataset Shift in Machine Learning*, MIT Press, 2009,
+  pp. 3-28** (rango reverificado el 2026-08-18), y **marcador de `5.1` repuntado de `[76, cap. 1]` a
+  `[78, pp. 3-28]`**. Lo que este informe declaraba fuera de la mano del `researcher` **lo ha
+  encargado Francisco por escrito**. `[76]` queda como volumen contenedor **sin uso en el texto**.
+- **Contradicción interna de la fila `[76]` — resuelta:** decía a la vez «rango establecido» y «no se
+  desdobla», y devolvía a Francisco una decisión ya tomada.
+- **`2.1.5:114`** ya llevaba `[5, cap. 2]`: verificado, no tocado.
+- **`2.1.4:46` y `:51` (k-NN):** localizador **retirado**, queda `[5]` a secas. La reserva que ya
+  constaba en la fila de `[5]` —el cap. 3 no desarrolla el aprendizaje perezoso— era correcta.
+- **LOF en `2.1.4` — NO se ha dado de alta nada, y esa es la noticia.** El encargo pedía dar de alta
+  Breunig, Kriegel, Ng y Sander (2000), SIGMOD, **10.1145/335191.335388**, y reapuntar ahí la cita.
+  **Eso es exactamente `[75]`**, alta de la Tanda 14 por esa misma corrección de atribución (venía de
+  `[12]` Hastie), y `2.1.4:76` **ya cita `[75]`**. DOI reverificado contra Crossref: coincide autor
+  por autor, *ACM SIGMOD Record*, vol. 29, n.º 2, pp. 93-104, 2000. Dar un número nuevo **habría
+  duplicado la referencia**, así que **el segundo número que el encargo reservaba no se consume**.
+- **Anderson en `1.2` —** la frase queda **retirada en firme**: ya no es recuperable «si aparece el
+  aval». El callout de la nota lo declara cerrado.
+- **Las 5 citas colgantes irreconstruibles — sus afirmaciones, RETIRADAS**, no solo sus marcadores:
+  `[27]` (viñeta SIEM/XDR de `2.2.2`), `[28]` (enunciado de defensa en profundidad de `2.2.2`, con el
+  párrafo reescrito para que la sección siga leyéndose), `[37]` (atribución del panorama de amenazas
+  en `2.2.5` **y** cierre de `2.3.2`), `[44]` (párrafo «Apoyo al analista en el SOC» de `2.3.2`) y
+  `[45]` (junto con `[37]`). Cada sitio lleva su callout; las cinco entradas siguen en la tabla,
+  **sin borrar ni renumerar**, marcadas como sin uso.
+
+## Lo que sigue sin poder confirmarse
+
+- **La página exacta** dentro de `[78]` (pp. 3-28) y dentro de `[8]` cap. 1: no hay texto paginado
+  accesible en ninguno de los dos. **Se marca, no se inventa.**
+- **La discrepancia del registro de Edinburgh** sobre `[78]`: fecha el capítulo en dic. 2008 y
+  consigna «Yale University Press», que es un error de ese registro (la editorial es MIT Press,
+  verificada en su catálogo y en la ACM DL).
+- **Seis entradas quedan sin uso en el texto** (`[27]`, `[28]`, `[37]`, `[44]`, `[45]`, `[76]`).
+  Es consecuencia buscada de las decisiones, pero **rompe la dirección inversa de T16** y conviene
+  que Francisco lo sepa: borrarlas o no es decisión suya.

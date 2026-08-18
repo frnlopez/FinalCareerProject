@@ -211,11 +211,10 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
   de solo lectura. Un cierre por **tanda**, no por nota: una sola pasada de `cronista`.
 - **Protocolo de citas — vale para CUALQUIER agente que escriba en el vault.** Los marcadores `[n]`
   son un **contador global** que apunta a `Bibliografía.md`. **En uso hoy: `[1]`–`[8]` y
-  `[10]`–`[77]`, 76 entradas** —verificado contra `Bibliografía.md` el 2026-08-17 tras el pase en
-  serie del `researcher`, que dio de alta `[76]` Quiñonero-Candela et al. (MIT Press 2009) y `[77]`
-  Hindy et al. (2020)—, y **`[9]` está
+  `[10]`–`[78]`, 77 entradas** —contadas en disco el 2026-08-18 tras el segundo pase en serie del
+  `researcher`, que dio de alta `[78]` Storkey (cap. 1, pp. 3-28) al desdoblar `[76]`—, y **`[9]` está
   RETIRADA SIN RENUMERAR** (`396e283`), así que está
-  **quemada, no libre**. **El primer número disponible es el `[78]`.** **Este rango se cuenta, no se recuerda**
+  **quemada, no libre**. **El primer número disponible es el `[79]`.** **Este rango se cuenta, no se recuerda**
   (`grep -oE '^\| *\[[0-9]+\]' Bibliografía.md`): estuvo desfasado en `leader.md` diciendo `[11]`
   cuando ya iba por el `[57]`, y ese es justo el fichero que despacha.
   Importa porque `[2]` (Anderson 1980) y `[3]` (Denning 1987) son las que más se citan al redactar
@@ -326,4 +325,14 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
   `Figura <capítulo>.<orden>`, en series **contiguas y sin duplicados**: `2.1`–`2.5`, `4.1`–`4.7` y
   `5.1`–`5.12` (el `2.1`–`2.4` que decía este fichero **ya era falso antes** de la Tanda 28) y **se llaman por número desde la
   prosa**, que es lo que les da referencia cruzada al volcarlas al `.docx`.
+- **Referenciar por TÍTULO, nunca por `fichero:línea`.** Al remitir a una sede dentro de una nota,
+  un script o un fichero de seguimiento, se cita el **título de la sección, el encabezado o un
+  fragmento literal del texto**, no el número de línea. Los números de línea **caducan en cuanto
+  alguien edita el fichero por encima**, y este proyecto ya ha mandado agentes a corregir líneas
+  que habían dejado de existir: el 2026-08-18 se contaron **doce ocurrencias en una sola sesión**,
+  ocho de ellas por esta causa —incluida la vez que el desfase mordió al propio bloque que lo
+  denunciaba, cuyas referencias nacieron desplazadas **+456 líneas** al insertarse él mismo al
+  inicio de `## Abiertas`—. Un `fichero:línea` solo es admisible como **pista auxiliar junto al
+  título**, nunca como única referencia, y quien lo lea **debe localizar el destino por contenido
+  antes de editarlo**.
 - **No inventar rutas:** si se necesita una ruta al dataset o a los resultados, usar las hardcodeadas en los scripts o preguntar al usuario.

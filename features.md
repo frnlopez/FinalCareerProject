@@ -168,7 +168,16 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 >
 > ### ⛔ CONTADOR GLOBAL DE CITAS — el dato con riesgo real de este fichero
 >
-> **ESTADO VIGENTE A 2026-08-17, DESPUÉS DEL PASE EN SERIE DEL `researcher` — contado contra disco
+> **ESTADO VIGENTE A 2026-08-18, DESPUÉS DEL SEGUNDO PASE EN SERIE DEL `researcher` (TANDA 30) —
+> contado contra disco por el hilo principal y por el `researcher`, las dos cuentas coinciden:
+> `Bibliografía.md` tiene **77 FILAS**, rango `[1]`–`[8]` y `[10]`–`[78]`, con **`[9]` SIGUE
+> QUEMADA** (retirada sin renumerar). **EL PRIMER `[n]` LIBRE ES EL `[79]`.** El alta nueva de la
+> Tanda 30 es **`[78]`** Storkey (cap. 1, pp. 3-28), al desdoblar `[76]`. **Breunig et al. (2000)
+> NO se dio de alta: ya existía como `[75]` desde la Tanda 14**, y el `researcher` lo verificó
+> contra Crossref antes de escribir. **Todo lo que este fichero diga más abajo sobre «76 filas» o
+> «primer libre `[78]`» es TRAZA HISTÓRICA, no recuento vigente.**
+>
+> **Estado a 2026-08-17 — SUPERADO, se deja como traza: contado contra disco
 > por el `researcher` y RECONTADO al cerrar, las dos cuentas coinciden: `Bibliografía.md` tiene
 > **76 FILAS**, rango `[1]`–`[8]` y `[10]`–`[77]`, con **`[9]` SIGUE QUEMADA** (retirada sin
 > renumerar). **EL PRIMER `[n]` LIBRE ES EL `[78]`.** Las dos altas nuevas del pase son
@@ -456,35 +465,27 @@ vuelva a despachar**: el detalle está en `## Cerradas`, en las filas del 2026-0
 
 ## Abiertas
 
-### 📊 TRIAJE DE LAS FICHAS ABIERTAS — RECALCULADO el 2026-08-18 tras la TANDA 28
+### 📊 TRIAJE DE LAS FICHAS ABIERTAS — CRITERIO (sin cifras, 2026-08-18)
 
 **Motivo del apunte:** Francisco preguntó por qué no se despachan de golpe todas las fichas
-abiertas. La respuesta es que **no son trabajo homogéneo**. **Este bloque es un RECÁLCULO contra
-disco:** su versión anterior se escribió hoy mismo y quedó obsoleta en horas, porque la **TANDA 28**
-(`896c60f`, estampado `04dab7a`) cerró fichas que el bloque seguía contando como abiertas. **Las
-cifras de abajo se han recontado sobre el propio documento, no derivado de las del bloque viejo.**
+abiertas. La respuesta es que **no son trabajo homogéneo**.
 
-**Inventario de `## Abiertas`, contado bullet a bullet: 54 bullets-ficha — 27 con `[ ]`, 1 con
-`[~]` y 26 con `[x]`.** Reparto de los 27 `[ ]`:
+**Este bloque ya NO lleva recuentos, por decisión de Francisco del 2026-08-18.** Sus cifras
+caducaron en horas dos veces el mismo día, así que aquí queda **solo el criterio de clasificación**.
+**El recuento se hace contra disco cuando se necesite, no se arrastra de aquí.** Un inventario
+numérico escrito en presente es una trampa.
 
-> ⚠️ **Estas cifras son del recuento tras la TANDA 28 y la TANDA 29 ya las movió** (2026-08-18): las
-> **tres altas de la TANDA 28** —tercera sede del `52`, el `.png`/`.svg` del diagrama y el cosmético
-> de `Abstract.md`— pasaron a `[x]`, así que el reparto real es **24 `[ ]` / 1 `[~]` / 29 `[x]`**, con
-> **A=14** y **C=6**. **No se reescribe el bloque:** el recuento se hace contra disco cuando se
-> necesite, no se arrastra de aquí. Es la enésima confirmación de que un inventario escrito en
-> presente **caduca en horas**.
-
-**A. Bloqueadas en una decisión de Francisco (o en su máquina) — 15 fichas. Ningún agente puede
-ejecutarlas.** Por título: «Edición de `[8]` Stallings: 4.ª (2018) vs 5.ª (2023)»; «Versión, fecha y
+**A. Bloqueadas en una decisión de Francisco (o en su máquina). Ningún agente puede
+ejecutarlas.** Ejemplos por título: «Edición de `[8]` Stallings: 4.ª (2018) vs 5.ª (2023)»; «Versión, fecha y
 URL del PDF de la CCN-STIC-401 `[10]`»; «Página exacta dentro del cap. 1 de `[76]` (Storkey)»;
 «Metadatos de `[26]` (Roesch, LISA'99) contra la fuente viva»; «¿Recuperar la frase sobre Anderson
 en `1.2:14`?»; «5 de las 47 citas colgantes NO se han podido reconstruir»; «`2.1.5:114` (MAE frente
 a RMSE) — el capítulo del marcador NO cuadra»; «`2.1.4:77` (LOF) — «Hastie, cap. 14» no trata LOF»;
 «Reserva menor sobre `2.1.4:46` y `:51` (k-NN) apuntando a Géron cap. 3»; «La deriva de
 `evaluacion.py` quedó corregida en 2 de sus 4 sedes»; «`4.6:24` roza fijar alcance propio»; «`6.2`
-enlaza `[[aprendizaje-continuo-nested-learning]]`, que vive en `99 Investigación/`»; «Dos peticiones
-de Francisco de `mis-apuntes-del-informe.md` quedan RESUELTAS por esta tanda» (solo falta que él lo
-dé por bueno); ~~«`03_orquestacion_agentes.png` y `.svg` quedan DESFASADOS respecto al `.mmd`»~~
+enlaza `[[aprendizaje-continuo-nested-learning]]`, que vive en `99 Investigación/`»; ~~«Dos peticiones
+de Francisco de `mis-apuntes-del-informe.md` quedan RESUELTAS por esta tanda»~~ **— CERRADA el
+2026-08-18: Francisco la dio por buena**; ~~«`03_orquestacion_agentes.png` y `.svg` quedan DESFASADOS respecto al `.mmd`»~~
 **— YA NO PERTENECE A ESTE GRUPO: CERRADA el 2026-08-18 en la Tanda 29.** Se fichó como bloqueada
 «en la máquina de Francisco» dando por hecho que `mermaid-cli` no estaba disponible desde el
 harness; **no se comprobó, y era falso** (`npx` 10.9.2). Los dos binarios se regeneraron en 40
@@ -498,19 +499,21 @@ Son de cuatro clases: (1) datos bibliográficos que **no se pueden establecer si
 (2) **autorizaciones de escritura** que no están concedidas; (3) **decisiones de contenido**;
 (4) **una dependencia de herramienta ausente del harness**. Despacharlas no adelantaría nada.
 
-**B. Informativas — 4 fichas. No hay nada que ejecutar.** «Asimetría de remedio entre dos informes
+**B. Informativas. No hay nada que ejecutar.** «Asimetría de remedio entre dos informes
 de la misma tanda»; «Anotación de MÉTODO, no defecto: cómo se verificó la intocabilidad de los
 artefactos»; «Los cuatro informes dejan un `> [!todo]` cada uno, y son correctos»; «Anotación de
-MÉTODO, no defecto: el `auditor-ml` no puede calcular `md5`». Están abiertas porque **solo Francisco
-las borra**, no porque falte trabajo.
+MÉTODO, no defecto: el `auditor-ml` no puede calcular `md5`». Estaban abiertas porque **solo
+Francisco las borra**, no porque faltara trabajo — **las cuatro quedaron CERRADAS el 2026-08-18 con
+su autorización**, y dos de ellas eran **la misma anotación duplicada**. Se conservan como ejemplo
+del criterio: el grupo B es una categoría, no un inventario.
 
-**C. Ejecutables por agente — 8 fichas, y NO todas son sustancia.** Mecánicas o de vigilancia:
+**C. Ejecutables por agente, y NO todas son sustancia.** Mecánicas o de vigilancia:
 «La celda de `[76]` en `Bibliografía.md` se contradice a sí misma» (solo `researcher`); «Tercera
 sede del `52` sin tocar, y con una referencia `fichero:línea` desfasada dentro»; «Cosmético:
 `Abstract.md:15` pide guiones — «Machine-learning-based»»; «`features.md` citaba `3.3:42` como sede
 pendiente; en disco es `3.3:29` y ya está resuelta» (vigilancia del patrón, no acción); «PDF sin
 acceso institucional — reabrir si Francisco consigue acceso» (bloqueada en el acceso, no en un
-agente). Y las **tres de sustancia real**, ninguna caducada — verificado contra disco:
+agente). Y las **de sustancia real**, ninguna caducada — verificado contra disco:
 - **«`1.4`: qué conceptos de IA entran de verdad en el capítulo 2, y resúmenes de capítulo demasiado
   escuetos»:** su **punto 2** lo cubre la Fase B, pero su **punto 1** **sigue vivo**, tiene
   **ALCANCE NO CERRADO** y es una **decisión de contenido que no puede tomar un agente**. Además
@@ -521,44 +524,19 @@ agente). Y las **tres de sustancia real**, ninguna caducada — verificado contr
 - **«Revisión del profesor: simplificar, unificar y desduplicar del capítulo 3 en adelante»:**
   sustancia, y también con **alcance no cerrado**.
 
-**D. Lo que el recuento de `[ ]` NO cubre — 1 ficha más.** El triaje cuenta bullets `[ ]`, y con eso
-se queda fuera un `[~]` con trabajo vivo: **«Seis afirmaciones del vault que la TANDA 7 dejó
+**D. Lo que un barrido de `[ ]` NO cubre.** El triaje mira bullets `[ ]`, y con eso
+se queda fuera algún `[~]` con trabajo vivo: **«Seis afirmaciones del vault que la TANDA 7 dejó
 desfasadas»** —cinco cerradas, **queda viva la 5**: los números de línea de **T25** están
 desplazados y hay que localizarlos **por contenido, no por línea**—. Es **ejecutable**, y es otra
 manifestación del patrón del `fichero:línea` desfasado. **Un `[~]` o un `[x]` que declara trabajo
 vivo en su cuerpo es invisible a `grep '^- \[ \]'`: ese es el fallo de método que este apartado
 cubre.**
 
-**Qué cifras cambiaron respecto a la versión anterior de este bloque, y por qué.** No es que el
-recuento original fuera arbitrario: **la TANDA 28 cerró seis de las fichas que contaba**, más las
-que ya había cerrado la TANDA 27 y el pase en serie del `researcher`.
-- **Total de bullets: 51 → 54.** Suben 3 porque la TANDA 28 dio de alta sus **tres residuos**
-  declarados (tercera sede del `52`, el `.png`/`.svg` del diagrama y el cosmético de `Abstract.md`).
-- **`[ ]`: 35 → 27.** Once fichas pasaron de `[ ]` a `[x]` y entraron 3 nuevas.
-- **`[~]`: 2 → 1** y **`[x]`: 14 → 26** (el recuento viejo de `[x]` estaba además corto: se ha
-  contado de nuevo, no arrastrado).
-- **Grupo A: 21 → 15.** Salen, **verificadas una a una en `## Cerradas` con el hash `896c60f`**:
-  «Dos figuras duplicadas»; «`03 Desarrollo/` SIGUE EXISTIENDO en disco, vacía»; **las dos** de
-  `resumen-de-decisiones.md` («contradicho EN SILENCIO por el ciclo de Código del 2026-08-17» y
-  «`:570-571` quedó contradicho por esta misma tanda»); y «`next-steps.md:493` mantiene
-  `dos ~45,9k · probe ~11,7k · r2l ~1,0k`». Entra el `.png`/`.svg` del diagrama.
-- **Grupo B: 4 → 4.** Sin cambios: nadie las cierra salvo Francisco.
-- **Grupo C: 10 → 8.** Se cierran «erratas de estilo en `1.1`» y **`[54]` Molnar** (TANDA 27,
-  `5e6bccc`), el **diagrama de agentes** y **Preliminares** (`896c60f`); entran las dos mecánicas
-  nuevas de la TANDA 28.
-- **Corrección de clasificación:** los **Preliminares (Fase 7)** los contaba el bloque viejo en el
-  grupo **C**, y ahí estaban bien; lo que estaba mal era darlos por pendientes. **Constan CERRADOS
-  POR COMPLETO** en `## Cerradas` con `896c60f`, título fijado incluido.
-- **Grupo D: 3 → 1.** El `[~]` de «`03 Desarrollo\` está vacía y solo falta borrar la carpeta»
-  **está cerrado** (`896c60f`: la carpeta está borrada de verdad), y **T23** también, en el pase en
-  serie del `researcher` (`5ebf8f9`). Las **seis** fichas que el encargo señalaba constan **todas**
-  cerradas en disco: **ninguna quedó sin verificar.**
-
 **Conclusión de método, que no cambia:** «estaba todo resuelto» es **cierto en lo que importa** —los
 capítulos 1 a 6 están redactados y el track de código está cerrado—. Lo que queda abierto **no es
-contenido faltante**: son **19 fichas de 27 que no son despachables por construcción**
-(15 decisiones + 4 informativas), y de las 8 restantes las **tres de sustancia real** tienen **las
-tres el ALCANCE NO CERRADO** y exigen **`grill-me` con Francisco antes de tocar una sola nota**. Por
+contenido faltante**: la mayor parte **no es despachable por construcción** (decisiones de Francisco
+e informativas), y de lo ejecutable, las fichas **de sustancia real** tienen **el ALCANCE NO
+CERRADO** y exigen **`grill-me` con Francisco antes de tocar una sola nota**. Por
 tanto lo despachable HOY sin interrogatorio previo es **solo mecánica**: la celda de `[76]` en
 `Bibliografía.md`, la tercera sede del `52`, el cosmético de `Abstract.md:15` y la ficha de
 vigilancia del `3.3:42`. El cuello de botella del proyecto **ya no es capacidad de agente: son las
@@ -672,13 +650,9 @@ decisiones de Francisco y la bibliografía en Zotero.**
   más fácil» (sintaxis rota). **Fichada, no arreglada**: no estaba en el alcance de la Fase B y **no se
   abre alcance por cuenta propia**.
 
-- [ ] 🟢 **Dos peticiones de Francisco de `mis-apuntes-del-informe.md` quedan RESUELTAS por esta tanda** · Informe · **verificar con Francisco**
-  Alta el **2026-08-18**. `mis-apuntes-del-informe.md:11` («ese resumen de cada capítulo es
-  excesivamente escueto, ofrecer una propuesta más completa») lo cumple la **reescritura de `1.4`**; y
-  `:9` («en el 1.4 digo que el capítulo 2 son 3 bloques… ¿qué conceptos de IA estoy incluyendo?
-  ¿ninguno?») queda contestado: **`1.4:14` nombra ya los tres bloques** y el vault **sí tiene** el
-  bloque de IA, con `2.3.1`, `2.3.2` y `2.3.3`. **Queda para que Francisco lo dé por bueno**: no se
-  marca aceptada.
+> **El 🟢 «Dos peticiones de Francisco de `mis-apuntes-del-informe.md` quedan RESUELTAS por esta
+> tanda» queda CERRADO el 2026-08-18: Francisco dio el visto bueno**, que era lo único que faltaba.
+> Su ficha vive ya en `## Cerradas`.
 
 > **El 🟡 «El campo `estado:` del frontmatter está sin mantener y MIENTE» queda CERRADO en la TANDA 22**
 > (2026-08-18): resincronizadas **26 notas** de `borrador` a `redactada`. Su ficha vive ya en
@@ -725,6 +699,50 @@ decisiones de Francisco y la bibliografía en Zotero.**
   `signature-based` ya estaba bien. **El fichero vive en `00 Preliminares/`, no en la raíz del
   vault.**
 
+### Altas de la TANDA 30 — 2026-08-18
+
+> **Seis fichas: tres decisiones del barrido de `## PRÓXIMOS PASOS` que nunca estuvieron en disco,
+> más los tres residuos declarados de la tanda.** **Ninguna es bloqueante** y **ninguna mueve una
+> cifra publicada.** **Fichar no es resolver: aquí no se ha corregido nada.**
+
+- [ ] 🟡 **Cómo se fichan las sub-tareas: T20 nunca tuvo ficha propia** · Ninguno · **decide Francisco**
+  Alta el **2026-08-18**, del barrido de `## PRÓXIMOS PASOS`. El propio fichero admite que **T20 vive
+  como viñeta dentro de T9**, mientras **dos bloques distintos la nombran como tarea independiente**.
+  No es un error de contenido: es que **no hay convención escrita** sobre cuándo una sub-tarea gana
+  ficha propia. **Fichada, no resuelta.**
+
+- [ ] 🟡 **El callout «Punto actual» de `00 Índice TFG.md` está fechado el 2026-07-16 y no menciona `A.3`** · Informe · **decide Francisco**
+  Alta el **2026-08-18**, del barrido de `## PRÓXIMOS PASOS`, donde quedó «a criterio de Francisco» y
+  **nunca se llevó a `## Abiertas`**. **Verificar en disco antes de actuar**, por el precedente del
+  `mermaid-cli`.
+
+- [ ] 🟡 **La decisión de no versionar `APUNTES SOBRE CS229 STANFORD ML LECTURES/` solo vive en `## PRÓXIMOS PASOS`** · Ninguno · **decide Francisco**
+  Alta el **2026-08-18**, del barrido de `## PRÓXIMOS PASOS`. Es **una decisión de diseño fuera de su
+  sede**: `resumen-de-decisiones.md` no la recoge. **Y ese fichero lo escribe el hilo principal con
+  Francisco delante**, así que ningún agente puede trasladarla por su cuenta.
+
+- [ ] 🟠 **Grupo IV (puntos 18, 19 y 20): el `grill-me` conjunto de `1.4` + densidad de `2.1` + revisión del profesor** · Informe · **NO EJECUTABLE POR NINGÚN AGENTE — es un interrogatorio con Francisco**
+  Alta el **2026-08-18**. Es **lo único de sustancia que queda** tras la TANDA 30. Agrupa las tres
+  fichas de alcance no cerrado del grupo C del triaje —«`1.4`: qué conceptos de IA entran de verdad en
+  el capítulo 2», «`2.1` · coherencia y densidad del guion teórico» y «Revisión del profesor:
+  simplificar, unificar y desduplicar del capítulo 3 en adelante»—, que **convergen** y por eso se
+  interrogan juntas. Francisco ordenó el **2026-08-12** que la de `1.4` se ejecute **la última**.
+
+- [ ] 🟡 **La nota del `bin_accuracy` 0,8605 quedó registrada AL FINAL DE H-6, y el `auditor-ml` dijo que no es H-6** · Informe · **decide Francisco**
+  Alta el **2026-08-18**, reserva del `leader` sobre el **punto 12** de la TANDA 30. El auditor fue
+  explícito en que la decisión de etiquetar el `bin_accuracy` como **cifra de comparabilidad externa,
+  no de titular**, **no es H-6 y no debían fundirse**; el implementador la escribió como **nota fechada
+  al final de H-6**, y **la ubicación invita justo a la confusión que el auditor señalaba**.
+  **Cosmético y reversible:** decide Francisco si se mueve a decisión propia. **La cifra es correcta y
+  no se toca**: `metricas_hibrido.csv`, valor real **0.860451**.
+
+- [ ] 🟡 **Seis entradas de `Bibliografía.md` quedan SIN USO en el texto — rompe a propósito la dirección inversa de T16** · Informe · **decide Francisco**, ejecuta `researcher`
+  Alta el **2026-08-18**, dejada escrita por el `researcher` en su ciclo propio. Es **efecto esperado y
+  declarado** de dos cosas del ciclo A: la **retirada de las cinco afirmaciones colgantes
+  irreconstruibles** y el **desdoble de `[76]`**. **No es un error**: T16 se cerró por agotamiento
+  sobre la dirección «cita → entrada», y esto afecta a la inversa. **Decidir: retirar las seis
+  entradas o conservarlas como bibliografía consultada.**
+
 ### Altas del pase en serie del `researcher` — 2026-08-18
 
 > **Cinco decisiones que SOLO puede tomar Francisco, más un 🟡 de coherencia.** El `researcher`
@@ -737,7 +755,7 @@ decisiones de Francisco y la bibliografía en Zotero.**
 > `[10]`–`[77]`, CERO altas, `[9]` sigue quemada, ningún `[n]` renumerado. El primer libre sigue
 > siendo el `[78]`.**
 
-- [ ] 🟡 **Edición de `[8]` Stallings: 4.ª (2018) vs 5.ª (2023)** · Informe · **BLOQUEADA — decide Francisco, con el libro delante**
+- [x] 🟡 **Edición de `[8]` Stallings: 4.ª (2018) vs 5.ª (2023)** · **CERRADA el 2026-08-18 en la TANDA 30 (ciclo A, `researcher` en ciclo propio): APLICADA la 5.ª ed., Pearson 2023** en `Bibliografía.md`. Su fila vive ya en `## Cerradas` · Informe · **decide Francisco, con el libro delante**
   Alta el **2026-08-18**. La entrada queda **⚠️ EDICIÓN NO ESTABLECIDA**. Las dos ediciones coexisten
   (Pearson 2018, ISBN 978-0-13-479410-5 · Pearson 2023, ISBN 978-0-13-809167-5) y **el texto del TFG no
   discrimina**: los tres usos de `2.2.1` viven en el **cap. 1, §1.1**, sección presente en todas las
@@ -751,28 +769,28 @@ decisiones de Francisco y la bibliografía en Zotero.**
   2026-08-17**, que fijaba la 4.ª ed. de 2018 «a lo que hay en disco» (ficha P5, más abajo): manda la
   del 2026-08-18. Al aplicarla, **actualizar también el aviso de `CLAUDE.md`** que la declara sin fijar.
 
-- [ ] 🟡 **Versión, fecha y URL del PDF de la CCN-STIC-401 `[10]`** · Informe · **BLOQUEADA — decide Francisco**
+- [x] 🟡 **Versión, fecha y URL del PDF de la CCN-STIC-401 `[10]`** · **CERRADA el 2026-08-18 en la TANDA 30 (ciclo A):** Francisco aceptó la recomendación y la entrada queda apuntando a la **ficha oficial de la guía, SIN versión ni fecha** — no se inventa ninguna de las dos. Su fila vive ya en `## Cerradas` · Informe · **decidió Francisco**
   Alta el **2026-08-18**. El enlace ya **no** apunta al término suelto del visor HTML, sino a la **ficha
   oficial de la guía**. Lo que **no se ha podido verificar, y está marcado**: `WebFetch` da **403**, el
   navegador real da **403 contra un test anti-bot** y la ruta del PDF da **503**. **No se ha inventado
   ninguna URL de descarga.** **Versión y fecha siguen sin fijar** (un comunicado del CCN-CERT habla de
   1.069 términos: dato de segunda mano y sin verificar).
 
-- [ ] 🟡 **Página exacta dentro del cap. 1 de `[76]` (Storkey)** · Informe · **BLOQUEADA — decide Francisco**
+- [x] 🟡 **Página exacta dentro del cap. 1 de `[76]` (Storkey)** · **CERRADA el 2026-08-18 en la TANDA 30 (ciclo A) por la vía del DESDOBLE, que Francisco aceptó:** se dio de alta **`[78]` Storkey, cap. 1, pp. 3-28** y `5.1:86` quedó repuntada a **`[78, pp. 3-28]`**. El rango verificado basta como localizador; **la página exacta no se inventa**. Su fila vive ya en `## Cerradas` · Informe · **decidió Francisco**
   Alta el **2026-08-18**. **El rango del capítulo SÍ está establecido y verificado: pp. 3-28**, contra el
   registro institucional del autor (University of Edinburgh Research Explorer), coincidente con MIT
   Press Scholarship Online. **El punto exacto de la afirmación dentro de ese rango, no**: MIT Press
   devuelve 403. Anotado de paso: **el desdoble de `[76]` sigue disponible** si Francisco acepta
   repuntar `5.1:86` a un `[78]` — con los datos ya en la fila es un cambio de dos líneas.
 
-- [ ] 🟡 **Metadatos de `[26]` (Roesch, LISA'99) contra la fuente viva** · Informe · **BLOQUEADA — decide Francisco**
+- [x] 🟡 **Metadatos de `[26]` (Roesch, LISA'99) contra la fuente viva** · **CERRADA el 2026-08-18 en la TANDA 30 (ciclo A):** Francisco **acepta los metadatos de la reconstrucción previa**, que es lo que la ficha pedía decidir; USENIX sigue devolviendo 403 y **no se reinventa nada**. Su fila vive ya en `## Cerradas` · Informe · **decidió Francisco**
   Alta el **2026-08-18**. USENIX devuelve **403** a todo acceso automático, PDF e índice. **Se conservan
   los metadatos de la reconstrucción previa y NO se han reinventado.** Anotada también la aparente
   discrepancia de fecha, que **no es un error**: la nota dice **1998** (publicación de la herramienta) y
   el artículo es de **1999**; ambas son correctas, y la nota lo explica en un callout sin reescribir la
   prosa.
 
-- [ ] 🟡 **¿Recuperar la frase sobre Anderson en `1.2:14`?** · Informe · **BLOQUEADA — decide Francisco**
+- [x] 🟡 **¿Recuperar la frase sobre Anderson en `1.2:14`?** · **CERRADA el 2026-08-18 en la TANDA 30 (ciclo A): la frase QUEDA RETIRADA**, por decisión de Francisco. No se recupera sin aval de nivel 1, y **`[78]` se consumió en otra cosa** (Storkey). Su fila vive ya en `## Cerradas` · Informe · **decidió Francisco**
   Alta el **2026-08-18**. La afirmación de que «la literatura del área señala de forma recurrente a
   Anderson (1980) como el punto de partida de la detección de intrusiones» **se retiró del cuerpo** por
   falta de aval de nivel 1: **Khraisat *et al.* 2019 `[31]` no menciona a Anderson** (verificado sobre
@@ -780,7 +798,7 @@ decisiones de Francisco y la bibliografía en Zotero.**
   10.1109/MAHC.2015.41, metadatos verificados en Crossref) **está tras muro de pago**. **Basta con
   acceso al Yost o a otra revisión de nivel 1 para recuperarla: sería la PRIMERA ALTA del `[78]`.**
 
-- [ ] 🟡 **La celda de `[76]` en `Bibliografía.md` se contradice a sí misma** · Informe · `researcher`
+- [x] 🟡 **La celda de `[76]` en `Bibliografía.md` se contradice a sí misma** · **CERRADA el 2026-08-18 en la TANDA 30 (ciclo A):** retirada la marca antigua en el pase del `researcher`, el único agente que escribe ese fichero. Su fila vive ya en `## Cerradas` · Informe · `researcher`
   Alta el **2026-08-18**, detectada al verificar el pase. La celda contiene **a la vez** la marca antigua
   «⚠️ Página exacta NO ESTABLECIDA … el rango del capítulo no se ha podido verificar» **y, más abajo, el
   rango pp. 3-28 ya verificado**. La marca vieja **no se retiró**: solo se dice al final que «decae para
@@ -793,7 +811,7 @@ decisiones de Francisco y la bibliografía en Zotero.**
 > `auditor-ml` (dos hallazgos 🟠 **no aplicados, y no por descuido**) y de lo que T17 dejó vivo al
 > cerrarse. **Fichar no es resolver: aquí no se ha corregido nada.**
 
-- [ ] 🟠 **La deriva de `evaluacion.py` quedó corregida en 2 de sus 4 sedes** · Informe · **decide Francisco / hilo principal**
+- [x] 🟠 **La deriva de `evaluacion.py` quedó corregida en 2 de sus 4 sedes** · **CERRADA el 2026-08-18 en la TANDA 30 (ciclo B, punto 15): Q3 de `resumen-de-decisiones.md` puesta al día por NOTA FECHADA**, y **`CLAUDE.md` YA ESTABA CORRECTA en disco** —su fila de `evaluacion.py` describe el contrato post-T1 con `metricas_tiempo` y la maquinaria de esquema—, verificado por el hilo principal. **Es la decimotercera ocurrencia del patrón de registro caducado en la sesión.** Su fila vive ya en `## Cerradas` · Informe · **decide Francisco / hilo principal**
   Alta el **2026-08-18**. T17 punto 2 enumeraba cuatro sedes: `CLAUDE.md`, `next-steps.md`,
   `resumen-de-decisiones.md` y `Guia_ML`. **La TANDA 26 hizo las dos últimas citadas.** **Siguen con el
   contrato pre-T1:** la fila de `evaluacion.py` en **`CLAUDE.md:64`** —«módulo común de métricas y
@@ -811,25 +829,13 @@ decisiones de Francisco y la bibliografía en Zotero.**
   existen ya en disco desde hoy.** Una decisión cerrada **no se contradice en silencio**. **Vía propuesta,
   la de siempre: nota fechada sin reescribir el texto previo. Requiere autorización de Francisco.**
 
-- [ ] 🟡 **Asimetría de remedio entre dos informes de la misma tanda** · Informe · **informativa**
-  Alta el **2026-08-18**. Ante el mismo defecto —la frase caducada sobre `6.2`—,
-  `aprendizaje-continuo:25` **conservó** la frase y la corrigió con un callout `[!info]` encima, y
-  `clasificadores-tabulares:30-31` la **reescribió en línea**. **Las dos son honestas**; solo obliga a leer
-  dos veces. El cuerpo de `aprendizaje-continuo` sigue diciendo «material para que Francisco escriba 6.2»
-  en `:423` y `:529`, **cubierto por el callout**.
-
-- [ ] 🟡 **Anotación de MÉTODO, no defecto: cómo se verificó la intocabilidad de los artefactos** · — · **informativa**
-  Alta el **2026-08-18**. El `auditor-ml` **sigue sin poder calcular hashes** (su definición no incluye
-  Bash), así que lo verificó **por contenido y por sello de procedencia**, no por `md5`. Es la **segunda
-  vez** que se registra (la primera, TANDA 24). **Queda escrito cómo se verificó para que nadie lo lea como
-  comprobación de hash.**
-
-- [ ] 🟡 **Los cuatro informes dejan un `> [!todo]` cada uno, y son correctos** · — · **informativa**
-  Alta el **2026-08-18**. Marcan **propuestas del informe sin decisión registrada** en lugar de
-  inventarlas: la **etiqueta del `bin_accuracy` 0,8605 frente a H-6** (verificado: esa etiqueta **no está
-  decidida en ningún sitio del repo**), los **10 candidatos de la tabla B**, la **fusión de peldaños de
-  `6.2`**, el **análisis D1→D2** y la **dilución del término «híbrido»**. **No se resuelven aquí: son
-  decisiones de contenido de Francisco.**
+> **Las CUATRO fichas informativas quedan CERRADAS el 2026-08-18, autorizadas por Francisco** —
+> «Asimetría de remedio entre dos informes de la misma tanda», «Anotación de MÉTODO, no defecto:
+> cómo se verificó la intocabilidad de los artefactos», «Los cuatro informes dejan un `> [!todo]`
+> cada uno, y son correctos» y «Anotación de MÉTODO, no defecto: el `auditor-ml` no puede calcular
+> `md5`». Sus fichas viven ya en `## Cerradas`. **Dejar escrito: eran TRES anotaciones distintas,
+> no cuatro** — las dos de MÉTODO son **la misma anotación fichada dos veces**. Defecto de
+> registro, y el proyecto tiene el patrón de duplicar fichas.
 
 ### Altas de la TANDA 25 — 2026-08-18
 
@@ -865,17 +871,15 @@ decisiones de Francisco y la bibliografía en Zotero.**
 > Dos fichas, **ninguna bloqueante**, **ninguna mueve una cifra publicada**. **Fichar no es resolver:
 > aquí no se ha corregido nada.**
 
-- [ ] 🟡 **`4.6:24` roza fijar alcance propio** · Informe · **decide Francisco**
+- [x] 🟡 **`4.6:24` roza fijar alcance propio** · **CERRADA el 2026-08-18 en la TANDA 30 (ciclo B, punto 13): `4.6` reescrita.** El capítulo 5 aporta el **respaldo empírico** del veredicto H1 y **la sede canónica SIGUE EN §4.3.5** — el primer pase cedía la sede al capítulo 5 y habría creado un **bucle de remisiones** con `5.1`, `5.2` y `5.4`, que remiten de vuelta a `4.3.5`; corregido en el mismo ciclo. Su fila vive ya en `## Cerradas` · Informe · **decidió Francisco**
   Alta el **2026-08-18**. La nota declara «no fijar cifras ni alcance por cuenta propia» y **a
   continuación enuncia el veredicto cualitativo** «doble efecto beneficioso» / «mejor generalización».
   El `auditor-ml` lo dejó como **informativo**: es **criterio de Francisco** si se aplica el criterio
   estricto. **Fichada, no tocada.**
 
-- [ ] 🟡 **Anotación de MÉTODO, no defecto: el `auditor-ml` no puede calcular `md5`** · — · **informativa**
-  Alta el **2026-08-18**. Su definición **no incluye Bash**, así que la **intocabilidad de los
-  artefactos** de la TANDA 24 la verificó **por contenido**, no por hash: las **cuatro tablas de
-  métricas** siguen con **`semilla=42`** y **`commit=1163c90`** en todas sus filas, **sin filas del
-  barrido**. Queda escrito **cómo se verificó** para que nadie lo lea como una comprobación de hash.
+> **El 🟡 «Anotación de MÉTODO, no defecto: el `auditor-ml` no puede calcular `md5`» queda CERRADO
+> el 2026-08-18** con las otras tres informativas. **Era un DUPLICADO** de «cómo se verificó la
+> intocabilidad de los artefactos». Su ficha vive ya en `## Cerradas`.
 
 ### Altas de la TANDA 22 — 2026-08-18
 
@@ -948,7 +952,7 @@ decisiones de Francisco y la bibliografía en Zotero.**
   mecanismo exacto** por el que dos agentes acabarían asignando el mismo `[n]`. **Lo toca SOLO el
   `researcher`**, en el pase en serie.
 
-- [ ] 🟡 **`6.2` enlaza `[[aprendizaje-continuo-nested-learning]]`, que vive en `99 Investigación/`** · Informe · **confirmar con Francisco**
+- [x] 🟡 **`6.2` enlaza `[[aprendizaje-continuo-nested-learning]]`, que vive en `99 Investigación/`** · **CERRADA el 2026-08-18 en la TANDA 30 (ciclo B, punto 14):** wikilink **retirado** y el párrafo **autocontenido**. **El `auditor-ml` encontró el MISMO defecto en `5.4`** —wikilink a `[[benchmark-comparativo-nsl-kdd]]`, también en `99 Investigación/`—, igualmente retirado y autocontenido: **ese fallo solo se ve auditando las notas juntas**. Su fila vive ya en `## Cerradas` · Informe · **decidió Francisco**
   Alta el **2026-08-17**. Wikilink a un informe: **permitido**, pero al volcar a Word **apunta a algo
   que no es memoria**. Confirmar si se quiere así.
 
@@ -1110,7 +1114,7 @@ decisiones de Francisco y la bibliografía en Zotero.**
 > 2026-08-17** en el pase en serie del `researcher`, junto con los **tres `[CITA: …]` vivos**. Su
 > ficha vive ya en `## Cerradas`.
 
-- [ ] 🟠 **5 de las 47 citas colgantes NO se han podido reconstruir — falta criterio de Francisco** · Informe · **decide Francisco**, ejecuta `researcher`
+- [x] 🟠 **5 de las 47 citas colgantes NO se han podido reconstruir — falta criterio de Francisco** · **CERRADA el 2026-08-18 en la TANDA 30 (ciclo A): Francisco eligió RETIRAR las cinco afirmaciones**, de las dos opciones que la ficha planteaba. Ejecutado por el `researcher` en su ciclo propio. Su fila vive ya en `## Cerradas` · Informe · **decidió Francisco**, ejecuta `researcher`
   Alta el **2026-08-15**, residuo de la reparación de las 47 citas colgantes (ver `## Cerradas`, misma
   fecha). De los 47 `[n]` que dejó colgando el pase interrumpido, **42 quedan reconstruidos y
   verificados con DOI/URL** y dados de alta en `Bibliografía.md`; **5 no se han podido reconstruir** y
@@ -2231,20 +2235,20 @@ decisiones de Francisco y la bibliografía en Zotero.**
 > propia, que es la disciplina acordada. **Ninguna es bloqueante** y **ninguna mueve una cifra
 > publicada.** **Fichar no es resolver: aquí no se ha decidido nada.**
 
-- [ ] **`2.1.5:114` (MAE frente a RMSE) — el capítulo del marcador NO cuadra** (🟡) · Informe · **decide Francisco**, ejecuta `researcher`
+- [x] **`2.1.5:114` (MAE frente a RMSE) — el capítulo del marcador NO cuadra** (🟡) · **CERRADA el 2026-08-18 en la TANDA 30 (ciclo A), y NO HIZO FALTA TOCAR NADA: en disco `2.1.5:114` YA llevaba `[5, cap. 2]`**, verificado por el `researcher`. Su fila vive ya en `## Cerradas` · Informe · **decidió Francisco**, ejecuta `researcher`
   Alta el **2026-08-16**. El marcador decía «Géron, cap. 4» («Training Models») y la contraposición
   MAE/RMSE de Géron vive en el **cap. 2** («Select a Performance Measure»). **Convertido a `[5]` sin
   capítulo** en vez de trasladarlo por cuenta propia. Queda marcado como ⚠️ **NO ESTABLECIDO** en la
   fila de `[5]` de `Bibliografía.md`. **Decidir: fijar `[5, cap. 2]` o dejarlo sin localizador.**
 
-- [ ] **`2.1.4:77` (LOF) — «Hastie, cap. 14» no trata LOF; la primaria correcta sería Breunig et al. 2000** (🟡) · Informe · **decide Francisco**, ejecuta `researcher`
+- [x] **`2.1.4:77` (LOF) — «Hastie, cap. 14» no trata LOF; la primaria correcta sería Breunig et al. 2000** (🟡) · **CERRADA el 2026-08-18 en la TANDA 30 (ciclo A): el LOF queda reapuntado a `[75]`, SIN consumir número.** **Breunig et al. (2000) YA EXISTÍA como `[75]`** desde la Tanda 14; el `researcher` lo detectó por su cuenta y lo verificó contra Crossref **antes** de escribir — darla de alta habría **duplicado** la referencia. Su fila vive ya en `## Cerradas` · Informe · **decidió Francisco**, ejecuta `researcher`
   Alta el **2026-08-16**. **Convertido a `[12]` sin capítulo.** La fuente primaria correcta es
   **Breunig, Kriegel, Ng y Sander (2000)**, SIGMOD, DOI `10.1145/335191.335388`, **propuesta pero NO
   dada de alta**: **sustituir una fuente por otra no lo decide un agente**. Mismo patrón que la
   reasignación del Isolation Forest, que sí venía con encargo escrito. **Decidir: dar de alta la
   primaria y reapuntar, o dejar `[12]` sin capítulo.**
 
-- [ ] **Reserva menor sobre `2.1.4:46` y `:51` (k-NN) apuntando a Géron cap. 3** (🟡) · Informe · **decide Francisco**, ejecuta `researcher`
+- [x] **Reserva menor sobre `2.1.4:46` y `:51` (k-NN) apuntando a Géron cap. 3** (🟡) · **CERRADA el 2026-08-18 en la TANDA 30 (ciclo A): localizador RETIRADO, la cita queda como `[5]` a secas.** La obra era correcta; lo dudoso era el capítulo, y no se sustituye por otro inventado. Su fila vive ya en `## Cerradas` · Informe · **decidió Francisco**, ejecuta `researcher`
   Alta el **2026-08-16**. El cap. 3 («Classification») **usa** k-NN en sus ejercicios pero **no
   desarrolla el aprendizaje perezoso ni las métricas de distancia** con el detalle que el texto le
   atribuye. **Dejado como estaba** y anotado en la fila de `[5]` de `Bibliografía.md`. Es el menor de
@@ -2465,6 +2469,26 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-18 | Informe | **TANDA 30 · LAS 23 DECISIONES DE FRANCISCO, APLICADAS. Francisco aceptó TODAS las recomendaciones del listado; se ejecutaron en TRES CICLOS.** **CICLO A — Grupo I, `researcher` EN CICLO PROPIO (11 puntos de bibliografía)**, como manda la regla dura de no mezclarlo con otros agentes: `Bibliografía.md`, `1.2 Preliminares`, `2.1.4`, `2.2.2`, `2.2.5`, `2.3.2`, `5.1` y el informe `99 Investigación/pase-bibliografia-2026-08-18.md`. **CICLO B — cuatro agentes en paralelo sobre ficheros disjuntos (puntos 12-15) más `auditor-ml`**: veredicto **`APTO CON CAMBIOS`, 5 hallazgos, ningún 🔴**, los cinco aplicados en una segunda tanda paralela. **Los cuatro números auditados salieron VERDADEROS contra disco: `0,8605`** (`metricas_hibrido.csv`, valor real **0.860451**), **`0,1017`**, **`56,9 %`** y el recuento de `evaluacion.py`. **CICLO C — `cronista` sobre `features.md`** (puntos 16, 21, 22): cinco fichas cerradas y **bloque de triaje reescrito SIN CIFRAS**, solo con el criterio. **Cero código, cero cómputo, cero corridas, ninguna cifra publicada movida.** **Cierra TRECE fichas** de `## Abiertas` **y deja SEIS nuevas**, ninguna bloqueante | — |
+| 2026-08-18 | Informe | **CICLO A de la TANDA 30 — EL PASE DE BIBLIOGRAFÍA, y EL CONTADOR NO SE SOLAPÓ, que era el riesgo.** **La tarea 4 se llevó el `[78]`** (Storkey, cap. 1, **pp. 3-28**, con `5.1` repuntada a **`[78, pp. 3-28]`**) y **la tarea 8 NO consumió número**, porque **Breunig et al. (2000) YA EXISTÍA como `[75]`** desde la Tanda 14: **el `researcher` lo detectó por su cuenta y lo verificó contra Crossref ANTES de escribir** — darla de alta habría **duplicado** la referencia. **`Bibliografía.md` queda en 77 filas: `[1]`–`[8]` + `[10]`–`[78]`, `[9]` sigue quemada, primer libre `[79]`. Contado en disco, no recordado** | — |
+| 2026-08-18 | Informe | **CICLO B de la TANDA 30 — puntos 12 a 15, cuatro ficheros disjuntos.** **(12)** el `bin_accuracy` **0,8605** queda **etiquetado como cifra de comparabilidad externa, NO de titular**. **(13)** `4.6` reescrita, **y el primer pase se pasó de frenada**: cedía al capítulo 5 la **sede canónica** del veredicto **H1** cuando `4.3` declara que la sede es **§4.3.5** y `5.1`, `5.2` y `5.4` remiten de vuelta allí — habría creado un **bucle de remisiones**; corregido, el capítulo 5 aporta el **respaldo empírico** y **la sede sigue en 4.3.5**. **(14)** wikilink de `6.2` a `[[aprendizaje-continuo-nested-learning]]` retirado y el párrafo autocontenido, **y el `auditor-ml` encontró el MISMO defecto en `5.4`** (`[[benchmark-comparativo-nsl-kdd]]`), igualmente retirado: **ese fallo solo se ve auditando las notas juntas**, que es para lo que existe la auditoría de tanda paralela. **(15)** **Q3 de `resumen-de-decisiones.md` puesta al día por NOTA FECHADA**, y **la otra sede, `CLAUDE.md`, YA ESTABA CORRECTA en disco** —su fila de `evaluacion.py` ya describía el contrato post-T1 con `metricas_tiempo` y la maquinaria de esquema—, verificado por el hilo principal: **decimotercera ocurrencia del patrón de registro caducado en la sesión** | — |
+| 2026-08-18 | Ninguno | **PUNTO 17 — «Referenciar por TÍTULO, nunca por `fichero:línea`» ES YA REGLA DEL PROYECTO. Ejecutado por el HILO PRINCIPAL en `CLAUDE.md`** (andamiaje, le corresponde), escrita en «Normas de trabajo». Recoge el dato que la motiva: **doce ocurrencias del patrón en una sola sesión, ocho por esta causa**, incluida la del desfase **+456** que **mordió al propio bloque que lo denunciaba**. **En el mismo pase, CONTADOR DE CITAS ACTUALIZADO** de «76 entradas, primer libre `[78]`» a **«77 entradas, `[1]`–`[8]` + `[10]`–`[78]`, primer libre `[79]`»**, **contado en disco** | — |
+| 2026-08-18 | Informe | **🟡 «Edición de `[8]` Stallings: 4.ª (2018) vs 5.ª (2023)» — CERRADA: APLICADA la 5.ª ed., Pearson 2023** en `Bibliografía.md`, en el ciclo propio del `researcher` que la ficha exigía. La decisión era de Francisco (2026-08-18) e **invertía la del 2026-08-17**; lo que faltaba era escribirla | — |
+| 2026-08-18 | Informe | **🟡 «Versión, fecha y URL del PDF de la CCN-STIC-401 `[10]`» — CERRADA:** la entrada queda como **ficha oficial de la guía, SIN versión ni fecha**. **No se inventa ninguna de las dos**: `WebFetch` da 403, el navegador real 403 anti-bot y la ruta del PDF 503 | — |
+| 2026-08-18 | Informe | **🟡 «Página exacta dentro del cap. 1 de `[76]` (Storkey)» — CERRADA POR DESDOBLE, la vía que Francisco aceptó:** alta de **`[78]` Storkey, cap. 1, pp. 3-28** y `5.1:86` repuntada a **`[78, pp. 3-28]`**. El rango estaba verificado; **la página exacta no se inventa** | — |
+| 2026-08-18 | Informe | **🟡 «Metadatos de `[26]` (Roesch, LISA'99) contra la fuente viva» — CERRADA: metadatos de la reconstrucción previa ACEPTADOS.** USENIX sigue devolviendo 403 y **no se reinventó nada**. La aparente discrepancia 1998/1999 **no es un error** y sigue explicada en su callout | — |
+| 2026-08-18 | Informe | **🟡 «¿Recuperar la frase sobre Anderson en `1.2:14`?» — CERRADA: la frase QUEDA RETIRADA.** No hay aval de nivel 1 (Khraisat *et al.* `[31]` no menciona a Anderson; Yost 2016 tras muro de pago) y **el `[78]` se consumió en Storkey** | — |
+| 2026-08-18 | Informe | **🟡 «La celda de `[76]` en `Bibliografía.md` se contradice a sí misma» — CERRADA:** retirada la marca antigua «⚠️ Página exacta NO ESTABLECIDA … el rango del capítulo no se ha podido verificar», que convivía con el rango **pp. 3-28 ya verificado**. Lo ejecutó el `researcher`, **único agente que escribe ese fichero** | — |
+| 2026-08-18 | Informe | **🟠 «5 de las 47 citas colgantes NO se han podido reconstruir» — CERRADA: Francisco eligió RETIRAR las cinco afirmaciones**, de las dos opciones que la ficha planteaba. **Efecto declarado, fichado aparte:** entre esto y el desdoble de `[76]` quedan **seis entradas de `Bibliografía.md` sin uso en el texto** | — |
+| 2026-08-18 | Informe | **🟡 «`2.1.5:114` (MAE frente a RMSE) — el capítulo del marcador NO cuadra» — CERRADA, y NO HIZO FALTA TOCAR NADA: en disco YA llevaba `[5, cap. 2]`**, verificado por el `researcher`. Registro caducado, no defecto de contenido | — |
+| 2026-08-18 | Informe | **🟡 «`2.1.4:77` (LOF) — Hastie cap. 14 no trata LOF» — CERRADA: reapuntado a `[75]`, SIN consumir número.** **Breunig et al. (2000) ya existía como `[75]`** desde la Tanda 14; el `researcher` lo verificó contra Crossref antes de escribir y **evitó una entrada duplicada** | — |
+| 2026-08-18 | Informe | **🟡 «Reserva menor sobre `2.1.4:46` y `:51` (k-NN) apuntando a Géron cap. 3» — CERRADA: LOCALIZADOR RETIRADO**, la cita queda como **`[5]` a secas**. La obra era correcta; lo dudoso era el capítulo, y no se sustituye por otro inventado | — |
+| 2026-08-18 | Informe | **🟠 «La deriva de `evaluacion.py` quedó corregida en 2 de sus 4 sedes» — CERRADA en sus dos sedes restantes:** **Q3 de `resumen-de-decisiones.md`** por **nota fechada** y **`CLAUDE.md`, que YA ESTABA CORRECTA en disco** — la ficha describía el disco al revés. **Decimotercera ocurrencia del patrón de registro caducado en la sesión** | — |
+| 2026-08-18 | Informe | **🟡 «`4.6:24` roza fijar alcance propio» — CERRADA: `4.6` reescrita.** El capítulo 5 aporta el **respaldo empírico** del veredicto H1 y **la sede canónica sigue siendo §4.3.5** — el primer pase la cedía al capítulo 5 y habría creado un **bucle de remisiones** con `5.1`, `5.2` y `5.4`; corregido en el mismo ciclo | — |
+| 2026-08-18 | Informe | **🟡 «`6.2` enlaza `[[aprendizaje-continuo-nested-learning]]`, que vive en `99 Investigación/`» — CERRADA:** wikilink retirado y párrafo **autocontenido**. **El `auditor-ml` halló el MISMO defecto en `5.4`** (`[[benchmark-comparativo-nsl-kdd]]`), también retirado y autocontenido | — |
+| 2026-08-18 | Ninguno | **Bloque «📊 TRIAJE DE LAS FICHAS ABIERTAS» DESPOJADO DE SUS CIFRAS por decisión de Francisco — sin ficha previa (carril Intervención).** Se retiran **todos los recuentos** (bullets-ficha, reparto `[ ]`/`[~]`/`[x]`, tamaños de los grupos A/B/C/D, el listado «qué cifras cambiaron» y el aviso de caducidad de la TANDA 29) y **queda solo el CRITERIO**: la clasificación **A/B/C/D** con qué significa cada grupo, las **cuatro clases de bloqueo** (datos bibliográficos no establecibles sin inventarlos · autorizaciones de escritura no concedidas · decisiones de contenido · dependencia de herramienta ausente), la regla de que **el recuento se hace contra disco cuando se necesite y no se arrastra**, la advertencia de **verificar en disco antes de fichar** con su ejemplo del `mermaid-cli` —fichado como bloqueado sin comprobarlo, y era falso—, la localización **por título y nunca por `fichero:línea`**, y que **T14 pertenece al grupo A y no al C** por la **Decisión 4 de la Fase 0**. **Motivo, escrito por el propio bloque:** sus recuentos caducaron en horas **dos veces el mismo día**. **Un inventario numérico escrito en presente es una trampa.** Los títulos de fichas citados como ejemplo se conservan. **Cero código, cero cómputo, ninguna cifra publicada movida.** Fichero tocado: **únicamente `features.md`** | — |
+| 2026-08-18 | Informe | **🟢 «Dos peticiones de Francisco de `mis-apuntes-del-informe.md` quedan RESUELTAS por esta tanda» — CERRADA: FRANCISCO LO DIO POR BUENO el 2026-08-18**, que era lo único que faltaba. `mis-apuntes-del-informe.md:11` («ese resumen de cada capítulo es excesivamente escueto») lo cumple la **reescritura de `1.4`**; `:9` («¿qué conceptos de IA estoy incluyendo?») queda contestado: **`1.4:14` nombra ya los tres bloques** y el vault **sí tiene** el bloque de IA, con `2.3.1`, `2.3.2` y `2.3.3` | — |
+| 2026-08-18 | Informe/Ninguno | **LAS CUATRO FICHAS INFORMATIVAS — CERRADAS EN BLOQUE, autorizadas por Francisco.** Son: **(1)** «Asimetría de remedio entre dos informes de la misma tanda» —ante el mismo defecto, `aprendizaje-continuo:25` conservó la frase con un callout `[!info]` y `clasificadores-tabulares:30-31` la reescribió en línea; **las dos son honestas**, solo obligan a leer dos veces—; **(2)** «Anotación de MÉTODO, no defecto: cómo se verificó la intocabilidad de los artefactos» —el `auditor-ml` **no tiene Bash**, así que lo verificó **por contenido y por sello de procedencia**, no por `md5`—; **(3)** «Los cuatro informes dejan un `> [!todo]` cada uno, y son correctos» —marcan **propuestas sin decisión registrada** en vez de inventarlas: etiqueta del `bin_accuracy` 0,8605 frente a H-6, los 10 candidatos de la tabla B, la fusión de peldaños de `6.2`, el análisis D1→D2 y la dilución del término «híbrido»; **siguen siendo decisiones de contenido de Francisco**, cerrar la ficha no las resuelve—; y **(4)** «Anotación de MÉTODO, no defecto: el `auditor-ml` no puede calcular `md5`». **DATO QUE QUEDA ESCRITO: las informativas distintas eran TRES, no cuatro.** La **(2)** y la **(4)** son **la MISMA anotación fichada dos veces** — mismo hecho (el `auditor-ml` verificó la intocabilidad de las cuatro tablas de métricas por contenido, `semilla=42` y `commit=1163c90` en todas sus filas y sin filas del barrido, porque su definición no incluye Bash). Es un **defecto de registro**, no de contenido, y **el proyecto tiene el patrón de duplicar fichas**. **Cero código, cero cómputo, ninguna cifra movida** | — |
 | 2026-08-18 | Código/Informe | **TANDA 29 · ARREGLO DE LOS RESIDUOS DE LA TANDA 28. Cinco ficheros, verificados contra `git status`** (`features.md`, `00 Preliminares/Abstract.md`, `99 Investigación/clasificadores-tabulares-y-arquitecturas-hibridas.md`, `Implementacion/diagramas/03_orquestacion_agentes.png` y `.svg`). **Cierra las TRES fichas residuales de la TANDA 28.** **(1) Bloque «📊 TRIAJE DE LAS FICHAS ABIERTAS» RECALCULADO contra disco, no contra sí mismo:** antes **51 bullets-ficha** (35 `[ ]` / 2 `[~]` / 14 `[x]`) con grupos **A=21, B=4, C=10, D=3**; ahora **54 bullets-ficha** (**27 `[ ]` / 1 `[~]` / 26 `[x]`**) con **A=15, B=4, C=8, D=1**. Las **seis** fichas cerradas en la TANDA 28 se verificaron **una por una** en `## Cerradas` con `896c60f`. El bloque **identifica ya cada ficha por TÍTULO, no por `fichero:línea`**, y se eliminó un **duplicado literal** del «Fichar no es resolver». **(2) Tercera sede del `52`:** la cifra **era CORRECTA y no se tocó** (muestras de `u2r` en D3, no características); se le quitó el `~` y se ancló a `Resultados/specialized_nsl_kdd_composicion_d3.csv`, y la referencia `firmas.py:98` —que apuntaba a hiperparámetros de HistGB, no a lo que la frase afirmaba— pasa a citar el símbolo **`K_SMOTE`** de `NSLKDDSignatureTrainer`. **(3) `Abstract.md`:** el cosmético estaba fichado **AL REVÉS** —el texto estaba **sin** guiones—; queda `Machine-learning-based`, `signature-based` ya era correcto. **(4) Diagrama de agentes CERRADO contra la previsión de que era imposible:** `npx` **sí** estaba disponible (10.9.2); `.svg` (41 KB) y `.png` (502 KB, 2352×5874) regenerados desde el `.mmd` y verificados por tipo, tamaño y fecha, con el desfase confirmado antes de actuar (`.mmd` 14:57 vs binarios del 2026-08-01); `01` y `02` no estaban desfasados. **AVISO DE MÉTODO, registrado sin adornos:** de los tres residuos fichados al cerrar la TANDA 28, **dos describían el disco al revés** y **el tercero, dado por imposible, se resolvió en 40 segundos** — **novena y décima ocurrencia del patrón de registro caducado/falso en esta misma sesión**, y la **tercera vez hoy** que muerde. **La causa no son los agentes: se fichó sin verificar en disco.** **Cero cómputo, cero corridas, ninguna cifra publicada movida.** **Pendiente de Francisco, NO tocado:** la edición de `[8]` Stallings (4.ª 2018 vs 5.ª 2023), **III.1**, **III.3** y **III.4** (las tres sin aplicar a propósito: cambian qué afirma la memoria), `Bibliografía.md` intacta a la espera de un ciclo del `researcher`, y elevar a regla del proyecto el referenciar **por título** en vez de por `fichero:línea` (exigiría escribir en `CLAUDE.md`) | `933c2ab` |
 | 2026-08-18 | Código | **🟡 «`03_orquestacion_agentes.png` y `.svg` quedan DESFASADOS respecto al `.mmd`» — CERRADA, y la ficha daba la tarea por IMPOSIBLE.** Se fichó como bloqueada en la máquina de Francisco por suponer `mermaid-cli` ausente del harness; **`npx` estaba disponible (10.9.2)**. Regenerados desde el `.mmd` el **`.svg` (41 KB)** y el **`.png` (502 KB, 2352×5874)**, verificados en disco por tipo, tamaño y fecha, con el desfase confirmado **antes** de actuar. **Residuo declarado:** el PNG salió con **`-s 3`** por escala original desconocida y pesa **menos** que el anterior (502 vs 603 KB) aun con contenido nuevo — **fijar la escala si importa la resolución del entregable**; decide Francisco | `933c2ab` |
 | 2026-08-18 | Informe | **🟡 «Tercera sede del `52` sin tocar, y con una referencia `fichero:línea` desfasada dentro» — CERRADA, con la premisa del `52` CONFIRMADA COMO CORRECTA.** En `99 Investigación/clasificadores-tabulares-y-arquitecturas-hibridas.md` la cifra **no se tocó**: son las **muestras de `u2r` en D3**, no características. Retirada la virgulilla y anclada a `Resultados/specialized_nsl_kdd_composicion_d3.csv`. La referencia `firmas.py:98` **no apuntaba a lo que la frase afirmaba** (eran hiperparámetros de HistGB): pasa a citar el símbolo **`K_SMOTE`** de `NSLKDDSignatureTrainer`, que **no se desplaza al editar el fichero** — remedio del patrón, no solo del síntoma | `933c2ab` |

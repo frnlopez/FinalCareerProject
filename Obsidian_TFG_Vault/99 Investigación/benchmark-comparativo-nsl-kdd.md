@@ -295,7 +295,7 @@ Lo anoto como **requisito del protocolo** (conjunto mínimo obligatorio de colum
 ### Lo que quedó abierto y no es decisión
 
 > [!todo] Dos propuestas de este informe sin decisión registrada
-> 1. **Etiquetar el `bin_accuracy` 0,8605 como «cifra de comparabilidad externa, no titular del sistema»** para resolver el roce con H-6 (ver «Fricciones», punto 1). El informe lo propone y lo deja explícitamente a Francisco; **no consta cerrado** en `resumen-de-decisiones.md`.
+> 1. **Etiquetar el `bin_accuracy` 0,8605 como «cifra de comparabilidad externa, no titular del sistema»** para resolver el roce con H-6 (ver «Fricciones», punto 1). El informe lo propone y lo deja explícitamente a Francisco. ~~**No consta cerrado** en `resumen-de-decisiones.md`.~~ **CONSUMIDO: Francisco lo CERRÓ el 2026-08-18** — la decisión está registrada en `resumen-de-decisiones.md` (nota fechada del 2026-08-18, al final de la sección H-6) y aplicada como callout en `05 Evaluación/5.4 Conclusiones del capítulo.md`. Queda constancia además de que **es distinta de H-6**, no una relectura suya.
 > 2. **Declarar en `6.1` como limitaciones** la semilla única y los pitfalls **P9** (*Lab-Only Evaluation*) y **P10** (*Inappropriate Threat Model*). Es propuesta de B.1(i) y de «Fricciones», punto 2; falta el respaldo escrito que la convierta en decisión.
 >
 > Si alguna de las dos se cierra, actualizar este bloque y no darla por decidida antes.

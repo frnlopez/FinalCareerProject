@@ -96,7 +96,9 @@ de los CSVs como argumento, de modo que cambiar 54↔122 sea un flag, no una ree
   calibración de probabilidades más allá del umbral del híbrido, logging estructurado.
 
 **Nota del 2026-08-18 — la enumeración entre paréntesis de esta Q3 está DESFASADA; la decisión, no.**
-La superficie real de `Implementacion/app/evaluacion.py` en disco hoy son **trece funciones públicas**,
+La superficie real de `Implementacion/app/evaluacion.py` en disco hoy son **trece funciones públicas**
+*(recuento corregido por la nota siguiente de esta misma fecha: **trece funciones en total, doce
+públicas** — `_respaldar_csv` es privada; verificado contra el fichero en disco)*,
 no las seis que enumera la viñeta: además de `evaluar_binario`, `evaluar_multiclase`,
 `plot_matriz_confusion`, `plot_roc_pr`, `guardar_metricas` y `evaluar_0day_por_tipo`, expone
 `metricas_tiempo` y **toda la maquinaria de esquema que trajo T1** —`validar_esquema_minimo`,
@@ -114,6 +116,19 @@ deja constancia de que la lista dejó de ser exhaustiva.**
 > ficha y en la descripción de `CLAUDE.md`. Para `metricas_tiempo` **no se ha encontrado en el repo
 > ninguna decisión registrada que amplíe la Q3 para admitirla**: entró sin quedar anotada. No se
 > inventa aquí una justificación; lo decide Francisco si quiere cerrarlo.
+
+**Nota del 2026-08-18 (segunda) — autoría de la corrección y recuento exacto.** Francisco AUTORIZÓ
+hoy corregir las dos sedes que aún describían la superficie de `evaluacion.py` desfasada
+(`CLAUDE.md:64`, que corrige él, y esta Q3). La viñeta original se deja **intacta** a propósito, como
+traza de lo que se decidió el 2026-08-06: la reparación es esta nota, no una reescritura. Precisión
+sobre el recuento de la nota anterior, verificada contra `Implementacion/app/evaluacion.py` en disco
+hoy: el módulo define **trece funciones**, de las cuales **doce son públicas** y una es auxiliar
+privada (`_respaldar_csv`). Las doce públicas, en orden de aparición: `metricas_tiempo`,
+`validar_esquema_minimo`, `evaluar_binario`, `evaluar_multiclase`, `evaluar_0day_por_tipo`,
+`plot_matriz_confusion`, `plot_roc_pr`, `cabecera_esperada`, `limpiar_variante_csv`,
+`comprobar_unicidad`, `comprobar_recuento` y `guardar_metricas`. La ampliación respecto al paréntesis
+original viene de **T1** (esquema de métricas) salvo `metricas_tiempo`, cuyo origen sigue sin
+establecerse (ver el pendiente de arriba, que no se cierra aquí).
 
 ### Q4 — calibración de `UMBRAL_CONF` del híbrido → **`cross_val_predict` OOF, sin leakage**
 
@@ -421,6 +436,19 @@ mal-etiquetar un ataque nuevo como firma conocida.
    cuentan como error (conservador: infravalora al híbrido y aun así la tesis se sostiene por el 0-day).
 4. **Evitar explícitamente** un "f1_macro global a 5 clases" como titular del híbrido, justificando
    en la memoria por qué (castigaría el enrutado correcto a `unknown` o premiaría el mal-etiquetado).
+
+**Nota del 2026-08-18 — el `bin_accuracy` = 0,8605 es cifra de COMPARABILIDAD EXTERNA, no titular
+del sistema (decisión de Francisco).** Qué se decide: la accuracy binaria del híbrido sobre D2
+(**0,8605**) se presenta y se cita **solo** como referencia para situar el sistema frente a los
+baselines canónicos publicados sobre NSL-KDD, **nunca** como cifra de titular de los resultados.
+Por qué: el objetivo del trabajo es la **detección de 0-day**, y una accuracy binaria agregada sobre
+D2 no captura ese objetivo —un sistema puede subirla degradando justo lo que aquí se mide—, así que
+usarla de titular desplazaría el criterio de éxito. Dónde está aplicada: como callout en
+`Obsidian_TFG_Vault/05 Evaluación/5.4 Conclusiones del capítulo.md`. **Es una decisión DISTINTA de
+H-6 y no debe fundirse con ella:** H-6 rige el *scoring multiclase* del híbrido (matriz 5×6 y
+métricas por alcance, sin número único); esta nota rige el **estatus retórico de una cifra binaria
+concreta**. Son compatibles —esta nota no altera H-6 ni ninguna otra decisión previa—, pero H-6 no
+la cubría, y por eso se registra aquí.
 
 ### H-7 — Artefactos, CLI e idempotencia de `hibrido.py` → **mismo patrón auditado que anomalias/firmas/baseline**
 
