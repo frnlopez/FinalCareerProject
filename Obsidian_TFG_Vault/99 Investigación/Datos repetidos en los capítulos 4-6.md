@@ -464,6 +464,31 @@ ya cumplen**. Las sedes a recortar son **cinco** —`4.3.7`, `4.6`, `5.0.4`, `5.
 > pero el volumen de cada pasaje recortado solo se conoce al aplicarlo. **El porcentaje se calcula
 > recontando DESPUÉS del recorte**, contra estas bases, nunca antes y nunca a ojo.
 
+> [!check] RESULTADO MEDIDO tras aplicar D1–D18 — 2026-08-19
+> Los porcentajes se calculan aquí, **recontando después del recorte** contra las bases de arriba,
+> que es lo que este informe prometía y lo que evita el error que ya se cometió tres veces.
+>
+> | Bloque | Antes | Después | Δ |
+> |---|---:|---:|---:|
+> | Capítulo 4 | 16.446 | **15.702** | −744 (−4,5 %) |
+> | Capítulo 5 | 20.105 | **19.400** | −705 (−3,5 %) |
+> | Capítulo 6 | 8.500 | **8.404** | −96 (−1,1 %) |
+> | **Conjunto 4-6** | **45.051** | **43.506** | **−1.545 (−3,4 %)** |
+> | `A.3` (destino T7) | 15.127 | **15.325** | **+198** |
+>
+> **El titular honesto es −3,4 %, no más.** Conviene decir por qué es modesto en vez de presentarlo
+> como un recorte grande: de los 18 solapes, **la mayoría eran «unificar y remitir», no «suprimir»**.
+> Lo duplicado se sustituye por una frase de remisión, que también ocupa. El recorte real está
+> concentrado en `5.4` (−461 palabras, la nota que reproducía en vez de recapitular), en `4.4`
+> (−545, al irse la tabla de configuraciones y el callout del *wall-clock*) y en `4.2.1`.
+>
+> **El +198 de `A.3` es la prueba de que T7 se cumplió**: el análisis del residual salió de `4.4` y
+> entró íntegro en `A.3.6`. Si `A.3` no hubiera crecido, algo se habría perdido por el camino.
+>
+> **Lo que este recorte NO arregla**, y no debe venderse como si lo hiciera: el capítulo 4 sigue
+> teniendo `4.2` y `4.3` por encima de las 5.000 palabras cada una, y el barrido no las tocó porque
+> son **sedes canónicas**, no duplicación. Si hace falta más volumen, sale de otra decisión.
+
 **Lo que sí se puede afirmar sin contar**, porque depende de la estructura y no del volumen:
 
 > [!warning] Esta tabla se corrigió tras la auditoría — léase la columna «recorte real»
