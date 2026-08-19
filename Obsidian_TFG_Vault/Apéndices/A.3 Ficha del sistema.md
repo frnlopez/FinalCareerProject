@@ -103,19 +103,7 @@ OneClassSVM (`anomalias.py:163` para la muestra de D3; la submuestra de OneClass
 > | Rejilla de hiperparámetros y eje de balanceo de la etapa 2 | `GridSearchCV` con `f1_macro` por validación cruzada **sobre D3** | `firmas.py` |
 > | `UMBRAL_CONF` del híbrido | Calibración *out-of-fold* sobre D3; el método **no recibe D2 en su firma** (decisión P-4) | `hibrido.py::_calibrar_umbral_conf` |
 >
-> **Lo que sí miró D2: tres decisiones.** El **detector de la etapa 1** (H-2), el **clasificador de
-> la etapa 2** (H-3) y **el set de características, 54 frente a 122** (Q1/C, experimento H1, decidido
-> por recall 0-day por tipo y `f1_macro` medidos sobre D2). Las tres son selección de modelo sobre el
-> conjunto de test, es decir *data snooping*, y por tanto las métricas publicadas son optimistas
-> respecto a lo que daría un test verdaderamente ciego. La declaración de referencia de esta
-> limitación es [[6.1 Conclusiones]]; el inventario tabulado de las tres decisiones, con criterio y
-> registro de cada una, está en A.3.7 de esta misma ficha. No se presenta como protocolo limpio.
->
-> **Remisión.** El alcance y las cifras de la tercera decisión —la desviación relativa al set de
-> características, 54 frente a 122— se fijan en su sede canónica,
-> [[4.3 Preprocesamiento de los datasets|4.3.5]] § «Decisión experimental: 54 frente a 122
-> (experimento H1, medido sobre D2)»; aquí solo se enuncia, sin fijar cifras ni alcance por cuenta propia.
-
+> **Lo que sí miró D2.** *Tres decisiones del sistema se tomaron mirando D2: el detector de la etapa 1, el clasificador de la etapa 2 y el set de características (54 frente a 122). Las tres son selección de modelo sobre el conjunto de test, es decir* data snooping, *y por tanto las métricas publicadas son optimistas respecto a lo que daría un test verdaderamente ciego.* Su alcance y sus cifras se fijan en [[4.3 Preprocesamiento de los datasets|4.3.5]] § *Decisión experimental*, y el inventario completo, como limitación del trabajo, en [[6.1 Conclusiones|6.1]] (§6.1.3); **el detalle de cada una no se reproduce aquí**. El inventario **tabulado** de las tres, con criterio y registro de cada una, está en A.3.7 de esta misma ficha. No se presenta como protocolo limpio.
 ---
 
 ## A.3.3 Configuraciones seleccionadas (semilla 42)
