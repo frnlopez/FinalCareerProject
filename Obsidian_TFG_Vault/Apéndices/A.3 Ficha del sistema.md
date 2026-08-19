@@ -441,6 +441,23 @@ leerse juntas** porque proceden de corridas distintas:
   `ac496cb` y `1163c90`; en esas dos corridas da **162** en la variante de 54 características y
   **128** en la de 122. Esa columna **no separa causas** y no decide si una diferencia de tiempo es
   de épocas o de carga de máquina.
+- **El reparto interno del bloque sí resiste el cambio de corrida** —trasladado aquí desde
+  [[4.4 Entrenamiento del modelo de detección de anomalías|4.4]], que es donde se redactó—. Medido
+  sobre el **residual** (el tramo que no es ajuste ni inferencia) expresado como fracción del
+  `tiempo_s`, ese peso se mueve **como mucho 4,5 puntos porcentuales** en las ocho filas
+  (detectores × variantes); el máximo lo marca `IsolationForest` 122, que pasa del **31,0 %** al
+  **26,5 %**. El orden se conserva casi entero: ordenadas de mayor a menor residual, la única que
+  cambia de sitio es esa misma fila, que **baja del 4.º al 6.º puesto** adelantada por las dos de
+  `LocalOutlierFactor`; las otras siete mantienen su posición relativa. La explicación es mecánica:
+  la carga de máquina reescala el bloque entero y se cancela al dividir, mientras que el peso de
+  cada tramo lo fija el diseño del script —cuántas filas puntúa y cuántas veces—, que la semilla 42
+  hace determinista. **Es la magnitud menos frágil de las que aquí se publican, no una constante del
+  algoritmo**, y arrastra dos salvedades sin las cuales no debe citarse: **(1)** son **dos corridas
+  comparadas, no una serie** —los Δ salen de contrastar `ac496cb` con `1163c90`, y nada garantiza
+  que una tercera se mantuviera en esa banda—; y **(2)** una de las dos, `ac496cb`, **no es
+  reproducible desde git** (véase la salvedad de abajo, que le aplica igual). La comparación
+  completa, celda a celda y anclada al *commit* de cada corrida, está en
+  `Implementacion\PIPELINE.md`.
 
 > [!warning] Salvedad obligatoria: `ac496cb` no es reproducible desde git
 > Los recuentos de épocas se apoyan en parte en la corrida `ac496cb`, cuyos CSV **nunca se
