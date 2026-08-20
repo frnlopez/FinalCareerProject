@@ -1699,3 +1699,102 @@ palabras resultó ser **6.670** —base corta un ~54 %, que inflaba los titulare
 **Regla que queda:** antes de publicar un porcentaje de recorte, se cuenta; un volumen reportado por
 un agente es una pista, no una medida.
 
+---
+
+## Decisiones del 2026-08-19/20 — recorte por volumen de la memoria
+
+### Decisión 1 — El criterio «quién lo usa», extendido a TODO el capítulo 2
+
+Cada apartado de `2.x` debe poder **señalar el punto de los capítulos 3-5 que lo usa**. El que no
+puede, se comprime a un párrafo o sale del cuerpo. Extiende a `2.2` y `2.3` el criterio que la
+Decisión 1 del 2026-08-18 fijó solo para `2.1`.
+
+**Por qué se abrió, con la medida delante:** la memoria eran **108.591 palabras (~360 páginas)** y el
+capítulo 2 solo, **35.361** —un tercio del total, y más que un TFG de grado típico completo—.
+
+**Restricción que Francisco añadió y que manda sobre el criterio: COMPRIMIR, NO SUPRIMIR.** Los 8
+wikilinks que los capítulos 3-5 lanzan hacia `2.1` apuntan **todos a `2.1.6`**, y `2.1.1`–`2.1.5` no
+reciben ninguno; aun así **se comprimen y no se retiran**, porque son el vocabulario de entrada que un
+tribunal necesita antes del capítulo 3. **La ausencia de wikilink no es ausencia de dependencia
+conceptual** — las remisiones explícitas son una convención de este vault, no una medida de uso.
+
+### Decisión 2 — Lo retirado alimenta la DEFENSA ORAL, no solo el apéndice
+
+Encargo de Francisco del 2026-08-19: el material del que se prescinde **no se tira**. Lo que sobra en
+una memoria escrita suele ser justo lo que responde una pregunta del tribunal, de modo que cada
+bloque retirado queda recogido en la sección de defensa oral de su informe de recorte.
+
+### Decisión 3 — EXCEPCIÓN ACOTADA A T7: se autoriza borrar sin mover, en cuatro bloques nombrados
+
+**T7 sigue vigente como regla general:** lo que sale del cuerpo se **mueve** a `A.3`/`A.2`, no se
+borra. Esta es su **única excepción**, y se registra aquí porque hasta ahora vivía **solo en las notas
+de investigación** —una excepción a una restricción cerrada no puede vivir fuera de esta sede—.
+
+Se autoriza el destino **«solo exposición»** (sin apéndice) para **cuatro bloques, y ninguno más**:
+
+| Bloque | Por qué no merece apéndice |
+|---|---|
+| El bucle de seis pasos de selección de modelo, `2.1.3.4` | **Describe un procedimiento que el sistema NO siguió**: el trabajo compara cuatro algoritmos con rejilla fija, sin rondas iterativas de reingeniería. Describir lo que no se hizo es peor que no describirlo |
+| `2.3.1.2` El recorrido histórico | Ningún apartado del trabajo lo usa, y un apéndice justifica material que el sistema emplea |
+| `2.2.2.5` El catálogo de capas de la defensa en profundidad | Cero apariciones de «defensa en profundidad», «preventiv\*» y «correctiv\*» en los capítulos 3-6 |
+| `2.2.5.3` El panorama de amenazas contemporáneas | Cero apariciones de ransomware, APT, phishing y DDoS en 3-6 |
+
+**Criterio que separa esta excepción de un borrado arbitrario:** un apéndice justifica material que
+**el sistema usa** y no cabe en el cuerpo. El caso contrario, y por eso **sí** fue a apéndice, es el
+bloque de **redes neuronales** de `2.1.4.3` → `A.3.10.3`: el sistema **sí** contiene un componente
+neuronal —el autoencoder de la etapa 1 es su detector ganador— y un tribunal puede pedir su
+fundamento.
+
+> **La prueba de que T7 se cumplió en todo lo demás es que `A.3` CRECIÓ +766 palabras** con los
+> traslados entrantes, mientras perdía 6.221 por otra vía. Si no hubiera crecido, algo se habría
+> perdido por el camino.
+
+### Decisión 4 — Las dos tablas de `A.3.6` salen del apéndice, y el argumento NO es que fueran largas
+
+Eran **198 filas** que transcribían a mano `Resultados/dispersion_semillas.csv`, **versionado**
+(verificado: 199 líneas, es decir 198 filas de datos). **No añadían ni una columna al artefacto**, y
+mantenerlas creaba una segunda copia que puede desincronizarse. El caso más claro es el bloque de
+máquina, cuyo **propio título declara «NO es calidad y NO se cita como resultado»**: una tabla de 100
+filas cuyo encabezado prohíbe citarla.
+
+**Atribución: es (b), volumen, y NO se le atribuye al profesor.** Él habla de «las explicaciones de
+las soluciones analizadas», que es **el cuerpo**, y esa parte se hizo en el pase D10 del 2026-08-19
+al mover las configuraciones ganadoras de `4.4` y `4.5` a `A.3.3`.
+
+### Decisión 5 — La atribución (a)/(b) y la cita completa del profesor
+
+**Su cita literal, sin elipsis** —y esto importa porque una primera redacción del encargo la truncó
+justo aquí, sesgando los cuatro informes de recorte—:
+
+> «El informe está bien en general, pero hay que mejorar bastante la redacción, simplificando las
+> explicaciones de las soluciones analizadas sin dar todos los hiperparámetros **(por ejemplo, que
+> aporta al lector saber si has usado como semilla el valor 42)**, quizás recortando algunos
+> apartados (por ejemplo, los primeros apartados del Capítulo 3 no creo que sean necesarios y se
+> podían unificar).»
+
+**Consecuencias que quedan fijadas:**
+- **Lo único del capítulo 2 que él pidió es la rejilla de hiperparámetros de `2.1.6.4`.** Todo lo
+  demás del capítulo 2 es **(b)**, decisión de Francisco por volumen, y **no se le atribuye**.
+- Leída completa, su petición es **«menos detalle de implementación», no «menos teoría»**, lo que
+  apunta a los capítulos 4-5 y a los apéndices antes que al capítulo 2.
+- **Presentarle un recorte de apéndice como si lo hubiera pedido él es tan malo como no atender su
+  único ejemplo concreto.** Francisco defiende esto ante él.
+
+### Nota de método — cuatro reglas que salieron de aplicar este recorte
+
+1. **Un recorte puede CREAR una duplicación nueva.** Al insertar la frase canónica del *data
+   snooping*, los callouts de `4.6` y `A.3` quedaron con un párrafo «Remisión» que repetía lo que la
+   propia frase ya decía. **Un recorte que genera duplicación no está terminado.**
+2. **Al irse una tabla, su prosa queda coja.** Casos reales: `4.4` decía «el AUC-ROC de **esta
+   tabla**»; `4.2.1` remitía a «**el artefacto**» sin que nadie lo nombrara ya; `2.1.5.3` anunciaba
+   «**tres** esquemas» cuando quedaban dos y discutía «micro», término que había dejado de definirse
+   en toda la memoria.
+3. **Un recorte justificado con «ya está en X» exige verificar X en disco**, y **dos informes no
+   pueden justificar cada uno su recorte con el otro**. Si dos sedes se señalan mutuamente, **una se
+   designa canónica y la otra remite**; no se recortan las dos.
+4. **Los porcentajes de recorte se calculan recontando con `wc -w` DESPUÉS de aplicar.** Van
+   **cuatro** episodios de cifras infladas en tres días: el capítulo 3 estimado en ≈4.330 cuando eran
+   **6.670**; el desglose de la Tanda A que sumaba ~11.000 con total real **13.125**; los «~52.000»
+   de los capítulos 4-6 que eran **45.051**; y los volúmenes por nota del bloque `2.1`. **Un volumen
+   reportado por un agente es una pista, no una medida.**
+

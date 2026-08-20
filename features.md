@@ -25,6 +25,74 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 
 ## PRÓXIMOS PASOS — próxima sesión
 
+> ### 🔴 EMPIEZA POR AQUÍ — apunte de traspaso del 2026-08-20
+>
+> **Francisco cerró la sesión para abrir otra y resolver EXACTAMENTE lo de abajo.** Todo lo demás de
+> este bloque es historial: no leas trabajo pendiente de ningún apunte anterior a esta fecha.
+>
+> **Estado: la memoria está en 99.120 palabras (~330 páginas), desde 108.591.** El **Grupo IV está
+> CERRADO entero** y el **recorte por volumen está aplicado y auditado** (`APTO CON CAMBIOS`, cinco de
+> seis hallazgos aplicados en `ac7c821`).
+>
+> **LAS CINCO COSAS QUE HAY QUE RESOLVER, en este orden:**
+>
+> **1. El pase del `researcher` sobre `Bibliografía.md`. Es el primero porque DESBLOQUEA al 3.**
+> Nadie más escribe ese fichero.
+> - **`[40]` Krizhevsky quedó SIN NINGÚN USO VIVO**: vivía en el recorrido histórico de `2.3.1`, que
+>   se retiró. Su fila **sigue declarándola en uso y localizada en un apartado que ya no existe**. Por
+>   el protocolo del proyecto hay que **QUEMARLA** con su declaración escrita — sería la **octava**
+>   quemada, y el primer libre seguiría siendo el `[79]`.
+> - El «**7 ocurrencias**» de `[6]` es falso **y en sitio nuevo**: `2.1.4.3` conserva **1** marcador
+>   vivo y las **7 se mudaron a `A.3.10.3`**. Su columna de localizador remite además a un `[!todo]`
+>   de **`2.1.4.3.4`**, apartado que **no existe**.
+> - Los recuentos por nota de **`[5]`** están **todos** desfasados, con localizadores a líneas que ya
+>   no existen. **Cuéntalos en disco, no los heredes.**
+>
+> **2. Los DOS RECORTES BLOQUEADOS. No se ejecutan hasta resolverlos, y están razonados en los
+> informes.**
+> - «**detección basada en el estado**» de `1.2`: se propuso retirarla por duplicar `2.2.2`, y
+>   **contado en disco existe SOLO en `1.2`**. Recortarla la **borraría** del trabajo. Agravante: el
+>   informe de `2.2` comprime `2.2.2.2` alegando que «ya está en `1.2`» — **apoyo recíproco**, y
+>   aplicados los dos el contenido desaparece de ambos lados.
+> - El **cifrado**: `2.2.3.4` quedó designada **sede canónica** y no se toca. Los recortes de `2.2`
+>   que colgaban de esa dependencia siguen pendientes de un pase coordinado, y **por eso `2.2` está
+>   recortado menos de lo que su informe pedía** (11.204 palabras, no las ~8.900 del objetivo).
+>
+> **3. Los callouts de reserva bibliográfica que siguen en el cuerpo. Son TRECE, no dos** —el hilo
+> principal solo vio los dos que se tropezó al recortar; el recuento en disco lo hizo el `cronista` al
+> cerrar—. `[!warning] Verificación pendiente — sin acceso al texto completo` aparece **13 veces en 7
+> notas**: `2.2.3`×4, `2.2.4`×3, `2.2.2`×2, y una en `2.2.5`, `2.3.2`, `2.3.3` y `2.1.6`; más el
+> `[!todo] Localizador de [6]` en `2.1.4`. Son hoy **el único registro** de que `[18]` Arp, `[16]`
+> Chow y `[49]` Bendale están verificadas **solo por resumen**, mientras `Bibliografía.md` las marca
+> **fiabilidad 1 sin esa reserva**.
+> **NO se retira ninguno todavía, y el orden importa:** primero **inventariar qué reserva sostiene
+> cada uno** —trece callouts no dicen lo mismo—, después el punto 1 traslada esas reservas a
+> `Bibliografía.md`, y solo entonces pueden salir del cuerpo. Al revés se pierde la reserva.
+>
+> **4. `4.2` y `4.3` superan las 5.000 palabras cada una.** **NO se tocaron a propósito: son sedes
+> canónicas, no duplicación.** Recortarlas es una decisión de Francisco que aún no ha tomado.
+>
+> **5. ¿Se aprieta más el capítulo 2?** `2.1` está en 10.599 (objetivo del informe: ~8.870), `2.2` en
+> 11.204, `2.3` en 9.458. Y **los solapes 2↔4/5/6 siguen sin diagnosticar** —el barrido de la Tanda 19
+> fue **interno** al capítulo 2, que es otra cosa—.
+>
+> **LO QUE NO HAY QUE VOLVER A DISCUTIR, está decidido y registrado en
+> `resumen-de-decisiones.md` § «Decisiones del 2026-08-19/20»:** el criterio «quién lo usa», la regla
+> «comprimir, no suprimir», la **excepción acotada a T7** para cuatro bloques nombrados, la salida de
+> las dos tablas de `A.3.6`, y **la atribución (a)/(b)**.
+>
+> **⚠️ LO MÁS FÁCIL DE ESTROPEAR AL DEFENDER ESTO:** del capítulo 2, **lo único que el profesor pidió
+> es la rejilla de hiperparámetros de `2.1.6.4`**. Su cita completa —con el ejemplo de la semilla 42
+> que una elipsis del encargo llegó a tapar— está en `resumen-de-decisiones.md`, Decisión 5. Todo lo
+> demás del capítulo 2 es **decisión de Francisco por volumen**, y atribuírselo a él es tan malo como
+> no atender su único ejemplo concreto.
+>
+> **Método que funcionó y conviene repetir:** el trabajo ya decidido y redactado en un informe **lo
+> aplica el hilo principal con `Edit`**, sin `leader`/`redactor`/`auditor`, **commiteando cada 3-4
+> unidades** y **recontando con `wc -w` después de CADA edición**. Los dos intentos con agentes en
+> paralelo murieron por **529 Overloaded** sin escribir nada, y un corte mal delimitado **duplicó
+> contenido** en `2.2.2` sin que el total lo delatara hasta recontar.
+
 > ### 🟢 EMPIEZA POR AQUÍ — apunte de traspaso del 2026-08-19
 >
 > **EL GRUPO IV ESTÁ CERRADO ENTERO.** Era lo que este fichero venía marcando como «lo único que
@@ -761,6 +829,62 @@ eso el `3.3:42` y el residuo de T25 no llevan commit separado—;
   **sin** guiones, no con ellos. Queda **`Machine-learning-based`** (correcto en uso atributivo);
   `signature-based` ya estaba bien. **El fichero vive en `00 Preliminares/`, no en la raíz del
   vault.**
+
+### Altas del RECORTE POR VOLUMEN — 2026-08-19/20
+
+> **Cinco fichas, y son LO QUE LA PRÓXIMA SESIÓN DEBE RESOLVER.** El recorte por volumen del
+> capítulo 2 y de `A.3` está aplicado y commiteado (filas en `## Cerradas`); lo de aquí es lo que
+> quedó **declarado y sin ejecutar**, no lo que se olvidó. **Fichar no es resolver.**
+> **Lee antes las dos reglas del pase:** (a) los porcentajes se **recuentan con `wc -w` después de
+> aplicar**, y (b) **lo único que el profesor pidió del capítulo 2 es la rejilla de `2.1.6.4`** —el
+> resto del recorte es decisión de Francisco y **no se le atribuye**.
+
+- [ ] 🟠 **Pase del `researcher` sobre `Bibliografía.md` tras el recorte — es el PRIMERO de la lista, porque otras dos fichas dependen de él** · Informe · `researcher` (nadie más escribe ese fichero)
+  Alta el **2026-08-20**. Cuatro defectos, los cuatro **consecuencia del recorte**:
+  **(1) `[40]` Krizhevsky quedó SIN NINGÚN USO VIVO** al retirarse el recorrido histórico de `2.3.1`,
+  donde vivía ImageNet 2012, **y su fila sigue declarándola en uso, localizada en un apartado que ya
+  no existe**. **Verificado contra disco: fuera de `Bibliografía.md` solo aparece en dos informes de
+  `99 Investigación/`, ninguno es memoria.** Por protocolo hay que **QUEMARLA** —retirada **sin
+  renumerar**— junto con su declaración de uso.
+  **(2) El «7 ocurrencias» de `[6]` es falso Y está en sitio nuevo:** `2.1.4.3` conserva **1**
+  marcador vivo y **las 7 se mudaron a `A.3.10.3`**.
+  **(3) La columna de localizador de `[6]` remite a un `[!todo]` de `2.1.4.3.4`, apartado
+  INEXISTENTE.**
+  **(4) Los recuentos por nota de `[5]` están TODOS desfasados**, con localizadores a líneas que ya
+  no existen. **Ojo: el contador global no se toca por quemar `[40]`** — el número no vuelve nunca.
+
+- [ ] 🟠 **`2.2` está recortado MENOS de lo que su informe pedía, y es A PROPÓSITO** · Informe · **necesita un pase coordinado**
+  Alta el **2026-08-20**. La **dependencia del cifrado** se resolvió designando **`2.2.3.4` sede
+  canónica**, pero **los recortes que colgaban de ella siguen pendientes**: no se pueden aplicar uno
+  a uno sin volver a romper las remisiones. **Es el sexto 🟠 de la review, el único no aplicado.**
+  Cifra de partida contada: `2.2` está en **11.204** palabras (venía de 12.030).
+
+- [ ] 🟠 **Dos callouts siguen en el cuerpo contra lo que decían los informes — y hoy son el ÚNICO registro de tres verificaciones «solo por resumen»** · Informe · **bloqueada: exige antes el pase del `researcher`**
+  Alta el **2026-08-20**. Son los **«Verificación pendiente»** de `2.1.6` y de `2.3.2` y el
+  **«Localizador de `[6]`»** de `2.1.4.3`. **No se retiran todavía**: son lo único que declara que
+  **`[18]` Arp, `[16]` Chow y `[49]` Bendale están verificadas SOLO POR RESUMEN**, mientras
+  `Bibliografía.md` las marca **fiabilidad 1 sin esa reserva**. Sacarlos antes de trasladar la
+  reserva a `Bibliografía.md` **perdería el dato**.
+  > **⚠️ CONTADO EN DISCO EL 2026-08-20, y la ficha se queda corta:** el callout `[!warning]
+  > Verificación pendiente — sin acceso al texto completo` aparece **13 veces** en el capítulo 2
+  > —`2.2.3` (4), `2.2.4` (3), `2.2.2` (2), `2.2.5`, `2.3.2`, `2.3.3` y `2.1.6`—, más el `[!todo]
+  > Localizador de [6]` de `2.1.4`. **No son dos: son 13 + 1.** Antes de retirar ninguno hay que
+  > **inventariar qué reserva sostiene cada uno**; los tres de `[18]`/`[16]`/`[49]` son solo parte.
+
+- [ ] 🟠 **DOS RECORTES BLOQUEADOS por la review de los informes — NO SE EJECUTAN** · Informe · **decide Francisco**
+  Alta el **2026-08-20**. Los dos ilustran la regla nueva: **un recorte justificado con «ya está en
+  X» exige verificar X en disco, y dos informes no pueden justificar cada uno su recorte con el
+  otro.**
+  **(a) «Detección basada en el estado» de `1.2`** se propuso retirar por duplicar `2.2.2`, pero
+  **contado en disco existe SOLO en `1.2`: recortarla la BORRARÍA.** Agravante: el informe de `2.2`
+  comprime `2.2.2.2` alegando que «ya está en `1.2`» — **apoyo recíproco**.
+  **(b) El CIFRADO:** sus sedes no se retiran todas porque **`2.3.3.5` remite a `2.2.3`**. Enlaza con
+  la ficha del pase coordinado de `2.2`.
+
+- [ ] 🟡 **`4.2` y `4.3` siguen por encima de 5.000 palabras cada una** · Informe · **decide Francisco**
+  Alta el **2026-08-20**, **reabierta con la misma razón que en la Tanda C**: **no se tocaron a
+  propósito — son sedes canónicas, no duplicación.** Recortarlas es **otra decisión de Francisco**,
+  y con el criterio «quién lo usa» no salen: son ellas las que se usan.
 
 ### Altas de la TANDA 30 — 2026-08-18
 
@@ -2614,6 +2738,10 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-20 | Informe | **REVIEW DEL RECORTE POR VOLUMEN · `auditor-ml`: APTO CON CAMBIOS, seis 🟠, CINCO APLICADOS.** El más grave: **`2.1.5.3` dejaba «micro» discutido en una lista cuando el término ya NO se definía en ningún sitio de la memoria** — un recorte puede dejar huérfana una **definición**, no solo una cifra. Los otros cuatro aplicados: el callout de **`A.3.6`** remitía **13 celdas a `5.2.4.3`, que solo enumera 5**; **`A.3.10.3`** había quedado **anidada bajo `A.3.11`** al trasladarla; **hueco de numeración `2.3.1.1`→`2.3.1.3`**, renumerado **con sus dos remisiones reapuntadas**; y **`A.3.11.2`** afirmaba que el inventario vive en **`2.1.6.2`, que dejó de contenerlo**. **HALLAZGO COLATERAL, encontrado al mover `A.3.10.3`: `A.3.10` se titulaba «algoritmos que el sistema NO emplea» cuando el autoencoder SÍ se emplea — RETITULADA.** El sexto 🟠 queda vivo como ficha abierta (`2.2` recortado menos de lo que pedía su informe) | `ac7c821` |
+| 2026-08-20 | Informe | **RECORTE POR VOLUMEN DEL CAPÍTULO 2 Y DE `A.3` — EJECUCIÓN.** Nace de una **medida**, no de una impresión: la memoria eran **108.591 palabras (~360 páginas)** y **el capítulo 2 solo, 35.361** —un tercio del total y más que un TFG de grado típico completo—. **Decisión de Francisco del 2026-08-19:** el criterio **«quién lo usa»** se extiende a **TODO el capítulo 2** —cada apartado de `2.x` debe poder señalar el punto de los capítulos 3-5 que lo usa— y **«comprimir, no suprimir»**, con el orden **«primero lo que pidió el profesor, después el volumen»**. **VOLUMEN RECONTADO CON `wc -w` DESPUÉS DE APLICAR, nunca estimado: 108.591 → 99.120 palabras (~330 páginas), −9.471 (−8,7 %).** Por bloque: **`A.3 Ficha del sistema` 15.325 → 9.870**; **capítulo 2 35.361 → 31.261** (`2.1` **13.125 → 10.599**, `2.2` **12.030 → 11.204**, `2.3` **10.206 → 9.458**). **EL MAYOR AHORRO DE UNA PIEZA: las dos tablas de `A.3.6`, 198 filas que transcribían A MANO `Resultados/dispersion_semillas.csv`** —versionado y con **199 líneas, verificado**— **sin añadir ni una columna al artefacto**; una de ellas llevaba en su propio título «NO es calidad y NO se cita como resultado». **T7 CUMPLIDO Y CON PRUEBA: `A.3` CRECIÓ +766 palabras** por los traslados entrantes (el análisis del residual desde `4.4`, y las redes neuronales de `2.1.4.3` a `A.3.10.3`); **si no hubiera crecido, algo se habría perdido**. **MÉTODO: lo aplicó EL HILO PRINCIPAL con `Edit`, sin circuito de agentes**, por autorización de Francisco — **dos intentos con `redactor-tfg` en paralelo murieron por 529 Overloaded sin escribir nada** (árbol limpio y recuentos intactos, verificado). **COMMITS:** `8fba585` (tablas de `A.3.6`), `670ec26`, `ed49451`, `f370c35`, `713d2c3` (bloque `2.1`), `1719c66` (`2.3`), `bf3bbfc` (`2.2`). **DOS HALLAZGOS QUE VALEN COMO REGLA, no como anécdota: (1) un recorte puede CREAR duplicación** —al insertar la frase canónica de D3, los callouts de `4.6` y `A.3` quedaron con un párrafo «Remisión» que repetía lo que la propia frase ya decía—; **(2) al irse una tabla, su prosa queda coja**: `4.4` decía «el AUC-ROC de **esta tabla**», `4.2.1` remitía a «**el artefacto**» sin que nadie lo nombrara ya, y `2.1.5.3` anunciaba «**tres** esquemas» con dos. **Y una tercera: un recorte justificado con «ya está en X» exige verificar X EN DISCO, y dos informes NO pueden justificar cada uno su recorte con el otro** — dos recortes quedaron bloqueados por eso (ficha abierta). **CINCO FICHAS ABIERTAS por este pase**, en `## Abiertas` | `8fba585` |
+| 2026-08-19 | Informe | **DIAGNÓSTICO DEL RECORTE POR VOLUMEN · CUATRO INFORMES NUEVOS en `Obsidian_TFG_Vault/99 Investigación/`:** `Recorte capítulo 2 - bloque 2.1.md`, `… 2.2.md`, `… 2.3.md` y `Recorte memoria - barrido capítulos 1, 3, 4, 5, 6 y apéndices.md` **(los cuatro verificados en disco).** Cada uno trae **tabla apartado por apartado con veredicto y destino**, la **separación (a) lo pidió el profesor / (b) volumen**, y una **sección de MATERIAL PARA LA DEFENSA ORAL** —la vuelta de tuerca que pidió Francisco: **lo que sale del cuerpo no se tira, se recoge como material de exposición**—. **ERROR PROPIO REGISTRADO, que SESGÓ los cuatro informes: el hilo principal citó al profesor con una elipsis que tapaba su ÚNICO EJEMPLO CONCRETO** —«por ejemplo, que aporta al lector saber si has usado como semilla el valor 42»— **y los cuatro agentes la reprodujeron**. **Consecuencia que debe leerse antes de tocar el capítulo 2: lo ÚNICO que el profesor pidió de ese capítulo es la rejilla de hiperparámetros de `2.1.6.4`; TODO lo demás es (b), decisión de Francisco, y NO se le atribuye.** Leída completa, su petición es **«menos detalle de implementación», no «menos teoría»** — y eso ya se había hecho en el pase D10 | `3c82aff` |
+| 2026-08-19 | Ninguno | **CUARTO EPISODIO DEL PATRÓN DE CIFRAS INFLADAS, y un ERROR PROPIO con lección operativa distinta.** (1) **Los porcentajes de recorte se calculan recontando con `wc -w` DESPUÉS de aplicar**, nunca antes ni a ojo: van **cuatro** episodios en tres días —capítulo 3 estimado en ≈4.330 cuando eran **6.670**; el desglose de la Tanda A que sumaba ~11.000 con total **13.125**; los «~52.000» de 4-6 que eran **45.051**; y **los volúmenes por nota del bloque `2.1` que el `leader` reportó mal**—. (2) **Al recortar `2.2.2.5` se usó `\n---\n` como marcador de fin porque `2.2.2.6` no existe: el marcador estaba ANTES del inicio y la operación DUPLICÓ contenido** —`2.2` **subió a 13.735** en vez de bajar—. **Detectado al recontar INMEDIATAMENTE DESPUÉS**, revertido con `git checkout` y rehecho **por número de línea**. **Regla: recontar tras CADA edición, no al final del pase** — es lo único que lo cazó | `bf3bbfc` |
 | 2026-08-19 | Informe | **TANDA C DEL GRUPO IV · EJECUCIÓN DE LOS 18 SOLAPES D1–D18 sobre los capítulos 4-6, y con ella EL GRUPO IV QUEDA CERRADO ENTERO** (parte 1 `2.1` en la Tanda A, parte 2 «revisión del profesor» en las Tandas B y C, parte 3 `1.4` en esta). **MÉTODO, que debe quedar registrado: la aplicó EL HILO PRINCIPAL directamente con `Edit`, sin `leader`, sin `redactor-tfg` y sin `auditor-ml`**, por **autorización expresa de Francisco del 2026-08-18/19** tras topar el límite de sesión con **tres agentes muertos a media edición**; el motivo es que los 18 solapes **ya estaban decididos y con la frase de remisión redactada** en el informe de la Tanda B, y pagar tres agentes por aplicar texto ya escrito agotaba el límite antes de terminar. **Se commiteó cada 3-4 solapes** para que una caída no se llevara más de un bloque. **CINCO COMMITS, en el orden de §6 del informe —primero las sedes canónicas, para recortar contra ellas después—:** (1) **`5.3`** canónica de D14–D18, retiradas sus dos repeticiones internas (D14b, el matiz P-5 y los 2.504; D18a, el 0,822 → 0,748 del cierre); **`5.2.3`** (D13a) deja de adelantar el «8 de las 10» que `5.2.4.1` da con su procedencia; **`4.3.6`** (D4) pasa a remisión la segunda enumeración de los 17 tipos 0-day, **verificado que `A.1` los lista con ★ y que `4.2.1` conserva íntegro el callout que acredita el recuento**. (2) **`5.4`**, la nota más afectada de la memoria, **8 solapes**: D12 reduce el balanceo a un párrafo, D17 pasa tres viñetas a dos frases, D14/D15/D16 dejan los tres hallazgos en su consecuencia con remisión, y D13 y D18 en el caveat 2; **rehecha la transición de entrada**, que seguía terminando en dos puntos introduciendo una lista ya inexistente. (3) **Capítulo 4** (D1, D2, D5, D6, D10, D11) con **T7 PRIMERO**: el análisis del residual como fracción del bloque —lo único que `4.4` aportaba y `A.3` no tenía— **se trasladó a `A.3.6` con sus dos salvedades y SOLO ENTONCES se suprimió de `4.4`**; retiradas las tablas de configuraciones ganadoras de `4.4` y `4.5` (D10), que `A.3.3` ya publica con más precisión y para las dos variantes; **se conservan el umbral p95** (es criterio, no hiperparámetro) **y el párrafo de `4.5` que compara los `f1_macro` de CV con sus valores**, porque ahí el número ES el argumento. (4) **Pase D3 completo y de una vez**, el único que cruza los tres capítulos: las cinco sedes que reenumeraban —`4.3.7`, `4.6`, `5.0.4`, `5.4` caveat 4 y `A.3`— pasan a la **formulación canónica de `resumen-de-decisiones.md`, reproducida literal y sin recortar su segunda mitad**; los dos párrafos de `5.1.4` y `5.2.3` dejan de reenumerar y conservan su propia decisión (H-2 y H-3); **`4.4` y `4.5` NO se tocaron: ya cumplían**; más D8 y D9. (5) **Capítulo 6** (D14, D16, D17) y **`1.4`**. **DOS HALLAZGOS FICHADOS AQUÍ, que valen como regla: (a) aplicar un recorte puede CREAR una duplicación nueva** —al meter la frase canónica de D3, los callouts de `4.6` y `A.3` quedaron con un párrafo «Remisión» que repetía lo que la propia frase ya decía; retirado en ambos—; **un recorte que genera duplicación no está terminado**. **(b) Al irse una tabla, su prosa queda con referentes colgados**: el callout de `4.4` seguía diciendo «el AUC-ROC de **esta tabla**», y el párrafo de los tiempos y el «debe consultarse en **el artefacto**» de `4.2.1` perdieron su antecedente; **arreglados los tres**. **VOLUMEN MEDIDO RECONTANDO DESPUÉS DEL RECORTE, no estimado:** capítulo 4 **16.446 → 15.702** (−744, −4,5 %); capítulo 5 **20.105 → 19.400** (−705, −3,5 %); capítulo 6 **8.500 → 8.404** (−96, −1,1 %); **conjunto 4-6 45.051 → 43.506 (−1.545, −3,4 %)**; **`A.3` 15.127 → 15.325 (+198)**. **El titular honesto es −3,4 % y se registra como tal, sin inflar**: de los 18 solapes **la mayoría eran «unificar y remitir», no «suprimir»**, y la frase de remisión también ocupa. **El +198 de `A.3` es la PRUEBA de que T7 se cumplió**: si no hubiera crecido, algo se habría perdido. **Verificados los doce wikilinks insertados: los doce apuntan a notas que existen.** **`1.4` no se reescribió**: su descripción del capítulo 2 seguía siendo exacta —los tres bloques siguen ahí—; lo que se realineó es **el papel de los apéndices**, que ahora son la sede del detalle que salió del cuerpo, y **eso se declara para que el lector sepa dónde buscar**. **PENDIENTES VIVOS, NO tocados por ser alcance que el grill no fijó:** (1) **el capítulo 2 sigue sin barrer** —solapes 2↔4/5/6 sin diagnosticar, previsible que D9 y D11 tengan sede en `2.1.6.5`—; (2) **sin decidir si se aprieta el volumen restante de `2.1`** (13.125 frente a ~10.000 orientativas); (3) **declarado en el informe:** `4.2` y `4.3` siguen por encima de las 5.000 palabras cada una y **el barrido NO las tocó porque son sedes canónicas, no duplicación** — si hace falta más volumen, sale de otra decisión | `2d48cfd` |
 | 2026-08-19 | Informe | **CORRECCIÓN DEL REGISTRO DE LA TANDA B, y con ella se cierra la ficha del KNN de `4.5`.** La Tanda B fichó que la frase «difieren marginalmente» seguía viva en la prosa y que «la corrección nunca bajó a la redacción»: **es FALSO, verificado contra disco**. `4.5` dice correctamente «para **KNN** son el mismo número, 0,945349» y explica por qué. **La única ocurrencia viva de «difieren marginalmente» está dentro del informe de diagnóstico del capítulo 3, citando el texto viejo.** La ficha original se cerró bien en `65484bb` y **la corrección SÍ llegó a la prosa**: la reapertura del 2026-08-18 fue un falso positivo. **Cero cifras tocadas** | `2d48cfd` |
 | 2026-08-18 | Informe | **TANDA B DEL GRUPO IV · parte (2) «revisión del profesor», FASE DE ANÁLISIS — NO de ejecución.** Dos piezas. **(1) Solapes S1–S15 del capítulo 3 (ficha `T9`): NADA QUE EJECUTAR, ya estaban aplicados en disco.** El `redactor-tfg` verificó nota a nota `03 Diseño del sistema/3.1`–`3.6` y el `auditor-ml` confirmó que el «ya estaba hecho» es **cierto y sin pérdida de material**: `3.3.3` suprimida con su paso 1 **trasplantado a `3.2`**, **cero punteros caducados** a `§3.3.3`/`§3.3.4` en todo el vault y **ningún borrado que T7 obligara a mover a `A.3`**. **Cero ficheros tocados: es una ficha que sobrevivió a su propio arreglo**, el mismo patrón que ya ha mordido varias veces en este fichero. **(2) Barrido nuevo de duplicación de los capítulos 4-6: INFORME ESCRITO, ninguna nota editada** —el encargo exigía informe previo antes de tocar nada—. Fichero único y nuevo: `Obsidian_TFG_Vault/99 Investigación/Datos repetidos en los capítulos 4-6.md`, con **18 solapes D1–D18** (sedes citadas literalmente, decisión, sede canónica y frase de remisión ya redactada), **9 repeticiones legítimas**, **4 discrepancias detectadas** y un **orden de ejecución** en su §6. **`auditor-ml`: APTO CON CAMBIOS, cuatro reparos, los cuatro aplicados** en un pase en serie: el más caro cazado **antes** de ejecutarse —**D3 habría ALARGADO `4.4` y `4.5`** en un pase cuyo objeto es recortar, porque esas dos sedes no enumeran las tres decisiones sino que remiten; corregido, **D3 pasa de 9 a 5 sedes + 2 párrafos**—; **§3 asignaba D4 a `4.2` cuando el recorte vive en `4.3.6`**, y un ejecutor guiado por la tabla vieja habría recortado **la lista de 17 nombres que acredita el recuento**; matizada la discrepancia sobre `5.0` (2 de sus 4 viñetas ya cumplen la norma de referencia por título); y **D7 REVERTIDO** — el callout `delta = (A) − (B)` **se queda** en `5.1` como vacuna legítima. **EL GRUPO IV NO SE CIERRA:** lo siguiente es **EJECUTAR D1–D18** sobre las notas de 4-6 en el orden de §6, y **`1.4` sigue siendo LA ÚLTIMA** | `379d1b2` |
