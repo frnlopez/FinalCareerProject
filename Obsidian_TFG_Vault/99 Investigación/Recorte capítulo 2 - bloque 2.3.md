@@ -12,11 +12,21 @@ alcance: "2.3.1, 2.3.2, 2.3.3"
 > semilla el valor 42)**». **El error viene del encargo, no del agente**: el hilo principal redactó
 > el brief con esa elipsis y los cuatro informes la reprodujeron fielmente.
 >
-> **Consecuencia sobre la atribución (a)/(b), que es el eje de este informe:** el material de
-> **reproducibilidad y de semillas** —`2.1.6.7`, las dos tablas de `A.3.6`, las menciones de la
-> semilla 42 en el cuerpo— pasa a ser **(a), petición explícita del profesor**, no (b) decisión de
-> volumen. Es lo único que él señaló con un ejemplo nombrado. Cualquier veredicto de este informe que
-> declare ese material «intocable» o lo clasifique como (b) **queda revisado por esta nota**.
+> **Consecuencia sobre la atribución (a)/(b), que es el eje de este informe — y leída con precisión,
+> porque una primera versión de esta nota se pasó de largo:**
+> - **(a), y es exactamente lo que él pidió:** las **menciones de la semilla 42 y de
+>   hiperparámetros dentro de las explicaciones del CUERPO**. Él habla de «las explicaciones de las
+>   soluciones analizadas», no del apéndice. **Buena parte ya está hecha**: el pase D10 del
+>   2026-08-19 movió las tablas de configuraciones ganadoras de `4.4` y `4.5` a `A.3.3`, dejando en el
+>   cuerpo qué se buscó y por qué. Lo que quede de ese tipo en el cuerpo es **(a)** y se recorta
+>   citándole a él.
+> - **(b), y NO se le atribuye:** las **dos tablas de `A.3.6`** y el volumen de `2.1.6.7`. Son
+>   apéndice, no «explicaciones», y el argumento para retirarlas es otro y es bueno por sí solo:
+>   **reproducen a mano un CSV versionado y citable**. Eso es redundancia con el artefacto, no exceso
+>   de detalle en la prosa.
+>
+> La distinción importa porque Francisco defiende esto ante el profesor: presentarle un recorte de
+> apéndice como si lo hubiera pedido él es tan malo como no atender su único ejemplo concreto.
 >
 > Con la cita completa, además, el sentido general cambia de matiz: el profesor no pide *menos
 > teoría*, pide **menos detalle de implementación en las explicaciones**. Eso apunta a los capítulos

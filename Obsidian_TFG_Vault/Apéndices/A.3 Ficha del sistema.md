@@ -312,107 +312,14 @@ El recuento se cita **con sus tres salvedades**, y las tres son parte de la cifr
 | `metricas_anomalias_semillas.csv` | 54 | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `roc_auc` | 0.8360 | 0.8200 | 0.8359 | 0.000097 |
 
 #### Bloque de calidad (98 celdas)
-
-| Tabla de origen | Variante | Algoritmo | Alcance | Métrica | n | Media | sd | Mín | Máx | Semilla 42 | ¿En banda? |
-|---|---|---|---|---|---:|---:|---:|---:|---:|---:|---|
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | Autoencoder | binario normal-vs-ataque (2 clases) sobre D2 completo | `f1` | 10 | 0.8687 | 0.0232 | 0.8351 | 0.8965 | 0.8659 | dentro |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | Autoencoder | binario normal-vs-ataque (2 clases) sobre D2 completo | `fpr` | 10 | 0.0861 | 0.0138 | 0.0488 | 0.0978 | 0.0849 | dentro |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | Autoencoder | binario normal-vs-ataque (2 clases) sobre D2 completo | `pr_auc` | 10 | 0.9542 | 0.0067 | 0.9407 | 0.9602 | 0.9519 | dentro |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | Autoencoder | binario normal-vs-ataque (2 clases) sobre D2 completo | `roc_auc` | 10 | 0.9480 | 0.0069 | 0.9341 | 0.9573 | 0.9472 | dentro |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | Autoencoder | binario normal-vs-ataque (2 clases) sobre D2 completo | `umbral` | 10 | 0.0014 | 0.0016 | 0.0001 | 0.0043 | 0.0001 | dentro |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `f1` | 10 | 0.8194 | 0.0087 | 0.8063 | 0.8322 | 0.8187 | dentro |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `fpr` | 10 | 0.0898 | 0.0034 | 0.0823 | 0.0938 | 0.0928 | dentro |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `pr_auc` | 10 | 0.9570 | 0.0019 | 0.9546 | 0.9609 | 0.9511 | **FUERA** |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `roc_auc` | 10 | 0.9502 | 0.0022 | 0.9473 | 0.9539 | 0.9459 | **FUERA** |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `umbral` | 10 | 0.4060 | 0.0042 | 0.4003 | 0.4126 | 0.4098 | dentro |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | LocalOutlierFactor | binario normal-vs-ataque (2 clases) sobre D2 completo | `f1` | 10 | 0.7148 | 0.0253 | 0.6511 | 0.7342 | 0.7272 | dentro |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | LocalOutlierFactor | binario normal-vs-ataque (2 clases) sobre D2 completo | `fpr` | 10 | 0.1607 | 0.0021 | 0.1569 | 0.1635 | 0.1659 | **FUERA** |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | LocalOutlierFactor | binario normal-vs-ataque (2 clases) sobre D2 completo | `pr_auc` | 10 | 0.7559 | 0.0036 | 0.7484 | 0.7599 | 0.7546 | dentro |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | LocalOutlierFactor | binario normal-vs-ataque (2 clases) sobre D2 completo | `roc_auc` | 10 | 0.8315 | 0.0042 | 0.8218 | 0.8364 | 0.8340 | dentro |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | LocalOutlierFactor | binario normal-vs-ataque (2 clases) sobre D2 completo | `umbral` | 10 | 2.4144 | 0.0588 | 2.2966 | 2.5244 | 2.3155 | dentro |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `f1` | 10 | 0.8014 | 0.0010 | 0.7997 | 0.8033 | 0.8017 | dentro |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `fpr` | 10 | 0.0825 | 0.0004 | 0.0819 | 0.0830 | 0.0834 | **FUERA** |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `pr_auc` | 10 | 0.9254 | 0.0008 | 0.9238 | 0.9270 | 0.9258 | dentro |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `roc_auc` | 10 | 0.8883 | 0.0019 | 0.8855 | 0.8915 | 0.8898 | dentro |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `umbral` | 10 | 0.0837 | 0.3817 | -0.5839 | 0.5857 | -0.5063 | dentro |
-| `metricas_anomalias_semillas.csv` | 54 | Autoencoder | binario normal-vs-ataque (2 clases) sobre D2 completo | `f1` | 10 | 0.8721 | 0.0161 | 0.8492 | 0.8934 | 0.8716 | dentro |
-| `metricas_anomalias_semillas.csv` | 54 | Autoencoder | binario normal-vs-ataque (2 clases) sobre D2 completo | `fpr` | 10 | 0.0986 | 0.0050 | 0.0934 | 0.1070 | 0.1017 | dentro |
-| `metricas_anomalias_semillas.csv` | 54 | Autoencoder | binario normal-vs-ataque (2 clases) sobre D2 completo | `pr_auc` | 10 | 0.9287 | 0.0077 | 0.9208 | 0.9464 | 0.9092 | **FUERA** |
-| `metricas_anomalias_semillas.csv` | 54 | Autoencoder | binario normal-vs-ataque (2 clases) sobre D2 completo | `roc_auc` | 10 | 0.9343 | 0.0077 | 0.9242 | 0.9489 | 0.9288 | dentro |
-| `metricas_anomalias_semillas.csv` | 54 | Autoencoder | binario normal-vs-ataque (2 clases) sobre D2 completo | `umbral` | 10 | 0.0001 | 0.0001 | 0.0000 | 0.0003 | 0.0000 | dentro |
-| `metricas_anomalias_semillas.csv` | 54 | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `f1` | 10 | 0.8259 | 0.0120 | 0.8062 | 0.8428 | 0.8341 | dentro |
-| `metricas_anomalias_semillas.csv` | 54 | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `fpr` | 10 | 0.0995 | 0.0019 | 0.0969 | 0.1024 | 0.1002 | dentro |
-| `metricas_anomalias_semillas.csv` | 54 | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `pr_auc` | 10 | 0.9347 | 0.0079 | 0.9197 | 0.9421 | 0.9181 | **FUERA** |
-| `metricas_anomalias_semillas.csv` | 54 | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `roc_auc` | 10 | 0.9294 | 0.0041 | 0.9225 | 0.9336 | 0.9229 | dentro |
-| `metricas_anomalias_semillas.csv` | 54 | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `umbral` | 10 | 0.4366 | 0.0033 | 0.4320 | 0.4436 | 0.4406 | dentro |
-| `metricas_anomalias_semillas.csv` | 54 | LocalOutlierFactor | binario normal-vs-ataque (2 clases) sobre D2 completo | `f1` | 10 | 0.5838 | 0.0404 | 0.5196 | 0.6480 | 0.5718 | dentro |
-| `metricas_anomalias_semillas.csv` | 54 | LocalOutlierFactor | binario normal-vs-ataque (2 clases) sobre D2 completo | `fpr` | 10 | 0.1598 | 0.0025 | 0.1559 | 0.1650 | 0.1604 | dentro |
-| `metricas_anomalias_semillas.csv` | 54 | LocalOutlierFactor | binario normal-vs-ataque (2 clases) sobre D2 completo | `pr_auc` | 10 | 0.7416 | 0.0057 | 0.7335 | 0.7502 | 0.7401 | dentro |
-| `metricas_anomalias_semillas.csv` | 54 | LocalOutlierFactor | binario normal-vs-ataque (2 clases) sobre D2 completo | `roc_auc` | 10 | 0.8105 | 0.0075 | 0.8000 | 0.8223 | 0.8071 | dentro |
-| `metricas_anomalias_semillas.csv` | 54 | LocalOutlierFactor | binario normal-vs-ataque (2 clases) sobre D2 completo | `umbral` | 10 | 2.2577 | 0.0588 | 2.1594 | 2.3362 | 2.1863 | dentro |
-| `metricas_anomalias_semillas.csv` | 54 | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `f1` | 10 | 0.7834 | 0.0016 | 0.7801 | 0.7847 | 0.7844 | dentro |
-| `metricas_anomalias_semillas.csv` | 54 | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `fpr` | 10 | 0.0837 | 0.0010 | 0.0821 | 0.0850 | 0.0849 | dentro |
-| `metricas_anomalias_semillas.csv` | 54 | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `pr_auc` | 10 | 0.8866 | 0.0028 | 0.8807 | 0.8896 | 0.8890 | dentro |
-| `metricas_anomalias_semillas.csv` | 54 | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `roc_auc` | 10 | 0.8301 | 0.0051 | 0.8200 | 0.8359 | 0.8360 | **FUERA** |
-| `metricas_anomalias_semillas.csv` | 54 | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `umbral` | 10 | 14.2180 | 9.7495 | 0.1280 | 22.2675 | 19.1866 | dentro |
-| `metricas_baseline_semillas.csv` | 122_sin_seleccion | RandomForest_monolitico | multiclase 5 clases (normal + 4 ataques) sobre D2 completo | `bin_accuracy` | 10 | 0.7476 | 0.0009 | 0.7460 | 0.7489 | 0.7477 | dentro |
-| `metricas_baseline_semillas.csv` | 122_sin_seleccion | RandomForest_monolitico | multiclase 5 clases (normal + 4 ataques) sobre D2 completo | `bin_fpr` | 10 | 0.0261 | 0.0002 | 0.0260 | 0.0265 | 0.0261 | dentro |
-| `metricas_baseline_semillas.csv` | 122_sin_seleccion | RandomForest_monolitico | multiclase 5 clases (normal + 4 ataques) sobre D2 completo | `f1_macro` | 10 | 0.4694 | 0.0016 | 0.4672 | 0.4720 | 0.4698 | dentro |
-| `metricas_baseline_semillas.csv` | 122_sin_seleccion | RandomForest_monolitico | multiclase 5 clases (normal + 4 ataques) sobre D2 completo | `recall_0day_global` | 10 | 0.1471 | 0.0046 | 0.1376 | 0.1539 | 0.1480 | dentro |
-| `metricas_baseline_semillas.csv` | 54 | RandomForest_monolitico | multiclase 5 clases (normal + 4 ataques) sobre D2 completo | `bin_accuracy` | 10 | 0.7451 | 0.0017 | 0.7429 | 0.7484 | 0.7466 | dentro |
-| `metricas_baseline_semillas.csv` | 54 | RandomForest_monolitico | multiclase 5 clases (normal + 4 ataques) sobre D2 completo | `bin_fpr` | 10 | 0.0269 | 0.0002 | 0.0266 | 0.0271 | 0.0268 | dentro |
-| `metricas_baseline_semillas.csv` | 54 | RandomForest_monolitico | multiclase 5 clases (normal + 4 ataques) sobre D2 completo | `f1_macro` | 10 | 0.4703 | 0.0017 | 0.4678 | 0.4734 | 0.4721 | dentro |
-| `metricas_baseline_semillas.csv` | 54 | RandomForest_monolitico | multiclase 5 clases (normal + 4 ataques) sobre D2 completo | `recall_0day_global` | 10 | 0.1402 | 0.0107 | 0.1269 | 0.1597 | 0.1496 | dentro |
-| `metricas_cascada_invertida_semillas.csv` | 122_sin_seleccion | RandomForest | medida CONTRAFACTUAL de la cascada invertida (T3): predict_proba del c… | `n_condenadas` | 10 | 6011.1000 | 2398.7285 | 2157.0000 | 9051.0000 | 3329.0000 | dentro |
-| `metricas_cascada_invertida_semillas.csv` | 122_sin_seleccion | RandomForest | medida CONTRAFACTUAL de la cascada invertida (T3): predict_proba del c… | `tasa_condena` | 10 | 0.6190 | 0.2470 | 0.2221 | 0.9320 | 0.3428 | dentro |
-| `metricas_cascada_invertida_semillas.csv` | 54 | RandomForest | medida CONTRAFACTUAL de la cascada invertida (T3): predict_proba del c… | `n_condenadas` | 10 | 7436.9000 | 1524.5470 | 5585.0000 | 9586.0000 | 6558.0000 | dentro |
-| `metricas_cascada_invertida_semillas.csv` | 54 | RandomForest | medida CONTRAFACTUAL de la cascada invertida (T3): predict_proba del c… | `tasa_condena` | 10 | 0.7658 | 0.1570 | 0.5751 | 0.9871 | 0.6753 | dentro |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | DecisionTree | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `accuracy_D2` | 10 | 0.8740 | 0.0402 | 0.7924 | 0.9080 | 0.9029 | dentro |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | DecisionTree | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `f1_macro` | 10 | 0.6716 | 0.0786 | 0.5356 | 0.7462 | 0.7309 | dentro |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | DecisionTree | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `f1_u2r` | 10 | 0.2306 | 0.1599 | 0.0296 | 0.3810 | 0.3492 | dentro |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | DecisionTree | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `recall_macro` | 10 | 0.7251 | 0.0489 | 0.6480 | 0.7705 | 0.7536 | dentro |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | HistGradientBoosting | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `accuracy_D2` | 10 | 0.9333 | 0.0146 | 0.9150 | 0.9519 | 0.9296 | dentro |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | HistGradientBoosting | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `f1_macro` | 10 | 0.7489 | 0.0329 | 0.6896 | 0.7866 | 0.7131 | dentro |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | HistGradientBoosting | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `f1_u2r` | 10 | 0.3250 | 0.1006 | 0.1082 | 0.4200 | 0.1699 | dentro |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | HistGradientBoosting | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `recall_macro` | 10 | 0.8301 | 0.0141 | 0.8117 | 0.8540 | 0.8312 | dentro |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | KNN | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `accuracy_D2` | 10 | 0.9529 | 0.0044 | 0.9459 | 0.9583 | 0.9499 | dentro |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | KNN | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `f1_macro` | 10 | 0.7584 | 0.0067 | 0.7479 | 0.7658 | 0.7530 | dentro |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | KNN | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `f1_u2r` | 10 | 0.1934 | 0.0044 | 0.1824 | 0.1972 | 0.1972 | dentro |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | KNN | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `recall_macro` | 10 | 0.8947 | 0.0043 | 0.8880 | 0.9004 | 0.8919 | dentro |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | RandomForest | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `accuracy_D2` | 10 | 0.9307 | 0.0388 | 0.8605 | 0.9747 | 0.8938 | dentro |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | RandomForest | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `f1_macro` | 10 | 0.7838 | 0.0390 | 0.7155 | 0.8435 | 0.6956 | **FUERA** |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | RandomForest | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `f1_u2r` | 10 | 0.4920 | 0.1026 | 0.3182 | 0.6429 | 0.3182 | dentro |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | RandomForest | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `recall_macro` | 10 | 0.8267 | 0.0504 | 0.7480 | 0.8852 | 0.7458 | **FUERA** |
-| `metricas_firmas_semillas.csv` | 54 | DecisionTree | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `accuracy_D2` | 10 | 0.8850 | 0.0242 | 0.8440 | 0.9145 | 0.9135 | dentro |
-| `metricas_firmas_semillas.csv` | 54 | DecisionTree | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `f1_macro` | 10 | 0.6876 | 0.0533 | 0.5976 | 0.7464 | 0.7456 | dentro |
-| `metricas_firmas_semillas.csv` | 54 | DecisionTree | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `f1_u2r` | 10 | 0.2514 | 0.1533 | 0.0464 | 0.4138 | 0.3607 | dentro |
-| `metricas_firmas_semillas.csv` | 54 | DecisionTree | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `recall_macro` | 10 | 0.7375 | 0.0282 | 0.6827 | 0.7672 | 0.7668 | dentro |
-| `metricas_firmas_semillas.csv` | 54 | HistGradientBoosting | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `accuracy_D2` | 10 | 0.9406 | 0.0140 | 0.9180 | 0.9538 | 0.9577 | **FUERA** |
-| `metricas_firmas_semillas.csv` | 54 | HistGradientBoosting | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `f1_macro` | 10 | 0.7929 | 0.0184 | 0.7680 | 0.8327 | 0.8041 | dentro |
-| `metricas_firmas_semillas.csv` | 54 | HistGradientBoosting | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `f1_u2r` | 10 | 0.4823 | 0.0607 | 0.3797 | 0.5747 | 0.4318 | dentro |
-| `metricas_firmas_semillas.csv` | 54 | HistGradientBoosting | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `recall_macro` | 10 | 0.8382 | 0.0213 | 0.8057 | 0.8756 | 0.8407 | dentro |
-| `metricas_firmas_semillas.csv` | 54 | KNN | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `accuracy_D2` | 10 | 0.9559 | 0.0053 | 0.9489 | 0.9651 | 0.9564 | dentro |
-| `metricas_firmas_semillas.csv` | 54 | KNN | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `f1_macro` | 10 | 0.7710 | 0.0079 | 0.7603 | 0.7841 | 0.7687 | dentro |
-| `metricas_firmas_semillas.csv` | 54 | KNN | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `f1_u2r` | 10 | 0.2584 | 0.0129 | 0.2295 | 0.2705 | 0.2445 | dentro |
-| `metricas_firmas_semillas.csv` | 54 | KNN | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `recall_macro` | 10 | 0.8961 | 0.0063 | 0.8854 | 0.9062 | 0.8974 | dentro |
-| `metricas_firmas_semillas.csv` | 54 | RandomForest | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `accuracy_D2` | 10 | 0.9484 | 0.0134 | 0.9309 | 0.9705 | 0.9683 | dentro |
-| `metricas_firmas_semillas.csv` | 54 | RandomForest | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `f1_macro` | 10 | 0.8035 | 0.0146 | 0.7779 | 0.8205 | 0.8223 | **FUERA** |
-| `metricas_firmas_semillas.csv` | 54 | RandomForest | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `f1_u2r` | 10 | 0.4910 | 0.0657 | 0.4054 | 0.5902 | 0.4524 | dentro |
-| `metricas_firmas_semillas.csv` | 54 | RandomForest | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `recall_macro` | 10 | 0.8126 | 0.0156 | 0.7839 | 0.8370 | 0.8496 | **FUERA** |
-| `metricas_hibrido_semillas.csv` | 122_sin_seleccion | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `bin_accuracy` | 10 | 0.8597 | 0.0215 | 0.8275 | 0.8860 | 0.8567 | dentro |
-| `metricas_hibrido_semillas.csv` | 122_sin_seleccion | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `bin_fpr` | 10 | 0.0861 | 0.0138 | 0.0488 | 0.0978 | 0.0849 | dentro |
-| `metricas_hibrido_semillas.csv` | 122_sin_seleccion | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `bin_recall` | 10 | 0.8187 | 0.0414 | 0.7644 | 0.8666 | 0.8125 | dentro |
-| `metricas_hibrido_semillas.csv` | 122_sin_seleccion | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `conocida_f1_macro` | 10 | 0.6757 | 0.0709 | 0.6077 | 0.7909 | 0.6554 | dentro |
-| `metricas_hibrido_semillas.csv` | 122_sin_seleccion | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `fpr_cascada` | 10 | 0.0861 | 0.0138 | 0.0488 | 0.0978 | 0.0849 | dentro |
-| `metricas_hibrido_semillas.csv` | 122_sin_seleccion | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `recall_0day_global` | 10 | 0.7363 | 0.0409 | 0.6669 | 0.7800 | 0.7853 | **FUERA** |
-| `metricas_hibrido_semillas.csv` | 122_sin_seleccion | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `umbral_conf_elegido` | 10 | 0.4700 | 0.0483 | 0.4000 | 0.5000 | 0.5000 | dentro |
-| `metricas_hibrido_semillas.csv` | 54 | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `bin_accuracy` | 10 | 0.8614 | 0.0156 | 0.8395 | 0.8824 | 0.8605 | dentro |
-| `metricas_hibrido_semillas.csv` | 54 | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `bin_fpr` | 10 | 0.0986 | 0.0050 | 0.0934 | 0.1070 | 0.1017 | dentro |
-| `metricas_hibrido_semillas.csv` | 54 | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `bin_recall` | 10 | 0.8312 | 0.0269 | 0.7939 | 0.8656 | 0.8318 | dentro |
-| `metricas_hibrido_semillas.csv` | 54 | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `conocida_f1_macro` | 10 | 0.7325 | 0.0290 | 0.6789 | 0.7706 | 0.7481 | dentro |
-| `metricas_hibrido_semillas.csv` | 54 | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `fpr_cascada` | 10 | 0.0986 | 0.0050 | 0.0934 | 0.1070 | 0.1017 | dentro |
-| `metricas_hibrido_semillas.csv` | 54 | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `recall_0day_global` | 10 | 0.7531 | 0.0173 | 0.7232 | 0.7771 | 0.7707 | dentro |
-| `metricas_hibrido_semillas.csv` | 54 | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `umbral_conf_elegido` | 10 | 0.4800 | 0.0632 | 0.4000 | 0.6000 | 0.5000 | dentro |
+> **Las 98 celdas NO se transcriben aquí.** Están íntegras y en su forma citable en
+> `Resultados/dispersion_semillas.csv` y `Resultados/dispersion_semillas.md`, **ambos versionados**,
+> con las mismas columnas que tendría esta tabla —tabla de origen, variante, algoritmo, alcance,
+> métrica, `n`, media, `sd`, mín, máx, valor de la semilla 42 y si cae en banda—. Copiarlas dentro
+> multiplicaría páginas **sin añadir una sola columna** al artefacto, y crearía una segunda copia que
+> puede desincronizarse de él. **Las 13 celdas que caen fuera de su banda, que son las que sostienen
+> afirmaciones en el capítulo 5, se enumeran en [[5.2 Resultados del modelo de detección basado en
+> firmas|5.2]] (§5.2.4.3).**
 
 #### Bloque de máquina (NO es calidad y NO se cita como resultado)
 
@@ -455,108 +362,12 @@ leerse juntas** porque proceden de corridas distintas:
 
 En ningún caso son estos segundos una propiedad del algoritmo.
 
-| Tabla de origen | Variante | Algoritmo | Alcance | Métrica | n | Media | sd | Mín | Máx |
-|---|---|---|---|---|---:|---:|---:|---:|---:|
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | Autoencoder | binario normal-vs-ataque (2 clases) sobre D2 completo | `flujos_por_segundo` | 10 | 721485.9600 | 117671.0275 | 535460.2000 | 904920.0000 |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | Autoencoder | binario normal-vs-ataque (2 clases) sobre D2 completo | `latencia_ms_por_flujo` | 10 | 0.0014 | 0.0003 | 0.0011 | 0.0019 |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | Autoencoder | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_entrenamiento_s` | 10 | 35.7019 | 15.8000 | 19.3230 | 70.0510 |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | Autoencoder | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_inferencia_s` | 10 | 0.0320 | 0.0055 | 0.0250 | 0.0420 |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | Autoencoder | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_s` | 10 | 35.9550 | 15.8082 | 19.5900 | 70.3300 |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `flujos_por_segundo` | 10 | 116008.7300 | 56548.0205 | 63219.4000 | 201214.4000 |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `latencia_ms_por_flujo` | 10 | 0.0105 | 0.0044 | 0.0050 | 0.0158 |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_entrenamiento_s` | 10 | 2.9860 | 0.1194 | 2.8740 | 3.2150 |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_inferencia_s` | 10 | 0.2356 | 0.0981 | 0.1120 | 0.3570 |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_s` | 10 | 4.6690 | 0.1880 | 4.3900 | 4.9100 |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | LocalOutlierFactor | binario normal-vs-ataque (2 clases) sobre D2 completo | `flujos_por_segundo` | 10 | 12360.0200 | 151.4281 | 12182.7000 | 12590.2000 |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | LocalOutlierFactor | binario normal-vs-ataque (2 clases) sobre D2 completo | `latencia_ms_por_flujo` | 10 | 0.0809 | 0.0010 | 0.0794 | 0.0821 |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | LocalOutlierFactor | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_entrenamiento_s` | 10 | 16.1018 | 0.4619 | 15.2940 | 17.0710 |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | LocalOutlierFactor | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_inferencia_s` | 10 | 1.8242 | 0.0222 | 1.7910 | 1.8500 |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | LocalOutlierFactor | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_s` | 10 | 25.0140 | 0.5478 | 24.0900 | 26.1500 |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `flujos_por_segundo` | 10 | 13891.9600 | 456.9030 | 13088.6000 | 14463.3000 |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `latencia_ms_por_flujo` | 10 | 0.0721 | 0.0024 | 0.0691 | 0.0764 |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_entrenamiento_s` | 10 | 23.3979 | 0.4999 | 22.5930 | 24.4720 |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_inferencia_s` | 10 | 1.6244 | 0.0542 | 1.5590 | 1.7220 |
-| `metricas_anomalias_semillas.csv` | 122_sin_seleccion | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_s` | 10 | 39.3010 | 0.8445 | 38.1800 | 40.4900 |
-| `metricas_anomalias_semillas.csv` | 54 | Autoencoder | binario normal-vs-ataque (2 clases) sobre D2 completo | `flujos_por_segundo` | 10 | 912386.9500 | 170907.2347 | 726391.6000 | 1189782.6000 |
-| `metricas_anomalias_semillas.csv` | 54 | Autoencoder | binario normal-vs-ataque (2 clases) sobre D2 completo | `latencia_ms_por_flujo` | 10 | 0.0011 | 0.0002 | 0.0008 | 0.0014 |
-| `metricas_anomalias_semillas.csv` | 54 | Autoencoder | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_entrenamiento_s` | 10 | 22.3951 | 7.0837 | 8.6730 | 31.9610 |
-| `metricas_anomalias_semillas.csv` | 54 | Autoencoder | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_inferencia_s` | 10 | 0.0255 | 0.0043 | 0.0190 | 0.0310 |
-| `metricas_anomalias_semillas.csv` | 54 | Autoencoder | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_s` | 10 | 22.6230 | 7.0907 | 8.8900 | 32.1800 |
-| `metricas_anomalias_semillas.csv` | 54 | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `flujos_por_segundo` | 10 | 134959.0900 | 51455.4713 | 64631.2000 | 191575.1000 |
-| `metricas_anomalias_semillas.csv` | 54 | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `latencia_ms_por_flujo` | 10 | 0.0086 | 0.0036 | 0.0052 | 0.0155 |
-| `metricas_anomalias_semillas.csv` | 54 | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_entrenamiento_s` | 10 | 2.8595 | 0.1742 | 2.6260 | 3.2500 |
-| `metricas_anomalias_semillas.csv` | 54 | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_inferencia_s` | 10 | 0.1939 | 0.0804 | 0.1180 | 0.3490 |
-| `metricas_anomalias_semillas.csv` | 54 | IsolationForest | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_s` | 10 | 4.5660 | 0.2625 | 4.3200 | 5.1500 |
-| `metricas_anomalias_semillas.csv` | 54 | LocalOutlierFactor | binario normal-vs-ataque (2 clases) sobre D2 completo | `flujos_por_segundo` | 10 | 22252.8000 | 1903.3129 | 17944.4000 | 25193.1000 |
-| `metricas_anomalias_semillas.csv` | 54 | LocalOutlierFactor | binario normal-vs-ataque (2 clases) sobre D2 completo | `latencia_ms_por_flujo` | 10 | 0.0453 | 0.0043 | 0.0397 | 0.0557 |
-| `metricas_anomalias_semillas.csv` | 54 | LocalOutlierFactor | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_entrenamiento_s` | 10 | 10.5086 | 0.5574 | 9.3800 | 11.6360 |
-| `metricas_anomalias_semillas.csv` | 54 | LocalOutlierFactor | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_inferencia_s` | 10 | 1.0205 | 0.0968 | 0.8950 | 1.2560 |
-| `metricas_anomalias_semillas.csv` | 54 | LocalOutlierFactor | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_s` | 10 | 15.9430 | 0.9189 | 14.2400 | 17.9600 |
-| `metricas_anomalias_semillas.csv` | 54 | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `flujos_por_segundo` | 10 | 10840.2000 | 3818.6411 | 8145.9000 | 16855.5000 |
-| `metricas_anomalias_semillas.csv` | 54 | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `latencia_ms_por_flujo` | 10 | 0.1010 | 0.0276 | 0.0593 | 0.1228 |
-| `metricas_anomalias_semillas.csv` | 54 | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_entrenamiento_s` | 10 | 10.4263 | 0.2990 | 10.2130 | 11.2060 |
-| `metricas_anomalias_semillas.csv` | 54 | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_inferencia_s` | 10 | 2.2766 | 0.6225 | 1.3370 | 2.7680 |
-| `metricas_anomalias_semillas.csv` | 54 | OneClassSVM | binario normal-vs-ataque (2 clases) sobre D2 completo | `tiempo_s` | 10 | 24.9240 | 0.9084 | 23.1900 | 25.7300 |
-| `metricas_baseline_semillas.csv` | 122_sin_seleccion | RandomForest_monolitico | multiclase 5 clases (normal + 4 ataques) sobre D2 completo | `flujos_por_segundo` | 10 | 262583.8000 | 106516.3367 | 143196.9000 | 374553.5000 |
-| `metricas_baseline_semillas.csv` | 122_sin_seleccion | RandomForest_monolitico | multiclase 5 clases (normal + 4 ataques) sobre D2 completo | `latencia_ms_por_flujo` | 10 | 0.0045 | 0.0018 | 0.0027 | 0.0070 |
-| `metricas_baseline_semillas.csv` | 122_sin_seleccion | RandomForest_monolitico | multiclase 5 clases (normal + 4 ataques) sobre D2 completo | `tiempo_entrenamiento_s` | 10 | 37.0471 | 1.0061 | 35.1510 | 38.4950 |
-| `metricas_baseline_semillas.csv` | 122_sin_seleccion | RandomForest_monolitico | multiclase 5 clases (normal + 4 ataques) sobre D2 completo | `tiempo_inferencia_s` | 10 | 0.1008 | 0.0414 | 0.0600 | 0.1570 |
-| `metricas_baseline_semillas.csv` | 122_sin_seleccion | RandomForest_monolitico | multiclase 5 clases (normal + 4 ataques) sobre D2 completo | `tiempo_s` | 10 | 37.0460 | 1.0053 | 35.1500 | 38.4900 |
-| `metricas_baseline_semillas.csv` | 54 | RandomForest_monolitico | multiclase 5 clases (normal + 4 ataques) sobre D2 completo | `flujos_por_segundo` | 10 | 276574.0200 | 112872.4809 | 157752.7000 | 388837.8000 |
-| `metricas_baseline_semillas.csv` | 54 | RandomForest_monolitico | multiclase 5 clases (normal + 4 ataques) sobre D2 completo | `latencia_ms_por_flujo` | 10 | 0.0043 | 0.0017 | 0.0026 | 0.0063 |
-| `metricas_baseline_semillas.csv` | 54 | RandomForest_monolitico | multiclase 5 clases (normal + 4 ataques) sobre D2 completo | `tiempo_entrenamiento_s` | 10 | 31.9097 | 1.0484 | 30.5180 | 33.4390 |
-| `metricas_baseline_semillas.csv` | 54 | RandomForest_monolitico | multiclase 5 clases (normal + 4 ataques) sobre D2 completo | `tiempo_inferencia_s` | 10 | 0.0958 | 0.0394 | 0.0580 | 0.1430 |
-| `metricas_baseline_semillas.csv` | 54 | RandomForest_monolitico | multiclase 5 clases (normal + 4 ataques) sobre D2 completo | `tiempo_s` | 10 | 31.9080 | 1.0477 | 30.5200 | 33.4400 |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | DecisionTree | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `flujos_por_segundo` | 10 | 2747904.1400 | 426379.6864 | 1916972.7000 | 3063303.1000 |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | DecisionTree | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `latencia_ms_por_flujo` | 10 | 0.0004 | 0.0001 | 0.0003 | 0.0005 |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | DecisionTree | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_entrenamiento_s` | 10 | 13.7895 | 11.9127 | 2.1560 | 26.9810 |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | DecisionTree | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_inferencia_s` | 10 | 0.0034 | 0.0008 | 0.0030 | 0.0050 |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | DecisionTree | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_s` | 10 | 14.0710 | 11.9082 | 2.4400 | 27.2500 |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | HistGradientBoosting | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `flujos_por_segundo` | 10 | 172115.9900 | 29299.7587 | 109205.2000 | 216798.7000 |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | HistGradientBoosting | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `latencia_ms_por_flujo` | 10 | 0.0060 | 0.0013 | 0.0046 | 0.0092 |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | HistGradientBoosting | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_entrenamiento_s` | 10 | 136.5404 | 14.9129 | 112.3730 | 164.7980 |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | HistGradientBoosting | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_inferencia_s` | 10 | 0.0544 | 0.0114 | 0.0420 | 0.0830 |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | HistGradientBoosting | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_s` | 10 | 136.9500 | 14.9147 | 112.7800 | 165.2400 |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | KNN | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `flujos_por_segundo` | 10 | 3540.8600 | 160.0837 | 3340.6000 | 3804.4000 |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | KNN | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `latencia_ms_por_flujo` | 10 | 0.2829 | 0.0125 | 0.2629 | 0.2993 |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | KNN | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_entrenamiento_s` | 10 | 79.4062 | 2.0220 | 77.4130 | 84.2620 |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | KNN | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_inferencia_s` | 10 | 2.5698 | 0.1139 | 2.3870 | 2.7190 |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | KNN | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_s` | 10 | 82.3250 | 1.9750 | 80.4700 | 87.1700 |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | RandomForest | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `flujos_por_segundo` | 10 | 174828.9200 | 62964.6506 | 115243.8000 | 278223.6000 |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | RandomForest | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `latencia_ms_por_flujo` | 10 | 0.0064 | 0.0021 | 0.0036 | 0.0087 |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | RandomForest | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_entrenamiento_s` | 10 | 40.1839 | 24.8803 | 10.8740 | 62.0990 |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | RandomForest | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_inferencia_s` | 10 | 0.0581 | 0.0186 | 0.0330 | 0.0790 |
-| `metricas_firmas_semillas.csv` | 122_sin_seleccion | RandomForest | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_s` | 10 | 40.5490 | 24.8946 | 11.2000 | 62.4800 |
-| `metricas_firmas_semillas.csv` | 54 | DecisionTree | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `flujos_por_segundo` | 10 | 4166870.5600 | 325600.7992 | 3769349.0000 | 4656277.1000 |
-| `metricas_firmas_semillas.csv` | 54 | DecisionTree | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `latencia_ms_por_flujo` | 10 | 0.0002 | 0.0000 | 0.0002 | 0.0003 |
-| `metricas_firmas_semillas.csv` | 54 | DecisionTree | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_entrenamiento_s` | 10 | 12.5740 | 7.4287 | 1.7500 | 17.4390 |
-| `metricas_firmas_semillas.csv` | 54 | DecisionTree | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_inferencia_s` | 10 | 0.0020 | 0.0000 | 0.0020 | 0.0020 |
-| `metricas_firmas_semillas.csv` | 54 | DecisionTree | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_s` | 10 | 12.8510 | 7.4260 | 2.0400 | 17.7300 |
-| `metricas_firmas_semillas.csv` | 54 | HistGradientBoosting | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `flujos_por_segundo` | 10 | 158198.7400 | 74244.3300 | 71105.9000 | 299890.7000 |
-| `metricas_firmas_semillas.csv` | 54 | HistGradientBoosting | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `latencia_ms_por_flujo` | 10 | 0.0076 | 0.0034 | 0.0033 | 0.0141 |
-| `metricas_firmas_semillas.csv` | 54 | HistGradientBoosting | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_entrenamiento_s` | 10 | 69.4763 | 3.9821 | 64.7330 | 79.0080 |
-| `metricas_firmas_semillas.csv` | 54 | HistGradientBoosting | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_inferencia_s` | 10 | 0.0693 | 0.0311 | 0.0300 | 0.1280 |
-| `metricas_firmas_semillas.csv` | 54 | HistGradientBoosting | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_s` | 10 | 69.9050 | 3.9838 | 65.1600 | 79.3700 |
-| `metricas_firmas_semillas.csv` | 54 | KNN | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `flujos_por_segundo` | 10 | 5440.4800 | 243.4515 | 5076.1000 | 5976.4000 |
-| `metricas_firmas_semillas.csv` | 54 | KNN | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `latencia_ms_por_flujo` | 10 | 0.1841 | 0.0080 | 0.1673 | 0.1970 |
-| `metricas_firmas_semillas.csv` | 54 | KNN | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_entrenamiento_s` | 10 | 49.6723 | 0.9327 | 48.7730 | 51.6080 |
-| `metricas_firmas_semillas.csv` | 54 | KNN | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_inferencia_s` | 10 | 1.6725 | 0.0728 | 1.5200 | 1.7890 |
-| `metricas_firmas_semillas.csv` | 54 | KNN | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_s` | 10 | 51.6900 | 0.9371 | 50.7800 | 53.7300 |
-| `metricas_firmas_semillas.csv` | 54 | RandomForest | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `flujos_por_segundo` | 10 | 203763.2800 | 69797.7417 | 105459.7000 | 277675.0000 |
-| `metricas_firmas_semillas.csv` | 54 | RandomForest | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `latencia_ms_por_flujo` | 10 | 0.0056 | 0.0023 | 0.0036 | 0.0095 |
-| `metricas_firmas_semillas.csv` | 54 | RandomForest | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_entrenamiento_s` | 10 | 31.6166 | 23.0660 | 9.4280 | 56.1030 |
-| `metricas_firmas_semillas.csv` | 54 | RandomForest | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_inferencia_s` | 10 | 0.0507 | 0.0205 | 0.0330 | 0.0860 |
-| `metricas_firmas_semillas.csv` | 54 | RandomForest | multiclase 4 categorías de ataque sobre los ataques de D2 de tipo cono… | `tiempo_s` | 10 | 31.9970 | 23.0504 | 9.7600 | 56.4800 |
-| `metricas_hibrido_semillas.csv` | 122_sin_seleccion | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `flujos_por_segundo` | 10 | 241264.4400 | 52746.0031 | 179940.3000 | 327785.0000 |
-| `metricas_hibrido_semillas.csv` | 122_sin_seleccion | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `latencia_ms_por_flujo` | 10 | 0.0043 | 0.0009 | 0.0031 | 0.0056 |
-| `metricas_hibrido_semillas.csv` | 122_sin_seleccion | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `tiempo_entrenamiento_s` | 10 | 14.5081 | 8.7821 | 5.2790 | 25.3500 |
-| `metricas_hibrido_semillas.csv` | 122_sin_seleccion | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `tiempo_inferencia_s` | 10 | 0.0972 | 0.0199 | 0.0690 | 0.1250 |
-| `metricas_hibrido_semillas.csv` | 122_sin_seleccion | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `tiempo_s` | 10 | 16.7520 | 8.8076 | 7.4700 | 27.5900 |
-| `metricas_hibrido_semillas.csv` | 54 | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `flujos_por_segundo` | 10 | 359484.4500 | 76843.0165 | 240304.3000 | 432984.7000 |
-| `metricas_hibrido_semillas.csv` | 54 | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `latencia_ms_por_flujo` | 10 | 0.0029 | 0.0007 | 0.0023 | 0.0042 |
-| `metricas_hibrido_semillas.csv` | 54 | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `tiempo_entrenamiento_s` | 10 | 9.6319 | 5.2529 | 5.2470 | 22.3690 |
-| `metricas_hibrido_semillas.csv` | 54 | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `tiempo_inferencia_s` | 10 | 0.0658 | 0.0166 | 0.0520 | 0.0940 |
-| `metricas_hibrido_semillas.csv` | 54 | Autoencoder->RandomForest | cascada extremo a extremo (5 clases + unknown) sobre D2 completo; ojo:… | `tiempo_s` | 10 | 12.1350 | 5.9565 | 6.9600 | 24.0800 |
+> **Las 100 filas NO se transcriben aquí**, por la misma razón y con más motivo: el propio título
+> de este bloque declara que **no es calidad y no se cita como resultado**. Están en
+> `Resultados/dispersion_semillas.csv` y `Resultados/dispersion_semillas.md`, versionados. Lo que
+> sostiene afirmaciones vivas es la **prosa** de este apartado —la dispersión sin causa atribuida, el
+> recuento de épocas, el reparto interno del bloque y la salvedad de `ac496cb`—, y **se conserva
+> íntegra**.
 
 ### Decisiones no constantes entre semillas
 
