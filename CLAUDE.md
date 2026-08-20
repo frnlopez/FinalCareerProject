@@ -210,11 +210,11 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
   de `auditor-ml` (va después, no a la vez). **Varios `auditor-ml` sí pueden ir en paralelo**: son
   de solo lectura. Un cierre por **tanda**, no por nota: una sola pasada de `cronista`.
 - **Protocolo de citas — vale para CUALQUIER agente que escriba en el vault.** Los marcadores `[n]`
-  son un **contador global** que apunta a `Bibliografía.md`. **Contado en disco el 2026-08-18, al cierre de la Tanda 31:
-  se han emitido 78 números, de los que 71 son ENTRADAS VIVAS y SIETE están QUEMADAS —`[9]`,
-  `[27]`, `[28]`, `[37]`, `[44]`, `[45]` y `[76]`—.** Quemada significa **retirada SIN RENUMERAR**
-  (`[9]` lo fue en `396e283`; las otras seis, al retirarse las entradas que ya no citaba ningún
-  marcador vivo): el número **no vuelve al contador jamás**. **El primer número disponible es el
+  son un **contador global** que apunta a `Bibliografía.md`. **Contado en disco el 2026-08-20, tras quemar `[40]` Krizhevsky en R1:
+  se han emitido 78 números, de los que 70 son ENTRADAS VIVAS y OCHO están QUEMADAS —`[9]`,
+  `[27]`, `[28]`, `[37]`, `[40]`, `[44]`, `[45]` y `[76]`—.** Quemada significa **retirada SIN RENUMERAR**
+  (`[9]` lo fue en `396e283`; las otras siete, al retirarse las entradas que ya no citaba ningún
+  marcador vivo — `[40]` Krizhevsky, la última, en R1 el 2026-08-20): el número **no vuelve al contador jamás**. **El primer número disponible es el
   `[79]`.** Ojo con `[76]`: está quemada, pero **`[78]` Storkey sí está viva** — nació al desdoblarla. **Este rango se cuenta, no se recuerda**
   (`grep -oE '^\| *\[[0-9]+\]' Bibliografía.md`): estuvo desfasado en `leader.md` diciendo `[11]`
   cuando ya iba por el `[57]`, y ese es justo el fichero que despacha.
