@@ -317,9 +317,9 @@ El recuento se cita **con sus tres salvedades**, y las tres son parte de la cifr
 > con las mismas columnas que tendría esta tabla —tabla de origen, variante, algoritmo, alcance,
 > métrica, `n`, media, `sd`, mín, máx, valor de la semilla 42 y si cae en banda—. Copiarlas dentro
 > multiplicaría páginas **sin añadir una sola columna** al artefacto, y crearía una segunda copia que
-> puede desincronizarse de él. **Las 13 celdas que caen fuera de su banda, que son las que sostienen
-> afirmaciones en el capítulo 5, se enumeran en [[5.2 Resultados del modelo de detección basado en
-> firmas|5.2]] (§5.2.4.3).**
+> puede desincronizarse de él. **Las 13 celdas que caen fuera de su banda se enumeran, con su distancia, en el apartado
+> siguiente de esta misma sección**; de ellas, las **5 que proceden de la tabla de firmas** son las que
+> [[5.2 Resultados del modelo de detección basado en firmas|5.2]] (§5.2.4.3) discute en el capítulo 5.
 
 #### Bloque de máquina (NO es calidad y NO se cita como resultado)
 
@@ -580,7 +580,9 @@ la fuente está en [[benchmark-comparativo-nsl-kdd]].
 
 ---
 
-## A.3.10 Algoritmos del marco teórico que el sistema no emplea
+## A.3.10 Desarrollo ampliado de algoritmos del marco teórico
+
+> Recoge el desarrollo que `2.1.4` no conserva en el cuerpo. **Dos casos distintos, y conviene no confundirlos:** `A.3.10.1` y `A.3.10.2` son algoritmos que **el sistema no emplea** —regresión logística, k-means y jerárquico—, mientras que `A.3.10.3` desarrolla las **redes neuronales**, que el sistema **sí** emplea: el autoencoder de la etapa 1 es un MLP y es el detector seleccionado. Está aquí por volumen del cuerpo, no por ser ajeno al trabajo.
 
 Material trasladado desde [[2.1.4 Algoritmos de ML]], cuyo criterio de inclusión en el cuerpo es
 «lo que el sistema usa». Las dos familias siguientes **no intervienen en ninguna etapa del H-NIDS**
@@ -617,12 +619,6 @@ Los algoritmos de agrupamiento (*clustering*) buscan agrupar puntos de datos que
 
 ---
 
-## A.3.11 Desarrollo metodológico ampliado
-
-Material trasladado desde [[2.1.6 Metodologías y buenas prácticas]], que conserva en el cuerpo
-**solo las prácticas que el sistema implementado emplea**. Lo que sigue es el desarrollo general de
-cada una: no introduce ninguna cifra nueva y no altera nada de lo declarado en A.3.1–A.3.9.
-
 ### A.3.10.3 Redes neuronales artificiales (excedente de [[2.1.4 Algoritmos de ML|2.1.4.3]])
 
 > Trasladado desde el cuerpo el 2026-08-20 al comprimir `2.1.4.3`. **Nada se ha reescrito:** es el
@@ -657,6 +653,12 @@ Entrenar una red neuronal consiste en ajustar los pesos de todas sus conexiones 
 #### A.3.10.3.4 Qué distingue a las redes neuronales del ML clásico
 
 Frente a los algoritmos descritos en 2.1.4.1 y 2.1.4.2 —que operan sobre las características tal como se les entregan, eventualmente tras una selección o transformación manual—, una red neuronal con capas ocultas suficientes puede **aprender su propia representación intermedia** de los datos como parte del mismo proceso de optimización que aprende la tarea final. Esta capacidad es también lo que separa, por grado, al aprendizaje profundo del resto del aprendizaje automático: cuantas más capas ocultas y más profunda la jerarquía de representaciones aprendidas, más nos acercamos a ese régimen. Dónde se traza esa frontera, y por qué el único componente neuronal de este sistema —un `MLPRegressor` de scikit-learn usado como autoencoder para el error de reconstrucción— queda deliberadamente **fuera** de ella, se discute con detalle en [[2.3.1 IA, ML y Deep Learning]], en el bloque «El único componente neuronal, y por qué no es "profundo"».
+
+## A.3.11 Desarrollo metodológico ampliado
+
+Material trasladado desde [[2.1.6 Metodologías y buenas prácticas]], que conserva en el cuerpo
+**solo las prácticas que el sistema implementado emplea**. Lo que sigue es el desarrollo general de
+cada una: no introduce ninguna cifra nueva y no altera nada de lo declarado en A.3.1–A.3.9.
 
 ### A.3.11.1 CRISP-DM: fases, carácter iterativo y mapeo completo
 
@@ -696,7 +698,7 @@ En cuanto una decisión —por pequeña que sea— se toma mirando el resultado 
 > [!note] La tabla de la teoría; el sistema se desvió de ella en tres decisiones
 > En la tabla de 2.1.6.2, la fila **Validación** incluye el «algoritmo ganador» entre lo que corresponde decidir en validación —y lo mismo vale para la elección del espacio de características—. Esa es la práctica correcta y se mantiene enunciada así porque es la que el marco teórico debe fijar. Lo que este trabajo añade es la constatación de que **su implementación no la respetó en las tres decisiones declaradas**: la comparación entre algoritmos de cada etapa y la comparación entre los sets de 54 y 122 características se resolvieron sobre el conjunto de test. El inventario tabulado de esas tres decisiones **no se repite aquí**: está en A.3.7 § *Límite de protocolo*. La corrección —repetir las tres comparaciones sobre un conjunto de decisión independiente de D2 y volver a medir— queda recogida como línea futura en [[6.2 Líneas futuras]].
 
-Sobre la duplicidad del inventario de las tres decisiones: el mismo inventario reaparece en [[6.1 Conclusiones]], y la duplicidad es deliberada porque cada sede responde a una pregunta distinta. **En 2.1.6.2 el inventario funciona como encuadre metodológico**: sirve de ejemplo concreto de qué es el *data snooping*, en qué momento del ciclo de trabajo se cuela y por qué el perímetro de protocolo no basta para impedirlo. **En [[6.1 Conclusiones]] el mismo inventario se trata como limitación del trabajo**: allí se valora cuánto compromete la validez de las cifras publicadas en el capítulo 5 y qué haría falta para levantarlo.
+Sobre la duplicidad del inventario de las tres decisiones: el mismo inventario reaparece en [[6.1 Conclusiones]], y la duplicidad es deliberada porque cada sede responde a una pregunta distinta. **En `2.1.6.2` la declaración funciona como encuadre metodológico** —el inventario ya no se reproduce allí, solo su lectura conceptual—: sirve de ejemplo concreto de qué es el *data snooping*, en qué momento del ciclo de trabajo se cuela y por qué el perímetro de protocolo no basta para impedirlo. **En [[6.1 Conclusiones]] el mismo inventario se trata como limitación del trabajo**: allí se valora cuánto compromete la validez de las cifras publicadas en el capítulo 5 y qué haría falta para levantarlo.
 
 | Objeto | Sede canónica | Qué se decide allí |
 |---|---|---|
