@@ -623,6 +623,41 @@ Material trasladado desde [[2.1.6 Metodologías y buenas prácticas]], que conse
 **solo las prácticas que el sistema implementado emplea**. Lo que sigue es el desarrollo general de
 cada una: no introduce ninguna cifra nueva y no altera nada de lo declarado en A.3.1–A.3.9.
 
+### A.3.10.3 Redes neuronales artificiales (excedente de [[2.1.4 Algoritmos de ML|2.1.4.3]])
+
+> Trasladado desde el cuerpo el 2026-08-20 al comprimir `2.1.4.3`. **Nada se ha reescrito:** es el
+> texto que estaba en la memoria, movido íntegro por la restricción T7. El cuerpo conserva el
+> resumen y la remisión a este apartado. Aquí se desarrolla porque el sistema **sí** contiene un
+> componente neuronal —el autoencoder de la etapa 1— y un tribunal puede pedir su fundamento.
+
+
+#### A.3.10.3.1 La neurona artificial y el perceptrón
+
+La unidad básica de una red neuronal artificial es la **neurona artificial**, un modelo matemático simplificado de la neurona biológica: recibe un vector de entradas $x_1, \ldots, x_n$, calcula una combinación lineal ponderada de ellas más un término de sesgo (*bias*), y aplica a ese resultado una **función de activación** no lineal para producir su salida [6, cap. 6].
+
+El **perceptrón**, propuesto por Rosenblatt, es la formulación más simple de esta idea: una sola neurona con una función de activación de umbral, capaz de separar linealmente dos clases. Su limitación clásica —no poder resolver problemas no separables linealmente, como la función XOR— es precisamente lo que motiva apilar varias neuronas en capas [6, cap. 6].
+
+#### A.3.10.3.2 El perceptrón multicapa (MLP)
+
+Un **perceptrón multicapa** (*Multi-Layer Perceptron*, MLP) organiza las neuronas artificiales en **capas** sucesivas: una capa de entrada, una o varias capas ocultas y una capa de salida, en las que cada neurona de una capa recibe como entrada las salidas de todas las neuronas de la capa anterior (red densamente conectada o *fully connected*) [6, cap. 6]. Al introducir capas ocultas con funciones de activación no lineales, el MLP deja de estar limitado a fronteras de decisión lineales: puede aproximar funciones arbitrariamente complejas dado un número suficiente de neuronas, resultado conocido como teorema de aproximación universal [6, cap. 6].
+
+Entre las funciones de activación más habituales en las capas ocultas se encuentran:
+
+- **Sigmoide**, que comprime la salida al intervalo $(0,1)$ y fue históricamente la más usada, aunque hoy se emplea menos en capas intermedias por su tendencia a saturar y atenuar el gradiente.
+- **Tangente hiperbólica (tanh)**, similar a la sigmoide pero centrada en cero, con salida en $(-1,1)$.
+- **ReLU** (*Rectified Linear Unit*), que devuelve la entrada si es positiva y cero en caso contrario; es hoy la opción por defecto en la mayoría de arquitecturas por su sencillez de cálculo y porque mitiga —aunque no elimina— el problema de desvanecimiento del gradiente [6, cap. 6].
+
+#### A.3.10.3.3 Entrenamiento: retropropagación y descenso de gradiente
+
+Entrenar una red neuronal consiste en ajustar los pesos de todas sus conexiones para minimizar una función de pérdida que mide el error entre la salida de la red y el valor esperado. El procedimiento estándar combina dos mecanismos [6, cap. 6]:
+
+1. **Descenso de gradiente.** Los pesos se actualizan iterativamente en la dirección opuesta al gradiente de la función de pérdida respecto a cada peso, con un tamaño de paso —la tasa de aprendizaje— que controla cuánto se desplaza el peso en cada iteración. En la práctica se emplean variantes estocásticas que estiman el gradiente sobre lotes (*mini-batches*) de ejemplos en lugar de sobre el conjunto de entrenamiento completo, lo que acelera el cálculo y añade una forma de regularización implícita.
+2. **Retropropagación (*backpropagation*).** Es el algoritmo que calcula de forma eficiente el gradiente de la pérdida respecto a **todos** los pesos de la red, capa por capa, aplicando la regla de la cadena del cálculo diferencial desde la capa de salida hacia la capa de entrada. Sin retropropagación, calcular el gradiente de una red con varias capas ocultas tendría un coste computacional impracticable [6, cap. 6].
+
+#### A.3.10.3.4 Qué distingue a las redes neuronales del ML clásico
+
+Frente a los algoritmos descritos en 2.1.4.1 y 2.1.4.2 —que operan sobre las características tal como se les entregan, eventualmente tras una selección o transformación manual—, una red neuronal con capas ocultas suficientes puede **aprender su propia representación intermedia** de los datos como parte del mismo proceso de optimización que aprende la tarea final. Esta capacidad es también lo que separa, por grado, al aprendizaje profundo del resto del aprendizaje automático: cuantas más capas ocultas y más profunda la jerarquía de representaciones aprendidas, más nos acercamos a ese régimen. Dónde se traza esa frontera, y por qué el único componente neuronal de este sistema —un `MLPRegressor` de scikit-learn usado como autoencoder para el error de reconstrucción— queda deliberadamente **fuera** de ella, se discute con detalle en [[2.3.1 IA, ML y Deep Learning]], en el bloque «El único componente neuronal, y por qué no es "profundo"».
+
 ### A.3.11.1 CRISP-DM: fases, carácter iterativo y mapeo completo
 
 Un proyecto de aprendizaje automático no es una sucesión lineal de tareas, sino un ciclo. El marco de referencia más extendido para ordenarlo es **CRISP-DM** (*Cross-Industry Standard Process for Data Mining*), que descompone un proyecto de minería de datos en seis fases [11]:
