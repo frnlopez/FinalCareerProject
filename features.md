@@ -963,26 +963,8 @@ eso el `3.3:42` y el residuo de T25 no llevan commit separado—;
 > **Orden de ejecución: F1 → F2 → F3 → F4 → F5**, y el reparto en tandas está en el apunte de
 > traspaso del 2026-08-21.
 
-- [ ] 🔴 **La memoria cita 23 veces ficheros de seguimiento que el lector no tiene** · Informe · `redactor-tfg`
-  Alta el **2026-08-21**. **Contado en disco:** `resumen-de-decisiones.md` (**14**), `EL_FUTURO.md`
-  (**5**), `next-steps.md` (**2**), `features.md` (**1**), `CLAUDE.md` (**1**), repartidas en **12
-  notas**: `A.3` (5), `00 Índice TFG.md` (4), `4.3` (3), `6.2` (2), `5.3` (2), y `5.2`, `5.0`, `3.1`,
-  `3.2`, `3.3`, `3.4`, `3.5` (1 cada una). **Ninguno de esos ficheros existe para el tribunal:** una
-  nota que justifica una decisión remitiendo a `resumen-de-decisiones.md` **no la justifica**. Cada
-  remisión se resuelve **de una de dos formas: se dice el contenido en la propia nota, o se remite a
-  una sede de la memoria**.
-  > **⚠️ NO confundir con la PROCEDENCIA legítima, que SE QUEDA:** los sellos tipo `274923d-sucio` +
-  > fecha de `A.3` son **trazabilidad de artefactos** y son **correctos**.
-
-- [ ] 🟠 **Los informes de «material para la defensa oral» describen como retirado texto que sigue en el cuerpo** · Informe · **NO toca notas de la memoria**
-  Alta el **2026-08-21**, **hallazgo 9 del `auditor-ml`**. En
-  `99 Investigación/Recorte capítulo 2 - bloque 2.2.md`, los bloques **§5.1, §5.2, §5.5, §5.6 y
-  §5.10** declaran **retirado o borrado** material que está **íntegro en disco**: `2.2.1.4` completa,
-  la tabla HIDS/NIDS de 6 filas de `2.2.3.1`, los tres desgloses de `2.2.1.2`, `2.2.1.1` y `2.2.1.3`,
-  las tres viñetas de cifrado/volumen/evasión de `2.2.3.4`, la tabla «A favor / En contra» de
-  `2.2.5.4` y la tabla Entrada/Salida de `2.2.2.1`. **El recorte ejecutado y el planificado no son el
-  mismo**, y el registro **promete una trazabilidad que no existe**. Hay que **reconciliar los
-  informes con el disco**.
+> **F1 y F2 quedaron CERRADAS el 2026-08-21; sus filas viven ya en `## Cerradas`.** Con F1 cerrada,
+> **F5 queda DESBLOQUEADA**.
 
 - [ ] 🟠 **Tres arreglos en `Bibliografía.md`** · Informe · **solo `researcher`** · **SIEMPRE EN SERIE, nunca en paralelo con nada**
   Alta el **2026-08-21**.
@@ -1010,7 +992,30 @@ eso el `3.3:42` y el residuo de T25 no llevan commit separado—;
   como acta de trabajo?** **Dato a favor de que el problema es acotado:** contado en disco el
   2026-08-21, en la memoria hay **CERO** ocurrencias de «Tanda N», «decisión de Francisco», nombres de
   agentes y referencias `fichero:línea`. **Troceable por nota UNA VEZ F1 haya cerrado**: se solapan en
-  `3.x` y `5.x`.
+  `3.x` y `5.x`. **F1 cerró el 2026-08-21, así que esta ficha ya está DESBLOQUEADA.**
+
+### Altas de la tanda del 2026-08-21 — residuos de F1/F2
+
+> **Cuatro residuos, ninguno bloqueante.** Salen del pase que cerró F1 y F2 y de su auditoría de
+> coherencia. **Fichar no es resolver: aquí no se ha corregido nada.**
+
+- [ ] 🟡 **La URL del dataset no tiene sede única en la memoria** · Informe
+  Alta el **2026-08-21**. `4.2` **no la contiene**, y es el apartado donde el lector la buscaría.
+  Hay que **fijar una sede canónica** para ella y remitir el resto allí.
+
+- [ ] 🟡 **`5.2` referencia `firmas.py` por número de línea** · Informe
+  Alta el **2026-08-21**. Cita `firmas.py:146` y `firmas.py:103-108`, **contra la norma de
+  referenciar por TÍTULO** («Normas de trabajo» de `CLAUDE.md`). Localizar los destinos **por
+  contenido** y reescribir las dos remisiones.
+
+- [ ] 🟡 **Los otros tres informes de `99 Investigación/` pueden arrastrar el defecto que arregló F2** · Informe · **NO toca notas de la memoria**
+  Alta el **2026-08-21**. F2 reconcilió con el disco el informe del bloque `2.2`; los otros **tres
+  informes de recorte** con bloques «material para la defensa oral» **no los ha abierto nadie**, y
+  pueden declarar retirado texto que sigue en el cuerpo.
+
+- [ ] 🟡 **Dos menciones a `99 Investigación/` en el `00 Índice TFG.md`** · Informe
+  Alta el **2026-08-21**. Están en el callout del criterio de recuento: es **autorreferencia, no
+  respaldo** — `99 Investigación/` no es memoria y el tribunal no lo tiene.
 
 ### Altas de la TANDA 30 — 2026-08-18
 
@@ -2879,6 +2884,9 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-21 | Informe | **🔴 «La memoria cita 23 veces ficheros de seguimiento que el lector no tiene» (F1) — CERRADA: las 23 remisiones RESUELTAS en 18 notas + `00 Índice TFG.md`**, en cuatro trozos (tres en paralelo + uno en serie con el índice y `6.2`). **La cuenta de la ficha eran 12 notas y en disco eran 18.** Incluye una remisión **CAMUFLADA POR PERÍFRASIS** en `5.2` —«el contrato de decisiones» = `resumen-de-decisiones.md` **sin nombrarlo**—, que **un conteo por nombre de fichero no ve**, y el **alta de la etiqueta `Q1/C` en su sede de `4.3`**. La **procedencia legítima se queda**: los sellos de commit + fecha de `A.3` son trazabilidad, no remisión | — |
+| 2026-08-21 | Informe | **🟠 «Los informes de defensa oral describen como retirado texto que sigue en el cuerpo» (F2) — CERRADA.** `99 Investigación/Recorte capítulo 2 - bloque 2.2.md` queda **reconciliado con el disco**, **distinguiendo el plan de lo ejecutado** en vez de prometer una trazabilidad que no existía. **Ninguna nota de la memoria tocada** | — |
+| 2026-08-21 | Informe | **REVIEW DE LA TANDA · `auditor-ml`: APTO CON CAMBIOS, 6 hallazgos y los 5 accionables APLICADOS.** Auditó la **coherencia ENTRE las 11 notas** y **verificó las cifras contra `Resultados/*.csv`** —77→122, +45 dummies, los ocho `f1_macro` y la cascada invertida—: **ninguna sin respaldo**. **El hallazgo 3 fue el que valió el pase: evitó cerrar F1 con SEIS remisiones vivas en dos notas que la propia ficha contaba** — otra vez el patrón de cerrar por el recuento de la ficha en vez de por el disco | — |
 | 2026-08-21 | Ninguno | **🔴 EL RECORTE POR VOLUMEN ESTÁ CUMPLIDO Y SOBRECUMPLIDO — CORRECCIÓN DE REGISTRO, y es el dato que manda sobre el resto.** El apunte del 2026-08-20 escribió «la memoria está en **99.120 palabras (~330 páginas), desde 108.591**»: **eso era un ESTADO ALCANZADO, no un objetivo**, y en la sesión del 2026-08-20/21 **se leyó como objetivo**. **Medido en disco el 2026-08-21: la memoria (`00`–`06` + `Apéndices`) son 97.730 palabras**, ya **1.390 POR DEBAJO** de esa cifra. **Los 203.461 del vault completo NO son la memoria:** incluyen `99 Investigación` (**88.273**) y `Bibliografía.md` (**17.458**), que **nunca deben contarse**. **CONSECUENCIA OPERATIVA: nadie abre una ficha de volumen sin medir primero**, y las dos que quedaban se cierran **sin hacerse** — `4.2`/`4.3` (R5) y «¿se aprieta más el capítulo 2?» (`2.1` en **10.347**, `2.3` en **9.094**) —. **Lo que queda es COHERENCIA, no volumen: F1–F5** | — |
 | 2026-08-21 | Informe | **🟡 «`4.2` y `4.3` siguen por encima de 5.000 palabras cada una» (R5) — CERRADA SIN HACERSE: NO SE RECORTAN.** **Su única justificación era el volumen, y el volumen ya está.** Son **sedes canónicas**: con el criterio «quién lo usa» **no salen, porque son ellas las que se usan**. **Si alguien la reabre, tiene que traer una razón que NO sea el volumen** | — |
 | 2026-08-21 | Informe | **🟡 «¿Se aprieta más el capítulo 2?» — CERRADA SIN HACERSE, por la misma razón.** `2.1` está en **10.347** palabras y `2.3` en **9.094**, y **no hay objetivo global de volumen que lo exija**. **Nunca tuvo ficha en `## Abiertas`: vivía solo como punto 5 del apunte de traspaso del 2026-08-20**, y se registra aquí para que no desaparezca sin rastro. **Lo que sí queda de ella es coherencia: los solapes 2↔4/5/6, hoy ficha F4** | — |

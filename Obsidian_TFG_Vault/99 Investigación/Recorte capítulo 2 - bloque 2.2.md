@@ -214,7 +214,7 @@ menos se toca, y a propósito.**
 | 2.2.5.1 → las cuatro fichas (DoS, Probe, R2L, U2R) + callout «Conexión con el problema del TFG» | 698 | **Son las clases del problema**: `4.3` (tabla de categorías), `5.1`-`5.3`, `6.1` («clases minoritarias `u2r` y `r2l`») | QUEDA | ≈580: se recortan las **enumeraciones exhaustivas de tipos** de cada ficha, que duplican `A.1` y `4.2`; se conservan uno o dos ejemplos por categoría y la «huella en el tráfico» completa | (b) |
 | 2.2.5.2 Gradación de visibilidad en red | 364 | **`4.2` la enlaza por wikilink**; el punto 2 (`snmpgetattack`, punto ciego estructural) reaparece en `4.2`, `4.3`, `5.3`, `5.4` y `6.2`; el punto 1 (jerarquía DoS→Probe→R2L→U2R como predicción *a priori*) es el marco con que `6.1` lee sus resultados por clase | **QUEDA ÍNTEGRO** | — | — |
 | 2.2.5.3 Panorama actual de amenazas | 502 (de ellas 311 en tres callouts de gestión) | **Nadie.** Cero hits de `ransomware`, `APT`, `phishing`, `DDoS` en 3-6. Su cita `[37]` ya se retiró por irreconstruible y el apartado declara él mismo que no cuantifica nada | COMPRIME | un párrafo de ≈120 palabras que solo da pie a 2.2.5.4; el desarrollo de los cuatro bloques → **solo exposición** | (b) |
-| 2.2.5.4 Vigencia de una taxonomía de 1998 | 539 (97 en callout de gestión) | Es la defensa de la elección de dataset. **Pero su tabla «A favor / En contra» duplica «Por qué se eligió NSL-KDD» de `4.2`**, que desarrolla cinco razones más la contrapartida | QUEDA comprimido | ≈350: se conserva «lo que caduca son los tipos, no las categorías» con `[38]` (kill chain / ATT&CK) y la segunda razón con `[22]` `[23]`; **la tabla A favor/En contra se retira y la sede única pasa a ser `4.2`** | (b) |
+| 2.2.5.4 Vigencia de una taxonomía de 1998 *(hoy `2.2.5.3`: se renumeró al fusionarse en `446ec4e`, cuando desapareció el antiguo `2.2.5.3`)* | 539 (97 en callout de gestión) | Es la defensa de la elección de dataset. **Pero su tabla «A favor / En contra» duplica «Por qué se eligió NSL-KDD» de `4.2`**, que desarrolla cinco razones más la contrapartida | QUEDA comprimido | ≈350: se conserva «lo que caduca son los tipos, no las categorías» con `[38]` (kill chain / ATT&CK) y la segunda razón con `[22]` `[23]`; **la tabla A favor/En contra se retira y la sede única pasa a ser `4.2`** | (b) |
 
 **Objetivo de la nota: ≈ 1.885 palabras** (hoy 2.419, de las que 408 son bitácora).
 
@@ -400,6 +400,11 @@ frente a la *cyber kill chain* y MITRE ATT&CK `[38]`—, y eso se conserva.
 
 ## 4. Destinos: qué va al apéndice y qué no
 
+> [!warning] Esta tabla es PLAN, no registro
+> Su columna «Material retirado» enumera lo que el plan **proponía** retirar. **La mayoría no se
+> retiró**: el estado real de cada elemento está en la tabla de reconciliación del §5. No usar esta
+> tabla como inventario de lo ejecutado.
+
 El criterio que se ha aplicado, y que conviene poder enunciar ante el tribunal: **al apéndice va lo
 que el lector necesita consultar; a exposición va lo que el lector necesitaría aprender**. Un
 apéndice de material didáctico no reduce la memoria, solo la desplaza.
@@ -419,7 +424,7 @@ apéndice de material didáctico no reduce la memoria, solo la desplaza.
 | 2.2.4.5 arquitectura interna de Ji `[68]` y Khraisat `[70]` | ≈200 de las 675 | Solo exposición | **(a)**: es literalmente el detalle de soluciones analizadas que el profesor pidió simplificar |
 | 2.2.5.1 catálogos exhaustivos de tipos por categoría | ≈120 de las 698 | **Ya está en `A.1` y `4.2`** | No hay destino nuevo: es una deduplicación, la sede ya existe |
 | 2.2.5.3 los cuatro bloques del panorama de amenazas | ≈380 de las 502 | Solo exposición | Sin fuente citable. Un apéndice sin aval traslada el problema, no lo resuelve |
-| 2.2.5.4 tabla «A favor / En contra» | ≈190 de las 539 | **Sede única en `4.2`** | Deduplicación, no retirada: el argumento se conserva donde está desarrollado |
+| 2.2.5.4 tabla «A favor / En contra» *(el apartado es hoy `2.2.5.3`: se renumeró al fusionarse en `446ec4e`, cuando desapareció el antiguo `2.2.5.3`)* | ≈190 de las 539 | **Sede única en `4.2`** | Deduplicación, no retirada: el argumento se conserva donde está desarrollado |
 
 > [!note] Un solo apéndice nuevo sería defendible, y probablemente no hace falta
 > De las catorce piezas retiradas, **solo una** tiene forma de material de consulta: la tabla
@@ -432,11 +437,56 @@ apéndice de material didáctico no reduce la memoria, solo la desplaza.
 
 ## 5. Material retirado, orientado a la DEFENSA ORAL
 
+> [!danger] RECONCILIACIÓN CON EL DISCO — 2026-08-21 (ficha F2)
+> Los apartados §1 a §4 de este informe son un **PLAN de recorte**. Este §5 se redactó en tiempo
+> futuro-hecho («Retirado de: …») **antes de ejecutarlo**, y el recorte que después se ejecutó
+> (**R2**, `e706761`, más la *review* `446ec4e`) **no es el planificado**: es una condensación de
+> prosa que dejó **en el cuerpo** varias de las piezas que este §5 declaraba retiradas.
+>
+> **Por tanto, en todo este §5 hay que leer «Retirado de» como «Material de esa sede, retirado o
+> no».** El valor del bloque para la defensa oral **no cambia** —sigue siendo el guion de respuesta
+> a la pregunta previsible—; lo que cambia es que **no puede usarse como registro de qué se recortó**.
+> El estado real, verificado en disco sobre las cinco notas de 2.2 el **2026-08-21**, es este:
+>
+> | Elemento del plan | Sede | Estado real |
+> |---|---|---|
+> | `2.2.1.1` seguridad informática / ciberseguridad | `2.2.1` | **NO APLICADO** — íntegro |
+> | `2.2.1.2` desgloses de la tríada (datos/privacidad, datos/sistema) | `2.2.1` | **NO APLICADO** — los tres subapartados y sus desgloses, íntegros |
+> | `2.2.1.3` autenticidad y responsabilidad | `2.2.1` | **NO APLICADO** — íntegro |
+> | `2.2.1.4` recorrido del bloque («se borra») | `2.2.1` | **NO APLICADO** — el apartado existe completo |
+> | Tabla Entrada/Salida de `2.2.2.1` | `2.2.2` | **NO APLICADO** — la tabla de 2 filas sigue en el cuerpo |
+> | `2.2.2.2` línea temporal (tramo posterior a Denning) | `2.2.2` | **NO APLICADO** — los cinco hitos y los dos callouts, íntegros |
+> | Tabla IDS/IPS de 4 filas de `2.2.2.3` | `2.2.2` | **NO APLICADO** — íntegra |
+> | `2.2.2.5` defensa en profundidad | `2.2.2` | **APLICADO** — reducido a un párrafo de encuadre; sin reparto preventivo/detectivo/correctivo ni ubicaciones del sensor |
+> | Tabla HIDS/NIDS de 6 filas de `2.2.3.1` | `2.2.3` | **NO APLICADO** — las 6 filas siguen en el cuerpo |
+> | `2.2.3.2` desarrollo de la crítica a Khraisat et al. | `2.2.3` | **APLICADO** — la crítica está hoy condensada en un solo párrafo («*la revisión más citada del área tampoco taxonomiza lo híbrido…*» `[31]`), sin desarrollo *ad fontem* |
+> | `2.2.3.4` cifrado, volumen y evasión | `2.2.3` | **NO APLICADO, Y BLOQUEADO A PROPÓSITO** — ver abajo |
+> | Arquitectura interna de Ji `[68]` y Khraisat `[70]` en `2.2.4.5` | `2.2.4` | **APLICADO** — un párrafo corto cada uno, sin desglose de etapas |
+> | `2.2.5.1` catálogos exhaustivos de tipos por categoría | `2.2.5` | **NO APLICADO** — las cuatro fichas conservan las enumeraciones completas: DoS lista `neptune, smurf, back, teardrop, pod, land, apache2, mailbomb, processtable, udpstorm`; R2L, catorce tipos; U2R, ocho |
+> | `2.2.5.3` «Panorama actual de amenazas» | — | **APLICADO** — retirado por completo; `ransomware`, `APT` y `phishing` tienen cero apariciones en todo 2.2 |
+> | Tabla «A favor / En contra» de `2.2.5.4` | hoy `2.2.5.3` | **NO APLICADO** — la tabla de 4 filas sigue en el cuerpo. El apartado se **renumeró** a `2.2.5.3` al fusionarse en `446ec4e`, al desaparecer el antiguo `2.2.5.3` |
+>
+> **Esta tabla es el inventario COMPLETO:** cubre los **14 elementos** de la tabla del §4, más una
+> pieza que allí no figuraba (la tabla Entrada/Salida de `2.2.2.1`) — **15 filas** en total. Puede
+> leerse, por tanto, como registro cerrado de lo ejecutado.
+>
+> **El caso del cifrado es distinto de los demás no-aplicados: está bloqueado, no pendiente.** El
+> callout de cabecera de este informe lo declara NO APTO, y **R4** (`eb0613a`) fue más allá y
+> **designó `2.2.3.4` sede canónica del cifrado**, porque `2.3.3.5` remite ahí. Retirar esa viñeta
+> dejaría la remisión colgando: **no se recorta, y no como olvido**.
+>
+> **Lectura correcta de todo esto:** el plan de §1-§4 sigue siendo defendible como plan, pero el
+> ahorro que promete su «Recuento de destino» (≈ 7.345 palabras) **no se realizó por esa vía**. El
+> volumen se resolvió por otra: 2.2 está hoy en **9.023 palabras** medidas tras `446ec4e`, y la
+> ficha de volumen se cerró por cumplida. **Reabrir cualquiera de los «NO APLICADO» de la tabla es
+> una decisión nueva de Francisco, no la ejecución de un pendiente.**
+
 Lo que sale del cuerpo no se pierde: se convierte en munición para preguntas previsibles. Cada
 bloque va con la pregunta que responde y con lo que hay que llevar preparado.
 
 ### 5.1 «¿Qué es exactamente la ciberseguridad y en qué se diferencia de la seguridad informática?»
-**Retirado de:** 2.2.1.1 (319 palabras).
+**Sede:** 2.2.1.1 (319 palabras). **Recorte PLANIFICADO, NO EJECUTADO:** el apartado sigue íntegro
+en el cuerpo. Lo de abajo es guion de respuesta oral, no inventario de material retirado.
 **Qué llevar:** seguridad informática = proteger **un** sistema automatizado (hardware, software,
 firmware, datos, telecomunicaciones) preservando confidencialidad, integridad y disponibilidad
 `[8, cap. 1]`. Ciberseguridad = el mismo objetivo trasladado al **ciberespacio** interconectado, con
@@ -447,7 +497,10 @@ trabajo sea un NIDS y no un HIDS. Es la respuesta de una frase si preguntan por 
 titula «ciberseguridad».
 
 ### 5.2 «Usted habla de falsos positivos, pero ¿qué objetivo de seguridad protege realmente su sistema?»
-**Retirado de:** 2.2.1.2 (desgloses) y 2.2.1.3 (213 palabras).
+**Sede:** 2.2.1.2 (desgloses) y 2.2.1.3 (213 palabras). **Recorte PLANIFICADO, NO EJECUTADO:** los
+dos desgloses de la tríada —confidencialidad de los datos / privacidad e integridad de los datos /
+del sistema— y el apartado 2.2.1.3 completo **siguen en el cuerpo**. También sigue `2.2.1.4`, que el
+plan daba por **borrado**.
 **Qué llevar:** el desglose completo —confidencialidad de los datos frente a privacidad; integridad
 de los datos frente a integridad del sistema— y el ejemplo que lo hace tangible: una modificación no
 autorizada de un fichero de configuración compromete la **integridad de los datos** aunque el
@@ -460,7 +513,11 @@ operativa última de un IDS.
 categoría —`dos` ataca disponibilidad, `probe`/`r2l`/`u2r` atacan confidencialidad e integridad—.
 
 ### 5.3 «¿Desde cuándo existe esto? ¿Su trabajo es original o reinventa algo de los años ochenta?»
-**Retirado de:** 2.2.2.2 (554 palabras del tramo posterior a Denning) y sus callouts.
+**Sede:** 2.2.2.2 (554 palabras del tramo posterior a Denning) y sus callouts. **Recorte
+PLANIFICADO, NO EJECUTADO:** la línea temporal completa —Anderson, Denning, los años 90, Snort y el
+análisis con estado— y sus dos callouts siguen en el cuerpo. **R4** (`eb0613a`) además **trasladó
+aquí** la «detección basada en el estado» desde `1.2`, de modo que el apartado hoy tiene **más**
+material que cuando se planificó su compresión.
 **Qué llevar:** la línea temporal completa en cuatro hitos. 1980, Anderson, *Computer Security
 Threat Monitoring and Surveillance*: los registros de auditoría, hasta entonces material contable,
 pueden explotarse para vigilar amenazas `[2]`. 1987, Denning, IDES: primer marco formal, perfil
@@ -477,7 +534,10 @@ analista, se aprenden de los datos** y se extraen legibles del árbol (`firmas_r
 atribución, ese es el punto.
 
 ### 5.4 «¿Por qué un IDS y no un IPS? ¿No sería más útil bloquear?»
-**Retirado de:** 2.2.2.3 (≈195 palabras) y 2.2.2.5 (≈450).
+**Sede:** 2.2.2.3 (≈195 palabras) y 2.2.2.5 (≈450). **Recorte APLICADO PARCIALMENTE:** en `2.2.2.5`
+**sí** se ejecutó —queda un solo párrafo de encuadre, sin reparto preventivo/detectivo/correctivo ni
+ubicaciones del sensor, así que ese material es efectivamente munición oral—; en `2.2.2.3` **no**, la
+tabla IDS/IPS de cuatro filas y el párrafo del despliegue progresivo siguen en el cuerpo.
 **Qué llevar:** la diferencia no está en cómo detectan, sino en **dónde se colocan y qué hacen con
 lo detectado**. El IDS es pasivo, fuera del camino del tráfico (*tap* o *port mirroring*), y su
 salida es una alerta; el IPS está en línea y descarta, corta o bloquea. La fila decisiva es el
@@ -500,7 +560,10 @@ esta memoria (`[28]` es irreconstruible y la afirmación se retiró). Enunciarlo
 doctrina consolidada es correcto; no se le puede colgar una referencia.
 
 ### 5.5 «¿Por qué un NIDS y no un HIDS, si dice que U2R es casi invisible en red?»
-**Retirado de:** 2.2.3.1 (≈350 palabras, la tabla).
+**Sede:** 2.2.3.1 (≈350 palabras, la tabla). **Recorte PLANIFICADO, NO EJECUTADO:** la tabla
+comparativa HIDS/NIDS **de seis filas sigue íntegra en el cuerpo**, con las seis filas que se
+enumeran abajo. La respuesta oral vale igual, pero **la tabla se puede señalar en la memoria** en vez
+de llevarla aparte.
 **Qué llevar — es la pregunta más probable del bloque, porque el propio trabajo la invita:** la
 respuesta honesta es que **no es una preferencia de diseño, es una consecuencia de los datos**.
 NSL-KDD describe conexiones de red y no contiene ningún evento de host —ni logs, ni integridad de
@@ -515,7 +578,11 @@ que documenta 2.2.5.2 es precisamente el argumento de por qué una defensa real 
 Reconocerlo es más fuerte que defender que el NIDS basta.
 
 ### 5.6 «Su sistema no ve tráfico cifrado. ¿No queda obsoleto con TLS generalizado?»
-**Retirado de:** 2.2.3.4 (≈380 palabras).
+**Sede:** 2.2.3.4 (≈380 palabras). **Recorte NO EJECUTADO, y BLOQUEADO — no es un pendiente.** Las
+tres viñetas de **cifrado, volumen/velocidad y evasión** siguen íntegras en el cuerpo, y deben
+seguir: la auditoría declaró NO APTO retirar las sedes del cifrado, y **R4** (`eb0613a`) designó
+`2.2.3.4` **sede canónica** precisamente porque `2.3.3.5` remite a ella. Retirarla dejaría esa
+remisión colgando. Lo de abajo es, por tanto, **refuerzo oral de material que está en la memoria**.
 **Qué llevar — y este bloque conviene no perderlo, porque la respuesta favorece al trabajo:** con
 TLS generalizado, la inspección de *payload* pierde alcance y el sensor ve un flujo opaco. Pero las
 características de NSL-KDD son **metadatos y estadísticas de flujo** —duración, bytes por sentido,
@@ -535,8 +602,10 @@ así que la respuesta correcta no es defender que el sistema resiste evasión, s
 medido y el trabajo lo declara**.
 
 ### 5.7 «¿Qué es un IDS híbrido? Porque hay muchos papers que dicen serlo.»
-**Retirado de:** ≈140 palabras de 2.2.3.2 (el desarrollo de la crítica a la revisión de 2019). El
-núcleo de los cuatro sentidos **se queda en el cuerpo**.
+**Retirado de:** ≈140 palabras de 2.2.3.2 (el desarrollo de la crítica a la revisión de 2019).
+**Recorte EJECUTADO y verificado:** en el cuerpo la crítica está hoy condensada en un solo párrafo
+—«*la revisión más citada del área tampoco taxonomiza lo híbrido…*» `[31]`—, sin el desarrollo *ad
+fontem*. El núcleo de los cuatro sentidos **se queda en el cuerpo**.
 **Qué llevar de más:** que la ambigüedad no es de trabajos aislados sino del área. **La revisión más
 citada del campo tampoco taxonomiza lo híbrido**: organiza todo en SIDS y AIDS con gran detalle
 —técnicas, familias de algoritmos, datasets, métricas, evasión— y despacha los sistemas híbridos en
@@ -575,7 +644,10 @@ completo tras muro de pago, sin acceso institucional— y la memoria lo declara.
 ninguna cifra en la defensa.
 
 ### 5.9 «¿Un dataset de 1998? ¿Y las amenazas de hoy — ransomware, APT?»
-**Retirado de:** 2.2.5.3 (≈380 palabras). **Es el bloque retirado más probable de ser preguntado, y
+**Retirado de:** 2.2.5.3 «Panorama actual de amenazas» (≈380 palabras). **Recorte EJECUTADO y
+verificado:** el apartado ya no existe en el cuerpo —`ransomware`, `APT` y `phishing` tienen cero
+apariciones en las cinco notas de 2.2— y el número `2.2.5.3` lo ocupa hoy otro apartado, «Vigencia de
+una taxonomía de 1998», renumerado en `446ec4e`. **Es el bloque retirado más probable de ser preguntado, y
 el que conviene llevar mejor preparado, porque su ausencia del cuerpo es justo lo que el tribunal
 puede leer como punto ciego.**
 **Qué llevar:** los cuatro vectores dominantes de la última década. **Ransomware**: cifrado extorsivo
@@ -597,9 +669,12 @@ magnitud publicada citada de memoria en la defensa sería exactamente el error q
 por escrito**.
 
 ### 5.10 «Entonces, ¿su taxonomía sigue valiendo?»
-**Parcialmente retirado:** la tabla «A favor / En contra» de 2.2.5.4 se retira del cuerpo, pero
-**sigue en la memoria**, en `4.2 Base de datos utilizada`. El argumento conceptual se conserva en
-2.2.5.4.
+**Sede: el apartado «Vigencia de una taxonomía de 1998», que hoy es `2.2.5.3`** —era `2.2.5.4` y se
+renumeró al fusionarse en `446ec4e`, cuando desapareció el antiguo `2.2.5.3`. **Recorte PLANIFICADO,
+NO EJECUTADO:** la tabla «A favor / En contra (asumido)» **sigue en el cuerpo con sus cuatro filas**,
+además de estar el argumento desarrollado en `4.2 Base de datos utilizada`. Es decir: la
+deduplicación que el plan proponía **no se hizo**, y las dos sedes coexisten. El argumento conceptual
+—los tipos caducan, las categorías no— también está en el cuerpo.
 **Qué llevar:** dos razones que hay que separar con cuidado, porque mezclarlas debilita la respuesta.
 **(1) Lo que caduca son los tipos, no las categorías.** `smurf` es inviable desde que los routers
 dejaron de reenviar tráfico dirigido a broadcast; `teardrop` y `land` son fallos de pilas TCP/IP

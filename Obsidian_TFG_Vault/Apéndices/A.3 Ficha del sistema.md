@@ -433,11 +433,11 @@ sobre D2**, y se declaran aquí en lugar de omitirlas.
 > versiones difirieran, manda la redacción de [[6.1 Conclusiones]].
 
 
-| Decisión | Opción publicada | Criterio de selección | Registro de la decisión |
+| Decisión | Opción publicada | Criterio de selección | Dónde queda documentada en la memoria |
 |---|---|---|---|
-| 1 — detección de anomalías | Autoencoder-MLP | AUC-ROC / F1, métricas cuyo alcance declarado es «binario normal-vs-ataque sobre D2 completo» (A.3.4) | Decisión H-2 en `resumen-de-decisiones.md`; `hibrido.py:16` y `:755` documentan «Detector por defecto = Autoencoder (mejor en 5.1)» |
-| 2 — clasificador de firmas | RandomForest | `f1_macro` **sobre D2** = 0,822 | Decisión H-3 en `resumen-de-decisiones.md` |
-| 3 — set de características | **54** (frente a 122) | Recall 0-day por tipo + `f1_macro`, medidos con la cascada AE→RF **sobre D2** (experimento H1) | Decisión Q1/C y sección fechada 2026-07-15 de `resumen-de-decisiones.md`; [[4.3 Preprocesamiento de los datasets|4.3.5]] § Decisión experimental |
+| 1 — detección de anomalías | Autoencoder-MLP | AUC-ROC / F1, métricas cuyo alcance declarado es «binario normal-vs-ataque sobre D2 completo» (A.3.4) | Comparativa de los cuatro detectores en [[5.1 Resultados del modelo de detección de anomalías|5.1]]; el propio código de `hibrido.py` fija el Autoencoder como detector por defecto con la justificación «mejor en 5.1» |
+| 2 — clasificador de firmas | RandomForest | `f1_macro` **sobre D2** = 0,822 | Comparativa de los cuatro clasificadores en [[5.2 Resultados del modelo de detección basado en firmas|5.2]] |
+| 3 — set de características | **54** (frente a 122) | Recall 0-day por tipo + `f1_macro`, medidos con la cascada AE→RF **sobre D2** (experimento H1) | Tabla del experimento H1 y su veredicto en [[4.3 Preprocesamiento de los datasets|4.3.5]] § *Decisión experimental*, que es la **sede canónica** de esta desviación |
 
 Las tres son selección de modelo sobre el conjunto de test, es decir *data snooping*, y por tanto las
 métricas publicadas son optimistas respecto a lo que daría un test verdaderamente ciego. La tercera
@@ -474,8 +474,10 @@ seguridad este patrón se cataloga como contaminación por selección sobre el t
 >   D2, que no existe en este diseño, y no se ha medido.
 >
 > Declararlo es más defendible que negarlo. Afirmar que «D2 no participa en ninguna decisión» sería
-> **invertir** el defecto realmente cometido, y un lector que cotejase la ficha con
-> `resumen-de-decisiones.md` lo detectaría de inmediato.
+> **invertir** el defecto realmente cometido, y un lector que cotejase esta ficha con las tablas
+> comparativas del capítulo 5 y con la tabla del experimento H1 de
+> [[4.3 Preprocesamiento de los datasets|4.3.5]] lo detectaría de inmediato: en ambos sitios se ve
+> que la opción publicada es la que mejor puntuaba **sobre D2**.
 
 > [!warning] Límite declarado de alcance: la corrección no se ejecuta en este trabajo
 > **Qué corregiría el defecto.** Repetir las tres selecciones —algoritmo de cada etapa y set de
@@ -539,7 +541,7 @@ la fuente está en [[benchmark-comparativo-nsl-kdd]].
 | # | Ítem FT | Estado | Dónde se cumple |
 |---|---|---|---|
 | 1 | *Data collection* | Cumplido | NSL-KDD, `KDDTrain+` / `KDDTest+`; origen y procedencia en [[4.2 Base de datos utilizada]] |
-| 2 | *Link to data* | Cumplido | Repositorio público citado en `CLAUDE.md` y en [[4.2 Base de datos utilizada]] |
+| 2 | *Link to data* | Cumplido | Copia pública del dataset empleada en este trabajo: `https://github.com/Jehuty4949/NSL_KDD` (ficheros `KDDTrain+.txt` y `KDDTest+.txt`); procedencia y linaje del conjunto en [[4.2 Base de datos utilizada]] |
 | 3 | *Pre-processing* | Cumplido | One-hot, escalado y selección descritos en [[4.3 Preprocesamiento de los datasets]]; diagrama en `Implementacion/PIPELINE.md` |
 | 4 | *Sample allocation* | Cumplido | Particiones D1/D2/D3 con tamaños exactos en A.3.2 |
 | 5 | *Hyper-parameters* | Cumplido | `config_ganadora` persistida en cada CSV y volcada en A.3.3 |

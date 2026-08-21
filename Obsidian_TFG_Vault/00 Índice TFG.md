@@ -10,9 +10,7 @@ estado: borrador
 >
 > El encabezado de esta nota es una forma abreviada del título por legibilidad; el título válido para la memoria es el de arriba, literal.
 
-> [!info] Punto actual (2026-08-18): estructura ✅ · **capítulo 1 CERRADO — sus 5 notas (1.0-1.4) están `estado: redactada`** ✅ · **capítulo 2 Marco Teórico CERRADO** — sus 14 notas (2.1.1–2.1.6, 2.2.1–2.2.5, 2.3.1–2.3.3) están `estado: redactada` en prosa desde el 2026-08-15 ✅ · volcado de resultados a caps. 4-5 ✅ · Apéndice A.1 + 4.2.1 ✅ · **cap. 3 Diseño completo (3.1-3.6) ✅** · conclusiones 4.6, 5.4 y **6.1 ✅** · **4.1 Tecnologías ✅** · **A.2 Métricas ✅** · **A.3 Ficha del sistema ✅** · **4.2 completa: teoría redactada y sin marcadores `[CITA: …]` vivos ✅** · **6.2 Líneas futuras redactada (borrador extenso), pendiente solo de la revisión final de Francisco** (respaldo en `EL_FUTURO.md`) · lo único que sigue siendo de Francisco es la **bibliografía final en Zotero/IEEE** · **Resumen y Abstract redactados (2026-08-18): las 43 notas de la memoria están `estado: redactada`** ✅
->
-> **Actualizado el 2026-08-09 (T0):** la regla «la teoría en prosa la escribe Francisco» quedó retirada. Ver «Autoría de la redacción — estado vigente desde T0» en `features.md`.
+> [!info] Punto actual (2026-08-18): estructura ✅ · **capítulo 1 CERRADO — sus 5 notas (1.0-1.4) están `estado: redactada`** ✅ · **capítulo 2 Marco Teórico CERRADO** — sus 14 notas (2.1.1–2.1.6, 2.2.1–2.2.5, 2.3.1–2.3.3) están `estado: redactada` en prosa desde el 2026-08-15 ✅ · volcado de resultados a caps. 4-5 ✅ · Apéndice A.1 + 4.2.1 ✅ · **cap. 3 Diseño completo (3.1-3.6) ✅** · conclusiones 4.6, 5.4 y **6.1 ✅** · **4.1 Tecnologías ✅** · **A.2 Métricas ✅** · **A.3 Ficha del sistema ✅** · **4.2 completa: teoría redactada y sin marcadores `[CITA: …]` vivos ✅** · **6.2 Líneas futuras redactada (borrador extenso), pendiente solo de la revisión final de Francisco** · lo único que sigue siendo de Francisco es la **bibliografía final en Zotero/IEEE** · **Resumen y Abstract redactados (2026-08-18): las 43 notas de la memoria están `estado: redactada`** ✅
 >
 > **Actualizado el 2026-08-18:** resincronizados los estados publicados con el frontmatter real. La
 > tanda anterior pasó 26 notas de `borrador` a `redactada` en disco y este índice seguía publicando
@@ -44,7 +42,10 @@ Mapa de contenido del TFG. Las notas MD son la fuente de verdad; el docx se rell
 - `borrador` — redacción real existente pero con hueco de contenido; **hoy no lo lleva ninguna nota
   de la memoria**. La única entrada del listado en `borrador` es `Bibliografía`, que es aparato de
   apoyo y se cuenta aparte de las 43.
-- `📊 volcado` — resultados ya traídos desde `Resultados\` (mapa en `next-steps.md` §6.6).
+- `📊 volcado` — resultados ya traídos desde `Resultados\`. La correspondencia entre cada artefacto
+  y la sección que lo cita queda declarada en la propia nota de destino, donde el artefacto se
+  nombra al presentar la tabla o la figura; la ficha consolidada del sistema y el alcance de cada
+  métrica están en [[A.3 Ficha del sistema]].
 - `pendiente` — sin contenido; **hoy no lo lleva ninguna nota**.
 
 > [!note] Estados retirados
@@ -125,7 +126,7 @@ Mapa de contenido del TFG. Las notas MD son la fuente de verdad; el docx se rell
 ## 6. Conclusiones
 
 - [[6.1 Conclusiones]] — redactada: cumplimiento de objetivos + validación de la tesis + limitaciones
-- [[6.2 Líneas futuras]] — redactada, extensa (339 líneas), con criterio de admisión declarado: solo entra lo respaldado por una medición del trabajo o por una limitación estructural verificada. Fuente: `EL_FUTURO.md` e informes de `99 Investigación/`. **Pendiente solo de la revisión final de Francisco** (orden de prioridad y formulación de cada línea)
+- [[6.2 Líneas futuras]] — redactada, extensa (339 líneas), con criterio de admisión declarado: solo entra lo respaldado por una medición del trabajo o por una limitación estructural verificada. **Pendiente solo de la revisión final de Francisco** (orden de prioridad y formulación de cada línea)
 
 ## Apéndices
 
