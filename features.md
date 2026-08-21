@@ -25,7 +25,60 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 
 ## PRÓXIMOS PASOS — próxima sesión
 
-> ### 🔴 EMPIEZA POR AQUÍ — apunte de traspaso del 2026-08-20
+> ### 🔴 EMPIEZA POR AQUÍ — apunte de traspaso del 2026-08-21
+>
+> **Este es el apunte vigente.** Todo lo que hay debajo —incluido el del 2026-08-20— es **historial**:
+> no leas trabajo pendiente de ningún apunte anterior a esta fecha.
+>
+> **🔴 EL DATO QUE MANDA SOBRE EL RESTO: EL RECORTE POR VOLUMEN ESTÁ CUMPLIDO Y SOBRECUMPLIDO.**
+> El apunte del 2026-08-20 decía «la memoria está en **99.120 palabras (~330 páginas), desde
+> 108.591**». **Eso era un ESTADO ALCANZADO, no un objetivo**, y en la sesión del 2026-08-20/21 se
+> leyó como objetivo. **Medido en disco el 2026-08-21: la memoria (`00`–`06` + `Apéndices`) son
+> 97.730 palabras**, ya **1.390 por debajo** de esa cifra. Los **203.461** del vault completo
+> incluyen `99 Investigación` (**88.273**) y `Bibliografía.md` (**17.458**), que **NO son memoria y
+> nunca deben contarse**. **Nadie abre una ficha de volumen sin medir primero.**
+>
+> **CERRADO EN LA SESIÓN DEL 2026-08-20/21, con hash:** **R1** (`cb20a37`, `Bibliografía.md`
+> saneada), **ampliación de R1** (`43b1a6f`, las 12 reservas del cuerpo trasladadas: **15 reservas
+> registradas, cero PENDIENTE**), **R4** (`eb0613a`, «detección basada en el estado» **trasladada** de
+> `1.2` a `2.2.2.2` y `2.2.3.4` fijada sede canónica del cifrado), **R3** (`a8ed04b`, los **14**
+> callouts de reserva retirados de 8 notas), **R2** (`e706761`, `2.2` de **11.204 a 9.080**) y la
+> **review de la tanda** (`446ec4e`, `auditor-ml` APTO CON CAMBIOS, **9 de 10** hallazgos aplicados,
+> `2.2` queda en **9.023**).
+>
+> **DOS FICHAS CERRADAS SIN HACERSE, y la razón es la misma:** **R5** (`4.2` y `4.3` por encima de
+> 5.000 palabras) y **«¿Se aprieta más el capítulo 2?»** (`2.1` en **10.347**, `2.3` en **9.094**).
+> **Su única justificación era el volumen, y el volumen ya está.** Si alguien las reabre, **tiene que
+> traer una razón que no sea el volumen**.
+>
+> **LO QUE QUEDA ES COHERENCIA, NO VOLUMEN: las cinco fichas F1–F5** del bloque «Altas de la sesión
+> del 2026-08-20/21», en ese orden. **F1** (23 remisiones a ficheros de seguimiento que el lector no
+> tiene) es la única 🔴.
+>
+> **TANDAS PARA EL DESPACHO EN PARALELO. La unidad es el FICHERO, no el tema:**
+> - **Tanda A (EN SERIE, SOLA):** **F3** — `researcher` sobre `Bibliografía.md`. **No se combina con
+>   nada.**
+> - **Tanda B (3 agentes en paralelo, ficheros disjuntos):** **F1** troceada — agente 1: `3.1`–`3.5`;
+>   agente 2: `5.0`, `5.2`, `5.3`; agente 3: `A.3` y `4.3`. **El cuarto trozo, `6.2` +
+>   `00 Índice TFG.md`, VA APARTE**: el índice está en la lista de ficheros que nunca se tocan en
+>   paralelo.
+> - **Tanda C:** **F2**. No toca notas de la memoria, así que **paraleliza con cualquier cosa salvo
+>   consigo misma**.
+> - **Tanda D:** **F4**, diagnóstico y ejecución en la misma tirada.
+> - **Tanda E:** **F5**, troceable por nota **una vez F1 haya cerrado** (se solapan en `3.x` y `5.x`).
+> - **Cierre:** un `auditor-ml` de coherencia **ENTRE** las notas de cada tanda, y **una sola** pasada
+>   de `cronista` **por tanda**.
+>
+> **HALLAZGO DEL AUDITOR DESCARTADO POR VERIFICACIÓN — no se reabre.** Acusaba a esta tanda de
+> retirar tres callouts de gestión de `2.2.5.3` declarados fuera de alcance. **En `HEAD~5` ya no
+> estaban: los retiró `bf3bbfc`, de una sesión anterior.**
+>
+> **GIT: hay 8 commits SIN SUBIR. El `push` lo lanza Francisco**, no un agente ni el harness.
+
+> ### 🟢 EMPIEZA POR AQUÍ — apunte de traspaso del 2026-08-20 · **HISTORIAL: SUPERADO POR EL DEL 2026-08-21**
+>
+> **⚠️ Su cifra de 99.120 palabras se leyó como objetivo y NO lo era.** Ver el apunte del 2026-08-21.
+> Sus puntos 1, 2 y 3 están cerrados (R1, R4, R2, R3) y sus puntos 4 y 5 **cerrados sin hacerse**.
 >
 > **Francisco cerró la sesión para abrir otra y resolver EXACTAMENTE lo de abajo.** Todo lo demás de
 > este bloque es historial: no leas trabajo pendiente de ningún apunte anterior a esta fecha.
@@ -266,7 +319,16 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 >
 > ### ⛔ CONTADOR GLOBAL DE CITAS — el dato con riesgo real de este fichero
 >
-> **ESTADO VIGENTE A 2026-08-18, AL CIERRE DE LA TANDA 31 — contado contra disco por el hilo
+> **ESTADO VIGENTE A 2026-08-20, TRAS R1 (`cb20a37`) — contado contra disco:** se han emitido
+> **78 NÚMEROS**, de los que **70 SON ENTRADAS VIVAS** y **OCHO ESTÁN QUEMADAS**: `[9]`, `[27]`,
+> `[28]`, `[37]`, **`[40]`**, `[44]`, `[45]` y `[76]`. **`[40]` Krizhevsky se quemó** al retirarse el
+> recorrido histórico de `2.3.1`, que era su único uso vivo. **EL PRIMER `[n]` LIBRE SIGUE SIENDO EL
+> `[79]`:** quemar **no** devuelve el número al contador. Sigue valiendo el falso amigo: `[76]`
+> quemada, **`[78]` Storkey viva**. **Todo lo que este fichero o `CLAUDE.md` digan sobre «71 entradas
+> vivas» o «SIETE quemadas» es TRAZA HISTÓRICA** —`CLAUDE.md` quedó corregido el 2026-08-21 en
+> `eb0613a`—.
+>
+> **Estado a 2026-08-18, AL CIERRE DE LA TANDA 31 — SUPERADO, se deja como traza: contado contra disco por el hilo
 > principal y por el `researcher`, las dos cuentas coinciden: se han emitido **78 NÚMEROS**, de los
 > que **71 SON ENTRADAS VIVAS** y **SIETE ESTÁN QUEMADAS**: `[9]`, `[27]`, `[28]`, `[37]`, `[44]`,
 > `[45]` y `[76]`. Quemada = **retirada SIN RENUMERAR**, el número no vuelve al contador jamás.
@@ -853,13 +915,13 @@ eso el `3.3:42` y el residuo de T25 no llevan commit separado—;
   **(4) Los recuentos por nota de `[5]` están TODOS desfasados**, con localizadores a líneas que ya
   no existen. **Ojo: el contador global no se toca por quemar `[40]`** — el número no vuelve nunca.
 
-- [ ] 🟠 **`2.2` está recortado MENOS de lo que su informe pedía, y es A PROPÓSITO** · Informe · **necesita un pase coordinado**
+- [x] 🟠 **`2.2` está recortado MENOS de lo que su informe pedía, y es A PROPÓSITO** · **CERRADA el 2026-08-21 (R2, `e706761`, más los hallazgos de la review en `446ec4e`): el pase coordinado se ejecutó y `2.2` bajó de 11.204 a 9.080, y a 9.023 tras la review.** Verificado: **los 22 marcadores de cita del bloque siguen vivos y ningún wikilink roto**. Su fila vive ya en `## Cerradas` · Informe · **fue un pase coordinado**
   Alta el **2026-08-20**. La **dependencia del cifrado** se resolvió designando **`2.2.3.4` sede
   canónica**, pero **los recortes que colgaban de ella siguen pendientes**: no se pueden aplicar uno
   a uno sin volver a romper las remisiones. **Es el sexto 🟠 de la review, el único no aplicado.**
   Cifra de partida contada: `2.2` está en **11.204** palabras (venía de 12.030).
 
-- [ ] 🟠 **Dos callouts siguen en el cuerpo contra lo que decían los informes — y hoy son el ÚNICO registro de tres verificaciones «solo por resumen»** · Informe · **bloqueada: exige antes el pase del `researcher`**
+- [x] 🟠 **Dos callouts siguen en el cuerpo contra lo que decían los informes — y hoy son el ÚNICO registro de tres verificaciones «solo por resumen»** · **CERRADA el 2026-08-21 (R3, `a8ed04b`), y en el ORDEN que la ficha exigía:** primero la **ampliación de R1** (`43b1a6f`) trasladó a `Bibliografía.md` las **12 reservas que vivían solo en el cuerpo** —con las 3 de R1 son **15 reservas registradas, cero PENDIENTE**; Tombini y Kim **ya tenían entrada** (`[33]`, `[69]`), así que **cero altas**— y **solo entonces** se retiraron los **14** callouts (13 «Verificación pendiente» + el `[!todo]` de `2.1.4`) de **8 notas**. **Contado antes y después: cero residuales.** Su fila vive ya en `## Cerradas` · Informe · `researcher` + `redactor-tfg`
   Alta el **2026-08-20**. Son los **«Verificación pendiente»** de `2.1.6` y de `2.3.2` y el
   **«Localizador de `[6]`»** de `2.1.4.3`. **No se retiran todavía**: son lo único que declara que
   **`[18]` Arp, `[16]` Chow y `[49]` Bendale están verificadas SOLO POR RESUMEN**, mientras
@@ -879,7 +941,7 @@ eso el `3.3:42` y el residuo de T25 no llevan commit separado—;
   > a `Bibliografía.md` —pase del `researcher`, **ya lanzado como ampliación de R1**— **antes de retirar
   > ningún callout**, o el dato se pierde. **Sin ese traslado, esta ficha no se toca.**
 
-- [ ] 🟠 **DOS RECORTES BLOQUEADOS por la review de los informes — NO SE EJECUTAN** · Informe · **decide Francisco**
+- [x] 🟠 **DOS RECORTES BLOQUEADOS por la review de los informes — NO SE EJECUTAN** · **CERRADA el 2026-08-21 (R4, `eb0613a`), y NINGUNO de los dos se ejecutó como recorte: (a) «detección basada en el estado» se TRASLADÓ** de `1.2` a la línea histórica de `2.2.2.2` —existía **solo** en `1.2`, así que recortarla la habría borrado—; **(b) `2.2.3.4` quedó fijada sede canónica del cifrado** y se reescribió la remisión de `2.3.3.5`. Actualizado además el contador de citas de `CLAUDE.md`, que decía **71 vivas y siete quemadas**. Su fila vive ya en `## Cerradas` · Informe · **decidió Francisco**
   Alta el **2026-08-20**. Los dos ilustran la regla nueva: **un recorte justificado con «ya está en
   X» exige verificar X en disco, y dos informes no pueden justificar cada uno su recorte con el
   otro.**
@@ -889,10 +951,66 @@ eso el `3.3:42` y el residuo de T25 no llevan commit separado—;
   **(b) El CIFRADO:** sus sedes no se retiran todas porque **`2.3.3.5` remite a `2.2.3`**. Enlaza con
   la ficha del pase coordinado de `2.2`.
 
-- [ ] 🟡 **`4.2` y `4.3` siguen por encima de 5.000 palabras cada una** · Informe · **decide Francisco**
+- [x] 🟡 **`4.2` y `4.3` siguen por encima de 5.000 palabras cada una** · **CERRADA el 2026-08-21 SIN HACERSE: NO SE RECORTAN.** Su **única justificación era el volumen, y el volumen ya está cumplido y sobrecumplido** —memoria medida en disco el 2026-08-21: **97.730 palabras**, **1.390 por debajo** de las 99.120 que el apunte del 2026-08-20 daba como estado alcanzado y que se leyeron por error como objetivo—. Son **sedes canónicas**: con el criterio «quién lo usa» **no salen**. **Si alguien la reabre, tiene que traer una razón que NO sea el volumen.** Su fila vive ya en `## Cerradas` · Informe · **decidió Francisco**
   Alta el **2026-08-20**, **reabierta con la misma razón que en la Tanda C**: **no se tocaron a
   propósito — son sedes canónicas, no duplicación.** Recortarlas es **otra decisión de Francisco**,
   y con el criterio «quién lo usa» no salen: son ellas las que se usan.
+
+### Altas de la sesión del 2026-08-20/21 — F1 a F5
+
+> **Cinco fichas, y NINGUNA es de volumen: son de COHERENCIA.** El recorte por volumen está
+> **cumplido y sobrecumplido** (memoria = **97.730** palabras medidas en disco el 2026-08-21).
+> **Orden de ejecución: F1 → F2 → F3 → F4 → F5**, y el reparto en tandas está en el apunte de
+> traspaso del 2026-08-21.
+
+- [ ] 🔴 **La memoria cita 23 veces ficheros de seguimiento que el lector no tiene** · Informe · `redactor-tfg`
+  Alta el **2026-08-21**. **Contado en disco:** `resumen-de-decisiones.md` (**14**), `EL_FUTURO.md`
+  (**5**), `next-steps.md` (**2**), `features.md` (**1**), `CLAUDE.md` (**1**), repartidas en **12
+  notas**: `A.3` (5), `00 Índice TFG.md` (4), `4.3` (3), `6.2` (2), `5.3` (2), y `5.2`, `5.0`, `3.1`,
+  `3.2`, `3.3`, `3.4`, `3.5` (1 cada una). **Ninguno de esos ficheros existe para el tribunal:** una
+  nota que justifica una decisión remitiendo a `resumen-de-decisiones.md` **no la justifica**. Cada
+  remisión se resuelve **de una de dos formas: se dice el contenido en la propia nota, o se remite a
+  una sede de la memoria**.
+  > **⚠️ NO confundir con la PROCEDENCIA legítima, que SE QUEDA:** los sellos tipo `274923d-sucio` +
+  > fecha de `A.3` son **trazabilidad de artefactos** y son **correctos**.
+
+- [ ] 🟠 **Los informes de «material para la defensa oral» describen como retirado texto que sigue en el cuerpo** · Informe · **NO toca notas de la memoria**
+  Alta el **2026-08-21**, **hallazgo 9 del `auditor-ml`**. En
+  `99 Investigación/Recorte capítulo 2 - bloque 2.2.md`, los bloques **§5.1, §5.2, §5.5, §5.6 y
+  §5.10** declaran **retirado o borrado** material que está **íntegro en disco**: `2.2.1.4` completa,
+  la tabla HIDS/NIDS de 6 filas de `2.2.3.1`, los tres desgloses de `2.2.1.2`, `2.2.1.1` y `2.2.1.3`,
+  las tres viñetas de cifrado/volumen/evasión de `2.2.3.4`, la tabla «A favor / En contra» de
+  `2.2.5.4` y la tabla Entrada/Salida de `2.2.2.1`. **El recorte ejecutado y el planificado no son el
+  mismo**, y el registro **promete una trazabilidad que no existe**. Hay que **reconciliar los
+  informes con el disco**.
+
+- [ ] 🟠 **Tres arreglos en `Bibliografía.md`** · Informe · **solo `researcher`** · **SIEMPRE EN SERIE, nunca en paralelo con nada**
+  Alta el **2026-08-21**.
+  **(a)** La fila **`[38]`** localiza en **`2.2.5.4`**, apartado **fusionado en `446ec4e`**: hay que
+  **reapuntarla a `2.2.5.3`**.
+  **(b)** Las reservas de los **cinco callouts fuera del capítulo 2** —`3.5` Shwartz-Ziv y Armon,
+  `6.1` Scheirer et al., y el bucle de realimentación de `6.2`— **siguen viviendo solo en el cuerpo**,
+  lo que es **incoherente con la derogación de T14 del 2026-08-20**: la reserva **debe vivir en la
+  fila**.
+  **(c)** Cuatro filas —**`[29]`, `[34]`, `[46]`, `[47]`**— siguen con **identidad inferida del
+  contexto**, reserva de **segundo orden** que conviene confirmar.
+
+- [ ] 🟠 **Solapes 2↔4/5/6 sin diagnosticar** · Informe
+  Alta el **2026-08-21**. El barrido de la **Tanda 19** fue **INTERNO** al capítulo 2. **Esta ficha ya
+  NO es de volumen: es de COHERENCIA** —un concepto definido dos veces en dos capítulos—. Sospechas
+  ya escritas: **D9** (las cuatro transformaciones) y **D11** (SMOTE por *fold*, con sede extra en
+  `2.1.6.5`). **Autorización de Francisco del 2026-08-20: diagnosticar y ejecutar en la misma
+  tirada**, consultándole **solo si aparece otro caso tipo `1.2`** —contenido único en peligro—.
+
+- [ ] 🟡 **Barrer los callouts que leen como nota interna en lugar de prosa de memoria** · Informe
+  Alta el **2026-08-21**. En el bloque `2.2` quedan **once** callouts (cuatro en `2.2.2`, uno en
+  `2.2.3`, cinco en `2.2.4`, uno en `2.2.5`); **tres ya se despersonalizaron en `446ec4e`** —«Alcance
+  de la cita», «Sobre la fecha» de `1.2` y «Alcance declarado» de `2.3.3`—. Falta revisar **el resto
+  del capítulo 2 y de la memoria** con el mismo criterio: **¿esto lo lee el tribunal como contenido, o
+  como acta de trabajo?** **Dato a favor de que el problema es acotado:** contado en disco el
+  2026-08-21, en la memoria hay **CERO** ocurrencias de «Tanda N», «decisión de Francisco», nombres de
+  agentes y referencias `fichero:línea`. **Troceable por nota UNA VEZ F1 haya cerrado**: se solapan en
+  `3.x` y `5.x`.
 
 ### Altas de la TANDA 30 — 2026-08-18
 
@@ -992,8 +1110,9 @@ eso el `3.3:42` y el residuo de T25 no llevan commit separado—;
 > ~~**Contador verificado contra disco en el mismo pase: 76 filas antes y 76 después, `[1]`–`[8]` +
 > `[10]`–`[77]`, CERO altas, `[9]` sigue quemada, ningún `[n]` renumerado. El primer libre sigue
 > siendo el `[78]`.**~~ **TRAZA HISTÓRICA — caducada el 2026-08-18 (TANDA 31).** El recuento vigente
-> vive **solo** en el bloque «CONTADOR GLOBAL DE CITAS» de `## PRÓXIMOS PASOS`: **78 números
-> emitidos, 71 entradas vivas, SIETE quemadas, primer libre `[79]`.** No copies la cifra de aquí.
+> vive **solo** en el bloque «CONTADOR GLOBAL DE CITAS» de `## PRÓXIMOS PASOS`: desde R1
+> (2026-08-20) son **78 números emitidos, 70 entradas vivas, OCHO quemadas, primer libre `[79]`**.
+> No copies la cifra de aquí.
 
 - [x] 🟡 **Edición de `[8]` Stallings: 4.ª (2018) vs 5.ª (2023)** · **CERRADA el 2026-08-18 en la TANDA 30 (ciclo A, `researcher` en ciclo propio): APLICADA la 5.ª ed., Pearson 2023** en `Bibliografía.md`. Su fila vive ya en `## Cerradas` · Informe · **decide Francisco, con el libro delante**
   Alta el **2026-08-18**. La entrada queda **⚠️ EDICIÓN NO ESTABLECIDA**. Las dos ediciones coexisten
@@ -1893,7 +2012,13 @@ eso el `3.3:42` y el residuo de T25 no llevan commit separado—;
 > son de esta nota, y el hallazgo 🔴 **(a)** —el `[!todo]` falso del 13,4 % en `6.2:84-88`—. Se deja
 > esta línea para que nadie la vuelva a despachar; el encargo original vive en git.
 
-- [ ] **T14 · Cerrar las verificaciones pendientes** · — · `researcher`
+- [ ] **T14 · Cerrar las verificaciones pendientes** · — · **NO EJECUTABLE POR AGENTE** (marcado el 2026-08-21)
+  > **⚠️ SE QUEDA ABIERTA, PERO NINGÚN AGENTE LA DESPACHA.** Desde la **Decisión 4 de la Fase 0**
+  > (Francisco, 2026-08-14) es un **inventario de puntos que Francisco revisará él en la revisión
+  > final del informe**, no una tarea de `researcher`. **No se le asigna agente y no entra en ninguna
+  > tanda.** Su **regla permanente quedó DEROGADA el 2026-08-20**: la reserva vive **solo en la fila
+  > de `Bibliografía.md`**, no en el cuerpo de las notas.
+
   Francisco **no tiene acceso institucional**. **Esta es la ficha ejecutable y el inventario completo
   vive solo aquí** (consolidado el 2026-08-09: la ficha de guardia «PDF sin acceso institucional»
   duplicaba el mismo listado y se ha reducido a su función propia, con puntero a T14).
@@ -1989,7 +2114,11 @@ eso el `3.3:42` y el residuo de T25 no llevan commit separado—;
      la forma anterior en `CLAUDE.md:63`, `next-steps.md:621`,
      `resumen-de-decisiones.md:319,343` y `Guia_ML\03_validacion_y_metricas.md:153`.
 
-- [ ] **PDF sin acceso institucional — reabrir si Francisco consigue acceso** · — · `researcher`
+- [ ] **PDF sin acceso institucional — reabrir si Francisco consigue acceso** · — · **NO EJECUTABLE POR AGENTE** (marcado el 2026-08-21)
+  > **⚠️ SE QUEDA ABIERTA, PERO ESTÁ BLOQUEADA EN EL ACCESO, NO EN UN AGENTE.** Ningún `researcher`
+  > puede desbloquearla: **no hay nada que despachar hasta que Francisco consiga el acceso.** No entra
+  > en ninguna tanda.
+
   Ficha de guardia abierta el 2026-08-06 junto a T14. **Su única función es esa: quedarse de guardia.**
   Si Francisco consigue acceso institucional, se reabren las verificaciones degradadas o cerradas por
   escrito y se revisa qué afirmaciones pueden dejar de ir con salvedad.
@@ -2139,7 +2268,7 @@ eso el `3.3:42` y el residuo de T25 no llevan commit separado—;
 
 ### Apuntes de relectura de la memoria — alta del 2026-08-12
 
-- [ ] **`1.4`: qué conceptos de IA entran de verdad en el capítulo 2, y resúmenes de capítulo demasiado escuetos** · Informe · `redactor-tfg`
+- [x] **`1.4`: qué conceptos de IA entran de verdad en el capítulo 2, y resúmenes de capítulo demasiado escuetos** · **CERRADA POR CADUCIDAD el 2026-08-21, con permiso de Francisco del 2026-08-20: su ficha contenedora, el GRUPO IV, está `- [x]` CERRADA ENTERA desde el 2026-08-19 (TANDA C)** y esta seguía marcada `- [ ]`. `1.4` fue la parte (3) del Grupo IV y se ejecutó allí. Su fila vive ya en `## Cerradas` · Informe · `redactor-tfg`
   Sale de la **relectura de la memoria completa** que está haciendo Francisco. **Fuente viva:
   `mis-apuntes-del-informe.md`**, en la raíz del repo. Ese fichero es **incremental**: Francisco lo
   sigue ampliando conforme relee, así que **al ejecutar esta ficha hay que releerlo entero** y
@@ -2161,7 +2290,7 @@ eso el `3.3:42` y el residuo de T25 no llevan commit separado—;
     «Qué conceptos de IA entran en el capítulo 2» es una **decisión de contenido** y **no la puede
     tomar un agente**.
 
-- [ ] **`2.1` · coherencia y densidad del guion teórico** · Informe · `redactor-tfg`
+- [x] **`2.1` · coherencia y densidad del guion teórico** · **CERRADA POR CADUCIDAD el 2026-08-21, con permiso de Francisco del 2026-08-20: su ficha contenedora, el GRUPO IV, está `- [x]` CERRADA ENTERA desde el 2026-08-19** y esta seguía marcada `- [ ]`. Fue la parte (1) del Grupo IV (TANDA A, `5502d31`). **Y el residuo de densidad que dejaba —`2.1` en 10.347 palabras— quedó CERRADO SIN HACERSE el 2026-08-21: era volumen, y el volumen ya está.** Su fila vive ya en `## Cerradas` · Informe · `redactor-tfg`
   Sale de la misma relectura. **Fuente viva: `mis-apuntes-del-informe.md`**, en la raíz del repo.
   Ese fichero es **incremental**: Francisco lo sigue ampliando conforme relee, así que **al
   ejecutar esta ficha hay que releerlo entero** y trabajar sobre lo que diga ese día — **no fiarse
@@ -2191,7 +2320,7 @@ eso el `3.3:42` y el residuo de T25 no llevan commit separado—;
   - **ALCANCE NO CERRADO:** «cuánta teoría sobra» y «dónde se define la IA» son **decisiones de
     contenido**; hará falta un **`grill-me` con Francisco** antes de ejecutar.
 
-- [ ] **Revisión del profesor: simplificar, unificar y desduplicar del capítulo 3 en adelante** · Informe · `redactor-tfg`
+- [x] **Revisión del profesor: simplificar, unificar y desduplicar del capítulo 3 en adelante** · **CERRADA POR CADUCIDAD el 2026-08-21, con permiso de Francisco del 2026-08-20: su ficha contenedora, el GRUPO IV, está `- [x]` CERRADA ENTERA desde el 2026-08-19** y esta seguía marcada `- [ ]`. Fue la parte (2) del Grupo IV: S1–S15 del capítulo 3 en la TANDA B (`379d1b2`) y los 18 solapes D1–D18 de los capítulos 4-6 en la TANDA C (`2d48cfd`). **Lo único que dejaba vivo, los solapes 2↔4/5/6, es hoy ficha propia: F4.** Su fila vive ya en `## Cerradas` · Informe · `redactor-tfg`
   **El material que el profesor pide quitar del cuerpo se MUEVE al apéndice `A.3 Ficha del
   sistema` (`T7`), NO se elimina.** `T7` es exactamente la *model card* donde viven semilla,
   hiperparámetros y configuraciones ganadoras; borrar esos datos rompería `T7` y la
@@ -2750,7 +2879,17 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
-| 2026-08-20 | Informe | **🟠 «Pase del `researcher` sobre `Bibliografía.md` tras el recorte» — CERRADA. Único fichero tocado: `Obsidian_TFG_Vault/Bibliografía.md`.** **CONTADOR CONTADO EN DISCO: 78 filas emitidas; tras quemar `[40]` quedan 70 VIVAS y 8 QUEMADAS —`[9]`, `[27]`, `[28]`, `[37]`, `[40]`, `[44]`, `[45]`, `[76]`—. EL PRIMER NÚMERO LIBRE SIGUE SIENDO EL `[79]`: quemar NO devuelve el número al contador.** **Cero altas, cero renumeraciones.** Los cuatro defectos del recorte: **(1) `[40]` Krizhevsky QUEMADA** —sin uso vivo en la memoria tras retirarse el recorrido histórico de `2.3.1`; solo quedaba en prosa de `99 Investigación/`, **que no es memoria**—, con su declaración de uso retirada. **(2) y (3) `[6]` Goodfellow: recuento corregido a 1 uso vivo en `2.1.4.3` + 7 en `A.3.10.3`** (las 7 se habían mudado allí), y **localizador corregido — apuntaba al apartado INEXISTENTE `2.1.4.3.4`**; retiradas además las declaraciones residuales de orfandad. **(4) `[5]` Géron RECONTADA: 25 ocurrencias en 7 notas** — el recuento anterior estaba mal **en las cinco notas del capítulo 2** y **omitía los 5 usos de `A.2`/`A.3`**. **Extras del mismo pase: `[54]` Molnar pierde la declaración caducada de «edición sin fijar»**, y **las reservas de verificación de `[18]` Arp, `[16]` Chow y `[49]` Bendale quedan TRASLADADAS a sus filas, autosuficientes y con FIABILIDAD 1 INTACTA** — decisión de Francisco del 2026-08-20: la reserva es **nota**, no degradación. **DEJA ALCANCE VIVO, fichado arriba: R3 sigue BLOQUEADA** porque las reservas de `[3]`, `[22]`, `[25]`, `[29]`, `[30]`, `[34]`, `[46]`, `[47]`, `[48]`, `[70]`, Tombini (2004) y Kim (2014) **viven todavía solo en el cuerpo de las notas** | — |
+| 2026-08-21 | Ninguno | **🔴 EL RECORTE POR VOLUMEN ESTÁ CUMPLIDO Y SOBRECUMPLIDO — CORRECCIÓN DE REGISTRO, y es el dato que manda sobre el resto.** El apunte del 2026-08-20 escribió «la memoria está en **99.120 palabras (~330 páginas), desde 108.591**»: **eso era un ESTADO ALCANZADO, no un objetivo**, y en la sesión del 2026-08-20/21 **se leyó como objetivo**. **Medido en disco el 2026-08-21: la memoria (`00`–`06` + `Apéndices`) son 97.730 palabras**, ya **1.390 POR DEBAJO** de esa cifra. **Los 203.461 del vault completo NO son la memoria:** incluyen `99 Investigación` (**88.273**) y `Bibliografía.md` (**17.458**), que **nunca deben contarse**. **CONSECUENCIA OPERATIVA: nadie abre una ficha de volumen sin medir primero**, y las dos que quedaban se cierran **sin hacerse** — `4.2`/`4.3` (R5) y «¿se aprieta más el capítulo 2?» (`2.1` en **10.347**, `2.3` en **9.094**) —. **Lo que queda es COHERENCIA, no volumen: F1–F5** | — |
+| 2026-08-21 | Informe | **🟡 «`4.2` y `4.3` siguen por encima de 5.000 palabras cada una» (R5) — CERRADA SIN HACERSE: NO SE RECORTAN.** **Su única justificación era el volumen, y el volumen ya está.** Son **sedes canónicas**: con el criterio «quién lo usa» **no salen, porque son ellas las que se usan**. **Si alguien la reabre, tiene que traer una razón que NO sea el volumen** | — |
+| 2026-08-21 | Informe | **🟡 «¿Se aprieta más el capítulo 2?» — CERRADA SIN HACERSE, por la misma razón.** `2.1` está en **10.347** palabras y `2.3` en **9.094**, y **no hay objetivo global de volumen que lo exija**. **Nunca tuvo ficha en `## Abiertas`: vivía solo como punto 5 del apunte de traspaso del 2026-08-20**, y se registra aquí para que no desaparezca sin rastro. **Lo que sí queda de ella es coherencia: los solapes 2↔4/5/6, hoy ficha F4** | — |
+| 2026-08-21 | Informe | **🟠 «`2.2` está recortado MENOS de lo que su informe pedía» (R2) — CERRADA: el pase coordinado se ejecutó.** `2.2` baja de **11.204 a 9.080** palabras, y a **9.023** tras aplicar la review. **Verificado: los 22 marcadores de cita del bloque siguen vivos y ningún wikilink roto** | `e706761` |
+| 2026-08-21 | Informe | **🟠 «Dos callouts siguen en el cuerpo…» (R3) — CERRADA, y EN EL ORDEN QUE LA FICHA EXIGÍA.** Primero la **ampliación de R1** trasladó a `Bibliografía.md` las **12 reservas que vivían solo en el cuerpo** —con las 3 de R1 son **15 reservas registradas y CERO PENDIENTE**; **Tombini (2004) y Kim (2014) ya tenían entrada (`[33]`, `[69]`): cero altas**—, y **solo entonces** se retiraron los **14** callouts (**13** «Verificación pendiente» + el `[!todo]` de `2.1.4`) de **8 notas**. **Contado antes y después: cero residuales.** La ficha no eran «dos»: eran **13+1**, y el orden es lo que evitó perder la reserva | `a8ed04b`, `43b1a6f` |
+| 2026-08-21 | Informe | **🟠 «DOS RECORTES BLOQUEADOS» (R4) — CERRADA, y NINGUNO DE LOS DOS SE EJECUTÓ COMO RECORTE.** **(a)** «Detección basada en el estado» **existía SOLO en `1.2`**, así que **no se recortó: se TRASLADÓ** a la línea histórica de `2.2.2.2` — recortarla la habría **borrado del trabajo**. **(b)** **`2.2.3.4` queda fijada sede canónica del cifrado** y se **reescribió la remisión de `2.3.3.5`**. **Colateral: actualizado el contador de citas de `CLAUDE.md`, que seguía diciendo 71 vivas y siete quemadas** | `eb0613a` |
+| 2026-08-21 | Informe | **REVIEW DE LA TANDA · `auditor-ml`: APTO CON CAMBIOS, NUEVE DE DIEZ hallazgos aplicados.** `2.2` queda en **9.023** palabras. **Lo que solo se ve mirando las notas JUNTAS**, que es exactamente para lo que sirve auditar una tanda paralela: **`§2.2.2.2` anunciaba «dos tradiciones» y enumeraba TRES** tras el traslado; el traslado dejó **la MISMA definición en `1.2` y en `2.2.2.2`**; la remisión de **`§2.2.3.3`** prometía un desarrollo que **era justo lo condensado**; el «Encaje» de **`§2.2.3.4`** apuntaba a **un ítem ajeno a su propia lista**; **`§2.2.5.3` era un epígrafe de una frase** que anticipaba `§2.2.5.4` —**FUSIONADOS, y `§2.2.5.4` YA NO EXISTE**, con la consecuencia fichada en F3(a)—; y un callout de **`1.2`** era **un acta de sesión** con fecha, «Tanda 25» y una referencia `:14` de las prohibidas. **Tres callouts despersonalizados** aquí: «Alcance de la cita», «Sobre la fecha» de `1.2` y «Alcance declarado» de `2.3.3` | `446ec4e` |
+| 2026-08-21 | Ninguno | **HALLAZGO DEL AUDITOR DESCARTADO POR VERIFICACIÓN — queda registrado así para que NADIE LO REABRA.** Acusaba a esta tanda de **retirar tres callouts de gestión de `2.2.5.3` declarados fuera de alcance**. **En `HEAD~5` ya no estaban: los retiró `bf3bbfc`, de una sesión ANTERIOR.** Es el patrón de siempre —un hallazgo que atribuye a la tanda un cambio que no hizo—, y la única defensa es **verificar contra el árbol antes de aceptar el reparo** | — |
+| 2026-08-21 | Informe | **TRES FICHAS DEL GRUPO IV CERRADAS POR CADUCIDAD, con permiso de Francisco del 2026-08-20:** «`1.4`: qué conceptos de IA entran de verdad en el capítulo 2», «`2.1` · coherencia y densidad del guion teórico» y «Revisión del profesor: simplificar, unificar y desduplicar del capítulo 3 en adelante». **Su ficha contenedora, el GRUPO IV, está `- [x]` CERRADA ENTERA desde el 2026-08-19 (TANDA C) y las tres seguían marcadas `- [ ]`**, contando como trabajo vivo lo que ya se había ejecutado como partes (1), (2) y (3) de ese grupo. **Cero ficheros del vault tocados: es corrección de registro** | — |
+| 2026-08-21 | Ninguno | **DOS FICHAS MARCADAS «NO EJECUTABLE POR AGENTE», y SE QUEDAN ABIERTAS:** **T14 · «Cerrar las verificaciones pendientes»** —desde la Decisión 4 de la Fase 0 es un **inventario para la revisión final de Francisco**, no una tarea de `researcher`— y **«PDF sin acceso institucional»** —**bloqueada en el ACCESO, no en un agente**—. **Se les retira el agente asignado y no entran en ninguna tanda.** Ambas seguían apareciendo como despachables a un `researcher`, que es lo que hacía que un barrido de `- [ ]` las contara como trabajo pendiente | — |
+| 2026-08-20 | Informe | **🟠 «Pase del `researcher` sobre `Bibliografía.md` tras el recorte» — CERRADA. Único fichero tocado: `Obsidian_TFG_Vault/Bibliografía.md`.** **CONTADOR CONTADO EN DISCO: 78 filas emitidas; tras quemar `[40]` quedan 70 VIVAS y 8 QUEMADAS —`[9]`, `[27]`, `[28]`, `[37]`, `[40]`, `[44]`, `[45]`, `[76]`—. EL PRIMER NÚMERO LIBRE SIGUE SIENDO EL `[79]`: quemar NO devuelve el número al contador.** **Cero altas, cero renumeraciones.** Los cuatro defectos del recorte: **(1) `[40]` Krizhevsky QUEMADA** —sin uso vivo en la memoria tras retirarse el recorrido histórico de `2.3.1`; solo quedaba en prosa de `99 Investigación/`, **que no es memoria**—, con su declaración de uso retirada. **(2) y (3) `[6]` Goodfellow: recuento corregido a 1 uso vivo en `2.1.4.3` + 7 en `A.3.10.3`** (las 7 se habían mudado allí), y **localizador corregido — apuntaba al apartado INEXISTENTE `2.1.4.3.4`**; retiradas además las declaraciones residuales de orfandad. **(4) `[5]` Géron RECONTADA: 25 ocurrencias en 7 notas** — el recuento anterior estaba mal **en las cinco notas del capítulo 2** y **omitía los 5 usos de `A.2`/`A.3`**. **Extras del mismo pase: `[54]` Molnar pierde la declaración caducada de «edición sin fijar»**, y **las reservas de verificación de `[18]` Arp, `[16]` Chow y `[49]` Bendale quedan TRASLADADAS a sus filas, autosuficientes y con FIABILIDAD 1 INTACTA** — decisión de Francisco del 2026-08-20: la reserva es **nota**, no degradación. **DEJA ALCANCE VIVO, fichado arriba: R3 sigue BLOQUEADA** porque las reservas de `[3]`, `[22]`, `[25]`, `[29]`, `[30]`, `[34]`, `[46]`, `[47]`, `[48]`, `[70]`, Tombini (2004) y Kim (2014) **viven todavía solo en el cuerpo de las notas** — **TRASLADADAS el 2026-08-21 en la ampliación de R1 (`43b1a6f`); lo único que queda de esa cola son las CINCO reservas de fuera del capítulo 2, hoy ficha F3(b)** | `cb20a37` |
 | 2026-08-20 | Ninguno | **LA REGLA PERMANENTE DE T14 QUEDA DEROGADA — decisión de Francisco del 2026-08-20.** Decía que **toda nota que citara una de las fuentes verificadas solo por resumen «nace con un marcador VISIBLE DENTRO de la nota»**; desde hoy **la reserva vive SOLO en `Bibliografía.md`**, en la fila de su entrada. Anotado en la propia ficha de T14, con el texto viejo tachado y conservado como historial. **No se reintroduce en ningún fichero** | — |
 | 2026-08-20 | Informe | **REVIEW DEL RECORTE POR VOLUMEN · `auditor-ml`: APTO CON CAMBIOS, seis 🟠, CINCO APLICADOS.** El más grave: **`2.1.5.3` dejaba «micro» discutido en una lista cuando el término ya NO se definía en ningún sitio de la memoria** — un recorte puede dejar huérfana una **definición**, no solo una cifra. Los otros cuatro aplicados: el callout de **`A.3.6`** remitía **13 celdas a `5.2.4.3`, que solo enumera 5**; **`A.3.10.3`** había quedado **anidada bajo `A.3.11`** al trasladarla; **hueco de numeración `2.3.1.1`→`2.3.1.3`**, renumerado **con sus dos remisiones reapuntadas**; y **`A.3.11.2`** afirmaba que el inventario vive en **`2.1.6.2`, que dejó de contenerlo**. **HALLAZGO COLATERAL, encontrado al mover `A.3.10.3`: `A.3.10` se titulaba «algoritmos que el sistema NO emplea» cuando el autoencoder SÍ se emplea — RETITULADA.** El sexto 🟠 queda vivo como ficha abierta (`2.2` recortado menos de lo que pedía su informe) | `ac7c821` |
 | 2026-08-20 | Informe | **RECORTE POR VOLUMEN DEL CAPÍTULO 2 Y DE `A.3` — EJECUCIÓN.** Nace de una **medida**, no de una impresión: la memoria eran **108.591 palabras (~360 páginas)** y **el capítulo 2 solo, 35.361** —un tercio del total y más que un TFG de grado típico completo—. **Decisión de Francisco del 2026-08-19:** el criterio **«quién lo usa»** se extiende a **TODO el capítulo 2** —cada apartado de `2.x` debe poder señalar el punto de los capítulos 3-5 que lo usa— y **«comprimir, no suprimir»**, con el orden **«primero lo que pidió el profesor, después el volumen»**. **VOLUMEN RECONTADO CON `wc -w` DESPUÉS DE APLICAR, nunca estimado: 108.591 → 99.120 palabras (~330 páginas), −9.471 (−8,7 %).** Por bloque: **`A.3 Ficha del sistema` 15.325 → 9.870**; **capítulo 2 35.361 → 31.261** (`2.1` **13.125 → 10.599**, `2.2` **12.030 → 11.204**, `2.3` **10.206 → 9.458**). **EL MAYOR AHORRO DE UNA PIEZA: las dos tablas de `A.3.6`, 198 filas que transcribían A MANO `Resultados/dispersion_semillas.csv`** —versionado y con **199 líneas, verificado**— **sin añadir ni una columna al artefacto**; una de ellas llevaba en su propio título «NO es calidad y NO se cita como resultado». **T7 CUMPLIDO Y CON PRUEBA: `A.3` CRECIÓ +766 palabras** por los traslados entrantes (el análisis del residual desde `4.4`, y las redes neuronales de `2.1.4.3` a `A.3.10.3`); **si no hubiera crecido, algo se habría perdido**. **MÉTODO: lo aplicó EL HILO PRINCIPAL con `Edit`, sin circuito de agentes**, por autorización de Francisco — **dos intentos con `redactor-tfg` en paralelo murieron por 529 Overloaded sin escribir nada** (árbol limpio y recuentos intactos, verificado). **COMMITS:** `8fba585` (tablas de `A.3.6`), `670ec26`, `ed49451`, `f370c35`, `713d2c3` (bloque `2.1`), `1719c66` (`2.3`), `bf3bbfc` (`2.2`). **DOS HALLAZGOS QUE VALEN COMO REGLA, no como anécdota: (1) un recorte puede CREAR duplicación** —al insertar la frase canónica de D3, los callouts de `4.6` y `A.3` quedaron con un párrafo «Remisión» que repetía lo que la propia frase ya decía—; **(2) al irse una tabla, su prosa queda coja**: `4.4` decía «el AUC-ROC de **esta tabla**», `4.2.1` remitía a «**el artefacto**» sin que nadie lo nombrara ya, y `2.1.5.3` anunciaba «**tres** esquemas» con dos. **Y una tercera: un recorte justificado con «ya está en X» exige verificar X EN DISCO, y dos informes NO pueden justificar cada uno su recorte con el otro** — dos recortes quedaron bloqueados por eso (ficha abierta). **CINCO FICHAS ABIERTAS por este pase**, en `## Abiertas` | `8fba585` |
