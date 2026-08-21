@@ -51,29 +51,29 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > **Su única justificación era el volumen, y el volumen ya está.** Si alguien las reabre, **tiene que
 > traer una razón que no sea el volumen**.
 >
-> **LO QUE QUEDA ES COHERENCIA, NO VOLUMEN: las cinco fichas F1–F5** del bloque «Altas de la sesión
-> del 2026-08-20/21», en ese orden. **F1** (23 remisiones a ficheros de seguimiento que el lector no
-> tiene) es la única 🔴.
+> **F1, F2, F3 y F5 están CERRADAS** el 2026-08-21 (`22a6ddc`, `d4aa742`, `7774257`, `b8335b4`), con
+> sus cuatro residuos y con el residuo de metadiscurso «sede canónica / sede única», que **en la
+> memoria ya está a cero**. **Lo único que queda vivo de F1–F5 es la MITAD (b) de F4:** el barrido
+> **sistemático** del perímetro 2↔4/5/6, que **no consta en ningún informe** y por tanto **no está
+> auditado**. Su mitad concreta —**D9** (sede única de las cuatro transformaciones en `4.3.7`) y
+> **D11** (SMOTE por *fold* en `4.3.4`)— **está hecha y verificada en disco**, y **`2.1.6.5` no era
+> duplicado sino la sede conceptual de la fuga**, ya cosida en ambos sentidos. **Abrir el perímetro es
+> decisión de Francisco.**
 >
-> **TANDAS PARA EL DESPACHO EN PARALELO. La unidad es el FICHERO, no el tema:**
-> - **Tanda A (EN SERIE, SOLA):** **F3** — `researcher` sobre `Bibliografía.md`. **No se combina con
->   nada.**
-> - **Tanda B (3 agentes en paralelo, ficheros disjuntos):** **F1** troceada — agente 1: `3.1`–`3.5`;
->   agente 2: `5.0`, `5.2`, `5.3`; agente 3: `A.3` y `4.3`. **El cuarto trozo, `6.2` +
->   `00 Índice TFG.md`, VA APARTE**: el índice está en la lista de ficheros que nunca se tocan en
->   paralelo.
-> - **Tanda C:** **F2**. No toca notas de la memoria, así que **paraleliza con cualquier cosa salvo
->   consigo misma**.
-> - **Tanda D:** **F4**, diagnóstico y ejecución en la misma tirada.
-> - **Tanda E:** **F5**, troceable por nota **una vez F1 haya cerrado** (se solapan en `3.x` y `5.x`).
-> - **Cierre:** un `auditor-ml` de coherencia **ENTRE** las notas de cada tanda, y **una sola** pasada
->   de `cronista` **por tanda**.
+> **El reparto en tandas A–E de esta sesión queda como HISTORIAL:** las tandas A, B, C y E se
+> ejecutaron y cerraron; de la D solo salió D9/D11. **No se vuelve a despachar ninguna.**
+>
+> **Regla que sí se conserva:** un `auditor-ml` de coherencia **ENTRE** las notas de cada tanda, y
+> **una sola** pasada de `cronista` **por tanda**.
 >
 > **HALLAZGO DEL AUDITOR DESCARTADO POR VERIFICACIÓN — no se reabre.** Acusaba a esta tanda de
 > retirar tres callouts de gestión de `2.2.5.3` declarados fuera de alcance. **En `HEAD~5` ya no
 > estaban: los retiró `bf3bbfc`, de una sesión anterior.**
 >
-> **GIT: hay 8 commits SIN SUBIR. El `push` lo lanza Francisco**, no un agente ni el harness.
+> **GIT: hay commits SIN SUBIR y el número NO se escribe aquí — CUÉNTALO CON GIT** (`git log
+> origin/develop..develop --oneline`). El «8» que este apunte llevaba caducó el mismo día en que se
+> escribió: la sesión del 2026-08-21 añadió `22a6ddc`, `d4aa742`, `7774257` y `b8335b4`, más el de
+> esta tanda. **El `push` lo lanza Francisco**, no un agente ni el harness.
 
 > ### 🟢 EMPIEZA POR AQUÍ — apunte de traspaso del 2026-08-20 · **HISTORIAL: SUPERADO POR EL DEL 2026-08-21**
 >
@@ -967,25 +967,31 @@ eso el `3.3:42` y el residuo de T25 no llevan commit separado—;
 > **F5 queda DESBLOQUEADA**.
 
 > **F3 y F5 quedaron CERRADAS el 2026-08-21, junto con los cuatro residuos de F1/F2; sus filas viven
-> ya en `## Cerradas`. De este bloque solo sigue abierta F4.**
+> ya en `## Cerradas`. De este bloque solo sigue abierta F4, y solo A MEDIAS: su mitad D9/D11 está
+> hecha y verificada en disco, y lo que queda vivo es el barrido del perímetro 2↔4/5/6, que **abre
+> Francisco**.**
 
-- [ ] 🟠 **Solapes 2↔4/5/6 sin diagnosticar** · Informe
+- [~] 🟠 **Solapes 2↔4/5/6 — REPLANTEADA el 2026-08-21: la mitad concreta está hecha, el perímetro sigue sin barrer** · Informe
   Alta el **2026-08-21**. El barrido de la **Tanda 19** fue **INTERNO** al capítulo 2. **Esta ficha ya
-  NO es de volumen: es de COHERENCIA** —un concepto definido dos veces en dos capítulos—. Sospechas
-  ya escritas: **D9** (las cuatro transformaciones) y **D11** (SMOTE por *fold*, con sede extra en
-  `2.1.6.5`). **Autorización de Francisco del 2026-08-20: diagnosticar y ejecutar en la misma
-  tirada**, consultándole **solo si aparece otro caso tipo `1.2`** —contenido único en peligro—.
+  NO es de volumen: es de COHERENCIA** —un concepto definido dos veces en dos capítulos—.
+  **(a) HECHO Y VERIFICADO EN DISCO el 2026-08-21 (su fila vive ya en `## Cerradas`):** **D9** queda
+  con **sede única de las cuatro transformaciones en `4.3.7`** y **D11** con el **SMOTE por *fold* en
+  `4.3.4`**; y **`2.1.6.5` NO era un duplicado** sino la **sede conceptual de la fuga**, con el
+  reparto **cosido en ambos sentidos** por esta tanda. La ficha seguía marcada `[ ]` cuando ya estaba
+  resuelto.
+  **(b) SIGUE ABIERTO: el barrido SISTEMÁTICO del perímetro 2↔4/5/6.** **No consta en ningún informe**
+  —no hay diagnóstico de solapes 2↔4/5/6 en `99 Investigación/`—, así que ese perímetro **no está
+  auditado formalmente**: lo hecho son D9 y D11, que eran las dos sospechas ya escritas, no el
+  barrido. **Abrirlo es decisión de Francisco.** La autorización del 2026-08-20 («diagnosticar y
+  ejecutar en la misma tirada», consultando **solo si aparece otro caso tipo `1.2`**) sigue en pie
+  para cuando lo abra.
 
 ### Altas de la tanda del 2026-08-21 — residuo de F5
 
-> **Un solo residuo, no bloqueante.** Sale del barrido de metadiscurso que cerró F5. **Fichar no es
-> resolver: aquí no se ha corregido nada.**
-
-- [ ] 🟡 **El metadiscurso «sede canónica / sede única» sigue vivo en la memoria** · Informe
-  Alta el **2026-08-21**. Contado en disco tras cerrar F5: **~21 puntos repartidos en 11 notas**. Es
-  vocabulario de proceso interno —cómo se organizó el trabajo—, no contenido que el tribunal lea como
-  memoria. Hay que reescribir esas remisiones **sin nombrar la mecánica**, conservando el reenvío al
-  apartado que corresponda.
+> **Bloque VACÍO desde el 2026-08-21.** Su única ficha —el metadiscurso «sede canónica / sede única»,
+> contado como **~21 puntos en 11 notas**— quedó **CERRADA el 2026-08-21 al verificar disco: en la
+> memoria ya está a CERO**. Su fila vive ya en `## Cerradas`. Se conserva el encabezado como
+> historial: **no hay trabajo pendiente aquí.**
 
 ### Altas de la TANDA 30 — 2026-08-18
 
@@ -2854,6 +2860,11 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-21 | Informe | **🟡 «El metadiscurso "sede canónica / sede única" sigue vivo en la memoria» — CERRADA AL VERIFICAR DISCO, no como trabajo nuevo.** La ficha declaraba **~21 puntos en 11 notas** y **en la memoria ya estaba a CERO**: el trabajo estaba **hecho en el árbol sin commitear** cuando se fue a comprobarlo. Es el mismo patrón que con los cuatro residuos de F1/F2 — **el registro iba por detrás del árbol, no al revés** | — |
+| 2026-08-21 | Informe | **🟠 F4 mitad (a) — D9 y D11 RESUELTOS Y VERIFICADOS EN DISCO.** **Sede única de las cuatro transformaciones en `4.3.7`** y **SMOTE por *fold* en `4.3.4`**. Y el hallazgo que la sospecha no anticipaba: **`2.1.6.5` NO era un duplicado**, sino la **sede conceptual de la fuga de información**; el reparto queda **cosido en ambos sentidos** por esta tanda, en vez de recortado. La ficha seguía marcada `[ ]` con el trabajo ya hecho. **La mitad (b) —el barrido SISTEMÁTICO del perímetro 2↔4/5/6— NO se cierra aquí: no consta en ningún informe de `99 Investigación/`, así que ese perímetro sigue SIN AUDITAR, y abrirlo es decisión de Francisco** | — |
+| 2026-08-21 | Informe | **AUDITORÍA DE COHERENCIA RELANZADA DESDE CERO — la anterior se PERDIÓ con un corte de límite de sesión y su veredicto NO EXISTÍA**, así que se rehizo entera en vez de dar por bueno un dictamen ausente. Veredicto **`APTO CON CAMBIOS`, NINGÚN 🔴**: **cero contenido perdido, cero citas `[n]` inventadas** y **cifras cuadradas contra `Resultados/`**. **Seis hallazgos, los SEIS aplicados** en una tanda de **4 redactores con ficheros disjuntos**: **dos remisiones cruzadas apuntaban a apartados que NEGABAN tener el contenido** —`2.1.6` → `A.3.7` en vez de `A.3.11.2`, y `2.1.5`/`2.1.3` → `2.1.6.6` en vez de `2.1.5.3`—; **`A.3` era el fichero que MÁS metadiscurso concentraba y el barrido no había llegado hasta él** (8 literales retirados, incluido «trasladado aquí desde 4.4, que es donde se redactó»); **solape de prosa argumental entre `A.2` y `2.1.5.5`**, deduplicado en `A.2`; y el `[!todo]` de `A.3.8` convertido en **`[!warning]` de alcance declarado**. **15 ficheros tocados:** `2.1.1`, `2.1.3`, `2.1.5`, `2.1.6`, `2.3.3`, `3.3`, `4.3`, `4.5`, `4.6`, `5.0`, `5.2`, `5.4`, `6.1`, `A.2`, `A.3` | — |
+| 2026-08-21 | Informe | **PASE DE VERIFICACIÓN sobre la aplicación de los seis hallazgos: `APTO CON CAMBIOS`, dos puntos COSMÉTICOS y ambos CORREGIDOS** — un **pipe escapado fuera de tabla** en `A.3` y una **autorremisión «en §4.6» dentro de `4.6`** | — |
+| 2026-08-21 | Ninguno | **🔴 «Contenido perdido» — COMPROBACIÓN CERRADA por el hilo principal, que es lo que el auditor no puede hacer porque no ejecuta `git`.** El diff son **15 ficheros, 67 inserciones y 67 supresiones**: la **simetría es propia de sustitución de vocabulario, no de recorte**. Se revisaron **todas** las líneas eliminadas con cifras y se verificó en disco que sobrevive lo sustantivo: **CRISP-DM**, el **pasaje de estratificación de `2.1.6`**, el **`f1_macro = 0.8223`** de la etapa 2, los **tres apartados `A.3.10.1`–`A.3.10.3`** (regresión logística, k-means, redes neuronales), las **13 celdas fuera de banda** y las **100 filas no transcritas**. **Nada perdido** | — |
 | 2026-08-21 | Informe | **🟠 «Tres arreglos en `Bibliografía.md`» (F3) — CERRADA en pase en solitario del `researcher`.** `[38]` **reapuntada** a `2.2.5.3`, las reservas que vivían solo en el cuerpo **trasladadas a sus filas** y las **cuatro identidades inferidas** (`[29]`, `[34]`, `[46]`, `[47]`) **verificadas**. **8 filas tocadas y CERO altas: el primer número libre sigue siendo `[79]`.** Verificado en disco tras el pase: **70 filas vivas**, y `[29]`, `[34]`, `[38]`, `[46]` y `[47]` —que el diff mostraba como líneas eliminadas— **siguen presentes: fueron reescrituras, no bajas** | `7774257` |
 | 2026-08-21 | Informe | **🟡 «Barrer los callouts que leen como nota interna» (F5) — CERRADA.** Barrido de metadiscurso y callouts en los capítulos **1, 2, 3, 4, 5, 6 y `A.3`**, en **dos tandas paralelas de ficheros disjuntos**: **de 129 callouts a ~85, sin perder ni una cifra.** Los *caveats* críticos quedan **intactos y verificados uno a uno en disco** —la declaración de `2.1.6` sobre las tres decisiones tomadas mirando D2, la cota inferior de `3.2` y los seis «Verificación pendiente»—. **Los 24 callouts «Trazabilidad» NO se retiraron, y es deliberado:** son el vínculo entre cada tabla y su CSV versionado; lo que faltaba era la frase que declara qué son, y **ya está en `5.0`**. En el capítulo 3 sí se disolvieron, porque allí no hay cifras que sostener. **La memoria ya no enlaza a `99 Investigación/`: CERO remisiones** — ese defecto sobrevivía a los barridos anteriores porque el diagnóstico buscaba **la cadena de texto y no los wikilinks**, y se cazó contándolos aparte | `7774257` |
 | 2026-08-21 | Informe | **🟡 Los CUATRO residuos de F1/F2 — CERRADOS: ya estaban RESUELTOS en el árbol sin commitear** cuando se fue a mirar el disco, así que **se anotan como resueltos y detectados al verificar disco, no como trabajo nuevo de esta tanda**. La URL del dataset tiene **sede única en `4.2`**; las referencias `firmas.py:NNN` **han desaparecido de `5.2`**; los **tres informes de `99 Investigación/`** llevan su **bloque de reconciliación**; y **`00 Índice TFG.md` no menciona esa carpeta** | `7774257` |

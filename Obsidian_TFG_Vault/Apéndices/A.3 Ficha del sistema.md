@@ -12,9 +12,9 @@ Este apéndice tiene **dos partes de naturaleza distinta**, y conviene separarla
    **model card** propuesta por [60]: detalles del modelo, uso previsto, particiones de datos,
    configuraciones seleccionadas, alcance exacto de cada métrica, infraestructura de cómputo,
    análisis cuantitativo con dispersión y limitaciones declaradas.
-2. **Anexo teórico desplazado del capítulo 2 (A.3.10 y A.3.11).** Recoge el material que
-   [[2.1.4 Algoritmos de ML]] y [[2.1.6 Metodologías y buenas prácticas]] no conservan en el cuerpo,
-   por aplicárseles el criterio «lo que el sistema usa»: los algoritmos que el H-NIDS no emplea
+2. **Anexo teórico (A.3.10 y A.3.11).** Desarrolla en extensión lo que
+   [[2.1.4 Algoritmos de ML]] y [[2.1.6 Metodologías y buenas prácticas]] tratan de forma resumida,
+   ya que el cuerpo se limita a «lo que el sistema usa»: los algoritmos que el H-NIDS no emplea
    (A.3.10) y el desarrollo metodológico general de las prácticas que sí emplea (A.3.11).
 
 > [!note] Naturaleza de este apéndice
@@ -227,8 +227,8 @@ Alcance exacto de este volcado, para que se sepa qué se transcribe y qué no:
 | Tablas de dispersión (198 filas: calidad + máquina) | **Íntegras**, fila a fila |
 | Bloque «Avisos de la agregación» (19 líneas de aviso) | **Resumido** en una tabla de 6 filas, con los casos de mayor amplitud |
 
-El resumen del bloque de avisos es una selección editorial de este apéndice, no del artefacto: para
-el reparto completo semilla a semilla hay que ir al propio `dispersion_semillas.md` o a la columna
+El resumen del bloque de avisos recoge los casos de mayor amplitud y no reproduce el artefacto
+completo: el reparto semilla a semilla está en `Resultados/dispersion_semillas.md` y en la columna
 `decisiones_no_constantes` del CSV.
 
 ### Alcance y método del barrido
@@ -318,9 +318,9 @@ El recuento se cita **con sus tres salvedades**, y las tres son parte de la cifr
 > **Las 98 celdas NO se transcriben aquí.** Están íntegras y en su forma citable en
 > `Resultados/dispersion_semillas.csv` y `Resultados/dispersion_semillas.md`, **ambos versionados**,
 > con las mismas columnas que tendría esta tabla —tabla de origen, variante, algoritmo, alcance,
-> métrica, `n`, media, `sd`, mín, máx, valor de la semilla 42 y si cae en banda—. Copiarlas dentro
-> multiplicaría páginas **sin añadir una sola columna** al artefacto, y crearía una segunda copia que
-> puede desincronizarse de él. **Las 13 celdas que caen fuera de su banda se enumeran, con su distancia, en el apartado
+> métrica, `n`, media, `sd`, mín, máx, valor de la semilla 42 y si cae en banda—. **El detalle
+> completo está en esos dos artefactos**, que son su única copia: transcribirlo aquí no añadiría
+> ninguna columna y abriría una segunda copia que podría desincronizarse. **Las 13 celdas que caen fuera de su banda se enumeran, con su distancia, en el apartado
 > siguiente de esta misma sección**; de ellas, las **5 que proceden de la tabla de firmas** son las que
 > [[5.2 Resultados del modelo de detección basado en firmas|5.2]] (§5.2.4.3) discute en el capítulo 5.
 
@@ -339,8 +339,8 @@ leerse juntas** porque proceden de corridas distintas:
   `ac496cb` y `1163c90`; en esas dos corridas da **162** en la variante de 54 características y
   **128** en la de 122. Esa columna **no separa causas** y no decide si una diferencia de tiempo es
   de épocas o de carga de máquina.
-- **El reparto interno del bloque sí resiste el cambio de corrida** —trasladado aquí desde
-  [[4.4 Entrenamiento del modelo de detección de anomalías|4.4]], que es donde se redactó—. Medido
+- **El reparto interno del bloque sí resiste el cambio de corrida** —su lectura en el cuerpo está en
+  [[4.4 Entrenamiento del modelo de detección de anomalías|4.4]]—. Medido
   sobre el **residual** (el tramo que no es ajuste ni inferencia) expresado como fracción del
   `tiempo_s`, ese peso se mueve **como mucho 4,5 puntos porcentuales** en las ocho filas
   (detectores × variantes); el máximo lo marca `IsolationForest` 122, que pasa del **31,0 %** al
@@ -365,9 +365,9 @@ leerse juntas** porque proceden de corridas distintas:
 
 En ningún caso son estos segundos una propiedad del algoritmo.
 
-> **Las 100 filas NO se transcriben aquí**, por la misma razón y con más motivo: el propio título
-> de este bloque declara que **no es calidad y no se cita como resultado**. Están en
-> `Resultados/dispersion_semillas.csv` y `Resultados/dispersion_semillas.md`, versionados. Lo que
+> **Las 100 filas NO se transcriben aquí**: el detalle completo está en
+> `Resultados/dispersion_semillas.csv` y `Resultados/dispersion_semillas.md`, ambos versionados, y el
+> propio título de este bloque declara que **no es calidad y no se cita como resultado**. Lo que
 > sostiene afirmaciones vivas es la **prosa** de este apartado —la dispersión sin causa atribuida, el
 > recuento de épocas, el reparto interno del bloque y la salvedad de `ac496cb`—, y **se conserva
 > íntegra**.
@@ -430,8 +430,7 @@ Los hiperparámetros, la estrategia de balanceo y los umbrales del sistema se aj
 sobre D2**, y se declaran aquí en lugar de omitirlas.
 
 > [!note] Relación con el cuerpo de la memoria
-> La **sede canónica** de esta limitación es [[6.1 Conclusiones]], donde se declara como limitación
-> del trabajo. Lo que sigue es su **volcado tabulado** para consulta de ficha: la misma limitación,
+> Esta limitación se declara como tal en [[6.1 Conclusiones]]. Lo que sigue es su **volcado tabulado** para consulta de ficha: la misma limitación,
 > desglosada decisión a decisión con su criterio de selección y el registro donde consta. Si ambas
 > versiones difirieran, manda la redacción de [[6.1 Conclusiones]].
 
@@ -440,7 +439,7 @@ sobre D2**, y se declaran aquí en lugar de omitirlas.
 |---|---|---|---|
 | 1 — detección de anomalías | Autoencoder-MLP | AUC-ROC / F1, métricas cuyo alcance declarado es «binario normal-vs-ataque sobre D2 completo» (A.3.4) | Comparativa de los cuatro detectores en [[5.1 Resultados del modelo de detección de anomalías|5.1]]; el propio código de `hibrido.py` fija el Autoencoder como detector por defecto con la justificación «mejor en 5.1» |
 | 2 — clasificador de firmas | RandomForest | `f1_macro` **sobre D2** = 0,822 | Comparativa de los cuatro clasificadores en [[5.2 Resultados del modelo de detección basado en firmas|5.2]] |
-| 3 — set de características | **54** (frente a 122) | Recall 0-day por tipo + `f1_macro`, medidos con la cascada AE→RF **sobre D2** (experimento H1) | Tabla del experimento H1 y su veredicto en [[4.3 Preprocesamiento de los datasets|4.3.5]] § *Decisión experimental*, que es la **sede canónica** de esta desviación |
+| 3 — set de características | **54** (frente a 122) | Recall 0-day por tipo + `f1_macro`, medidos con la cascada AE→RF **sobre D2** (experimento H1) | Tabla del experimento H1 y su veredicto en [[4.3 Preprocesamiento de los datasets|4.3.5]] § *Decisión experimental*, donde se desarrolla esta desviación |
 
 Las tres son selección de modelo sobre el conjunto de test, es decir *data snooping*, y por tanto las
 métricas publicadas son optimistas respecto a lo que daría un test verdaderamente ciego. La tercera
@@ -498,7 +497,7 @@ seguridad este patrón se cataloga como contaminación por selección sobre el t
 >   el que se decidió queda a la vista del lector en los CSV de todos los candidatos.
 >
 > **Dónde vive como continuación.** Se recoge como línea futura en [[6.2 Líneas futuras]]; su lectura
-> como limitación del trabajo está en [[6.1 Conclusiones]], que es su sede canónica.
+> como limitación del trabajo se desarrolla en [[6.1 Conclusiones]].
 
 ### Otros límites del alcance evaluado
 
@@ -525,14 +524,14 @@ Se rellenan los **11 ítems «FT»** del *Machine Learning Reproducibility Check
 [20] — el subconjunto que aplica **a toda figura o tabla con resultados empíricos**,
 de los **17** que componen el checklist completo. Los **seis restantes no se rellenan**.
 
-> [!todo] Qué son los seis ítems no rellenados: dato pendiente, sin efecto sobre lo afirmado
+> [!warning] Alcance declarado: la identidad de los seis ítems restantes no se establece
 > El recuento realizado en este trabajo sobre las fuentes revisadas fija el **total en 17** y
 > **enumera los 11 «FT»**, pero **no establece cuáles son los otros seis** ni de qué tratan. Cualquier
 > caracterización de ese resto queda pendiente de comprobar contra el checklist original de
 > [20], y **no se rellena por conjetura**.
 >
 > **Qué sí queda establecido sin ese dato**, de forma que el apéndice se sostiene igual:
-> - Los 11 ítems «FT» están enumerados y resueltos uno a uno en la tabla siguiente, con su sede.
+> - Los 11 ítems «FT» están enumerados y resueltos uno a uno en la tabla siguiente, con la indicación del apartado donde se tratan.
 > - El criterio de elección del subconjunto es explícito: «FT» es el que aplica **a toda figura o
 >   tabla con resultados empíricos**, que es exactamente lo que documenta esta ficha.
 > - Las restricciones de los ítems 6, 9 y 10 se declaran en el callout posterior.
@@ -543,7 +542,7 @@ de los **17** que componen el checklist completo. Los **seis restantes no se rel
 | # | Ítem FT | Estado | Dónde se cumple |
 |---|---|---|---|
 | 1 | *Data collection* | Cumplido | NSL-KDD, `KDDTrain+` / `KDDTest+`; origen y procedencia en [[4.2 Base de datos utilizada]] |
-| 2 | *Link to data* | Cumplido | Ficheros empleados: `KDDTrain+.txt` y `KDDTest+.txt`; la URL de la copia pública de descarga, junto con la procedencia y el linaje del conjunto, está en [[4.2 Base de datos utilizada]] («Origen de descarga de los ficheros»), sede única de esa dirección en la memoria |
+| 2 | *Link to data* | Cumplido | Ficheros empleados: `KDDTrain+.txt` y `KDDTest+.txt`; la URL de la copia pública de descarga, junto con la procedencia y el linaje del conjunto, se indican en [[4.2 Base de datos utilizada]] («Origen de descarga de los ficheros») |
 | 3 | *Pre-processing* | Cumplido | One-hot, escalado y selección descritos en [[4.3 Preprocesamiento de los datasets]]; diagrama en `Implementacion/PIPELINE.md` |
 | 4 | *Sample allocation* | Cumplido | Particiones D1/D2/D3 con tamaños exactos en A.3.2 |
 | 5 | *Hyper-parameters* | Cumplido | `config_ganadora` persistida en cada CSV y volcada en A.3.3 |
@@ -584,14 +583,14 @@ de los **17** que componen el checklist completo. Los **seis restantes no se rel
 
 ## A.3.10 Desarrollo ampliado de algoritmos del marco teórico
 
-> Recoge el desarrollo que `2.1.4` no conserva en el cuerpo. **Dos casos distintos, y conviene no confundirlos:** `A.3.10.1` y `A.3.10.2` son algoritmos que **el sistema no emplea** —regresión logística, k-means y jerárquico—, mientras que `A.3.10.3` desarrolla las **redes neuronales**, que el sistema **sí** emplea: el autoencoder de la etapa 1 es un MLP y es el detector seleccionado. Está aquí por volumen del cuerpo, no por ser ajeno al trabajo.
+> Recoge el desarrollo que `2.1.4` no conserva en el cuerpo. **Dos casos distintos, y conviene no confundirlos:** `A.3.10.1` y `A.3.10.2` son algoritmos que **el sistema no emplea** —regresión logística, k-means y jerárquico—, mientras que `A.3.10.3` desarrolla las **redes neuronales**, que el sistema **sí** emplea: el autoencoder de la etapa 1 es un MLP y es el detector seleccionado. Su desarrollo se recoge aquí por extensión, no por ser ajeno al trabajo.
 
-Material trasladado desde [[2.1.4 Algoritmos de ML]], cuyo criterio de inclusión en el cuerpo es
+Desarrollo ampliado de [[2.1.4 Algoritmos de ML]], cuyo criterio de inclusión en el cuerpo es
 «lo que el sistema usa». Las dos familias siguientes **no intervienen en ninguna etapa del H-NIDS**
 y se conservan aquí por completitud del panorama algorítmico; el cuerpo las menciona en una frase y
 remite a este apartado.
 
-### A.3.10.1 Regresión logística (excedente de [[2.1.4 Algoritmos de ML|2.1.4.1]])
+### A.3.10.1 Regresión logística (amplía [[2.1.4 Algoritmos de ML|2.1.4.1]])
 
 La regresión logística toma un vector de características numéricas y estima la probabilidad de que un ejemplo pertenezca a una clase, modelando el logaritmo de la razón de probabilidades (*log-odds*): para un evento que ocurre con probabilidad $p$, la razón de probabilidades es $p/(1-p)$, y el modelo ajusta una combinación lineal de las características a $\log(p/(1-p))$ [5, cap. 4].
 
@@ -603,7 +602,7 @@ Su uso está condicionado por tres supuestos que conviene tener presentes:
 - **Baja multicolinealidad.** Las características de entrada deben ser razonablemente independientes entre sí; la redundancia entre variables distorsiona la estimación de los coeficientes.
 - **Tamaño muestral.** La estimación por máxima verosimilitud que emplea la regresión logística es menos eficiente estadísticamente que los mínimos cuadrados de la regresión lineal, por lo que suele requerir más ejemplos de entrenamiento para alcanzar una potencia comparable [5, cap. 4].
 
-### A.3.10.2 Agrupamiento: k-means y jerárquico (excedente de 2.1.4.4)
+### A.3.10.2 Agrupamiento: k-means y jerárquico (amplía 2.1.4.4)
 
 Los algoritmos de agrupamiento (*clustering*) buscan agrupar puntos de datos que resultan «cercanos» entre sí según alguna métrica, sin usar ninguna etiqueta durante el entrenamiento. Aunque este trabajo no emplea agrupamiento en su arquitectura final, se incluyen aquí por completitud del panorama de algoritmos de ML y porque delimitan, por contraste, el régimen semisupervisado (one-class) de 2.1.4.2: mientras que el agrupamiento no usa ninguna etiqueta, los detectores de anomalías de este sistema sí usan la etiqueta «normal» para decidir con qué datos entrenar.
 
@@ -621,7 +620,7 @@ Los algoritmos de agrupamiento (*clustering*) buscan agrupar puntos de datos que
 
 ---
 
-### A.3.10.3 Redes neuronales artificiales (excedente de [[2.1.4 Algoritmos de ML|2.1.4.3]])
+### A.3.10.3 Redes neuronales artificiales (amplía [[2.1.4 Algoritmos de ML|2.1.4.3]])
 
 > A diferencia de A.3.10.1 y A.3.10.2, este apartado desarrolla una familia que el sistema **sí**
 > emplea: el detector de la etapa 1 es un autoencoder construido sobre un perceptrón multicapa. Se
@@ -658,7 +657,7 @@ Frente a los algoritmos descritos en 2.1.4.1 y 2.1.4.2 —que operan sobre las c
 
 ## A.3.11 Desarrollo metodológico ampliado
 
-Material trasladado desde [[2.1.6 Metodologías y buenas prácticas]], que conserva en el cuerpo
+Desarrollo ampliado de [[2.1.6 Metodologías y buenas prácticas]], que conserva en el cuerpo
 **solo las prácticas que el sistema implementado emplea**. Lo que sigue es el desarrollo general de
 cada una: no introduce ninguna cifra nueva y no altera nada de lo declarado en A.3.1–A.3.9.
 
@@ -700,7 +699,7 @@ En cuanto una decisión —por pequeña que sea— se toma mirando el resultado 
 > [!note] La tabla de la teoría; el sistema se desvió de ella en tres decisiones
 > En la tabla de 2.1.6.2, la fila **Validación** incluye el «algoritmo ganador» entre lo que corresponde decidir en validación —y lo mismo vale para la elección del espacio de características—. Esa es la práctica correcta y se mantiene enunciada así porque es la que el marco teórico debe fijar. Lo que este trabajo añade es la constatación de que **su implementación no la respetó en las tres decisiones declaradas**: la comparación entre algoritmos de cada etapa y la comparación entre los sets de 54 y 122 características se resolvieron sobre el conjunto de test. El inventario tabulado de esas tres decisiones **no se repite aquí**: está en A.3.7 § *Límite de protocolo*. La corrección —repetir las tres comparaciones sobre un conjunto de decisión independiente de D2 y volver a medir— queda recogida como línea futura en [[6.2 Líneas futuras]].
 
-Cada una de las tres decisiones tiene una sede única y aquí no se repite: el volcado tabulado decisión a decisión, con su criterio y su registro, está en A.3.7 § *Límite de protocolo*; su tratamiento como limitación del trabajo, en [[6.1 Conclusiones]]; y el alcance y las cifras de la desviación relativa al set de características (54 frente a 122), en [[4.3 Preprocesamiento de los datasets\|4.3.5]] § «Decisión experimental: 54 frente a 122 (experimento H1, medido sobre D2)», por proximidad al experimento que las genera.
+Cada una de las tres decisiones se desarrolla en el apartado que le corresponde y aquí no se repite: el volcado tabulado decisión a decisión, con su criterio y su registro, está en A.3.7 § *Límite de protocolo*; su tratamiento como limitación del trabajo, en [[6.1 Conclusiones]]; y el alcance y las cifras de la desviación relativa al set de características (54 frente a 122), en [[4.3 Preprocesamiento de los datasets|4.3.5]] § «Decisión experimental: 54 frente a 122 (experimento H1, medido sobre D2)», por proximidad al experimento que las genera.
 
 La declaración se hace en el cuerpo del trabajo, y no en una nota al pie, porque **negar un fallo de protocolo es peor que cometerlo**. La magnitud del sesgo no se puede cuantificar con los datos disponibles —haría falta un conjunto de decisión independiente de D2—, de modo que no se estima.
 
@@ -708,7 +707,7 @@ La declaración se hace en el cuerpo del trabajo, y no en una nota al pie, porqu
 
 Un único corte train/validación tiene dos inconvenientes: la estimación depende de qué muestras cayeron a cada lado —con conjuntos pequeños, la varianza es considerable— y desperdicia datos, porque la parte reservada a validar no entrena. La **validación cruzada de K particiones** (*K-fold*) resuelve ambos: los datos se dividen en K bloques, se entrena K veces dejando cada vez un bloque fuera para validar, y la estimación final es el promedio de las K medidas. Toda muestra actúa una vez como validación y K−1 veces como entrenamiento [13].
 
-Sobre la **estratificación** —exigir que cada partición conserve la proporción de clases del conjunto completo— este apéndice **no repite la justificación**: con clases equilibradas es una mejora marginal y con clases muy minoritarias es imprescindible, por un razonamiento combinatorio que se desarrolla en su sede única, [[2.1.6 Metodologías y buenas prácticas]] § 2.1.6.3, donde además se conecta con el caso medido de `u2r` en D3.
+Sobre la **estratificación** —exigir que cada partición conserve la proporción de clases del conjunto completo— este apéndice **no repite la justificación**: con clases equilibradas es una mejora marginal y con clases muy minoritarias es imprescindible, por un razonamiento combinatorio que se desarrolla en [[2.1.6 Metodologías y buenas prácticas]] § 2.1.6.3, donde además se conecta con el caso medido de `u2r` en D3.
 
 ### A.3.11.4 Coste de `GridSearchCV` y alternativas
 
@@ -718,7 +717,7 @@ Sobre la **estratificación** —exigir que cada partición conserve la proporci
 
 Un experimento que no puede repetirse no es una evidencia: es una anécdota. En aprendizaje automático la reproducibilidad no se da por supuesta, porque casi todo el proceso incorpora aleatoriedad —el reparto en particiones, la inicialización de los modelos, el muestreo interno, la generación de puntos sintéticos— y porque el resultado depende además de las versiones exactas de las bibliotecas empleadas. La comunidad ha respondido con listas de comprobación que enumeran qué debe declararse para que un resultado sea verificable [20].
 
-Declarar una única corrida como si fuera el resultado, sin ninguna medida de dispersión, es precisamente lo que esas listas piden evitar, y su vocabulario nombra los cuatro elementos que hay que declarar. **La tabla de cumplimiento no se repite aquí**: los once ítems «FT», con su estado y su sede, están en A.3.8. Lo que sigue es el fundamento de los cuatro que atañen a la dispersión, que el cuerpo de 2.1.6.7 resume en un párrafo:
+Declarar una única corrida como si fuera el resultado, sin ninguna medida de dispersión, es precisamente lo que esas listas piden evitar, y su vocabulario nombra los cuatro elementos que hay que declarar. **La tabla de cumplimiento no se repite aquí**: los once ítems «FT», con su estado y el apartado donde se tratan, están en A.3.8. Lo que sigue es el fundamento de los cuatro que atañen a la dispersión, que el cuerpo de 2.1.6.7 resume en un párrafo:
 
 | Ítem | Qué exige | Cómo se cumple en este trabajo |
 |---|---|---|

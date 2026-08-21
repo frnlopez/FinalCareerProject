@@ -6,7 +6,7 @@ estado: redactada
 
 # A.2 Métricas de desempeño
 
-Este apéndice documenta **cómo se instancian en este sistema** las métricas empleadas en la evaluación del [[5.1 Resultados del modelo de detección de anomalías|capítulo 5]]: la convención de signo adoptada, la forma que toma la matriz de confusión en las dos etapas, el criterio de umbral del detector de anomalías y las cifras de FPR que se obtienen con él (A.2.1). A ello se añade un apartado de naturaleza distinta, **A.2.2**, que recoge las familias de métricas **ajenas a la clasificación** —regresión y *clustering*— que el marco teórico necesita definir pero que **ninguna tabla de resultados de este trabajo reporta**. **La definición formal de cada métrica y la justificación de su elección no están aquí, sino en [[2.1.5 Métricas de evaluación]]**, que es su sede canónica; las fórmulas que siguen se reproducen **solo como tabla de consulta rápida**, para no obligar al lector del capítulo 5 a volver al capítulo 2.
+Este apéndice documenta **cómo se instancian en este sistema** las métricas empleadas en la evaluación del [[5.1 Resultados del modelo de detección de anomalías|capítulo 5]]: la convención de signo adoptada, la forma que toma la matriz de confusión en las dos etapas, el criterio de umbral del detector de anomalías y las cifras de FPR que se obtienen con él (A.2.1). A ello se añade un apartado de naturaleza distinta, **A.2.2**, que recoge las familias de métricas **ajenas a la clasificación** —regresión y *clustering*— que el marco teórico necesita definir pero que **ninguna tabla de resultados de este trabajo reporta**. **La definición formal de cada métrica y la justificación de su elección no están aquí, sino en [[2.1.5 Métricas de evaluación]]**, donde se desarrollan; las fórmulas que siguen se reproducen **solo como tabla de consulta rápida**, para no obligar al lector del capítulo 5 a volver al capítulo 2.
 
 Salvo indicación contraria, se adopta la convención del sistema: **positivo = ataque (1)**, **negativo = normal (0)**.
 
@@ -53,8 +53,10 @@ donde $n_i$ es el número de muestras reales de la clase $i$ y $N = \sum_i n_i$.
 
 Métricas independientes del umbral, calculadas a partir del *score* continuo del modelo:
 
-- **AUC-ROC** — área bajo la curva ROC, que enfrenta TPR frente a FPR al barrer todos los umbrales de decisión. Un valor de 1 indica separación perfecta; 0,5 equivale al azar.
-- **AUC-PR** — área bajo la curva *Precision-Recall*. Más informativa que la ROC cuando **la clase positiva es minoritaria o el conjunto está desbalanceado**, situación habitual en la detección de intrusiones.
+- **AUC-ROC** — área bajo la curva ROC, que enfrenta TPR frente a FPR al barrer todos los umbrales de decisión.
+- **AUC-PR** — área bajo la curva *Precision-Recall*.
+
+La lectura de ambas áreas y el criterio para preferir una u otra están en [[2.1.5 Métricas de evaluación]] § 2.1.5.5.
 
 ## A.2.1 Métricas del modelo de anomalías
 
@@ -80,7 +82,7 @@ $$\text{umbral} = P_{95}\big(\text{score}(D1_{\text{val}})\big)$$
 
 ## A.2.2 Métricas ajenas a la clasificación, no reportadas por este trabajo
 
-Las familias que siguen **no aparecen en ninguna tabla `metricas_*.csv` del capítulo 5**: se recogen aquí, y no en el cuerpo, por completitud del marco de aprendizaje automático expuesto en [[2.1.2 Tipos de ML]]. El cuerpo de [[2.1.5 Métricas de evaluación]] § 2.1.5.6 las deja enunciadas en una frase y remite a este apartado. Ninguna decisión del sistema depende de ellas.
+Las familias que siguen **no aparecen en ninguna tabla `metricas_*.csv` del capítulo 5**: se recogen aquí, y no en el cuerpo, por completitud del marco de aprendizaje automático expuesto en [[2.1.2 Tipos de ML]]. El cuerpo de [[2.1.5 Métricas de evaluación]] § 2.1.5.6 se limita a mencionarlas y remite a este apartado. Ninguna decisión del sistema depende de ellas.
 
 ### A.2.2.1 Métricas de regresión: MAE y RMSE
 
