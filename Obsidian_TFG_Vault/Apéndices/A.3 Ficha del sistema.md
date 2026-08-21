@@ -86,11 +86,13 @@ derivada para que no se cite como salida de una corrida.
 
 Muestreos internos con semilla, empleados durante el ajuste: **5.000 filas de D3** como conjunto
 etiquetado de validación de la etapa 1 y **20.000 filas de `D1_train`** como submuestra de
-OneClassSVM (`anomalias.py:163` para la muestra de D3; la submuestra de OneClassSVM se declara en
-`anomalias.py:94-97` y se aplica en `anomalias.py:249-250`).
+OneClassSVM (la muestra de D3 se extrae en `anomalias.py::NSLKDDAnomalyTrainer.cargar_datos`, con la
+constante de clase `N_MUESTRA_D3`; la submuestra de OneClassSVM se declara en la misma clase como
+`N_SUBMUESTRA_OCSVM` y se aplica en `anomalias.py::NSLKDDAnomalyTrainer._datos_entrenamiento`).
 
 > [!warning] Qué es intocable en D2 — y qué sí lo miró
-> La regla que enuncia el código (`anomalias.py:18-22`) es **acotada**: D2 es intocable **para
+> La regla que enuncia el código (bloque «Reglas de protocolo (invalidan el TFG si se rompen)» del
+> encabezado de `anomalias.py`) es **acotada**: D2 es intocable **para
 > ajustar hiperparámetros o el umbral**. No es —y este apéndice no lo afirma— que D2 quede fuera de
 > *toda* decisión.
 >
@@ -99,7 +101,7 @@ OneClassSVM (`anomalias.py:163` para la muestra de D3; la submuestra de OneClass
 > | Decisión | Dónde se ajusta | Referencia |
 > |---|---|---|
 > | Umbral de la etapa 1 | Percentil 95 del *score* sobre `D1_val` | `anomalias.py` |
-> | Configuración **dentro** de cada algoritmo de la etapa 1 | AUC-ROC sobre `D1_val` + muestra etiquetada de 5.000 filas de D3 | `anomalias.py:281` |
+> | Configuración **dentro** de cada algoritmo de la etapa 1 | AUC-ROC sobre `D1_val` + muestra etiquetada de 5.000 filas de D3 | `anomalias.py::NSLKDDAnomalyTrainer._seleccionar_config` |
 > | Rejilla de hiperparámetros y eje de balanceo de la etapa 2 | `GridSearchCV` con `f1_macro` por validación cruzada **sobre D3** | `firmas.py` |
 > | `UMBRAL_CONF` del híbrido | Calibración *out-of-fold* sobre D3; el método **no recibe D2 en su firma** (decisión P-4) | `hibrido.py::_calibrar_umbral_conf` |
 >
@@ -130,7 +132,8 @@ en la variante de 54 y **66 de 128** en la de 122 (`n_iter_ganador` / `n_iter_to
 ### Etapa 2 — clasificador de firmas
 
 Fuente: `Resultados/metricas_firmas.csv`, columnas `balanceo` y `config_ganadora`. El eje de balanceo
-se decide **por algoritmo** (mini-experimento de 4.3.4, `firmas.py:100-108`).
+se decide **por algoritmo** (mini-experimento de 4.3.4, diccionario `BALANCEO_OPCIONES` de
+`firmas.py::NSLKDDSignatureTrainer`).
 
 | Variante | Algoritmo | Balanceo ganador | Configuración ganadora |
 |---|---|---|---|
@@ -520,12 +523,11 @@ seguridad este patrón se cataloga como contaminación por selección sobre el t
 
 Se rellenan los **11 ítems «FT»** del *Machine Learning Reproducibility Checklist* de
 [20] — el subconjunto que aplica **a toda figura o tabla con resultados empíricos**,
-de los **17** que componen el checklist completo. Los **seis restantes no se rellenan**. El detalle de
-la fuente está en [[benchmark-comparativo-nsl-kdd]].
+de los **17** que componen el checklist completo. Los **seis restantes no se rellenan**.
 
 > [!todo] Qué son los seis ítems no rellenados: dato pendiente, sin efecto sobre lo afirmado
-> La fuente del proyecto ([[benchmark-comparativo-nsl-kdd]]) respalda el **total de 17** y **enumera
-> los 11 «FT»**, pero **no dice cuáles son los otros seis** ni de qué tratan. Cualquier
+> El recuento realizado en este trabajo sobre las fuentes revisadas fija el **total en 17** y
+> **enumera los 11 «FT»**, pero **no establece cuáles son los otros seis** ni de qué tratan. Cualquier
 > caracterización de ese resto queda pendiente de comprobar contra el checklist original de
 > [20], y **no se rellena por conjetura**.
 >
@@ -541,7 +543,7 @@ la fuente está en [[benchmark-comparativo-nsl-kdd]].
 | # | Ítem FT | Estado | Dónde se cumple |
 |---|---|---|---|
 | 1 | *Data collection* | Cumplido | NSL-KDD, `KDDTrain+` / `KDDTest+`; origen y procedencia en [[4.2 Base de datos utilizada]] |
-| 2 | *Link to data* | Cumplido | Copia pública del dataset empleada en este trabajo: `https://github.com/Jehuty4949/NSL_KDD` (ficheros `KDDTrain+.txt` y `KDDTest+.txt`); procedencia y linaje del conjunto en [[4.2 Base de datos utilizada]] |
+| 2 | *Link to data* | Cumplido | Ficheros empleados: `KDDTrain+.txt` y `KDDTest+.txt`; la URL de la copia pública de descarga, junto con la procedencia y el linaje del conjunto, está en [[4.2 Base de datos utilizada]] («Origen de descarga de los ficheros»), sede única de esa dirección en la memoria |
 | 3 | *Pre-processing* | Cumplido | One-hot, escalado y selección descritos en [[4.3 Preprocesamiento de los datasets]]; diagrama en `Implementacion/PIPELINE.md` |
 | 4 | *Sample allocation* | Cumplido | Particiones D1/D2/D3 con tamaños exactos en A.3.2 |
 | 5 | *Hyper-parameters* | Cumplido | `config_ganadora` persistida en cada CSV y volcada en A.3.3 |
@@ -567,18 +569,16 @@ la fuente está en [[benchmark-comparativo-nsl-kdd]].
 | Cascada invertida (T3) | `Resultados/metricas_cascada_invertida.csv` | `274923d-sucio`, `2026-08-10` (columnas `commit` y `fecha` del propio CSV; coincide con `commit_semilla_42` del agregado) |
 | Tabla de dispersión (T4) | `Resultados/dispersion_semillas.md` / `.csv` y `comparaciones_pareadas.csv` | `commit_agregador = 0276039-sucio` (quinta pasada del agregador, 2026-08-17); filas agregadas de `df30cb2`. **Re-anclado en prosa a `98a0289`** |
 
-> [!info] El sello del agregado es pre-commit: **re-anclaje HECHO** (2026-08-17)
-> `commit_agregador = 0276039-sucio` es el valor **impreso en los artefactos en disco**, estampado por
-> `config.commit_actual()` **antes** del commit que versiona los propios artefactos: por construcción, un
-> fichero no puede llevar el hash del commit que lo incluye. La versión del código que produjo esa
-> agregación es **`98a0289`** —«codigo: emitir el "8 de 10" pareado desde agregar_semillas.py y
-> corregir el residuo de T22», del 2026-08-17, que arrastra a la vez `agregar_semillas.py` y los tres
-> artefactos del agregador—, verificado con git y **no** estimado. `0276039` es el commit **anterior**
-> al cambio y es de track *informe*, así que **no contiene el código** que produjo las cifras. El sello
-> impreso **no se edita**: el re-anclaje va **en prosa**, aquí y en `Implementacion/PIPELINE.md` (tabla
-> de corridas, tabla de las cinco pasadas y recuadro de re-anclajes), que es como el proyecto ha hecho
-> los cinco anteriores — el de la cuarta pasada (`6bb224c-sucio` → **`1cb5c26`**, 2026-08-14) sigue
-> siendo válido para lo que nombra, aunque su artefacto ya no sea el que hay en disco.
+> [!note] Cómo leer el sello del agregado
+> El sello que llevan impreso los artefactos del agregador se estampa **antes** de consolidar la
+> versión que los incluye, de modo que, por construcción, un fichero no puede llevar la identificación
+> de la versión que lo contiene: el valor impreso (`0276039-sucio`) identifica el estado del árbol en
+> el momento de generarlos, no la versión del código que los produjo. Esa versión es **`98a0289`**, que
+> es la que introduce a la vez `agregar_semillas.py` y los tres artefactos resultantes, y se ha
+> comprobado directamente sobre el historial del repositorio. El sello impreso **no se edita**: la
+> correspondencia se declara en prosa, aquí y en `Implementacion/PIPELINE.md`. Con esa correspondencia
+> declarada, cualquier lector puede recuperar el código exacto con el que se calcularon las cifras
+> publicadas en A.3.6.
 
 ---
 
@@ -623,10 +623,10 @@ Los algoritmos de agrupamiento (*clustering*) buscan agrupar puntos de datos que
 
 ### A.3.10.3 Redes neuronales artificiales (excedente de [[2.1.4 Algoritmos de ML|2.1.4.3]])
 
-> Trasladado desde el cuerpo el 2026-08-20 al comprimir `2.1.4.3`. **Nada se ha reescrito:** es el
-> texto que estaba en la memoria, movido íntegro por la restricción T7. El cuerpo conserva el
-> resumen y la remisión a este apartado. Aquí se desarrolla porque el sistema **sí** contiene un
-> componente neuronal —el autoencoder de la etapa 1— y un tribunal puede pedir su fundamento.
+> A diferencia de A.3.10.1 y A.3.10.2, este apartado desarrolla una familia que el sistema **sí**
+> emplea: el detector de la etapa 1 es un autoencoder construido sobre un perceptrón multicapa. Se
+> sitúa aquí por extensión, no por ser ajeno al trabajo; [[2.1.4 Algoritmos de ML|2.1.4.3]] conserva
+> en el cuerpo el resumen y remite a este desarrollo.
 
 
 #### A.3.10.3.1 La neurona artificial y el perceptrón
@@ -700,15 +700,9 @@ En cuanto una decisión —por pequeña que sea— se toma mirando el resultado 
 > [!note] La tabla de la teoría; el sistema se desvió de ella en tres decisiones
 > En la tabla de 2.1.6.2, la fila **Validación** incluye el «algoritmo ganador» entre lo que corresponde decidir en validación —y lo mismo vale para la elección del espacio de características—. Esa es la práctica correcta y se mantiene enunciada así porque es la que el marco teórico debe fijar. Lo que este trabajo añade es la constatación de que **su implementación no la respetó en las tres decisiones declaradas**: la comparación entre algoritmos de cada etapa y la comparación entre los sets de 54 y 122 características se resolvieron sobre el conjunto de test. El inventario tabulado de esas tres decisiones **no se repite aquí**: está en A.3.7 § *Límite de protocolo*. La corrección —repetir las tres comparaciones sobre un conjunto de decisión independiente de D2 y volver a medir— queda recogida como línea futura en [[6.2 Líneas futuras]].
 
-Sobre la duplicidad del inventario de las tres decisiones: el mismo inventario reaparece en [[6.1 Conclusiones]], y la duplicidad es deliberada porque cada sede responde a una pregunta distinta. **En `2.1.6.2` la declaración funciona como encuadre metodológico** —el inventario ya no se reproduce allí, solo su lectura conceptual—: sirve de ejemplo concreto de qué es el *data snooping*, en qué momento del ciclo de trabajo se cuela y por qué el perímetro de protocolo no basta para impedirlo. **En [[6.1 Conclusiones]] el mismo inventario se trata como limitación del trabajo**: allí se valora cuánto compromete la validez de las cifras publicadas en el capítulo 5 y qué haría falta para levantarlo.
+Cada una de las tres decisiones tiene una sede única y aquí no se repite: el volcado tabulado decisión a decisión, con su criterio y su registro, está en A.3.7 § *Límite de protocolo*; su tratamiento como limitación del trabajo, en [[6.1 Conclusiones]]; y el alcance y las cifras de la desviación relativa al set de características (54 frente a 122), en [[4.3 Preprocesamiento de los datasets\|4.3.5]] § «Decisión experimental: 54 frente a 122 (experimento H1, medido sobre D2)», por proximidad al experimento que las genera.
 
-| Objeto | Sede canónica | Qué se decide allí |
-|---|---|---|
-| **Inventario de las tres decisiones** tomadas con métricas de D2, tratado como limitación del trabajo | [[6.1 Conclusiones]] | El recuento de decisiones y la redacción con la que se enuncian como limitación |
-| **Desviación relativa al set de características (54 frente a 122)**, la tercera de las tres | [[4.3 Preprocesamiento de los datasets\|4.3.5]] § «Decisión experimental: 54 frente a 122 (experimento H1, medido sobre D2)» | El alcance y las cifras de esa desviación concreta, por proximidad al experimento H1 que las genera |
-| **Volcado tabulado decisión a decisión**, con criterio y registro de cada una | A.3.7 § *Límite de protocolo* | La consulta de ficha |
-
-Se declara en el cuerpo, y no en una nota al pie, por una razón de fondo: **negar un fallo de protocolo es peor que cometerlo**. Una versión anterior de esa sección afirmaba que «ninguna decisión del sistema se toma mirando D2», lo que convertía un defecto acotado y auditable en una afirmación falsa sobre el propio método; una segunda versión lo redujo a una única intervención, lo que tampoco era cierto. La magnitud del sesgo no se puede cuantificar con los datos disponibles —haría falta un conjunto de decisión independiente de D2—, de modo que no se estima.
+La declaración se hace en el cuerpo del trabajo, y no en una nota al pie, porque **negar un fallo de protocolo es peor que cometerlo**. La magnitud del sesgo no se puede cuantificar con los datos disponibles —haría falta un conjunto de decisión independiente de D2—, de modo que no se estima.
 
 ### A.3.11.3 Motivación general de la validación cruzada
 

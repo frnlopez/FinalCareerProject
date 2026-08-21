@@ -267,6 +267,42 @@ fase → sede, no en una sección propia.
 
 ## 4. Material retirado, orientado a la DEFENSA ORAL
 
+> [!success] RECONCILIACIÓN CON EL DISCO — 2026-08-21 (ficha F3)
+> Este §4 se redactó en tiempo futuro-hecho («retirado de …») **antes de ejecutar el recorte**, igual
+> que el §5 del informe de `2.2`. La diferencia es el resultado: **verificado apartado por apartado
+> sobre las seis notas de `2.1` el 2026-08-21, el recorte de este bloque SÍ se ejecutó**, y las diez
+> partidas D-1…D-10 describen el disco. **Este §4 puede usarse como registro**, con las tres
+> salvedades que se marcan abajo.
+>
+> | Partida | Sede | Estado real en disco |
+> |---|---|---|
+> | D-1 aprendizaje por refuerzo | `2.1.2.3` | **APLICADO** — el apartado **subsiste como una sola frase** de declaración («*Este trabajo no lo emplea —no hay agente ni entorno…*»); el desarrollo del paradigma se fue. El plan pedía que solo quedara la frase de `2.1.2.7`: quedan las dos, y no es un defecto |
+> | D-2 marco general del auto-supervisado | `2.1.2.5` | **APLICADO** — hoy son una frase de definición más el *callout* «Relación con el autoencoder de este trabajo», que se conservó como estaba previsto |
+> | D-3 fundamentos neuronales | `2.1.4.3` → `A.3.10.3` | **APLICADO, y el destino existe** — `A.3` tiene hoy `A.3.10.3 Redes neuronales artificiales (excedente de 2.1.4.3)` con sus cuatro subapartados (neurona y perceptrón · MLP · retropropagación y descenso de gradiente · qué las distingue del ML clásico). En el cuerpo queda el resumen con `[6, cap. 6]` |
+> | D-4 agrupamiento | `2.1.4.4` | **APLICADO** — un párrafo que declara que no se emplea y remite a `A.3` §A.3.10.2 y `A.2` §A.2.2.2 |
+> | D-5 micro-F1 | `2.1.5.3` | **APLICADO** — el apartado se titula hoy «*Promediado multiclase: macro y ponderado*» y la viñeta «Micro» no está. **Salvedad, abajo** |
+> | D-6 métricas ajenas a la clasificación | `2.1.5.6` | **APLICADO** — reducido a una frase que declara que no se reportan y remite a `A.2` §A.2.2 |
+> | D-7 ciclo de vida y CRISP-DM | `2.1.3`, `2.1.6.1` | **APLICADO** — los seis apartados de `2.1.3` son hoy remisiones breves; los «pasos 1 a 6» y el *callout* de despliegue no están, y la distinción CV / *K-fold* / desviación típica vive **solo** en el *callout* «Tres términos que no son sinónimos» de `2.1.6.3`, con `2.1.3.4` remitiendo a él |
+> | D-8 rejilla de hiperparámetros | `2.1.6.4` | **APLICADO. Pero la sede NO es la que dice D-8: ver la corrección abajo** |
+> | D-9 inventario de las tres decisiones sobre D2 | `2.1.6.2` | **APLICADO** — el *callout* «Declaración: tres decisiones…» conserva la lectura conceptual y remite el inventario a `4.3.5`, `6.1` §6.1.3 y `A.3` §A.3.11.2 |
+> | D-10 tres notas de trabajo | `2.1.4.2.1`, `2.1.4.3`, `2.1.6.8` | **APLICADO** — ninguno de los tres *callouts* (atribución del Isolation Forest, localizador de `[6]`, verificación pendiente de Arp y Chow) sigue en las notas. La reasignación a `[73]` Liu, Ting y Zhou **sí** quedó en el texto de `2.1.4.2.1`, que es lo que se quería conservar |
+>
+> **Las tres salvedades, y ninguna es un «no aplicado»:**
+>
+> 1. **D-8 apunta a una sede equivocada.** Dice «*la rejilla no desaparece de la memoria: vive en
+>    `4.5`, que es su sede*». **Falso en disco:** `2.1.6.4` remite a «*la ficha del sistema, `A.3`
+>    (§A.3.3)*» y `4.5` remite exactamente a lo mismo («*Los valores concretos de cada rejilla están
+>    en el Apéndice A.3 (§A.3.3)*»). **La sede de los valores es `A.3` §A.3.3**; `4.5` describe qué
+>    ejes se exploran y con cuántas combinaciones, pero no los tabula. El argumento de defensa de
+>    D-8 —rejilla pequeña y publicada— no cambia; el sitio al que hay que señalar, sí.
+> 2. **Residuo de redacción de D-5, en la nota y no en este informe.** `2.1.5.3` retiró la viñeta
+>    «Micro» pero conserva dos menciones al recuento anterior: «*mediante alguno de **tres** esquemas
+>    de promediado*» y «*La elección entre **estos tres** esquemas*». **No se corrige desde aquí**:
+>    es una nota de la memoria y esta ficha es de solo lectura sobre ellas. Queda señalado para que
+>    se despache.
+> 3. **`2.1.4.5` conserva el título «Transición»** con ~110 palabras, cuando el plan lo dejaba en
+>    ~40. Es compresión pendiente, no material retirado: no afecta a ninguna partida de este §4.
+
 Cada bloque, con la pregunta previsible que responde y lo que hay que llevar sabido.
 
 ### D-1. «¿Por qué no ha usado aprendizaje por refuerzo?» — retirado de `2.1.2.3` (155 palabras)
@@ -335,8 +371,10 @@ validación cruzada → medida final sobre datos no vistos, con retrocesos entre
 decisión posterior revela un problema anterior.
 
 ### D-8. «¿Cuál era la rejilla exacta de hiperparámetros?» — retirado de `2.1.6.4` por petición del profesor
-Es el **único** recorte de 2.1 atribuible a él. La rejilla no desaparece de la memoria: vive en
-`4.5`, que es su sede. El argumento a defender es el criterio, no los números: **rejilla pequeña y
+Es el **único** recorte de 2.1 atribuible a él. La rejilla no desaparece de la memoria: **sus valores
+viven en `A.3 Ficha del sistema` §A.3.3**, que es su sede única —verificado en disco el 2026-08-21;
+`4.5` declara los ejes y el número de combinaciones y remite allí para las cifras, igual que hace
+hoy `2.1.6.4`—. El argumento a defender es el criterio, no los números: **rejilla pequeña y
 publicada**, por dos razones — se comparan arquitecturas, no se exprime un algoritmo (un presupuesto
 de búsqueda desigual contaminaría la comparación, porque el ganador podría serlo por haber recibido
 más ajuste), y una rejilla publicada es auditable. En la etapa de anomalías el mecanismo no puede

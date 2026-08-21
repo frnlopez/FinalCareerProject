@@ -7,15 +7,11 @@ docx_ref: "Abstract"
 
 # Abstract
 
-> [!note] Traducción fiel de [[Resumen]]
-> Este texto es la versión inglesa del mismo resumen, no un texto distinto. Cualquier cambio en `Resumen.md` debe replicarse aquí.
+Versión inglesa del título y del resumen; el texto español se recoge en [[Resumen]].
 
 ## Title
 
 **Machine-learning-based hybrid network intrusion detection system: cascaded anomaly and signature detection on NSL-KDD**
-
-> [!note] Traducción del título fijado — 2026-08-18
-> Versión inglesa del título definitivo cerrado por Francisco el **2026-08-18** (texto español en [[Resumen]]). No reabrir la elección: cualquier ajuste aquí es de traducción, no de contenido.
 
 ## Abstract
 

@@ -161,13 +161,14 @@ cada nota del vault una a una y cruzándolo con los wikilinks de este índice.
 > - **Se cuentan** las notas de la memoria: preliminares, capítulos 1-6 y apéndices.
 > - **`Bibliografía` se cuenta aparte**, no como nota de memoria: es aparato de apoyo y su
 >   contenido lo gestiona el `researcher`. De ahí que 43 notas den 44 entradas indexadas.
-> - **No se cuentan ni se indexan** las 8 notas de `99 Investigación/`: son informes de
->   investigación, insumo citable, no contenido de la memoria.
+> - **No se cuentan ni se indexan** los documentos de trabajo auxiliares: notas de investigación
+>   previa, material de consulta y borradores de apoyo. Son insumo del proceso de elaboración, no
+>   contenido de la memoria, y por tanto no forman parte de lo que se entrega ni de este índice.
 > - **No se cuenta** esta propia nota de índice.
-> - **No se cuenta** `APUNTES SOBRE CS229 STANFORD ML LECTURES\Lecture 1.md`, de 0 bytes, ajena al
->   TFG y **pendiente de borrarse**. Es el único fichero del vault que queda fuera por este motivo,
->   así que al eliminarlo el recuento no cambia.
+> - **No se cuentan** los ficheros ajenos al TFG que puedan convivir en el vault (apuntes de
+>   terceros, material descargado o ficheros vacíos). Al no aportar contenido a la memoria, su
+>   presencia o su eliminación no altera el recuento.
 >
-> Con ese criterio, **los ficheros del vault cuadran exactamente con las entradas del índice**:
-> 54 `.md` en disco − 8 de `99 Investigación/` − este índice − `Lecture 1.md` = **44**. No hay
-> notas de memoria sin indexar ni entradas del índice sin fichero: **los 44 wikilinks resuelven**.
+> Con ese criterio la cuenta cierra sobre sí misma: **43 notas de memoria + `Bibliografía` = 44
+> entradas indexadas**, exactamente las que enumera el listado de arriba. No hay notas de memoria
+> sin indexar ni entradas del índice sin nota detrás: **los 44 wikilinks resuelven**.

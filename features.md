@@ -966,16 +966,8 @@ eso el `3.3:42` y el residuo de T25 no llevan commit separado—;
 > **F1 y F2 quedaron CERRADAS el 2026-08-21; sus filas viven ya en `## Cerradas`.** Con F1 cerrada,
 > **F5 queda DESBLOQUEADA**.
 
-- [ ] 🟠 **Tres arreglos en `Bibliografía.md`** · Informe · **solo `researcher`** · **SIEMPRE EN SERIE, nunca en paralelo con nada**
-  Alta el **2026-08-21**.
-  **(a)** La fila **`[38]`** localiza en **`2.2.5.4`**, apartado **fusionado en `446ec4e`**: hay que
-  **reapuntarla a `2.2.5.3`**.
-  **(b)** Las reservas de los **cinco callouts fuera del capítulo 2** —`3.5` Shwartz-Ziv y Armon,
-  `6.1` Scheirer et al., y el bucle de realimentación de `6.2`— **siguen viviendo solo en el cuerpo**,
-  lo que es **incoherente con la derogación de T14 del 2026-08-20**: la reserva **debe vivir en la
-  fila**.
-  **(c)** Cuatro filas —**`[29]`, `[34]`, `[46]`, `[47]`**— siguen con **identidad inferida del
-  contexto**, reserva de **segundo orden** que conviene confirmar.
+> **F3 y F5 quedaron CERRADAS el 2026-08-21, junto con los cuatro residuos de F1/F2; sus filas viven
+> ya en `## Cerradas`. De este bloque solo sigue abierta F4.**
 
 - [ ] 🟠 **Solapes 2↔4/5/6 sin diagnosticar** · Informe
   Alta el **2026-08-21**. El barrido de la **Tanda 19** fue **INTERNO** al capítulo 2. **Esta ficha ya
@@ -984,38 +976,16 @@ eso el `3.3:42` y el residuo de T25 no llevan commit separado—;
   `2.1.6.5`). **Autorización de Francisco del 2026-08-20: diagnosticar y ejecutar en la misma
   tirada**, consultándole **solo si aparece otro caso tipo `1.2`** —contenido único en peligro—.
 
-- [ ] 🟡 **Barrer los callouts que leen como nota interna en lugar de prosa de memoria** · Informe
-  Alta el **2026-08-21**. En el bloque `2.2` quedan **once** callouts (cuatro en `2.2.2`, uno en
-  `2.2.3`, cinco en `2.2.4`, uno en `2.2.5`); **tres ya se despersonalizaron en `446ec4e`** —«Alcance
-  de la cita», «Sobre la fecha» de `1.2` y «Alcance declarado» de `2.3.3`—. Falta revisar **el resto
-  del capítulo 2 y de la memoria** con el mismo criterio: **¿esto lo lee el tribunal como contenido, o
-  como acta de trabajo?** **Dato a favor de que el problema es acotado:** contado en disco el
-  2026-08-21, en la memoria hay **CERO** ocurrencias de «Tanda N», «decisión de Francisco», nombres de
-  agentes y referencias `fichero:línea`. **Troceable por nota UNA VEZ F1 haya cerrado**: se solapan en
-  `3.x` y `5.x`. **F1 cerró el 2026-08-21, así que esta ficha ya está DESBLOQUEADA.**
+### Altas de la tanda del 2026-08-21 — residuo de F5
 
-### Altas de la tanda del 2026-08-21 — residuos de F1/F2
+> **Un solo residuo, no bloqueante.** Sale del barrido de metadiscurso que cerró F5. **Fichar no es
+> resolver: aquí no se ha corregido nada.**
 
-> **Cuatro residuos, ninguno bloqueante.** Salen del pase que cerró F1 y F2 y de su auditoría de
-> coherencia. **Fichar no es resolver: aquí no se ha corregido nada.**
-
-- [ ] 🟡 **La URL del dataset no tiene sede única en la memoria** · Informe
-  Alta el **2026-08-21**. `4.2` **no la contiene**, y es el apartado donde el lector la buscaría.
-  Hay que **fijar una sede canónica** para ella y remitir el resto allí.
-
-- [ ] 🟡 **`5.2` referencia `firmas.py` por número de línea** · Informe
-  Alta el **2026-08-21**. Cita `firmas.py:146` y `firmas.py:103-108`, **contra la norma de
-  referenciar por TÍTULO** («Normas de trabajo» de `CLAUDE.md`). Localizar los destinos **por
-  contenido** y reescribir las dos remisiones.
-
-- [ ] 🟡 **Los otros tres informes de `99 Investigación/` pueden arrastrar el defecto que arregló F2** · Informe · **NO toca notas de la memoria**
-  Alta el **2026-08-21**. F2 reconcilió con el disco el informe del bloque `2.2`; los otros **tres
-  informes de recorte** con bloques «material para la defensa oral» **no los ha abierto nadie**, y
-  pueden declarar retirado texto que sigue en el cuerpo.
-
-- [ ] 🟡 **Dos menciones a `99 Investigación/` en el `00 Índice TFG.md`** · Informe
-  Alta el **2026-08-21**. Están en el callout del criterio de recuento: es **autorreferencia, no
-  respaldo** — `99 Investigación/` no es memoria y el tribunal no lo tiene.
+- [ ] 🟡 **El metadiscurso «sede canónica / sede única» sigue vivo en la memoria** · Informe
+  Alta el **2026-08-21**. Contado en disco tras cerrar F5: **~21 puntos repartidos en 11 notas**. Es
+  vocabulario de proceso interno —cómo se organizó el trabajo—, no contenido que el tribunal lea como
+  memoria. Hay que reescribir esas remisiones **sin nombrar la mecánica**, conservando el reenvío al
+  apartado que corresponda.
 
 ### Altas de la TANDA 30 — 2026-08-18
 
@@ -2884,6 +2854,11 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-21 | Informe | **🟠 «Tres arreglos en `Bibliografía.md`» (F3) — CERRADA en pase en solitario del `researcher`.** `[38]` **reapuntada** a `2.2.5.3`, las reservas que vivían solo en el cuerpo **trasladadas a sus filas** y las **cuatro identidades inferidas** (`[29]`, `[34]`, `[46]`, `[47]`) **verificadas**. **8 filas tocadas y CERO altas: el primer número libre sigue siendo `[79]`.** Verificado en disco tras el pase: **70 filas vivas**, y `[29]`, `[34]`, `[38]`, `[46]` y `[47]` —que el diff mostraba como líneas eliminadas— **siguen presentes: fueron reescrituras, no bajas** | — |
+| 2026-08-21 | Informe | **🟡 «Barrer los callouts que leen como nota interna» (F5) — CERRADA.** Barrido de metadiscurso y callouts en los capítulos **1, 2, 3, 4, 5, 6 y `A.3`**, en **dos tandas paralelas de ficheros disjuntos**: **de 129 callouts a ~85, sin perder ni una cifra.** Los *caveats* críticos quedan **intactos y verificados uno a uno en disco** —la declaración de `2.1.6` sobre las tres decisiones tomadas mirando D2, la cota inferior de `3.2` y los seis «Verificación pendiente»—. **Los 24 callouts «Trazabilidad» NO se retiraron, y es deliberado:** son el vínculo entre cada tabla y su CSV versionado; lo que faltaba era la frase que declara qué son, y **ya está en `5.0`**. En el capítulo 3 sí se disolvieron, porque allí no hay cifras que sostener. **La memoria ya no enlaza a `99 Investigación/`: CERO remisiones** — ese defecto sobrevivía a los barridos anteriores porque el diagnóstico buscaba **la cadena de texto y no los wikilinks**, y se cazó contándolos aparte | — |
+| 2026-08-21 | Informe | **🟡 Los CUATRO residuos de F1/F2 — CERRADOS: ya estaban RESUELTOS en el árbol sin commitear** cuando se fue a mirar el disco, así que **se anotan como resueltos y detectados al verificar disco, no como trabajo nuevo de esta tanda**. La URL del dataset tiene **sede única en `4.2`**; las referencias `firmas.py:NNN` **han desaparecido de `5.2`**; los **tres informes de `99 Investigación/`** llevan su **bloque de reconciliación**; y **`00 Índice TFG.md` no menciona esa carpeta** | — |
+| 2026-08-21 | Informe | **REVIEW DE LA TANDA · auditoría de coherencia ENTRE notas: APTO CON CAMBIOS, NINGÚN hallazgo rojo.** Los **seis hallazgos** quedaron **aplicados en un tercer pase paralelo** | — |
+| 2026-08-21 | Ninguno | **🔴 «Contenido perdido» — COMPROBACIÓN CERRADA por el hilo principal, que es lo que el auditor no podía hacer porque no ejecuta `git`.** `git diff HEAD -- Obsidian_TFG_Vault/` da **33 ficheros, +353/−271**, y se revisaron las **73 líneas eliminadas que contenían cifras**: **todas** son retirada de callouts o reescritura en el sitio. Verificado en disco que sobrevive la prosa de `2.3.1` («Conviene no presentar el debate como cerrado», «Escala de la arquitectura»), la de `3.1` («investigar y experimentar»), la **«cascada de dos etapas»** (viva en `1.3`, `3.2` y `6.1`) y el pasaje de estratificación de `2.1.6` —cuya línea desaparecía del diff **solo por un cambio de redacción**: «La estratificación aquí no es opcional» → «La estratificación, en este caso, no es opcional», con sus **52** muestras de `u2r` frente a **45.927** de `dos` intactas—. **Nada perdido** | — |
 | 2026-08-21 | Informe | **🔴 «La memoria cita 23 veces ficheros de seguimiento que el lector no tiene» (F1) — CERRADA: las 23 remisiones RESUELTAS en 18 notas + `00 Índice TFG.md`**, en cuatro trozos (tres en paralelo + uno en serie con el índice y `6.2`). **La cuenta de la ficha eran 12 notas y en disco eran 18.** Incluye una remisión **CAMUFLADA POR PERÍFRASIS** en `5.2` —«el contrato de decisiones» = `resumen-de-decisiones.md` **sin nombrarlo**—, que **un conteo por nombre de fichero no ve**, y el **alta de la etiqueta `Q1/C` en su sede de `4.3`**. La **procedencia legítima se queda**: los sellos de commit + fecha de `A.3` son trazabilidad, no remisión | `22a6ddc` |
 | 2026-08-21 | Informe | **🟠 «Los informes de defensa oral describen como retirado texto que sigue en el cuerpo» (F2) — CERRADA.** `99 Investigación/Recorte capítulo 2 - bloque 2.2.md` queda **reconciliado con el disco**, **distinguiendo el plan de lo ejecutado** en vez de prometer una trazabilidad que no existía. **Ninguna nota de la memoria tocada** | `22a6ddc` |
 | 2026-08-21 | Informe | **REVIEW DE LA TANDA · `auditor-ml`: APTO CON CAMBIOS, 6 hallazgos y los 5 accionables APLICADOS.** Auditó la **coherencia ENTRE las 11 notas** y **verificó las cifras contra `Resultados/*.csv`** —77→122, +45 dummies, los ocho `f1_macro` y la cascada invertida—: **ninguna sin respaldo**. **El hallazgo 3 fue el que valió el pase: evitó cerrar F1 con SEIS remisiones vivas en dos notas que la propia ficha contaba** — otra vez el patrón de cerrar por el recuento de la ficha en vez de por el disco | `22a6ddc` |

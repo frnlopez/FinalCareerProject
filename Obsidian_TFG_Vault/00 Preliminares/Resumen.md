@@ -11,8 +11,7 @@ docx_ref: "Resumen"
 
 **Sistema híbrido de detección de intrusiones en red basado en aprendizaje automático: detección de anomalías y firmas en cascada sobre NSL-KDD**
 
-> [!note] Título fijado — 2026-08-18
-> Francisco cerró la elección del título el **2026-08-18**. El texto anterior es el definitivo y **no debe reformularse ni reabrirse**: el callout con los cinco candidatos que ocupaba este lugar se retiró al tomarse la decisión. La traducción inglesa del título está en [[Abstract]].
+La versión inglesa del título y del resumen se recoge en [[Abstract]].
 
 ## Resumen
 

@@ -354,13 +354,57 @@ evaluar.
 
 ## 6. Material para la DEFENSA ORAL
 
+> [!danger] RECONCILIACIÓN CON EL DISCO — 2026-08-21 (ficha F3)
+> Este §6 se redactó en tiempo futuro-hecho («*retirado del cuerpo*», «*el desarrollo va a…*»)
+> **antes de ejecutar el recorte**, y el recorte que después se ejecutó sobre `2.3` **fue parcial**:
+> de las nueve partidas P1–P9, **solo dos se aplicaron**. Es el mismo defecto que el §5 del informe
+> de `2.2`, y la corrección es la misma:
+>
+> **En todo este §6 hay que leer «retirado del cuerpo» como «material de esa sede, retirado o no».**
+> El valor del bloque para la defensa oral **no cambia** —el guion de respuesta sirve igual—; lo que
+> **no** puede hacerse es usarlo como registro de qué se recortó. Estado real, verificado apartado
+> por apartado sobre las tres notas de `2.3` el **2026-08-21**:
+>
+> | Partida | Sede declarada | Estado real |
+> |---|---|---|
+> | **P1** naturaleza tabular de los datos | `2.3.1.4 (1)` | **NO APLICADO** — íntegro, hoy en **`2.3.1.3 § (1)`** (ver la renumeración abajo), con `[41]`, `[42]` y el enlace a `[[clasificadores-tabulares-y-arquitecturas-hibridas]]`. La duplicación con `3.5` **sigue viva en las dos sedes** |
+> | **P2** detalle de arquitectura del autoencoder | `2.3.1.4` → `4.4` | **NO APLICADO** — el punto 1 conserva «*tres capas ocultas y anchura decreciente-creciente, del orden de decenas de neuronas por capa (`anomalias.py:86-88`)*», con la referencia `fichero:línea` incluida. Era la única partida **(a)** ejecutable de forma mecánica y no se ejecutó |
+> | **P3** privacidad y RGPD | `2.3.3.5` → `A.3.11.7` | **NO APLICADO, y el destino NO EXISTE** — los cinco principios siguen en el cuerpo, y **`A.3` no tiene ninguna sección `A.3.11.7`**: `A.3.11` sigue con seis subapartados. `A.3.11.7` era una **propuesta** del §4.4, y este §6 la daba por hecha |
+> | **P4** categoría de riesgo del AI Act | `2.3.3.7`, *callout* | **NO APLICADO** — el *callout* «Alcance declarado: no se determina la categoría de riesgo» sigue en el cuerpo, y con él la tabla RGPD / AI Act / NIS2 de tres filas |
+> | **P5** IA ofensiva y doble uso | `2.3.2.3` | **APLICADO** — el apartado conserva el encabezado y una declaración de tres líneas que remite a `3.1` §3.1.5; las cuatro viñetas descriptivas no están. `[37]` y `[45]` no reaparecen |
+> | **P6** malware · anti-phishing · UEBA | `2.3.2.1` | **NO APLICADO** — los tres siguen desarrollados en un párrafo cada uno, con `[43]` y `[3]`. Lo que sí se fue es la fila «Apoyo al SOC» como texto: **queda solo como fila de la tabla**, sin párrafo y sin `[44]` |
+> | **P7** recorrido histórico de la IA | `2.3.1.2` | **APLICADO** — retirado íntegro. `Dartmouth`, `sistemas expertos` e ImageNet no aparecen en `2.3.1`, y `[40]` Krizhevsky quedó quemada en consecuencia (R1, 2026-08-20) |
+> | **P8** cadena del envenenamiento | `2.3.2.4` | **NO APLICADO** — los cuatro pasos siguen enumerados en el cuerpo, con su frase de cierre |
+> | **P9** explicabilidad | `2.3.3.4` | **NO APLICADO** — la entradilla, las tres razones operativas, la tabla interpretable/*post-hoc* y el párrafo con `[53]` **y `[54]`** siguen íntegros. **Consecuencia para el `researcher`: `[54]` Molnar conserva su marcador vivo** y el cabo 1 del §7 sigue abierto, no resuelto |
+>
+> **Renumeración que hay que tener presente al buscar cualquier apartado de `2.3.1`.** Al retirarse
+> el antiguo `2.3.1.2` (P7), los tres siguientes subieron un número. Correspondencia verificada:
+>
+> | En este informe | Hoy en disco |
+> |---|---|
+> | `2.3.1.2` recorrido histórico | **no existe** (retirado) |
+> | `2.3.1.3` reglas escritas a mano frente a aprendidas | `2.3.1.2` |
+> | `2.3.1.4` por qué ML clásico y no *deep learning* (y sus tres puntos y «El único componente neuronal») | `2.3.1.3` |
+> | `2.3.1.5` situación del trabajo y transición | `2.3.1.4` |
+>
+> Ojo con el efecto colateral: **`2.3.3.4` remite a «`2.3.1` (§2.3.1.2)»** para el mecanismo de las
+> reglas legibles, y con la numeración nueva ese puntero **acierta por casualidad** —`2.3.1.2` es hoy
+> justamente el apartado de reglas escritas a mano frente a aprendidas—. No hay nada que arreglar,
+> pero conviene saber que no es una remisión revisada, es una coincidencia.
+>
+> **Lectura correcta:** los §1–§5 siguen siendo defendibles como plan, pero **el ahorro de 4.269
+> palabras que anuncia el §1 no se ha realizado**, y las 9.922 palabras contadas allí siguen siendo,
+> en su mayor parte, las que hay. Reabrir cualquiera de los siete «NO APLICADO» es **una decisión
+> nueva de Francisco**, no la ejecución de un pendiente.
+
 Lo retirado del cuerpo, ordenado por la pregunta previsible del tribunal que responde. Cada bloque
 lleva lo suficiente para contestar sin volver a la nota.
 
 ### P1. «¿Por qué no ha usado *deep learning*? Hoy todo el mundo lo usa.»
 
-**Fuente:** 2.3.1.4 (1) *La naturaleza tabular de los datos* — retirado del cuerpo por estar
-duplicado en `3.5`.
+**Fuente:** 2.3.1.4 (1) *La naturaleza tabular de los datos* — **hoy `2.3.1.3 § (1)`; recorte
+PLANIFICADO, NO EJECUTADO:** sigue íntegro en el cuerpo, y la duplicación con `3.5` sigue viva en las
+dos sedes. La respuesta oral vale igual, y además **se puede señalar en la memoria**.
 
 **Respuesta:** tres argumentos independientes, cada uno suficiente. (i) NSL-KDD es tabular y
 estructurado: 41 características por conexión, 125.973 registros de entrenamiento, sin imágenes ni
@@ -381,8 +425,9 @@ toma la decisión, no en el marco teórico.»
 
 ### P2. «Su sistema tiene un autoencoder. ¿No es eso una red neuronal? ¿No es *deep learning*?»
 
-**Fuente:** 2.3.1.4 *El único componente neuronal* — **se queda en el cuerpo**, pero el detalle de
-arquitectura se traslada a `4.4`.
+**Fuente:** 2.3.1.4 *El único componente neuronal* — **hoy dentro de `2.3.1.3`**. Se queda en el
+cuerpo, como estaba previsto, pero **el traslado del detalle de arquitectura a `4.4` NO se ejecutó**:
+el punto 1 sigue dando las tres capas ocultas y la referencia `anomalias.py:86-88`.
 
 **Respuesta:** cuatro hechos. (i) Escala: perceptrón multicapa de tres capas ocultas, decenas de
 neuronas por capa. (ii) Implementación: `MLPRegressor` de scikit-learn, sin TensorFlow ni Keras, sin
@@ -393,7 +438,9 @@ aprendizaje de representaciones sea el mecanismo principal del modelo.»
 
 ### P3. «¿Y la privacidad? Está monitorizando el tráfico de personas. ¿Ha considerado el RGPD?»
 
-**Fuente:** 2.3.3.5, comprimida en el cuerpo a su *callout*; el desarrollo va a `A.3.11.7`.
+**Fuente:** 2.3.3.5. **Recorte PLANIFICADO, NO EJECUTADO:** el apartado sigue completo en el cuerpo,
+con los cinco principios y el *callout*, y **`A.3.11.7` no existe en `A.3`** — era una propuesta del
+§4.4, no un destino creado.
 
 **Respuesta:** sí, y con una precisión honesta. Una IP asociable a una persona física identificable
 es **dato personal**, luego un IDS cae en el ámbito del RGPD `[55]`. Hay una tensión estructural: más
@@ -415,7 +462,9 @@ práctica.»
 
 ### P4. «¿En qué categoría del AI Act cae su sistema? ¿Es de alto riesgo?»
 
-**Fuente:** 2.3.3.7, *callout* «Alcance declarado» — **retirado del cuerpo a propósito**.
+**Fuente:** 2.3.3.7, *callout* «Alcance declarado: no se determina la categoría de riesgo». **Recorte
+PLANIFICADO, NO EJECUTADO:** el *callout* y la tabla de las tres normas siguen en el cuerpo, así que
+la respuesta de abajo **está escrita en la memoria** y no solo en este guion.
 
 **Respuesta:** «**No lo he determinado, y no lo voy a afirmar sin haber leído el texto consolidado y
 sus anexos en EUR-Lex.** Lo que sí expongo es el enfoque basado en riesgo del Reglamento (UE)
@@ -432,7 +481,9 @@ contexto normativo que empuja el despliegue de sistemas como este.
 
 ### P5. «¿Y si el atacante usa IA? ¿Su sistema resiste a un atacante con IA generativa?»
 
-**Fuente:** 2.3.2.3 *La otra cara: IA ofensiva y doble uso* — retirada íntegra del cuerpo.
+**Fuente:** 2.3.2.3 *La otra cara: IA ofensiva y doble uso* — **RECORTE EJECUTADO**: del cuerpo queda
+solo el encabezado y una declaración de tres líneas que remite a `3.1` §3.1.5. Las cuatro
+manifestaciones de abajo **ya no están en la memoria**, así que este guion es su única sede.
 
 **Respuesta en dos tiempos.** Primero, el reconocimiento: el doble uso no es un riesgo emergente, es
 una **característica estructural del campo**, porque la tecnología es genérica, pública y de coste
@@ -459,7 +510,9 @@ fuera de lo que este trabajo mide, y lo digo antes de que me lo pregunten.**»
 
 ### P6. «El *machine learning* en seguridad no es nuevo. ¿Qué más se hace con él?»
 
-**Fuente:** 2.3.2.1, los tres casos de uso comprimidos a un párrafo.
+**Fuente:** 2.3.2.1. **Recorte PLANIFICADO, NO EJECUTADO:** los tres casos de uso siguen desarrollados
+en un párrafo cada uno. Lo único que cambió es «Apoyo al SOC», que **hoy es solo una fila de la tabla**
+—sin párrafo propio— tras retirarse `[44]` el 2026-08-18.
 
 **Respuesta:** cuatro familias además de la propia. **Análisis de malware**, en dos vías: estático
 (cadenas, secciones, entropía, funciones importadas, *n-gramas* de opcodes — rápido, pero lo degradan
@@ -482,7 +535,9 @@ alarmas y sensibilidad a la deriva del perfil.»
 
 ### P7. «¿De dónde viene todo esto? ¿Cuándo empezó la IA?»
 
-**Fuente:** 2.3.1.2, retirada íntegra.
+**Fuente:** 2.3.1.2, **RECORTE EJECUTADO**: retirada íntegra del cuerpo, y con ella el último uso de
+`[40]` Krizhevsky, **hoy quemada**. Los cinco hitos de abajo **ya no están en la memoria**: no se puede
+señalar el apartado, hay que contarlos. Y **`[40]` no se cita**, porque la entrada está retirada.
 
 **Respuesta:** cinco hitos. **1956**, Conferencia de Dartmouth: acta fundacional de la disciplina y
 del propio término. **Décadas de 1970 y 1980**: ciclos de expectativa y retracción, los «inviernos
@@ -500,7 +555,8 @@ la explicabilidad del enfoque clásico.»
 
 ### P8. «¿Cómo se envenena un detector de anomalías?»
 
-**Fuente:** 2.3.2.4, la cadena de cuatro pasos, retirada del cuerpo.
+**Fuente:** 2.3.2.4. **Recorte PLANIFICADO, NO EJECUTADO:** la cadena de cuatro pasos sigue enumerada
+en el cuerpo, con su frase de cierre.
 
 **Respuesta:** cuatro pasos. (1) El detector define «normal» a partir del tráfico que ve en
 producción. (2) Un atacante con presencia persistente inyecta poco a poco tráfico de su propio
@@ -517,7 +573,9 @@ experimental, no una defensa que yo haya construido.»
 
 ### P9. «¿Por qué explicabilidad? ¿No basta con que acierte?»
 
-**Fuente:** 2.3.3.4, entradilla y párrafo de `[53]`/`[54]`, retirados.
+**Fuente:** 2.3.3.4. **Recorte PLANIFICADO, NO EJECUTADO:** la entradilla, las tres razones operativas,
+la tabla interpretable/*post-hoc* y el párrafo con `[53]` y `[54]` siguen íntegros en el cuerpo. **Por
+tanto `[54]` Molnar conserva su marcador vivo** y el cabo 1 del §7 sigue abierto.
 
 **Respuesta:** tres razones operativas, no estéticas. **Triaje**: el analista decide en minutos;
 «anómalo, puntuación 0,87» no orienta esa decisión, «coincide con el patrón de conexiones
@@ -542,8 +600,9 @@ con su conocimiento del dominio y discutirlas — impracticable con un *ensemble
 
 1. **`[54]` Molnar se queda sin marcador vivo** si se recorta el párrafo final de 2.3.3.4, que es su
    único uso restante según `CLAUDE.md`. Decisión del `researcher`, en pase serie, no desde aquí.
-2. **Varias citas cambian de estado** si se aplican estos recortes: `[40]` (ImageNet) pierde su único
-   uso con 2.3.1.2; `[43]` (filtros bayesianos) sobrevive solo si el párrafo comprimido de 2.3.2.1
+2. **Varias citas cambian de estado** si se aplican estos recortes. **Actualizado el 2026-08-21:**
+   `[40]` (ImageNet) ya perdió su único uso al ejecutarse la retirada de 2.3.1.2 y **está quemada**
+   desde R1 (2026-08-20); `[54]` **sigue viva**, porque el recorte de 2.3.3.4 no se ejecutó. `[43]` (filtros bayesianos) sobrevive solo si el párrafo comprimido de 2.3.2.1
    conserva la mención; `[55]`, `[56]` y `[57]` sobreviven **porque van al apéndice** — ese es parte
    del motivo de proponerlo. **Requiere un pase del `researcher` posterior a la edición, con recuento
    en disco**, no una estimación.

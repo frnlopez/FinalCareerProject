@@ -3,7 +3,7 @@ titulo: "Recorte de la memoria — barrido de capítulos 1, 3, 4, 5, 6, prelimin
 tipo: informe de análisis
 fecha: 2026-08-20
 alcance: "Capítulos 1, 3, 4, 5, 6, Preliminares y Apéndices. NO cubre el capítulo 2."
-estado: análisis — ninguna nota de la memoria ha sido modificada
+estado: "análisis; DESFASADO como registro — R1 y R2 se ejecutaron después (ver la reconciliación del §8, 2026-08-21)"
 ---
 
 
@@ -55,8 +55,9 @@ estado: análisis — ninguna nota de la memoria ha sido modificada
 
 > [!warning] Qué es y qué no es este informe
 > Es un **barrido de prescindibles evidentes**, no el análisis detallado que se está haciendo sobre
-> los tres bloques del capítulo 2. **Ninguna nota de la memoria se ha editado.** El único fichero
-> escrito es este.
+> los tres bloques del capítulo 2. **Ninguna nota de la memoria se había editado al redactarlo** —el
+> único fichero escrito entonces fue este—. **Eso ya no describe el disco:** R1 y R2 se ejecutaron
+> después sobre `A.3`. El estado real, partida por partida, está en la reconciliación del §8.
 >
 > **El capítulo 2 queda fuera del alcance** y no se analiza aquí: lo cubren tres informes hermanos.
 > Donde una propuesta de este informe toca al capítulo 2, se limita a **señalar la sede canónica
@@ -353,6 +354,35 @@ cruza hacia el capítulo 1, el 3 y los apéndices:
 ---
 
 ## 8. Material para la DEFENSA ORAL
+
+> [!warning] RECONCILIACIÓN CON EL DISCO — 2026-08-21 (ficha F3)
+> La columna «**Dónde vive tras el recorte**» de la tabla de abajo describe un estado **posterior a
+> la ejecución**, y el *frontmatter* de este informe todavía dice «*ninguna nota de la memoria ha
+> sido modificada*». **Las dos cosas están hoy desfasadas, en direcciones opuestas.** Estado real,
+> verificado en disco el 2026-08-21:
+>
+> | Partida | Sede | Estado real |
+> |---|---|---|
+> | **R1** tabla de calidad (98 filas) | `A.3` §A.3.6 | **EJECUTADO** — el encabezado «Bloque de calidad (98 celdas)» sigue, pero su contenido es hoy un *callout* de remisión: «*Las 98 celdas NO se transcriben aquí […] `Resultados/dispersion_semillas.csv` y `.md`, ambos versionados*» |
+> | **R2** tabla de máquina (100 filas) | `A.3` §A.3.6 | **EJECUTADO** — la tabla no está; se conservan la prosa en viñetas (el 4,8×, el recuento de épocas) y el *callout* de `ac496cb`, que era exactamente lo previsto en §2.2 punto 3 |
+> | **R3** tabla de rejillas de la etapa 1 | `4.4` | **NO EJECUTADO** — la tabla de cuatro filas (`n_estimators`, `nu`/`gamma`, `n_neighbors`, `hidden_layer_sizes`) sigue en `## Algoritmos y espacios de búsqueda`. **La asimetría con `4.5` que denuncia el §4 sigue viva** |
+> | **R4** dos tablas de márgenes de balanceo | `5.2` §5.2.4.4 | **NO EJECUTADO** — las tablas de márgenes de `f1_macro` con su `±` entre *folds* siguen en el cuerpo de `5.2.4.4` |
+> | **C1–C12** condensaciones | varias | **NINGUNA EJECUTADA** que se haya podido verificar. Comprobadas una a una las dos que dejan huella inequívoca: `3.5.2 § Por qué familias clásicas…` (C9) conserva sus **cinco condiciones con tabla**, y `1.2 Preliminares` (C7) conserva el relato histórico completo |
+>
+> **Consecuencias que hay que leer con cuidado:**
+>
+> - **El −6.410 contado SÍ se materializó**, y es R1+R2. Ese titular del §1.1 es real.
+> - **El +301 de «solo se muda al apéndice» NO**: R3 y R4 siguen pendientes, así que las 301 palabras
+>   siguen en el cuerpo y `A.3.3`/`A.3.6` no las han recibido.
+> - **El orden de ejecución del §9 se cumplió solo en su paso 1.** El paso 2 (R3/R4, «mecánicos, 301
+>   palabras, cierran el carril de hiperparámetros que el profesor pidió») **está sin hacer**, y es el
+>   pendiente más barato y más defendible de todo este informe.
+> - **La fila «¿Los hiperparámetros son reproducibles?» de la tabla de abajo es la que más engaña
+>   hoy:** dice que tras R3/R4 `A.3` es «*el único sitio de la memoria donde viven*». Aún **no** lo es
+>   —`4.4` y `5.2.4.4` siguen tabulándolos—, aunque `2.1.6.4` y `4.5` sí remiten ya a `A.3` §A.3.3.
+>
+> **`5.2` estaba siendo editada por otro agente el 2026-08-21**, así que el estado de R4 debe
+> reconfirmarse contra el disco antes de darlo por pendiente.
 
 Todo lo que este informe retira del cuerpo **sigue existiendo**: en un CSV versionado, en el
 apéndice o en `Resultados/`. Esta sección empareja cada pieza retirada con la pregunta del tribunal
