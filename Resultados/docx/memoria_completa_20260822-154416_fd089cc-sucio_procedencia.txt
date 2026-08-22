@@ -1,0 +1,169 @@
+volcado del vault al .docx
+commit: fd089cc-sucio
+fecha: 2026-08-22T15:44:18
+capitulos: memoria completa
+plantilla: C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Plantilla-para-volcado.docx
+pandoc: C:\Users\francisco.lopez\AppData\Local\pandoc-portable\pandoc-3.6.3\pandoc.exe
+markdown intermedio: C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Resultados\docx\memoria_completa_20260822-154416_fd089cc-sucio.md
+citas [n] en el .docx: 204 (69 distintas)
+imagenes embebidas: 24
+callouts: 128 vistos, 37 borrados, 91 degradados
+censo de estilos de la plantilla: memoria_completa_20260822-154416_fd089cc-sucio_estilos_plantilla.txt
+censo de estilos del .docx generado: memoria_completa_20260822-154416_fd089cc-sucio_estilos_docx.txt
+politica de callouts: degradar a prosa es el DEFECTO; se borra solo el andamiaje (ANDAMIAJE / ANDAMIAJE_TIPOS)
+
+== RECUENTO ESTIMADO DE PAGINAS (425 palabras/pagina de prosa) ==
+   MIDE: prosa. NO MIDE: bloques de codigo, filas de tabla, divs ':::' ni rutas de imagen, que en Word SI ocupan pagina. Es por tanto una INFRAESTIMACION del grosor del documento, no la longitud de la memoria.
+   columnas: capitulo | palabras de prosa | paginas estimadas | palabras en bruto (inflado)
+  Preliminares                         974  ~   2.3 pag.  bruto     980
+  1. Introducción                     3109  ~   7.3 pag.  bruto    3191
+  2. Marco Teórico                   25250  ~  59.4 pag.  bruto   28422
+  3. Diseño del sistema               5919  ~  13.9 pag.  bruto    6513
+  4. Implementación del sistema      11218  ~  26.4 pag.  bruto   13147
+  5. Evaluación                      15739  ~  37.0 pag.  bruto   19002
+  6. Conclusiones                     7115  ~  16.7 pag.  bruto    7938
+  Apéndices                           9114  ~  21.4 pag.  bruto   12458
+  TOTAL                              78438  ~ 184.6 pag.  bruto   91651
+  callouts indentados detectados (dentro de un elemento de lista): 5
+
+== CALLOUTS BORRADOS (contenido que NO entra en el .docx) ==
+   columnas: nota | [!tipo] titulo | citas | clase
+  - 2.1.6 Metodologías y buenas prácticas | [!warning] Verificación pendiente — sin acceso al texto completo | [18] | andamiaje
+  - 2.3.3 Límites y consideraciones éticas | [!warning] Verificación pendiente — sin acceso al texto completo | [18] | andamiaje
+  - 3.5 Modelo de detección basado en firmas | [!warning] Verificación pendiente — sin acceso al texto completo | sin citas | andamiaje
+  - 4.2 Base de datos utilizada | [!info] Trazabilidad — recuentos de D2 | sin citas | andamiaje
+  - 4.2 Base de datos utilizada | [!info] Trazabilidad — el 78,3 % de DoS en D3 | sin citas | andamiaje
+  - 4.2 Base de datos utilizada | [!info] Trazabilidad — el «17»: medido en disco, no citado | sin citas | andamiaje
+  - 4.2 Base de datos utilizada | [!info] Trazabilidad | sin citas | andamiaje
+  - 4.3 Preprocesamiento de los datasets | [!info] Trazabilidad | sin citas | andamiaje
+  - 4.3 Preprocesamiento de los datasets | [!info] Trazabilidad | sin citas | andamiaje
+  - 4.3 Preprocesamiento de los datasets | [!info] Trazabilidad | sin citas | andamiaje
+  - 4.3 Preprocesamiento de los datasets | [!info] Trazabilidad | sin citas | andamiaje
+  - 4.3 Preprocesamiento de los datasets | [!info] Trazabilidad | sin citas | andamiaje
+  - 4.3 Preprocesamiento de los datasets | [!info] Trazabilidad | sin citas | andamiaje
+  - 4.3 Preprocesamiento de los datasets | [!warning] Verificación pendiente — sin acceso al texto completo | sin citas | andamiaje
+  - 4.3 Preprocesamiento de los datasets | [!info] Trazabilidad | sin citas | andamiaje
+  - 4.4 Entrenamiento del modelo de detección de anomalías | [!info] Trazabilidad | sin citas | andamiaje
+  - 4.5 Entrenamiento del modelo de detección basado en firmas | [!info] Trazabilidad | sin citas | andamiaje
+  - 5.0 Protocolo de evaluación | [!warning] Verificación pendiente — sin acceso al texto completo | sin citas | andamiaje
+  - 5.0 Protocolo de evaluación | [!info] Trazabilidad | sin citas | andamiaje
+  - 5.1 Resultados del modelo de detección de anomalías | [!info] Trazabilidad | sin citas | andamiaje
+  - 5.1 Resultados del modelo de detección de anomalías | [!info] Trazabilidad | sin citas | andamiaje
+  - 5.1 Resultados del modelo de detección de anomalías | [!info] Trazabilidad | sin citas | andamiaje
+  - 5.1 Resultados del modelo de detección de anomalías | [!info] Trazabilidad | sin citas | andamiaje
+  - 5.2 Resultados del modelo de detección basado en firmas | [!info] Trazabilidad | sin citas | andamiaje
+  - 5.2 Resultados del modelo de detección basado en firmas | [!info] Trazabilidad | sin citas | andamiaje
+  - 5.2 Resultados del modelo de detección basado en firmas | [!info] Trazabilidad | sin citas | andamiaje
+  - 5.2 Resultados del modelo de detección basado en firmas | [!info] Trazabilidad | sin citas | andamiaje
+  - 5.3 Resultados del sistema híbrido | [!info] Trazabilidad | sin citas | andamiaje
+  - 5.3 Resultados del sistema híbrido | [!info] Trazabilidad | sin citas | andamiaje
+  - 5.3 Resultados del sistema híbrido | [!info] Trazabilidad | sin citas | andamiaje
+  - 5.3 Resultados del sistema híbrido | [!info] Trazabilidad | sin citas | andamiaje
+  - 5.3 Resultados del sistema híbrido | [!info] Trazabilidad | sin citas | andamiaje
+  - 6.1 Conclusiones | [!warning] Verificación pendiente — sin acceso al texto completo | sin citas | andamiaje
+  - 6.2 Líneas futuras | [!todo] Dos huecos detectados, pendientes de decidir si entran | sin citas | andamiaje
+  - 6.2 Líneas futuras | [!warning] Verificación pendiente — sin acceso al texto completo | sin citas | andamiaje
+  - A.1 Columnas del dataset NSL-KDD | [!info] Trazabilidad | sin citas | andamiaje
+  - A.3 Ficha del sistema | [!warning] Verificación pendiente — sin acceso al texto completo | [18] | andamiaje
+
+== CALLOUTS DEGRADADOS A PROSA (el texto entra, la caja no) ==
+  - 1.2 Preliminares | [!note] Sobre la fecha | [26]
+  - 1.3 Objetivo | [!note] Alcance | sin citas
+  - 2.1.2 Tipos de ML | [!note] Relación con el autoencoder de este trabajo | sin citas
+  - 2.1.2 Tipos de ML | [!important] Regla terminológica de este trabajo | sin citas
+  - 2.1.4 Algoritmos de ML | [!note] Tres nociones de anomalía, un mismo régimen de supervisión | sin citas
+  - 2.1.6 Metodologías y buenas prácticas | [!warning] Declaración: tres decisiones del sistema se tomaron mirando D2 | sin citas
+  - 2.1.6 Metodologías y buenas prácticas | [!note] Tres términos que no son sinónimos | [13]
+  - 2.1.6 Metodologías y buenas prácticas | [!important] Un umbral de confianza no es una regla de rechazo óptima | [16]
+  - 2.1.6 Metodologías y buenas prácticas | [!important] La métrica inadecuada como error metodológico catalogado | [18], [24]
+  - 2.1.6 Metodologías y buenas prácticas | [!important] Definición: el *semantic gap* | [21]
+  - 2.2.2 Sistemas de detección de intrusiones | [!note] Alcance de la cita en esta línea histórica | [26]
+  - 2.2.2 Sistemas de detección de intrusiones | [!important] Alcance de este trabajo | sin citas
+  - 2.2.3 Taxonomía de los IDS | [!important] Definición operativa adoptada en este trabajo | sin citas
+  - 2.2.4 Detección por firmas frente a detección por anomalías | [!important] Qué se entiende aquí por «híbrido» | sin citas
+  - 2.3.1 IA, ML y Deep Learning | [!note] El criterio de la herramienta mínima | sin citas
+  - 2.3.3 Límites y consideraciones éticas | [!note] Alcance de este trabajo | sin citas
+  - 2.3.3 Límites y consideraciones éticas | [!note] Alcance declarado: no se determina la categoría de riesgo | sin citas
+  - 2.3.3 Límites y consideraciones éticas | [!note] Postura adoptada en este trabajo | sin citas
+  - 3.1 Requisitos del sistema | [!warning] Alcance de esta exclusión | [18]
+  - 3.2 Arquitectura del sistema | [!important] Cómo se lee esa cifra: cota inferior, no FPR | sin citas
+  - 3.2 Arquitectura del sistema | [!note] Divergencia con ADAM | [32]
+  - 3.5 Modelo de detección basado en firmas | [!warning] Dos «8 de 10» distintos | sin citas
+  - 4.1 Tecnologías utilizadas | [!note] Dependencias transitivas | sin citas
+  - 4.2 Base de datos utilizada | [!info] Origen de descarga de los ficheros | sin citas
+  - 4.2 Base de datos utilizada | [!warning] Vacuna contra un error que circula en la literatura | sin citas
+  - 4.2 Base de datos utilizada | [!warning] Vacuna: el «14» de Tavallaee et al. es de KDD'99, no de NSL-KDD | [23], [23]
+  - 4.2 Base de datos utilizada | [!warning] `delta = (A) − (B)` es una comparación, no una descomposición | sin citas
+  - 4.2 Base de datos utilizada | [!info] Homólogas de la variante de 122 características | sin citas
+  - 4.2 Base de datos utilizada | [!note] Dónde se publican las cifras del test KS | sin citas
+  - 4.3 Preprocesamiento de los datasets | [!warning] Limitación asumida de SMOTE sobre variables one-hot | sin citas
+  - 4.3 Preprocesamiento de los datasets | [!warning] Efecto de esta poda sobre las dos etapas | sin citas
+  - 4.3 Preprocesamiento de los datasets | [!warning] Esta elección se tomó sobre D2 | sin citas
+  - 4.4 Entrenamiento del modelo de detección de anomalías | [!important] El AUC-ROC de validación **no** es el de § 5.1.2 | sin citas
+  - 4.6 Conclusiones del capítulo | [!warning] Alcance real de la regla: qué sí miró D2 | sin citas
+  - 5.0 Protocolo de evaluación | [!note] Relación con el apéndice | sin citas
+  - 5.0 Protocolo de evaluación | [!warning] Un cociente crudo entre columnas de tiempo no es un cociente de coste por flujo | sin citas
+  - 5.0 Protocolo de evaluación | [!warning] Dos nomenclaturas que solo distingue un guion | [18]
+  - 5.0 Protocolo de evaluación | [!warning] La misma cifra, dos variantes, dos números | sin citas
+  - 5.0 Protocolo de evaluación | [!note] Alcance exacto de lo que se toma de [18] | [18]
+  - 5.1 Resultados del modelo de detección de anomalías | [!note] Qué mide cada columna de tiempo, y hasta dónde vale | sin citas
+  - 5.1 Resultados del modelo de detección de anomalías | [!note] Sobre el FPR real frente al FPR de diseño (caveat P-2) | sin citas
+  - 5.1 Resultados del modelo de detección de anomalías | [!warning] `delta = (A) − (B)` es una comparación, no una descomposición | sin citas
+  - 5.1 Resultados del modelo de detección de anomalías | [!warning] La elección del detector ganador sí usó métricas de D2 | sin citas
+  - 5.2 Resultados del modelo de detección basado en firmas | [!note] Alcance de la evaluación | sin citas
+  - 5.2 Resultados del modelo de detección basado en firmas | [!warning] La distancia RandomForest–HistGradientBoosting no establece un orden | sin citas
+  - 5.2 Resultados del modelo de detección basado en firmas | [!warning] La elección del clasificador ganador sí usó métricas de D2 | sin citas
+  - 5.2 Resultados del modelo de detección basado en firmas | [!important] La banda acompaña al titular | sin citas
+  - 5.2 Resultados del modelo de detección basado en firmas | [!warning] Las tres salvedades del recuento | sin citas
+  - 5.2 Resultados del modelo de detección basado en firmas | [!important] Qué se concluye y qué NO | sin citas
+  - 5.2 Resultados del modelo de detección basado en firmas | [!info] Los dos repartos son recuentos automatizados | sin citas
+  - 5.2 Resultados del modelo de detección basado en firmas | [!note] Alcance de este apartado | sin citas
+  - 5.3 Resultados del sistema híbrido | [!important] Estas cifras coinciden exactamente con las de la etapa 1 — por construcción, no por casualidad (H-5) | sin citas
+  - 5.3 Resultados del sistema híbrido | [!warning] Por qué no se reporta un "F1 global" único (H-6) | sin citas
+  - 5.3 Resultados del sistema híbrido | [!note] Por qué el recall 0-day es idéntico en las tres filas | sin citas
+  - 5.3 Resultados del sistema híbrido | [!important] Qué NO explica este 13,4 % | sin citas
+  - 5.4 Conclusiones del capítulo | [!note] Cifra de comparabilidad externa, no titular del trabajo | sin citas
+  - 5.4 Conclusiones del capítulo | [!warning] Dos reservas que acompañan obligatoriamente a esta tabla | sin citas
+  - 5.4 Conclusiones del capítulo | [!note] Por qué no se publica aquí el porcentaje del conteo propio | [74]
+  - 5.4 Conclusiones del capítulo | [!warning] Alcance de esta proyección | [24]
+  - 5.4 Conclusiones del capítulo | [!warning] La cifra de flujos por segundo es un techo de inferencia en laboratorio, no capacidad operativa | sin citas
+  - 5.4 Conclusiones del capítulo | [!note] Ausencia de medición del coste de extracción y captura | sin citas
+  - 6.1 Conclusiones | [!note] Dónde vive la instanciación | sin citas
+  - 6.2 Líneas futuras | [!warning] Salvaguarda metodológica: no elegir los miembros mirando la partición que después mide | [62]
+  - 6.2 Líneas futuras | [!note] Sobre UNSW-NB15 como alternativa | [50]
+  - 6.2 Líneas futuras | [!warning] Lo que este peldaño **no** puede sustituirse por | sin citas
+  - 6.2 Líneas futuras | [!warning] Dos etiquetas que no deben usarse | sin citas
+  - A.1 Columnas del dataset NSL-KDD | [!note] Etiquetas del registro | sin citas
+  - A.2 Métricas de desempeño | [!note] Por qué el FPR del sistema es el FPR de esta etapa | sin citas
+  - A.2 Métricas de desempeño | [!warning] Alcance de la remisión a `5.3` | sin citas
+  - A.2 Métricas de desempeño | [!note] Un matiz propio de este sistema | sin citas
+  - A.3 Ficha del sistema | [!note] Naturaleza de este apéndice | sin citas
+  - A.3 Ficha del sistema | [!warning] Son dos corridas distintas y no se presentan mezcladas | sin citas
+  - A.3 Ficha del sistema | [!warning] Qué es intocable en D2 — y qué sí lo miró | sin citas
+  - A.3 Ficha del sistema | [!note] Dónde vive el protocolo | sin citas
+  - A.3 Ficha del sistema | [!warning] El *wall-clock* no es reproducible | sin citas
+  - A.3 Ficha del sistema | [!warning] Salvedad (i) — el 13 depende del criterio de comparación | sin citas
+  - A.3 Ficha del sistema | [!warning] Salvedad (ii) — no todas esas celdas son métricas sobre D2 | sin citas
+  - A.3 Ficha del sistema | [!warning] Salvedad (iii) — el titular y la banda no salen del mismo commit | sin citas
+  - A.3 Ficha del sistema | [!warning] Salvedad obligatoria: `ac496cb` no es reproducible desde git | sin citas
+  - A.3 Ficha del sistema | [!note] 19 líneas de aviso, 15 celdas | sin citas
+  - A.3 Ficha del sistema | [!warning] Es deuda técnica declarada, no una decisión de diseño | sin citas
+  - A.3 Ficha del sistema | [!note] Relación con el cuerpo de la memoria | sin citas
+  - A.3 Ficha del sistema | [!warning] Alcance exacto de este sesgo, para no exagerarlo ni minimizarlo | sin citas
+  - A.3 Ficha del sistema | [!warning] Límite declarado de alcance: la corrección no se ejecuta en este trabajo | sin citas
+  - A.3 Ficha del sistema | [!warning] Alcance declarado: la identidad de los seis ítems restantes no se establece | [20]
+  - A.3 Ficha del sistema | [!note] Alcance de los ítems 6, 9 y 10 | sin citas
+  - A.3 Ficha del sistema | [!note] Cómo leer el sello del agregado | sin citas
+  - A.3 Ficha del sistema | [!note] Métrica asociada | sin citas
+  - A.3 Ficha del sistema | [!note] Una fase que no se ejecuta también se declara | sin citas
+  - A.3 Ficha del sistema | [!note] La tabla de la teoría; el sistema se desvió de ella en tres decisiones | sin citas
+  - A.3 Ficha del sistema | [!note] Declarar la renuncia forma parte del cumplimiento | sin citas
+
+== AVISOS DE LA CORRIDA ==
+  - ANDAMIAJE: 3.2 Arquitectura del sistema trae un bloque ```mermaid; Word lo publicara como codigo fuente tal cual (no se borra por decision del script)
+  - DEFECTO DE LA PLANTILLA: 'Titulo 3 de Apendice' hereda la numeracion del cuerpo (numId del capitulo), no la del apendice; el volcado CONSERVA el numero a mano de los apartados A.x.y para que el desajuste se vea. --numerar-apendice-n3 lo quita.
+  - callout borrado con citas que SI sobreviven en otra sede: 2.1.6 Metodologías y buenas prácticas | [!warning] Verificación pendiente — sin acceso al texto completo | [18]
+  - callout borrado con citas que SI sobreviven en otra sede: 2.3.3 Límites y consideraciones éticas | [!warning] Verificación pendiente — sin acceso al texto completo | [18]
+  - callout borrado con citas que SI sobreviven en otra sede: A.3 Ficha del sistema | [!warning] Verificación pendiente — sin acceso al texto completo | [18]
+
+ADVERTENCIA: el volcado es destructivo respecto al trabajo manual en Word; re-ejecutar revive lo borrado.

@@ -1,0 +1,30 @@
+censo del .docx GENERADO (no de la plantilla)
+docx: memoria_completa_20260822-154416_fd089cc-sucio.docx
+commit: fd089cc-sucio
+fecha: 2026-08-22T15:44:18
+capitulos: memoria completa
+
+== RECUENTOS DEL DOCUMENTO ==
+  tablas (<w:tbl>): 112
+  imagenes (<a:blip>): 24
+  marcadores de cita [n]: 204 (69 entradas distintas)
+  pStyle inyectados por pandoc y remapeados: {'Compact': 2692, 'FirstParagraph': 385, 'BodyText': 603, 'BlockText': 8, 'SourceCode': 13}
+
+== ESTILOS DE PARRAFO (w:pStyle) DEL DOCUMENTO ==
+   columnas: veces | styleId | w:name en la plantilla
+    2692  Prrafodelista                List Paragraph
+     138  Ttulo4                       heading 4
+      92  Ttulo3                       heading 3
+      36  Ttulo5                       heading 5
+      27  Ttulo2                       heading 2
+      24  FiguraTablaEcuacin           Figura_Tabla_Ecuación
+      23  Ttulo3deApndice              Título 3 de Apéndice
+      13  Cdigofuente                  Código fuente
+       6  Ttulo1                       heading 1
+       3  Apndice                      Apéndice
+       3  Ttulo2deApndice              Título 2 de Apéndice
+
+== ESTILOS COLGANTES (en el .docx, no en la plantilla) ==
+   (ninguno)
+
+ADVERTENCIA: el volcado es destructivo respecto al trabajo manual en Word; re-ejecutar revive lo borrado.

@@ -1,0 +1,50 @@
+censo de estilos de la plantilla de volcado
+plantilla: C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Plantilla-para-volcado.docx
+commit: fd089cc-sucio
+fecha: 2026-08-22T15:44:16
+estilos declarados en word/styles.xml: 84
+
+== (1) ESTILOS QUE EL VOLCADO USA POR NOMBRE ==
+   (se resuelven por w:name; el script nunca emite el literal en ingles sin comprobarlo)
+  [OK]    pie de figura                      w:name='Figura_Tabla_Ecuación'  styleId='FiguraTablaEcuacin'  numera=no  -
+  [OK]    tabla                              w:name='Table Grid'  styleId='Tablaconcuadrcula'  numera=no  -
+  [OK]    titulo de apendice / sin numerar   w:name='Apéndice'  styleId='Apndice'  numera=no  -
+  [OK]    apendice nivel 2                   w:name='Título 2 de Apéndice'  styleId='Ttulo2deApndice'  numera=si  numId 5 [ilvl 0 -> 'Apéndice %1.'; ilvl 1 -> '%1.%2.'; ilvl 2 -> '%1.%2.%3.'; ilvl 3 -> '']
+  [OK]    apendice nivel 3                   w:name='Título 3 de Apéndice'  styleId='Ttulo3deApndice'  numera=si  numId 4 [ilvl 0 -> 'Capítulo %1.'; ilvl 1 -> '%1.%2.'; ilvl 2 -> '%1.%2.%3.'; ilvl 3 -> '']
+  [OK]    elementos de lista                 w:name='List Paragraph'  styleId='Prrafodelista'  numera=no  -
+  [OK]    codigo fuente                      w:name='Código fuente'  styleId='Cdigofuente'  numera=no  -
+
+== (2) ENCABEZADOS Y ESTILOS CON NUMERACION ==
+   numera=si significa numPr propio o HEREDADO por basedOn; 'origen' es el styleId del que trae el numPr
+  Elemento para referenciar        styleId='Elementoparareferenciar'  propio                   numId 4 [ilvl 0 -> 'Capítulo %1.'; ilvl 1 -> '%1.%2.'; ilvl 2 -> '%1.%2.%3.'; ilvl 3 -> '']
+  Encabezado de tabla de contenido styleId='Encabezadodetabladecontenido'  heredado de 'Ttulo1'     numId 4 [ilvl 0 -> 'Capítulo %1.'; ilvl 1 -> '%1.%2.'; ilvl 2 -> '%1.%2.%3.'; ilvl 3 -> '']
+  Outline List 3                   styleId='ArtculoSeccin'  propio                   numId 2 [ilvl 0 -> 'Artículo %1.'; ilvl 1 -> 'Sección %1.%2'; ilvl 2 -> '(%3)'; ilvl 3 -> '(%4)']
+  Title                            styleId='Ttulo'  propio                   numId 3 [ilvl 0 -> 'Capítulo %1.'; ilvl 1 -> '%1.%2'; ilvl 2 -> '%1.%2.%3'; ilvl 3 -> '']
+  Título 2 de Apéndice             styleId='Ttulo2deApndice'  propio                   numId 5 [ilvl 0 -> 'Apéndice %1.'; ilvl 1 -> '%1.%2.'; ilvl 2 -> '%1.%2.%3.'; ilvl 3 -> '']
+  Título 3 de Apéndice             styleId='Ttulo3deApndice'  heredado de 'Ttulo3'     numId 4 [ilvl 0 -> 'Capítulo %1.'; ilvl 1 -> '%1.%2.'; ilvl 2 -> '%1.%2.%3.'; ilvl 3 -> '']
+  Título de TDC                    styleId='TtulodeTDC'  propio                   numId 0 (sin lvlText legible)
+  heading 1                        styleId='Ttulo1'  propio                   numId 4 [ilvl 0 -> 'Capítulo %1.'; ilvl 1 -> '%1.%2.'; ilvl 2 -> '%1.%2.%3.'; ilvl 3 -> '']
+  heading 2                        styleId='Ttulo2'  propio                   numId 4 [ilvl 0 -> 'Capítulo %1.'; ilvl 1 -> '%1.%2.'; ilvl 2 -> '%1.%2.%3.'; ilvl 3 -> '']
+  heading 3                        styleId='Ttulo3'  propio                   numId 4 [ilvl 0 -> 'Capítulo %1.'; ilvl 1 -> '%1.%2.'; ilvl 2 -> '%1.%2.%3.'; ilvl 3 -> '']
+  heading 5                        styleId='Ttulo5'  propio                   numId 1 [ilvl 0 -> 'Artículo %1.'; ilvl 1 -> 'Sección %1.%2'; ilvl 2 -> '(%3)'; ilvl 3 -> '(%4)']
+  heading 6                        styleId='Ttulo6'  propio                   numId 4 [ilvl 0 -> 'Capítulo %1.'; ilvl 1 -> '%1.%2.'; ilvl 2 -> '%1.%2.%3.'; ilvl 3 -> '']
+  heading 7                        styleId='Ttulo7'  propio                   numId 4 [ilvl 0 -> 'Capítulo %1.'; ilvl 1 -> '%1.%2.'; ilvl 2 -> '%1.%2.%3.'; ilvl 3 -> '']
+  heading 8                        styleId='Ttulo8'  propio                   -
+  heading 9                        styleId='Ttulo9'  propio                   numId 1 [ilvl 0 -> 'Artículo %1.'; ilvl 1 -> 'Sección %1.%2'; ilvl 2 -> '(%3)'; ilvl 3 -> '(%4)']
+
+== (3) DIAGNOSTICO DE LOS APARTADOS A.x.y ==
+  'Título 2 de Apéndice' -> styleId 'Ttulo2deApndice', numera=si, numPr propio, numId 5 [ilvl 0 -> 'Apéndice %1.'; ilvl 1 -> '%1.%2.'; ilvl 2 -> '%1.%2.%3.'; ilvl 3 -> '']
+  'Título 3 de Apéndice' -> styleId 'Ttulo3deApndice', numera=si, numPr heredado de 'Ttulo3', numId 4 [ilvl 0 -> 'Capítulo %1.'; ilvl 1 -> '%1.%2.'; ilvl 2 -> '%1.%2.%3.'; ilvl 3 -> '']
+  Lectura: si el numId efectivo del nivel 3 de apendice coincide con el de los encabezados del CUERPO, Word numeraria A.x.y con la serie de los capitulos; por eso el volcado CONSERVA el numero escrito a mano (conservar=True).
+
+== (4) NIVELES DE ENCABEZADO AUTONUMERADOS ==
+  nivel 1: 'heading 1' (styleId 'Ttulo1') numera=si  numId 4 [ilvl 0 -> 'Capítulo %1.'; ilvl 1 -> '%1.%2.'; ilvl 2 -> '%1.%2.%3.'; ilvl 3 -> '']
+  nivel 2: 'heading 2' (styleId 'Ttulo2') numera=si  numId 4 [ilvl 0 -> 'Capítulo %1.'; ilvl 1 -> '%1.%2.'; ilvl 2 -> '%1.%2.%3.'; ilvl 3 -> '']
+  nivel 3: 'heading 3' (styleId 'Ttulo3') numera=si  numId 4 [ilvl 0 -> 'Capítulo %1.'; ilvl 1 -> '%1.%2.'; ilvl 2 -> '%1.%2.%3.'; ilvl 3 -> '']
+  nivel 4: 'heading 4' (styleId 'Ttulo4') numera=no  -
+  nivel 5: 'heading 5' (styleId 'Ttulo5') numera=si  numId 1 [ilvl 0 -> 'Artículo %1.'; ilvl 1 -> 'Sección %1.%2'; ilvl 2 -> '(%3)'; ilvl 3 -> '(%4)']
+  nivel 6: 'heading 6' (styleId 'Ttulo6') numera=si  numId 4 [ilvl 0 -> 'Capítulo %1.'; ilvl 1 -> '%1.%2.'; ilvl 2 -> '%1.%2.%3.'; ilvl 3 -> '']
+  nivel 7: 'heading 7' (styleId 'Ttulo7') numera=si  numId 4 [ilvl 0 -> 'Capítulo %1.'; ilvl 1 -> '%1.%2.'; ilvl 2 -> '%1.%2.%3.'; ilvl 3 -> '']
+  nivel 8: 'heading 8' (styleId 'Ttulo8') numera=si  -
+  nivel 9: 'heading 9' (styleId 'Ttulo9') numera=si  numId 1 [ilvl 0 -> 'Artículo %1.'; ilvl 1 -> 'Sección %1.%2'; ilvl 2 -> '(%3)'; ilvl 3 -> '(%4)']
+  NIVELES_AUTONUMERADOS declarado en el script: (1, 2, 3, 5, 6, 7, 8, 9)

@@ -1870,3 +1870,230 @@ fichero **no se edita**: es salida de `config.commit_actual()`.
 | **Actual** | D1 + D3 (todo el train) | Escalado correcto para ambos modelos | Ninguna significativa |
 
 El scaler se ajusta en `concat(D1, D3)` y se aplica igual a D2 (test), garantizando que ninguna división tenga ventaja artificial en el rango de valores.
+
+---
+
+## Runbook del volcado del vault al `.docx` (`exportar_docx.py`)
+
+> [!warning] Advertencia literal, no cosmética
+> **El volcado es destructivo respecto al trabajo manual en Word; re-ejecutar revive lo borrado.**
+> El volcado es **UNIDIRECCIONAL** y no hay volcado inverso: las notas del vault son la fuente y el
+> `.docx` es la salida. A partir del volcado inicial Francisco va borrando material en su documento
+> de trabajo (tiene que recortar ~100 páginas); el script **no conoce esos borrados** y una corrida
+> nueva los **revive en silencio, sin fallar y sin conflicto visible**. Por eso no se compara
+> «script contra documento»: se compara **artefacto nuevo contra documento** y se traslada a mano.
+
+**Invariantes del destino (comprobadas por el propio script, que aborta si no se cumplen):**
+
+- **Todo** lo que el volcado escribe vive bajo `Resultados\docx\`: el `.docx`, el Markdown
+  intermedio y los tres `.txt`. Cualquier otra carpeta aborta. La puerta es **una sola**
+  (`validar_ruta_escritura()`) y la pasa también `--md-intermedio`: sin eso, un `--md-intermedio`
+  apuntando al vault **sobrescribiría una nota**, que es la fuente del volcado.
+- La ruta se resuelve con `os.path.realpath`, no con `abspath`: una *junction* o un enlace simbólico
+  colocado dentro de `Resultados\docx\` y apuntando al documento de trabajo **no** pasa el filtro.
+- La **extensión** se comprueba (`.docx` para la salida, `.md`/`.markdown` para el intermedio).
+- El nombre **no puede** contener `Proyecto_Fin_de_Grado`, `TFG - Fran` ni `Plantilla-para-volcado`:
+  son documentos que Francisco edita a mano.
+- El nombre por defecto va **versionado** (`memoria_<alcance>_<fecha-hora>_<commit>.docx`), y si el
+  destino ya existe **se aborta**: solo `--sobrescribir` pisa una corrida anterior.
+- Cada corrida deja **tres** ficheros de texto al lado del `.docx` —`*_procedencia.txt`,
+  `*_estilos_plantilla.txt` (censo de la PLANTILLA) y `*_estilos_docx.txt` (censo del DOCUMENTO
+  GENERADO)—, con `commit` vía `config.commit_actual()` (el mismo mecanismo que las tablas de
+  métricas). Los tres pasan por la misma puerta de escritura. Su contenido se detalla más abajo.
+
+**Comandos.**
+
+```powershell
+.\Imp\Scripts\Activate.ps1
+
+# Piloto de un capítulo (el artefacto conservado se llama asi)
+python .\exportar_docx.py --capitulos 3 --salida ..\Resultados\docx\piloto_cap3.docx
+
+# Un capítulo con nombre versionado automático
+python .\exportar_docx.py --capitulos 2
+
+# Apéndices y preliminares (estilos propios de la plantilla)
+python .\exportar_docx.py --capitulos "Apendices,Preliminares"
+
+# Memoria completa (nombre versionado automático)
+python .\exportar_docx.py
+```
+
+**Puertas de calidad que el script aplica antes de escribir nada:**
+
+1. `comprobar_numeracion_plantilla()` abre el ZIP de `Plantilla-para-volcado.docx`, lista los
+   estilos de encabezado con `numPr` y **falla** si no cuadran con `NIVELES_AUTONUMERADOS`
+   (`1,2,3,5,6,7,8,9`). En los niveles autonumerados se quita el número escrito a mano; en el
+   nivel 4, que no numera, **se conserva**.
+2. Todos los nombres de estilo se resuelven **por `w:name` contra la plantilla** —nunca como
+   literal en inglés—: tabla, pie de figura, encabezados 7-9 y los estilos de apéndice. Si alguno
+   falta, queda aviso y el párrafo cae en `Normal` en vez de perderse.
+3. Los `pStyle` que **inyecta pandoc** y la plantilla no define (`Compact`, `FirstParagraph`,
+   `BodyText`, `BlockText`, `SourceCode`) se remapean en post-proceso a estilos reales; lo que
+   quedara colgante sale como aviso.
+4. **Ninguna entrada de cita `[n]` puede desaparecer por el borrado de un callout.** El script
+   emite el **listado íntegro de callouts borrados** (nota, título, citas, si es andamiaje) y
+   **aborta** si un callout borrado era la **única sede** de una cita. Desde la política de
+   callouts del 2026-08-22 esta comprobación es además la **red de seguridad de la lista de
+   andamiaje**: la única vía por la que se pierde contenido es un añadido a `ANDAMIAJE` /
+   `ANDAMIAJE_TIPOS`, y el mensaje de aborto señala esa lista. **Deliberadamente NO hay detector
+   semántico de «salvedad metodológica»** (decisión explícita de Francisco: frágil y cubriría dos
+   veces el mismo riesgo).
+5. El recuento de páginas se estima sobre **prosa** (sin bloques de código, filas de tabla, divs
+   `:::` ni rutas de imagen) a 425 palabras/página, y muestra al lado el recuento **bruto**, que
+   está inflado. **Es una infraestimación del grosor del documento y no la longitud de la memoria**:
+   lo que excluye sí ocupa página en Word. La declaración va escrita en el propio
+   `*_procedencia.txt`, junto al reparto por capítulos, y el alcance de la cifra se detalla en el
+   recuadro «Qué mide —y qué NO mide— el recuento de páginas del script».
+6. `escribir_censo_plantilla()` vuelca a `*_estilos_plantilla.txt` el censo completo de estilos de
+   la plantilla con su `numPr`/`numId`/`lvlText` y la **existencia** de los que el script usa por
+   nombre. El diagnóstico de numeración de la plantilla deja así de ser una afirmación de confianza:
+   se comprueba **leyendo texto**, sin descomprimir el ZIP.
+7. `escribir_censo_docx()` vuelca a `*_estilos_docx.txt` el censo del **documento generado**:
+   tablas, imágenes, marcadores `[n]`, cada `w:pStyle` con su recuento y los estilos colgantes. Sin
+   él esas cifras solo existían en la consola de la corrida.
+8. El índice enlaza las notas por *basename*. Si hubiera **dos notas homónimas** en carpetas
+   distintas, el wikilink sería ambiguo; el volcado usa la primera y **avisa** de cuál ignora, en vez
+   de descartarla en silencio. Hoy no ocurre: ninguna corrida ha emitido ese aviso.
+
+### Política de callouts (decisión de Francisco, 2026-08-22): degradar es el defecto
+
+La lógica está **invertida** respecto a las tres primeras pasadas del script:
+
+- **Degradar a prosa es el COMPORTAMIENTO POR DEFECTO.** El callout pierde la caja y **conserva el
+  texto**. No hay que enumerarlo en ninguna parte.
+- **Se borra únicamente el andamiaje declarado**: los títulos de `ANDAMIAJE`
+  (`Verificación pendiente`, `Trazabilidad`) y los callouts de tipo `[!todo]` (`ANDAMIAJE_TIPOS`),
+  que son tareas abiertas del vault y no contenido de la memoria. Esa es la **única lista
+  enumerada** que queda en el script.
+- La antigua constante `CALLOUTS_DEGRADAR` —lista curada de excepciones que se salvaban del
+  borrado— está **eliminada del código**, no comentada: con el defecto invertido sería código
+  muerto y una segunda fuente de verdad sobre la misma decisión.
+- **Consecuencia asumida y aceptada por Francisco:** vuelve al documento el contenido de los
+  callouts que las pasadas anteriores borraban (los **67 de CONTENIDO** de la tercera pasada),
+  ≈12.000 palabras / ≈28 páginas. **La poda la hace él a mano en Word**; el script no la compensa.
+  Choca a propósito con el recorte de la Decisión 2 de `resumen-de-decisiones.md`, donde queda
+  registrado.
+
+**Corrección mecánica del mismo ciclo: los callouts INDENTADOS.** La detección anclaba el `>` en la
+columna 0 (`^> *\[!...`), así que **todo callout dentro de un elemento de lista escapaba a todo el
+procesado**: no se borraba, no se degradaba, no se contaba y no se auditaba, y **entraba en el
+`.docx` con la sintaxis Obsidian cruda visible** (`> [!info] Trazabilidad — …`). Eran **cinco** en
+la memoria completa —tres de ellos `Trazabilidad`, es decir andamiaje que la regla prohíbe incluso
+degradado—, y uno iba indentado con **tabulador**, no con espacios. La regex admite ahora
+indentación con espacios o tabuladores, tanto en la cabecera como en las líneas del cuerpo. **El
+censo queda por tanto en 128 callouts, no en 123**, y el `*_procedencia.txt` publica cuántos de
+ellos venían indentados.
+
+**Estado verificado en disco el 2026-08-22 (cuarta pasada, la de la política nueva).** Cada fila se
+corresponde con un artefacto **conservado** en `Resultados\docx\`, y las cifras se han contado sobre
+el `.docx` generado (los `pStyle` del `word/document.xml`), no sobre la consola de la corrida.
+**Todas ellas se leen hoy en los `.txt` que acompañan a cada `.docx`** —`*_estilos_docx.txt` para
+los recuentos del documento y `*_procedencia.txt` para callouts y páginas—, sin descomprimir nada.
+
+| Corrida (artefacto conservado) | Qué se verificó **en el artefacto** |
+|---|---|
+| `--capitulos 3` → `piloto_cap3.docx` | 13 marcadores `[n]`, 10 entradas distintas —**incluidas `[18]` y `[32]`**, que la primera pasada perdía—; 1 `Ttulo1`, 6 `Ttulo2`, 20 `Ttulo3`, 3 `Ttulo4`; 4 tablas; 5 callouts vistos → 4 degradados a prosa y 1 borrado (andamiaje, sin citas); 0 indentados; ningún `pStyle` colgante; 0 imágenes (el capítulo 3 no embebe ninguna) |
+| `--capitulos 2` → `memoria_cap2_20260822-145537_fd089cc-sucio.docx` | Los tres subgrupos del índice salen como `Título 2` y las **14** notas del capítulo cuelgan de ellos en `Título 3`, bajo **un** `Título 1` (contado: 1 `Ttulo1`, 3 `Ttulo2`, 14 `Ttulo3`); **5 imágenes y 5 párrafos con el estilo `Figura_Tabla_Ecuación`**; **102** marcadores `[n]`, 51 distintos; 28 tablas; 18 callouts → 16 degradados y 2 borrados (andamiaje) |
+| `--capitulos "Apendices,Preliminares"` → `memoria_capApendices-Preliminares_20260822-145538_fd089cc-sucio.docx` | 3 párrafos con el estilo `Apéndice` sin numerar (el título `Apéndices` más `Resumen` y `Abstract`), las **3** notas `A.x` con `Título 2 de Apéndice` y sus 23 apartados con `Título 3 de Apéndice`. Ya **no** caen en `Título 1` autonumerado, que era lo que borraba la letra de `A.1/A.2/A.3`. 27 marcadores `[n]` (11 distintos), 24 tablas; 27 callouts → 25 degradados y 2 borrados (andamiaje) |
+| memoria completa → `memoria_completa_20260822-145539_fd089cc-sucio.docx` | **≈184,6 páginas de PROSA estimadas** (78.442 palabras a 425 por página; bruto 91.655) — **no es la longitud de la memoria**: ver el recuadro siguiente. Reparto: Preliminares ~2,3 · cap. 1 ~7,3 · cap. 2 ~59,4 · cap. 3 ~13,9 · cap. 4 ~26,4 · cap. 5 ~37,0 · cap. 6 ~16,7 · Apéndices ~21,5. **204** marcadores `[n]` (**69** distintos), 24 imágenes con sus 24 pies en `Figura_Tabla_Ecuación`, **112** tablas, 6 `Ttulo1`, 27 `Ttulo2`, 92 `Ttulo3`, 138 `Ttulo4`, 36 `Ttulo5`, 3 `Apndice`, 3 `Ttulo2deApndice`, 23 `Ttulo3deApndice`, 13 `Cdigofuente`, 2.692 `Prrafodelista`; ningún `pStyle` colgante; **128 callouts vistos → 91 degradados y 37 borrados, los 37 de andamiaje y ninguno de CONTENIDO** (5 de los 128 venían indentados), listados uno a uno en el `*_procedencia.txt` |
+
+> [!warning] Qué mide —y qué NO mide— el recuento de páginas del script
+> **`~184,6 páginas` es una estimación de PROSA, y por diseño una INFRAESTIMACIÓN del grosor del
+> documento. No es la longitud de la memoria y no debe usarse para planificar la poda.**
+> `palabras_prosa()` **excluye**: los bloques de código, las **filas de tabla**, los divs `:::` y
+> las rutas de imagen. En Word esas tres primeras cosas **sí ocupan página**, y las tablas son
+> muchas: **112** en el `.docx` completo, con **764 filas** en el Markdown intermedio (contadas
+> sobre `memoria_completa_20260822-145539_fd089cc-sucio.md`, líneas cuyo primer carácter no blanco
+> es `|`), más **24 imágenes** y **79 líneas** dentro de bloques de código.
+>
+> **La cifra `~171 páginas` que este documento publicaba antes está retirada por dos motivos**: era
+> de la tercera pasada (con 67 callouts de contenido borrados, que ahora vuelven) **y** se estaba
+> leyendo como longitud de la memoria, contradiciendo en silencio las **≈240-260 páginas** cerradas
+> en la Decisión 2 de `resumen-de-decisiones.md`.
+>
+> **Estimación que sí incluye lo excluido, declarada como orden de magnitud y no como medida:**
+> 184,6 páginas de prosa **+** las 764 filas de tabla (a razón de 20-30 filas por página con esta
+> tipografía: ≈25-38 páginas) **+** las 24 figuras (≈⅓-½ página cada una: ≈8-12 páginas) ≈
+> **220-235 páginas**, del mismo orden que las ≈240-260 de la Decisión 2 —que se calcularon sobre
+> el volumen íntegro de las notas (≈96.200 palabras)—. Los tres sumandos son comprobables en disco;
+> los dos factores de conversión (filas por página, fracción de página por figura) **no están
+> medidos**: son estimaciones a ojo y por eso el resultado se da como banda. **La cifra que manda
+> para planificar es la de la Decisión 2, no esta.**
+
+> [!note] Las citas `[n]`: cuántas hay de verdad
+> **La cifra de «623 citas» que circuló en el tercer pase es FALSA y no tiene respaldo en ningún
+> artefacto.** Los recuentos reales de la corrida completa, leíbles en
+> `memoria_completa_20260822-145539_fd089cc-sucio_procedencia.txt` y en
+> `..._estilos_docx.txt`: **204 marcadores en el `.docx` generado, 69 entradas distintas** (y 204 /
+> 69 también en el Markdown intermedio: **no se pierde ninguna cita**). En la tercera pasada eran
+> **195 marcadores y las mismas 69 entradas**: el delta de 9 marcadores lo explican los callouts
+> ahora degradados cuyas citas ya sobrevivían en otra sede —de ahí que las **entradas distintas no
+> cambien**—. Ninguna corrida ha perdido nunca una entrada, y el script **aborta** si lo hiciera.
+
+**Cada corrida deja CUATRO ficheros de texto junto al `.docx`,** y son ellos —no la consola— los que
+sostienen lo anterior:
+
+- `*_procedencia.txt`: commit, fecha, alcance, plantilla, pandoc, recuentos, la **política de
+  callouts** aplicada, el **recuento estimado de páginas por capítulo** (con su declaración de qué
+  mide y qué no) **y el listado íntegro de los callouts borrados y degradados** (nota, tipo,
+  título, citas que contenía y si es `andamiaje` o `CONTENIDO`), más los avisos de la corrida. El
+  recuento solo dice *cuántos*; el listado dice **qué contenido queda fuera**, que es lo que hay
+  que poder revisar.
+- `*_estilos_plantilla.txt`: censo de los 84 estilos de `word/styles.xml` **de la PLANTILLA** con su
+  `numPr`/`numId` y el `lvlText` de cada nivel, la comprobación de que **existen** los estilos que
+  el script usa por nombre, el diagnóstico de los apartados `A.x.y` y la tabla de niveles
+  autonumerados. Existe para que el diagnóstico de numeración sea auditable **sin abrir el ZIP** de
+  la plantilla.
+- `*_estilos_docx.txt`: censo del **DOCUMENTO GENERADO** —otra cosa, y no se confunden—: número de
+  tablas (`<w:tbl>`), de imágenes (`<a:blip>`), de marcadores `[n]`, los `pStyle` que inyectó
+  pandoc y se remapearon, el recuento de cada `w:pStyle` con su `w:name` en la plantilla, y los
+  estilos **colgantes**. Antes ese diccionario se calculaba y **solo se imprimía por consola**, de
+  modo que las cifras de tablas y encabezados del `.docx` no eran comprobables sin descomprimir el
+  ZIP. Ahora se leen en texto plano.
+- `*.md`: el Markdown único intermedio que se le pasa a pandoc.
+
+**Los cuatro pasan por la misma puerta de escritura** (`validar_ruta_escritura`), incluidos el
+`*_estilos_plantilla.txt` y el `*_procedencia.txt`, que hasta el cuarto pase derivaban su ruta de
+`self.salida` **sin pasar por ella**: si el `.docx` no existía pero el `.txt` sí, se pisaba sin
+`--sobrescribir` y sin aviso.
+
+Los `.docx` **no se versionan** (`*.docx` está en el `.gitignore`: no diffean y pesan megas), pero sus cuatro acompañantes de texto **sí**, y son los que permiten comprobar las cifras de arriba sin tener el binario delante.
+
+> [!warning] Constancia: el volcado completo se ejecutó fuera del orden acordado, y se borró una corrida
+> Queda escrito porque no debe perderse en la conversación, aunque no hubo daño material:
+>
+> 1. **La memoria completa se volcó ANTES de validar el piloto** con Francisco, que era el orden que
+>    él había acordado. Las corridas del 2026-08-22 a las `14:23`-`14:24`
+>    (`memoria_completa_20260822-142422_*` y sus hermanas) se lanzaron sin esa validación previa.
+> 2. **Se borró una corrida anterior sin dejar constancia en su momento**:
+>    `memoria_completa_20260822-142301_*`. El motivo del borrado era legítimo (quedó superada por la
+>    corrida de las `14:24`, cuatro minutos posterior), pero el borrado silencioso es exactamente lo
+>    que el nombre versionado y el aborto-si-existe pretenden evitar.
+> 3. **Y en el cuarto pase se borraron a propósito** los tres artefactos versionados de la tercera
+>    pasada —`memoria_cap2_20260822-142355_*`, `memoria_capApendices-Preliminares_20260822-142400_*`
+>    y `memoria_completa_20260822-142422_*`, con sus `.docx`, `.md` y `.txt`— porque los sustituyen
+>    los de las `14:55` con la política nueva; sus cifras quedan **citadas** en este documento (la
+>    fila «~171 páginas», retirada arriba, y el «195 marcadores») y **no son recuperables**.
+>    `piloto_cap3.*` se **regeneró con `--sobrescribir`**, que es la única vía por la que este script
+>    pisa algo.
+>
+> Nada de esto afecta al vault ni al documento de trabajo de Francisco: el volcado nunca escribe
+> fuera de `Resultados\docx\`.
+
+> [!note] Defecto de la PLANTILLA, no del script, en los apartados `A.x.y`
+> Verificado en `*_estilos_plantilla.txt`, sección «(3) DIAGNOSTICO DE LOS APARTADOS A.x.y»:
+> `Título 2 de Apéndice` (styleId `Ttulo2deApndice`) tiene `numPr` **propio** con `numId 5`, cuyo
+> `lvlText` es `Apéndice %1.` / `%1.%2.`; en ese nivel el número escrito a mano **se quita**, porque
+> lo pone Word. `Título 3 de Apéndice` (styleId `Ttulo3deApndice`) **no tiene `numPr` propio: lo
+> hereda por `basedOn` de `Ttulo3`**, y ese es el `numId 4` del cuerpo (`Capítulo %1.` / `%1.%2.%3.`),
+> el mismo que usan `heading 1`, `heading 2` y `heading 3`. Word numeraría `A.3.1` con la serie de
+> los capítulos. Por eso en el nivel 3 el volcado **conserva por defecto** el número a mano
+> (`A.3.1`, `A.3.2`…): un número visiblemente repetido se detecta al leer, uno silenciosamente
+> equivocado no. Con `--numerar-apendice-n3` se quita, para cuando la plantilla se corrija.
+
+**Andamiaje que Word publicará tal cual, reportado y no borrado:** el bloque ```` ```mermaid ````
+del diagrama de cascada de `3.2 Arquitectura del sistema` sale como código fuente (estilo `Código
+fuente` de la plantilla). El script lo avisa en cada corrida y el aviso queda **escrito** en el
+`*_procedencia.txt`; no se borra por decisión del script, y sustituirlo por la figura renderizada
+es decisión de Francisco.

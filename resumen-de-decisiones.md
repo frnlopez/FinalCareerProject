@@ -1661,6 +1661,13 @@ improvisan recortes sobre 52k palabras sin verificar.
 **Restricción T7, sin excepción:** lo que sale del cuerpo **se MUEVE a `A.3 Ficha del sistema`**,
 nunca se borra.
 
+> **Nota del 2026-08-22 — esta restricción sigue vigente como regla de CONSERVACIÓN, pero queda
+> SUPERADA como forma de AHORRAR PÁGINAS.** El límite de extensión que Francisco fijó el 2026-08-22
+> **incluye los apéndices**, así que mover del cuerpo a `A.3`/`A.2` **no descuenta ni una página del
+> total**. Mover sigue siendo lo correcto para no perder material y para alimentar la defensa oral;
+> lo que ya no se puede es contar un traslado como recorte. Ver
+> «Decisiones del 2026-08-22 — volcado a `.docx` unidireccional y límite de extensión».
+
 ### Decisión 5 — Hiperparámetros y semilla 42: fuera del cuerpo **salvo cuando el número ES el argumento**
 
 Los valores concretos van a `A.3`; en el cuerpo se dice **qué se buscó y por qué**, con remisión.
@@ -1727,7 +1734,8 @@ bloque retirado queda recogido en la sección de defensa oral de su informe de r
 ### Decisión 3 — EXCEPCIÓN ACOTADA A T7: se autoriza borrar sin mover, en cuatro bloques nombrados
 
 **T7 sigue vigente como regla general:** lo que sale del cuerpo se **mueve** a `A.3`/`A.2`, no se
-borra. Esta es su **única excepción**, y se registra aquí porque hasta ahora vivía **solo en las notas
+borra. (Con el matiz del 2026-08-22 anotado bajo la Decisión 4 del 2026-08-18: mover conserva, pero
+**no ahorra páginas**, porque el límite de extensión incluye los apéndices.) Esta es su **única excepción**, y se registra aquí porque hasta ahora vivía **solo en las notas
 de investigación** —una excepción a una restricción cerrada no puede vivir fuera de esta sede—.
 
 Se autoriza el destino **«solo exposición»** (sin apéndice) para **cuatro bloques, y ninguno más**:
@@ -1796,5 +1804,143 @@ justo aquí, sesgando los cuatro informes de recorte—:
    **cuatro** episodios de cifras infladas en tres días: el capítulo 3 estimado en ≈4.330 cuando eran
    **6.670**; el desglose de la Tanda A que sumaba ~11.000 con total real **13.125**; los «~52.000»
    de los capítulos 4-6 que eran **45.051**; y los volúmenes por nota del bloque `2.1`. **Un volumen
-   reportado por un agente es una pista, no una medida.**
+   reportado por un agente es una pista, no una medida.
+
+---
+
+## Decisiones del 2026-08-22 — volcado a `.docx` unidireccional y límite de extensión
+
+Cerradas por Francisco en el `grill-me` de `Implementacion/exportar_docx.py`, el script que vuelca las
+notas de la memoria a un único `.docx` aplicando `Plantilla-para-volcado.docx` vía pandoc
+`--reference-doc`.
+
+### Decisión 1 — El volcado es **UNIDIRECCIONAL**: no habrá volcado inverso
+
+El vault es la fuente y el `.docx` es la salida. **No se construirá ningún camino de vuelta** de Word
+al Markdown.
+
+**El riesgo concreto, y por qué obliga a un diseño y no solo a un aviso:** a partir del volcado
+inicial Francisco irá **borrando material en el `.docx`** bajo su criterio editorial (tiene que
+recortar ~100 páginas, ver la Decisión 2). El script **no conoce esos borrados**: si se relanza, los
+**REVIVE en silencio**, sin fallar y sin conflicto visible. No hay merge, no hay diff, no hay aviso
+del propio pandoc — el fallo es indetectable desde dentro de la herramienta.
+
+**Advertencia literal que debe quedar documentada** (en el `--help` del script, en su cabecera y donde
+se describa el flujo):
+
+> «el volcado es destructivo respecto al trabajo manual en Word; re-ejecutar revive lo borrado».
+
+**Consecuencias de diseño, obligatorias y parte de la decisión:**
+
+| Regla | Detalle |
+|---|---|
+| **El script NUNCA escribe sobre el documento de trabajo de Francisco** | Escribe siempre a un fichero de salida **propio y separado** bajo `Resultados/docx/`, para que él compare y traslade a mano lo que quiera. **Prohibido** tomar como destino `Proyecto_Fin_de_Grado-FJLM-2026.doc(x)` ni ningún fichero que él esté editando |
+| **No sobrescribe una salida anterior sin dejar rastro** | O **versiona el nombre de salida**, o **aborta si el destino existe** y exige un flag explícito para pisarlo. Un re-volcado accidental no debe pisar nada |
+
+### Decisión 2 — Límite de extensión: **100-150 páginas que INCLUYEN TODO**
+
+El límite del TFG es de **100-150 páginas contando apéndices, bibliografía e índice**. No hay
+material «que no cuenta».
+
+**La cuenta que abre el problema**, con la tipografía de la plantilla —A4, 12 pt, interlineado 1,5,
+márgenes laterales de 3 cm, ≈**425 palabras/página**—:
+
+| Magnitud | Valor |
+|---|---|
+| Volumen de las **41 notas de memoria** | ≈**96.200 palabras** |
+| Páginas que salen con esa tipografía | ≈**240-260** |
+| Recorte necesario | ≈**100 páginas**, en torno al **40 %** |
+
+**De dónde sale ese recorte:**
+
+- **≈35 páginas** por **retirar del `.docx` los 152 callouts**. Es la única partida mecánica y ya
+  está identificada.
+  > [!warning] SUPERADO el 2026-08-22 por la Decisión 4 («Política de callouts del volcado»)
+  > Esta partida daba por hecho que los 152 callouts se **borraban por defecto**, degradando a prosa
+  > solo una **lista corta curada a mano**. Esa política queda **superada**: hoy solo se borra el
+  > **andamiaje declarado** y **todo lo demás se degrada**. Motivo: la clasificación automática no
+  > era fiable y el borrado se llevaba salvedades metodológicas sin otra sede. **El ahorro mecánico
+  > de esta partida deja de existir tal como está contado aquí**: vuelven ≈12.000 palabras
+  > (≈28 páginas). La línea no se retira: describe el estado en que se tomó la Decisión 2.
+- **El resto es poda editorial de Francisco**, decidida por él sobre el documento y **informada por
+  el recuento de páginas por capítulo que el script emite en cada ejecución** — ese recuento es la
+  razón de ser de esa salida, no un extra informativo.
+
+### Decisión 3 — Queda SUPERADA la estrategia «condensar y trasladar a apéndice» como ahorro de páginas
+
+**Desde el 2026-08-22.** El recorte por volumen registrado en «Decisiones del 2026-08-19/20 — recorte
+por volumen de la memoria» y la **restricción T7** («lo que sale del cuerpo se MUEVE a `A.3`/`A.2`,
+nunca se borra») se apoyaban en que el apéndice fuera un destino más barato que el cuerpo. **Con el
+límite de la Decisión 2 eso es falso: el apéndice cuenta igual, y trasladar no ahorra ni una
+página.**
+
+**Qué cambia y qué no:**
+
+- **Sigue vigente:** mover en vez de borrar, como regla de **conservación** del material y como
+  insumo de la **defensa oral** (Decisión 2 del 2026-08-19/20). Lo que se conserva, se conserva.
+- **Queda derogado:** presentar un traslado a apéndice **como recorte**, o contarlo en un porcentaje
+  de reducción de extensión. Un traslado es **reubicación, no ahorro**.
+- **Consecuencia práctica:** las ≈100 páginas solo pueden salir de **supresión efectiva** —callouts
+  fuera del `.docx` y poda editorial—, y los apéndices ya existentes son **candidatos a poda como
+  cualquier capítulo**, no un refugio.
+
+> No se retira ninguna línea de las entradas anteriores: quedan describiendo el estado en que se
+> tomaron, con esta nota como corrección.**
+
+### Decisión 4 — Política de callouts del volcado: **degradar todo lo que no sea andamiaje**
+
+**Cerrada el 2026-08-22.** Francisco pidió recomendación tras la auditoría del script y **la aceptó**.
+Sustituye a la política registrada en la **Decisión 2** (bullet «≈35 páginas por retirar del `.docx`
+los 152 callouts»), que ya queda marcada allí como superada.
+
+**Qué hace el volcado con cada callout:**
+
+| Clase de callout | Acción en el `.docx` |
+|---|---|
+| **Andamiaje declarado** — `Verificación pendiente`, `Trazabilidad` y `[!todo]` | **Se borra** |
+| **Todo lo demás** | **Se DEGRADA a prosa normal**: pierde la caja del callout, **conserva el texto** |
+
+- **Degradar es el comportamiento por defecto**, no una excepción.
+- **La lista de excepciones a degradar desaparece.** La **única lista enumerada que queda en el
+  código** es la de **andamiaje**.
+
+**Razón — asimetría de errores (es la parte importante de esta entrada):**
+
+| Error | Coste | Quién lo detecta |
+|---|---|---|
+| **Conservar de más** | Páginas | Francisco, **leyendo**: barato y **reversible** |
+| **Borrar de más** | Una **salvedad metodológica ausente** del entregable | **Nadie**: no se echa en falta al leer. Caro e **invisible** |
+
+**Prueba de que la clasificación automática no era fiable:** **57** de los callouts que se iban a
+borrar estaban marcados **«(?) candidato» por el propio script**.
+
+**El caso que disparó la revisión:** la auditoría verificó **en disco** que se borraba el callout
+«Dos reservas que acompañan obligatoriamente a esta tabla» de `5.4 Conclusiones del capítulo`, cuyo
+texto **se declara obligatorio a sí mismo** y **cuyo contenido no sobrevivía en ninguna otra sede**:
+la tabla de comparación externa se habría publicado **sin sus dos reservas**.
+
+**Consecuencia asumida y aceptada explícitamente por Francisco:** vuelven **≈12.000 palabras
+(≈28 páginas)** al documento, y **la poda la hará él a mano**. Se registra expresamente que esto
+**choca de frente con el recorte de ≈100 páginas de la Decisión 2**: se acepta **a sabiendas**, porque
+el error caro es el invisible.
+
+### Decisión 5 — Red de seguridad **mínima**, y decisión explícita de **NO** hacer más
+
+**Cerrada el 2026-08-22**, junto con la Decisión 4 y como su contrapartida de alcance.
+
+**Lo que SÍ se hace:** se **extiende** la comprobación que ya existía para los marcadores de cita
+`[n]`, de modo que **salte si un futuro añadido a la lista de andamiaje se lleva la ÚNICA sede** de
+algo.
+
+**Lo que explícitamente NO se hace:** **no** se construye un **detector semántico de «salvedad
+metodológica»**. Los tres motivos, registrados como decisión y no como olvido:
+
+1. Sería **frágil**.
+2. **Francisco no lo pidió.**
+3. **Cubriría dos veces el mismo riesgo:** como con la Decisión 4 **ya no se borra contenido**, la red
+   **deja de ser la defensa principal** y su único cometido es **guardar la lista de andamiaje**.
+
+> [!note] Esto es una decisión de **alcance**
+> El «no se hace» queda registrado con el mismo rango que el «se hace». Reabrirlo exige una decisión
+> nueva de Francisco, no la iniciativa de un agente que lo lea como una carencia pendiente.
 

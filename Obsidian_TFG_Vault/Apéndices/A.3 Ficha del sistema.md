@@ -426,7 +426,7 @@ dataset crudo y escribir los resultados. En consecuencia:
 ### Límite de protocolo: tres decisiones del sistema se tomaron con métricas medidas sobre D2
 
 Los hiperparámetros, la estrategia de balanceo y los umbrales del sistema se ajustaron sin mirar D2
-(tabla del callout de A.3.2). **Tres decisiones, en cambio, sí se apoyaron en métricas calculadas
+(tabla de A.3.2). **Tres decisiones, en cambio, sí se apoyaron en métricas calculadas
 sobre D2**, y se declaran aquí en lugar de omitirlas.
 
 > [!note] Relación con el cuerpo de la memoria
@@ -534,7 +534,7 @@ de los **17** que componen el checklist completo. Los **seis restantes no se rel
 > - Los 11 ítems «FT» están enumerados y resueltos uno a uno en la tabla siguiente, con la indicación del apartado donde se tratan.
 > - El criterio de elección del subconjunto es explícito: «FT» es el que aplica **a toda figura o
 >   tabla con resultados empíricos**, que es exactamente lo que documenta esta ficha.
-> - Las restricciones de los ítems 6, 9 y 10 se declaran en el callout posterior.
+> - Las restricciones de los ítems 6, 9 y 10 se declaran más abajo.
 >
 > Es decir, **lo único no resuelto es la identidad de los seis restantes**, y ninguna afirmación de
 > este apéndice depende de ella.
