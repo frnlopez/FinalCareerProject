@@ -53,7 +53,10 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 >
 > **F1, F2, F3 y F5 están CERRADAS** el 2026-08-21 (`22a6ddc`, `d4aa742`, `7774257`, `b8335b4`), con
 > sus cuatro residuos y con el residuo de metadiscurso «sede canónica / sede única», que **en la
-> memoria ya está a cero**. **Lo único que queda vivo de F1–F5 es la MITAD (b) de F4:** el barrido
+> memoria ya está a cero**. **⚠️ SUPERADO EL 2026-08-22: la MITAD (b) de F4 quedó CERRADA ese día
+> —informe `99 Investigación/Solapes capitulo 2 con 4-5-6.md`, 41 solapes, 8 contradicciones
+> corregidas—, así que LAS CINCO FICHAS F1–F5 ESTÁN CERRADAS.** Lo que el apunte declaraba vivo era
+> la MITAD (b) de F4: el barrido
 > **sistemático** del perímetro 2↔4/5/6, que **no consta en ningún informe** y por tanto **no está
 > auditado**. Su mitad concreta —**D9** (sede única de las cuatro transformaciones en `4.3.7`) y
 > **D11** (SMOTE por *fold* en `4.3.4`)— **está hecha y verificada en disco**, y **`2.1.6.5` no era
@@ -127,7 +130,9 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 >
 > **5. ¿Se aprieta más el capítulo 2?** `2.1` está en 10.599 (objetivo del informe: ~8.870), `2.2` en
 > 11.204, `2.3` en 9.458. Y **los solapes 2↔4/5/6 siguen sin diagnosticar** —el barrido de la Tanda 19
-> fue **interno** al capítulo 2, que es otra cosa—.
+> fue **interno** al capítulo 2, que es otra cosa—. **[SUPERADO el 2026-08-22: el perímetro YA está
+> diagnosticado — 41 solapes inventariados, 8 contradicciones y 33 repeticiones compatibles, en
+> `99 Investigación/Solapes capitulo 2 con 4-5-6.md`. No leer esta frase como estado vigente.]**
 >
 > **LO QUE NO HAY QUE VOLVER A DISCUTIR, está decidido y registrado en
 > `resumen-de-decisiones.md` § «Decisiones del 2026-08-19/20»:** el criterio «quién lo usa», la regla
@@ -167,7 +172,9 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > 2. **¿Se barre el capítulo 2 contra 4/5/6?** Los solapes **2↔4, 2↔5 y 2↔6 siguen sin
 >    diagnosticar** —el barrido de la TANDA 19 fue **interno** al capítulo 2, que es otra cosa—.
 >    Previsible que **D9** (las cuatro transformaciones) y **D11** (SMOTE por *fold*) tengan una
->    sede más en `2.1.6.5`.
+>    sede más en `2.1.6.5`. **— HIPÓTESIS REFUTADA el 2026-08-21, verificada contra disco: `2.1.6.5`
+>    es la SEDE CONCEPTUAL de la fuga de datos, no un duplicado de D9 ni de D11. La promesa de
+>    arriba se deja como traza; no la reutilices como diagnóstico pendiente.**
 > 3. **¿Se recortan `4.2` y `4.3`?** Siguen por encima de **5.000 palabras cada una**, y el barrido
 >    **no las tocó a propósito: son sedes canónicas, no duplicación.** Recortarlas es otra decisión.
 >
@@ -338,8 +345,12 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 >
 > **Estado a 2026-08-18, tras la Tanda 30 — SUPERADO, se deja como traza:
 > contado contra disco por el hilo principal y por el `researcher`, las dos cuentas coinciden:
-> `Bibliografía.md` tiene **77 FILAS**, rango `[1]`–`[8]` y `[10]`–`[78]`, con **`[9]` SIGUE
-> QUEMADA** (retirada sin renumerar). **EL PRIMER `[n]` LIBRE ES EL `[79]`.** El alta nueva de la
+> ~~`Bibliografía.md` tiene **77 FILAS**, rango `[1]`–`[8]` y `[10]`–`[78]`, con **`[9]` SIGUE
+> QUEMADA** (retirada sin renumerar).~~ **CIFRA CORREGIDA el 2026-08-21, contada en disco: hay
+> **70 FILAS VIVAS** y las quemadas son **OCHO** —`[9]`, `[27]`, `[28]`, `[37]`, `[40]`, `[44]`,
+> `[45]` y `[76]`—, las mismas que declara `CLAUDE.md`. El «77 filas» de arriba se deja como traza
+> de lo que este bloque decía antes.** **EL PRIMER `[n]` LIBRE ES EL `[79]`** (esto sí coincide y se
+> mantiene). El alta nueva de la
 > Tanda 30 es **`[78]`** Storkey (cap. 1, pp. 3-28), al desdoblar `[76]`. **Breunig et al. (2000)
 > NO se dio de alta: ya existía como `[75]` desde la Tanda 14**, y el `researcher` lo verificó
 > contra Crossref antes de escribir. **Todo lo que este fichero diga más abajo sobre «76 filas» o
@@ -966,25 +977,46 @@ eso el `3.3:42` y el residuo de T25 no llevan commit separado—;
 > **F1 y F2 quedaron CERRADAS el 2026-08-21; sus filas viven ya en `## Cerradas`.** Con F1 cerrada,
 > **F5 queda DESBLOQUEADA**.
 
-> **F3 y F5 quedaron CERRADAS el 2026-08-21, junto con los cuatro residuos de F1/F2; sus filas viven
-> ya en `## Cerradas`. De este bloque solo sigue abierta F4, y solo A MEDIAS: su mitad D9/D11 está
-> hecha y verificada en disco, y lo que queda vivo es el barrido del perímetro 2↔4/5/6, que **abre
-> Francisco**.**
+> **Bloque CERRADO ENTERO desde el 2026-08-22.** F3, F5 y los cuatro residuos de F1/F2 cerraron el
+> 2026-08-21; **F4 cerró el 2026-08-22 con su mitad (b)** —el barrido sistemático del perímetro
+> 2↔4/5/6, ya con informe propio—. **Las cinco fichas F1–F5 están cerradas y sus filas viven en
+> `## Cerradas`: no hay trabajo pendiente en este bloque.** Lo que queda vivo de la tanda de cierre
+> son **dos residuos menores** y **dos decisiones que solo puede tomar Francisco**, fichados abajo.
 
-- [~] 🟠 **Solapes 2↔4/5/6 — REPLANTEADA el 2026-08-21: la mitad concreta está hecha, el perímetro sigue sin barrer** · Informe
-  Alta el **2026-08-21**. El barrido de la **Tanda 19** fue **INTERNO** al capítulo 2. **Esta ficha ya
-  NO es de volumen: es de COHERENCIA** —un concepto definido dos veces en dos capítulos—.
-  **(a) HECHO Y VERIFICADO EN DISCO el 2026-08-21 (su fila vive ya en `## Cerradas`):** **D9** queda
-  con **sede única de las cuatro transformaciones en `4.3.7`** y **D11** con el **SMOTE por *fold* en
-  `4.3.4`**; y **`2.1.6.5` NO era un duplicado** sino la **sede conceptual de la fuga**, con el
-  reparto **cosido en ambos sentidos** por esta tanda. La ficha seguía marcada `[ ]` cuando ya estaba
-  resuelto.
-  **(b) SIGUE ABIERTO: el barrido SISTEMÁTICO del perímetro 2↔4/5/6.** **No consta en ningún informe**
-  —no hay diagnóstico de solapes 2↔4/5/6 en `99 Investigación/`—, así que ese perímetro **no está
-  auditado formalmente**: lo hecho son D9 y D11, que eran las dos sospechas ya escritas, no el
-  barrido. **Abrirlo es decisión de Francisco.** La autorización del 2026-08-20 («diagnosticar y
-  ejecutar en la misma tirada», consultando **solo si aparece otro caso tipo `1.2`**) sigue en pie
-  para cuando lo abra.
+- [x] 🟠 **Solapes 2↔4/5/6 (F4) — CERRADA el 2026-08-22, mitades (a) y (b).** Su fila vive en
+  `## Cerradas`; se conserva el enunciado solo como historial.
+
+### Altas de la tanda del 2026-08-22 — cierre de F4 mitad (b)
+
+> **Cuatro altas y NINGUNA es trabajo pendiente de agente por defecto:** dos son **residuos menores**
+> de una línea y **dos son decisiones que solo puede tomar Francisco**. **Ninguna afecta a una cifra
+> publicada en `Resultados/`.** Contexto completo en
+> `Obsidian_TFG_Vault/99 Investigación/Solapes capitulo 2 con 4-5-6.md`.
+
+- [ ] 🟡 **DECISIÓN DE FRANCISCO — C8: las cuatro sedes del «13,4 %»** · Informe
+  Alta el **2026-08-22**. El barrido de solapes la traía como contradicción y, **releída con rigor, NO
+  lo era**: el «13,4 %» aparece en cuatro sedes que **dicen lo mismo sin contradecirse**, o sea
+  **repetición compatible**, y por la regla dura del encargo —solo se corrigen contradicciones— **NO
+  se aplicó, a propósito y con razón escrita**. Queda **desviada a Francisco** con la corrección ya
+  redactada y lista para despachar: si al leerla decide que **la razón técnica de `6.1.4` límite 5
+  sobra**, se aplica. **No es trabajo pendiente de agente.**
+
+- [ ] 🟡 **DECISIÓN DE FRANCISCO — las 6 apariciones restantes de «deriva temporal»** · Informe
+  Alta el **2026-08-22**. El `auditor-ml` proponía barrer **4 apariciones más en `5.1` § 5.1.3** y **2
+  en los títulos de `6.2`**. **No se aplicó, con razón escrita:** (1) esa subsección **se titula «Cómo
+  se llama el fenómeno, y cómo no» y discute la palabra misma**, así que barrerla podría **romper el
+  deslinde al que remite `2.1.6.8`**; y (2) **`6.2` no estaba en el alcance de A-4** y meterla sería
+  reabrir el barrido. **Es la única inconsistencia terminológica viva del trabajo y no afecta a
+  ninguna cifra.**
+
+- [ ] 🟢 **El callout de `6.2` presenta la MISMA sede como si fueran dos** · Informe
+  Alta el **2026-08-22**. Cita «§ Encaje en el trabajo» y «§ 2.2.3.3» **como dos sedes distintas
+  siendo la misma**. Reportado sin actuar; arreglo de una línea.
+
+- [ ] 🟢 **En `features.md`, el bloque del recuento viejo de `Bibliografía.md` no remite al que lo corrige** · Informe
+  Alta el **2026-08-22**. Un bloque anterior sigue declarando «**71 vivas y siete quemadas**»: está
+  rotulado **SUPERADO**, pero **no remite al bloque que lo corrige** (70 vivas / 8 quemadas / primer
+  libre `[79]`), así que **puede leerse como vigente**. Reportado sin actuar.
 
 ### Altas de la tanda del 2026-08-21 — residuo de F5
 
@@ -1060,6 +1092,8 @@ eso el `3.3:42` y el residuo de T25 no llevan commit separado—;
   > **20.105**, capítulo 6 **8.500**, **conjunto 4-6 45.051**, `A.3` **15.127**.
   > **DOS PENDIENTES ANOTADOS, ninguno bloqueante:** (a) **el capítulo 2 NO entró en este barrido**,
   > así que los solapes **2↔4/5/6 siguen sin diagnosticar** — es previsible que **D9** (las cuatro
+  > **[SUPERADO el 2026-08-22: perímetro diagnosticado, y la previsión de `2.1.6.5` REFUTADA — es sede
+  > conceptual, no duplicado.]**
   > transformaciones) y **D11** (SMOTE por *fold*) tengan **una sede más en `2.1.6.5`**; es **alcance
   > nuevo que el grill no fijó**. (b) **Sigue viva y sin decidir** si se aprieta el volumen restante
   > de `2.1` (**13.125** frente a las ~10.000 orientativas).
@@ -2860,6 +2894,10 @@ quedaban quietas el plan se atascaba en la Fase 0, no en la Fase 4**.
 
 | Fecha | Track | Tarea | Commit |
 |---|---|---|---|
+| 2026-08-22 | Informe | **🟠 F4 mitad (b) — EL PERÍMETRO 2↔4/5/6 QUEDA BARRIDO Y AUDITADO: F4 CERRADA, y con ella las CINCO fichas F1–F5.** Informe nuevo `Obsidian_TFG_Vault/99 Investigación/Solapes capitulo 2 con 4-5-6.md` (**380 líneas**): **41 solapes inventariados — 8 CONTRADICCIONES y 33 REPETICIONES COMPATIBLES**, repartidos **17 en 2↔4, 13 en 2↔5 y 11 en 2↔6**. **El hallazgo de fondo es que el perímetro está SANO:** 33 de 41 son repetición **deliberada y declarada** —la disciplina de remisión del capítulo 2 funciona— y **ninguna de las 8 contradicciones afecta a ninguna cifra publicada en `Resultados/`** (cinco eran de una sola frase; tres pedían una frase de reconciliación). **Alcance respetado según el criterio de Francisco: se corrigieron SOLO las contradicciones**, y **las 33 repeticiones compatibles quedan INTACTAS** porque «cuál sobra» es decisión suya, no del barrido. Tipo de defecto corregido, para que quede en el registro: **`2.1.6` llamaba «deriva» a lo que el capítulo 5 declara explícitamente que NO es deriva**; **`2.3.3` afirmaba que el trabajo «no proyecta a prevalencia operativa» cuando `5.4` publica una proyección**; y **cuatro remisiones apuntaban a apartados que niegan tener el contenido**. **C8 NO se aplicó a propósito** —releída era repetición compatible, no contradicción— y queda **fichada como decisión de Francisco**, igual que las **6 apariciones de «deriva temporal»** que el auditor proponía barrer | — |
+| 2026-08-22 | Informe | **🟡 Los SEIS residuos A-1…A-6 del apéndice de auditoría del informe — CERRADOS.** **Tres ya estaban hechos:** **A-1** (el peldaño 2 de `6.2` § 6.2.6 se apoya en la medición **(B)**, las **9.711 normales**, y descarta **(A)** con la razón correcta), **A-3** (el `[!todo]` de `6.2` **no contiene afirmación falsa**: las tres remisiones emisoras están retiradas) y **A-6** (§ 2.1.6.4 **sí está acotada a la etapa de firmas**, con la excepción de anomalías declarada). **Tres aplicados:** **A-2** en `5.2` § 5.2.2 —la frase de reconciliación **atribuía la inversión al desbalance de soportes, contradiciendo lo que la propia sección mide**; ahora atribuye la caída del F1 de `probe` a la **contaminación de su precisión por falsos positivos desde `dos` y `r2l`** y **rechaza el soporte explícitamente** (`r2l` tiene más, **2.199 frente a 1.106**, y sale mejor), verificado contra `Resultados/metricas_firmas.csv` y **comprobado aritméticamente**: ≈**739 FP** hacia `probe` frente a ≈**758 flujos perdidos** por `dos`+`r2l` en DecisionTree—; **A-4**, «deriva» → «drift», **decidida una por una y no a ciegas** (2 ocurrencias corregidas en `2.1.6` § 2.1.6.8 y `A.3` § A.3.11.1, tabla; **las legítimas intactas** — «información derivada» en § 2.1.6.5 y «deriva de código» en § A.3.10); y **A-5**, sedes de remisión (`5.1` § 5.1.3 ya llevaba sede —§ 6.2.6, peldaños 1 y 2— y solo se corrigió su «deriva temporal»; en `5.4` la entradilla de «Hallazgos que trascienden…» ganó sede: «**§§ 6.2.1, 6.2.2 y 6.2.6 respectivamente**», verificadas contra `6.2`). **CORRECCIÓN DE REGISTRO: § A.3.11.6 NO tenía ninguna ocurrencia de «deriva»; la de `A.3` estaba en § A.3.11.1** — el apéndice del informe la ubicaba mal | — |
+| 2026-08-22 | Informe | **REVIEW DE LA TANDA · `auditor-ml`: `APTO CON CAMBIOS`.** Los **cinco cambios verificados correctos**, **sin cifras inventadas, sin sedes inexistentes, sin `[n]` nuevos y sin contenido borrado**. **Un cambio del auditor NO aplicado con razón escrita** —las 6 apariciones de «deriva temporal» de `5.1` § 5.1.3 y de los títulos de `6.2`—, **fichado como decisión de Francisco** en `## Abiertas`. **Cinco notas en esta última tanda:** `5.1`, `5.2`, `5.4`, `2.1.6` y `A.3` | — |
+| 2026-08-22 | Ninguno | **🔴 «Contenido perdido» — COMPROBACIÓN CERRADA por el hilo principal, que es lo que el auditor no puede hacer porque no ejecuta `git`.** El diff son **13 ficheros, 65 inserciones y 20 supresiones**: **crecimiento neto, propio de añadir frases de reconciliación**, no de recortar. Verificado en disco que sobrevive **`GridSearchCV`**, «**cuatro categorías de ataque**», «**sintético y de 1998**», «**estructural del banco de pruebas**», «**primera prioridad de mejora**» y **`A.3.11.6`**, y que el cambio «deriva» → «drift» está aplicado **en las dos sedes**. **Nada perdido** | — |
 | 2026-08-21 | Informe | **🟡 «El metadiscurso "sede canónica / sede única" sigue vivo en la memoria» — CERRADA AL VERIFICAR DISCO, no como trabajo nuevo.** La ficha declaraba **~21 puntos en 11 notas** y **en la memoria ya estaba a CERO**: el trabajo estaba **hecho en el árbol sin commitear** cuando se fue a comprobarlo. Es el mismo patrón que con los cuatro residuos de F1/F2 — **el registro iba por detrás del árbol, no al revés** | `a244ee2` |
 | 2026-08-21 | Informe | **🟠 F4 mitad (a) — D9 y D11 RESUELTOS Y VERIFICADOS EN DISCO.** **Sede única de las cuatro transformaciones en `4.3.7`** y **SMOTE por *fold* en `4.3.4`**. Y el hallazgo que la sospecha no anticipaba: **`2.1.6.5` NO era un duplicado**, sino la **sede conceptual de la fuga de información**; el reparto queda **cosido en ambos sentidos** por esta tanda, en vez de recortado. La ficha seguía marcada `[ ]` con el trabajo ya hecho. **La mitad (b) —el barrido SISTEMÁTICO del perímetro 2↔4/5/6— NO se cierra aquí: no consta en ningún informe de `99 Investigación/`, así que ese perímetro sigue SIN AUDITAR, y abrirlo es decisión de Francisco** | `a244ee2` |
 | 2026-08-21 | Informe | **AUDITORÍA DE COHERENCIA RELANZADA DESDE CERO — la anterior se PERDIÓ con un corte de límite de sesión y su veredicto NO EXISTÍA**, así que se rehizo entera en vez de dar por bueno un dictamen ausente. Veredicto **`APTO CON CAMBIOS`, NINGÚN 🔴**: **cero contenido perdido, cero citas `[n]` inventadas** y **cifras cuadradas contra `Resultados/`**. **Seis hallazgos, los SEIS aplicados** en una tanda de **4 redactores con ficheros disjuntos**: **dos remisiones cruzadas apuntaban a apartados que NEGABAN tener el contenido** —`2.1.6` → `A.3.7` en vez de `A.3.11.2`, y `2.1.5`/`2.1.3` → `2.1.6.6` en vez de `2.1.5.3`—; **`A.3` era el fichero que MÁS metadiscurso concentraba y el barrido no había llegado hasta él** (8 literales retirados, incluido «trasladado aquí desde 4.4, que es donde se redactó»); **solape de prosa argumental entre `A.2` y `2.1.5.5`**, deduplicado en `A.2`; y el `[!todo]` de `A.3.8` convertido en **`[!warning]` de alcance declarado**. **15 ficheros tocados:** `2.1.1`, `2.1.3`, `2.1.5`, `2.1.6`, `2.3.3`, `3.3`, `4.3`, `4.5`, `4.6`, `5.0`, `5.2`, `5.4`, `6.1`, `A.2`, `A.3` | `a244ee2` |

@@ -681,7 +681,7 @@ El mapeo de las fases al trabajo realizado es directo:
 | Fase CRISP-DM | Materialización en este TFG |
 |---|---|
 | Comprensión del problema | Objetivos y pregunta de investigación ([[1.3 Objetivo]], [[3.1 Requisitos del sistema]]) |
-| Comprensión de los datos | EDA sobre NSL-KDD (`program.py`) y validación de los splits (`validacion.py`): integridad, distribuciones, deriva y valores atípicos |
+| Comprensión de los datos | EDA sobre NSL-KDD (`program.py`) y validación de los splits (`validacion.py`): integridad, distribuciones, drift y valores atípicos |
 | Preparación de los datos | Codificación, escalado, selección de características y generación de los splits D1/D2/D3 ([[4.3 Preprocesamiento de los datasets]]) |
 | Modelado | Las dos etapas del sistema por separado: anomalías ([[4.4 Entrenamiento del modelo de detección de anomalías]]) y firmas ([[4.5 Entrenamiento del modelo de detección basado en firmas]]) |
 | Evaluación | Evaluación única de extremo a extremo sobre D2 y contraste con el baseline monolítico (capítulo [[5.3 Resultados del sistema híbrido]]) |
@@ -731,9 +731,9 @@ Declarar una única corrida como si fuera el resultado, sin ninguna medida de di
 
 Las **tres palancas** con las que este trabajo instrumenta la reproducibilidad —semilla fija, entorno congelado y artefactos persistidos, con su materialización concreta en el proyecto— **no se repiten aquí**: están tabuladas en [[2.1.6 Metodologías y buenas prácticas]] § 2.1.6.7.
 
-### A.3.11.6 Desarrollo de la deriva y las clases nunca vistas
+### A.3.11.6 Desarrollo del desplazamiento entre particiones y las clases nunca vistas
 
-Sobre la deriva: aunque el conjunto de test contuviera solo tipos de ataque conocidos, sus características no se distribuyen igual que las del entrenamiento. Sobre las clases nunca vistas: ninguna partición de validación construida sobre el entrenamiento puede contener un solo ejemplo de ellos, luego ninguna validación cruzada puede anticipar cómo se comportará el modelo ante ellos. El fenómeno tiene una formulación clásica en el ámbito de la detección de intrusiones, donde se argumenta que la enorme variabilidad del tráfico real y el coste asimétrico de los errores explican la distancia sistemática entre los resultados de laboratorio y el rendimiento operativo [21].
+Sobre el desplazamiento entre particiones (*dataset shift*): aunque el conjunto de test contuviera solo tipos de ataque conocidos, sus características no se distribuyen igual que las del entrenamiento. Sobre las clases nunca vistas: ninguna partición de validación construida sobre el entrenamiento puede contener un solo ejemplo de ellos, luego ninguna validación cruzada puede anticipar cómo se comportará el modelo ante ellos. El fenómeno tiene una formulación clásica en el ámbito de la detección de intrusiones, donde se argumenta que la enorme variabilidad del tráfico real y el coste asimétrico de los errores explican la distancia sistemática entre los resultados de laboratorio y el rendimiento operativo [21].
 
 ---
 
