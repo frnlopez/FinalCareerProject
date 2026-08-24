@@ -12,8 +12,8 @@ Cada tarea marca su sede: `vault` = se arregla en la nota `.md` · `Word` = se a
 ## T · Transversal (afecta a todo el documento)
 
 ### Bibliografía
-- [ ] **T1** · Verificar el mapa `[1]`–`[11]` entre el vault y el `.docx` antes de congelarlo. Hay desajuste: `[11]` cita a Snort/Roesch en el `.docx` y es CRISP-DM en `Bibliografía.md`. `vault`
-- [X] **T2** · Corregir la cita `[9]` de la línea 479 (cap. 2): es un número **quemado**, no existe entrada. Remapear a `[8]` o `[10]`. `vault`
+- [ ] **T1** · Verificar el mapa `[1]`–`[11]` entre el vault y el `.docx` antes de congelarlo. Hay desajuste declarado: el `[11]` **del `.docx`** es Snort/Roesch (equivale al `[26]` del vault), mientras que el `[11]` **del vault** es CRISP-DM y **no tiene equivalente en el `.docx`**. `vault`
+- [X] **T2** · Corregir la cita `[9]` **del vault** (cap. 2): es un número **quemado**, no existe entrada. Remapear a `[8]` o `[10]`, que son los mismos números en ambas numeraciones. `vault`
 - [ ] **T3** · Volcar al Word las entradas de `Bibliografía.md` que queden en uso. Hoy el `.docx` tiene 11 escritas a mano y sin relación con el vault. `Word`
 - [ ] **T4** · **(ÚLTIMA)** Renumerar de `[12]` en adelante por orden de aparición, en el vault y en el `.docx` **a la vez**. `[1]`–`[11]` se congelan. `vault` + `Word`
 
@@ -53,8 +53,8 @@ Cada tarea marca su sede: `vault` = se arregla en la nota `.md` · `Word` = se a
 - [ ] **2.4** · Citar 2.2.3 «Taxonomía de los IDS»: los cuatro ejes, HIDS/NIDS, inline/pasivo (5 altas). `vault`
 - [ ] **2.5** · Citar 2.2.4 «Firmas frente a anomalías» y mapear Denning a `[3]` y Snort a su entrada correcta (5 altas). `vault`
 - [ ] **2.6** · Citar 2.2.5 «Taxonomía de ataques»: DARPA/KDD y los ejemplos de cada categoría (5 altas). `vault`
-- [ ] **2.7** · Citar 2.3 entera —incluida 2.3.3 «Límites y consideraciones éticas», hoy sin ninguna fuente pese a tener `[53]` Rudin, `[54]` Molnar y `[55]`–`[57]` RGPD/AI Act/NIS2 vivas y sin usar. `vault`
-- [ ] **2.8** · Poner marcador a la **cita textual en inglés** («each paper suffers from at least three pitfalls»): está entrecomillada y sin `[18]`. `vault`
+- [ ] **2.7** · Citar 2.3 entera —incluida 2.3.3 «Límites y consideraciones éticas», hoy sin ninguna fuente pese a tener `[68]` Rudin, `[69]` Molnar y `[70]`–`[72]` RGPD/AI Act/NIS2 vivas y sin usar. `vault`
+- [ ] **2.8** · Poner marcador a la **cita textual en inglés** («each paper suffers from at least three pitfalls»): está entrecomillada y sin `[66]` Arp *et al.* `vault`
 - [ ] **2.9** · Poner localizador de página a `[4]` Chio, `[5]` Géron (×2), `[7]` Murphy y `[8]` Stallings. Ninguno lo lleva. `vault`
 
 ### Estructura
@@ -200,11 +200,11 @@ Cada tarea marca su sede: `vault` = se arregla en la nota `.md` · `Word` = se a
 
 ## Bibliografía
 
-**Estado medido:** 70 entradas vivas en el vault · **20 citadas** · **51 huérfanas** · 1 colgando (`[9]`).
+**Estado medido:** 70 entradas vivas en el vault · **20 citadas** · **51 huérfanas** · 1 colgando (`[9]` **del vault**, número quemado).
 La memoria usa el **27 %** de su propia bibliografía.
 
 - [ ] **B1** · **Revisar las 51 huérfanas una a una** (lista en el Anexo B) y decidir: se rescatan poniéndoles marcador, o se excluyen del `.docx`.
-      ⚠️ **No borrar antes de hacer las tareas de citas.** Muchas son huérfanas porque **falta el marcador**, no porque sobre la fuente: `[73]` Isolation Forest, `[75]` LOF, `[26]` Snort, `[58]` KDD Cup 99, `[22]` McHugh, `[19]` desbalance, `[13]` validación cruzada, `[16]` reject option, `[53]`–`[57]` ética y normativa. `vault`
+      ⚠️ **No borrar antes de hacer las tareas de citas.** Muchas son huérfanas porque **falta el marcador**, no porque sobre la fuente: `[29]` Isolation Forest, `[31]` LOF, `[11]` Snort, `[86]` KDD Cup 99, `[54]` McHugh, `[37]` desbalance, `[21]` validación cruzada, `[94]` reject option, `[68]`–`[72]` ética y normativa. `vault`
 - [ ] **B2** · Dar formato IEEE a las 4 entradas del `.docx` que son **URLs desnudas**, y fusionar la que duplica el enlace de Stallings. `Word`
 - [ ] **B3** · Añadir año y edición al Stallings (5.ª ed., 2023) y año al Anderson. `Word`
 - [ ] **B4** · Recuperar `[6, cap. 6]` Goodfellow: existe en el vault y **no llegó al `.docx`**. `Word`
@@ -234,28 +234,28 @@ La memoria usa el **27 %** de su propia bibliografía.
 | Gradient Boosting | Friedman 2001 |
 | HistGradientBoosting | Ke et al. 2017 (LightGBM) |
 | k-NN | Cover y Hart 1967 |
-| Semisupervisado one-class | Chandola et al. 2009 → `[30]`, viva |
-| Isolation Forest | Liu, Ting y Zhou 2008 → `[73]`, viva |
+| Semisupervisado one-class | Chandola et al. 2009 → `[28]` (vault `[30]`), viva |
+| Isolation Forest | Liu, Ting y Zhou 2008 → `[29]` (vault `[73]`), viva |
 | One-Class SVM | Schölkopf et al. 2001 (+ Cortes y Vapnik 1995) |
-| LOF | Breunig et al. 2000 → `[75]`, viva |
+| LOF | Breunig et al. 2000 → `[31]` (vault `[75]`), viva |
 | MLP / retropropagación | Rumelhart, Hinton y Williams 1986, o `[6, cap. 6]` |
 | Autoencoder | Goodfellow et al. 2016, cap. 14 → `[6]` |
-| k-means / clustering | MacQueen 1967 / Hastie et al. cap. 14 → `[12]` |
+| k-means / clustering | MacQueen 1967 / Hastie et al. cap. 14 → `[20]` (vault `[12]`) |
 
 ## Las 10 altas de 2.1.5 «Métricas»
 
 Matriz de confusión, precisión (ec. 1), recall (ec. 2), FPR (ec. 3), F1 (ec. 5), macro y ponderado (ec. 6 y 7), curva ROC y AUC, curva PR, y el argumento de que PR es más informativa bajo desbalance.
 
-Fuentes: **Fawcett 2006**, **Powers 2011**, **Sokolova y Lapalme 2009**, **van Rijsbergen 1979**, **Davis y Goadrich 2006**, **He y García 2009** → `[19]`, viva.
+Fuentes: **Fawcett 2006**, **Powers 2011**, **Sokolova y Lapalme 2009**, **van Rijsbergen 1979**, **Davis y Goadrich 2006**, **He y García 2009** → `[37]` (vault `[19]`), viva.
 
 ## Altas de 2.2 y 2.3
 
-Definición de intrusión y de IDS, cadena de bloques del NIDS, despliegue inline/pasivo (**NIST SP 800-94** → `[25]`, viva) · ejes de la taxonomía (**Axelsson 2000**, **Debar et al. 1999**) · propiedades de firmas y anomalías (**García-Teodoro et al. 2009** → `[29]`, viva) · deriva y falsos positivos (**Sommer y Paxson 2010** → `[21]`, viva) · DARPA 1998 (**Lippmann et al. 2000**) · ejemplos de ataque por categoría (**Kendall 1999** → `[36]`, viva) · criterio de DL (**LeCun, Bengio y Hinton 2015**) · casos de uso defensivos (**`[4]` Chio, con localizador**) · conjunto cerrado (**`[61]` Scheirer**, ya usada en §5.3) · los tres usos de Arp et al. (**`[18]`, con localizador**).
+Definición de intrusión y de IDS, cadena de bloques del NIDS, despliegue inline/pasivo (**NIST SP 800-94** → `[14]` (vault `[25]`), viva) · ejes de la taxonomía (**Axelsson 2000**, **Debar et al. 1999**) · propiedades de firmas y anomalías (**García-Teodoro et al. 2009** → `[40]` (vault `[29]`), viva) · deriva y falsos positivos (**Sommer y Paxson 2010** → `[44]` (vault `[21]`), viva) · DARPA 1998 (**Lippmann et al. 2000**) · ejemplos de ataque por categoría (**Kendall 1999** → `[50]` (vault `[36]`), viva) · criterio de DL (**LeCun, Bengio y Hinton 2015**) · casos de uso defensivos (**`[4]` Chio, con localizador**) · conjunto cerrado (**`[59]` Scheirer** (vault `[61]`), ya usada en §5.3) · los tres usos de Arp et al. (**`[66]`** (vault `[18]`)**, con localizador**).
 
 ## Altas de 3, 4, 5 y 6
 
 - **Cap. 3:** los cuatro algoritmos de la tabla de anomalías · Random Forest y XGBoost en la de firmas · **SMOTE (Chawla et al. 2002)**.
-- **Cap. 4:** los 3 placeholders de §4.2 · imbalanced-learn (Lemaître et al. 2017) · test KS (Massey 1951) · las 41 características (Lee y Stolfo 2000 → `[59]`, viva) · categorías canónicas · SMOTE + leakage · importancias de RF · O(n²) de OC-SVM · autoencoder para anomalías (Sakurada y Yairi 2014).
+- **Cap. 4:** los 3 placeholders de §4.2 · imbalanced-learn (Lemaître et al. 2017) · test KS (Massey 1951) · las 41 características (Lee y Stolfo 2000 → `[87]` (vault `[59]`), viva) · categorías canónicas · SMOTE + leakage · importancias de RF · O(n²) de OC-SVM · autoencoder para anomalías (Sakurada y Yairi 2014).
 - **Cap. 5:** «el patrón dominante en la literatura» · «el célebre ~99 %» · comparación pareada (Demšar 2006 / Dietterich 1998) · O(n²) de OC-SVM.
 - **Cap. 6:** la afirmación sobre el enfoque supervisado que domina la literatura.
 
@@ -266,67 +266,71 @@ Definición de intrusión y de IDS, cadena de bloques del NIDS, despliegue inlin
 Entradas vivas en `Bibliografía.md` que **no se citan ni una vez** en la memoria.
 Las marcadas con **←** son las que el texto **sí usa conceptualmente** y solo les falta el marcador: rescatarlas debería ser el primer movimiento.
 
-| n | Referencia | |
-|---|---|---|
-| 6 | Goodfellow, Bengio y Courville, *Deep Learning* | ← |
-| 12 | Hastie, Tibshirani y Friedman, *ESL* | ← |
-| 13 | Kohavi, validación cruzada y bootstrap | ← |
-| 14 | scikit-learn, doc. `GridSearchCV` | ← |
-| 15 | Bergstra y Bengio, Random Search | |
-| 16 | Chow, error/reject tradeoff | ← |
-| 19 | He y García, *Learning from Imbalanced Data* | ← |
-| 21 | Sommer y Paxson, *Outside the Closed World* | ← |
-| 22 | McHugh, crítica a las evaluaciones DARPA | ← |
-| 26 | Roesch, Snort (LISA'99) | ← |
-| 29 | García-Teodoro et al., anomaly-based NIDS | ← |
-| 30 | Chandola, Banerjee y Kumar, *Anomaly detection: A survey* | ← |
-| 31 | Khraisat et al., survey de IDS | ← |
-| 32 | Barbará et al., ADAM | |
-| 33 | Tombini et al., combinación serial anomalía + misuse | ← |
-| 34 | Ptacek y Newsham, *Insertion, Evasion and DoS* | |
-| 35 | Snort Users Manual, «Writing Snort Rules» | ← |
-| 36 | Kendall, base de datos de ataques (tesis MIT) | ← |
-| 38 | Strom et al., MITRE ATT&CK | |
-| 39 | Russell y Norvig, *AIMA* | ← |
-| 41 | Grinsztajn et al., árboles vs DL en tabular | |
-| 42 | McElfresh et al., redes vs boosted trees | |
-| 43 | Sahami et al., filtrado bayesiano de spam | |
-| 46 | Szegedy et al., *Intriguing properties of neural networks* | |
-| 47 | Goodfellow, Shlens y Szegedy, FGSM | |
-| 48 | Biggio y Roli, *Wild patterns* | ← |
-| 50 | Moustafa y Slay, UNSW-NB15 | ← |
-| 51 | Sharafaldin et al., CIC-IDS2017 | ← |
-| 52 | Pierazzi et al., adversarial ML en el espacio del problema | ← |
-| 53 | Rudin, modelos interpretables en decisiones críticas | ← |
-| 54 | Molnar, *Interpretable Machine Learning* | ← |
-| 55 | RGPD — Reglamento (UE) 2016/679 | ← |
-| 56 | Reglamento de IA — (UE) 2024/1689 | ← |
-| 57 | Directiva NIS2 — (UE) 2022/2555 | ← |
-| 58 | *KDD Cup 1999 Data*, UCI KDD Archive | ← |
-| 59 | Lee y Stolfo, features y modelos para IDS | ← |
-| 60 | Mitchell et al., Model Cards | |
-| 62 | Erickson et al., TabArena | |
-| 63 | Micci-Barreca, target encoding | |
-| 64 | Pargent et al., regularized target encoding | |
-| 65 | Hwang et al., hybrid IDS con firmas ponderadas | ← |
-| 66 | Pendlebury et al., TESSERACT | |
-| 67 | Behrouz et al., Nested Learning | |
-| 68 | Ji et al., IDS multinivel | ← |
-| 69 | Kim, Lee y Kim, híbrido anomalía + misuse | ← |
-| 70 | Khraisat et al., stacking C5 + OC-SVM | ← |
-| 71 | Shwartz-Ziv y Armon, *DL is not all you need* | |
-| 72 | Hollmann et al., TabPFN | |
-| 73 | Liu, Ting y Zhou, *Isolation Forest* | ← |
-| 75 | Breunig et al., LOF | ← |
-| 78 | Storkey, *When Training and Test Sets Are Different* | ← |
+La columna **n (Word)** es el número del `.docx`; entre paréntesis va el del vault, para poder
+localizar la entrada en `Bibliografía.md`.
 
-**Las de `[65]`, `[68]`, `[69]`, `[70]` y `[33]` son híbridos de IDS**: son exactamente el material que necesita el estado del arte de la tarea 2.10 y los tres trabajos de la 2.11.
+| n (Word) | (vault) | Referencia | |
+|---|---|---|---|
+| 6 | (6) | Goodfellow, Bengio y Courville, *Deep Learning* | ← |
+| 20 | (12) | Hastie, Tibshirani y Friedman, *ESL* | ← |
+| 21 | (13) | Kohavi, validación cruzada y bootstrap | ← |
+| 89 | (14) | scikit-learn, doc. `GridSearchCV` | ← |
+| ⚠️ sin equivalente en el `.docx` | (15) | Bergstra y Bengio, Random Search | |
+| 94 | (16) | Chow, error/reject tradeoff | ← |
+| 37 | (19) | He y García, *Learning from Imbalanced Data* | ← |
+| 44 | (21) | Sommer y Paxson, *Outside the Closed World* | ← |
+| 54 | (22) | McHugh, crítica a las evaluaciones DARPA | ← |
+| 11 | (26) | Roesch, Snort (LISA'99) | ← |
+| 40 | (29) | García-Teodoro et al., anomaly-based NIDS | ← |
+| 28 | (30) | Chandola, Banerjee y Kumar, *Anomaly detection: A survey* | ← |
+| 12 | (31) | Khraisat et al., survey de IDS | ← |
+| 41 | (32) | Barbará et al., ADAM | |
+| 42 | (33) | Tombini et al., combinación serial anomalía + misuse | ← |
+| 43 | (34) | Ptacek y Newsham, *Insertion, Evasion and DoS* | |
+| 45 | (35) | Snort Users Manual, «Writing Snort Rules» | ← |
+| 50 | (36) | Kendall, base de datos de ataques (tesis MIT) | ← |
+| 53 | (38) | Strom et al., MITRE ATT&CK | |
+| 15 | (39) | Russell y Norvig, *AIMA* | ← |
+| 56 | (41) | Grinsztajn et al., árboles vs DL en tabular | |
+| 57 | (42) | McElfresh et al., redes vs boosted trees | |
+| 58 | (43) | Sahami et al., filtrado bayesiano de spam | |
+| 60 | (46) | Szegedy et al., *Intriguing properties of neural networks* | |
+| 61 | (47) | Goodfellow, Shlens y Szegedy, FGSM | |
+| 62 | (48) | Biggio y Roli, *Wild patterns* | ← |
+| 64 | (50) | Moustafa y Slay, UNSW-NB15 | ← |
+| 65 | (51) | Sharafaldin et al., CIC-IDS2017 | ← |
+| 67 | (52) | Pierazzi et al., adversarial ML en el espacio del problema | ← |
+| 68 | (53) | Rudin, modelos interpretables en decisiones críticas | ← |
+| 69 | (54) | Molnar, *Interpretable Machine Learning* | ← |
+| 70 | (55) | RGPD — Reglamento (UE) 2016/679 | ← |
+| 71 | (56) | Reglamento de IA — (UE) 2024/1689 | ← |
+| 72 | (57) | Directiva NIS2 — (UE) 2022/2555 | ← |
+| 86 | (58) | *KDD Cup 1999 Data*, UCI KDD Archive | ← |
+| 87 | (59) | Lee y Stolfo, features y modelos para IDS | ← |
+| 74 | (60) | Mitchell et al., Model Cards | |
+| ⚠️ sin equivalente en el `.docx` | (62) | Erickson et al., TabArena | |
+| ⚠️ sin equivalente en el `.docx` | (63) | Micci-Barreca, target encoding | |
+| ⚠️ sin equivalente en el `.docx` | (64) | Pargent et al., regularized target encoding | |
+| ⚠️ sin equivalente en el `.docx` | (65) | Hwang et al., hybrid IDS con firmas ponderadas | ← |
+| ⚠️ sin equivalente en el `.docx` | (66) | Pendlebury et al., TESSERACT | |
+| ⚠️ sin equivalente en el `.docx` | (67) | Behrouz et al., Nested Learning | |
+| 47 | (68) | Ji et al., IDS multinivel | ← |
+| 48 | (69) | Kim, Lee y Kim, híbrido anomalía + misuse | ← |
+| 49 | (70) | Khraisat et al., stacking C5 + OC-SVM | ← |
+| 76 | (71) | Shwartz-Ziv y Armon, *DL is not all you need* | |
+| 77 | (72) | Hollmann et al., TabPFN | |
+| 29 | (73) | Liu, Ting y Zhou, *Isolation Forest* | ← |
+| 31 | (75) | Breunig et al., LOF | ← |
+| 91 | (78) | Storkey, *When Training and Test Sets Are Different* | ← |
+
+**Las de Hwang (vault `[65]`, ⚠️ sin equivalente en el `.docx`), `[47]`, `[48]`, `[49]` y `[42]` son híbridos de IDS**: son exactamente el material que necesita el estado del arte de la tarea 2.10 y los tres trabajos de la 2.11.
 
 ---
 
 # Anexo C · Dónde va exactamente cada cita
 
-> [!warning] Los números de la columna «Marcador» que vienen del pase del 2026-08-24 son **números del `.docx`** (`[12]`-`[95]`, mapa en [[Bibliografia del docx - numeracion y anclas]] §2). Los números planos que ya estaban antes (`[25]`, `[36]`, `[73]`…) son **del vault** y siguen **pendientes de traducir** al Word.
+> [!note] Numeración del `.docx`
+> Desde el **2026-08-24** este fichero está **íntegramente en la numeración del `.docx`** (`[1]`–`[11]` congelados, mapa en [[Bibliografia del docx - numeracion y anclas]] §2). Cuando aparece `(vault [xx])`, ese segundo número es solo la referencia para localizar la entrada en `Bibliografía.md`.
 
 > **Cómo se usa.** No hay números de línea a propósito: los de Word y los del vault se
 > desplazan en cuanto editas algo por encima, y este proyecto ya ha mandado corregir líneas
@@ -339,7 +343,7 @@ Las marcadas con **←** son las que el texto **sí usa conceptualmente** y solo
 
 | Buscar este texto | Marcador |
 |---|---|
-| «…el de detección basada en el estado. Este último monitorea las sesiones de red» | NIST SP 800-94 → `[25]` |
+| «…el de detección basada en el estado. Este último monitorea las sesiones de red» | NIST SP 800-94 → `[14]` (vault `[25]`) |
 
 ## Capítulo 2 · §2.1.1–2.1.3 (1 alta)
 
@@ -359,13 +363,13 @@ Todas al final del párrafo que describe cada algoritmo.
 | «cada árbol nuevo se entrena para corregir los errores residuales del conjunto acumulado» | `[25]` (vault `[86]`) |
 | «discretizando las características continuas en un número fijo de contenedores» | `[26]` (vault `[87]`) |
 | «el ejemplo más conocido de aprendizaje perezoso» | `[27]` (vault `[88]`) |
-| «Estos algoritmos se denominan semisupervisados (one-class)» | `[30]` Chandola et al. |
-| «La longitud media del camino de aislamiento a través del conjunto de árboles» | `[73]` Liu, Ting y Zhou |
+| «Estos algoritmos se denominan semisupervisados (one-class)» | `[28]` (vault `[30]`) Chandola et al. |
+| «La longitud media del camino de aislamiento a través del conjunto de árboles» | `[29]` (vault `[73]`) Liu, Ting y Zhou |
 | «busca la frontera —en el espacio transformado por un núcleo (kernel), típicamente el radial (RBF)—» | `[30]` (vault `[89]`) |
-| «recibe una puntuación LOF elevada y se considera anómalo» | `[75]` Breunig et al. |
+| «recibe una puntuación LOF elevada y se considera anómalo» | `[31]` (vault `[75]`) Breunig et al. |
 | «calculando los gradientes de todos los pesos mediante retropropagación» | `[32]` (vault `[90]`) |
 | «un MLP empleado como autoencoder, que es el detector seleccionado para la etapa 1» | `[6, cap. 14]` |
-| «k-means y el agrupamiento jerárquico como exponentes principales» | `[12, cap. 14]` |
+| «k-means y el agrupamiento jerárquico como exponentes principales» | `[20, cap. 14]` (vault `[12]`) |
 
 ## Capítulo 2 · §2.1.5 «Métricas» (10 altas)
 
@@ -388,25 +392,25 @@ Las de las ecuaciones van **en la frase que introduce la fórmula**, no en la f�
 
 | Buscar este texto | Marcador |
 |---|---|
-| «Una intrusión es cualquier acción, intencionada o no, que compromete la confidencialidad» | `[25]` NIST SP 800-94 |
-| «monitoriza de forma continua los eventos que ocurren en un sistema o en una red» | `[25]` |
+| «Una intrusión es cualquier acción, intencionada o no, que compromete la confidencialidad» | `[14]` (vault `[25]`) NIST SP 800-94 |
+| «monitoriza de forma continua los eventos que ocurren en un sistema o en una red» | `[14]` |
 | «hereda de Denning (quien aportó el modelo IDES…)» | `[3]` — **mapear, no dar de alta** |
-| «entronca con la tradición de Snort» | `[26]` Roesch — **ojo: hoy pone `[11]`, que es CRISP-DM** |
-| «Sensor o captura. Obtiene el tráfico del segmento vigilado» | `[25]` |
-| «La literatura no usa una taxonomía única sino varios ejes ortogonales» | `[39]` (vault `[96]`) ⚠️ nivel 2; **no confundir con `[46]`**, el otro Axelsson |
-| «Se diferencia en este punto entre HIDS (host-based IDS) y NIDS» | `[25]` |
-| «Es la taxonomía más citada del área y la que enmarca el problema de este TFG» | `[29]` García-Teodoro et al. |
-| «es la modalidad que convierte al detector en un IPS» | `[25]` |
-| «El conocimiento del analista de seguridad queda así codificado en una base de firmas» | `[26]` Roesch |
-| «alta precisión sobre lo que cubre, alertas explicables y bajo volumen de falsas alarmas» | `[29]` |
+| «entronca con la tradición de Snort» | `[11]` (vault `[26]`) Roesch — **el `[11]` del `.docx` ES Snort; el `[11]` del vault es CRISP-DM** |
+| «Sensor o captura. Obtiene el tráfico del segmento vigilado» | `[14]` |
+| «La literatura no usa una taxonomía única sino varios ejes ortogonales» | `[39]` (vault `[96]`) ⚠️ nivel 2; **no confundir con `[60]`** (vault `[46]`), el otro Axelsson |
+| «Se diferencia en este punto entre HIDS (host-based IDS) y NIDS» | `[14]` |
+| «Es la taxonomía más citada del área y la que enmarca el problema de este TFG» | `[40]` (vault `[29]`) García-Teodoro et al. |
+| «es la modalidad que convierte al detector en un IPS» | `[14]` |
+| «El conocimiento del analista de seguridad queda así codificado en una base de firmas» | `[11]` (vault `[26]`) Roesch |
+| «alta precisión sobre lo que cubre, alertas explicables y bajo volumen de falsas alarmas» | `[40]` |
 | «La formulación original del enfoque se debe a Denning» | `[3]` — mapear |
-| «mayor tasa de falsos positivos, alertas menos explicables y sensibilidad a la deriva (drift)» | `[21]` Sommer y Paxson |
-| «existen trabajos que la adoptan, la invierten y la reformulan como conjunto paralelo» | `[33]` `[65]` `[68]` `[69]` `[70]` — **son la tarea 2.11** |
-| «procede de las campañas de evaluación… del MIT Lincoln Laboratory para DARPA (1998)» | `[51]` (vault `[97]`) + `[23]` |
-| «Ejemplos en el dataset: neptune (inundación de segmentos SYN)…» | `[36]` Kendall |
-| «Ejemplos en el dataset: nmap, portsweep, ipsweep, satan» | `[36]` |
-| «Ejemplos en el dataset: guess_passwd (fuerza bruta…)» | `[36]` |
-| «Ejemplos en el dataset: buffer_overflow, rootkit, loadmodule, perl» | `[36]` |
+| «mayor tasa de falsos positivos, alertas menos explicables y sensibilidad a la deriva (drift)» | `[44]` (vault `[21]`) Sommer y Paxson |
+| «existen trabajos que la adoptan, la invierten y la reformulan como conjunto paralelo» | `[42]` (vault `[33]`) `[47]` (vault `[68]`) `[48]` (vault `[69]`) `[49]` (vault `[70]`) + Hwang ⚠️ sin equivalente en el `.docx` (vault `[65]`) — **son la tarea 2.11** |
+| «procede de las campañas de evaluación… del MIT Lincoln Laboratory para DARPA (1998)» | `[51]` (vault `[97]`) + `[52]` (vault `[23]`) |
+| «Ejemplos en el dataset: neptune (inundación de segmentos SYN)…» | `[50]` (vault `[36]`) Kendall |
+| «Ejemplos en el dataset: nmap, portsweep, ipsweep, satan» | `[50]` |
+| «Ejemplos en el dataset: guess_passwd (fuerza bruta…)» | `[50]` |
+| «Ejemplos en el dataset: buffer_overflow, rootkit, loadmodule, perl» | `[50]` |
 
 ## Capítulo 2 · §2.3 (5 altas)
 
@@ -414,9 +418,9 @@ Las de las ecuaciones van **en la frase que introduce la fórmula**, no en la f�
 |---|---|
 | «se habla de DL cuando la jerarquía de capas es lo bastante honda» | `[55]` (vault `[98]`) |
 | «Detección de intrusiones en red / Análisis de malware / Anti-phishing y anti-spam / UEBA» | `[4, cap. …]` con localizador |
-| «no produce «ninguna de las anteriores»: produce la categoría conocida más parecida» | `[61]` Scheirer et al. |
-| ««each paper suffers from at least three pitfalls»» | `[18, p. …]` — **cita textual sin marcador** |
-| «El pitfall P9 de Arp et al., Lab-Only Evaluation» y «el pitfall P10, Inappropriate Threat Model» | `[18, §…]` en ambas |
+| «no produce «ninguna de las anteriores»: produce la categoría conocida más parecida» | `[59]` (vault `[61]`) Scheirer et al. |
+| ««each paper suffers from at least three pitfalls»» | `[66, p. …]` (vault `[18]`) — **cita textual sin marcador** |
+| «El pitfall P9 de Arp et al., Lab-Only Evaluation» y «el pitfall P10, Inappropriate Threat Model» | `[66, §…]` en ambas |
 
 ## Capítulo 3 (3 altas, 7 anclas)
 
@@ -424,9 +428,9 @@ En las **tablas de candidatos**, el marcador va en la celda «NOCIÓN DE ANOMAL�
 
 | Buscar este texto | Marcador |
 |---|---|
-| «Aísla las anomalías por particiones aleatorias» | `[73]` |
-| «Aprende una frontera que encierra el comportamiento normal» | `[30]` (vault `[89]`) |
-| «Compara la densidad local de cada punto con la de sus vecinos» | `[75]` |
+| «Aísla las anomalías por particiones aleatorias» | `[29]` (vault `[73]`) Liu, Ting y Zhou |
+| «Aprende una frontera que encierra el comportamiento normal» | `[30]` (vault `[89]`) Schölkopf et al. |
+| «Compara la densidad local de cada punto con la de sus vecinos» | `[31]` (vault `[75]`) Breunig et al. |
 | «Error de reconstrucción: reconstruye mal lo que no se parece a lo normal» | `[6, cap. 14]` |
 | «Conjunto (ensemble) de árboles por bagging» | `[24]` (vault `[85]`) |
 | «Conjunto por boosting (rendimiento tipo XGBoost)» | `[75]` (vault `[99]`) |
@@ -436,15 +440,15 @@ En las **tablas de candidatos**, el marcador va en la celda «NOCIÓN DE ANOMAL�
 
 | Buscar este texto | Marcador |
 |---|---|
-| `[enlace bibliografía: KDD Cup 99]` — **sustituir el placeholder entero** | `[58]` + `[51]` (vault `[97]`) |
-| `[ enlace bibliografía: Tavallaee 2009]` — ×2, sustituir | `[23]` |
-| `[ enlace bibliografía: McHugh 2000]` — sustituir | `[22]` |
+| `[enlace bibliografía: KDD Cup 99]` — **sustituir el placeholder entero** | `[86]` (vault `[58]`) + `[51]` (vault `[97]`) |
+| `[ enlace bibliografía: Tavallaee 2009]` — ×2, sustituir | `[52]` (vault `[23]`) |
+| `[ enlace bibliografía: McHugh 2000]` — sustituir | `[54]` (vault `[22]`) |
 | `[CITA: Tavallaee 2009 + survey de datasets NIDS]` — sustituir | `[52]` (vault `[23]`) + `[88, §5.5.4]` (vault `[74]`) |
 | «Tratamiento del desbalance de clases: SMOTE dentro de un Pipeline» (tabla de librerías) | `[80]` (vault `[102]`) |
 | «test de Kolmogórov-Smirnov para el análisis de drift» (tabla de librerías) | `[81]` (vault `[103]`) |
-| «Las 41 características se agrupan en tres familias» | `[59]` Lee y Stolfo |
-| «una de las cinco categorías canónicas de la literatura de NSL-KDD» | `[36]` + `[23]` |
-| «las muestras sintéticas se interpolan a partir de vecinos reales» | `[78]` (vault `[100]`) + `[17]` |
+| «Las 41 características se agrupan en tres familias» | `[87]` (vault `[59]`) Lee y Stolfo |
+| «una de las cinco categorías canónicas de la literatura de NSL-KDD» | `[50]` (vault `[36]`) + `[52]` (vault `[23]`) |
+| «las muestras sintéticas se interpolan a partir de vecinos reales» | `[78]` (vault `[100]`) + `[73]` (vault `[17]`) Kapoor y Narayanan |
 | «se entrena un RandomForestClassifier (100 árboles, class_weight='balanced', semilla 42)» | `[24]` (vault `[85]`) |
 | «Su coste de entrenamiento es O(n²) en memoria y tiempo» | `[30]` (vault `[89]`) |
 | «las conexiones anómalas se reconstruyen mal y producen un MSE alto» | `[90]` (vault `[108]`) |
@@ -469,7 +473,8 @@ En las **tablas de candidatos**, el marcador va en la celda «NOCIÓN DE ANOMAL�
 
 # Anexo D · Anclas de las 48 citas medias
 
-> [!warning] Los números de la columna «Marcador» que vienen del pase del 2026-08-24 son **números del `.docx`** (`[12]`-`[95]`, mapa en [[Bibliografia del docx - numeracion y anclas]] §2). Los números planos que ya estaban antes (`[25]`, `[39, cap. 1]`, `[19]`…) son **del vault** y siguen **pendientes de traducir** al Word.
+> [!note] Numeración del `.docx`
+> Desde el **2026-08-24** este anexo está **íntegramente en la numeración del `.docx`** (mapa en [[Bibliografia del docx - numeracion y anclas]] §2). El `(vault [xx])` entre paréntesis es solo la referencia para localizar la entrada en `Bibliografía.md`.
 
 Mismo criterio que el Anexo C: busca el fragmento con Ctrl+F, el marcador va al final de la frase.
 Estas son **defendibles sin cita**, pero suman rigor. Si vas justo de tiempo, haz primero el Anexo C.
@@ -480,20 +485,20 @@ Estas son **defendibles sin cita**, pero suman rigor. Si vas justo de tiempo, ha
 |---|---|
 | «Se han creado algoritmos basados tanto en Machine Learning (ML) como en IA» | `[12]` (vault `[31]`) Khraisat *et al.* 2019 |
 | «estos algoritmos han sido fundamentales para la detección de ataques desconocidos» | `[13]` (vault `[77]`) Hindy *et al.* 2020 — ⚠️ se cita por el método, **no** por su 89-99 % |
-| «Evasión del IDS/NIDS – el atacante conoce el mecanismo de detección y lo esquiva» | `[25]` NIST SP 800-94 |
+| «Evasión del IDS/NIDS – el atacante conoce el mecanismo de detección y lo esquiva» | `[14]` (vault `[25]`) NIST SP 800-94 |
 
 ## Capítulo 2 · §2.1.1–2.1.3 (8)
 
 | Buscar este texto | Marcador |
 |---|---|
-| «los investigadores han perseguido enseñar a las computadoras a razonar» | `[39, cap. 1]` Russell y Norvig |
+| «los investigadores han perseguido enseñar a las computadoras a razonar» | `[15, cap. 1]` (vault `[39]`) Russell y Norvig |
 | «el algoritmo es el conjunto de instrucciones que dicen como aprender de los datos» | `[5, cap. 1]` Géron |
-| «se limpian, transforman y dividen en subconjuntos de entrenamiento, validación y prueba» | `[12, cap. 7]` Hastie |
+| «se limpian, transforman y dividen en subconjuntos de entrenamiento, validación y prueba» | `[20, cap. 7]` (vault `[12]`) Hastie |
 | «Reducción de dimensionalidad y visualización» | `[17, cap. 1]` (vault `[80]`) ⚠️ localizador no establecido (página) |
 | «Reglas de asociación, que busca encontrar coocurrencias frecuentes» | `[18]` (vault `[81]`) |
 | «Un agente aprende por interacción con un entorno, guiado por recompensas y penalizaciones» | `[19, cap. 1]` (vault `[82]`) ⚠️ localizador no establecido (página) |
-| «un candidato algo peor pero mucho más estable puede ser preferible» | `[12, cap. 7]` |
-| «los valores que el algoritmo no aprende de los datos— mediante validación cruzada» | `[5, cap. 2]` + `[13]` Kohavi |
+| «un candidato algo peor pero mucho más estable puede ser preferible» | `[20, cap. 7]` (vault `[12]`) |
+| «los valores que el algoritmo no aprende de los datos— mediante validación cruzada» | `[5, cap. 2]` + `[21]` (vault `[13]`) Kohavi |
 
 ## Capítulo 2 · §2.1.5 «Métricas» (5)
 
@@ -502,32 +507,32 @@ Estas son **defendibles sin cita**, pero suman rigor. Si vas justo de tiempo, ha
 | «VP (verdadero positivo): un ataque correctamente señalado como ataque» | `[33]` (vault `[91]`) |
 | «la matriz pasa a ser de k x k, con k el número de clases» | `[34]` (vault `[92]`) |
 | «Exactitud (accuracy): la proporción de predicciones correctas sobre el total» | `[34]` (vault `[92]`) |
-| «un weighted alto, porque el peso n_i de la clase mayoritaria domina la suma» | `[19]` He y García |
+| «un weighted alto, porque el peso n_i de la clase mayoritaria domina la suma» | `[37]` (vault `[19]`) He y García |
 | «no produce directamente una etiqueta, sino una puntuación continua» | `[33]` (vault `[91]`) |
 
 ## Capítulo 2 · §2.2 y §2.3 (5)
 
 | Buscar este texto | Marcador |
 |---|---|
-| «el momento del análisis: tiempo real… y diferido (offline)» | `[25]` |
-| «los 39 tipos de ataque específicos presentes en el corpus» | `[23]` |
-| «Huella en el tráfico» (las cuatro apariciones: `serror_rate`, `count`, `hot`, `root_shell`) | `[59]` Lee y Stolfo |
+| «el momento del análisis: tiempo real… y diferido (offline)» | `[14]` (vault `[25]`) |
+| «los 39 tipos de ataque específicos presentes en el corpus» | `[52]` (vault `[23]`) |
+| «Huella en el tráfico» (las cuatro apariciones: `serror_rate`, `count`, `hot`, `root_shell`) | `[87]` (vault `[59]`) Lee y Stolfo |
 | «designan conjuntos anidados: cada uno es un subconjunto estricto del anterior» | `[4]` — ya usada antes |
 | «Un modelo de amenaza es la especificación explícita de las hipótesis sobre el adversario» | ⛔ **SIN NÚMERO — el fragmento no existe hoy ni en el vault ni en el `.docx`: no hay sede** (mapa §4.3) |
-| «equivale a suponer un adversario que no modifica su comportamiento» | `[48]` Biggio y Roli |
+| «equivale a suponer un adversario que no modifica su comportamiento» | `[62]` (vault `[48]`) Biggio y Roli |
 
 ## Capítulo 3 (8)
 
 | Buscar este texto | Marcador |
 |---|---|
-| «las cuatro categorías canónicas del dataset NSL-KDD» | `[23]` |
-| «siguiendo la línea de un IDS clásico basado en reglas» | `[26]` Roesch |
-| «instanciar el caso, es decir, fijar un valor concreto en cada dimensión» | `[18]` |
-| «produce puntos que ningún atacante real podría generar» | `[52]` Pierazzi et al. |
-| «al no re-particionar el test, D2 conserva los tipos de ataque que no aparecen» | `[23]` |
-| «se ajustan únicamente sobre el tráfico de entrenamiento (D1+D3)» | `[17]` Kapoor y Narayanan |
-| «del árbol de decisión se extraen reglas legibles (mediante export_text)» | `[54, cap. …]` Molnar |
-| «estimadas fuera de muestra (out-of-fold, mediante validación cruzada sobre D3)» | `[16]` Chow, reject option |
+| «las cuatro categorías canónicas del dataset NSL-KDD» | `[52]` (vault `[23]`) |
+| «siguiendo la línea de un IDS clásico basado en reglas» | `[11]` (vault `[26]`) Roesch |
+| «instanciar el caso, es decir, fijar un valor concreto en cada dimensión» | `[66]` (vault `[18]`) Arp et al. |
+| «produce puntos que ningún atacante real podría generar» | `[67]` (vault `[52]`) Pierazzi et al. |
+| «al no re-particionar el test, D2 conserva los tipos de ataque que no aparecen» | `[52]` (vault `[23]`) |
+| «se ajustan únicamente sobre el tráfico de entrenamiento (D1+D3)» | `[73]` (vault `[17]`) Kapoor y Narayanan |
+| «del árbol de decisión se extraen reglas legibles (mediante export_text)» | `[69, cap. …]` (vault `[54]`) Molnar |
+| «estimadas fuera de muestra (out-of-fold, mediante validación cruzada sobre D3)» | `[94]` (vault `[16]`) Chow, reject option |
 
 ## Capítulo 4 (11)
 
@@ -535,33 +540,33 @@ Estas son **defendibles sin cita**, pero suman rigor. Si vas justo de tiempo, ha
 |---|---|
 | «Python es el lenguaje de referencia para el aprendizaje automático» | ⛔ **SIN NÚMERO — no hay fuente de nivel 1-2; decide Francisco: atenuar la frase o retirarla** (mapa §4.3) |
 | «Núcleo de ML: preprocesamiento (MinMaxScaler, LabelEncoder)» (fila de la tabla) | `[79]` (vault `[101]`) |
-| Filas de NumPy · Pandas · Matplotlib · Seaborn de la misma tabla | Harris 2020 · McKinney 2010 · Hunter 2007 · Waskom 2021 |
-| «etiquetaron cada registro de KDDTest+ con un valor de #successfulPrediction» | `[23, §…]` |
+| Filas de NumPy · Pandas · Matplotlib · Seaborn de la misma tabla | `[84]` Harris 2020 · `[85]` McKinney 2010 · `[82]` Hunter 2007 · `[83]` Waskom 2021 |
+| «etiquetaron cada registro de KDDTest+ con un valor de #successfulPrediction» | `[52, §…]` (vault `[23]`) |
 | «desde tasas en [0,1] hasta contadores de bytes con valores de cientos de millones» | `[5, cap. 2]` |
 | «Se codifican mediante One-Hot Encoding (pd.get_dummies)» | `[5, cap. 2]` |
-| «selección de modelo sobre el conjunto de test, es decir data snooping» | `[18]` — ya está, verificar |
-| «LocalOutlierFactor se instancia con novelty=True» | `[14]` doc. scikit-learn |
-| «un clasificador que nunca predijera u2r conservaría un accuracy superior al 99,9 %» | `[19]` |
-| «las firmas deben poder leerse, auditarse y, llegado el caso, trasladarse a reglas» | `[54]` Molnar |
-| «Es la firma canónica de un SYN flood tipo neptune» | `[36]` Kendall |
+| «selección de modelo sobre el conjunto de test, es decir data snooping» | `[66]` (vault `[18]`) Arp et al. — ya está, verificar |
+| «LocalOutlierFactor se instancia con novelty=True» | `[89]` (vault `[14]`) doc. scikit-learn |
+| «un clasificador que nunca predijera u2r conservaría un accuracy superior al 99,9 %» | `[37]` (vault `[19]`) |
+| «las firmas deben poder leerse, auditarse y, llegado el caso, trasladarse a reglas» | `[69]` (vault `[54]`) Molnar |
+| «Es la firma canónica de un SYN flood tipo neptune» | `[50]` (vault `[36]`) Kendall |
 
 ## Capítulo 5 (4)
 
 | Buscar este texto | Marcador |
 |---|---|
-| «Su noción de anomalía basada en densidad local no captura bien la separación» | `[75]` Breunig et al. |
-| «refleja el desplazamiento distribucional D3→D2 propio del NSL-KDD» | `[23]` |
-| «el sobreajuste es invisible en validación cruzada» | `[12, cap. 15]` |
-| «la captura del tráfico en la interfaz de red, el ensamblado de los paquetes en flujos» | `[21]` Sommer y Paxson |
+| «Su noción de anomalía basada en densidad local no captura bien la separación» | `[31]` (vault `[75]`) Breunig et al. |
+| «refleja el desplazamiento distribucional D3→D2 propio del NSL-KDD» | `[52]` (vault `[23]`) |
+| «el sobreajuste es invisible en validación cruzada» | `[20, cap. 15]` (vault `[12]`) |
+| «la captura del tráfico en la interfaz de red, el ensamblado de los paquetes en flujos» | `[44]` (vault `[21]`) Sommer y Paxson |
 
 ## Capítulo 6 (4)
 
 | Buscar este texto | Marcador |
 |---|---|
-| «firmas y anomalías no compiten, sino que se complementan» | `[29]` García-Teodoro et al. |
-| «debido al desplazamiento distribucional entre el tráfico normal de entrenamiento y el de test» | `[23]` |
-| «ningún algoritmo ni técnica de balanceo (SMOTE, class_weight) logra un rendimiento sólido» | `[19]` + `[78]` (vault `[100]`) |
-| «el clasificador de firmas, cerrado, tiende a asignar con confianza etiquetas conocidas» | `[61]` Scheirer / `[49]` Bendale |
+| «firmas y anomalías no compiten, sino que se complementan» | `[40]` (vault `[29]`) García-Teodoro et al. |
+| «debido al desplazamiento distribucional entre el tráfico normal de entrenamiento y el de test» | `[52]` (vault `[23]`) |
+| «ningún algoritmo ni técnica de balanceo (SMOTE, class_weight) logra un rendimiento sólido» | `[37]` (vault `[19]`) + `[78]` (vault `[100]`) |
+| «el clasificador de firmas, cerrado, tiende a asignar con confianza etiquetas conocidas» | `[59]` (vault `[61]`) Scheirer / `[63]` (vault `[49]`) Bendale |
 
 ---
 
@@ -569,8 +574,13 @@ Estas son **defendibles sin cita**, pero suman rigor. Si vas justo de tiempo, ha
 
 Si haces los Anexos C y D completos, **quedan citadas 21 de las 51 huérfanas** sin decidir nada:
 
-`[4]` `[12]` `[13]` `[14]` `[16]` `[19]` `[21]` `[22]` `[26]` `[29]` `[30]` `[33]` `[36]` `[39]` `[48]` `[52]` `[54]` `[58]` `[59]` `[73]` `[75]`
-más `[65]` `[68]` `[69]` `[70]` si haces el estado del arte (tareas 2.10 y 2.11).
+Números del `.docx`, con el del vault entre paréntesis:
+
+`[4]` (4) · `[20]` (12) · `[21]` (13) · `[89]` (14) · `[94]` (16) · `[37]` (19) · `[44]` (21) ·
+`[54]` (22) · `[11]` (26) · `[40]` (29) · `[28]` (30) · `[42]` (33) · `[50]` (36) · `[15]` (39) ·
+`[62]` (48) · `[67]` (52) · `[69]` (54) · `[86]` (58) · `[87]` (59) · `[29]` (73) · `[31]` (75)
+
+más `[47]` (68) · `[48]` (69) · `[49]` (70) y **Hwang ⚠️ sin equivalente en el `.docx` (vault `[65]`)** si haces el estado del arte (tareas 2.10 y 2.11).
 
 Es decir: **la lista real de descartes de la tarea B1 no son 51, sino unas 26**, y solo se puede
 decidir *después* de las tareas de citas. Por eso B1 va al final del bloque de bibliografía.
