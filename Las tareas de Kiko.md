@@ -388,143 +388,252 @@ y **no entra en la secuencia** (ver §4 del mapa y las «Decisiones pendientes»
 
 # Anexo C · Dónde va exactamente cada cita
 
-> [!note] Numeración del `.docx`
-> Desde el **2026-08-24 (tercera pasada)** este anexo está **íntegramente en la numeración del `.docx` por orden de aparición en el Word** (`[1]`–`[11]` congelados, mapa en [[Bibliografia del docx - numeracion y anclas]] §2). El `(vault [xx])` entre paréntesis es solo la referencia para localizar la entrada en `Bibliografía.md`.
-
-> **Cómo se usa.** No hay números de línea a propósito: los de Word y los del vault se
-> desplazan en cuanto editas algo por encima. El ancla es el **fragmento literal**: cópialo en
-> Ctrl+F, y el marcador va **al final de esa frase, antes del punto**.
+> [!important] Estado real del Word ahora mismo (2026-08-24, mapa [[Bibliografia del docx - numeracion y anclas]])
+> Este anexo es la **hoja de trabajo autosuficiente**: se recorre de arriba abajo con el `.docx`
+> abierto y **sin consultar nada más**. Lo que hay que hacer en Word son cuatro cosas:
 >
-> Aquí están las **69 altas**. Las medias están descritas en el Anexo A.
+> | Trabajo | Cantidad | Dónde está en este anexo |
+> |---|---|---|
+> | **Reescribir** marcadores que ya están puestos con la numeración VIEJA del vault | **39** (en 47 párrafos; 1999, 2032 y 2262 llevan dos) | §C.0 |
+> | **Insertar** marcadores que faltan | **~165 apariciones** | §C.1–§C.10 |
+> | **Sustituir** placeholders visibles en el cuerpo | **3** (2 × `[ enlace bibliografía: …]` + 1 × `[CITA: …]`) | §C.8, primeras filas |
+> | **Pegar** el apartado Bibliografía completo, sustituyendo el actual | lista `[1]`–`[75]` | §9 del mapa |
 
-## Capítulo 1 (1 alta)
+> [!warning] Obras ≠ apariciones — por qué las cifras no son la misma
+> - **64 obras** es lo que numera el mapa (`[12]`–`[75]`), más los 11 congelados: **75 números**.
+> - **~165 apariciones** es cuántas veces hay que **pegar** un marcador; una obra citada nueve
+>   veces cuenta una vez como obra y nueve como apariciones.
+> - **Las «69 altas» que este anexo declaraba antes eran ANCLAS**, no obras ni apariciones: una
+>   fila de esta hoja puede llevar dos marcadores y una obra puede tener varias filas. La cifra se
+>   retira y se sustituye por el recuento real de filas: **74 filas de ancla** (§C.1–§C.10), de las
+>   que **1 está bloqueada** (`[68]` Pineau). Las citas medias van en el Anexo D.
 
-| Buscar este texto | Marcador |
-|---|---|
-| «…el de detección basada en el estado. Este último monitorea las sesiones de red» | `[14]` (vault `[25]`) NIST SP 800-94 |
+> **Cómo se usa.** Cada fila trae el **párrafo del Word** para ir directo, y el **fragmento
+> literal** para confirmar con Ctrl+F. El marcador va **al final de esa frase, antes del punto**, y
+> **siempre a pelo**: `[n]`, nunca `[n, p. …]` (decisión del 2026-08-24). Dentro de cada capítulo
+> las filas van **ordenadas por número de párrafo ascendente**.
+>
+> **Leyenda de la columna Párr.**
+> - `123` — párrafo tomado del mapa, ancla literal.
+> - `123 ⚠️inf.` — el párrafo está en el mapa, pero **cuál de las apariciones de esa obra es esta
+>   fila** se ha deducido por orden. Confirma con Ctrl+F antes de pegar.
+> - `—` — el mapa **no da** párrafo para esta ancla. No se ha inventado: localízala por Ctrl+F.
+>
+> La correspondencia con la numeración del vault (para volver a `Bibliografía.md`) está **al final
+> del anexo, en §C.11**, fuera de la hoja de trabajo.
 
-## Capítulo 2 · §2.1.1–2.1.3 (1 alta)
+## C.0 · Las 39 reescrituras — marcadores que HOY están mal
 
-| Buscar este texto | Marcador |
-|---|---|
-| «algoritmos y procesos que «aprenden» en el sentido de que son capaces de generalizar datos» | `[16]` (vault `[79]`) — página sin establecer (solo para `Bibliografía.md`; el marcador va a pelo) |
+Estos marcadores ya están en el documento, pero con la numeración vieja del vault: **cada número
+significa hoy otra obra**. Se recorren por párrafo y se **traducen**; no se insertan de nuevo.
 
-## Capítulo 2 · §2.1.4 «Algoritmos de ML» (14 altas, 13 anclas)
+| ☐ | Párr. | Marcador | Qué obra es |
+|---|---|---|---|
+| ☐ | 737 | reescribir `[18]` → `[49]` | Arp *et al.* (2022), *Dos and Don'ts of ML in Computer Security* |
+| ☐ | 868 | reescribir `[23]` → `[44]` | Tavallaee *et al.* (2009), análisis de KDD CUP 99 |
+| ☐ | 873 | reescribir `[23]` → `[44]` | Tavallaee *et al.* (2009) |
+| ☐ | 1432 | reescribir `[23]` → `[44]` | Tavallaee *et al.* (2009) |
+| ☐ | 1434 | reescribir `[20]` → `[68]` | Pineau *et al.* (2021), reproducibilidad en ML |
+| ☐ | 1436 | reescribir `[18]` → `[49]` | Arp *et al.* (2022) |
+| ☐ | 1438 | reescribir `[25]` → `[14]` | Scarfone y Mell (2007), NIST SP 800-94 |
+| ☐ | 1441 | reescribir `[17]` → `[52]` | Kapoor y Narayanan (2023), *Leakage and the reproducibility crisis* |
+| ☐ | 1443 | reescribir `[23]` → `[44]` | Tavallaee *et al.* (2009) |
+| ☐ | 1835 | reescribir `[61]` → `[48]` | Scheirer *et al.* (2013), *Toward Open Set Recognition* |
+| ☐ | 1837 | reescribir `[49]` → `[71]` | Bendale y Boult (2016), OpenMax |
+| ☐ | 1929 | reescribir `[18]` → `[49]` | Arp *et al.* (2022) |
+| ☐ | 1931 | reescribir `[23]` → `[44]` | Tavallaee *et al.* (2009) |
+| ☐ | 1934 | reescribir `[23]` → `[44]` | Tavallaee *et al.* (2009) |
+| ☐ | 1970 | reescribir `[74]` → `[72]` | Goldschmidt y Chudá (2025), survey de datasets NIDS — **mismo párrafo que el placeholder `[CITA: …]` de §C.8** |
+| ☐ | 1972 | reescribir `[74]` → `[72]` | Goldschmidt y Chudá (2025) |
+| ☐ | 1978 | reescribir `[77]` → `[13]` | Hindy *et al.* (2020), zero-day con DL |
+| ☐ | 1999 | reescribir `[24]` → `[73]` | Axelsson (2000), *base-rate fallacy* — **párrafo con DOS marcadores** |
+| ☐ | 1999 | reescribir `[25]` → `[14]` | Scarfone y Mell (2007), NIST SP 800-94 — el segundo del párrafo |
+| ☐ | 2024 | reescribir `[24]` → `[73]` | Axelsson (2000), *base-rate fallacy* |
+| ☐ | 2032 | reescribir `[24]` → `[73]` | Axelsson (2000), *base-rate fallacy* — **párrafo con DOS marcadores** |
+| ☐ | 2032 | reescribir `[25]` → `[14]` | Scarfone y Mell (2007), NIST SP 800-94 — el segundo del párrafo |
+| ☐ | 2093 | reescribir `[18]` → `[49]` | Arp *et al.* (2022) |
+| ☐ | 2100 | reescribir `[18]` → `[49]` | Arp *et al.* (2022) |
+| ☐ | 2101 | reescribir `[52]` → `[51]` | Pierazzi *et al.* (2020), adversarial en el espacio del problema |
+| ☐ | 2106 | reescribir `[20]` → `[68]` | Pineau *et al.* (2021) |
+| ☐ | 2111 | reescribir `[61]` → `[48]` | Scheirer *et al.* (2013) |
+| ☐ | 2116 | reescribir `[31]` → `[12]` | Khraisat *et al.* (2019), survey de IDS |
+| ☐ | 2120 | reescribir `[18]` → `[49]` | Arp *et al.* (2022) |
+| ☐ | 2224 | ⛔ `[62]` **sin equivalencia** | La obra que el vault numera `[62]` **no recibe número en el `.docx`** (no está en §2 del mapa). **Decisión en Word: retirar el marcador o volcar su sede.** No se traduce a ciegas |
+| ☐ | 2228 | reescribir `[49]` → `[71]` | Bendale y Boult (2016), OpenMax |
+| ☐ | 2262 | ⛔ `[63]` **sin equivalencia** | Ídem: vault `[63]` sin número en el `.docx`. **Párrafo con DOS marcadores** |
+| ☐ | 2262 | ⛔ `[64]` **sin equivalencia** | Ídem: vault `[64]` sin número en el `.docx`. El segundo del párrafo |
+| ☐ | 2269 | ⛔ `[65]` **sin equivalencia** | Es **Hwang** (híbrido de IDS), una de las obras que el Anexo B marca ⛔ sin número por falta de sede. Ver tarea **2.11** |
+| ☐ | 2298 | reescribir `[51]` → `[74]` | Sharafaldin *et al.* (2018), CIC-IDS2017 |
+| ☐ | 2300 | reescribir `[50]` → `[75]` | Moustafa y Slay (2015), UNSW-NB15 |
+| ☐ | 2303 | ⛔ `[66]` **sin equivalencia** | Vault `[66]` sin número en el `.docx`. Misma decisión que 2224 |
+| ☐ | 2317 | ⛔ `[67]` **sin equivalencia** | Vault `[67]` sin número en el `.docx` |
+| ☐ | 2318 | ⛔ `[67]` **sin equivalencia** | Ídem |
+
+> [!warning] Las seis sin equivalencia no se traducen por analogía
+> `[62]`, `[63]`, `[64]`, `[65]`, `[66]` y `[67]` del vault **no aparecen en la tabla de numeración
+> del `.docx`**: sus obras no tienen sede numerada en el documento entregable (§4 del mapa). Poner
+> ahí cualquier número del rango `[12]`–`[75]` sería atribuir la cita a **otra obra**. Son **9 de
+> los 39 marcadores** y hay que decidirlos uno a uno en Word.
+
+## C.1 · Capítulo 1 (1 fila)
+
+| ☐ | Párr. | Buscar este texto | Marcador | Qué obra es |
+|---|---|---|---|---|
+| ☐ | 248 | «…el de detección basada en el estado. Este último monitorea las sesiones de red» | `[14]` | Scarfone y Mell (2007), NIST SP 800-94, *Guide to IDPS* |
+
+## C.2 · Capítulo 2 · §2.1.1–2.1.3 (1 fila)
+
+| ☐ | Párr. | Buscar este texto | Marcador | Qué obra es |
+|---|---|---|---|---|
+| ☐ | 304 | «algoritmos y procesos que «aprenden» en el sentido de que son capaces de generalizar datos» | `[16]` | Mitchell (1997), *Machine Learning* |
+
+## C.3 · Capítulo 2 · §2.1.4 «Algoritmos de ML» (13 filas)
 
 Todas al final del párrafo que describe cada algoritmo.
 
-| Buscar este texto | Marcador |
-|---|---|
-| «Un árbol de decisión es una estructura jerárquica de nodos de decisión» | `[22]` (vault `[83]`) — página sin establecer (solo para `Bibliografía.md`; el marcador va a pelo) |
-| «Un conjunto (ensemble) combina varios clasificadores individuales» | `[23]` (vault `[84]`) |
-| «El muestreo aleatorio decorrelaciona los árboles individuales y reduce la varianza» | `[24]` (vault `[85]`) |
-| «cada árbol nuevo se entrena para corregir los errores residuales del conjunto acumulado» | `[25]` (vault `[86]`) |
-| «discretizando las características continuas en un número fijo de contenedores» | `[26]` (vault `[87]`) |
-| «el ejemplo más conocido de aprendizaje perezoso» | `[27]` (vault `[88]`) |
-| «Estos algoritmos se denominan semisupervisados (one-class)» | `[28]` (vault `[30]`) Chandola *et al.* |
-| «La longitud media del camino de aislamiento a través del conjunto de árboles» | `[29]` (vault `[73]`) Liu, Ting y Zhou |
-| «busca la frontera —en el espacio transformado por un núcleo (kernel), típicamente el radial (RBF)—» | `[30]` (vault `[89]`) |
-| «recibe una puntuación LOF elevada y se considera anómalo» | `[31]` (vault `[75]`) Breunig *et al.* |
-| «calculando los gradientes de todos los pesos mediante retropropagación» | `[32]` (vault `[90]`) |
-| «un MLP empleado como autoencoder, que es el detector seleccionado para la etapa 1» | `[6]` |
-| «k-means y el agrupamiento jerárquico como exponentes principales» | `[17]` (vault `[12]`) |
+| ☐ | Párr. | Buscar este texto | Marcador | Qué obra es |
+|---|---|---|---|---|
+| ☐ | 375 | «Un árbol de decisión es una estructura jerárquica de nodos de decisión» | `[22]` | Breiman, Friedman, Olshen y Stone (1984), *Classification and Regression Trees* |
+| ☐ | 377 | «Un conjunto (ensemble) combina varios clasificadores individuales» | `[23]` | Dietterich (2000), *Ensemble Methods in Machine Learning* |
+| ☐ | 379 | «El muestreo aleatorio decorrelaciona los árboles individuales y reduce la varianza» | `[24]` | Breiman (2001), *Random Forests* |
+| ☐ | 382 | «cada árbol nuevo se entrena para corregir los errores residuales del conjunto acumulado» | `[25]` | Friedman (2001), gradient boosting |
+| ☐ | 383 | «discretizando las características continuas en un número fijo de contenedores» | `[26]` | Ke *et al.* (2017), LightGBM |
+| ☐ | 385 | «el ejemplo más conocido de aprendizaje perezoso» | `[27]` | Cover y Hart (1967), vecino más cercano |
+| ☐ | 389 | «Estos algoritmos se denominan semisupervisados (one-class)» | `[28]` | Chandola, Banerjee y Kumar (2009), *Anomaly detection: A survey* |
+| ☐ | 392 | «La longitud media del camino de aislamiento a través del conjunto de árboles» | `[29]` | Liu, Ting y Zhou (2008), *Isolation Forest* |
+| ☐ | 395 | «busca la frontera —en el espacio transformado por un núcleo (kernel), típicamente el radial (RBF)—» | `[30]` | Schölkopf *et al.* (2001), One-Class SVM |
+| ☐ | 398 | «recibe una puntuación LOF elevada y se considera anómalo» | `[31]` | Breunig *et al.* (2000), LOF |
+| ☐ | 402 | «calculando los gradientes de todos los pesos mediante retropropagación» | `[32]` | Rumelhart, Hinton y Williams (1986), retropropagación |
+| ☐ | — | «un MLP empleado como autoencoder, que es el detector seleccionado para la etapa 1» | `[6]` | Goodfellow, Bengio y Courville (2016), *Deep Learning* — **`[6]` no aparece hoy ni una vez en el cuerpo** (tarea B4) |
+| ☐ | — | «k-means y el agrupamiento jerárquico como exponentes principales» | `[17]` | Hastie, Tibshirani y Friedman (2009), *The Elements of Statistical Learning* |
 
-## Capítulo 2 · §2.1.5 «Métricas» (10 altas)
+## C.4 · Capítulo 2 · §2.1.5 «Métricas» (10 filas)
 
 Las de las ecuaciones van **en la frase que introduce la fórmula**, no en la fórmula.
 
-| Buscar este texto | Marcador |
-|---|---|
-| «La matriz de confusión es el punto de partida de toda métrica de clasificación» | `[33]` (vault `[91]`) |
-| «Precisión: De todas las veces que el sistema levantó una alarma de ataque» | `[34]` (vault `[93]`) ⚠️ nivel 2 — ver §6 del mapa |
-| «Exhaustividad (recall): de todos los ataques reales, qué proporción detectó el sistema» | `[34]` (vault `[93]`) ⚠️ nivel 2 |
-| «Tasa de falsos positivos (FPR): de todo el tráfico normal» | `[33]` (vault `[91]`) |
-| «F1: la media armónica de precisión y recall» | `[36]` (vault `[94]`) — página sin establecer (solo para `Bibliografía.md`; el marcador va a pelo) |
-| «se calculan primero por clase, con el esquema uno-contra-el-resto» | `[35]` (vault `[92]`) |
-| «Macro: se calcula la métrica de cada clase por separado y se promedian sin ponderar» | `[35]` (vault `[92]`) |
-| «Su resumen numérico habitual es el área bajo la curva (AUC-ROC)» | `[33]` (vault `[91]`) |
-| «Enfrenta la precisión frente al recall en cada umbral, con su propia área bajo la curva» | `[38]` (vault `[95]`) |
-| «la curva ROC puede resultar engañosamente optimista» | `[38]` (vault `[95]`) |
+| ☐ | Párr. | Buscar este texto | Marcador | Qué obra es |
+|---|---|---|---|---|
+| ☐ | 412 | «La matriz de confusión es el punto de partida de toda métrica de clasificación» | `[33]` | Fawcett (2006), *An introduction to ROC analysis* |
+| ☐ | 423 | «Precisión: De todas las veces que el sistema levantó una alarma de ataque» | `[34]` ⚠️ nivel 2 | Powers (2011), *Evaluation: From Precision, Recall and F-Measure…* |
+| ☐ | 427 | «Exhaustividad (recall): de todos los ataques reales, qué proporción detectó el sistema» | `[34]` ⚠️ nivel 2 | Powers (2011) |
+| ☐ | 436 | «se calculan primero por clase, con el esquema uno-contra-el-resto» | `[35]` | Sokolova y Lapalme (2009), medidas de rendimiento |
+| ☐ | 440 | «F1: la media armónica de precisión y recall» | `[36]` | van Rijsbergen (1979), *Information Retrieval* |
+| ☐ | 446 ⚠️inf. | «Macro: se calcula la métrica de cada clase por separado y se promedian sin ponderar» | `[35]` | Sokolova y Lapalme (2009) |
+| ☐ | 464 ⚠️inf. | «Su resumen numérico habitual es el área bajo la curva (AUC-ROC)» | `[33]` | Fawcett (2006) |
+| ☐ | 469 | «Enfrenta la precisión frente al recall en cada umbral, con su propia área bajo la curva» | `[38]` | Davis y Goadrich (2006), PR vs ROC |
+| ☐ | 470 ⚠️inf. | «la curva ROC puede resultar engañosamente optimista» | `[38]` | Davis y Goadrich (2006) |
+| ☐ | — | «Tasa de falsos positivos (FPR): de todo el tráfico normal» | `[33]` | Fawcett (2006) — el mapa no asigna párrafo a esta ancla |
 
-## Capítulo 2 · §2.2 (19 altas)
+## C.5 · Capítulo 2 · §2.2 (19 filas)
 
-| Buscar este texto | Marcador |
-|---|---|
-| «Una intrusión es cualquier acción, intencionada o no, que compromete la confidencialidad» | `[14]` (vault `[25]`) NIST SP 800-94 |
-| «monitoriza de forma continua los eventos que ocurren en un sistema o en una red» | `[14]` |
-| «hereda de Denning (quien aportó el modelo IDES…)» | `[3]` — **mapear, no dar de alta** |
-| «entronca con la tradición de Snort» | `[11]` (vault `[26]`) Roesch — **el `[11]` del `.docx` ES Snort; el `[11]` del vault es CRISP-DM** |
-| «Sensor o captura. Obtiene el tráfico del segmento vigilado» | `[14]` |
-| «La literatura no usa una taxonomía única sino varios ejes ortogonales» | `[39]` (vault `[96]`) ⚠️ nivel 2; **no confundir con `[73]`**, el otro Axelsson |
-| «Se diferencia en este punto entre HIDS (host-based IDS) y NIDS» | `[14]` |
-| «Es la taxonomía más citada del área y la que enmarca el problema de este TFG» | `[40]` (vault `[29]`) García-Teodoro *et al.* |
-| «es la modalidad que convierte al detector en un IPS» | `[14]` |
-| «El conocimiento del analista de seguridad queda así codificado en una base de firmas» | `[11]` (vault `[26]`) Roesch |
-| «alta precisión sobre lo que cubre, alertas explicables y bajo volumen de falsas alarmas» | `[40]` |
-| «La formulación original del enfoque se debe a Denning» | `[3]` — mapear |
-| «mayor tasa de falsos positivos, alertas menos explicables y sensibilidad a la deriva (drift)» | `[41]` (vault `[21]`) Sommer y Paxson |
-| «existen trabajos que la adoptan, la invierten y la reformulan como conjunto paralelo» | `[42]` (vault `[33]`) + Ji, Kim, Khraisat 2020 y Hwang ⛔ **sin número hoy** — **son la tarea 2.11** |
-| «procede de las campañas de evaluación… del MIT Lincoln Laboratory para DARPA (1998)» | `[43]` (vault `[97]`) + `[44]` (vault `[23]`) |
-| «Ejemplos en el dataset: neptune (inundación de segmentos SYN)…» | `[45]` (vault `[36]`) Kendall |
-| «Ejemplos en el dataset: nmap, portsweep, ipsweep, satan» | `[45]` |
-| «Ejemplos en el dataset: guess_passwd (fuerza bruta…)» | `[45]` |
-| «Ejemplos en el dataset: buffer_overflow, rootkit, loadmodule, perl» | `[45]` |
+> [!note] Las seis anclas de NIST SP 800-94 de este bloque
+> El mapa registra apariciones de `[14]` en los párrafos **501, 503, 524, 535 y 570** dentro de
+> §2.2, pero **no dice qué ancla corresponde a cuál**. No se reparten a ciegas: las filas van con
+> `—` y se localizan por Ctrl+F, que en este rango es una pasada corta.
 
-## Capítulo 2 · §2.3 (5 altas)
+| ☐ | Párr. | Buscar este texto | Marcador | Qué obra es |
+|---|---|---|---|---|
+| ☐ | 521 | «La literatura no usa una taxonomía única sino varios ejes ortogonales» | `[39]` ⚠️ nivel 2 | Axelsson (2000), *IDS: A Survey and Taxonomy* (informe Chalmers) — **no confundir con `[73]`**, el otro Axelsson |
+| ☐ | 528 | «Es la taxonomía más citada del área y la que enmarca el problema de este TFG» | `[40]` | García-Teodoro *et al.* (2009), anomaly-based NIDS |
+| ☐ | 554 | «mayor tasa de falsos positivos, alertas menos explicables y sensibilidad a la deriva (drift)» | `[41]` | Sommer y Paxson (2010), *Outside the Closed World* |
+| ☐ | 568 | «existen trabajos que la adoptan, la invierten y la reformulan como conjunto paralelo» | `[42]` + ⛔ | Tombini *et al.* (2004), combinación serial. Los otros cuatro híbridos (Ji, Kim, Khraisat 2020, Hwang) **no tienen número hoy**: son la tarea **2.11** |
+| ☐ | 571 | «procede de las campañas de evaluación… del MIT Lincoln Laboratory para DARPA (1998)» | `[43]` + `[44]` | Lippmann *et al.* (2000), DARPA 1998 · Tavallaee *et al.* (2009) |
+| ☐ | 577 | «Ejemplos en el dataset: neptune (inundación de segmentos SYN)…» | `[45]` | Kendall (1999), *A Database of Computer Attacks* |
+| ☐ | 581 ⚠️inf. | «Ejemplos en el dataset: nmap, portsweep, ipsweep, satan» | `[45]` | Kendall (1999) |
+| ☐ | 586 ⚠️inf. | «Ejemplos en el dataset: guess_passwd (fuerza bruta…)» | `[45]` | Kendall (1999) |
+| ☐ | 591 ⚠️inf. | «Ejemplos en el dataset: buffer_overflow, rootkit, loadmodule, perl» | `[45]` | Kendall (1999) |
+| ☐ | — | «Una intrusión es cualquier acción, intencionada o no, que compromete la confidencialidad» | `[14]` | Scarfone y Mell (2007), NIST SP 800-94 |
+| ☐ | — | «monitoriza de forma continua los eventos que ocurren en un sistema o en una red» | `[14]` | Scarfone y Mell (2007) |
+| ☐ | — | «Sensor o captura. Obtiene el tráfico del segmento vigilado» | `[14]` | Scarfone y Mell (2007) |
+| ☐ | — | «Se diferencia en este punto entre HIDS (host-based IDS) y NIDS» | `[14]` | Scarfone y Mell (2007) |
+| ☐ | — | «es la modalidad que convierte al detector en un IPS» | `[14]` | Scarfone y Mell (2007) |
+| ☐ | — | «hereda de Denning (quien aportó el modelo IDES…)» | `[3]` — **mapear, no dar de alta** | Denning (1987), *An Intrusion-Detection Model* |
+| ☐ | — | «La formulación original del enfoque se debe a Denning» | `[3]` — mapear | Denning (1987) |
+| ☐ | — | «entronca con la tradición de Snort» | `[11]` | Roesch (1999), «Snort», LISA'99 — **el `[11]` del `.docx` ES Snort; el `[11]` del vault es CRISP-DM y no llega al Word** |
+| ☐ | — | «El conocimiento del analista de seguridad queda así codificado en una base de firmas» | `[11]` | Roesch (1999) |
+| ☐ | — | «alta precisión sobre lo que cubre, alertas explicables y bajo volumen de falsas alarmas» | `[40]` | García-Teodoro *et al.* (2009) |
 
-| Buscar este texto | Marcador |
-|---|---|
-| «se habla de DL cuando la jerarquía de capas es lo bastante honda» | `[47]` (vault `[98]`) |
-| «Detección de intrusiones en red / Análisis de malware / Anti-phishing y anti-spam / UEBA» | `[4]` |
-| «no produce «ninguna de las anteriores»: produce la categoría conocida más parecida» | `[48]` (vault `[61]`) Scheirer *et al.* |
-| ««each paper suffers from at least three pitfalls»» | `[49]` (vault `[18]`) — **cita textual sin marcador** |
-| «El pitfall P9 de Arp et al., Lab-Only Evaluation» y «el pitfall P10, Inappropriate Threat Model» | `[49]` en ambas |
+## C.6 · Capítulo 2 · §2.3 (5 filas)
 
-## Capítulo 3 (3 altas, 7 anclas)
+| ☐ | Párr. | Buscar este texto | Marcador | Qué obra es |
+|---|---|---|---|---|
+| ☐ | 606 | «se habla de DL cuando la jerarquía de capas es lo bastante honda» | `[47]` | LeCun, Bengio y Hinton (2015), *Deep learning* (Nature) |
+| ☐ | 624 | «no produce «ninguna de las anteriores»: produce la categoría conocida más parecida» | `[48]` | Scheirer *et al.* (2013), *Toward Open Set Recognition* |
+| ☐ | 631 | ««each paper suffers from at least three pitfalls»» | `[49]` — **cita textual hoy SIN marcador** | Arp *et al.* (2022), *Dos and Don'ts of ML in Computer Security* |
+| ☐ | 634 ⚠️inf. | «El pitfall P9 de Arp et al., Lab-Only Evaluation» | `[49]` | Arp *et al.* (2022) |
+| ☐ | 643 ⚠️inf. | «el pitfall P10, Inappropriate Threat Model» | `[49]` | Arp *et al.* (2022) |
+
+## C.7 · Capítulo 3 (7 filas)
 
 En las **tablas de candidatos**, el marcador va en la celda «NOCIÓN DE ANOMALÍA» / «IDEA».
 
-| Buscar este texto | Marcador |
-|---|---|
-| «Aísla las anomalías por particiones aleatorias» | `[29]` (vault `[73]`) Liu, Ting y Zhou |
-| «Aprende una frontera que encierra el comportamiento normal» | `[30]` (vault `[89]`) Schölkopf *et al.* |
-| «Compara la densidad local de cada punto con la de sus vecinos» | `[31]` (vault `[75]`) Breunig *et al.* |
-| «Error de reconstrucción: reconstruye mal lo que no se parece a lo normal» | `[6]` |
-| «Conjunto (ensemble) de árboles por bagging» | `[24]` (vault `[85]`) |
-| «Conjunto por boosting (rendimiento tipo XGBoost)» | `[53]` (vault `[99]`) |
-| «Comparar el sobremuestreo sintético (SMOTE) frente al reponderado de clases» | `[54]` (vault `[100]`) |
+| ☐ | Párr. | Buscar este texto | Marcador | Qué obra es |
+|---|---|---|---|---|
+| ☐ | 749 ⚠️inf. | «Aísla las anomalías por particiones aleatorias» | `[29]` | Liu, Ting y Zhou (2008), *Isolation Forest* |
+| ☐ | 752 ⚠️inf. | «Aprende una frontera que encierra el comportamiento normal» | `[30]` | Schölkopf *et al.* (2001), One-Class SVM |
+| ☐ | 755 ⚠️inf. | «Compara la densidad local de cada punto con la de sus vecinos» | `[31]` | Breunig *et al.* (2000), LOF |
+| ☐ | 782 ⚠️inf. | «Conjunto (ensemble) de árboles por bagging» | `[24]` | Breiman (2001), *Random Forests* |
+| ☐ | 788 | «Conjunto por boosting (rendimiento tipo XGBoost)» | `[53]` | Chen y Guestrin (2016), XGBoost |
+| ☐ | 794 | «Comparar el sobremuestreo sintético (SMOTE) frente al reponderado de clases» | `[55]` | Chawla *et al.* (2002), SMOTE |
+| ☐ | — | «Error de reconstrucción: reconstruye mal lo que no se parece a lo normal» | `[6]` | Goodfellow, Bengio y Courville (2016), *Deep Learning* |
 
-## Capítulo 4 (11 altas, 12 anclas)
+## C.8 · Capítulo 4 (12 filas) — incluye los 3 placeholders visibles
 
-| Buscar este texto | Marcador |
-|---|---|
-| `[enlace bibliografía: KDD Cup 99]` — **sustituir el placeholder entero** | `[62]` (vault `[58]`) + `[43]` (vault `[97]`) |
-| `[ enlace bibliografía: Tavallaee 2009]` — ×2, sustituir | `[44]` (vault `[23]`) |
-| `[ enlace bibliografía: McHugh 2000]` — sustituir | `[63]` (vault `[22]`) ⚠️ match aproximado |
-| `[CITA: Tavallaee 2009 + survey de datasets NIDS]` — sustituir | `[44]` + `[72]` (vault `[74]`) |
-| «Tratamiento del desbalance de clases: SMOTE dentro de un Pipeline» (tabla de librerías) | `[58]` (vault `[102]`) |
-| «test de Kolmogórov-Smirnov para el análisis de drift» (tabla de librerías) | `[59]` (vault `[103]`) |
-| «Las 41 características se agrupan en tres familias» | `[46]` (vault `[59]`) Lee y Stolfo |
-| «una de las cinco categorías canónicas de la literatura de NSL-KDD» | `[45]` (vault `[36]`) + `[44]` (vault `[23]`) |
-| «las muestras sintéticas se interpolan a partir de vecinos reales» | `[54]` (vault `[100]`) + `[52]` (vault `[17]`) Kapoor y Narayanan |
-| «se entrena un RandomForestClassifier (100 árboles, class_weight='balanced', semilla 42)» | `[24]` (vault `[85]`) |
-| «Su coste de entrenamiento es O(n²) en memoria y tiempo» | `[30]` (vault `[89]`) |
-| «las conexiones anómalas se reconstruyen mal y producen un MSE alto» | `[65]` (vault `[108]`) |
+Las tres primeras filas **sustituyen texto visible en el documento**, no añaden un marcador al final
+de una frase.
 
-## Capítulo 5 (4 altas)
+| ☐ | Párr. | Buscar este texto | Marcador | Qué obra es |
+|---|---|---|---|---|
+| ☐ | 840 | «Tratamiento del desbalance de clases: SMOTE dentro de un Pipeline» (tabla de librerías) | `[60]` | Lemaître, Nogueira y Aridas (2017), imbalanced-learn |
+| ☐ | 843 | «test de Kolmogórov-Smirnov para el análisis de drift» (tabla de librerías) | `[61]` | Massey (1951), test de Kolmogórov-Smirnov |
+| ☐ | 862 | **PLACEHOLDER** — sustituir entero: `[enlace bibliografía: KDD Cup 99]` | `[64]` + `[43]` | *KDD Cup 1999 Data*, UCI KDD Archive · Lippmann *et al.* (2000), DARPA 1998 |
+| ☐ | 864 | **PLACEHOLDER** — sustituir: `[ enlace bibliografía: McHugh 2000]` | `[65]` ⚠️ **sede INFERIDA por contenido, no literal** | McHugh (2000), crítica a las evaluaciones DARPA. **Confirma el sitio antes de pegar**: el fragmento no aparece verbatim en el `.docx` (§5.3 del mapa) |
+| ☐ | 875 ⚠️inf. | «Las 41 características se agrupan en tres familias» | `[46]` | Lee y Stolfo (2000), features y modelos para IDS |
+| ☐ | 1038 | «las muestras sintéticas se interpolan a partir de vecinos reales» | `[55]` + `[52]` | Chawla *et al.* (2002), SMOTE · Kapoor y Narayanan (2023), *Leakage…* |
+| ☐ | 1105 ⚠️inf. | «se entrena un RandomForestClassifier (100 árboles, class_weight='balanced', semilla 42)» | `[24]` | Breiman (2001), *Random Forests* |
+| ☐ | 1261 | «las conexiones anómalas se reconstruyen mal y producen un MSE alto» | `[67]` | Sakurada y Yairi (2014), autoencoders para detección de anomalías |
+| ☐ | 1970 | **PLACEHOLDER** — sustituir: `[CITA: Tavallaee 2009 + survey de datasets NIDS]` | `[44]` + `[72]` | Tavallaee *et al.* (2009) · Goldschmidt y Chudá (2025), survey de datasets NIDS. **Este párrafo también lleva una reescritura** (`[74]` → `[72]`, §C.0) |
+| ☐ | — | **PLACEHOLDER ¿residual?** — `[ enlace bibliografía: Tavallaee 2009]`, ×2 | `[44]` | Tavallaee *et al.* (2009). ⚠️ **Comprobar con Ctrl+F si siguen existiendo:** §5.4 del mapa cuenta **solo 2** placeholders `[ enlace bibliografía: …]` en el cuerpo, y son el de KDD Cup 99 y el de McHugh. Si estos dos no aparecen, la fila se tacha sin más |
+| ☐ | — | «una de las cinco categorías canónicas de la literatura de NSL-KDD» | `[45]` + `[44]` | Kendall (1999) · Tavallaee *et al.* (2009) |
+| ☐ | — | «Su coste de entrenamiento es O(n²) en memoria y tiempo» | `[30]` | Schölkopf *et al.* (2001), One-Class SVM |
 
-| Buscar este texto | Marcador |
-|---|---|
-| «su coste de entrenamiento O(n²) hace inviable ajustarlo con el conjunto completo» | `[30]` (vault `[89]`) |
-| «Comparación pareada (semilla a semilla)» | `[68]` (vault `[109]`) + `[69]` (vault `[110]`) — **complementarias, no alternativas** |
-| «el patrón dominante en la literatura sobre NSL-KDD: un RandomForest monolítico» | `[12]` (vault `[31]`) + `[44]` (vault `[23]`) — **sostiene la tesis**; ⚠️ «RandomForest monolítico» no está verificado en fuente: atenuar a «clasificador supervisado monolítico» si aprietan |
-| «El célebre "~99 % de accuracy" de la literatura no sobrevive al test oficial» | `[44]` (vault `[23]`) Tavallaee *et al.* |
+## C.9 · Capítulo 5 (5 filas, 1 de ellas bloqueada)
 
-## Capítulo 6 (1 alta)
+| ☐ | Párr. | Buscar este texto | Marcador | Qué obra es |
+|---|---|---|---|---|
+| ☐ | 1434 · 2106 | ⛔ **BLOQUEADA — sin ancla literal.** No hay fragmento establecido para esta obra en §5.0 (protocolo). **No se inventa uno.** Lo único accionable hoy son sus dos reescrituras de §C.0 (`[20]` → `[68]`) | `[68]` | Pineau *et al.* (2021), *Improving Reproducibility in ML Research* (NeurIPS Reproducibility Program). **Pendiente: localizar la frase que sostiene la cita** |
+| ☐ | 1704 | «Comparación pareada (semilla a semilla)» | `[69]` + `[70]` — **complementarias, no alternativas** | Demšar (2006), comparación estadística de clasificadores · Dietterich (1998), tests estadísticos aproximados |
+| ☐ | — | «su coste de entrenamiento O(n²) hace inviable ajustarlo con el conjunto completo» | `[30]` | Schölkopf *et al.* (2001), One-Class SVM |
+| ☐ | — | «el patrón dominante en la literatura sobre NSL-KDD: un RandomForest monolítico» | `[12]` + `[44]` | Khraisat *et al.* (2019), survey de IDS · Tavallaee *et al.* (2009). ⚠️ «RandomForest monolítico» **no está verificado en fuente**: atenuar a «clasificador supervisado monolítico» si aprietan |
+| ☐ | — | «El célebre "~99 % de accuracy" de la literatura no sobrevive al test oficial» | `[44]` | Tavallaee *et al.* (2009), análisis de KDD CUP 99 |
 
-| Buscar este texto | Marcador |
-|---|---|
-| «frente al enfoque supervisado que domina la literatura sobre el NSL-KDD» | `[12]` (vault `[31]`) Khraisat *et al.* — mismo sostén que en el cap. 5 |
+## C.10 · Capítulo 6 (1 fila)
+
+| ☐ | Párr. | Buscar este texto | Marcador | Qué obra es |
+|---|---|---|---|---|
+| ☐ | — | «frente al enfoque supervisado que domina la literatura sobre el NSL-KDD» | `[12]` | Khraisat *et al.* (2019), survey de IDS — mismo sostén que en el cap. 5 |
+
+> [!note] La otra sede inferida del mapa, `[75]`
+> `[75]` Moustafa y Slay (2015), UNSW-NB15, tiene **sede inferida por contenido, no literal**
+> (párr. 2300, §5.3 del mapa). No tiene fila de alta en esta hoja porque en ese párrafo el
+> marcador **ya está puesto**: entra como **reescritura** `[50]` → `[75]` en §C.0. Igual que con
+> `[65]` McHugh, **confirma el sitio antes de dejarlo fijo**.
+
+## C.11 · Trazabilidad al vault (no se usa al pegar)
+
+Solo para volver a `Bibliografía.md` —por ejemplo, a buscar un DOI—. **Nunca se escribe en el
+Word.** Los localizadores de página del vault **no se trasladan al `.docx`** (decisión del
+2026-08-24).
+
+| `.docx` → vault | | | |
+|---|---|---|---|
+| `[11]`→`[26]` · `[12]`→`[31]` · `[13]`→`[77]` · `[14]`→`[25]` | `[16]`→`[79]` · `[17]`→`[12]` · `[22]`→`[83]` · `[23]`→`[84]` | `[24]`→`[85]` · `[25]`→`[86]` · `[26]`→`[87]` · `[27]`→`[88]` | `[28]`→`[30]` · `[29]`→`[73]` · `[30]`→`[89]` · `[31]`→`[75]` |
+| `[32]`→`[90]` · `[33]`→`[91]` · `[34]`→`[93]` · `[35]`→`[92]` | `[36]`→`[94]` · `[38]`→`[95]` · `[39]`→`[96]` · `[40]`→`[29]` | `[41]`→`[21]` · `[42]`→`[33]` · `[43]`→`[97]` · `[44]`→`[23]` | `[45]`→`[36]` · `[46]`→`[59]` · `[47]`→`[98]` · `[48]`→`[61]` |
+| `[49]`→`[18]` · `[51]`→`[52]` · `[52]`→`[17]` · `[53]`→`[99]` | `[55]`→`[100]` · `[60]`→`[102]` · `[61]`→`[103]` · `[64]`→`[58]` | `[65]`→`[22]` · `[67]`→`[108]` · `[68]`→`[20]` · `[69]`→`[109]` | `[70]`→`[110]` · `[71]`→`[49]` · `[72]`→`[74]` · `[74]`→`[51]` · `[75]`→`[50]` |
+
+> Las equivalencias que no aparecen aquí (`[1]`–`[10]`, `[15]`, `[18]`–`[21]`, `[37]`, `[50]`,
+> `[54]`, `[56]`–`[59]`, `[62]`, `[63]`, `[66]`, `[73]`) o son del tramo congelado o solo se usan
+> en el Anexo D; están todas en §2 del mapa.
 
 ---
 
