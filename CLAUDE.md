@@ -226,27 +226,35 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
   empezarían en el mismo y el solape no lo ve nadie al leer. La conversión de `[CITA: …]` a `[n]` y
   el alta en `Bibliografía.md` es un pase **posterior y en serie**, del `researcher`. Un `[n]` que
   ya estaba en la nota **se respeta**: no se renumera ni se borra.
-- **Localizador de página — decisión de Francisco del 2026-08-15.** Francisco **genera él el formato
-  IEEE** en Zotero; de los agentes necesita exactamente dos cosas: **(1) de qué libro o página web
-  salió cada afirmación**, y **(2) el párrafo marcado con una numeración que apunte a esa fuente**.
-  La (2) ya la cumple el `[n]`. La (1) está cubierta a nivel de **obra** pero **no de página**, y esa
-  es la única pieza que faltaba. Por tanto:
-  - **El marcador admite localizador opcional**, en sintaxis IEEE nativa: `[8, p. 45]`,
-    `[5, cap. 1]`, `[39, pp. 17-25]`. **No consume número del contador global**: `[8, p. 45]` y
-    `[8, p. 90]` son la misma entrada `[8]`. En `[CITA: …]` igual: `[CITA: Géron, cap. 1]`.
-  - **Solo es obligatorio en libros y documentos largos.** En artículos de revista o congreso, IEEE
-    no pide más que lo que `Bibliografía.md` ya registra. **Son 9 los libros afectados desde la Tanda 31, y esta es la
-    lista completa**: `[4]` Chio, `[5]` Géron, `[6]` Goodfellow, `[7]` Murphy, `[8]` Stallings
-    (**5.ª ed. 2023**, fijada el 2026-08-18), `[12]` Hastie, `[39]` Russell y Norvig, `[54]` Molnar y
-    **`[78]` Storkey** —el noveno, nacido al desdoblar `[76]`, que quedó quemada—. Ojo con el falso amigo: los
-    `pp. 222-232` que ya aparecen son **el rango del artículo en su revista**, metadato de la
-    referencia, **no** el localizador de la afirmación.
+- **Localizador de página — DEROGADO PARA EL `.docx` el 2026-08-24. No lo reintroduzcas.**
+  La decisión del 2026-08-15 admitía localizador en el marcador (`[8, p. 45]`, `[5, cap. 1]`) y lo
+  hacía **obligatorio** en los 9 libros largos. **Francisco la derogó el 2026-08-24**, con estas
+  palabras: «Quita los capítulos, deja las referencias a pelo `[12]`, `[13]`, `[14]`». Registrada en
+  `resumen-de-decisiones.md`.
+  - **El marcador que va al `.docx` se escribe A PELO: `[39]`, nunca `[39, cap. 1]`.** Ningún agente
+    vuelve a añadir localizador a un marcador, ni en el vault ni en los ficheros de trabajo. Los 28
+    que había se retiraron ese mismo día.
+  - **Lo que NO se derogó: el registro de la obra.** `Bibliografía.md` conserva su columna
+    «Localizador por uso», que sigue escribiendo **solo el `researcher`**. Saber de qué libro o
+    página salió una afirmación sigue siendo obligatorio; lo que ya no se hace es **estamparlo en
+    el marcador**.
+  - **Y sigue en pie que la página no se inventa:** donde no se pueda establecer con honestidad, se
+    MARCA. Misma disciplina que con las 47 citas reconstruidas.
+  - Ojo con el falso amigo, que no es un localizador y **sí se conserva**: los `pp. 222-232` que
+    aparecen en algunas entradas son **el rango del artículo en su revista**, metadato de la
+    referencia.
+  - Los 9 libros largos siguen siendo los mismos como **obras**, para el registro:
+    `[4]` Chio, `[5]` Géron, `[6]` Goodfellow, `[7]` Murphy, `[8]` Stallings (**5.ª ed. 2023**,
+    fijada el 2026-08-18), `[12]` Hastie, `[39]` Russell y Norvig, `[54]` Molnar y `[78]` Storkey.
+    Lo que cambia es que **ya no arrastran localizador al marcador**.
   - **Sobre `[54]` Molnar:** la edición **ya está fijada** — la declaración de «edición sin fijar» que
-    había aquí es FALSA desde el 2026-08-18 y se retira; no la reintroduzcas. **Su alcance se redujo el 2026-08-16 (Tanda 13)**: al reasignar el Isolation
-    Forest a `[73]` Liu, Ting y Zhou (2008), Molnar ya **no bloquea ningún localizador del capítulo
-    2** — solo queda pendiente para su uso en `2.3.3`.
+    había aquí es FALSA desde el 2026-08-18 y se retira; no la reintroduzcas. Lo que se decía de que
+    «bloqueaba localizadores del capítulo 2» dejó de aplicar en dos pasos: primero al reasignar el
+    Isolation Forest a `[73]` Liu, Ting y Zhou (2008) el 2026-08-16, y después **por la derogación
+    del 2026-08-24, que retiró los localizadores del marcador**. Sigue pendiente su uso en `2.3.3`.
   - ~~`[6]` Goodfellow está huérfana~~ **— RESUELTO el 2026-08-16 (`296de24`). T24 la ancló:
-    `2.1.4.3` la cita con `[6, cap. 6]`, y ya lleva localizador.** El dato se contaba como vivo desde
+    la cita `2.1.4.3`.** (Nació como `[6, cap. 6]`; tras la derogación del 2026-08-24 el marcador va
+    a pelo, `[6]`.) El dato se contaba como vivo desde
     el 2026-08-15; **verificar antes de repetirlo** — `Bibliografía.md` la seguía marcando huérfana
     en tres sitios cuando ya no lo era. **Esas tres declaraciones falsas se retiraron del propio
     `Bibliografía.md` en la Tanda 13** (`:63`, `:75`, `:199`), con sus 7 ocurrencias verificadas.

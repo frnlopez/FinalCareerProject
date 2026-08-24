@@ -106,18 +106,21 @@ ya no lo toca. Es un fichero del usuario y tu mano llega hasta aquí:
   editorial, publicación, volumen, páginas, DOI, ISBN, URL.
 - **Marcar** con un callout la entrada que no supere el nivel 1-2, o la que esté duplicada,
   explicando por qué y **proponiendo el sustituto concreto**.
-- **Rellenar la columna «Localizador por uso»**, que solo escribes tú (decisión de Francisco del
-  2026-08-15). Francisco genera el formato IEEE en Zotero; de nosotros necesita **la fuente y la
-  página**. Anota el **capítulo o página concretos donde vive cada afirmación citada**, no el rango
-  del artículo en su revista —los `pp. 222-232` que ya hay son metadato de la referencia, **no**
-  localizador—. **Obligatorio solo en libros y documentos largos**; en artículos, lo que ya hay
-  basta. **Los libros son 8, lista completa**: `[4]` Chio, `[5]` Géron, `[6]` Goodfellow,
-  `[7]` Murphy, `[8]` Stallings, `[12]` Hastie, `[39]` Russell y Norvig, y `[54]` Molnar. **Dos de
-  ellos no los puedes cerrar todavía y no es culpa tuya:** `[6]` Goodfellow **está huérfana en todo
-  el vault** —nadie la cita, su anclaje depende de **T24**— y `[54]` Molnar **tiene la edición sin
-  fijar** (la web sirve hoy la 3.ª, la literatura cita la 2.ª de 2022), así que la página depende de
-  esa elección. Márcalos, no los fuerces. En las notas el marcador admite `[8, p. 45]` o
-  `[5, cap. 1]`, que **no consumen número nuevo**: siguen siendo la entrada `[8]` y la `[5]`.
+- **Rellenar la columna «Localizador por uso»**, que solo escribes tú. Francisco genera el formato
+  IEEE en Zotero; de nosotros necesita **la fuente y la página**. Anota el **capítulo o página
+  concretos donde vive cada afirmación citada**, no el rango del artículo en su revista —los
+  `pp. 222-232` que ya hay son metadato de la referencia, **no** localizador—. Pedirlo con
+  prioridad en **libros y documentos largos**; en artículos, lo que ya hay basta. **Los libros son
+  9, lista completa**: `[4]` Chio, `[5]` Géron, `[6]` Goodfellow, `[7]` Murphy, `[8]` Stallings
+  (**5.ª ed. 2023**), `[12]` Hastie, `[39]` Russell y Norvig, `[54]` Molnar y `[78]` Storkey.
+  Donde no puedas establecerla con honestidad, **márcala; no la fuerces**.
+  - **⚠️ La columna es lo ÚNICO que sobrevive: el MARCADOR va A PELO.** Francisco derogó el
+    2026-08-24 los localizadores dentro del marcador (`resumen-de-decisiones.md`): se escribe `[8]`,
+    **nunca `[8, p. 45]` ni `[5, cap. 1]`**, ni en las notas ni en los ficheros de trabajo. Lo que se
+    derogó es estamparlo en el marcador, no registrar de dónde sale la afirmación.
+  - **Dos datos que este fichero declaraba y son FALSOS — no los reintroduzcas:** `[6]` Goodfellow
+    **ya no está huérfana** (T24 la ancló en `2.1.4.3`, `296de24`, 2026-08-16) y `[54]` Molnar **ya
+    tiene la edición fijada** desde el 2026-08-18.
   **La página que no puedas establecer con honestidad, la MARCAS como no establecida. No la
   inventas** — misma disciplina que con las 47 citas reconstruidas.
 

@@ -1417,6 +1417,11 @@ el futuro se dispone de una medición real, **estas cifras se sustituyen** por e
   cual no cierra la decisión, pero inclina el argumento hacia **retirar la afirmación** frente a
   buscar fuente alternativa. Aplicado en `CLAUDE.md`, `.claude/agents/leader.md`, `researcher.md` y
   `redactor-tfg.md`.
+  > [!warning] SUPERADA EN SU ALCANCE el 2026-08-24 — solo en lo relativo a los marcadores del `.docx`
+  > La obligatoriedad del localizador en los 9 libros largos **queda derogada cuando el marcador va a
+  > los entregables del `.docx`**: allí las citas van a pelo (`[12]`, `[13]`). El **registro de la obra
+  > y de la página en `Bibliografía.md` sigue vigente**, columna «Localizador por uso» incluida. Ver
+  > «Decisión del 2026-08-24 — marcadores de cita a pelo en los entregables del `.docx`».
 - `2026-08-15` — **DELEGACIÓN GENERAL DE DECISIONES TÉCNICAS A LOS AGENTES. Es un cambio de régimen,
   no una decisión puntual.** Francisco: «yo no debo ser bloqueante para nada». A partir de aquí **las
   decisiones técnicas las toma el agente con criterio técnico**, sin devolverlas a Francisco, **con
@@ -1943,4 +1948,50 @@ metodológica»**. Los tres motivos, registrados como decisión y no como olvido
 > [!note] Esto es una decisión de **alcance**
 > El «no se hace» queda registrado con el mismo rango que el «se hace». Reabrirlo exige una decisión
 > nueva de Francisco, no la iniciativa de un agente que lo lea como una carencia pendiente.
+
+---
+
+## Decisión del 2026-08-24 — marcadores de cita **a pelo** en los entregables del `.docx`
+
+**Decisión directa de Francisco**, autor de la memoria. **No se re-litiga.** Sustituye **parcialmente**
+a la decisión del 2026-08-15 sobre el localizador de página (entrada `2026-08-15 — Localizador de
+página en las citas`, marcada allí como superada en su alcance).
+
+### Qué se decide
+
+En los **entregables destinados al `.docx`** —el informe
+`Obsidian_TFG_Vault/99 Investigación/Bibliografia del docx - numeracion y anclas.md` y
+`Las tareas de Kiko.md`— los marcadores de cita van **a pelo**: `[12]`, `[13]`, `[14]`.
+
+**Se retiran los localizadores IEEE** del tipo `[8, p. 45]`, `[39, cap. 1]`, `[74, §5.4]`.
+
+### Alcance exacto — esto es lo que no debe quedar ambiguo
+
+| Qué | Estado |
+|---|---|
+| Localizador **dentro del marcador** que se pega en Word | **DEROGADO** |
+| Registro en `Bibliografía.md` de **de qué obra** sale cada afirmación | **VIGENTE** |
+| Registro de **la página**, cuando se sepa | **VIGENTE** |
+| Columna **«Localizador por uso»** de `Bibliografía.md` | **NO se elimina**; sigue siendo del `researcher` |
+
+La derogación es de **los localizadores EN EL `.docx`**, **no** del registro de la obra. Lo único que
+cambia es que **el marcador que se pega en Word no lo lleva**.
+
+### Qué queda derogado, con nombres
+
+La **obligatoriedad** del localizador en los **9 libros largos** —`[4]` Chio, `[5]` Géron,
+`[6]` Goodfellow, `[7]` Murphy, `[8]` Stallings, `[12]` Hastie, `[39]` Russell y Norvig,
+`[54]` Molnar y `[78]` Storkey— **cuando el marcador va al `.docx`**. Fuera de ese destino, la
+decisión del 2026-08-15 sigue en pie.
+
+### Motivo declarado por Francisco
+
+Quiere poder **pegar en Word sin ir al vault** a buscar el nombre del libro o la página web. El
+localizador dentro del marcador le **estorbaba**. Y la solución al problema de fondo **no es el
+localizador**, sino que **la tabla del informe sea autosuficiente**: que lleve **el texto completo de
+cada referencia**.
+
+> [!warning] Nota para agentes futuros
+> **Ningún agente debe reintroducir localizadores en los marcadores de estos dos entregables.**
+> Si lo ve «faltando», no falta: está retirado por decisión de Francisco del 2026-08-24.
 

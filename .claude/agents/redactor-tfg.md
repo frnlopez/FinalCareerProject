@@ -82,9 +82,12 @@ hecho que **hay otros agentes escribiendo ahora mismo en otras notas del vault**
 - **Y en el `[CITA: …]`, di DE DÓNDE lo sacas, con página o capítulo si es un libro**:
   `[CITA: Géron, cap. 1]`, `[CITA: Stallings, p. 45]`. Francisco genera él el formato IEEE; lo que
   necesita de ti es **la fuente y el sitio exacto**, y eres tú quien lo sabe en el momento de
-  escribir el párrafo — recuperarlo después cuesta el triple. Si citas un `[n]` que ya existe y es
-  un libro, puedes precisarlo igual: `[8, p. 45]` **no** consume número nuevo, sigue siendo `[8]`.
-  Lo que no sepas, no lo inventes: déjalo sin localizador y dilo en tu línea de cierre.
+  escribir el párrafo — recuperarlo después cuesta el triple.
+  **PERO el `[n]` YA RESUELTO se escribe A PELO: `[8]`, nunca `[8, p. 45]`** (derogación de
+  Francisco del 2026-08-24, en `resumen-de-decisiones.md`). El sitio exacto va en el `[CITA: …]`
+  mientras está sin resolver, y de ahí lo recoge el `researcher` en la columna «Localizador por
+  uso» de `Bibliografía.md` — **nunca dentro del marcador**.
+  Lo que no sepas, no lo inventes: déjalo sin precisar y dilo en tu línea de cierre.
 - Si tu nota necesita algo que está escribiendo otro agente ahora, **no lo adivines ni lo dupliques**:
   deja `> [!todo]` y dilo en el cierre.
 

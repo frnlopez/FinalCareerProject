@@ -91,7 +91,7 @@ Cada tarea marca su sede: `vault` = se arregla en la nota `.md` · `Word` = se a
 - [ ] **2.6** · Citar 2.2.5 «Taxonomía de ataques»: DARPA/KDD y los ejemplos de cada categoría (5 altas). `vault`
 - [ ] **2.7** · Citar 2.3 entera. ⚠️ **Ojo:** §2.3.3 «Límites y consideraciones éticas» **no existe en el `.docx`**, y por eso Rudin, RGPD, Reglamento de IA y NIS2 **no reciben número** (§4 del mapa). Si se volca la sección, esas cuatro entran **por detrás del `[75]`**. `vault`
 - [ ] **2.8** · Poner marcador a la **cita textual en inglés** («each paper suffers from at least three pitfalls»): está entrecomillada y sin `[49]` Arp *et al.* `vault`
-- [ ] **2.9** · Poner localizador de página a `[4]` Chio, `[5]` Géron (×2), `[7]` Murphy y `[8]` Stallings. Ninguno lo lleva. `vault`
+- [x] ~~**2.9** · Poner localizador de página a `[4]` Chio, `[5]` Géron (×2), `[7]` Murphy y `[8]` Stallings.~~ **ANULADA el 2026-08-24:** Francisco derogó los localizadores dentro del marcador — se escribe `[4]`, no `[4, p. 45]`. La página de cada afirmación se sigue registrando, pero en la columna «Localizador por uso» de `Bibliografía.md`, no aquí. `vault`
 
 ### Estructura
 - [ ] **2.10** · **Añadir estado del arte / trabajos relacionados.** Es la carencia estructural más grave del TFG. Material aprovechable ya redactado en §5.4. `vault`
@@ -123,7 +123,7 @@ Cada tarea marca su sede: `vault` = se arregla en la nota `.md` · `Word` = se a
 **Citas:** **1 marcador en todo el capítulo**. Faltan 11 (3 altas) → ver Anexo A.
 
 ### Bibliografía
-- [ ] **3.1** · Citar los cuatro algoritmos de la tabla de candidatos de anomalías (§3.4.2): Isolation Forest `[29]`, One-Class SVM `[30]`, LOF `[31]` y autoencoder `[6, cap. 14]`. `vault`
+- [ ] **3.1** · Citar los cuatro algoritmos de la tabla de candidatos de anomalías (§3.4.2): Isolation Forest `[29]`, One-Class SVM `[30]`, LOF `[31]` y autoencoder `[6]`. `vault`
 - [ ] **3.2** · Citar la tabla de candidatos de firmas (§3.5.2): Random Forest `[24]` y boosting/XGBoost `[53]`. `vault`
 - [ ] **3.3** · Citar **SMOTE** `[55]` en §3.5.4. Se nombra como decisión de diseño sin fuente. `vault`
 - [ ] **3.4** · Añadir las 8 citas medias del Anexo A (categorías canónicas, anti-leakage, espacio-problema adversario, regla de presupuesto). `vault`
@@ -142,7 +142,7 @@ Cada tarea marca su sede: `vault` = se arregla en la nota `.md` · `Word` = se a
 **Citas:** 2 marcadores en 590 líneas. Faltan 22 (11 altas) → ver Anexo A. `4.3`, `4.4` y `4.5` **enteras** no citan nada.
 
 ### Bibliografía
-- [ ] **4.1** · **Resolver los placeholders visibles de §4.2**: `[enlace bibliografía: KDD Cup 99]` → `[62]` + `[43]`; `[… Tavallaee 2009]` ×2 → `[44]`; `[… McHugh 2000]` → `[63]`; `[CITA: Tavallaee 2009 + survey]` → `[44]` + `[72, §5.5.4]`. ⚠️ **Además quedan 3 placeholders más sin resolver en el cuerpo** (2 de `[ enlace bibliografía: …]` y 1 de `[CITA: …]`): localizarlos y cerrarlos en el mismo pase. `vault`
+- [ ] **4.1** · **Resolver los placeholders visibles de §4.2**: `[enlace bibliografía: KDD Cup 99]` → `[62]` + `[43]`; `[… Tavallaee 2009]` ×2 → `[44]`; `[… McHugh 2000]` → `[63]`; `[CITA: Tavallaee 2009 + survey]` → `[44]` + `[72]`. ⚠️ **Además quedan 3 placeholders más sin resolver en el cuerpo** (2 de `[ enlace bibliografía: …]` y 1 de `[CITA: …]`): localizarlos y cerrarlos en el mismo pase. `vault`
 - [ ] **4.2** · Citar las librerías de la tabla de §4.1.3: scikit-learn `[57]`, imbalanced-learn `[58]`, el test KS de scipy `[59]`, matplotlib `[60]`, seaborn `[61]`, NumPy `[55]`, pandas `[56]`. `vault`
 - [ ] **4.3** · Citar §4.3: las 41 características (Lee y Stolfo `[46]`), el escalado, el one-hot, **SMOTE + leakage** (`[54]` + `[52]`), y las importancias de Random Forest `[24]`. `vault`
 - [ ] **4.4** · Citar §4.4: complejidad O(n²) de One-Class SVM `[30]`, `novelty=True` de LOF `[64]` y el autoencoder como detector de anomalías `[65]`. `vault`
@@ -179,7 +179,7 @@ Cada tarea marca su sede: `vault` = se arregla en la nota `.md` · `Word` = se a
 - [ ] **5.5** · Sacar del cuerpo los `commit`, las rutas de `Resultados\` y `EL_FUTURO.md`. A apéndice o nota al pie. `vault`
 
 ### Bibliografía
-- [ ] **5.6** · Respaldar las dos afirmaciones sobre el estado del arte que sostienen la tesis: «el patrón dominante en la literatura» (`[12]` + `[44]`) y «el célebre ~99 % de accuracy» (`[44, §I]`). Hoy no apuntan a ninguna fuente. `vault`
+- [ ] **5.6** · Respaldar las dos afirmaciones sobre el estado del arte que sostienen la tesis: «el patrón dominante en la literatura» (`[12]` + `[44]`) y «el célebre ~99 % de accuracy» (`[44]`). Hoy no apuntan a ninguna fuente. `vault`
 - [ ] **5.7** · Citar el criterio estadístico pareado vs no pareado de §5.2.4 → `[68]` + `[69]`, **complementarias**. `vault`
 - [ ] **5.8** · Citar en §5.1 el LOF `[31]` y la complejidad O(n²) del One-Class SVM `[30]`, hoy explicados sin fuente. `vault`
 
@@ -264,7 +264,7 @@ Cada tarea marca su sede: `vault` = se arregla en la nota `.md` · `Word` = se a
       ⚠️ **No borrar antes de hacer las tareas de citas.** `vault`
 - [ ] **B2** · Dar formato IEEE a las 4 entradas del `.docx` que son **URLs desnudas** (`[1]`, `[9]`, `[10]`, `[11]`), y fusionar la que duplica el enlace de Stallings. `Word`
 - [ ] **B3** · Añadir año y edición al Stallings (5.ª ed., 2023) y año al Anderson. `Word`
-- [ ] **B4** · Recuperar `[6, cap. 6]` Goodfellow: existe en el vault y **no llegó al `.docx`**. `Word`
+- [ ] **B4** · Recuperar `[6]` Goodfellow: existe en el vault y **no llegó al `.docx`**. `Word`
 - [ ] **B5** · **Confirmar los tres matches aproximados** — `[63]` McHugh (párr. 864), `[70]` Chow (párr. 1833) y `[75]` Moustafa y Slay (párr. 2300) — **antes de pegar nada**. Si alguno cae en otro párrafo, su número puede moverse. `Word`
 
 ---
@@ -297,8 +297,8 @@ Cada tarea marca su sede: `vault` = se arregla en la nota `.md` · `Word` = se a
 | One-Class SVM | Schölkopf *et al.* 2001 | `[30]` (vault `[89]`) |
 | LOF | Breunig *et al.* 2000 | `[31]` (vault `[75]`) |
 | MLP / retropropagación | Rumelhart, Hinton y Williams 1986 | `[32]` (vault `[90]`) |
-| Autoencoder | Goodfellow *et al.* 2016, cap. 14 | `[6, cap. 14]` |
-| k-means / clustering | Hastie *et al.*, cap. 14 | `[17, cap. 14]` (vault `[12]`) |
+| Autoencoder | Goodfellow *et al.* 2016, cap. 14 | `[6]` |
+| k-means / clustering | Hastie *et al.*, cap. 14 | `[17]` (vault `[12]`) |
 
 ## Las 10 altas de 2.1.5 «Métricas»
 
@@ -312,7 +312,7 @@ Definición de intrusión y de IDS, cadena de bloques del NIDS, despliegue inlin
 
 ## Altas de 3, 4, 5 y 6
 
-- **Cap. 3:** los cuatro algoritmos de la tabla de anomalías (`[29]`, `[30]`, `[31]`, `[6, cap. 14]`) · Random Forest `[24]` y XGBoost `[53]` en la de firmas · **SMOTE `[54]`**.
+- **Cap. 3:** los cuatro algoritmos de la tabla de anomalías (`[29]`, `[30]`, `[31]`, `[6]`) · Random Forest `[24]` y XGBoost `[53]` en la de firmas · **SMOTE `[54]`**.
 - **Cap. 4:** los placeholders de §4.2 · imbalanced-learn `[58]` · test KS `[59]` · las 41 características (Lee y Stolfo `[46]`) · categorías canónicas · SMOTE + leakage · importancias de RF · O(n²) de OC-SVM `[30]` · autoencoder para anomalías `[65]`.
 - **Cap. 5:** «el patrón dominante en la literatura» · «el célebre ~99 %» · comparación pareada (`[68]` + `[69]`) · O(n²) de OC-SVM.
 - **Cap. 6:** la afirmación sobre el enfoque supervisado que domina la literatura → `[12]`.
@@ -407,7 +407,7 @@ y **no entra en la secuencia** (ver §4 del mapa y las «Decisiones pendientes»
 
 | Buscar este texto | Marcador |
 |---|---|
-| «algoritmos y procesos que «aprenden» en el sentido de que son capaces de generalizar datos» | `[16, cap. 1]` (vault `[79]`) ⚠️ página no establecida |
+| «algoritmos y procesos que «aprenden» en el sentido de que son capaces de generalizar datos» | `[16]` (vault `[79]`) — página sin establecer (solo para `Bibliografía.md`; el marcador va a pelo) |
 
 ## Capítulo 2 · §2.1.4 «Algoritmos de ML» (14 altas, 13 anclas)
 
@@ -415,7 +415,7 @@ Todas al final del párrafo que describe cada algoritmo.
 
 | Buscar este texto | Marcador |
 |---|---|
-| «Un árbol de decisión es una estructura jerárquica de nodos de decisión» | `[22]` (vault `[83]`) ⚠️ localizador no establecido |
+| «Un árbol de decisión es una estructura jerárquica de nodos de decisión» | `[22]` (vault `[83]`) — página sin establecer (solo para `Bibliografía.md`; el marcador va a pelo) |
 | «Un conjunto (ensemble) combina varios clasificadores individuales» | `[23]` (vault `[84]`) |
 | «El muestreo aleatorio decorrelaciona los árboles individuales y reduce la varianza» | `[24]` (vault `[85]`) |
 | «cada árbol nuevo se entrena para corregir los errores residuales del conjunto acumulado» | `[25]` (vault `[86]`) |
@@ -426,8 +426,8 @@ Todas al final del párrafo que describe cada algoritmo.
 | «busca la frontera —en el espacio transformado por un núcleo (kernel), típicamente el radial (RBF)—» | `[30]` (vault `[89]`) |
 | «recibe una puntuación LOF elevada y se considera anómalo» | `[31]` (vault `[75]`) Breunig *et al.* |
 | «calculando los gradientes de todos los pesos mediante retropropagación» | `[32]` (vault `[90]`) |
-| «un MLP empleado como autoencoder, que es el detector seleccionado para la etapa 1» | `[6, cap. 14]` |
-| «k-means y el agrupamiento jerárquico como exponentes principales» | `[17, cap. 14]` (vault `[12]`) |
+| «un MLP empleado como autoencoder, que es el detector seleccionado para la etapa 1» | `[6]` |
+| «k-means y el agrupamiento jerárquico como exponentes principales» | `[17]` (vault `[12]`) |
 
 ## Capítulo 2 · §2.1.5 «Métricas» (10 altas)
 
@@ -439,7 +439,7 @@ Las de las ecuaciones van **en la frase que introduce la fórmula**, no en la f�
 | «Precisión: De todas las veces que el sistema levantó una alarma de ataque» | `[34]` (vault `[93]`) ⚠️ nivel 2 — ver §6 del mapa |
 | «Exhaustividad (recall): de todos los ataques reales, qué proporción detectó el sistema» | `[34]` (vault `[93]`) ⚠️ nivel 2 |
 | «Tasa de falsos positivos (FPR): de todo el tráfico normal» | `[33]` (vault `[91]`) |
-| «F1: la media armónica de precisión y recall» | `[36]` (vault `[94]`) ⚠️ localizador no establecido |
+| «F1: la media armónica de precisión y recall» | `[36]` (vault `[94]`) — página sin establecer (solo para `Bibliografía.md`; el marcador va a pelo) |
 | «se calculan primero por clase, con el esquema uno-contra-el-resto» | `[35]` (vault `[92]`) |
 | «Macro: se calcula la métrica de cada clase por separado y se promedian sin ponderar» | `[35]` (vault `[92]`) |
 | «Su resumen numérico habitual es el área bajo la curva (AUC-ROC)» | `[33]` (vault `[91]`) |
@@ -475,10 +475,10 @@ Las de las ecuaciones van **en la frase que introduce la fórmula**, no en la f�
 | Buscar este texto | Marcador |
 |---|---|
 | «se habla de DL cuando la jerarquía de capas es lo bastante honda» | `[47]` (vault `[98]`) |
-| «Detección de intrusiones en red / Análisis de malware / Anti-phishing y anti-spam / UEBA» | `[4, cap. …]` con localizador |
+| «Detección de intrusiones en red / Análisis de malware / Anti-phishing y anti-spam / UEBA» | `[4]` |
 | «no produce «ninguna de las anteriores»: produce la categoría conocida más parecida» | `[48]` (vault `[61]`) Scheirer *et al.* |
-| ««each paper suffers from at least three pitfalls»» | `[49, p. …]` (vault `[18]`) — **cita textual sin marcador** |
-| «El pitfall P9 de Arp et al., Lab-Only Evaluation» y «el pitfall P10, Inappropriate Threat Model» | `[49, §…]` en ambas |
+| ««each paper suffers from at least three pitfalls»» | `[49]` (vault `[18]`) — **cita textual sin marcador** |
+| «El pitfall P9 de Arp et al., Lab-Only Evaluation» y «el pitfall P10, Inappropriate Threat Model» | `[49]` en ambas |
 
 ## Capítulo 3 (3 altas, 7 anclas)
 
@@ -489,7 +489,7 @@ En las **tablas de candidatos**, el marcador va en la celda «NOCIÓN DE ANOMAL�
 | «Aísla las anomalías por particiones aleatorias» | `[29]` (vault `[73]`) Liu, Ting y Zhou |
 | «Aprende una frontera que encierra el comportamiento normal» | `[30]` (vault `[89]`) Schölkopf *et al.* |
 | «Compara la densidad local de cada punto con la de sus vecinos» | `[31]` (vault `[75]`) Breunig *et al.* |
-| «Error de reconstrucción: reconstruye mal lo que no se parece a lo normal» | `[6, cap. 14]` |
+| «Error de reconstrucción: reconstruye mal lo que no se parece a lo normal» | `[6]` |
 | «Conjunto (ensemble) de árboles por bagging» | `[24]` (vault `[85]`) |
 | «Conjunto por boosting (rendimiento tipo XGBoost)» | `[53]` (vault `[99]`) |
 | «Comparar el sobremuestreo sintético (SMOTE) frente al reponderado de clases» | `[54]` (vault `[100]`) |
@@ -501,7 +501,7 @@ En las **tablas de candidatos**, el marcador va en la celda «NOCIÓN DE ANOMAL�
 | `[enlace bibliografía: KDD Cup 99]` — **sustituir el placeholder entero** | `[62]` (vault `[58]`) + `[43]` (vault `[97]`) |
 | `[ enlace bibliografía: Tavallaee 2009]` — ×2, sustituir | `[44]` (vault `[23]`) |
 | `[ enlace bibliografía: McHugh 2000]` — sustituir | `[63]` (vault `[22]`) ⚠️ match aproximado |
-| `[CITA: Tavallaee 2009 + survey de datasets NIDS]` — sustituir | `[44]` + `[72, §5.5.4]` (vault `[74]`) |
+| `[CITA: Tavallaee 2009 + survey de datasets NIDS]` — sustituir | `[44]` + `[72]` (vault `[74]`) |
 | «Tratamiento del desbalance de clases: SMOTE dentro de un Pipeline» (tabla de librerías) | `[58]` (vault `[102]`) |
 | «test de Kolmogórov-Smirnov para el análisis de drift» (tabla de librerías) | `[59]` (vault `[103]`) |
 | «Las 41 características se agrupan en tres familias» | `[46]` (vault `[59]`) Lee y Stolfo |
@@ -518,7 +518,7 @@ En las **tablas de candidatos**, el marcador va en la celda «NOCIÓN DE ANOMAL�
 | «su coste de entrenamiento O(n²) hace inviable ajustarlo con el conjunto completo» | `[30]` (vault `[89]`) |
 | «Comparación pareada (semilla a semilla)» | `[68]` (vault `[109]`) + `[69]` (vault `[110]`) — **complementarias, no alternativas** |
 | «el patrón dominante en la literatura sobre NSL-KDD: un RandomForest monolítico» | `[12]` (vault `[31]`) + `[44]` (vault `[23]`) — **sostiene la tesis**; ⚠️ «RandomForest monolítico» no está verificado en fuente: atenuar a «clasificador supervisado monolítico» si aprietan |
-| «El célebre "~99 % de accuracy" de la literatura no sobrevive al test oficial» | `[44, §I]` (vault `[23]`) Tavallaee *et al.* |
+| «El célebre "~99 % de accuracy" de la literatura no sobrevive al test oficial» | `[44]` (vault `[23]`) Tavallaee *et al.* |
 
 ## Capítulo 6 (1 alta)
 
@@ -548,14 +548,14 @@ Estas son **defendibles sin cita**, pero suman rigor. Si vas justo de tiempo, ha
 
 | Buscar este texto | Marcador |
 |---|---|
-| «los investigadores han perseguido enseñar a las computadoras a razonar» | `[15, cap. 1]` (vault `[39]`) Russell y Norvig |
-| «el algoritmo es el conjunto de instrucciones que dicen como aprender de los datos» | `[5, cap. 1]` Géron |
-| «se limpian, transforman y dividen en subconjuntos de entrenamiento, validación y prueba» | `[17, cap. 7]` (vault `[12]`) Hastie |
-| «Reducción de dimensionalidad y visualización» | `[18, cap. 1]` (vault `[80]`) ⚠️ página no establecida |
+| «los investigadores han perseguido enseñar a las computadoras a razonar» | `[15]` (vault `[39]`) Russell y Norvig |
+| «el algoritmo es el conjunto de instrucciones que dicen como aprender de los datos» | `[5]` Géron |
+| «se limpian, transforman y dividen en subconjuntos de entrenamiento, validación y prueba» | `[17]` (vault `[12]`) Hastie |
+| «Reducción de dimensionalidad y visualización» | `[18]` (vault `[80]`) — página sin establecer (solo para `Bibliografía.md`; el marcador va a pelo) |
 | «Reglas de asociación, que busca encontrar coocurrencias frecuentes» | `[19]` (vault `[81]`) |
-| «Un agente aprende por interacción con un entorno, guiado por recompensas y penalizaciones» | `[20, cap. 1]` (vault `[82]`) ⚠️ página no establecida |
-| «un candidato algo peor pero mucho más estable puede ser preferible» | `[17, cap. 7]` (vault `[12]`) |
-| «los valores que el algoritmo no aprende de los datos— mediante validación cruzada» | `[5, cap. 2]` + `[21]` (vault `[13]`) Kohavi |
+| «Un agente aprende por interacción con un entorno, guiado por recompensas y penalizaciones» | `[20]` (vault `[82]`) — página sin establecer (solo para `Bibliografía.md`; el marcador va a pelo) |
+| «un candidato algo peor pero mucho más estable puede ser preferible» | `[17]` (vault `[12]`) |
+| «los valores que el algoritmo no aprende de los datos— mediante validación cruzada» | `[5]` + `[21]` (vault `[13]`) Kohavi |
 
 ## Capítulo 2 · §2.1.5 «Métricas» (5)
 
@@ -588,7 +588,7 @@ Estas son **defendibles sin cita**, pero suman rigor. Si vas justo de tiempo, ha
 | «produce puntos que ningún atacante real podría generar» | `[51]` (vault `[52]`) Pierazzi *et al.* |
 | «al no re-particionar el test, D2 conserva los tipos de ataque que no aparecen» | `[44]` (vault `[23]`) |
 | «se ajustan únicamente sobre el tráfico de entrenamiento (D1+D3)» | `[52]` (vault `[17]`) Kapoor y Narayanan |
-| «del árbol de decisión se extraen reglas legibles (mediante export_text)» | `[66, cap. …]` (vault `[54]`) Molnar |
+| «del árbol de decisión se extraen reglas legibles (mediante export_text)» | `[66]` (vault `[54]`) Molnar |
 | «estimadas fuera de muestra (out-of-fold, mediante validación cruzada sobre D3)» | `[70]` (vault `[16]`) Chow, reject option ⚠️ match aproximado |
 
 ## Capítulo 4 (11)
@@ -598,9 +598,9 @@ Estas son **defendibles sin cita**, pero suman rigor. Si vas justo de tiempo, ha
 | «Python es el lenguaje de referencia para el aprendizaje automático» | ⛔ **SIN NÚMERO — no hay fuente de nivel 1-2. Decisión pendiente: tarea 4.13 (atenuar o retirar)** |
 | «Núcleo de ML: preprocesamiento (MinMaxScaler, LabelEncoder)» (fila de la tabla) | `[57]` (vault `[101]`) |
 | Filas de NumPy · Pandas · Matplotlib · Seaborn de la misma tabla | `[55]` Harris 2020 · `[56]` McKinney 2010 · `[60]` Hunter 2007 · `[61]` Waskom 2021 |
-| «etiquetaron cada registro de KDDTest+ con un valor de #successfulPrediction» | `[44, §V]` (vault `[23]`) |
-| «desde tasas en [0,1] hasta contadores de bytes con valores de cientos de millones» | `[5, cap. 2]` |
-| «Se codifican mediante One-Hot Encoding (pd.get_dummies)» | `[5, cap. 2]` |
+| «etiquetaron cada registro de KDDTest+ con un valor de #successfulPrediction» | `[44]` (vault `[23]`) |
+| «desde tasas en [0,1] hasta contadores de bytes con valores de cientos de millones» | `[5]` |
+| «Se codifican mediante One-Hot Encoding (pd.get_dummies)» | `[5]` |
 | «selección de modelo sobre el conjunto de test, es decir data snooping» | `[49]` (vault `[18]`) Arp *et al.* |
 | «LocalOutlierFactor se instancia con novelty=True» | `[64]` (vault `[14]`) doc. scikit-learn |
 | «un clasificador que nunca predijera u2r conservaría un accuracy superior al 99,9 %» | `[37]` (vault `[19]`) |
@@ -613,7 +613,7 @@ Estas son **defendibles sin cita**, pero suman rigor. Si vas justo de tiempo, ha
 |---|---|
 | «Su noción de anomalía basada en densidad local no captura bien la separación» | `[31]` (vault `[75]`) Breunig *et al.* |
 | «refleja el desplazamiento distribucional D3→D2 propio del NSL-KDD» | `[44]` (vault `[23]`) |
-| «el sobreajuste es invisible en validación cruzada» | `[17, cap. 15]` (vault `[12]`) |
+| «el sobreajuste es invisible en validación cruzada» | `[17]` (vault `[12]`) |
 | «la captura del tráfico en la interfaz de red, el ensamblado de los paquetes en flujos» | `[41]` (vault `[21]`) Sommer y Paxson |
 
 ## Capítulo 6 (4)
