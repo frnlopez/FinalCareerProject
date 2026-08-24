@@ -97,7 +97,7 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > - **`[40]` Krizhevsky quedó SIN NINGÚN USO VIVO**: vivía en el recorrido histórico de `2.3.1`, que
 >   se retiró. Su fila **sigue declarándola en uso y localizada en un apartado que ya no existe**. Por
 >   el protocolo del proyecto hay que **QUEMARLA** con su declaración escrita — sería la **octava**
->   quemada, y el primer libre seguiría siendo el `[79]`.
+>   quemada, y el primer libre seguiría siendo el `[79]`. **[DESFASADO — contado en disco el 2026-08-24 tras las 32 altas del mapeo del `.docx`: 110 emitidos · 102 vivos · 8 quemados · **primer libre `[111]`**. La regla de que quemar no devuelve el número sigue en pie; la CIFRA no.]**
 > - El «**7 ocurrencias**» de `[6]` es falso **y en sitio nuevo**: `2.1.4.3` conserva **1** marcador
 >   vivo y las **7 se mudaron a `A.3.10.3`**. Su columna de localizador remite además a un `[!todo]`
 >   de **`2.1.4.3.4`**, apartado que **no existe**.
@@ -334,12 +334,15 @@ Fechas absolutas `AAAA-MM-DD`. Track: **Código** / **Informe**.
 > quemada, **`[78]` Storkey viva**. **Todo lo que este fichero o `CLAUDE.md` digan sobre «71 entradas
 > vivas» o «SIETE quemadas» es TRAZA HISTÓRICA** —`CLAUDE.md` quedó corregido el 2026-08-21 en
 > `eb0613a`—.
+> **Y la cifra de este bloque también es ya TRAZA: contado en disco el 2026-08-24 tras las 32 altas
+> del mapeo del `.docx`, el contador va por 110 emitidos · 102 vivos · 8 quemados, y EL PRIMER
+> LIBRE ES EL `[111]`, no el `[79]`.**
 >
 > **Estado a 2026-08-18, AL CIERRE DE LA TANDA 31 — SUPERADO, se deja como traza: contado contra disco por el hilo
 > principal y por el `researcher`, las dos cuentas coinciden: se han emitido **78 NÚMEROS**, de los
 > que **71 SON ENTRADAS VIVAS** y **SIETE ESTÁN QUEMADAS**: `[9]`, `[27]`, `[28]`, `[37]`, `[44]`,
 > `[45]` y `[76]`. Quemada = **retirada SIN RENUMERAR**, el número no vuelve al contador jamás.
-> **EL PRIMER `[n]` LIBRE ES EL `[79]`.** Ojo con `[76]`: quemada, pero **`[78]` Storkey está viva**
+> **EL PRIMER `[n]` LIBRE ES EL `[79]`.** **[DESFASADO — contado en disco el 2026-08-24 tras las 32 altas del mapeo del `.docx`: 110 emitidos · 102 vivos · 8 quemados · **primer libre `[111]`**. La regla de que quemar no devuelve el número sigue en pie; la CIFRA no.]** Ojo con `[76]`: quemada, pero **`[78]` Storkey está viva**
 > — nació al desdoblarla. **Todo lo que este fichero diga más abajo sobre «77 filas», «76 filas» o
 > «primer libre `[78]`» es TRAZA HISTÓRICA.**
 >
