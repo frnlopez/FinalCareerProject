@@ -427,6 +427,31 @@ y **no entra en la secuencia** (ver §4 del mapa y las «Decisiones pendientes»
 Estos marcadores ya están en el documento, pero con la numeración vieja del vault: **cada número
 significa hoy otra obra**. Se recorren por párrafo y se **traducen**; no se insertan de nuevo.
 
+> [!danger] Los números de párrafo de esta sección NO sirven para navegar
+> Están tomados de una **versión anterior** del `.docx`. Verificado hoy sobre
+> `Proyecto_Fin_de_Grado-FJLM-2026.docx` (2793 párrafos `<w:p>`): en la zona alta del documento el
+> desfase es de **~+216 párrafos** (el párrafo real va **después** del anotado). Reglas:
+>
+> - **Cada marcador se localiza por su TEXTO** (Ctrl+F del fragmento), nunca contando párrafos.
+> - **El desfase NO se ha medido para las filas de reescritura** (las de índice < 2224): no se puede
+>   asumir que sea el mismo para ellas.
+> - Cualquier índice de esta sección es una **pista**, no una dirección.
+>
+> Índices reales verificados hoy, solo para las seis filas ⛔:
+>
+> | Anotado en §C.0 | Real en el `.docx` | Marcador |
+> |---|---|---|
+> | 2224 | **2440** | `[62]` |
+> | 2262 | **2478** | `[63]` y `[64]` (mismo párrafo) |
+> | 2269 | **2485** | `[65]` |
+> | 2303 | **2519** | `[66]` |
+> | 2317 | **2533** | `[67]` (1.ª) |
+> | 2318 | **2534** | `[67]` (2.ª, escrita `[67, §4.5 y §9]`) |
+>
+> Comprobaciones que respaldan el desfase: `[61]` aparece en 1929 y 2327; `[74]` en 2186 y 2188 (el
+> primero como `[74, §5.4]`); `[77]` en 2194; y el párrafo 2317 —que esta tabla atribuía a `[66]`—
+> contiene en realidad `[52]`.
+
 | ☐ | Párr. | Marcador | Qué obra es |
 |---|---|---|---|
 | ☐ | 737 | reescribir `[18]` → `[49]` | Arp *et al.* (2022), *Dos and Don'ts of ML in Computer Security* |
@@ -472,8 +497,15 @@ significa hoy otra obra**. Se recorren por párrafo y se **traducen**; no se ins
 > [!warning] Las seis sin equivalencia no se traducen por analogía
 > `[62]`, `[63]`, `[64]`, `[65]`, `[66]` y `[67]` del vault **no aparecen en la tabla de numeración
 > del `.docx`**: sus obras no tienen sede numerada en el documento entregable (§4 del mapa). Poner
-> ahí cualquier número del rango `[12]`–`[75]` sería atribuir la cita a **otra obra**. Son **9 de
+> ahí cualquier número del rango `[12]`–`[75]` sería atribuir la cita a **otra obra**. Son **7 de
 > los 39 marcadores** y hay que decidirlos uno a uno en Word.
+>
+> Desglose, para que el «seis» del título no se lea como contradicción:
+>
+> - **7 apariciones** en la tabla (las 7 filas ⛔).
+> - **6 números distintos**: `[62]`–`[67]`. `[67]` sale **dos veces**, en párrafos consecutivos
+>   (2533 y 2534 reales) — verificado en el `.docx`, no es un error de la tabla.
+> - **6 párrafos distintos**: `[63]` y `[64]` comparten párrafo.
 
 ## C.1 · Capítulo 1 (1 fila)
 
