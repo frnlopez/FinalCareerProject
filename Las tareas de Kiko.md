@@ -117,6 +117,8 @@ decisión**. No son pendientes: son errores. Se reescriben *in situ*, sin insert
 - [ ] **2.18** · SEDE: «…el corazón de la Seguridad Informática (CIA: Confidentiality, Integrity and **Aviability**)». ACCIÓN: corregir a **Availability**. `vault`
 - [ ] **2.24** · SEDE: el párrafo que empieza por «Un modelo de amenaza es la especificación explícita de las hipótesis sobre el adversario» y termina por «…Se construye fijando un valor en cada una de estas dimensiones». ACCIÓN: añadir el marcador `[CITA: Shostack, *Threat Modeling*, 2014]` al final de la primera frase; la obra no tiene número asignado en el `.docx`. `Word`
 - [ ] **2.25** · SEDE: el Título 3 **vacío** que cierra el capítulo 2, inmediatamente antes del Título 1 «Diseño del sistema». ACCIÓN: eliminarlo. `Word`
+- [ ] **2.26** · SEDE: la viñeta que empieza por «Reducción de dimensionalidad y visualización» y termina por «…conservando su estructura (como por ejemplo PCA)», y la «Lista de Acrónimos». ACCIÓN: desarrollar la sigla en la viñeta — «(como por ejemplo el análisis de componentes principales, PCA)» — y añadir la fila `PCA	Principal Component Analysis` a la lista, que hoy no la tiene. `Word`
+- [ ] **2.27** · SEDE: la «Lista de Acrónimos» completa. ACCIÓN: **`EDAKJDFSLDLKJ` es texto de relleno sin borrar**; dejarlo en `EDA	Exploratory Data Analysis`. **`CIA` y `ROC` no tienen desarrollo**: añadir «Confidentiality, Integrity and Availability» y «Receiver Operating Characteristic». **Falta el espacio entre sigla y desarrollo** en `IDSIntrusion`, `NIDSNetwork` y `H-NIDSHybrid`. `Word`
 
 ### Decisiones de Francisco (obras sin sede en el `.docx`)
 
