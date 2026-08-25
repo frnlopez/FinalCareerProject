@@ -1,9 +1,16 @@
 # Las tareas de Kiko
 
-Repaso del 2026-08-25 contra `Proyecto_Fin_de_Grado-FJLM-2026.docx` (2.968 párrafos, 94 marcadores,
-49 tablas, 23 imágenes, 34 pies de tabla **numérica** —la regex del extractor solo captura dígito
-tras «Tabla», así que los tres pies del Apéndice A quedan fuera de esa cuenta—, 22 pies de figura). Volcado en
-`Resultados\docx\REPASO_20260825\`.
+Repaso del **2026-08-25 (21:06)** contra `Proyecto_Fin_de_Grado-FJLM-2026.docx` (**2.989 párrafos,
+93 marcadores, 48 tablas, 24 imágenes** —23 DrawingML más **1 VML**—, **37 pies de tabla** —34 con forma «Tabla \<dígito\>» más los
+3 del Apéndice A, «Tabla A.1/A.2/A.3», que el extractor cuenta ya por separado—, **23 pies de
+figura**, 109 párrafos de TOC). Volcado en `Resultados\docx\REPASO_20260825-2106\`.
+
+> [!warning] Un solo volcado vigente, y lleva fecha
+> El volcado anterior (`REPASO_20260825\`, del binario de las 05:07) se BORRÓ el 2026-08-25 por
+> caducado. Toda verificación de este fichero se hace contra `REPASO_20260825-2106\`, cuya
+> procedencia consta en su `_PROCEDENCIA.txt`. **El nombre lleva la hora del binario a propósito:**
+> un `REPASO_ACTUAL` se pisa a sí mismo en el siguiente repaso y deja de decir de qué documento
+> salió. Cada volcado nuevo se nombra igual, con su `mtime`.
 
 - `Word` = se arregla en el `.docx` · `vault` = se arregla en la nota `.md`.
 - **Todas las tareas resueltas se han borrado.** El censo de lo retirado está al final.
@@ -16,81 +23,29 @@ tras «Tabla», así que los tres pies del Apéndice A quedan fuera de esa cuent
 
 ## 🔴 PRIORITARIO · Citas erróneas en el documento
 
-**31 marcadores designan hoy una obra distinta de la que sostiene la frase**, más **2 que exigen
-decisión**. No son pendientes: son errores. Se reescriben *in situ*, sin insertar nada nuevo.
+> [!success] Las 30 reescrituras (X1–X30) están **hechas** en el binario del 2026-08-25 21:06
+> Verificado marcador a marcador en `REPASO_20260825-2106\marcadores.txt`: Arp ya es `[49]` en sus seis
+> sedes, Tavallaee `[44]` en las seis suyas, el par de la falacia de la tasa base es `[73] [14]`,
+> Scheirer `[48]`, Bendale `[71]`, Pineau `[68]`, Kapoor `[52]`, Khraisat `[12]`, Lippmann `[43]`,
+> Hindy `[13]`, Sharafaldin `[74]` y Moustafa y Slay `[75]`. **X32 también queda cerrada**: el
+> marcador `[67]` ya no existe en el documento (por eso el total bajó de 94 a 93) y la frase
+> «Ese análisis consistió en revisar la propuesta original y contrastar sus supuestos…» conserva
+> su redacción sin marcador. El detalle está en el censo del final.
 
-> [!warning] Por qué son errores y no pendientes
-> El `.docx` conserva marcadores con la **numeración del vault**. En la numeración del `.docx`
-> (§2 del mapa) esos mismos números ya están adjudicados a otras obras: `[18]`=Jolliffe,
-> `[23]`=Dietterich, `[20]`=Sutton y Barto, `[25]`=Friedman, `[17]`=Hastie, `[61]`=Massey,
-> `[24]`=Breiman, `[31]`=Breunig, `[49]`=Arp, `[52]`=Kapoor, `[51]`=Pierazzi, `[50]`=Biggio,
-> `[63]`=Waskom. Dejarlos atribuye la afirmación a un autor que no la hizo.
+Queda **una sola** entrada viva, y es decisión de Francisco:
 
-### Arp *et al.* → `[49]` (6 reescrituras)
-
-- [ ] **X1** · SEDE: «…es decir data snooping —el pitfall P3 del catálogo de Arp et al. **[18]**—, y por tanto las métricas publicadas son optimistas respecto…». ACCIÓN: reescribir `[18]` → `[49]`. `Word`
-- [ ] **X2** · SEDE: «La taxonomía de errores metodológicos en machine learning aplicado a seguridad **[18]**, que cataloga como defecto reportar una métrica sin declarar sobre qué población y con qué etiquetas se calcula». ACCIÓN: reescribir `[18]` → `[49]`. `Word`
-- [ ] **X3** · SEDE: «…daría apariencia de comparación donde no la hay, que es justamente el error que **[18]** documenta como endémico en seguridad». ACCIÓN: reescribir `[18]` → `[49]`. `Word`
-- [ ] **X4** · SEDE: «Arp et al. clasifican esta situación como el pitfall P9, Lab-Only Evaluation **[18]**.». ACCIÓN: reescribir `[18]` → `[49]`. `Word`
-- [ ] **X5** · SEDE: «…en respuesta a la defensa —el pitfall P10, Inappropriate Threat Model **[18]**—». ACCIÓN: reescribir `[18]` → `[49]`. `Word`
-- [ ] **X6** · SEDE: «…aprendizaje automático a seguridad informática de Arp et al. **[18]**, introducido en 2.3.3». ACCIÓN: reescribir `[18]` → `[49]`. `Word`
-### Pierazzi *et al.* → `[51]` (1 reescritura)
-
-- [ ] **X7** · SEDE: «…la distinción feature space / problem space **[52]**—. Forzar el experimento produciría una medición vistosa…». ACCIÓN: reescribir `[52]` → `[51]` (Pierazzi, no Kapoor). `Word`
-
-### Tavallaee *et al.* → `[44]` (6 reescrituras)
-
-- [ ] **X8** · SEDE: «…se distribuye en tres ficheros con tamaños y funciones distintos **[23]**. KDDTrain+ reúne 125.973 instancias…». ACCIÓN: reescribir `[23]` → `[44]`. `Word`
-- [ ] **X9** · SEDE: «…no se entrenaron sobre KDDTrain+ entero, sino sobre el primer 20 % de sus registros **[23]**». ACCIÓN: reescribir `[23]` → `[44]`. `Word`
-- [ ] **X10** · SEDE: «…la partición de evaluación definida por el artículo que creó el dataset **[23]**, que publica sus baselines sobre KDDTest+». ACCIÓN: reescribir `[23]` → `[44]`. `Word`
-- [ ] **X11** · SEDE: «La composición de KDDTest+ frente a KDDTrain+ **[23]**: los 17 tipos ausentes del entrenamiento…». ACCIÓN: reescribir `[23]` → `[44]`. `Word`
-- [ ] **X12** · SEDE: «…los siete baselines canónicos del artículo que creó el dataset **[23]**, medidos sobre KDDTest+…». ACCIÓN: reescribir `[23]` → `[44]`. `Word`
-- [ ] **X13** · SEDE: la celda de cabecera de la tabla de baselines, «Clasificador **[23]**» (el espacio ya está bien en el `.docx`). ACCIÓN: reescribir `[23]` → `[44]`. `Word`
-
-### Axelsson *base-rate fallacy* → `[73]` y NIST SP 800-94 → `[14]` (6 reescrituras, 2 en el mismo párrafo)
-
-- [ ] **X14** · SEDE: «…los ataques son sucesos raros dentro de un volumen abrumador de conexiones legítimas **[24] [25]**. Este es el razonamiento de la falacia de la tasa base…». ACCIÓN: reescribir el par a `[73] [14]`, **sin perder ninguno de los dos**. `Word`
-- [ ] **X15** · SEDE: «…no depende del valor exacto elegido, sino del orden de magnitud **[24]**». ACCIÓN: reescribir `[24]` → `[73]`. `Word`
-- [ ] **X16** · SEDE: «…consiste en cambiar falsos negativos por falsos positivos **[25]**; y la conclusión clásica de la falacia de la tasa base…». ACCIÓN: reescribir `[25]` → `[14]`. `Word`
-- [ ] **X17** · SEDE: «…de intrusiones es la tasa de falsos positivos, no la sensibilidad **[24]**. Esta prioridad queda enunciada aquí…». ACCIÓN: reescribir `[24]` → `[73]`. `Word`
-- [ ] **X18** · SEDE: «El criterio de tuning de IDPS de la guía NIST SP 800-94 **[25]**, el mismo que respalda la métrica obligatoria 1 de §5.0.3». ACCIÓN: reescribir `[25]` → `[14]`. `Word`
-
-### Reconocimiento de conjunto abierto: Scheirer → `[48]`, Bendale → `[71]` (4 reescrituras)
-
-- [ ] **X19** · SEDE: «…el riesgo de espacio abierto, cualquiera que sea el umbral elegido **[61]**. La consecuencia práctica es la observada…». ACCIÓN: reescribir `[61]` → `[48]`. `Word`
-- [ ] **X20** · SEDE: «…la región del espacio de características que sus datos de entrenamiento no cubren —el riesgo de espacio abierto **[61]**—». ACCIÓN: reescribir `[61]` → `[48]`. `Word`
-- [ ] **X21** · SEDE: «…uso no calibrado de la salida probabilística como línea base a superar **[49]**. El mecanismo de UMBRAL_CONF no es una elección desafortunada…». ACCIÓN: reescribir `[49]` → `[71]`. `Word`
-- [ ] **X22** · SEDE: «…la probabilidad de que la muestra no pertenezca a ninguna clase vista **[49]**. Es la vía que atacadirectamente la fracción de 0-day mal etiquetados como conocidos» (la errata «atacadirectamente» es real en el `.docx`; se corrige en **5.32**). ACCIÓN: reescribir `[49]` → `[71]`. `Word`
-
-### Reproducibilidad, fugas y surveys (4 reescrituras)
-
-- [ ] **X23** · SEDE: «El ítem de asignación de muestras a particiones del checklist de reproducibilidad adoptado en §5.0.5 **[20]**». ACCIÓN: reescribir `[20]` → `[68]` (Pineau). `Word`
-- [ ] **X24** · SEDE: «…los error bars y central tendency del ML Reproducibility Checklist **[20]**». ACCIÓN: reescribir `[20]` → `[68]`. `Word`
-- [ ] **X25** · SEDE: «La taxonomía de fugas de datos **[17]**, y en concreto su categoría de preprocesado previo al split». ACCIÓN: reescribir `[17]` → `[52]` (Kapoor y Narayanan). `Word`
-- [ ] **X26** · SEDE: «…de la evaluación real y puede dar lugar a afirmaciones inexactas **[31]**». ACCIÓN: reescribir `[31]` → `[12]` (Khraisat *et al.* 2019). `Word`
-
-### Números fuera del rango del `.docx` (4 reescrituras)
-
-- [ ] **X27** · SEDE: «…el banco de pruebas estándar de la detección de intrusiones (**[63]** + [64])». ACCIÓN: reescribir `[63]` → `[43]` (Lippmann). El `[64]` de ese mismo paréntesis **es correcto** y no se toca. `Word`
-- [ ] **X28** · SEDE: «…reporta una «zero-day detection accuracy» del 89-99 % en su tabla 3 y en su §5 **[77]**». ACCIÓN: reescribir `[77]` → `[13]` (Hindy *et al.*). `Word`
-- [ ] **X29** · SEDE: «…con tráfico exclusivamente benigno y ataques en los cuatro restantes **[51]**. Eso habilita de golpe la división cronológica real…». ACCIÓN: reescribir `[51]` → `[74]` (Sharafaldin, CIC-IDS2017). `Word`
-- [ ] **X30** · SEDE: «…capturado, por lo que la información temporal existe en origen **[50]**. Ahora bien, este trabajo no ha podidoverificar…» (la errata «podidoverificar» es real en el `.docx`; se corrige en **5.33**). ACCIÓN: reescribir `[50]` → `[75]` (Moustafa y Slay, UNSW-NB15). ⚠️ identidad de la obra marcada como MATCH APROXIMADO en §5.3 «Dos matches solo aproximados» del mapa: confirmar antes de pegar. `Word`
-
-### Decisiones que solo puede tomar Francisco
-
-- [ ] **X31** · **DECISIÓN:** SEDE: «…la magnitud del problema sin medirla. El dato citable es el de **[74]**». ACCIÓN: decidir si es `[74]` (Sharafaldin, CIC-IDS2017) o `[72]` (Goldschmidt y Chudá), como las otras dos apariciones del mismo apartado. `Word`
-- [ ] **X32** · **DECISIÓN:** SEDE: «Ese análisis consistió en revisar la propuesta original **[67]** y contrastar sus supuestos con las condiciones del presente…». ACCIÓN: `[67]` del vault **no tiene equivalencia** en la numeración del `.docx`; decidir entre retirar el marcador o volcar la obra al final de la lista. **No traducir por analogía.** `Word`
+- [ ] **X31** · **DECISIÓN:** SEDE: «…la magnitud del problema sin medirla. El dato citable es el de **[74]**». ACCIÓN: decidir si es `[74]` (Sharafaldin, CIC-IDS2017) o `[72]` (Goldschmidt y Chudá), como las otras dos apariciones del mismo apartado. El `.docx` mantiene hoy `[74]`, así que **no consta que la decisión se haya tomado**. `Word`
 
 ---
 
 ## T · Transversal
 
-- [ ] **T3** · SEDE: el apartado «Bibliografía», hoy con la lista antigua del Word. ACCIÓN: volcar las 75 entradas de [[Bibliografia del docx - numeracion y anclas]] §9. `Word`
-- [ ] **T4** · **(ÚLTIMA)** SEDE: todo el cuerpo del `.docx`. ACCIÓN: aplicar `[12]`–`[75]` según el Anexo C, después de las **30 tareas (X1–X30) sobre 31 marcadores** del bloque prioritario (X14 toca dos marcadores en el mismo párrafo). `[1]`–`[11]` congelados. `Word`
-- [ ] **T5** · SEDE: los wikilinks `[[…]]` supervivientes — **18 ocurrencias repartidas en 16 párrafos** (dos de ellos llevan dos cada uno), p. ej. «…que se aborda en **[[5.1 Resultados del modelo de detección de anomalías el capítulo 5]]**». ACCIÓN: sustituir cada uno por «véase §x.y». `Word`
-- [ ] **T6** · SEDE: los pies de tabla y de figura del documento — los 34 «Tabla x.y» que cuenta el extractor **más los tres del Apéndice A** («Tabla A.1», «A.2», «A.3»), que su regex no captura. ACCIÓN: aplicar lo registrado en `Leyenda_tablas.md`. Aquí no se enumera nada más. `Word`
+- [ ] **T3** · **RECORTADA** (el volcado de las 75 entradas YA está hecho; quedan dos residuos editoriales dentro de la lista volcada, que ningún otro ítem vivo cubre: **B2** solo alcanza a `[1]`, `[9]`, `[10]` y `[11]`, y **B3** solo a `[2]` y `[8]`). **SEDE 1:** la entrada `[66]`, que hoy imprime literalmente «⚠️ INCOMPLETA — scikit-learn, documentación oficial de la API (sklearn.model_selection / sklearn.neighbors). Falta fijar en Zotero el año, la fecha de consulta y la URL concreta de LocalOutlierFactor.» — es una **nota de trabajo copiada tal cual desde `Bibliografia_para_Word.md`** y, si no se toca, **se imprime en la memoria entregada**. ACCIÓN: completar la referencia (año, fecha de consulta y URL de `LocalOutlierFactor`) o retirar el aviso. **SEDE 2:** la entrada `[13]` (Hindy), que termina con un pegote de la entrada siguiente: «…art. 1684, 2020. Scarfone y Mell (2007), NIST SP 800-94». ACCIÓN: separar las dos entradas. `Word`
+- [ ] **T4** · **(ÚLTIMA)** SEDE: todo el cuerpo del `.docx`. ACCIÓN: aplicar `[12]`–`[75]` según el Anexo C. `[1]`–`[11]` congelados. El bloque prioritario de reescrituras **ya está cumplido**, así que esta tarea no espera por nada. `Word`
+- [ ] **T5** · SEDE: los wikilinks `[[…]]` supervivientes — **10 ocurrencias repartidas en 8 párrafos** (dos de ellos llevan dos cada uno), p. ej. «…véase **[[5.3 Resultados del sistema híbrido]]**». ACCIÓN: sustituir cada uno por «véase §x.y». La forma con tubería (`|4.5`) y el wikilink roto «[[5.1 Resultados del modelo de detección de anomalías el capítulo 5]]» **ya no existen** en el binario actual. `Word`
+- [ ] **T6** · SEDE: los pies de tabla y de figura del documento — **37 pies de tabla** (34 «Tabla \<dígito\>» + «Tabla A.1», «A.2», «A.3») y **23 pies de figura**; el extractor de `REPASO_20260825-2106` ya cuenta las dos formas por separado. ACCIÓN: aplicar lo registrado en `Leyenda_tablas.md`. Aquí no se enumera nada más. `Word`
 - [ ] **T7** · SEDE: las figuras que **no se llaman por número desde la prosa**: 3.1, 4.1, 4.2, 4.3, 4.4, 4.5, 5.5, 5.6, 5.7, 5.8, 5.9, 5.10, 5.11 y 5.12 (su número aparece solo en el pie). **Sí llevan llamada** la 2.1 («tal y como se ilustra en la Figura 2.1»), la 2.5 («representada en la Figura 2.5») y las 5.1–5.4 («Las cuatro figuras siguientes (Figura 5.1, 5.2, 5.3 y 5.4)»). ACCIÓN: añadir la llamada por número en la prosa que las introduce. El detalle vive en `Leyenda_tablas.md`; aquí solo se remite. `Word`
-- [ ] **T8** · SEDE: el índice de contenido, entradas «A.1.5. Etiquetas: tipos de ataque y categorías» y «A.2. Métricas de desempeño». ACCIÓN: regenerar el índice **después** de A3, A6, A7/A8 y A15; hoy el TOC rotula «A.1.5» lo que el cuerpo deja como Título 8 sin número visible. `Word`
+- [ ] **T8** · SEDE: el índice de contenido, entradas «A.1.5. Etiquetas: tipos de ataque y categorías» y «A.2. Métricas de desempeño». ACCIÓN: regenerar el índice **después** de A6, A7/A8 y A15 (**A3 ya está hecha**: los cuatro encabezados de familia son hoy Título 8 uniforme); el TOC sigue rotulando «A.1.1»–«A.1.5» lo que el cuerpo deja como Título 8 sin número visible. `Word`
 - [ ] **T9** · SEDE: el párrafo que dice literalmente «EDAKJDFSLDLKJ». ACCIÓN: cerrar el glosario de acrónimos y borrar ese residuo. `Word`
 - [ ] **T10** · **DECISIÓN:** hoy no existe índice de figuras ni de tablas. ACCIÓN: decidir si se añaden ambos, solo uno o ninguno. `Word`
 
@@ -136,10 +91,6 @@ decisión**. No son pendientes: son errores. Se reescriben *in situ*, sin insert
 - [ ] **3.5** · SEDE: los tres párrafos que empiezan por «Para comprobar que el orden de la cascada fijado en §3.2.1 es el adecuado» y terminan por «…El coste real de invertir el orden sería, por tanto, superior al medido». ACCIÓN: pasarlos al capítulo 5, detrás del apartado «Resultados del sistema híbrido»; hoy dan cifras (6.558/9.711, 67,53 %) dentro de Diseño. `vault`
 - [ ] **3.6** · SEDE: «Las tres son, formalmente, selección de modelo sobre el conjunto de test, es decir data snooping» (cap. 6) y «…es decir data snooping —el pitfall P3 del catálogo de Arp et al.» (cap. 3). ACCIÓN: dejar la confesión desarrollada en un solo sitio y remitir desde el otro. `vault`
 - [ ] **3.7** · **DECISIÓN:** la comparación tabular de §3.5 no está volcada al `.docx`. Con ella se caen Barbará (ADAM), Grinsztajn, McElfresh, Shwartz-Ziv y Armon, y Hollmann (TabPFN). ACCIÓN: volcarla o descartar esas cinco obras. `vault` + `Word`
-> [!note] Pies del capítulo 3
-> Los defectos de pie de este capítulo (entre ellos el punto final de «Figura 3.1. Flujo del
-> proyecto») están registrados en `Leyenda_tablas.md` y los cubre **T6**. Aquí no se duplican.
-
 - [ ] **3.9** · **DECISIÓN:** la Figura 3.1 está en el `.docx` pero fuera del censo de `assets/` del vault. ACCIÓN: incorporarla al censo o declararla figura solo del Word. `vault` + `Word`
 - [ ] **3.10** · SEDE: el Título 3 **vacío** que separa el pie «Tabla 3.1. Subconjuntos especializados…» del párrafo «Esta separación es lo que hace posible medir la detección de 0-day». ACCIÓN: eliminarlo o darle título. `Word`
 
@@ -183,14 +134,13 @@ decisión**. No son pendientes: son errores. Se reescriben *in situ*, sin insert
 
 ### Figuras, tablas y ecuaciones
 
-- [ ] **5.17** · SEDE: «La proyección es aritmética elemental sobre dos cifras ya publicadas —`bin_recall` = 0,8318 y `bin_fpr` = 0,1017— y una prevalencia de ataque *p* que se hace variar». ACCIÓN: quitar los backticks vivos y los asteriscos de cursiva Markdown; dar formato de Word. `Word`
+- [ ] **5.17** · SEDE: «La proyección es aritmética elemental sobre dos cifras ya publicadas —`bin_recall` = 0,8318 y `bin_fpr` = 0,1017— y una prevalencia de ataque *p* que se hace variar». ACCIÓN: **recortada** — los backticks de ese párrafo ya se han retirado; lo que queda vivo son los **asteriscos de cursiva Markdown** de `*p*`, que hay que sustituir por cursiva de Word. (Quedan además backticks sueltos en el párrafo «…no depende del valor exacto elegido, sino del orden de magnitud», fuera del alcance original de esta tarea.) `Word`
 - [ ] **5.18** · SEDE: el párrafo que empieza por «Junto al FPR conviene acotar la segunda cifra que invita a la sobrelectura: la velocidad» y termina por «…residentes en memoria». ACCIÓN: añadir la tabla de tiempos y latencia; el texto critica las columnas `latencia_ms_por_flujo` y `flujos_por_segundo`, que no se muestran en ninguna tabla. `vault`
 - [ ] **5.19** · SEDE: los dos párrafos de estilo `FiguraTablaEcuacin` rotulados «(1)», uno en el capítulo 2 y otro en «La proyección es aritmética elemental…». ACCIÓN: renumerar el segundo. `Word`
 - [ ] **5.24** · SEDE: la fila vacía de la tabla del eje de balanceo en `5.2 Resultados del modelo de detección basado en firmas.md`. ACCIÓN: eliminarla. `vault`
 > [!note] Pies y celdas del capítulo 5
-> Los defectos de pie y de celda de este capítulo —las dos celdas de la Tabla 5.8 que empiezan por
-> pipe, el pie de la Figura 5.6 pegado a su imagen y el pie de la Figura 5.11 pegado a la prosa—
-> están registrados en `Leyenda_tablas.md` y los cubre **T6**. Aquí no se duplican.
+> El defecto vivo de este capítulo por esta vía —la **Figura 5.11**, cuya imagen sigue incrustada en
+> el párrafo de prosa— está registrado en `Leyenda_tablas.md` y lo cubre **T6**. Aquí no se duplica.
 
 - [ ] **5.28** · SEDE: la Tabla 5.11 y su pie «Tabla 5.11. Sistema híbrido frente al baseline de control». ACCIÓN: mantenerlos en la misma página. ⚠️ NO VERIFICADO: la paginación no es observable en el volcado. `Word`
 
@@ -212,7 +162,7 @@ decisión**. No son pendientes: son errores. Se reescriben *in situ*, sin insert
 
 ## Capítulo 6 · Conclusiones
 
-- [ ] **6.4** · SEDE: el bloque del capítulo 6 «3. No hay adversario adaptativo (P10, Inappropriate Threat Model).» y su razón técnica «Evaluar sobre un conjunto de tráfico fijo equivale a suponer un adversario estático, que no modifica su comportamiento en respuesta a la defensa —el pitfall P10, Inappropriate Threat Model [18]—». ACCIÓN: el supuesto **ya está declarado** en el capítulo 6, así que lo que queda es (a) poner el marcador `[50]` (Biggio y Roli) a esa formulación y (b) decidir si se deduplica con la formulación gemela del capítulo 2 («Medir un detector sobre un conjunto de tráfico fijo equivale a suponer un adversario que no modifica su comportamiento en respuesta a la defensa»), que es el **candidato a recorte nº 6**. `vault`
+- [ ] **6.4** · **DECISIÓN:** SEDE (texto **real** del binario actual, tras la reescritura **X5**): el bloque del capítulo 6 «3. No hay adversario adaptativo (P10, Inappropriate Threat Model).» y su razón técnica, que hoy termina «…que no modifica su comportamiento en respuesta a la defensa —el pitfall P10, Inappropriate Threat Model. **[49]**». ⚠️ La sede antigua citaba «…Inappropriate Threat Model **[18]**»: ese `[18]` **ya no existe** ahí y el Ctrl+F con él falla. ACCIÓN: el supuesto **ya está declarado**, así que lo que queda es (a) colocar `[50]` (Biggio y Roli) —**añadiéndolo como segundo marcador junto al `[49]` de Arp que ya está puesto, NO sustituyéndolo**: son dos obras distintas y el `[49]` sostiene el nombre del pitfall— y (b) decidir si se deduplica con la formulación gemela del capítulo 2 («Medir un detector sobre un conjunto de tráfico fijo equivale a suponer un adversario que no modifica su comportamiento en respuesta a la defensa»), que es el **candidato a recorte nº 6**. **Lo que decide Francisco es EN CUÁL DE LOS DOS PÁRRAFOS va el `[50]`**: el fragmento «equivale a suponer un adversario que no modifica su comportamiento en respuesta a la defensa» aparece en los dos —el del capítulo 2, **sin ningún marcador**, y el del capítulo 6, que **ya lleva `[49]`**— y hay que elegir uno solo. Esa misma decisión **resuelve a la vez la fila del Anexo D** «equivale a suponer un adversario que no modifica su comportamiento en respuesta a la defensa» → `[50]` Biggio y Roli: **se toma una vez y se aplica una vez, no dos**. `vault`
 - [ ] **6.5** · SEDE: la viñeta que empieza por «Tasa de falsos positivos condicionada por el drift. El detector de anomalías opera a un FPR efectivo del ~10 %» y termina por «…ambas cifras deben leerse juntas». ACCIÓN: añadir que ese FPR debe leerse **a prevalencia realista** (`[73]`, falacia de la tasa base) y que la latencia publicada es **techo de laboratorio**. `vault`
 - [ ] **6.6** · SEDE: el apartado «Validación de la tesis del híbrido». ACCIÓN: añadir el titular `f1_macro` 0,8223 con su banda [0,7779–0,8205] y la mención de que es el mejor de once corridas. `vault`
 - [ ] **6.7** · SEDE: la viñeta que empieza por «Clases minoritarias u2r y r2l. Con muy pocas muestras de entrenamiento» y termina por «…Es el punto débil universal de la etapa de firmas». ACCIÓN: desdoblarla en dos limitaciones, una por clase. `vault`
@@ -225,7 +175,6 @@ decisión**. No son pendientes: son errores. Se reescriben *in situ*, sin insert
 ## Apéndices
 
 - [ ] **A1** · **DECISIÓN:** la tabla de las 41 características es hoy una única tabla real de Word, continua y partida por subtítulos. ACCIÓN: decidir la numeración del Apéndice A (ligada a **A5**). `Word`
-- [ ] **A3** · SEDE: los encabezados «A.1.2 Características de contenido (10–22)» (estilo `Ttulo3`), «A.1.3 Características de tráfico basadas en tiempo (23–31)» y «A.1.4 Características de tráfico basadas en host (32–41)» (estilo `Ttulo3deApndice`). ACCIÓN: reestilarlos a Título 8, como «Características básicas (1–9)»; los tres salen renumerados y corrompidos en el cuerpo. `Word`
 - [ ] **A5** · **DECISIÓN:** el Apéndice A tiene hoy **tres** pies de tabla —«Tabla A.1. Características del dataset completo NSL-KDD», «Tabla A.2. Codificación numérica de las cinco categorías por el LabelEncoder del pipeline.» y «Tabla A.3. Los 40 tipos de etiqueta agrupados por categoría…»— frente a **cuatro** bloques de tabla de características, de los que **tres quedan sin pie**. ACCIÓN: decidir la numeración (cuatro bloques con pie propio A.1–A.4, desplazando los actuales A.2 y A.3; o una sola tabla continua con un único pie A.1). El detalle está en `Leyenda_tablas.md`. ⚠️ El «34 pies» del recuento automático es una limitación de la regex del extractor —solo captura dígito tras «Tabla»—, no un hecho del documento. `Word`
 - [ ] **A6** · SEDE: el Título 6 «Columnas del dataset NSL-KDD» seguido del Título 7 con el mismo texto. ACCIÓN: eliminar el duplicado. `Word`
 - [ ] **A7 + A8** · SEDE: el **Título 7 vacío** que precede inmediatamente a «Bibliografía» — es la posición que el índice rotula «A.2. Métricas de desempeño». ACCIÓN: **DECISIÓN:** o se redacta y vuelca el apéndice A.2, o se borra el Título 7 vacío y se retira su entrada del índice. Son el mismo objeto: no se tratan por separado. `vault` + `Word`
@@ -235,17 +184,16 @@ decisión**. No son pendientes: son errores. Se reescriben *in situ*, sin insert
 - [ ] **A12** · SEDE: «Número de fragmentos **“erróneos”** en la conexión», «Número de indicadores **“sensibles”** (accesos a directorios de sistema…)» y «Número de condiciones **“comprometidas”** observadas». ACCIÓN: sustituir las comillas tipográficas inglesas por comillas españolas. `Word`
 - [ ] **A13** · SEDE: «El pipeline (**program.py**) codifica las etiquetas en dos niveles», la ruta «**Resultados\specialized_nsl_kdd_mappings_and_info.txt**» y «los ficheros **y_attack/y_category** del capítulo 5». ACCIÓN: darles formato monoespaciado. ⚠️ NO VERIFICADO: la fuente no es observable en el volcado de texto. `Word`
 - [ ] **A14** · **DECISIÓN:** `A.3 «Ficha del sistema»` no existe en el `.docx` ni como encabezado, y el capítulo 5 le apunta. ACCIÓN: volcar el apéndice o retirar las llamadas colgantes. De ello dependen **4.14** (CRISP-DM), **2.19** (Bergstra y Bengio) y **5.26** (Model Cards). `vault` + `Word`
-- [ ] **A17** · SEDE: el pie «Tabla A.1. Características del dataset completo NSL-KDD», que hoy **termina sin punto final**. ACCIÓN: la registra `Leyenda_tablas.md`; aquí solo se remite. Su alcance queda cerrado con la decisión de **A5**. `Word`
 - [ ] **A15** · SEDE: el encabezado de página de las 13 páginas del Apéndice A, que lleva «Capítulo 6. Conclusiones». ACCIÓN: corregirlo. ⚠️ NO VERIFICADO: los encabezados de página no están en el volcado del cuerpo. `Word`
 
 ---
 
 ## Bibliografía · decisiones
 
-- [ ] **B1** · **DECISIÓN:** las obras huérfanas. ACCIÓN: rescatar con marcador o excluir del `.docx`. **No borrar antes de hacer los Anexos C y D.** Muchas no son descarte sino sede pendiente (2.19–2.23, 3.7, 4.14, 5.25, A14, X32). `vault`
+- [ ] **B1** · **DECISIÓN:** las obras huérfanas. ACCIÓN: rescatar con marcador o excluir del `.docx`. **No borrar antes de hacer los Anexos C y D.** Muchas no son descarte sino sede pendiente (2.19–2.23, 3.7, 4.14, 5.25, A14). **`[67]` (Sakurada y Yairi) es una de ellas y sigue abierta**: X32 retiró su marcador del cuerpo, pero **la entrada continúa en la lista bibliográfica del `.docx` sin ninguna cita**, o sea huérfana de hecho. **Su única sede candidata es la fila «las conexiones anómalas se reconstruyen mal y producen un MSE alto» del Anexo C.8, hoy marcada ⛔ SIN ANCLA.** Darle esa sede o retirar la entrada es **decisión de Francisco y se toma en un solo sitio** (esta, con la fila de C.8 y la línea de X32 delante): **no se decide tres veces**. `vault`
 - [ ] **B2** · SEDE: las entradas `[1]`, `[9]`, `[10]` y `[11]` de la bibliografía, hoy URLs desnudas. ACCIÓN: darles formato IEEE y fusionar `[9]` en `[8]` (duplica el enlace de Stallings). `Word`
 - [ ] **B3** · SEDE: las entradas `[2]` («Computer Security Threat Monitoring and Surveillance». James P. Anderson Co.) y `[8]` («Computer Security : Principles and Practice» William Stallings). ACCIÓN: añadir el año 1980 a Anderson, y a Stallings el año, la 5.ª edición, el coautor Brown y la editorial Pearson. `Word`
-- [ ] **B5** · **DECISIÓN:** los dos matches aproximados, `[65]` McHugh y `[75]` Moustafa y Slay (§5.3 «Dos matches solo aproximados» del mapa). ACCIÓN: confirmarlos antes de pegar. `[65]` **ya está pegado hoy** en «La crítica original a la metodología de evaluación del DARPA/KDD se remonta a [65]»: confirmarlo es urgente. `Word`
+- [ ] **B5** · **DECISIÓN:** los dos matches aproximados, `[65]` McHugh y `[75]` Moustafa y Slay (§5.3 «Dos matches solo aproximados» del mapa). ACCIÓN: confirmarlos. **Los dos están ya pegados** en el binario actual: `[65]` en «La crítica original a la metodología de evaluación del DARPA/KDD se remonta a [65]» y `[75]` en «…por lo que la información temporal existe en origen [75]» (lo pegó la reescritura X30). Confirmar la identidad de ambas obras es por tanto **urgente**, porque el documento ya las afirma. `Word`
 
 ---
 
@@ -256,14 +204,15 @@ literal (Ctrl+F)**. El marcador va al final de la frase, antes del punto, y **si
 
 > [!important] Sin números de párrafo
 > La columna «Párr.» se ha retirado de todo el anexo: procedía de un volcado de ~2.793 párrafos y
-> hoy el documento tiene 2.968. Todos los números estaban desplazados y mandaban a la frase
+> hoy el documento tiene **2.989**. Todos los números estaban desplazados y mandaban a la frase
 > equivocada. La regla del proyecto («referenciar por título, nunca por `fichero:línea`») los
 > prohíbe como referencia única.
 
 > [!note] Las reescrituras ya no viven aquí
-> La antigua §C.0 se ha promovido íntegra al bloque **🔴 PRIORITARIO** del principio del fichero,
-> revalidada contra los 94 marcadores del `.docx` actual. **§C.2 y §C.3 se han retirado por
-> completo: sus 15 marcadores ya están puestos y correctos en el documento.**
+> La antigua §C.0 se promovió íntegra al bloque **🔴 PRIORITARIO** del principio del fichero, y en
+> el repaso del 2026-08-25 (21:06) **se ha comprobado que ya está cumplida**: de las 32 entradas
+> solo sobrevive la decisión **X31**. **§C.2 y §C.3 se retiraron por completo: sus 15 marcadores ya
+> están puestos y correctos en el documento.** Recuento de referencia: **93 marcadores**.
 
 ## C.1 · Capítulo 1
 
@@ -313,7 +262,7 @@ NIDS» `[14]`, y las dos de Denning `[3]`.
 | ☐ | «Un modelo de amenaza es la especificación explícita de las hipótesis sobre el adversario» | `[CITA: Shostack, *Threat Modeling: Designing for Security*, 2014]` | Sin número en el `.docx` — tarea **2.24** |
 
 ✅ **Retiradas por resueltas:** `[47]` LeCun, `[48]` Scheirer, y las dos apariciones de `[49]` en los
-pitfalls P9 y P10 (que **sí necesitan reescritura**: ver X4 y X5).
+pitfalls P9 y P10 —cuya reescritura (X4 y X5) **ya está aplicada** en el binario actual—.
 
 ## C.7 · Capítulo 3 (1 fila viva)
 
@@ -330,14 +279,15 @@ las celdas de las tablas de candidatos.
 |---|---|---|---|
 | ☐ | «se entrena un RandomForestClassifier (100 árboles, class_weight='balanced', semilla 42)» | `[24]` | Breiman (2001). ⛔ **SIN ANCLA — no se pega a ciegas**: el fragmento no aparece literal |
 | ☐ | «las muestras sintéticas se interpolan a partir de vecinos reales» | `[55]` + `[52]` | Chawla *et al.* (2002) · Kapoor y Narayanan (2023). ⛔ **SIN ANCLA — no se pega a ciegas** |
-| ☐ | «las conexiones anómalas se reconstruyen mal y producen un MSE alto» | `[67]` | Sakurada y Yairi (2014). ⛔ **SIN ANCLA — no se pega a ciegas** |
+| ☐ | «las conexiones anómalas se reconstruyen mal y producen un MSE alto» | `[67]` | Sakurada y Yairi (2014). ⛔ **SIN ANCLA — no se pega a ciegas**. **DECISIÓN de Francisco, y esta fila es su única sede candidata:** la obra sigue **en la lista bibliográfica del `.docx` sin ninguna cita en el cuerpo** (X32 retiró su marcador), o sea huérfana de hecho. O se le da esta sede, o se retira la entrada de la bibliografía. **Se decide en un solo sitio, junto a B1 y a X32; no se resuelve por separado en tres.** |
 | ☐ | «una de las cinco categorías canónicas de la literatura de NSL-KDD» | `[45]` + `[44]` | Kendall (1999) · Tavallaee *et al.* (2009). ⛔ **SIN ANCLA — no se pega a ciegas** |
 | ☐ | «Su coste de entrenamiento es O(n²) en memoria y tiempo, lo que hace inviable ajustar 9 configuraciones» | `[30]` | Schölkopf *et al.* (2001) |
 | ☐ | «≈4·10⁶ flujos/s a 54 características» | `[CITA: medición propia, artefacto de `Resultados/`]` | ⛔ **SIN ANCLA — no se pega a ciegas**: no aparece literal. Si reaparece, respaldarlo con el artefacto en nota al pie |
 
 ✅ **Retiradas por resueltas:** `[60]` imbalanced-learn, `[61]` KS, `[65]` McHugh, `[46]` Lee y
 Stolfo («Las 41 características se agrupan en tres familias… [46]») y el par `[44]`+`[72]`.
-El `[63]`+`[64]` de KDD Cup 99 **no está resuelto**: es el error **X27**.
+El KDD Cup 99 **también queda resuelto**: el paréntesis dice hoy «([43] + [64])», o sea que la
+reescritura **X27** está aplicada.
 
 ## C.9 · Capítulo 5 (4 filas vivas)
 
@@ -348,8 +298,10 @@ El `[63]`+`[64]` de KDD Cup 99 **no está resuelto**: es el error **X27**.
 | ☐ | «el patrón dominante en la literatura sobre NSL-KDD: un RandomForest monolítico entrenado sobre todo el train» | `[12]` + `[44]` | Khraisat *et al.* (2019) · Tavallaee *et al.* (2009). ⚠️ «RandomForest monolítico» no está verificado en fuente: atenuar a «clasificador supervisado monolítico» si aprietan |
 | ☐ | «El célebre "~99 % de accuracy" de la literatura no sobrevive al test oficial del NSL-KDD» | `[44]` | Tavallaee *et al.* (2009) |
 
-⛔ **Pineau `[68]` sigue sin ancla literal propia.** Lo accionable hoy son sus dos reescrituras,
-**X23** y **X24**.
+⛔ **Pineau `[68]` sigue sin ancla literal propia.** Sus dos reescrituras (**X23** y **X24**) **ya
+están aplicadas**: el `.docx` lleva hoy `[68]` en «…checklist de reproducibilidad adoptado en
+Capítulo 5» y en «…error bars y central tendency del ML Reproducibility Checklist». No queda nada
+accionable por esta vía.
 
 ## C.10 · Capítulo 6 (1 fila viva)
 
@@ -414,7 +366,7 @@ Anexo C y las reescrituras del bloque prioritario.
 | «los 39 tipos de ataque específicos presentes en el corpus» | `[44]` Tavallaee *et al.* |
 | «Huella en el tráfico» (las cuatro apariciones) | `[46]` Lee y Stolfo |
 | «designan conjuntos anidados: cada uno es un subconjunto estricto del anterior» | `[4]` Chio y Freeman — ya usada antes |
-| «equivale a suponer un adversario que no modifica su comportamiento en respuesta a la defensa» | `[50]` Biggio y Roli |
+| «equivale a suponer un adversario que no modifica su comportamiento en respuesta a la defensa» | `[50]` Biggio y Roli — ⚠️ **el fragmento aparece en DOS párrafos** (el del cap. 2, sin marcador, y el del cap. 6, que ya lleva `[49]`): **decisión de Francisco en la tarea 6.4**, que se toma y se aplica **una sola vez** |
 
 ## Capítulo 3
 
@@ -513,4 +465,71 @@ Puntos que repiten algo ya dicho. Cada uno con sus dos sedes literales.
 - **A4** · Viñetas con guion literal · 0 ocurrencias · resuelto
 - **A16** · Rotular A.1.5 el apartado de etiquetas · el índice ya lo rotula «A.1.5. Etiquetas: tipos de ataque y categorías» · resuelto
 - **B4** · Goodfellow está en la bibliografía del `.docx` · resuelto
-- **Huérfanas que se rescatan solas** · sección retirada: su contenido está hoy en **B1** y en las tareas de sede (2.19–2.23, 3.7, 4.14, 5.25, A14, X32)
+- **Huérfanas que se rescatan solas** · sección retirada: su contenido está hoy en **B1** y en las tareas de sede (2.19–2.23, 3.7, 4.14, 5.25, A14)
+
+---
+
+## Censo de lo retirado en la poda del 2026-08-25 (21:06)
+
+Verificado contra el volcado fresco `Resultados\docx\REPASO_20260825-2106\` (binario de
+`2026-08-25T21:06:08`). **33 tareas retiradas** (las 30 reescrituras X1–X30, más **X32**, **A3** y
+**A17**); **T3 no está entre ellas**: se recortó y sigue viva, ver «Tareas recortadas, no retiradas».
+Cada línea da la evidencia.
+
+### Bloque prioritario · las 30 reescrituras de citas (`marcadores.txt`)
+
+| Tarea | Evidencia en `REPASO_20260825-2106\marcadores.txt` |
+|---|---|
+| **X1** | «…data snooping —el pitfall P3 del catálogo de Arp et al. **[49]**—» · era `[18]` |
+| **X2** | «…machine learning aplicado a seguridad **[49]**, que cataloga como defecto…» |
+| **X3** | «…el error que documenta como endémico en seguridad. **[49]**» |
+| **X4** | «…el pitfall P9, Lab-Only Evaluation **[49]**» |
+| **X5** | «…el pitfall P10, Inappropriate Threat Model. **[49]**» |
+| **X6** | «…a seguridad informática de Arp et al. **[49]**, introducido en 2.3.3» |
+| **X7** | «…la distinción feature space / problem space **[51]**—» · era `[52]` |
+| **X8** | «…tres ficheros con tamaños y funciones distintos **[44]**» · era `[23]` |
+| **X9** | «…el primer 20 % de sus registros **[44]**» |
+| **X10** | «…definida por el artículo que creó el dataset **[44]**, que publica sus baselines sobre KDDTest+» |
+| **X11** | «La composición de KDDTest+ frente a KDDTrain+ **[44]**» |
+| **X12** | «…los siete baselines canónicos del artículo que creó el dataset **[44]**» |
+| **X13** | celda de cabecera «Clasificador **[44]**» |
+| **X14** | «…volumen abrumador de conexiones legítimas. **[73] [14]**» · **los dos** puestos, era `[24] [25]` |
+| **X15** | «…sino del orden de magnitud. **[73]**» |
+| **X16** | «…cambiar falsos negativos por falsos positivos **[14]**» |
+| **X17** | «…la tasa de falsos positivos, no la sensibilidad **[73]**» |
+| **X18** | «El criterio de tuning de IDPS de la guía NIST SP 800-94. **[14]**» |
+| **X19** | «…cualquiera que sea el umbral elegido **[48]**» · era `[61]` |
+| **X20** | «…el riesgo de espacio abierto **[48]**—» |
+| **X21** | «…como línea base a superar **[71]**» · era `[49]` |
+| **X22** | «…no pertenezca a ninguna clase vista **[71]**» |
+| **X23** | «…checklist de reproducibilidad adoptado en Capítulo 5. **[68]**» · era `[20]` |
+| **X24** | «…error bars y central tendency del ML Reproducibility Checklist. **[68]**» |
+| **X25** | «La taxonomía de fugas de datos **[52]**» · era `[17]` |
+| **X26** | «…puede dar lugar a afirmaciones inexactas **[12]**» · era `[31]` |
+| **X27** | «…banco de pruebas estándar de la detección de intrusiones (**[43]** + [64])» · era `[63]` |
+| **X28** | «…«zero-day detection accuracy» del 89-99 % **[13]**» · era `[77]` |
+| **X29** | «…ataques en los cuatro restantes **[74]**» · era `[51]` |
+| **X30** | «…la información temporal existe en origen **[75]**» · era `[50]`. La confirmación de identidad de la obra **sigue viva en B5** |
+
+### Otras retiradas
+
+- **X32** · el marcador `[67]` **ya no existe** en el documento (0 ocurrencias en `marcadores.txt`; el total pasó de 94 a 93 marcadores, y esa es la única baja). La frase «Ese análisis consistió en revisar la propuesta original y contrastar sus supuestos con las condiciones del presente sistema…» sobrevive íntegra **sin marcador**: la decisión se tomó en el sentido de **retirar el marcador**, no de volcar la obra. ⚠️ **Lo retirado es el marcador del cuerpo, NO la obra**: la entrada de Sakurada y Yairi **sigue en la lista bibliográfica del `.docx` sin ninguna cita**, es decir huérfana de hecho. Su **única sede candidata** es la fila «las conexiones anómalas se reconstruyen mal y producen un MSE alto» del **Anexo C.8**, hoy ⛔ **SIN ANCLA**. Darle esa sede o retirar la entrada es **decisión de Francisco**, y se toma **en un solo sitio** (ver **B1** y esa fila de C.8).
+- **A3** · los cuatro encabezados de familia del Apéndice A son hoy **`Ttulo8` uniforme** —«Características básicas (1–9)», «Características de contenido (10–22)», «Características de tráfico basadas en tiempo (23–31)» y «Características de tráfico basadas en host (32–41)»—, sin el prefijo renumerado ni los estilos `Ttulo3` / `Ttulo3deApndice`. Es exactamente lo que pedía la tarea. El desfase con el TOC, que sigue rotulando «A.1.2»–«A.1.4», es lo que cubre **T8**.
+- **A17** · el pie «Tabla A.1. Características del dataset completo NSL-KDD» **ya cierra con punto final**; verificado en la poda hermana de `Leyenda_tablas.md` del mismo día.
+
+### Tareas recortadas, no retiradas
+
+- **T3** · **NO fue retirada: fue RECORTADA**, y sigue viva en `## T · Transversal`. Lo que sí está hecho es el volcado: el apartado «Bibliografía» tiene hoy **75 entradas** de estilo `Elementoparareferenciar`, con la lista nueva (Khraisat, Hindy, Scarfone, Russell y Norvig, Mitchell, Hastie, Jolliffe, Agrawal y Srikant, Sutton y Barto, Kohavi, Breiman, Dietterich, Friedman, LightGBM, Cover y Hart, Chandola, Liu, Schölkopf, Breunig, Rumelhart, Fawcett, Powers…). **Pero ese volcado arrastró dos residuos editoriales dentro de la lista ya volcada**: el aviso «⚠️ INCOMPLETA — scikit-learn…» de la entrada `[66]`, que se imprimiría en la memoria entregada, y el pegote de la entrada `[13]` con la siguiente («…art. 1684, 2020. Scarfone y Mell (2007), NIST SP 800-94»). **Ningún otro ítem los cubre**: **B2** solo alcanza a `[1]`, `[9]`, `[10]` y `[11]`, y **B3** solo a `[2]` y `[8]`. Por eso T3 se conserva con alcance recortado a esos dos residuos.
+- **T4** · se le quita la cláusula de espera («después de las 30 tareas X1–X30»): esa precondición ya está cumplida.
+- **T5** · la cifra baja de «18 ocurrencias en 16 párrafos» a la real, **10 en 8**; se cambia el ejemplo, porque el wikilink roto que citaba ya no existe, y se anota que la forma con tubería ha desaparecido.
+- **T6** · recuentos actualizados a 37 pies de tabla y 23 de figura; el extractor nuevo ya cuenta las dos formas.
+- **T8** · se le retira **A3** de la lista de precondiciones.
+- **5.17** · los backticks de su párrafo ya no están; queda solo el `*p*` en cursiva Markdown.
+- **B5** · se anota que `[75]` **también está ya pegado**, no solo `[65]`.
+
+### Comprobado y **NO** retirado
+
+- Los Anexos **C** y **D** se recorrieron fila a fila contra `marcadores.txt`: **ninguna fila viva tiene ya su marcador puesto**, así que no se retira ninguna y no se vacía ninguna sección. Los recuentos de los encabezados (C.4 = 5, C.5 = 11, C.6 = 1, C.7 = 1, C.8 = 6, C.9 = 4, C.10 = 1) siguen siendo exactos.
+- **5.32** («atacadirectamente») y **5.33** («podidoverificar») siguen literalmente en el `.docx`.
+- Las cinco NO VERIFICABLES en volcado de texto —**4.15, 5.28, A11, A13, A15**— conservan su marca ⚠️.
+- Las decisiones pendientes de Francisco —**X31, T10, 2.19–2.23, 3.7, 3.9, 4.13, 4.14, 5.25, 5.26, A1, A5, A7+A8, A14, B1, B5**— se conservan todas: el binario no prueba que ninguna se haya tomado (**salvo X32**, que sí queda probada y por eso se retira).

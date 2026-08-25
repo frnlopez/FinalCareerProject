@@ -1,19 +1,35 @@
 # Defectos de tablas y figuras del `.docx`
 
-Censo exhaustivo de las 48 tablas y verificación de figuras el 2026-08-25 contra
-`Proyecto_Fin_de_Grado-FJLM-2026.docx` (mtime 2026-08-25 07:05:43, 4.021.871 bytes).
+Censo exhaustivo de las 48 tablas y verificación de figuras contra
+`Proyecto_Fin_de_Grado-FJLM-2026.docx`. **Poda del 2026-08-25 (21:06)** hecha contra el volcado
+fresco `Resultados/docx/REPASO_20260825-2106/` del binario **mtime 2026-08-25T21:06:08, 4.023.965 bytes**.
 Se localiza siempre por el fragmento literal, nunca por número de página ni de línea.
 
+Recuentos frescos del binario actual: **2.989 párrafos · 48 tablas · 37 pies de tabla** (34 «Tabla
+`<dígito>`» + 3 «Tabla A.x») **· 23 pies de figura · 93 marcadores `[n]` · 109 párrafos de TOC**.
+
 > [!note] Lo que el censo confirma que está BIEN (no volver a revisar)
-> - Numeración «Tabla x.y» **contigua y sin duplicados** en 3.1-3.3, 4.1-4.13, 5.1-5.13, 6.1-6.5 y A.1-A.3.
+> - Numeración «Tabla x.y» **contigua y sin duplicados** en 3.1-3.3, 4.1-4.13, 5.1-5.13, 6.1-6.5 y A.1-A.3 (37, reverificado el 2026-08-25 21:06).
+> - Numeración «Figura x.y» **contigua y sin duplicados** en 2.1-2.5, 3.1, 4.1-4.5 y 5.1-5.12 (23, reverificado el 2026-08-25 21:06).
 > - Los **37 pies** van todos **debajo** de su tabla y **fuera** de ella.
+> - Los **23 pies de figura** son párrafo propio, con la única excepción de la Figura 5.11 (defecto vivo, más abajo).
 > - Cero tablas anidadas.
 > - Cero filas vacías.
 > - Cero columnas inconsistentes.
 > - Cero restos de Markdown **dentro** de las celdas.
 > - Las **8 tablas-contenedor de ecuaciones** no necesitan pie.
+> - El pie «Tabla A.1. Características del dataset completo NSL-KDD.» **ya cierra con punto**.
 
 ## Defectos vivos
+
+> [!info] Censo de esta lista, para que el número no vuelva a designar dos conjuntos
+> **18 viñetas vivas**: 17 verificadas contra el volcado del 21:06 más **1 marcada ⚠️ NO
+> VERIFICADO** (los marcadores y campos `SEQ` de los pies: el volcado de texto no extrae códigos
+> de campo de Word, así que esa afirmación no es comprobable por esta vía). Aparte van **2
+> decisiones pendientes de Francisco**, que no son defectos.
+> **Ojo al leer el historial:** este «17» **no es el «17 originales» de `d1286cf`**, que se podó a
+> 6. La lista se rehízo entera en `78e0525` contra el binario nuevo, así que el mismo número
+> designa conjuntos distintos según la fecha. Cuenta las viñetas, no te fíes de la cifra heredada.
 
 ### Referencias cruzadas y numeración
 
@@ -48,7 +64,7 @@ Se localiza siempre por el fragmento literal, nunca por número de página ni de
   | 5.9 | «Las columnas de D2 de la tabla siguiente son puramente informativas (análisis de sensibilidad); en ningún caso intervinieron en la elección.» | |
   | 5.10 | «…porque cada detector alarma con distinta frecuencia sobre tráfico normal.» | |
   | 5.11 | «…y evaluado sobre D2 completo.» | |
-  | 5.12 | «Superan el filtro los siete baselines canónicos del artículo que creó el dataset [23]…» | |
+  | 5.12 | «Superan el filtro los siete baselines canónicos del artículo que creó el dataset [44]…» | el marcador es hoy `[44]`, no `[23]`: lo cambió la reescritura **X12** |
   | 5.13 | «…y una prevalencia de ataque *p* que se hace variar:» | ojo, esa frase tiene Markdown residual |
   | 6.1 | «…no que el error quede eliminado.» | |
   | 6.2 | «Las líneas se agrupan en dos bloques:» | |
@@ -74,7 +90,7 @@ Se localiza siempre por el fragmento literal, nunca por número de página ni de
   | 5.11 | «…sobre D2 completo» | al separar la imagen, cerrar con «…sobre D2 completo, que recoge la Figura 5.11:» |
   | 5.12 | «…puede leerse en las matrices de confusión.)» | añadir después: «La Figura 5.12 muestra la del baseline.» |
 
-- **Ningún pie de tabla tiene marcador ni campo `SEQ`** · Los 37 pies son texto literal tecleado a mano; solo uno tiene `bookmarkStart`, y es una marca del índice de contenidos, no de referencia cruzada. Ninguno de los 40+ campos `REF` del documento apunta a una tabla: todos apuntan a epígrafes. CONSECUENCIA: no se puede generar índice de tablas ni renumerar automáticamente, y cualquier inserción o borrado de tabla obliga a renumerar a mano.
+- ⚠️ NO VERIFICADO (el volcado de texto no extrae marcadores de Word ni códigos de campo) · **Ningún pie de tabla tiene marcador ni campo `SEQ`** · Los 37 pies son texto literal tecleado a mano; solo uno tiene `bookmarkStart`, y es una marca del índice de contenidos, no de referencia cruzada. Ninguno de los 40+ campos `REF` del documento apunta a una tabla: todos apuntan a epígrafes. CONSECUENCIA: no se puede generar índice de tablas ni renumerar automáticamente, y cualquier inserción o borrado de tabla obliga a renumerar a mano.
 
 - **No existen índice de figuras ni índice de tablas** · El único campo `TOC` del documento es el del índice de contenidos. ACCIÓN: pendiente de decisión de Francisco. Recomendación: añadirlos y pasar la numeración a campos `SEQ`, porque es la única corrección de la lista que además previene defectos futuros.
 
@@ -93,9 +109,8 @@ Se localiza siempre por el fragmento literal, nunca por número de página ni de
 ### Erratas de texto en pies y prosa de tablas
 
 - **Markdown residual (backticks) en dos pies de tabla** · Ctrl+F «con la versión fijada en `requirements.txt`» (pie de la Tabla 4.1) y «evaluadas por `GridSearchCV`» (pie de la Tabla 4.12). ACCIÓN: quitar los backticks y dar formato de fuente monoespaciada, o dejar el texto llano.
-- **Markdown residual en la prosa que introduce la Tabla 5.13** · Ctrl+F «y una prevalencia de ataque *p* que se hace variar». Lleva backticks alrededor de `bin_recall` y `bin_fpr` y cursiva Markdown `*p*`. Misma errata, sin backticks, en Ctrl+F «Las tres columnas se derivan solo de `bin_recall`».
-- **Wikilinks de Obsidian sin convertir en 12 párrafos de prosa** · Ctrl+F «[[5.3 Resultados del sistema híbrido]]», «[[6.2 Líneas futuras]]», «[[4.5 Entrenamiento del modelo de detección basado en firmas|4.5]]». ACCIÓN: sustituir por la referencia normal al apartado.
-- **Wikilink roto, con el texto del enlace corrompido** · Ctrl+F «[[5.1 Resultados del modelo de detección de anomalías el capítulo 5]]». El propio texto del enlace está mal formado.
+- **Markdown residual en la prosa que introduce la Tabla 5.13** (parcialmente corregido) · Quedan dos restos: la cursiva Markdown `*p*` en Ctrl+F «y una prevalencia de ataque *p* que se hace variar», y los backticks en Ctrl+F «Las tres columnas se derivan solo de `bin_recall` y `bin_fpr` medidos». Los backticks del primer párrafo ya están quitados («bin_recall = 0,8318 y bin_fpr = 0,1017»).
+- **Wikilinks de Obsidian sin convertir en 8 párrafos de prosa** (recortado el 2026-08-25: eran 12) · 10 ocurrencias en 8 párrafos. SEDES, una por destino: «[[5.1 Resultados del modelo de detección de anomalías]]» (dos párrafos: Ctrl+F «37 de las 54 características (≈ 69 %) presentan drift» y Ctrl+F «la cascada Autoencoder → RandomForest sobre el conjunto primario»), «[[5.2 Resultados del modelo de detección basado en firmas]]» (mismo párrafo de la cascada), «[[5.3 Resultados del sistema híbrido]]» (Ctrl+F «El FPR efectivo de la etapa 1» y Ctrl+F «únicos detectables por la etapa de anomalías»), «[[3.3 Metodología de funcionamiento del sistema]]» (Ctrl+F «La arquitectura en cascada del H-NIDS»), «[[6.2 Líneas futuras]]» (Ctrl+F «un ensemble de detectores es la línea futura número uno» y Ctrl+F «sus prolongaciones se detallan en»), «[[6.1 Conclusiones]]» (mismo párrafo que la anterior) y «[[1.3 Objetivo]]» (Ctrl+F «Las conclusiones se ordenan según el grado de cumplimiento»). ACCIÓN: sustituir por la referencia normal al apartado. **Ya no queda ningún wikilink con tubería (`|4.5`).**
 - **Cita bibliográfica vacía** · Ctrl+F «todos implementables en scikit-learn[]». ACCIÓN: poner la cita que falte o quitar los corchetes.
 - **Dos palabras pegadas en la prosa de la Tabla 6.3** · Ctrl+F «ningún detectordomina a los demás» y «está en 0,160frente al». ACCIÓN: separar.
 - **Espacio sobrante al final del pie de la Tabla 5.11** · Ctrl+F «Tabla 5.11. Sistema híbrido frente al baseline de control». Es el único pie con espacio en blanco tras el punto final.
@@ -115,3 +130,28 @@ Se localiza siempre por el fragmento literal, nunca por número de página ni de
 
 - **Índices de figuras y de tablas:** decidir si se añaden. Requiere antes aplicar el estilo `Descripción` a los 60 pies y, para renumeración automática, pasar a campos `SEQ`.
 - **Redundancia entre las Tablas 3.1, 4.2 y 4.7:** decidir si se fusionan o se dejan.
+
+## Censo de lo retirado en la poda del 2026-08-25 (21:06)
+
+Poda contra `Resultados/docx/REPASO_20260825-2106/` (binario 4.023.965 bytes, mtime 2026-08-25T21:06:08).
+
+| Defecto retirado o recortado | Evidencia del volcado |
+|---|---|
+| **RETIRADO** — «Wikilink roto, con el texto del enlace corrompido» (`[[5.1 Resultados del modelo de detección de anomalías el capítulo 5]]`) | La cadena «el capítulo 5» ya no acompaña a ese wikilink en ninguna de sus dos apariciones: en `documento.txt` los dos wikilinks a 5.1 aparecen limpios, como `[[5.1 Resultados del modelo de detección de anomalías]]`, en el párrafo del drift («37 de las 54 características…») y en el de la cascada («la cascada Autoencoder → RandomForest…»). Búsqueda del fragmento corto «Resultados del modelo de detección de anomalías» sin más coincidencias. |
+| **RECORTADO** — wikilinks sin convertir: de **12 párrafos a 8** | Recuento en `documento.txt`: 10 ocurrencias de `[[` repartidas en 8 párrafos. Desaparecida en particular la forma con tubería `[[4.5 Entrenamiento del modelo de detección basado en firmas\|4.5]]`, que ya no figura. |
+| **RECORTADO** — Markdown residual en la prosa de la Tabla 5.13 | El párrafo «La proyección es aritmética elemental…» ya no lleva backticks («bin_recall = 0,8318 y bin_fpr = 0,1017»). Siguen vivos la cursiva `*p*` en ese mismo párrafo y los backticks de «Las tres columnas se derivan solo de `bin_recall` y `bin_fpr` medidos». |
+| **AÑADIDO al callout de lo correcto** — pie «Tabla A.1» con punto final | `documento.txt`: «Tabla A.1. Características del dataset completo NSL-KDD.» cierra con punto. |
+
+Comprobaciones que NO retiraron nada (todos los defectos siguen vivos, verificado uno a uno):
+
+- **Llamadas a tabla desde la prosa:** las **37** únicas apariciones del patrón «Tabla x.y» en `documento.txt` son los 37 pies. Cero llamadas en párrafos de cuerpo. Defecto íntegro; **ninguna fila de su tabla se ha podido borrar**.
+- **Llamadas a figura desde la prosa:** las únicas llamadas fuera del pie son a la 2.1 (dos veces), la 2.5 y el bloque 5.1-5.4. Las **14** figuras del defecto (3.1, 4.1-4.5, 5.5-5.12) siguen sin llamada. **Ninguna fila borrada.**
+- **Los 60 pies en estilo Normal:** `estilos_usados.txt` no registra ningún uso del estilo `Descripción`; los 60 pies aparecen con estilo por defecto (`-`) en `documento.txt`. `FiguraTablaEcuacin` sigue en 17 párrafos, todos de ecuaciones.
+- **Sin índice de tablas ni de figuras:** `indice_toc.txt` tiene 109 párrafos, todos `TDC1`/`TDC2`/`TDC3` del índice de contenidos. Cero rótulos «Índice de tablas» o «Índice de figuras». La decisión de Francisco sigue sin tomar.
+- **Título duplicado del Apéndice A:** «Columnas del dataset NSL-KDD» sigue en dos párrafos consecutivos, con estilos `Título 6` y `Título 7`.
+- **Leyenda única del Apéndice A:** el pie sigue en su forma corta y siguen intercalados los cuatro bloques con sus tres `Título 8` («Características de contenido (10–22)», «…basadas en tiempo (23–31)», «…basadas en host (32–41)»).
+- **Backticks en los pies de las Tablas 4.1 y 4.12**, **cita vacía «scikit-learn[]»**, **«detectordomina»**, **«0,160frente al»**, **espacio sobrante tras el punto del pie de la Tabla 5.11**, **corchetes `[Figura 2.2]` / `[Figura 2.3]` / `[Figura 2.4]`**: todos localizados literalmente en `documento.txt`.
+- **Figura 5.11 incrustada en la prosa:** `figuras.txt` sigue mostrando la imagen en el párrafo propio «…sobre D2 completo», sin punto final.
+- **Ecuación «(1)» duplicada:** `documento.txt` tiene «(1)» dos veces con estilo `FiguraTablaEcuacin`, una en el bloque de métricas del capítulo 2 y otra tras «La proyección es aritmética elemental…».
+- **Cabecera con celda vacía en la Tabla 6.1:** `tablas.txt`, TABLA 38, celda `[f1,c1]` vacía.
+- **Redundancia 3.1 / 4.2 / 4.7:** las tres tablas siguen existiendo, con sus tres pies.
