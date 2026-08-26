@@ -1,0 +1,123 @@
+TOTAL DrawingML = 23
+TOTAL VML = 1
+
+p0307	DrawingML
+  propio : [-] 
+  sig+1  : [-] Figura 2.1. Relación entre Inteligencia Artificial, Machine Learning y Deep Learning.
+  sig+2  : [Cdigofuente] 
+
+p0314	DrawingML
+  propio : [Cdigofuente] 
+  sig+1  : [-] Figura 2.2. Metodología en programación tradicional.
+  sig+2  : [-] 
+
+p0319	DrawingML
+  propio : [Cdigofuente] 
+  sig+1  : [-] Figura 2.3. Metodología en ML.
+  sig+2  : [-] Además, podríamos conseguir un modelo más completo haciendo que, una vez desplegado, aprendiera de los nuevos datos que está generando, es decir, de las nuevas evaluaciones que está haciendo a partir del algoritmo previamente entrenado (Figura 2.4). [5]
+
+p0323	DrawingML
+  propio : [Cdigofuente] 
+  sig+1  : [-] Figura 2.4. Metodología en ML con aprendizaje continuo.
+  sig+2  : [-] 
+
+p0516	DrawingML
+  propio : [-] 
+  sig+1  : [-] Figura 2.5. Cadena de bloques funcionales de un NIDS.
+  sig+2  : [-] 
+
+p0702	DrawingML
+  propio : [-] 
+  sig+1  : [-] Figura 3.1. Flujo del proyecto.
+  sig+2  : [-] 
+
+p0985	DrawingML
+  propio : [-] 
+  sig+1  : [-] Figura 4.1. Panel de nueve gráficos del análisis exploratorio: reparto de clases de D1, D2 y D3, comparación de tamaños de los tres subconjuntos, ataques predominantes y cobertura de tipos de ataque entre entrenamiento y test.
+  sig+2  : [-] 
+
+p0995	DrawingML
+  propio : [-] 
+  sig+1  : [-] Figura 4.2. Reparto de clases en cada subconjunto, generado por validacion.py: pureza de D1 (una sola barra, normal) y de D3 (solo ataques), y desbalance entre categorías de ataque dentro de D3.
+  sig+2  : [-] 
+
+p1001	DrawingML
+  propio : [-] 
+  sig+1  : [-] Figura 4.3. Histogramas superpuestos de las doce características más discriminantes entre D1 (tráfico normal, en verde) y D3 (ataques conocidos, en rojo). Cuanto menor es el solape entre ambas distribuciones, mayor es el poder discriminante de la característica.
+  sig+2  : [-] 
+
+p1016	DrawingML
+  propio : [-] 
+  sig+1  : [-] Figura 4.4. Desplazamiento de distribución entre D1 y D2 medido con el test de Kolmogorov-Smirnov, en la variante de 54 características. Panel izquierdo: ranking de las 20 características con mayor estadístico KS, en rojo las que superan el criterio de significación. Panel derecho: distribución de los p-valores de las 54 características, con la línea de corte en p = 0,01.
+  sig+2  : [-] 
+
+p1027	DrawingML
+  propio : [-] 
+  sig+1  : [-] Figura 4.5. Proporción de valores atípicos según el criterio del rango intercuartílico (IQR), para las 15 características con mayor proporción de atípicos en D1, con las tres barras de cada característica correspondientes a D1, D2 y D3. No es un barrido de las 54: el gráfico se restringe a ese top 15.
+  sig+2  : [-] 
+
+p1550	DrawingML
+  propio : [-] 
+  sig+1  : [-] Figura 5.1. Matriz de confusión binaria (normal frente a ataque) de IsolationForest sobre D2, con 54 características y umbral percentil 95 sobre D1_val.
+  sig+2  : [-] 
+
+p1553	DrawingML
+  propio : [-]  
+  sig+1  : [-] Figura 5.2. Matriz de confusión binaria de OneClassSVM sobre D2, en las mismas condiciones.
+  sig+2  : [-] 
+
+p1555	DrawingML
+  propio : [-] 
+  sig+1  : [-] Figura 5.3. Matriz de confusión binaria de LocalOutlierFactor sobre D2, en las mismas condiciones.
+  sig+2  : [-] 
+
+p1557	DrawingML
+  propio : [-] 
+  sig+1  : [-] Figura 5.4. Matriz de confusión binaria del Autoencoder (MLPRegressor) sobre D2, en las mismas condiciones.
+  sig+2  : [-] 
+
+p1655	DrawingML
+  propio : [-] 
+  sig+1  : [-] Figura 5.5. Curvas ROC de los cuatro detectores de anomalías sobre D2, con 54 características.
+  sig+2  : [-] 
+
+p1661	DrawingML
+  propio : [-] 
+  sig+1  : [-] Figura 5.6. Curvas precisión-recall de los cuatro detectores de anomalías sobre D2, con 54 características.
+  sig+2  : [-] 
+
+p1685	DrawingML
+  propio : [-] 
+  sig+1  : [-] Figura 5.7. Matriz de confusión multiclase (dos, probe, r2l, u2r) de DecisionTree sobre los flujos de D2 de tipo conocido, con 54 características.
+  sig+2  : [-] 
+
+p1690	DrawingML
+  propio : [-] 
+  sig+1  : [-] Figura 5.8. Matriz de confusión multiclase de RandomForest sobre la misma población.
+  sig+2  : [-] 
+
+p1695	DrawingML
+  propio : [-] 
+  sig+1  : [-] Figura 5.9. Matriz de confusión multiclase de KNN sobre la misma población.
+  sig+2  : [-] 
+
+p1700	DrawingML
+  propio : [-] 
+  sig+1  : [-] Figura 5.10. Matriz de confusión multiclase de HistGradientBoosting sobre la misma población.
+  sig+2  : [-] 
+
+p1962	DrawingML
+  propio : [-] 
+  sig+1  : [-] Figura 5.11. Matriz de confusión del sistema híbrido sobre D2 completo: 5 clases reales × 6 predichas, con la columna unknown para lo detectado como anómalo, pero no atribuido a una firma conocida.
+  sig+2  : [-] 
+
+p2204	DrawingML
+  propio : [-] 
+  sig+1  : [-] Figura 5.12. Matriz de confusión del baseline de control (RandomForest monolítico de 5 clases) sobre D2, con 54 características.
+  sig+2  : [-] 
+
+p2653	VML
+  propio : [-] 
+  sig+1  : [-] B. Ampliación del alcance experimental
+  sig+2  : [Ttulo3] Del flujo aislado a la secuencia con reloj: tres peldaños encadenados
+
