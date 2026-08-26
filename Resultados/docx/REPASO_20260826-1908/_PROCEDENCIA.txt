@@ -1,0 +1,18 @@
+Fuente: C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Proyecto_Fin_de_Grado-FJLM-2026.docx
+Tamano: 4038568 bytes
+mtime: 2026-08-26T19:06:27.664159
+Extraido: 2026-08-26T19:08:46.671285
+
+Total <w:p>: 3035
+Total <w:tbl>: 48
+Imagenes DrawingML: 23
+Imagenes VML: 0
+Pies "Tabla x.y" (numerico): 34
+Pies "Tabla A.y" (apendice, letra): 3
+Pies Tabla TOTAL (ambas formas): 37
+Pies "Figura x.y" (numerico): 23
+Pies "Figura A.y" (apendice, letra): 0
+Pies Figura TOTAL (ambas formas): 23
+Marcadores [n]: 93
+Parrafos TOC: 109
+Errores: ninguno

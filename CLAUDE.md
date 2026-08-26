@@ -18,7 +18,8 @@ Working_Directory/            ← raíz del repositorio git (rama de trabajo: de
 ├── EL_FUTURO.md              ← líneas futuras respaldadas con datos
 ├── .mcp.json                 ← MCP de Playwright (solo lo usa el researcher)
 ├── .claude/                  ← arquitectura de agentes (ver sección propia)
-├── TFG - Fran.docx           ← memoria en Word (no versionada)
+├── Proyecto_Fin_de_Grado-FJLM-2026.docx  ← memoria en Word (no versionada). El
+│                             `TFG - Fran.docx` que había aquí es un NOMBRE MUERTO
 ├── Archivos dataset/         ← NSL-KDD crudo (no versionado)
 ├── Resultados/               ← métricas, figuras y sus CSV, versionados; modelos y splits, no
 ├── Implementacion/           ← código Python
@@ -163,9 +164,21 @@ Aquí se escriben y gestionan las **notas del TFG en Markdown**. Obsidian las le
 
 ---
 
-## TFG - Fran.docx
+## Proyecto_Fin_de_Grado-FJLM-2026.docx
 
-Memoria **final y oficial** del TFG en formato Word, ubicada en este repo (`Working_Directory/TFG - Fran.docx`). No se edita desde aquí; se referencia para contexto cuando el usuario necesita alinear notas o código con el contenido del informe. Las notas de `Obsidian_TFG_Vault/` son la fuente que se vuelca a este documento.
+Memoria **final y oficial** del TFG en formato Word, ubicada en este repo
+(`Working_Directory/Proyecto_Fin_de_Grado-FJLM-2026.docx`). **Se llamaba `TFG - Fran.docx`; ese
+nombre está MUERTO desde el 2026-08-26** — el fichero viejo sigue en disco (mtime 2026-06-11) pero
+ya no es la memoria: no lo leas ni lo cites. Conviven además un `.doc` gemelo y
+`Plantilla-para-volcado.docx`, que tampoco son la memoria.
+
+**Se extrae, no se lee en crudo.** Las extracciones viven en `Resultados/docx/REPASO_<fecha>/`.
+**Antes de comparar nada contra él, verifica el `mtime` del `.docx` contra el `_PROCEDENCIA.txt` de
+la última extracción**: el documento cambia entre mensajes y una extracción de hace unas horas ya
+miente. Si existe un `~$Proyecto_Fin_de_Grado-FJLM-2026.docx`, **está abierto en Word y cualquier
+re-extracción es inválida**: hay que pedir a Francisco que lo cierre.
+
+No se edita desde aquí; se referencia para contexto cuando el usuario necesita alinear notas o código con el contenido del informe. Las notas de `Obsidian_TFG_Vault/` son la fuente que se vuelca a este documento.
 
 ---
 
