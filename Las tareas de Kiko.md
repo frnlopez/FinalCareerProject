@@ -59,7 +59,7 @@ Verificado contra `Resultados\docx\REPASO_20260826-0643\` (`.docx` de 4.038.690 
 - [ ] **A10** · Fila `su_attempted` de la tabla de características → corregir el tipo: dice «Discreta» y la descripción es binaria. `vault`
 - [ ] **5.24** · Fila vacía de la tabla del eje de balanceo en `5.2 Resultados del modelo de detección basado en firmas.md` → eliminarla. `vault`
 - [ ] **5.18** · «Junto al FPR conviene acotar la segunda cifra que invita a la sobrelectura: la velocidad» → añadir la tabla de tiempos y latencia; el texto critica columnas que no se muestran en ninguna tabla. `vault`
-- [ ] **T4** · Pegar los marcadores que faltan recorriendo el **Anexo C** (26 filas) y el **Anexo D** de este fichero con el Word abierto, fila a fila por su fragmento literal. `Word`
+- [ ] **T4** · Pegar los marcadores que faltan recorriendo el **Anexo C** (26 filas) y el **Anexo D** (47 filas) de este fichero con el Word abierto, fila a fila por su fragmento literal. Cada marcador va **al final de la frase, antes del punto, y siempre a pelo**. `Word`
 - [ ] **B2** · Entradas `[1]`, `[9]`, `[10]` y `[11]` de la bibliografía, hoy URLs desnudas → darles formato IEEE y fusionar `[9]` en `[8]`. `Word`
 - [ ] **B3** · Formato de dos entradas de la lista bibliográfica. `Word`
   - «"Computer Security Threat Monitoring and Surveillance". James P. Anderson Co.» (la **segunda** coincidencia, la de la lista, no la del capítulo 1) → añadir el año 1980.
@@ -159,8 +159,6 @@ Verificado contra `Resultados\docx\REPASO_20260826-0643\` (`.docx` de 4.038.690 
 ---
 
 # Anexo C · Dónde va exactamente cada cita
-
-Marcador al final de la frase, antes del punto, y siempre a pelo. 26 filas.
 
 ## C.4 · Capítulo 2, §2.1.5 «Métricas»
 
