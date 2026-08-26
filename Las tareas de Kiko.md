@@ -1,13 +1,15 @@
 # Las tareas de Kiko
 
-Repaso del **2026-08-25 (21:06)** contra `Proyecto_Fin_de_Grado-FJLM-2026.docx` (**2.989 párrafos,
+Repaso del **2026-08-26 (06:04)** contra `Proyecto_Fin_de_Grado-FJLM-2026.docx` (**3.014 párrafos,
 93 marcadores, 48 tablas, 24 imágenes** —23 DrawingML más **1 VML**—, **37 pies de tabla** —34 con forma «Tabla \<dígito\>» más los
 3 del Apéndice A, «Tabla A.1/A.2/A.3», que el extractor cuenta ya por separado—, **23 pies de
-figura**, 109 párrafos de TOC). Volcado en `Resultados\docx\REPASO_20260825-2106\`.
+figura**, 109 párrafos de TOC). Binario de **4.025.496 bytes**, `mtime` 2026-08-26T06:04:01.
+Volcado en `Resultados\docx\REPASO_20260826-0604\`.
 
 > [!warning] Un solo volcado vigente, y lleva fecha
-> El volcado anterior (`REPASO_20260825\`, del binario de las 05:07) se BORRÓ el 2026-08-25 por
-> caducado. Toda verificación de este fichero se hace contra `REPASO_20260825-2106\`, cuya
+> Los volcados anteriores (`REPASO_20260825\`, de las 05:07, y `REPASO_20260825-2106\`, de las
+> 21:06) están **caducados**. Toda verificación de este fichero se hace contra
+> `REPASO_20260826-0604\`, cuya
 > procedencia consta en su `_PROCEDENCIA.txt`. **El nombre lleva la hora del binario a propósito:**
 > un `REPASO_ACTUAL` se pisa a sí mismo en el siguiente repaso y deja de decir de qué documento
 > salió. Cada volcado nuevo se nombra igual, con su `mtime`.
@@ -19,22 +21,22 @@ figura**, 109 párrafos de TOC). Volcado en `Resultados\docx\REPASO_20260825-210
 - Autoridad de numeración: [[Bibliografia del docx - numeracion y anclas]] §2. **Ningún `[n]` nuevo.**
 - **Los números de párrafo se han retirado de todo el fichero**: los del volcado anterior estaban
   desplazados. Cada tarea se localiza por **fragmento literal (Ctrl+F)**.
-- **Frontera con `Leyenda_tablas.md`:** todo lo que sea defecto de **tabla, figura, pie o prosa que
-  los introduce** vive allí; aquí no se duplica, se remite. A la inversa, la **prosa del cuerpo**
-  vive aquí. Cuando un defecto toca los dos lados, se escribe una vez y el otro fichero remite.
+- **Fichero único.** Los antiguos `Leyenda_tablas.md` y `Llamadas a tablas y figuras.md` se han
+  **absorbido aquí**: no queda ninguna remisión a ellos. Todo defecto de tabla, figura, pie o prosa
+  que los introduce vive ahora en su tarea de este fichero, con su sede literal dentro.
 - **Una tarea = un gesto de edición en Word.** Lo que se arregla de una sola barrida de Ctrl+F va en
   una sola entrada con sub-viñetas, aunque toque capítulos distintos.
 
-> [!info] Censo de este fichero, contado tras la reorganización del 2026-08-25
-> **88 casillas `- [ ]` vivas.** Dentro de ese 88: **19 son decisiones de Francisco** (índice más
-> abajo), **5 no son verificables** con el volcado (callout siguiente) y **4 son remisiones puras**
-> a `Leyenda_tablas.md` o a otra tarea de aquí —**T9**, **T10**, **5.17** y **5.19**—, que se
-> conservan solo para que nadie las vuelva a fichar por su cuenta. ⚠️ **Las tres categorías se
-> solapan: no son una partición del 88 y no se suman.** El caso concreto es **T10**, que está a la
-> vez en las 19 decisiones de Francisco y en las 4 remisiones puras, porque es una decisión suya
-> cuyo detalle técnico vive en `Leyenda_tablas.md`. Ningún otro identificador aparece en dos de las
-> tres listas (las 5 no verificables —4.15, 5.28, A11, A13, A15— no coinciden con ninguna de las
-> otras dos). Aparte van las **26 filas** del
+> [!info] Censo de este fichero, recontado tras las decisiones del 2026-08-26 (índices y pies)
+> **89 casillas `- [ ]` vivas**, contadas en disco sobre el fichero ya editado (eran 91 antes de
+> cerrar **T10**, y 90 antes de cerrar **T6**). Dentro de ese 89: **19 son
+> decisiones de Francisco** (índice más abajo) y **5 no son verificables** con el volcado (callout
+> siguiente). **Ya no hay ninguna casilla en «Defectos menores»**: **T6** quedó cerrada por
+> decisión. **Ya no hay
+> remisiones puras a otro fichero**: la única remisión interna que queda es
+> **T9**, que apunta a **2.26** de este mismo fichero. ⚠️ **Las categorías se solapan con el
+> resto: no son una partición del 89 y no se suman.** Las 5 no verificables —4.15, 5.28, A11, A13,
+> A15— no coinciden con ninguna decisión. Aparte van las **26 filas** del
 > Anexo C, las del Anexo D y los **10 candidatos a recorte**, que no llevan casilla.
 > **Cuenta las casillas; no arrastres esta cifra si editas el fichero.**
 
@@ -45,12 +47,38 @@ figura**, 109 párrafos de TOC). Volcado en `Resultados\docx\REPASO_20260825-210
 > que no existan: significa que el volcado no puede decidirlo.
 
 > [!info] Índice de lo que decide Francisco y nadie más
-> **X31 · T10 · 2.19 · 2.20 · 2.21 · 2.22 · 2.23 · 3.7 · 3.9 · 4.13 · 4.14 · 5.25 · 5.26 · 6.4 ·
-> A5 · A7+A8 · A14 · B1 · B5.** Diecinueve entradas. **`A1` ya no está en la lista porque ya no
+> **X31 · T12 · 2.19 · 2.20 · 2.21 · 2.22 · 2.23 · 3.7 · 3.9 · 4.13 · 4.14 · 5.25 · 5.26 ·
+> 6.4 · A5 · A7+A8 · A14 · B1 · B5.** Diecinueve entradas. **`T12` es nueva del 2026-08-26**: la
+> redundancia D1/D2/D3 entre las Tablas 3.1, 4.2 y 4.7, que antes vivía fuera de este fichero — y
+> es **la única superviviente** de las dos decisiones que traía ese bloque de tablas. **`T10` ya no
+> está en la lista: Francisco la decidió el 2026-08-26 (no se añaden índice de tablas ni de
+> figuras) y queda cerrada sin casilla, como constancia, en el bloque transversal. **`T6` tampoco está en la lista y nunca lo estuvo**: Francisco la zanjó ese mismo día —el formato de los pies ya es el correcto— y su constancia está en «Defectos menores».** **`A1` ya no está en la lista porque ya no
 > existe: era la misma decisión que `A5` —la numeración del Apéndice A— y se ha fundido en ella.
 > `6.4` sí está, y antes faltaba.** El binario del 21:06 **no prueba que ninguna
 > se haya tomado**, así que se conservan todas. Van marcadas **DECISIÓN** en su sitio; esta lista
 > es solo el índice, no una segunda sede.
+
+> [!info] Lo que el censo de tablas y figuras confirma que está BIEN — NO volver a revisar
+> Rescatado del antiguo `Leyenda_tablas.md` al absorberlo. **No lleva casillas: no es trabajo, es
+> el resultado de una auditoría ya hecha.** Son hechos verificados tabla a tabla y figura a figura
+> contra el volcado del 2026-08-25 21:06; sus recuentos globales —**37 pies de tabla · 23 pies de
+> figura**— coinciden con los del volcado vigente del **06:04**, así que siguen valiendo. **Nadie
+> tiene que re-auditar nada de esta lista**; está aquí para que ningún repaso futuro vuelva a
+> gastar tiempo en medirlo.
+> - Numeración **«Tabla x.y» contigua y sin duplicados**: 3.1–3.3, 4.1–4.13, 5.1–5.13, 6.1–6.5 y A.1–A.3 (**37**).
+> - Numeración **«Figura x.y» contigua y sin duplicados**: 2.1–2.5, 3.1, 4.1–4.5 y 5.1–5.12 (**23**).
+> - Los **37 pies de tabla** van todos **debajo** de su tabla y **fuera** de ella.
+> - Los **23 pies de figura** son **párrafo propio, sin excepciones** —el de la Figura 5.11 también, y su imagen ya está separada (antigua **T7**, resuelta)—.
+> - **Cero tablas anidadas.**
+> - **Cero filas vacías.**
+> - **Cero columnas inconsistentes.**
+> - **Cero restos de Markdown dentro de las celdas** (`tablas.txt` no tiene ninguno). El Markdown residual vivo está solo en prosa: **5.17** y **T11**.
+> - Las **8 tablas-contenedor de ecuaciones** no necesitan pie, y no lo llevan.
+> - El pie «Tabla A.1. Características del dataset completo NSL-KDD.» **ya cierra con punto**.
+>
+> ⚠️ Dos matices que **sí** siguen vivos y no contradicen lo anterior: la **cabecera con celda
+> vacía de la Tabla 6.1** (tarea **6.12**) y el **espacio sobrante tras el punto** del pie de la
+> Tabla 5.11, cosmético y no fichado.
 
 ---
 
@@ -133,17 +161,29 @@ Queda **una sola** entrada viva, y es decisión de Francisco:
   - **`[[6.1 Conclusiones]]`** — en el mismo párrafo que la anterior.
   - **`[[1.3 Objetivo]]`** — Ctrl+F «Las conclusiones se ordenan según el grado de cumplimiento».
 
-  Ya **no queda ningún wikilink con tubería** (`|4.5`) ni el wikilink roto «[[5.1 … el capítulo 5]]»: los dos desaparecieron del binario actual. Esta es la **sede única** del defecto; la viñeta gemela de `Leyenda_tablas.md` se ha borrado.
+  Ya **no queda ningún wikilink con tubería** (`|4.5`) ni el wikilink roto «[[5.1 … el capítulo 5]]»: los dos desaparecieron del binario actual. Esta es la **sede única** del defecto.
 
-- [ ] **T6** · SEDE: los pies de tabla y de figura del documento — **37 pies de tabla** (34 «Tabla \<dígito\>» + «Tabla A.1», «A.2», «A.3») y **23 pies de figura**; el extractor de `REPASO_20260825-2106` ya cuenta las dos formas por separado. ACCIÓN: aplicar lo registrado en `Leyenda_tablas.md`, que es la sede única del detalle. Lo que le toca a T6, enumerado para no tener que deducirlo:
-  - **Llamada numerada desde la prosa de las 37 tablas** — la tabla sede a sede está en `Leyenda_tablas.md`, «Ninguna de las 37 tablas se llama por su número desde la prosa». **No se recorta.**
-  - **Estilo `Descripción` en los 60 pies** (23 de figura + 37 de tabla), hoy todos en Normal.
-  - **Las 4 sedes de Markdown residual** — `Leyenda_tablas.md`, «Markdown residual: una sola barrida de Ctrl+F»: los backticks de los pies de las Tablas 4.1 y 4.12, los de la prosa posterior a la Tabla 5.13 y la cursiva `*p*` de la prosa que la introduce (esta última es la tarea **5.17**, que remite allí).
-  - **La cita vacía `scikit-learn[]`** de la frase que introduce la Tabla 3.2.
-  - **Las tres llamadas de figura entre corchetes** —«[Figura 2.2]», «[Figura 2.3]», «[Figura 2.4]»— y el `[5]` que queda suelto detrás del punto en la tercera.
+**T6** · **CERRADA — sin casilla. Cubría DOS mitades y cada una cerró por una vía distinta:** las **51 llamadas numeradas** (y sus residuos de Markdown) **por EJECUCIÓN**, aplicadas y verificadas en el binario del 06:04 —lo detalla el callout de aquí debajo—, y el **estilo de los 60 pies por DECISIÓN de Francisco del 2026-08-26**. La tabla que deslinda las dos mitades está en «Defectos menores». Su constancia completa está en «Defectos menores», al final del fichero. Se deja aquí el puntero y el callout de deslinde, porque este último remite a tareas vivas (**T11**, **T13**, **5.32**, **5.17**), para que nadie la refiche: **el formato de los 60 pies ya es el correcto** —Francisco copió el estilo de las leyendas de tablas y figuras de una guía de estilos—, así que no hay nada que aplicar.
 
-  **Lo que NO es de T6:** las palabras pegadas de la prosa de la Tabla 6.3 van en la barrida única de **5.32**, y la Figura 5.11 (imagen incrustada + llamada numerada) va en **T7**, porque es el mismo párrafo y el mismo gesto. `Word`
-- [ ] **T7** · SEDE: las **14 figuras** que no se llaman por número desde la prosa (3.1, 4.1–4.5 y 5.5–5.12); su número aparece solo en el pie. **Sí llevan llamada** la 2.1, la 2.5 y las 5.1–5.4. ACCIÓN: añadir la llamada por número en la prosa que las introduce. **El detalle —figura por figura, con la frase donde se inserta y la redacción propuesta— está en `Leyenda_tablas.md`; aquí no se repite.** Junto con T6 son ~51 ediciones en Word, y **no se recortan**: sin llamada por número no hay referencia cruzada desde el texto. `Word`
+  > [!success] Lo que T6 ya NO incluye, verificado en el volcado del 06:04
+  > - **Las 51 llamadas numeradas a tablas y figuras están APLICADAS** en el binario del 06:04
+  >   (comprobadas por muestreo literal: «se ilustra en la Figura 3.1», «La Tabla 4.12 muestra los
+  >   espacios», «se listan en la Tabla A.1», «se recoge en la Tabla A.2», «La Figura 5.11 muestra la
+  >   matriz»). Lo único que dejaron son **tres residuos**, fichados en **T11**.
+  > - **Los backticks de los pies de las Tablas 4.1 y 4.12** y los de la prosa posterior a la Tabla
+  >   5.13: **retirados**. Hoy queda **una sola ocurrencia de backticks en todo el documento**, la de
+  >   **T11**.
+  > - **La cita vacía `scikit-learn[]`**: ya no está.
+  > - **Los corchetes «[Figura 2.3]» y «[Figura 2.4]»**: ya no están (el segundo es hoy
+  >   «(Figura 2.4)»). Siguen vivos «[Figura 2.2]» y el `[5]` huérfano: ver **T13**.
+  >
+  > **Lo que NO es de T6:** las palabras pegadas de la prosa de la Tabla 6.3 van en la barrida única
+  > de **5.32** y la cursiva Markdown `*p*` va en **5.17**. La imagen incrustada de la Figura 5.11
+  > (antigua **T7**) **ya está resuelta**.
+
+**T7** · **RESUELTA en el binario del 06:04 — sin casilla, se conserva solo como constancia.** Cubría dos cosas y las dos están hechas: (1) las **14 llamadas numeradas de figura** (3.1, 4.1–4.5 y 5.5–5.12) y (2) la **imagen de la Figura 5.11**, que estaba incrustada en el párrafo de prosa. Verificado por Ctrl+F **«las cinco categorías más la columna unknown), sobre D2 completo»** —**1 sola coincidencia**; ⚠️ no buscar «sobre D2 completo» a secas, que da varias—: ese párrafo **ya cierra con punto**, la imagen **ya está en párrafo propio** y el pie «Figura 5.11. Matriz de confusión del sistema híbrido sobre D2 completo…» es el párrafo siguiente. **No reabrir sin volver a comprobarlo en un volcado fresco.**
+
+  ✅ **Re-verificado el 2026-08-26 contra `REPASO_20260826-0604\documento.txt`:** el fragmento da **1 sola coincidencia**; el párrafo de prosa termina en «…sobre D2 completo.» (con punto), el párrafo siguiente está **vacío de texto** —es el que porta la imagen— y el de después es el pie «Figura 5.11. Matriz de confusión del sistema híbrido sobre D2 completo…». **La declaración del primer pase es correcta**: la imagen ya no está incrustada en la prosa.
 - [ ] **T8** · SEDE: el índice de contenido, en concreto las entradas del Apéndice A: el **par duplicado de la página 167** («Apéndice A. Columnas del dataset NSL-KDD» y «A.1. Columnas del dataset NSL-KDD»), la serie **«A.1.1. Características básicas (1–9)»–«A.1.5. Etiquetas: tipos de ataque y categorías»** (págs. 167–170) y **«A.2. Métricas de desempeño»** (pág. 172). ACCIÓN: **regenerar el índice, y hacerlo lo último**, cuando el cuerpo ya esté estable. `Word`
 
   **Qué está mal hoy**, verificado en `indice_toc.txt`: el TOC rotula «A.1.1»–«A.1.5» unos encabezados que en el cuerpo son `Título 8` sin número visible, e imprime **dos veces el mismo texto** —«Apéndice A. Columnas del dataset NSL-KDD» como `TDC1` y «A.1. Columnas del dataset NSL-KDD» como `TDC2`, ambas en la página 167—, que es el reflejo del duplicado del cuerpo.
@@ -156,7 +196,31 @@ Queda **una sola** entrada viva, y es decisión de Francisco:
   **A3 ya está hecha** y se ha retirado de esta lista: los cuatro encabezados de familia son hoy `Título 8` uniforme.
 
 - [ ] **T9** · SEDE: el párrafo que dice literalmente «EDAKJDFSLDLKJ», dentro de la «Lista de Acrónimos». ACCIÓN: **no se trata aquí** — es una de las **cinco** correcciones de la tarea **2.26**, que arregla el glosario de acrónimos entero de una pasada (la antigua 2.27 ya no existe: 2.26 la absorbió). Se deja anotado para que nadie lo fiche por tercera vez. `Word`
-- [ ] **T10** · **DECISIÓN:** hoy **no existe** índice de figuras ni de tablas (el único campo `TOC` del documento es el del índice de contenidos). ACCIÓN: decidir si se añaden ambos, solo uno o ninguno. **El detalle técnico y las dos precondiciones —estilo `Descripción` en los 60 pies y campos `SEQ` para renumerar— están en `Leyenda_tablas.md`, «Decisiones pendientes de Francisco»; aquí no se repite.** `Word`
+**T10** · **CERRADA POR DECISIÓN de Francisco del 2026-08-26 — sin casilla, se conserva solo como constancia.** Palabras literales: «No voy a hacer indice de tablas y figuras, esa tarea la puedes dar por finalizada tambien». Era la decisión de si se añadían índice de tablas e índice de figuras; **la respuesta es que no se añade ninguno de los dos**, y el documento se queda como está: su único campo `TOC` es el del índice de contenidos, con sus **109 párrafos** `TDC1`/`TDC2`/`TDC3`. **No es un cierre por ejecución**: no hay nada que tocar en el `.docx`. Consecuencias que arrastra, y que ya están aplicadas en este fichero: (a) **T6** —aplicar el estilo `Descripción` a los 60 pies— era **precondición suya y solo suya**, así que **decae por esta vía**; y (b) el paso de los números de pie a campos `SEQ`, que era la segunda precondición, **decae con ella como precondición**. ⚠️ **Pero el defecto `SEQ` no decae entero: solo decae una de sus dos consecuencias.** Ver la constancia inmediatamente debajo.
+
+  **Constancia — el defecto `SEQ` sigue vivo por su segunda consecuencia (sin casilla).** ⚠️ **NO VERIFICABLE por volcado de texto**: el extractor no saca códigos de campo de Word, así que esto se comprueba con el `.docx` abierto. Los **37 pies de tabla** son texto tecleado a mano: **ninguno lleva campo `SEQ`** —solo uno tiene un `bookmarkStart`, y es marca del índice de contenidos, no de referencia cruzada— y **ninguno de los 40+ campos `REF` del documento apunta a una tabla**: todos apuntan a epígrafes. De ahí salían **dos** consecuencias, y solo la primera muere con la decisión de T10:
+  - (a) **no se puede generar índice de tablas ni de figuras** → **DECAE**: Francisco decidió el 2026-08-26 que no se añade ninguno de los dos.
+  - (b) **cualquier inserción o borrado de tabla obliga a RENUMERAR A MANO**, porque «Tabla x.y» es texto y ningún `REF` la sigue → **NO DECAE. Sigue viva.**
+
+  **Por qué importa ahora mismo:** si **A5** se resuelve dando pie propio a los cuatro bloques del Apéndice A, eso **desplaza A.2→A.5 y A.3→A.6**, y quien lo ejecute debe saber que **la renumeración es manual, pie a pie y llamada a llamada**: no hay campo que se actualice solo. No se ficha como tarea porque no hay nada que arreglar hoy; se deja como **aviso permanente de mantenimiento**.
+
+  ⚠️ **T6 decae además por un segundo motivo, y más fuerte**, declarado por Francisco el mismo 2026-08-26: **el formato de los pies ya es el correcto**, copiado de una guía de estilos. Es decir, aunque la decisión de los índices se revocase, **T6 no volvería**: no hay nada que aplicar. Su constancia y su blindaje contra reapertura están en «Defectos menores». **No reabrir T10 sin que Francisco revoque la decisión.**
+
+- [ ] **T11** · **Residuos de la aplicación de las 51 frases de llamada.** Al insertarse las llamadas numeradas, en dos párrafos **convive el deíctico antiguo con la frase numerada nueva**, y en uno de ellos se pegaron además backticks. Los tres se verificaron en `documento.txt` del volcado del 06:04, **una sola coincidencia cada uno**. ACCIÓN por sede: `Word`
+  - **Tabla 4.1** · Ctrl+F «La tabla siguiente recoge las librerías directas y papel en el pipeline.» → **borrar esa frase entera**; la llamada numerada del mismo párrafo («Como se detalla en la Tabla 4.1, cada librería de Python usada se fija con su versión…») ya la sustituye.
+  - **Tabla 5.10** · Ctrl+F «La tabla siguiente muestra el recall de detección» → mismo defecto: el párrafo termina con «La Tabla 5.10 detalla, para los 17 tipos de ataque 0-day, el recall de cada detector…». **Borrar el deíctico** y dejar la frase numerada.
+  - **Backticks en la Tabla 4.1** · Ctrl+F «se fija con su versión en \`requirements.txt\`» → **quitar los backticks** y dar monoespaciada, o dejar el texto llano. Es hoy la **única ocurrencia de backticks de todo el documento** (contada en `documento.txt` del 06:04: 1 línea).
+
+- [ ] **T12** · **DECISIÓN:** **redundancia entre las Tablas 3.1, 4.2 y 4.7**, decidir si se fusionan o se dejan. Las tres describen el mismo reparto D1/D2/D3 con columnas distintas:
+  - **Tabla 3.1** — `SUBCONJUNTO | CONTENIDO | PROPÓSITO`
+  - **Tabla 4.2** — `Subconjunto | Contenido | Instancias | Características`
+  - **Tabla 4.7** — `Split | Contenido | Tamaño | Función`
+
+  SEDE: Ctrl+F «Tabla 4.7. División especializada del NSL-KDD en D1, D2 y D3». **No es un error, es redundancia:** valorar si 3.1 y 4.7 se fusionan o si una de las dos remite a la otra. La 4.2 es la que aporta las dimensiones, que las otras dos no dan. Es el **candidato a recorte nº 5**, que remite aquí. `Word` + `vault`
+
+- [ ] **T13** · SEDE: dos párrafos consecutivos del capítulo 2, **una sola coincidencia cada fragmento** en el volcado del 06:04. ACCIÓN: `Word`
+  - Ctrl+F «corregirlas a mano [Figura 2.2]» → reescribir a «…para corregirlas a mano, como muestra la Figura 2.2.». Es el **último corchete de figura** que queda: «[Figura 2.3]» y «[Figura 2.4]» ya se retiraron.
+  - Ctrl+F «previamente entrenado (Figura 2.4). [5]» → el marcador **queda suelto detrás del punto**, como si fuera frase propia. Reescribir a «…a partir del algoritmo previamente entrenado, según se representa en la Figura 2.4 [5].». `[5]` es Géron: **el número no se toca**, solo se reubica dentro de la frase.
 
 ---
 
@@ -265,18 +329,19 @@ Queda **una sola** entrada viva, y es decisión de Francisco:
 
 ### Figuras, tablas y ecuaciones
 
-- [ ] **5.17** · SEDE: Ctrl+F «y una prevalencia de ataque *p* que se hace variar» — quedan vivos los **asteriscos de cursiva Markdown** de `*p*`; los backticks de ese mismo párrafo ya se retiraron. ACCIÓN: **no se trata aquí.** Es una de las cuatro sedes de la barrida única de **Markdown residual** registrada en `Leyenda_tablas.md` («Erratas de texto en pies y prosa de tablas»), junto con los backticks de los pies de las Tablas 4.1 y 4.12 y los de la prosa posterior a la Tabla 5.13. Se hacen de una pasada y no se duplican aquí. `Word`
+- [ ] **5.17** · SEDE: Ctrl+F «una prevalencia de ataque *p* que se hace variar» — **1 sola coincidencia**, en la prosa que introduce la Tabla 5.13 («La proyección es aritmética elemental sobre dos cifras ya publicadas…»). ACCIÓN: **sustituir los asteriscos de cursiva Markdown por cursiva de Word**. Es **la única sede de Markdown residual del cuerpo que queda viva**: los backticks de los pies de las Tablas 4.1 y 4.12 y los de la prosa posterior a la Tabla 5.13 **ya se retiraron**, y `tablas.txt` no tiene ninguno —dentro de las celdas no queda Markdown—. El único backtick vivo del documento es otro y va en **T11**. `Word`
 - [ ] **5.18** · SEDE: el párrafo que empieza por «Junto al FPR conviene acotar la segunda cifra que invita a la sobrelectura: la velocidad» y termina por «…residentes en memoria». ACCIÓN: añadir la tabla de tiempos y latencia; el texto critica las columnas `latencia_ms_por_flujo` y `flujos_por_segundo`, que no se muestran en ninguna tabla. `vault`
-- [ ] **5.19** · SEDE: los dos párrafos de estilo `FiguraTablaEcuacin` rotulados «(1)», uno en el capítulo 2 (definición de Precisión) y otro tras «La proyección es aritmética elemental…». ACCIÓN: renumerar el segundo. **Degradada a menor**, y su sede única es `Leyenda_tablas.md`, «Menores, a criterio de Francisco»: es cosmético, no afecta al contenido, y ahí está con las dos opciones (numerar «(8)» o pasar a numeración por capítulo). `Word`
+**5.19** · **RESUELTA en el binario del 06:04 — sin casilla, se conserva solo como constancia.** Era la **numeración de ecuaciones duplicada**: la ecuación de la proyección de precisión del capítulo 5 (la que sigue a «La proyección es aritmética elemental sobre dos cifras ya publicadas…») se rotulaba «(1)», igual que la definición de Precisión del capítulo 2. Hoy los **8 párrafos de estilo `FiguraTablaEcuacin` rotulados con número** forman la serie **(1)…(8) contigua y sin duplicados**, y la del capítulo 5 es la **(8)**. No hay nada que renumerar.
+
+  ✅ **Re-verificado el 2026-08-26 contra `REPASO_20260826-0604\documento.txt`:** hay **17 párrafos** con estilo `FiguraTablaEcuacin`, de los que **8 llevan número**, y esos ocho rotulan **(1), (2), (3), (4), (5), (6), (7) y (8)** —serie **contigua y sin duplicados**—; los siete primeros están en el capítulo 2 y el **(8)** es el del capítulo 5. **La declaración del primer pase es correcta.**
 - [ ] **5.24** · SEDE: la fila vacía de la tabla del eje de balanceo en `5.2 Resultados del modelo de detección basado en firmas.md`. ACCIÓN: eliminarla. `vault`
 > [!note] Pies y celdas del capítulo 5
-> El defecto vivo de este capítulo por esta vía —la **Figura 5.11**, cuya imagen sigue incrustada en
-> el párrafo de prosa— está registrado en `Leyenda_tablas.md` y lo cubre **T7**, no T6: es el mismo
-> párrafo y el mismo gesto que la llamada numerada de esa figura, y las dos cosas se hacen juntas.
-> Aquí no se duplica.
+> Por esta vía **no queda ningún defecto vivo** en el capítulo 5: la imagen de la **Figura 5.11** ya
+> está en párrafo propio (antigua **T7**, resuelta) y la ecuación duplicada también (antigua
+> **5.19**). Lo que sigue vivo del capítulo son **5.17** (cursiva `*p*`), **5.28** (paginación) y el
+> residuo de la Tabla 5.10, que va en **T11**.
 
 - [ ] **5.28** · SEDE: la Tabla 5.11 y su pie «Tabla 5.11. Sistema híbrido frente al baseline de control». ACCIÓN: mantenerlos en la misma página. ⚠️ NO VERIFICADO: la paginación no es observable en el volcado. `Word`
-
 ### Recortes y redacción
 
 - [ ] **5.21** · SEDE: **siete sedes de prosa** más **una celda de tabla que no se toca**. ⚠️ **Cuidado con la aritmética:** un Ctrl+F de «13,4 %» devuelve **siete** párrafos —seis de prosa más la celda de tabla—; la **séptima sede de prosa** es la del «El 13» sin decimales, que ese Ctrl+F **no encuentra** (perdió los decimales, y eso lo arregla **5.31**). ACCIÓN: dejar la explicación desarrollada **en un solo sitio** y remitir desde el resto; es el **candidato a recorte nº 3**, que remite aquí. Las siete sedes de prosa, por Ctrl+F: `vault`
@@ -289,7 +354,7 @@ Queda **una sola** entrada viva, y es decisión de Francisco:
   - La séptima es la mención suelta de la cifra en el párrafo que abre «El **13** se cita con tres salvedades». ⚠️ **Aquí el Ctrl+F es «El 13 se cita con tres salvedades», NO «13,4 %»**: ese párrafo ha perdido los decimales y el símbolo de porcentaje, y por eso no aparece en la búsqueda de la cifra completa. Restituir los decimales es la tarea **5.31**; aquí solo cuenta como sede de la explicación repetida.
 - [ ] **5.22** · SEDE: la viñeta que empieza por «El baseline también falla donde su CV prometía: su f1_macro cae de 0.909 en validación cruzada» y la casi idéntica «El baseline también falla donde su validación cruzada prometía: su f1_macro se desploma de 0.909». ACCIÓN: dejar una sola. `vault`
 - [ ] **5.23** · SEDE: «…el titular y la banda no salen del mismo commit, **de modo qua ser deriva** de código y no dispersión por semilla». ACCIÓN: reescribir a «de modo que se deriva de código». `vault`
-- [ ] **5.32** · **Palabras pegadas: una sola barrida de Ctrl+F.** ACCIÓN: poner el espacio que falta en las **cinco** sedes. Van juntas porque en Word es el mismo gesto y el mismo recorrido; **absorbe la antigua 5.33** y las dos sedes que `Leyenda_tablas.md` tenía por su cuenta, que ahora remiten aquí. `Word`
+- [ ] **5.32** · **Palabras pegadas: una sola barrida de Ctrl+F.** ACCIÓN: poner el espacio que falta en las **cinco** sedes. Van juntas porque en Word es el mismo gesto y el mismo recorrido; **absorbe la antigua 5.33** y las dos sedes de la prosa de la Tabla 6.3, que **no se fichan en ningún otro sitio**. `Word`
   - Ctrl+F «atacadirectamente» → «ataca directamente». Frase: «Es la vía que ataca directamente la fracción de 0-day mal etiquetados como conocidos».
   - Ctrl+F «podidoverificar» → «podido verificar». Frase: «…este trabajo no ha podido verificar que los ficheros CSV publicados expongan columnas de tiempo».
   - Ctrl+F «La consecuencia estámedida» → «está medida». **Hallazgo nuevo del repaso del 21:06**, no fichado hasta ahora: está en el párrafo de líneas futuras «El enrutado a la clase unknown se resuelve hoy con un umbral sobre predict_proba (UMBRAL_CONF)…».
@@ -323,6 +388,7 @@ Queda **una sola** entrada viva, y es decisión de Francisco:
 - [ ] **6.7** · SEDE: la viñeta que empieza por «Clases minoritarias u2r y r2l. Con muy pocas muestras de entrenamiento» y termina por «…Es el punto débil universal de la etapa de firmas». ACCIÓN: desdoblarla en dos limitaciones, una por clase. `vault`
 - [ ] **6.9** · SEDE: «Objetivo general — implementar un H-NIDS. Cumplido. El sistema se materializó como una cascada de dos etapas». ACCIÓN: declarar expresamente si se cumplió la parte del objetivo general que exige comparar contra «cada etapa por separado»; hoy solo se declara el contraste con el monolítico. `vault`
 - [ ] **6.10** · SEDE: el Título 1 «Conclusiones» seguido inmediatamente del Título 2 «Conclusiones». ACCIÓN: renombrar el Título 2. `Word`
+- [ ] **6.12** · SEDE: la **cabecera de la Tabla 6.1**, Ctrl+F «Error metodológico» — **1 sola coincidencia** en el volcado del 06:04. La columna de códigos P1–P10 **no tiene rótulo**: la celda `[f1,c1]` está vacía (`tablas.txt`, TABLA 38). ACCIÓN: poner un rótulo a esa celda, o dejarlo si es deliberado. `Word`
 - [ ] **6.11** · SEDE: «La conclusión de fondo es que firmas y anomalías no compiten, sino que se complementan», que repite «En síntesis, el capítulo demuestra con datos que un enfoque híbrido orientado a la detección de lo desconocido aporta una capacidad…» del capítulo 5. ACCIÓN: suprimir la repetición y dejar la conclusión formulada una sola vez. ⚠️ **Colisiona con el Anexo D:** la frase «firmas y anomalías no compiten, sino que se complementan» existe **una sola vez** en el `.docx` y es justamente el ancla de `[40]` (García-Teodoro *et al.*) en el Anexo D, §«Capítulo 6». Si se suprime sin más, ese marcador se queda sin sede. Al recortar hay que decidir a la vez **dónde va el `[40]`**: o se conserva esta frase con el marcador, o el `[40]` se traslada a la formulación del capítulo 5 que se decida mantener. `vault`
 
 ---
@@ -333,11 +399,36 @@ Queda **una sola** entrada viva, y es decisión de Francisco:
 
   **Qué hay hoy**, verificado: **tres** pies de tabla en todo el apéndice —«Tabla A.1. Características del dataset completo NSL-KDD», «Tabla A.2. Codificación numérica de las cinco categorías por el LabelEncoder del pipeline.» y «Tabla A.3. Los 40 tipos de etiqueta agrupados por categoría…»— frente a **cuatro** bloques de tabla de características, de los que **tres quedan sin pie**. Los cuatro encabezados de familia son ya `Título 8` uniforme (eso lo cerró A3).
 
-  **ACCIÓN: decidir la numeración de los cuatro bloques.** Opción única sobre la mesa: dar **pie propio a cada bloque, A.1–A.4** —básicas (1–9), contenido (10–22), tráfico basadas en tiempo (23–31), tráfico basadas en host (32–41)—, lo que **desplaza** los actuales A.2 y A.3 a A.5 y A.6. Lo que Francisco decide es si se hace o se deja como está, con una sola leyenda al final. ⚠️ **La fusión en una sola tabla continua con un único pie A.1 NO es una opción**: Francisco la declaró cerrada («no se fusionan»), y `Leyenda_tablas.md` la da por no reabrible. La opción que aquí figuraba en ese sentido se ha retirado.
+  **ACCIÓN: decidir la numeración de los cuatro bloques.** Opción única sobre la mesa: dar **pie propio a cada bloque, A.1–A.4** —básicas (1–9), contenido (10–22), tráfico basadas en tiempo (23–31), tráfico basadas en host (32–41)—, lo que **desplaza** los actuales A.2 y A.3 a A.5 y A.6. Lo que Francisco decide es si se hace o se deja como está, con una sola leyenda al final. ⚠️ **La fusión en una sola tabla continua con un único pie A.1 NO es una opción**: Francisco la declaró cerrada («no se fusionan») y el censo de tablas la da por no reabrible. La opción que aquí figuraba en ese sentido se ha retirado.
 
-  **Remisión:** el **alcance del texto de la leyenda del pie A.1** —qué tiene que decir para que se lea como leyenda de los cuatro bloques, con la redacción propuesta— está en `Leyenda_tablas.md`, §«Apéndice A» → viñeta «La leyenda única no se lee como leyenda de las cuatro tablas». **Es otra cosa que esta decisión**, y solo hace falta si aquí se decide **no** numerar los cuatro bloques por separado.
+  > [!warning] Si se decide A.1–A.4, hay que corregir TAMBIÉN dos frases de prosa, no solo los pies
+  > Caducidad creada el **2026-08-26** al aplicarse las 51 frases de llamada: las llamadas por
+  > número **ya están dentro del `.docx`**, así que desplazar A.2→A.5 y A.3→A.6 **rompe la prosa que
+  > las nombra**. Y la renumeración es **manual** —ningún campo `REF` apunta a una tabla: ver la
+  > constancia del defecto `SEQ` en **T10**—. Las dos sedes, verificadas contra `documento.txt` del
+  > volcado del 06:04, **1 sola coincidencia cada una**:
+  > - Ctrl+F **«se recoge en la Tabla A.2 del apéndice»** → pasaría a «…Tabla A.5…». Frase completa: «La codificación numérica de las cinco categorías asignada por el LabelEncoder del pipeline se recoge en la Tabla A.2 del apéndice.»
+  > - Ctrl+F **«La tabla (Tabla A.3) asigna cada uno de los 40 tipos»** → pasaría a «(Tabla A.6)». ⚠️ **No buscar «se listan en la Tabla A.3 del apéndice»: ese texto NO existe** (0 coincidencias); la llamada de A.3 está redactada entre paréntesis, no con ese giro.
+  >
+  > La tercera llamada, Ctrl+F **«se listan en la Tabla A.1 del apéndice»**, **no se toca**: el
+  > primer bloque conserva el número A.1 en las dos opciones.
+
+  **Remisión interna:** el **alcance del texto de la leyenda del pie A.1** —qué tiene que decir para que se lea como leyenda de los cuatro bloques, con la redacción propuesta— es la tarea **A16**, aquí mismo. **Es otra cosa que esta decisión**, y solo hace falta si aquí se decide **no** numerar los cuatro bloques por separado.
 
   ⚠️ El «34 pies» del recuento automático es una limitación de la regex del extractor —solo captura dígito tras «Tabla»—, no un hecho del documento. `Word`
+- [ ] **A16** · **Alcance de la leyenda del pie A.1.** SEDE: Ctrl+F «Tabla A.1. Características del dataset completo NSL-KDD.» — **1 sola coincidencia**. La decisión de Francisco de **no fusionar** las cuatro tablas se respeta y no se vuelve a plantear: quedan partidas, con una sola leyenda al final de la cuarta. **El problema real, verificado:** entre la primera tabla y la leyenda hay **cuatro tablas y tres títulos de nivel `Título 8`** intercalados («Características de contenido (10–22)», «…basadas en tiempo (23–31)», «…basadas en host (32–41)»); en la maquetación final esa leyenda cae justo debajo del bloque «host (32–41)», y un lector la leerá como pie de esa subtabla, no del conjunto. Las tres anteriores quedan sin nada. ACCIÓN: no fusionar, sino **hacer explícito el alcance en la propia redacción de la leyenda**. Redacción propuesta, que sustituye a la actual:
+
+  > Tabla A.1. Características del dataset completo NSL-KDD, desglosadas en los cuatro bloques anteriores: básicas (1–9), de contenido (10–22), de tráfico basadas en tiempo (23–31) y de tráfico basadas en host (32–41).
+
+  Como refuerzo barato, conviene que la prosa introductoria del apéndice (Ctrl+F «Cada registro del dataset describe una conexión TCP/IP resumida en 41 atributos») anuncie que la Tabla A.1 se presenta partida en cuatro bloques. `Word` + `vault` (la redacción de la leyenda y la frase del apéndice existen también en la nota del vault).
+
+  > [!note] Esto NO es la disyuntiva de numeración
+  > Aquí se decide **el alcance de la leyenda del pie A.1**: qué tiene que decir su texto para que se
+  > lea como leyenda de los cuatro bloques. **Cuántos pies hay y cómo se numeran** (A.1–A.4 con pie
+  > propio, desplazando los actuales A.2 y A.3) es otra cosa, y es la tarea **A5**. Si Francisco
+  > decide numerar los cuatro bloques por separado, esta redacción ampliada **deja de hacer falta**.
+  >
+  > El pie A.1 **ya cierra con punto**: eso no es lo que hay que arreglar.
 - [ ] **A6** · SEDE: Ctrl+F «Columnas del dataset NSL-KDD». ⚠️ **Da 4 coincidencias**, y solo dos son el defecto: las **dos primeras** son entradas del **índice de contenidos** («Apéndice A. Columnas del dataset NSL-KDD» como `TDC1` y «A.1. Columnas del dataset NSL-KDD» como `TDC2`, las dos en la página 167) y **no se tocan** —el TOC se regenera con **T8**, no se edita a mano—. El par del **cuerpo** son las dos **últimas** coincidencias y se reconocen porque son **dos párrafos consecutivos, sin nada entre ellos, con estilos `Título 6` y `Título 7`** (el panel de estilos de Word lo muestra al poner el cursor en cada uno) y porque están al principio del Apéndice A, justo antes de la prosa «Cada registro del dataset describe una conexión TCP/IP resumida en 41 atributos…». ACCIÓN: borrar **uno de esos dos** encabezados del cuerpo (el `Título 7`, para que el apéndice abra en un solo nivel). **Es precondición de T8**: mientras el par siga ahí, regenerar el índice reproduce la entrada duplicada. `Word`
 - [ ] **A7 + A8** · SEDE: el **Título 7 vacío** que precede inmediatamente a «Bibliografía» — es la posición que el índice rotula «A.2. Métricas de desempeño». ACCIÓN: **DECISIÓN:** o se redacta y vuelca el apéndice A.2, o se borra el Título 7 vacío y se retira su entrada del índice. Son el mismo objeto: no se tratan por separado. `vault` + `Word`
 - [ ] **A9** · SEDE: «Constante a 0 en todo el NSL-KDD (por eso el filtro de varianza la elimina, **véase 4.3 Preprocesamiento de los datasets §4.3.5**)». ACCIÓN: reducir a «véase §4.3.5». `vault`
@@ -358,6 +449,47 @@ Queda **una sola** entrada viva, y es decisión de Francisco:
 - [ ] **B2** · SEDE: las entradas `[1]`, `[9]`, `[10]` y `[11]` de la bibliografía, hoy URLs desnudas. ACCIÓN: darles formato IEEE y fusionar `[9]` en `[8]` (duplica el enlace de Stallings). `Word`
 - [ ] **B3** · SEDE: las entradas `[2]` («Computer Security Threat Monitoring and Surveillance». James P. Anderson Co.) y `[8]` («Computer Security: Principles and Practice» William Stallings). ⚠️ **Sin espacio antes de los dos puntos:** la sede anterior lo escribía «Computer Security **:** Principles», y con ese espacio el Ctrl+F daba **0 resultados**. Verificado: el texto del `.docx` es «Computer Security: Principles and Practice», con **1 sola coincidencia**. El fragmento de Anderson es literal, pero **da 2 coincidencias**: la **primera** es la mención del cuerpo del capítulo 1 («…un informe titulado "Computer Security Threat Monitoring and Surveillance". … Este informe se considera el punto de partida para los IDS [2].»), que **no se toca**; la sede es la **segunda**, la entrada de la lista bibliográfica («"Computer Security Threat Monitoring and Surveillance". James P. Anderson Co.»), que es donde va el año. ACCIÓN: añadir el año 1980 a Anderson, y a Stallings el año, la 5.ª edición, el coautor Brown y la editorial Pearson. `Word`
 - [ ] **B5** · **DECISIÓN:** los dos matches aproximados, `[65]` McHugh y `[75]` Moustafa y Slay. Están registrados en la nota [[Bibliografia del docx - numeracion y anclas]] —la «Autoridad de numeración» citada en la cabecera de este fichero—, en su §5.3 «Dos matches solo aproximados». ACCIÓN: confirmarlos. **Los dos están ya pegados** en el binario actual: `[65]` en «La crítica original a la metodología de evaluación del DARPA/KDD se remonta a [65]» y `[75]` en «…por lo que la información temporal existe en origen [75]» (lo pegó una de las reescrituras X1–X30, ya cumplidas en el binario del 21:06; ver el callout del bloque 🔴 PRIORITARIO). Confirmar la identidad de ambas obras es por tanto **urgente**, porque el documento ya las afirma. `Word`
+
+---
+
+## Defectos menores
+
+Cosas que **no bloquean nada** y que ningún otro ítem vivo necesita. **Hoy no queda ninguna viva:**
+la única que había, **T6**, quedó **cerrada por decisión** el 2026-08-26 y se conserva abajo como
+constancia, **sin casilla**. El bloque se mantiene por si vuelve a caer algo aquí.
+
+**T6** · **Estilo de los 60 pies** — **CERRADA POR DECISIÓN de Francisco del 2026-08-26 — sin casilla, se conserva solo como constancia.** Palabras literales: «Los 60 pies en normal, está ok. He copiado el estilo de las leyendas de las tablas y de las figuras de una guía de estilos, por lo que no necesito hacer nada con eso. Está resuelto». El defecto fichaba los **60 pies** del documento —**37 de tabla** (34 «Tabla \<dígito\>» + «Tabla A.1», «A.2» y «A.3») y **23 de figura**— y pedía aplicarles el estilo `Descripción`. **No se aplica: no hace falta.**
+
+  > [!warning] Blindaje contra reapertura — leer antes de volver a medir esto
+  > **El motivo del cierre no es que su consecuencia decayera, sino que el formato ya es el
+  > correcto.** El nombre del estilo de Word era un **proxy de la apariencia**, y la apariencia
+  > **cumple**: Francisco copió el estilo de las leyendas de tablas y figuras de una guía de
+  > estilos, así que los 60 pies se imprimen ya como deben. Un defecto de forma cuya forma es
+  > correcta no es un defecto.
+  > *(La caída de su motivo declarado —era precondición de la decisión de los índices, hoy cerrada
+  > en **T10**— sigue siendo cierta, pero es un motivo secundario y no el que cierra esto.)*
+  >
+  > **NO se aplicó el estilo `Descripción` de la plantilla.** Por eso `estilos_usados.txt` del
+  > volcado del 06:04 —y el de cualquier volcado posterior, mientras no se toque el `.docx`— **no
+  > registrará ningún uso del estilo `Descripción`**; los 60 pies seguirán bajo el estilo por
+  > defecto. (Ese fichero es solo una lista de pares estilo/frecuencia —18 líneas—: no dice nada de
+  > pies ni de recuentos de pies, así que el dato verificable en él es exactamente ese, el **cero
+  > usos de `Descripción`**.) **Eso es CORRECTO, no un error de medición ni un defecto pendiente.**
+  > Quien vuelva a medirlo y no encuentre `Descripción` **NO debe reabrirlo**: solo se reabre si
+  > Francisco revoca la decisión.
+
+  > [!note] T6 cubría DOS mitades, y cada una cerró por una vía distinta
+  > El número **T6** designó desde el principio dos defectos hermanos, y por eso aparece con dos
+  > descripciones a lo largo de este fichero. Las dos están cerradas, pero **no por lo mismo**:
+  >
+  > | Mitad de T6 | Qué era | Cómo cerró | Dónde consta |
+  > |---|---|---|---|
+  > | **Llamadas** | las **51 llamadas numeradas** a tablas y figuras desde la prosa, más los residuos de Markdown que arrastraban | **por EJECUCIÓN**: aplicadas y verificadas en el binario del 06:04 | callout «Lo que T6 ya NO incluye», en el bloque transversal |
+  > | **Pies** | aplicar el estilo `Descripción` a los **60 pies** | **por DECISIÓN de Francisco** (2026-08-26): el formato ya es el correcto | esta entrada de «Defectos menores» |
+  >
+  > Lo único que sobrevivió de la primera mitad son **tres residuos**, fichados aparte en **T11**.
+  > Ninguna de las dos mitades se reabre sin volver a medir en un volcado fresco (la de llamadas) o
+  > sin que Francisco revoque su decisión (la de pies).
 
 ---
 
@@ -599,16 +731,16 @@ por número (**6.4** cita el nº 6).
 > [!info] Siete de los diez ya son tareas, y no se decide dos veces
 > Los candidatos **1, 2, 3, 4, 6 y 9** tienen **ficha propia** con sus sedes literales completas —en
 > algún caso más completa que la de aquí—, así que abajo **solo remiten**: se trabajan en su tarea.
-> El **5** también remite, pero **no a una ficha**: su sede es una **decisión pendiente de Francisco**
-> en `Leyenda_tablas.md` («Redundancia entre las Tablas 3.1, 4.2 y 4.7»), porque es redundancia de
-> tablas y no de prosa. Los que conservan texto son los **tres que no son tarea de nadie**: el **7**,
+> El **5** también remite, y desde el 2026-08-26 **sí a una ficha**: la tarea **T12**, que es una
+> **decisión pendiente de Francisco**, porque es redundancia de tablas y no de prosa. Los que
+> conservan texto son los **tres que no son tarea de nadie**: el **7**,
 > el **8** y el **10**.
 
 1. **Desbalance 883:1, tabulado dos veces** → tarea **4.10**, que lleva las **cinco** apariciones (cuatro de prosa —una de ellas en el capítulo 2— y un pie de tabla), no solo dos. **Cinco, no cuatro:** contado en `documento.txt` del volcado del 21:06.
 2. **Fracaso del baseline, viñeta casi calcada** → tarea **5.22**, con las dos sedes literales.
 3. **El 13,4 % explicado varias veces** → tarea **5.21**, con las **siete sedes de prosa** (más una celda de tabla que no se toca). **Siete, no seis:** la séptima es la mención sin decimales «El 13 se cita con tres salvedades», que un Ctrl+F de «13,4 %» no encuentra.
 4. **Justificación del percentil 95, dos veces con el mismo argumento** → tarea **4.11**, con las tres apariciones del umbral.
-5. **Tabla de subconjuntos D1/D2/D3, duplicada entre capítulos** → es cosa de tablas: la sede única es `Leyenda_tablas.md`, «Decisiones pendientes de Francisco» → «Redundancia entre las Tablas 3.1, 4.2 y 4.7». Allí están las tres tablas con sus columnas y el porqué. Aquí no se repite.
+5. **Tabla de subconjuntos D1/D2/D3, duplicada entre capítulos** → es cosa de tablas y es **decisión de Francisco**: la sede única es la tarea **T12** («Redundancia entre las Tablas 3.1, 4.2 y 4.7»), en el bloque transversal. Allí están las tres tablas con sus columnas y el porqué. Aquí no se repite.
 6. **Adversario estático, argumentado dos veces** → tarea **6.4**, que además decide en cuál de los dos párrafos va el `[50]`. **Se toma una vez y se aplica una vez.**
 7. **`snmpgetattack` como punto ciego, dos veces.** Primera: «snmpgetattack es un punto ciego universal (los cuatro detectores lo fallan, en ambos conjuntos de características)». Repetición: «El tipo de ataque snmpgetattack (n = 178) lo fallan los cuatro detectores en los dos conjuntos de características». ACCIÓN: dejar una y remitir; la segunda es la que aporta el soporte (n = 178), así que conviene fundirlo en la que se conserve. **Sin tarea propia: se decide aquí.** `vault`
 8. **«Patrón dominante en la literatura», tres veces.** Primera: «enfrenta el sistema híbrido al patrón dominante en la literatura sobre NSL-KDD: un RandomForest monolítico». Repeticiones: «…el sistema híbrido completo frente al patrón dominante en la literatura sobre NSL-KDD» y «Baseline no trivial: RandomForest monolítico de cinco clases, que además es el patrón dominante en la literatura sobre este dataset (5.3)». ACCIÓN: dejar la formulación completa en la primera y abreviar las otras dos. **Sin tarea propia: se decide aquí.** ⚠️ Ojo al recortar: la fila de **C.9** que pega `[12]`+`[44]` se ancla en esta frase, y su nota advierte que «RandomForest monolítico» no está verificado en fuente. `vault`
