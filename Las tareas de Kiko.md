@@ -6,13 +6,28 @@ Verificado contra `Resultados\docx\REPASO_20260826-0643\` (`.docx` de 4.038.690 
 
 ## HOY · Roto o mal
 
-- [ ] **5.1** · «D2 y D3 no se dividen, por lo que nos quedamos con sus funciones ya mencionadas» → invertir la atribución: D3 entrena la etapa 2 y aporta las probabilidades out-of-fold; D2 es el conjunto de evaluación. `vault`
+- [X] **5.1** · «D2 y D3 no se dividen, por lo que nos quedamos con sus funciones ya mencionadas» → invertir la atribución: D3 entrena la etapa 2 y aporta las probabilidades out-of-fold; D2 es el conjunto de evaluación. `vault`
+
+
 - [ ] **5.2** · «D1 se divide en dos particiones, una D1_train (80% de D1) y otra D1_val» → reescribir: D1 es el conjunto, D1_train y D1_val su división 80/20; hoy asigna función propia a D1 además de a sus dos mitades. `vault`
+
+Según la tabla del punto 5.0 Protocolo de evaluación, cada uno tiene su función. Dame más indicaciones aquín 
+
+
 - [ ] **T3** · Residuos de trabajo que se imprimen dentro de la lista bibliográfica. `Word`
   - «⚠️ INCOMPLETA — scikit-learn, documentación oficial de la API» → completar la entrada `[66]` con año, fecha de consulta y URL de `LocalOutlierFactor`, y borrar el aviso.
+
+      Te toca buscar cual es la documentación y ponermela aquí  para que la rellene
+
+
   - «art. 1684, 2020. Scarfone y Mell (2007), NIST SP 800-94» → separar: `[13]` acaba en «art. 1684, 2020.» y el pegote pasa a su entrada propia.
-- [ ] **2.18** · «el corazón de la Seguridad Informática (CIA: Confidentiality, Integrity and Aviability)» → corregir a «Availability». `vault`
-- [ ] **2.26** · Lista de Acrónimos, de una sola pasada. `Word`
+
+He borrado lo que le sobraba :)
+
+- [X] **2.18** · «el corazón de la Seguridad Informática (CIA: Confidentiality, Integrity and Aviability)» → corregir a «Availability». `vault`
+
+
+- [X] **2.26** · Lista de Acrónimos, de una sola pasada. `Word`
   - «CIAConfidentiality, Integrity and Aviability» → «CIA<TAB>Confidentiality, Integrity and Availability».
   - «IDSIntrusion Detection System» → «IDS<TAB>Intrusion Detection System».
   - «NIDSNetwork Intrusion Detection System» → «NIDS<TAB>Network Intrusion Detection System».
@@ -20,7 +35,13 @@ Verificado contra `Resultados\docx\REPASO_20260826-0643\` (`.docx` de 4.038.690 
   - «ROCReceiver Operating Characteristic» → «ROC<TAB>Receiver Operating Characteristic».
   - Falta la fila `EDA<TAB>Exploratory Data Analysis` → añadirla.
   - Falta la fila `PCA<TAB>Principal Component Analysis` → añadirla.
+
+
+
 - [ ] **5.23** · «de modo qua ser deriva de código y no dispersión por semilla» → «de modo que se deriva de código y no dispersión por semilla». `vault`
+
+He borrado esa parte, dentro del informe no importa si es de un commit u otro, he dejado que son 2 salvedades y lo otro da igual. Asumo.
+
 - [ ] **5.32** · Palabras pegadas, una sola barrida. `Word`
   - «La consecuencia estámedida» → «La consecuencia está medida».
   - «Es la vía que atacadirectamente» → «Es la vía que ataca directamente».
