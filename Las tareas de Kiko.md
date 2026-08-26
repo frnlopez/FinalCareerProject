@@ -38,54 +38,139 @@ He borrado lo que le sobraba :)
 
 
 
-- [ ] **5.23** · «de modo qua ser deriva de código y no dispersión por semilla» → «de modo que se deriva de código y no dispersión por semilla». `vault`
+- [X] **5.23** · «de modo qua ser deriva de código y no dispersión por semilla» → «de modo que se deriva de código y no dispersión por semilla». `vault`
 
 He borrado esa parte, dentro del informe no importa si es de un commit u otro, he dejado que son 2 salvedades y lo otro da igual. Asumo.
 
-- [ ] **5.32** · Palabras pegadas, una sola barrida. `Word`
+- [X] **5.32** · Palabras pegadas, una sola barrida. `Word`
   - «La consecuencia estámedida» → «La consecuencia está medida».
   - «Es la vía que atacadirectamente» → «Es la vía que ataca directamente».
   - «este trabajo no ha podidoverificar» → «no ha podido verificar».
   - «ningún detectordomina a los demás» → «ningún detector domina a los demás».
   - «está en 0,160frente al 0,102» → «0,160 frente al 0,102».
-- [ ] **5.31** · «El 13 se cita con tres salvedades que son parte de la cifra» → restituir «El 13,4 % se cita…». `vault`
-- [ ] **T13** · Marcadores y corchetes mal colocados en el capítulo 2. `Word`
+
+- [X] **5.31** · «El 13 se cita con tres salvedades que son parte de la cifra» → restituir «El 13,4 % se cita…». `vault`
+- [X] **T13** · Marcadores y corchetes mal colocados en el capítulo 2. `Word`
   - «analiza los errores para corregirlas a mano [Figura 2.2]» → «…analiza los errores para corregirlas a mano, como muestra la Figura 2.2.».
   - «previamente entrenado (Figura 2.4). [5]» → «…previamente entrenado, según se representa en la Figura 2.4 [5].».
-- [ ] **T11** · Residuos de la aplicación de las llamadas numeradas. `Word`
+
+
+- [X] **T11** · Residuos de la aplicación de las llamadas numeradas. `Word`
   - «La tabla siguiente muestra el recall de detección» → borrar el deíctico; el párrafo ya cierra con «La Tabla 5.10 detalla, para los 17 tipos…».
   - «recoge las librerías directas y papel en el pipeline» → «recoge las librerías directas y su papel en el pipeline».
-- [ ] **5.17** · «una prevalencia de ataque *p* que se hace variar» → sustituir los asteriscos por cursiva de Word. `Word`
-- [ ] **A6** · «Columnas del dataset NSL-KDD» (las **dos últimas** de las 4 coincidencias: dos encabezados consecutivos del cuerpo, `Título 6` y `Título 7`, antes de «Cada registro del dataset describe una conexión TCP/IP») → borrar el `Título 7`. Precondición de **T8**. `Word`
-- [ ] **2.25** · Título 3 vacío que cierra el capítulo 2, inmediatamente antes del Título 1 «Diseño del sistema» → eliminarlo. `Word`
-- [ ] **3.10** · Título 3 vacío entre el pie «Tabla 3.1. Subconjuntos especializados» y «Esta separación es lo que hace posible medir la detección de 0-day» → eliminarlo o titularlo. `Word`
-- [ ] **A7 + A8** · **DECISIÓN:** Título 7 vacío inmediatamente anterior a «Bibliografía», que el índice rotula «A.2. Métricas de desempeño» → o se redacta y vuelca el apéndice A.2, o se borra el encabezado. Precondición de **T8**. `Word` + `vault`
-- [ ] **A15** · Encabezado de página del Apéndice A: lleva «Capítulo 6. Conclusiones» → corregir el salto de sección. ⚠️ comprobar en Word. Precondición de **T8**. `Word`
-- [ ] **T8** · Índice de contenido: «A.1. Columnas del dataset NSL-KDD167» y la serie «A.1.1»–«A.1.5» rotulan encabezados sin número, y la página 167 sale duplicada → regenerar el índice **lo último**, después de A6, A7+A8 y A15. `Word`
+
+
+- [X] **5.17** · «una prevalencia de ataque *p* que se hace variar» → sustituir los asteriscos por cursiva de Word. `Word`
+
+
+- [X] **A6** · «Columnas del dataset NSL-KDD» (las **dos últimas** de las 4 coincidencias: dos encabezados consecutivos del cuerpo, `Título 6` y `Título 7`, antes de «Cada registro del dataset describe una conexión TCP/IP») → borrar el `Título 7`. Precondición de **T8**. `Word`
+
+
+- [X] **2.25** · Título 3 vacío que cierra el capítulo 2, inmediatamente antes del Título 1 «Diseño del sistema» → eliminarlo. `Word`
+
+- [X] **3.10** · Título 3 vacío entre el pie «Tabla 3.1. Subconjuntos especializados» y «Esta separación es lo que hace posible medir la detección de 0-day» → eliminarlo o titularlo. `Word`
+
+
+- [X] **A7 + A8** · **DECISIÓN:** Título 7 vacío inmediatamente anterior a «Bibliografía», que el índice rotula «A.2. Métricas de desempeño» → o se redacta y vuelca el apéndice A.2, o se borra el encabezado. Precondición de **T8**. `Word` + `vault`
+
+
+
+- [X] **A15** · Encabezado de página del Apéndice A: lleva «Capítulo 6. Conclusiones» → corregir el salto de sección. ⚠️ comprobar en Word. Precondición de **T8**. `Word`
+
+- [X] **T8** · Índice de contenido: «A.1. Columnas del dataset NSL-KDD167» y la serie «A.1.1»–«A.1.5» rotulan encabezados sin número, y la página 167 sale duplicada → regenerar el índice **lo último**, después de A6, A7+A8 y A15. `Word`
+
+
+
 - [ ] **6.10** · Título 1 «Conclusiones» seguido inmediatamente del Título 2 «Conclusiones» → renombrar el Título 2. `Word`
-- [ ] **5.9** · «Particiones y su función», «Elementos congelados» y «Métricas Obligatorias» en texto plano → convertirlos en §5.0 con subsecciones numeradas; el cuerpo remite a «§5.0.5» y «§5.0.3», que no existen. `Word` + `vault`
+
+Dame opción para el 1 o para el 2
+
+
+- [X] **5.9** · «Particiones y su función», «Elementos congelados» y «Métricas Obligatorias» en texto plano → convertirlos en §5.0 con subsecciones numeradas; el cuerpo remite a «§5.0.5» y «§5.0.3», que no existen. `Word` + `vault`
+
+No se remite ninguno, así que no lo pongo, y lo dejo conforme está
+
+
+
 - [ ] **5.4** · Siglas sin definir «decisión H-2», «decisión H-3», «(H-6)» y «Q1/C» → dar diccionario en §5.0 o eliminarlas del cuerpo. `vault`
+
+
+Dime que tendría que meter, ponmelo aquí mismo. Un texto breve que explicara todas. ,  analiza la importancia o si es posible eliminar las referencias también y cruzalo con lo que quedó fuera (fichero Lo que quedo fuera.md de este repositorio)
+
+
+
 - [ ] **5.3** · «siempre que se cite el 0,8223 debe citarse junto a su banda» → cumplir esa regla también en las apariciones sueltas de `0,8223` en las tablas de robustez. `vault`
+
+
 - [ ] **2.10** · No existe ningún encabezado de estado del arte ni de trabajos relacionados en el capítulo 2 → añadir la sección; material aprovechable en §5.4. `vault`
+
+como? el capítulo 2 está muy bien formado y no necesitamos estado del arte, a no ser que sea muy necesario
+
+
 - [ ] **2.11** · «Situar este trabajo frente a esos tres casos permite precisar en qué se apoya y en qué se aparta» → escribir los tres trabajos anunciados; hoy solo se cita Tombini. `vault`
+
+dime donde y qué tendría que meter,  analiza la importancia o si es posible eliminar las referencias también y cruzalo con lo que quedó fuera (fichero Lo que quedo fuera.md de este repositorio)
+
+
+
 - [ ] **2.12** · «dentro del sentido (a) fijado más arriba» → apunta a texto que ya no está en el `.docx`; reescribir el inciso o restituir el sentido (a). `vault`
+
+
+dime donde y que tendría que meter,  analiza la importancia o si es posible eliminar las referencias también y cruzalo con lo que quedó fuera (fichero Lo que quedo fuera.md de este repositorio)
+
+
+
 - [ ] **2.14** · «El recorrido va en cuatro tramos: los casos de uso defensivos, el problema de lo desconocido» → entregar los dos tramos que anuncia y no desarrolla, «la cara ofensiva» y «el panorama de datasets». `vault`
+
+dime donde y qué tendría que meter,  analiza la importancia o si es posible eliminar las referencias también y cruzalo con lo que quedó fuera (fichero Lo que quedo fuera.md de este repositorio)
+
 - [ ] **6.9** · «Objetivo general — implementar un H-NIDS. Cumplido.» → declarar expresamente si se cumplió la comparación contra «cada etapa por separado»; hoy solo se declara el contraste con el monolítico. `vault`
-- [ ] **6.12** · Cabecera de la Tabla 6.1, Ctrl+F «Error metodológico»: la celda `[f1,c1]` está vacía → poner rótulo a la columna P1–P10. `Word`
-- [ ] **4.16** · «permite medir la detección de ataques "0-day" por tipo» → comillas españolas «0-day». `Word`
-- [ ] **A12** · Comillas tipográficas inglesas en el apéndice → sustituir por españolas. `Word`
+
+dime donde y qué tendría que meter,  analiza la importancia o si es posible eliminar las referencias también y cruzalo con lo que quedó fuera (fichero Lo que quedo fuera.md de este repositorio)
+
+
+
+- [x] **6.12** · Cabecera de la Tabla 6.1, Ctrl+F «Error metodológico»: la celda `[f1,c1]` está vacía → poner rótulo a la columna P1–P10. `Word`
+
+
+- [X] **4.16** · «permite medir la detección de ataques "0-day" por tipo» → comillas españolas «0-day». `Word`
+- [X] **A12** · Comillas tipográficas inglesas en el apéndice → sustituir por españolas. `Word`
   - «Número de fragmentos “erróneos” en la conexión».
   - «Número de indicadores “sensibles”».
   - «Número de condiciones “comprometidas” observadas».
-- [ ] **A10** · Fila `su_attempted` de la tabla de características → corregir el tipo: dice «Discreta» y la descripción es binaria. `vault`
-- [ ] **5.24** · Fila vacía de la tabla del eje de balanceo en `5.2 Resultados del modelo de detección basado en firmas.md` → eliminarla. `vault`
+
+
+- [X] **A10** · Fila `su_attempted` de la tabla de características → corregir el tipo: dice «Discreta» y la descripción es binaria. `vault`
+
+
+- [X] **5.24** · Fila vacía de la tabla del eje de balanceo en `5.2 Resultados del modelo de detección basado en firmas.md` → eliminarla. `vault`
+
+
 - [ ] **5.18** · «Junto al FPR conviene acotar la segunda cifra que invita a la sobrelectura: la velocidad» → añadir la tabla de tiempos y latencia; el texto critica columnas que no se muestran en ninguna tabla. `vault`
-- [ ] **T4** · Pegar los marcadores que faltan recorriendo el **Anexo C** (26 filas) y el **Anexo D** (47 filas) de este fichero con el Word abierto, fila a fila por su fragmento literal. Cada marcador va **al final de la frase, antes del punto, y siempre a pelo**. `Word`
+
+Dime que tabla es, dame el rótulo, analiza la importancia o si es posible eliminar las referencias también y cruzalo con lo que quedó fuera (fichero Lo que quedo fuera.md de este repositorio)
+
+
+- [X] **T4** · Pegar los marcadores que faltan recorriendo el **Anexo C** (26 filas) y el **Anexo D** (47 filas) de este fichero con el Word abierto, fila a fila por su fragmento literal. Cada marcador va **al final de la frase, antes del punto, y siempre a pelo**. `Word`
+
+Esto está mas abajo también no?
+
+
 - [ ] **B2** · Entradas `[1]`, `[9]`, `[10]` y `[11]` de la bibliografía, hoy URLs desnudas → darles formato IEEE y fusionar `[9]` en `[8]`. `Word`
+
+Como se hace ese formato?¿?¿?¿?
+
+
 - [ ] **B3** · Formato de dos entradas de la lista bibliográfica. `Word`
   - «"Computer Security Threat Monitoring and Surveillance". James P. Anderson Co.» (la **segunda** coincidencia, la de la lista, no la del capítulo 1) → añadir el año 1980.
   - «Computer Security: Principles and Practice» → añadir año, 5.ª edición, coautor Brown y editorial Pearson.
+
+NO ES NECESARIO HOMBRE
+
 - [ ] **B1** · **DECISIÓN:** obras que hoy figuran en la lista bibliográfica del `.docx` sin ninguna cita en el cuerpo → para cada una, darle sede o retirarla de la lista. `vault` + `Word`
+
+
+
   - Bergstra y Bengio, *Random Search* → frase en §2.1.3 («Entrenamiento del modelo y ajuste de hiperparámetros») o descarte.
   - TabArena · Micci-Barreca · Pargent → tienen sede en el capítulo 5 pero no número; volcarlas al final de la lista o retirarlas.
   - Hwang *et al.*, IDS híbrido → número al final de la lista o retirarla; va junto a **2.10** y **2.11**.
@@ -95,17 +180,53 @@ He borrado esa parte, dentro del informe no importa si es de un commit u otro, h
   - CRISP-DM → 0 ocurrencias en el `.docx`; darle sede en §4.1 o descartar la obra.
   - Storkey, *When Training and Test Sets Are Different* → reintroducir la frase sobre *dataset shift* en §5.1 o descartar.
   - Mitchell *et al.*, *Model Cards* → se decide con **A14**.
+
+
+  ESTO DEJALO AQUÍ PORQUE AUN PUEDE SER QUE METAMOS COSAS, Y SI BORRAMOS LAS REFERENCIAS HAY QUE RENUMERAR TODA LA BIBLIOGRAFÍA
+
+
 - [ ] **X31** · **DECISIÓN:** «ilustra la magnitud del problema sin medirla. [74]» → confirmar `[74]` (Sharafaldin) o cambiar a `[72]` (Goldschmidt y Chudá), como las otras dos apariciones del apartado. `Word`
+
+
+
+COMO?
+
+
 - [ ] **B5** · **DECISIÓN:** confirmar la identidad de los dos matches aproximados, ya pegados en el documento. `Word`
   - «La crítica original a la metodología de evaluación del DARPA/KDD se remonta a [65]» → McHugh.
   - «la información temporal existe en origen [75]» → Moustafa y Slay.
-- [ ] **A5** · **DECISIÓN:** el Apéndice A tiene **cuatro** bloques de tabla de características y un solo pie, «Tabla A.1. Características del dataset completo NSL-KDD.» → decidir si se da pie propio a cada bloque (A.1–A.4), lo que desplaza los actuales A.2 y A.3 a A.5 y A.6. Si se hace, la renumeración es manual y hay que corregir además dos llamadas de la prosa: `Word`
+
+
+  ESTO NO ESTÁ BIEN?
+
+
+- [X] **A5** · **DECISIÓN:** el Apéndice A tiene **cuatro** bloques de tabla de características y un solo pie, «Tabla A.1. Características del dataset completo NSL-KDD.» → decidir si se da pie propio a cada bloque (A.1–A.4), lo que desplaza los actuales A.2 y A.3 a A.5 y A.6. Si se hace, la renumeración es manual y hay que corregir además dos llamadas de la prosa: `Word`
+
+
+
   - «se recoge en la Tabla A.2 del apéndice» → «Tabla A.5».
   - «La tabla (Tabla A.3) asigna cada uno de los 40 tipos» → «(Tabla A.6)».
+
+PERO HAY TABLA A.2 , revisa esto!! solo quiero un Tabla A.1 para TODAS las características
+
+
 - [ ] **A14** · **DECISIÓN:** `A.3 «Ficha del sistema»` no existe en el `.docx` y el capítulo 5 le apunta → volcar el apéndice o retirar las llamadas colgantes. `Word` + `vault`
-- [ ] **4.15** · Figura 4.3 y su pie «Figura 4.3. Histogramas superpuestos de las doce características más discriminantes» → mantenerlos en la misma página. ⚠️ comprobar en Word. `Word`
-- [ ] **5.28** · Tabla 5.11 y su pie «Tabla 5.11. Sistema híbrido frente al baseline de control» → mantenerlos en la misma página. ⚠️ comprobar en Word. `Word`
+
+Qué habría que borrar? Dejalo pendiente por si añadimos
+
+
+- [X] **4.15** · Figura 4.3 y su pie «Figura 4.3. Histogramas superpuestos de las doce características más discriminantes» → mantenerlos en la misma página. ⚠️ comprobar en Word. `Word`
+
+
+
+
+- [X] **5.28** · Tabla 5.11 y su pie «Tabla 5.11. Sistema híbrido frente al baseline de control» → mantenerlos en la misma página. ⚠️ comprobar en Word. `Word`
+
+
+
 - [ ] **A11** · Menciones a los flags de conexión en las descripciones del apéndice → unificar a mayúsculas `S0/S1/S2/S3`. ⚠️ comprobar en Word. `vault`
+
+
 - [ ] **A13** · Dar formato monoespaciado a «El pipeline (program.py) codifica las etiquetas en dos niveles», a la ruta `Resultados\specialized_nsl_kdd_mappings_and_info.txt` y a «los ficheros y_attack/y_category». ⚠️ comprobar en Word. `Word`
 
 ---
