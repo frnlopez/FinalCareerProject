@@ -73,7 +73,18 @@ Fichero hermano: `Lo que quedo fuera.md`, inventario de lo que se quedó en el v
   - `[1]`: "Principales ciberataques en España en 2024", *ChannelPartner*. [En línea]. Disponible en: https://www.channelpartner.es/seguridad/principales-ciberataques-en-espana-en-2024/ [Consultado: 27-ago-2026].
   - `[10]`: Centro Criptológico Nacional, *Glosario de términos y abreviaturas*, CCN-STIC 401. [En línea]. Disponible en: https://www.ccn-cert.cni.es/publico/seriesCCN-STIC/series/400-Guias_Generales/401-glosario_abreviaturas/index.html [Consultado: 27-ago-2026].
   - `[11]`: M. Roesch, "Snort — Lightweight Intrusion Detection for Networks", en *Proc. 13th USENIX LISA*, Seattle, WA, 1999, pp. 229-238.
-  - `[9]`: es solo un PDF del libro de Stallings, duplicado de `[8]`. **Verificado: `[9]` no se cita en ninguna parte del cuerpo**, así que **se borra la entrada y NO se renumera nada** — es el protocolo de «quemar» un número que el proyecto ya usa. **Sin miedo a la renumeración: no hay ninguna.**
+  - `[9]`: es solo un PDF del libro de Stallings, duplicado de `[8]`. **Verificado: `[9]` no se cita en ninguna parte del cuerpo.** Aun así, **el protocolo de «números quemados» de `CLAUDE.md` NO aplica aquí**: ese protocolo rige sobre `Bibliografía.md` del vault, que es una tabla manual. La lista del `.docx` está numerada por Word, de modo que **borrar una entrada intermedia renumera automáticamente todas las posteriores**. La afirmación «no se renumera nada» que figuraba aquí era **falsa** y queda retirada.
+
+    **Procedimiento decidido por Francisco (2026-08-27) — mover la última entrada al hueco.** Así la lista queda `[1]`–`[74]` contigua y **ningún número intermedio cambia**:
+
+    1. En la lista de referencias, **borrar la entrada `[9]`** (el PDF de Stallings).
+    2. **Mover la entrada que hoy es `[75]`** —N. Moustafa y J. Slay, «UNSW-NB15: a comprehensive data set for network intrusion detection systems», en *2015 MilCIS*, Canberra, 2015 (última fila de la lista, `p3031`)— **a la posición que deja libre el `[9]`**. Al ser la última, moverla no arrastra a ninguna otra.
+    3. En el cuerpo, **sustituir el marcador `[75]` por `[9]`**. Sede verificada, **única**: **`p2689`**, en «Sobre UNSW-NB15 como alternativa» (§6.2), frase «Se generó a partir de tráfico crudo capturado, por lo que la información temporal existe en origen [75].» Marcador **a pelo**, sin localizador.
+    4. Comprobar que la lista termina en `[74]` (Sharafaldin, CIC-IDS2017) y que `[72]` sigue siendo Goldschmidt y Chudá y `[73]` Axelsson — de ello dependen **X31** y **6.5**.
+
+    **Contradicción con B1, que hay que resolver antes de tocar Word.** B1 ordena «mantener la lista **intacta**, sin retirar ninguna obra, porque la poda obligaría a renumerar», y este procedimiento **sí borra una entrada**. Hay dos opciones y **la elección es de Francisco, no del redactor**:
+    - **(a) Ejecutar los cuatro pasos de arriba**: elimina el duplicado, pero exige mover una fila y editar un marcador en `p2689`.
+    - **(b) Alternativa barata, coherente con B1: no borrar `[9]` y dejar el duplicado de Stallings.** Coste cero, cero renumeración, cero ediciones en el cuerpo; el precio es una entrada redundante en la lista.
 
 - [ ] **B1** · Mantener la lista **intacta**, sin retirar ninguna obra, como pediste: la poda obligaría a renumerar. Única acción: **añadir la fila de Chow**, que falta (aparece una sola vez en el `.docx`, `p3012`, y cero veces citada en el cuerpo). Las obras del `.docx` sin cita en el cuerpo son **19** y están listadas en el **Anexo C**, de modo que B1 y el Anexo C ya no se contradicen. `vault` + `Word`
   - Aviso aparte, que no es orfandad: **`TabArena` se cita en el cuerpo (`p2610`) y NO tiene entrada en la lista de referencias** — cita sin respaldo bibliográfico.
@@ -182,6 +193,9 @@ Fichero hermano: `Lo que quedo fuera.md`, inventario de lo que se quedó en el v
 
 Solo quedan las obras que **no aparecen citadas ni una vez** en el cuerpo del `.docx`. Contado el 2026-08-27: la lista de referencias tiene **75 entradas** (`[1]`–`[75]`), el cuerpo cita **56 números distintos**, y las **19 sin cita** son `[9]`, `[15]`, `[18]`, `[19]`, `[20]`, `[21]`, `[37]`, `[50]`, `[54]`, `[56]`, `[57]`, `[58]`, `[59]`, `[62]`, `[63]`, `[66]`, `[67]`, `[69]`, `[70]`. No hay ningún marcador citado en el cuerpo que carezca de entrada en la lista.
 
+> [!note] Recuento condicionado a **B2**
+> Las cifras de arriba describen el estado **actual** del `.docx`. **Si se ejecuta la opción (a) de B2** —borrar `[9]` y trasladar la entrada `[75]` a ese hueco—, la lista pasa a **74 entradas** (`[1]`–`[74]`), `[9]` deja de ser huérfana (queda citada en `p2689`) y las obras sin cita en el cuerpo bajan a **18**: `[15]`, `[18]`, `[19]`, `[20]`, `[21]`, `[37]`, `[50]`, `[54]`, `[56]`, `[57]`, `[58]`, `[59]`, `[62]`, `[63]`, `[66]`, `[67]`, `[69]`, `[70]`. Si se elige la opción (b), el recuento sigue siendo 75 entradas y 19 huérfanas.
+
 ## Capítulo 2
 
 | ☐ | Marcador | Obra | Buscar este texto |
@@ -228,7 +242,7 @@ Solo quedan las obras que **no aparecen citadas ni una vez** en el cuerpo del `.
 
 1. Cada marcador va **al final de la frase, antes del punto, y siempre a pelo, sin localizador**.
 2. `[37]` tenía otra fila anclada en «un weighted alto, porque el peso n_i de la clase mayoritaria domina la suma»; ese fragmento está en el `.docx` con mayúscula inicial («Un weighted alto…», `p0462`), así que para evitar un fallo de búsqueda se le ha dado la sede del capítulo 4.
-3. `[9]` no lleva ancla: se resuelve **borrando la entrada**, en **B2**.
+3. `[9]` no lleva ancla, y **no se le busca una**: se resuelve en **B2**, que ofrece dos vías a decisión de Francisco. En la opción (a), la entrada `[9]` se borra y el número lo reocupa la obra que hoy es `[75]` (Moustafa y Slay, UNSW-NB15), cuya ancla ya existe en el cuerpo (`p2689`), donde hay que sustituir `[75]` → `[9]`; **no se renumera nada más**, porque `[75]` es la última entrada de la lista. En la opción (b) no se toca nada y `[9]` permanece como duplicado sin citar. **Nada de esto es trabajo del Anexo C: no añadas fila para `[9]`.**
 
 > [!note] Registro
 > El 2026-08-27, por decisión de Francisco, se han **borrado las ~56 filas de los antiguos Anexos C y D** cuyas obras ya se citan al menos una vez en el informe: una obra ya citada no necesita repetirse. Los dos anexos quedan fundidos en este.
