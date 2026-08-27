@@ -257,7 +257,8 @@ PERO HAY TABLA A.2 , revisa esto!! solo quiero un Tabla A.1 para TODAS las carac
 > **Ningún hallazgo de `Lo que quedo fuera.md` toca esta tarea**: el capítulo 4 la excluye por nombre.
 
 
-- [ ] **A14** · **DECISIÓN:** `A.3 «Ficha del sistema»` no existe en el `.docx` y el capítulo 5 le apunta → volcar el apéndice o retirar las llamadas colgantes. `Word` + `vault`
+- [ ] **A14** · **DECISIÓN:** `A.3 «Ficha del sistema»` no existe en el `.docx` y ~~el capítulo 5~~ **el capítulo 6** le apunta → volcar el apéndice o retirar las llamadas colgantes. `Word` + `vault`
+  ⚠️ **Enunciado corregido el 2026-08-27:** las dos llamadas están en `p2447` (§6.1.4). En el capítulo 5 hay **cero**. Ver la nota de abajo.
 
 Qué habría que borrar? Dejalo pendiente por si añadimos
 
