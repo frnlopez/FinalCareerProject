@@ -24,9 +24,10 @@ Según la tabla del punto 5.0 Protocolo de evaluación, cada uno tiene su funci�
       Te toca buscar cual es la documentación y ponermela aquí  para que la rellene
 
 
-  - «art. 1684, 2020. Scarfone y Mell (2007), NIST SP 800-94» → separar: `[13]` acaba en «art. 1684, 2020.» y el pegote pasa a su entrada propia.
-
-He borrado lo que le sobraba :)
+  - [X] ~~«art. 1684, 2020. Scarfone y Mell (2007), NIST SP 800-94» → separar~~ — **HECHO y VERIFICADO**
+    en la extracción del 2026-08-26 21:23: `p2969` acaba exactamente en «art. 1684, 2020.» y `p2970` es
+    ya una entrada propia y completa de Scarfone y Mell / NIST SP 800-94. Confirmado tu «He borrado lo
+    que le sobraba :)». **La tarea T3 NO se cierra**: sigue vivo el sub-bullet de `[66]` scikit-learn.
 
 - [X] **2.25** · Título 3 vacío que cierra el capítulo 2, inmediatamente antes del Título 1 «Diseño del sistema» → eliminarlo. `Word`
 
@@ -160,7 +161,8 @@ NO ES NECESARIO HOMBRE
 > [!note] PROPUESTA (pendiente de aprobación de Francisco)
 > **Mantener la lista intacta y no retirar ninguna obra**, exactamente como pides: la poda obligaría a
 > renumerar, y el cruce con `Lo que quedo fuera.md` demuestra que **cuatro de estas filas tienen sede
-> esperando** y se resolverían solas al aplicar hallazgos ya inventariados —dejarían de ser huérfanas
+> esperando** — tres de ellas ya son filas de B1; la cuarta, Chow, hay que darla de alta — y se
+> resolverían solas al aplicar hallazgos ya inventariados —dejarían de ser huérfanas
 > sin tocar la numeración:
 > - **Barbará (ADAM)** → cruza con el **hallazgo 2 del cap. 3** («Divergencia con ADAM»), que declara
 >   expresamente «remisión a B1» y le da sede en la arquitectura del capítulo 3.
@@ -169,6 +171,11 @@ NO ES NECESARIO HOMBRE
 >   («dependen de volcar la comparación tabular de §3.5»). El hallazgo declara «remisión parcial a B1».
 > - **Chow** → cruza con el **hallazgo 5 del cap. 5** (la acotación de Chow sobre la regla de rechazo),
 >   que declara expresamente que la orfandad de esta entrada «es **remisión a B1**».
+>   ⚠️ **Pero la lista de B1 NO tiene hoy la fila de Chow**, así que esa remisión apunta a un sitio que
+>   no la recoge. Verificado que **sí procede darla de alta**: Chow aparece una única vez en todo el
+>   `.docx` (`p3012`, lista de referencias) y **cero veces citada en el cuerpo**, luego es huérfana de
+>   pleno derecho. **Acción: añadir Chow como fila de B1.** Mientras no se añada, son **tres** las filas
+>   de B1 con sede esperando, no cuatro.
 > - **Mitchell *et al.*, Model Cards** → sigue atado a **A14**, y el **hallazgo 5 del cap. 1** confirma
 >   que la ficha del sistema no puede restituirse antes de que A14 se decida.
 >
@@ -179,7 +186,12 @@ NO ES NECESARIO HOMBRE
 > **excluye a propósito** y las remite aquí.
 
 
-- [ ] **X31** · **DECISIÓN:** «ilustra la magnitud del problema sin medirla. [74]» → confirmar `[74]` (Sharafaldin) o cambiar a `[72]` (Goldschmidt y Chudá), como las otras dos apariciones del apartado. `Word`
+- [ ] **X31** · **DECISIÓN:** «ilustra la magnitud del problema sin medirla. [74]» → confirmar `[74]` (Sharafaldin) o cambiar a `[72]` (Goldschmidt y Chudá). `Word`
+  ⚠️ **Enunciado corregido el 2026-08-27: no hay «otras dos apariciones».** Contado en la extracción,
+  `[72]` aparece **una sola vez** en todo el documento (`p0949`, cap. 4) y `[74]` **dos** (`p2307` §5.4 y
+  `p2687` cap. 6, esta última **correcta**: es la ficha de CIC-IDS2017). La decisión de abajo sigue en
+  pie — se apoya en la identidad de las entradas, no en ese recuento —, pero el argumento «por
+  coherencia con el apartado» **no vale**: no existía tal coherencia.
 
 
 
@@ -230,9 +242,10 @@ COMO?
 
 PERO HAY TABLA A.2 , revisa esto!! solo quiero un Tabla A.1 para TODAS las características
 
-> [!note] PROPUESTA (pendiente de aprobación de Francisco)
-> **Revisado: el `.docx` ya está como tú lo quieres, así que la decisión es «NO numerar los cuatro
-> bloques» y esta tarea se cierra sin tocar nada.** Verificado en la extracción: hay **un solo pie**
+> [!note] PROPUESTA (pendiente de aprobación de Francisco — la casilla `[X]` de arriba indica
+> «nada que hacer en el `.docx`», NO que la decisión esté tomada)
+> **Revisado: el `.docx` ya está como tú lo quieres, así que la decisión propuesta es «NO numerar los
+> cuatro bloques», y con ella la tarea se cerraría sin tocar nada.** Verificado en la extracción: hay **un solo pie**
 > «Tabla A.1. Características del dataset completo NSL-KDD.» para los cuatro bloques, y las otras dos
 > tablas del apéndice son **A.2** (codificación de las cinco categorías por el `LabelEncoder`) y **A.3**
 > (los 40 tipos agrupados por categoría). La prosa las llama bien: «se listan en la **Tabla A.1**», «se
@@ -251,9 +264,13 @@ Qué habría que borrar? Dejalo pendiente por si añadimos
 > [!note] PROPUESTA (pendiente de aprobación de Francisco)
 > **Dejarla pendiente, como pides — y NO borrar todavía**, porque el cruce demuestra que hay contenido
 > esperando a que se decida a favor de volcarla. Lo que quedaría por borrar si algún día se decide lo
-> contrario está acotado: las **llamadas colgantes desde el capítulo 5** a `A.3 Ficha del sistema` (el
-> apéndice no existe en el `.docx`: los únicos pies del apéndice son Tabla A.1, A.2 y A.3, y el índice
-> solo imprime `A.1` y `A.2`). No hay ningún encabezado `A.3` que retirar.
+> contrario está acotado: **las dos llamadas colgantes del CAPÍTULO 6**, no del 5 — las dos están en
+> `p2447`, en el límite del coste de despliegue de §6.1.4: «se recoge en **A.3 Ficha del sistema**: esas
+> columnas miden solo el predict/score…» y «(véase **A.3 Ficha del sistema** § Dispersión del
+> tiempo_s, sin causa atribuida)». **En el capítulo 5 hay CERO llamadas a `A.3`**: buscarlas ahí y no
+> encontrar nada no significa que la tarea sea inaplicable. El apéndice no existe en el `.docx` (los
+> únicos pies del apéndice son Tabla A.1, A.2 y A.3, y el índice solo imprime `A.1` y `A.2`), y no hay
+> ningún encabezado `A.3` que retirar.
 > **Cruza con el hallazgo 5 del cap. 1 de `Lo que quedo fuera.md`**, que es el que la condiciona de
 > forma explícita: el párrafo final de `1.4 Estructura` enumera «columnas del dataset, fórmulas de las
 > métricas de desempeño **y ficha del sistema**», y el hallazgo declara que «esto se resuelve con la
@@ -304,6 +321,9 @@ Qué habría que borrar? Dejalo pendiente por si añadimos
   - «supera a la minoritaria (u2r) en una proporción cercana a 883:1».
   - «La proporción entre la clase mayoritaria y la minoritaria es ≈ 883:1».
   - Pie «Tabla 4.8. Distribución de D3 por categoría de ataque» (solo si se decide quitar la cifra del pie).
+  - **SEXTA SEDE, que faltaba en esta lista** (añadida el 2026-08-27 tras contarlas en la extracción):
+    `p1285`, «La Tabla 4.8 recoge la distribución de D3 por categoría de ataque, con un desbalance de
+    ≈ 883:1…». **Son SEIS, no cinco**: recortar guiándose por la lista vieja dejaría vivo un duplicado.
 - [ ] **4.11** · La justificación del umbral p95 se repite → dejarla en un solo sitio y reducir el resto a mención escueta. `vault`
   - «El umbral se fija en el percentil 95 de la puntuación de anomalía sobre validación».
   - «El umbral se fija en el percentil 95 del score de anomalía sobre un subconjunto de validación reservado de D1».
@@ -323,9 +343,13 @@ Qué habría que borrar? Dejalo pendiente por si añadimos
   > [!warning] CONFLICTO — cruza con el hallazgo 5 del cap. 2 de `Lo que quedo fuera.md`
   > Ese hallazgo repone en el capítulo 2 la **tabla que compara los dos paradigmas criterio a criterio**
   > y declara que la formulación «firmas y anomalías no compiten, sino que se complementan» es
-  > justamente la que **el capítulo 6 reutiliza literalmente** de allí. Es decir: la frase no está
-  > duplicada dos veces sino que tendría **tres** sedes si se aplica el hallazgo, y la del capítulo 2
-  > sería la que la fundamenta. Recomendación: decidir 6.11 **después** de saber si se repone la tabla
+  > justamente la que **el capítulo 6 reutiliza literalmente** de allí.
+  > ⚠️ **OJO — la premisa del enunciado de esta tarea es FALSA contra el `.docx`.** La frase tiene
+  > **UNA sola sede** hoy (`p2417`, cap. 6): el cierre del capítulo 5 (`p2229`–`p2290`) **no la contiene
+  > ni la parafrasea** — lo más próximo es `p2256` («la aportación de la cascada no es binaria…»), que
+  > dice otra cosa. Así que **no hay nada que deduplicar**: si se aplica el hallazgo, se pasaría de una
+  > sede a **DOS**, no de dos a tres. Lo único vivo de `6.11` es dónde queda el `[40]`.
+  > Recomendación: decidir 6.11 **después** de saber si se repone la tabla
   > de 2.2.4.4, y conservar la sede del capítulo 6, que es la que ancla el `[40]` del **Anexo D ·
   > Capítulo 6**. Si el recorte cayera sobre la sede del capítulo 6, esa fila del Anexo D se queda sin
   > destino. No se depura el Anexo D: se anota.
