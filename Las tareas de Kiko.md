@@ -123,7 +123,7 @@ dime donde y qué tendría que meter,  analiza la importancia o si es posible el
 Dime que tabla es, dame el rótulo, analiza la importancia o si es posible eliminar las referencias también y cruzalo con lo que quedó fuera (fichero Lo que quedo fuera.md de este repositorio)
 
 
-- [X] **T4** · Pegar los marcadores que faltan recorriendo el **Anexo C** (26 filas) y el **Anexo D** (47 filas) de este fichero con el Word abierto, fila a fila por su fragmento literal. Cada marcador va **al final de la frase, antes del punto, y siempre a pelo**. `Word`
+- [X] **T4** · Pegar los marcadores que faltan recorriendo el **Anexo C** (26 filas) y el **Anexo D** (**48** filas — corregido el 2026-08-27: son 47 anclas con marcador más la fila ⛔ «Python es el lenguaje de referencia…», que no lo lleva) de este fichero con el Word abierto, fila a fila por su fragmento literal. Cada marcador va **al final de la frase, antes del punto, y siempre a pelo**. `Word`
 
 Esto está mas abajo también no?
 
@@ -141,7 +141,20 @@ Como se hace ese formato?¿?¿?¿?
 
 NO ES NECESARIO HOMBRE
 
-- [ ] **B1** · **DECISIÓN:** obras que hoy figuran en la lista bibliográfica del `.docx` sin ninguna cita en el cuerpo → para cada una, darle sede o retirarla de la lista. `vault` + `Word`
+- [ ] **B1** · **DECISIÓN:** obras huérfanas → para cada una, darle sede o retirarla de la lista. `vault` + `Word`
+  ⚠️ **ENUNCIADO CORREGIDO el 2026-08-27 — la premisa original era FALSA contra el `.docx`.** Decía
+  «obras que hoy figuran en la **lista bibliográfica del `.docx`** sin cita en el cuerpo». Contados los
+  **75** párrafos `Elementoparareferenciar` (`p2957`–`p3031`) de la extracción vigente, **ninguna de las
+  obras listadas abajo está en esa lista**, salvo Chow. Grep con 0 coincidencias: Barbará, Grinsztajn,
+  McElfresh, Shwartz-Ziv, Hollmann, Bergstra, Storkey, Micci-Barreca, Pargent, Hwang, TabPFN, Behrouz
+  y *Model Cards* (el «Mitchell» de `p2972` es **T. M. Mitchell, *Machine Learning*, 1997**, otra obra).
+  **Son huérfanas en `Bibliografía.md` del vault, no en el `.docx`.** Si se busca en Word, no se
+  encontrarán — y concluir que «ya está hecho», o retirar entradas por error, es el riesgo real.
+  ⚠️ **Y hay un caso INVERSO que esta tarea no cubría: `TabArena` se CITA en el cuerpo del `.docx`
+  (`p2610`, «El benchmark TabArena documenta que…») y NO tiene entrada en la lista de referencias.**
+  Eso no es una obra huérfana: es una cita sin respaldo bibliográfico, que es más grave.
+  ⚠️ **Chow es la Única que sí cumple el enunciado original** (`p3012`, sin cita en el cuerpo) — y es
+  justo la que falta como fila en la lista de abajo.
 
 
 
