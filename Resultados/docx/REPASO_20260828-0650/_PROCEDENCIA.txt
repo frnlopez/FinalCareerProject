@@ -1,0 +1,23 @@
+Fuente: C:\Users\francisco.lopez\KIKO_TFG\Working_Directory\Proyecto_Fin_de_Grado-FJLM-2026.docx
+Tamano: 4038263 bytes
+mtime: 2026-08-28T06:46:51.486645
+Extraido: 2026-08-28T06:50:41.607789
+
+Total <w:p>: 3216
+Total <w:tbl>: 49
+Imagenes DrawingML: 23
+Imagenes VML: 0
+Pies "Tabla x.y" (numerico): 34
+Pies "Tabla A.y" (apendice, letra): 3
+Pies Tabla TOTAL (ambas formas): 37
+Pies "Figura x.y" (numerico): 23
+Pies "Figura A.y" (apendice, letra): 0
+Pies Figura TOTAL (ambas formas): 23
+Marcadores [n]: 95
+Parrafos TOC: 108
+Errores: ninguno
+
+NOTA sobre el recuento de pies:
+  Las dos formas ("Tabla 4.1" y "Tabla A.1") se cuentan POR SEPARADO y se
+  declaran arriba; el total suma ambas. El mismo desdoble se aplica a los
+  pies de Figura ("Figura A.y").

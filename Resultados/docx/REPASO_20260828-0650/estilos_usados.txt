@@ -1,0 +1,18 @@
+-	2486
+Prrafodelista	409
+Elementoparareferenciar	74
+TDC3	74
+Ttulo3	70
+TDC2	25
+Ttulo2	25
+FiguraTablaEcuacin	17
+TDC1	9
+Ttulo1	7
+Cdigofuente	5
+Ttulo5	5
+Ttulo8	5
+Referencias	2
+Apndice	1
+Ttulo7	1
+TtulodeTDC	1
+

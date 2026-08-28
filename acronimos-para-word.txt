@@ -1,72 +1,166 @@
-ADFA	Australian Defence Force Academy (organismo de origen del conjunto de datos ADFA)
-AE	Autoencoder
-AUC	Area Under the Curve
 AUC-PR	Area Under the Precision-Recall Curve
 AUC-ROC	Area Under the ROC Curve
-AUT	Area Under Time
 CIA	Confidentiality, Integrity, Availability
-CIC-IDS2017	Canadian Institute for Cybersecurity Intrusion Detection System dataset 2017
-CPU	Central Processing Unit
-CSV	Comma-Separated Values
-CV	Cross-Validation
-DARPA	Defense Advanced Research Projects Agency
-DL	Deep Learning
-DoS	Denial of Service
-EDA	Exploratory Data Analysis
-FN	Falso negativo
-FP	Falso positivo
-FPR	False Positive Rate
-FTP	File Transfer Protocol
-GPU	Graphics Processing Unit
-HIDS	Host-based Intrusion Detection System
-H-IDS	Hybrid Intrusion Detection System
 H-NIDS	Hybrid Network Intrusion Detection System
-IA	Inteligencia Artificial
-ICMP	Internet Control Message Protocol
 IDES	Intrusion Detection Expert System
-IDPS	Intrusion Detection and Prevention System
-IDS	Intrusion Detection System
-IEEE	Institute of Electrical and Electronics Engineers
 INCIBE	Instituto Nacional de Ciberseguridad
-IP	Internet Protocol
-IPS	Intrusion Prevention System
 IQR	Interquartile Range
-KDD	Knowledge Discovery in Databases
-KNN	k-Nearest Neighbors
 KS	Kolmogorov-Smirnov
 LOF	Local Outlier Factor
-MIT	Massachusetts Institute of Technology
-ML	Machine Learning
-MLP	Multi-Layer Perceptron
-MSE	Mean Squared Error
 NIDS	Network Intrusion Detection System
-NIST	National Institute of Standards and Technology
-NSL-KDD	Conjunto de datos depurado derivado de KDD Cup 1999 [POR CONFIRMAR: sus autores no desarrollan la sigla NSL; la forma «Network Security Laboratory» es de uso divulgativo, no oficial]
-OCSVM	One-Class Support Vector Machine
-OOF	Out-Of-Fold
-PCA	Principal Component Analysis
-PR	Precision-Recall
 R2L	Remote to Local
-RBF	Radial Basis Function
-RF	Random Forest
-RIPPER	Repeated Incremental Pruning to Produce Error Reduction
 ROC	Receiver Operating Characteristic
 SIEM	Security Information and Event Management
-SMOTE	Synthetic Minority Over-sampling Technique
-SNMP	Simple Network Management Protocol
-SP	Special Publication (serie de publicaciones especiales del NIST)
 SRI	Stanford Research Institute
 SVM	Support Vector Machine
-SYN	Synchronize
-TCP	Transmission Control Protocol
-TFG	Trabajo Fin de Grado
-TPR	True Positive Rate
 U2R	User to Root
 UEBA	User and Entity Behavior Analytics
-UNSW-NB15	University of New South Wales, conjunto de datos de red de 2015
-VN	Verdadero negativo
 VP	Verdadero positivo
 
+# ============================================================================
+# CRITERIO APLICADO — SEGUNDA PASADA, 2026-08-28 (06:50)
+# ============================================================================
+# Corpus: Resultados/docx/REPASO_20260828-0650/documento.txt (mtime del .docx
+# 2026-08-28T06:46:51, 4.038.263 bytes, verificado contra _PROCEDENCIA.txt).
+# Zona de prosa: desde el titulo "Introduccion" hasta el final de los
+# Apendices; quedan fuera portada, resumen/abstract, indice (TDC), la propia
+# Lista de Acronimos y la Bibliografia.
+#
+# EL CRITERIO NO HA CAMBIADO respecto a la primera pasada. Se reproduce
+# integro para que la segunda pasada sea auditable con las mismas reglas.
+#
+# Una sigla SE MANTIENE solo si cumple LAS DOS condiciones:
+#   (1) en su PRIMERA aparicion va acompanada del desarrollo completo
+#       —"Texto Desarrollado (SIGLA)" o "SIGLA (Texto Desarrollado)"—;
+#   (2) en TODAS las apariciones posteriores se usa la SIGLA, no el desarrollo.
+#
+# Se RETIRAN las que fallan, clasificadas por motivo:
+#   (a) nunca se presenta con su desarrollo;
+#   (b) se presenta bien pero luego el documento vuelve a escribir el desarrollo;
+#   (c) aparece una sola vez;
+#   (d) el desarrollo aparece antes, en otro punto, que la primera sigla.
+#
+# DECISION DECLARADA SOBRE EL CASO (c) — aparicion unica:
+#   la condicion (2) se considera CUMPLIDA DE FORMA VACUA. Una sigla que sale
+#   una sola vez SE MANTIENE si esa unica aparicion la presenta bien, y se
+#   retira solo si ademas falla la condicion (1). Razon: la condicion (2)
+#   regula la repeticion, y sin repeticion no hay nada que incumplir; ademas
+#   una lista de acronimos cubre toda sigla que el lector se encuentre,
+#   incluidas las de uso unico. Se mantienen asi INCIBE, IQR, SIEM, SRI y UEBA.
+#
+# Otras reglas de lectura aplicadas de forma uniforme:
+#   - Presentacion contigua: el desarrollo vale como presentacion si esta en el
+#     encabezado de seccion o en la frase inmediatamente adyacente a la sigla
+#     (LOF y SVM entran por esta via).
+#   - Presentacion compuesta: AUC-ROC y AUC-PR se presentan como "area bajo la
+#     curva (AUC-ROC)" / "(AUC-PR)" junto a "Curva ROC (Receiver Operating
+#     Characteristic)". Se aceptan, con la salvedad anotada en el informe.
+#   - Traduccion: reescribir el desarrollo en la otra lengua cuenta como
+#     reincidencia (afecta a DoS, retirada por (b)).
+#   - Las celdas de tabla y los pies de figura/tabla NO cuentan como
+#     reincidencia en prosa (son rotulos). Por eso sobreviven R2L y U2R, cuyo
+#     desarrollo solo reaparece en la Tabla A.3; IQR, cuyo desarrollo solo
+#     reaparece en el pie de la Figura 4.5; y KS, cuyo desarrollo solo reaparece
+#     en el pie de la Figura 4.4.
+#   - Corolario simetrico de la regla anterior, que la segunda pasada ha tenido
+#     que aplicar de forma explicita: una tabla tampoco PRESENTA. La unica
+#     "Cross-Validation (CV)" que queda en el documento esta en la tabla de
+#     librerias de Python (fila Imbalanced-learn), y por eso NO vale como
+#     presentacion de CV.
+#   - Limites de palabra estrictos: IDS no se cuenta dentro de HIDS/NIDS/H-NIDS,
+#     SVM no se cuenta dentro de OCSVM, KDD no se cuenta dentro de NSL-KDD.
+#     HIDS (host-based) y H-IDS (hibrido) se tratan como siglas distintas.
+#
+# CASOS APARTE, DECIDIDOS POR FRANCISCO EL 2026-08-28:
+#   - IEEE: no aparece en la prosa (solo en la Bibliografia, como nombre de
+#     editorial y de revistas). Por criterio se retiraria; Francisco decidio
+#     RETIRARLA el 2026-08-28.
+#   - NSL-KDD: retirada por (a) —nunca se desarrolla—, y aunque su propia ficha
+#     dice que la sigla no tiene desarrollo oficial, Francisco decidio
+#     RETIRARLA el 2026-08-28.
+#   - ADFA y SP: fallaban por (a); llevaban ademas parentesis de emisor
+#     pendientes de decision, que al retirarse por (a) quedaba SIN OBJETO.
+#     Francisco decidio RETIRARLAS el 2026-08-28.
+#
+# RESULTADO DE LA SEGUNDA PASADA: 18 de 68 se mantienen (las 18 que cumplen
+# el criterio; IEEE retirada por decision). 50 se retiran.
+#
+# RETIRADAS (50 de 68), por motivo dominante:
+#   (a) nunca presentada: ADFA, AUT, CIC-IDS2017, CPU, CSV, CV, DARPA, EDA,
+#       FTP, GPU, H-IDS, HIDS, ICMP, IDPS, IP, IPS, KDD, MIT, NIST, NSL-KDD,
+#       OCSVM, PCA, PR, RBF, RIPPER, SMOTE, SNMP, SP, SYN, TCP, TFG, TPR,
+#       UNSW-NB15
+#   (b) presentada y luego re-desarrollada: DoS, FN, FP, FPR, IA, IDS, ML, MLP,
+#       MSE, VN
+#   (d) desarrollo antes que la sigla (todas suman ademas (a) o (b)):
+#       AE, AUC, DL, KNN, OOF, RF
+#   (c) por si sola no retira a nadie: ver la decision declarada arriba.
+#   retirada por decision (solo aparece en Bibliografia): IEEE
+# (el detalle nominal con la sede literal de cada fallo se entrego en el informe
+#  de la sesion del 2026-08-28, segunda pasada; aqui solo queda el resumen)
+#
+# ============================================================================
+# TRAZABILIDAD: DOS PASADAS Y SU DELTA
+# ============================================================================
+# PASADA 1 — 2026-08-28, corpus REPASO_20260828-0555, .docx mtime
+#            2026-08-28T05:21:29, 4.050.371 bytes.
+#            Resultado: 18 de 68 se mantenian (17 que cumplian + IEEE
+#            pendiente); 50 retiradas.
+# PASADA 2 — 2026-08-28, corpus REPASO_20260828-0650, .docx mtime
+#            2026-08-28T06:46:51, 4.038.263 bytes (documento re-editado a mano
+#            por Francisco entre ambas).
+#            Resultado: 18 de 68 se mantienen (las 18 que cumplen; IEEE
+#            retirada por decision del 2026-08-28); 50 retiradas.
+#
+# QUE CAMBIO EN EL DOCUMENTO ENTRE LAS DOS PASADAS (verificado por diff de las
+# dos extracciones, no por memoria). Tres unificaciones y dos supresiones:
+#   1. "aprendizaje automatico" -> "ML" en toda la prosa (y en el titulo del
+#      resumen y en las palabras clave).
+#   2. "validacion cruzada" -> "CV" en toda la prosa. Es una unificacion
+#      COMPLETA: no queda ninguna ocurrencia del desarrollo en la prosa.
+#   3. "F1 macro" -> "F1_macro" y "KNN" -> "K-NN" en varios puntos del
+#      capitulo 5 (afecta a la forma, no al criterio de acronimos).
+#   4. "H-IDS" desaparecio de la prosa: la unica ocurrencia (en 6.2) se
+#      reescribio como "un IDS hibrido que no es serie ni paralelo...".
+#   5. "OCSVM" desaparecio de la prosa: ya no queda ninguna ocurrencia.
+#   Ademas se reescribio la propia Lista de Acronimos del documento, que ahora
+#   enumera ~62 entradas.
+#
+# DELTA EN LOS VEREDICTOS, EN LAS TRES DIRECCIONES:
+#
+#   A) PASARON A CUMPLIR: KS.
+#      ATENCION — no es merito de las ediciones de Francisco. El texto de KS es
+#      IDENTICO en las dos extracciones (presentacion en 4.2.1, "el test de
+#      Kolmogorov-Smirnov (KS)"; unica reaparicion del desarrollo, en el pie de
+#      la Figura 4.4). La PASADA 1 la retiro por (b) contando ese pie como
+#      reincidencia, en contra de su propia regla de que los pies no cuentan.
+#      La PASADA 2 corrige ese error. Es una correccion de la auditoria, no un
+#      cambio del documento, y asi queda registrado.
+#      Ninguna sigla paso a cumplir POR EFECTO de las ediciones.
+#
+#   B) SIGUEN FALLANDO tras las correcciones: las 50 listadas arriba. En
+#      particular ML sigue fallando por (b) pese a la unificacion: el desarrollo
+#      "Machine Learning" persiste en los encabezados de 2.1 y 2.1.1 y en
+#      "machine learning aplicado a seguridad" (2.3.3), todos posteriores a la
+#      presentacion de 1.1.
+#
+#   C) CUMPLIAN Y HAN DEJADO DE CUMPLIR: ninguna de las 18 que se mantenian.
+#      Pero SI hay dano colateral que debe registrarse, aunque no cambie de
+#      columna porque la sigla ya fallaba:
+#      - CV EMPEORO de motivo. En la PASADA 1 fallaba por (b)+(d): estaba
+#        presentada en el cuerpo y luego se re-desarrollaba. La unificacion fue
+#        tan completa que borro TAMBIEN la presentacion, y CV pasa a fallar por
+#        (a): nunca se presenta en la prosa. Su primera aparicion es ahora
+#        "se compara por CV" en 2.1.3, sin desarrollo. La unica presentacion
+#        superviviente esta en el resumen (fuera de la zona de prosa) y en una
+#        celda de tabla, y ninguna de las dos vale.
+#      - H-IDS y OCSVM salieron por completo de la prosa. Ya se retiraban por
+#        (a) en la PASADA 1, asi que su veredicto no cambia, pero conviene
+#        saberlo: si se retiran de la Lista de Acronimos, no dejan huerfana
+#        ninguna aparicion.
+# ============================================================================
+
+# --- notas previas del fichero, conservadas sin cambios ---
 CAMPOS A CORREGIR (elige la variante canónica y avísame):
 AUC-ROC (15 ocurrencias: 11 en el cuerpo, 3 en tablas, 1 en pies) frente a ROC-AUC (1, en el cuerpo, en el párrafo de 3.x sobre el esquema de métricas). Recomiendo AUC-ROC: es la abrumadoramente mayoritaria y la que ya usan las tablas y los pies de figura. Ojo con una tercera forma que no estaba anotada: roc_auc en monoespaciado, que es el nombre del scorer de scikit-learn y solo debe aparecer citando el parámetro.
 
@@ -91,7 +185,7 @@ Probe (5 ocurrencias: 3 en el cuerpo, 2 en tablas) frente a PROBE (2, ambas en t
 
 PRESENCIA DE LAS SIGLAS EN EL DOCUMENTO (verificado el 2026-08-28 contra Resultados/docx/REPASO_20260828-0555/):
 De las 68 siglas de la lista, 67 aparecen en la PROSA del documento y ninguna falta.
-Única excepción: IEEE, que aparece 12 veces pero SOLO en la bibliografía (nombre de editorial y de las revistas), nunca en el cuerpo. Decide si se mantiene en la lista de acrónimos por ese uso o se retira.
+Única excepción: IEEE, que aparece 12 veces pero SOLO en la bibliografía (nombre de editorial y de las revistas), nunca en el cuerpo. Francisco decidió el 2026-08-28 retirarla de la lista de acrónimos.
 No hay siglas nuevas: ningún acrónimo ausente de la extracción anterior (REPASO_20260827-1854) ha entrado en la prosa.
 Notación que aparece en prosa y NO es acrónimo de esta lista (no procede darla de alta, se anota para que no se confunda al revisar): D1, D2, D3 (los splits), F1 (la métrica), C1-C7 (los criterios), UMBRAL_CONF (constante del código) y TESSERACT (el protocolo, ya cubierto por la entrada AUT).
 
