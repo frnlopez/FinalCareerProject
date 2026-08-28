@@ -1,79 +1,98 @@
 ADFA	Australian Defence Force Academy (organismo de origen del conjunto de datos ADFA)
-AE	Autoencoder (autocodificador)
-AUC	Area Under the Curve (área bajo la curva)
-AUC-PR	Area Under the Precision-Recall Curve (área bajo la curva de precisión-exhaustividad)
-AUC-ROC	Area Under the ROC Curve (área bajo la curva ROC)
-AUT	Area Under Time (métrica de robustez temporal del protocolo TESSERACT)
-CIA	Confidentiality, Integrity, Availability (confidencialidad, integridad y disponibilidad)
+AE	Autoencoder
+AUC	Area Under the Curve
+AUC-PR	Area Under the Precision-Recall Curve
+AUC-ROC	Area Under the ROC Curve
+AUT	Area Under Time
+CIA	Confidentiality, Integrity, Availability
 CIC-IDS2017	Canadian Institute for Cybersecurity Intrusion Detection System dataset 2017
-CPU	Central Processing Unit (unidad central de proceso)
-CSV	Comma-Separated Values (valores separados por comas)
-CV	Cross-Validation (validación cruzada)
+CPU	Central Processing Unit
+CSV	Comma-Separated Values
+CV	Cross-Validation
 DARPA	Defense Advanced Research Projects Agency
-DL	Deep Learning (aprendizaje profundo)
-DoS	Denial of Service (denegación de servicio)
-EDA	Exploratory Data Analysis (análisis exploratorio de datos)
+DL	Deep Learning
+DoS	Denial of Service
+EDA	Exploratory Data Analysis
 FN	Falso negativo
 FP	Falso positivo
-FPR	False Positive Rate (tasa de falsos positivos)
-FTP	File Transfer Protocol (protocolo de transferencia de ficheros)
-GPU	Graphics Processing Unit (unidad de procesamiento gráfico)
-HIDS	Host-based Intrusion Detection System (sistema de detección de intrusiones basado en host)
-H-IDS	Hybrid Intrusion Detection System (sistema híbrido de detección de intrusiones)
-H-NIDS	Hybrid Network Intrusion Detection System (sistema híbrido de detección de intrusiones en red)
+FPR	False Positive Rate
+FTP	File Transfer Protocol
+GPU	Graphics Processing Unit
+HIDS	Host-based Intrusion Detection System
+H-IDS	Hybrid Intrusion Detection System
+H-NIDS	Hybrid Network Intrusion Detection System
 IA	Inteligencia Artificial
 ICMP	Internet Control Message Protocol
 IDES	Intrusion Detection Expert System
-IDPS	Intrusion Detection and Prevention System (sistema de detección y prevención de intrusiones)
-IDS	Intrusion Detection System (sistema de detección de intrusiones)
+IDPS	Intrusion Detection and Prevention System
+IDS	Intrusion Detection System
 IEEE	Institute of Electrical and Electronics Engineers
 INCIBE	Instituto Nacional de Ciberseguridad
-IP	Internet Protocol (protocolo de internet)
-IPS	Intrusion Prevention System (sistema de prevención de intrusiones)
-IQR	Interquartile Range (rango intercuartílico)
-KDD	Knowledge Discovery in Databases (descubrimiento de conocimiento en bases de datos)
-KNN	k-Nearest Neighbors (k vecinos más cercanos)
-KS	Kolmogorov-Smirnov (contraste estadístico de dos muestras)
-LOF	Local Outlier Factor (factor de anomalía local)
+IP	Internet Protocol
+IPS	Intrusion Prevention System
+IQR	Interquartile Range
+KDD	Knowledge Discovery in Databases
+KNN	k-Nearest Neighbors
+KS	Kolmogorov-Smirnov
+LOF	Local Outlier Factor
 MIT	Massachusetts Institute of Technology
-ML	Machine Learning (aprendizaje automático)
-MLP	Multi-Layer Perceptron (perceptrón multicapa)
-MSE	Mean Squared Error (error cuadrático medio)
-NIDS	Network Intrusion Detection System (sistema de detección de intrusiones en red)
+ML	Machine Learning
+MLP	Multi-Layer Perceptron
+MSE	Mean Squared Error
+NIDS	Network Intrusion Detection System
 NIST	National Institute of Standards and Technology
 NSL-KDD	Conjunto de datos depurado derivado de KDD Cup 1999 [POR CONFIRMAR: sus autores no desarrollan la sigla NSL; la forma «Network Security Laboratory» es de uso divulgativo, no oficial]
-OCSVM	One-Class Support Vector Machine (máquina de vectores soporte de una clase)
-OOF	Out-Of-Fold (predicción fuera de la partición de entrenamiento)
-PCA	Principal Component Analysis (análisis de componentes principales)
-PR	Precision-Recall (precisión-exhaustividad)
-R2L	Remote to Local (acceso remoto no autorizado como usuario local)
-RBF	Radial Basis Function (función de base radial)
-RF	Random Forest (bosque aleatorio)
+OCSVM	One-Class Support Vector Machine
+OOF	Out-Of-Fold
+PCA	Principal Component Analysis
+PR	Precision-Recall
+R2L	Remote to Local
+RBF	Radial Basis Function
+RF	Random Forest
 RIPPER	Repeated Incremental Pruning to Produce Error Reduction
 ROC	Receiver Operating Characteristic
-SIEM	Security Information and Event Management (gestión de información y eventos de seguridad)
-SMOTE	Synthetic Minority Over-sampling Technique (sobremuestreo sintético de la clase minoritaria)
+SIEM	Security Information and Event Management
+SMOTE	Synthetic Minority Over-sampling Technique
 SNMP	Simple Network Management Protocol
 SP	Special Publication (serie de publicaciones especiales del NIST)
 SRI	Stanford Research Institute
-SVM	Support Vector Machine (máquina de vectores soporte)
-SYN	Synchronize (bandera de sincronización del establecimiento de conexión TCP)
-TCP	Transmission Control Protocol (protocolo de control de transmisión)
+SVM	Support Vector Machine
+SYN	Synchronize
+TCP	Transmission Control Protocol
 TFG	Trabajo Fin de Grado
-TPR	True Positive Rate (tasa de verdaderos positivos)
-U2R	User to Root (escalada de privilegios de usuario a administrador)
-UEBA	User and Entity Behavior Analytics (análisis del comportamiento de usuarios y entidades)
+TPR	True Positive Rate
+U2R	User to Root
+UEBA	User and Entity Behavior Analytics
 UNSW-NB15	University of New South Wales, conjunto de datos de red de 2015
 VN	Verdadero negativo
 VP	Verdadero positivo
 
 CAMPOS A CORREGIR (elige la variante canónica y avísame):
-AUC-ROC (19 ocurrencias: 13 en el cuerpo, 5 en tablas, 1 en pies) frente a ROC-AUC (1, en el párrafo p1521 de 3.x sobre el esquema de métricas). Recomiendo AUC-ROC: es la abrumadoramente mayoritaria y la que ya usan las tablas y los pies de figura.
-AUC-PR (6 ocurrencias: 4 en el cuerpo, 2 en tablas) frente a PR-AUC (1, en el mismo párrafo p1521). Recomiendo AUC-PR, por coherencia con AUC-ROC y por ser la mayoritaria.
-KNN (36 ocurrencias: 24 en el cuerpo, 10 en tablas, 1 en pies, 1 en figuras) frente a k-NN (2, ambas en el marco teórico: la enumeración de algoritmos supervisados y el encabezado «K vecinos más cercanos (k-NN)»). Recomiendo KNN: es la mayoritaria y la que aparece en todas las tablas de resultados como nombre del estimador; k-NN es la forma más habitual en la literatura, así que la alternativa es válida pero obliga a tocar 36 sitios.
-OneClassSVM (33 ocurrencias: 21 en el cuerpo, 9 en tablas, 1 en pies, 1 en figuras) frente a One-Class SVM (6, todas en el cuerpo) frente a OCSVM (1, en el cuerpo). Recomiendo OneClassSVM en tablas y resultados (es el nombre exacto de la clase de scikit-learn, y es la mayoritaria) reservando «SVM de una clase» para la explicación teórica; OCSVM aparece una sola vez y conviene eliminarla o declararla.
-DoS (5 ocurrencias, todas en el cuerpo) frente a DOS (4: 2 en el cuerpo, 2 en tablas) frente a la etiqueta en minúscula «dos» del dataset. Recomiendo DoS en prosa (forma estándar en la literatura de seguridad) y reservar «dos» en minúscula y monoespaciado solo cuando se cite literalmente la etiqueta de clase del NSL-KDD; DOS en versalitas se confunde con el sistema operativo.
-HIDS (2 ocurrencias, cuerpo y marcadores) frente a H-IDS (1, en 6.2). Colisión de significado, no solo de forma: HIDS es host-based IDS y H-IDS se usa allí con el sentido de IDS híbrido. Recomiendo sustituir H-IDS por H-NIDS o por «IDS híbrido» en prosa, y dejar HIDS únicamente para host-based.
-f1_macro (66 ocurrencias: 46 en el cuerpo, 20 en tablas) frente a F1_macro (8: 3 en el cuerpo, 5 en tablas), más las formas «F1 macro» separadas por espacio. Recomiendo f1_macro en monoespaciado cuando se nombre el parámetro de scikit-learn y «F1 macro» en prosa; F1_macro con mayúscula y guion bajo no corresponde a ninguna de las dos.
-AUC a secas (varias apariciones en el capítulo de evaluación, p. ej. junto a OCSVM y a LOF) frente a AUC-ROC. Recomiendo explicitar siempre AUC-ROC o AUC-PR, porque el trabajo maneja las dos y «AUC» solo es ambiguo.
-Probe (7 ocurrencias: 5 en el cuerpo, 2 en tablas) frente a PROBE (4: 2 en el cuerpo, 2 en tablas). Recomiendo el mismo criterio que en DoS: «Probe» en prosa y «probe» en monoespaciado como etiqueta de clase; evitar la versalita PROBE.
+AUC-ROC (15 ocurrencias: 11 en el cuerpo, 3 en tablas, 1 en pies) frente a ROC-AUC (1, en el cuerpo, en el párrafo de 3.x sobre el esquema de métricas). Recomiendo AUC-ROC: es la abrumadoramente mayoritaria y la que ya usan las tablas y los pies de figura. Ojo con una tercera forma que no estaba anotada: roc_auc en monoespaciado, que es el nombre del scorer de scikit-learn y solo debe aparecer citando el parámetro.
+
+
+
+AUC-PR (4 ocurrencias: 3 en el cuerpo, 1 en tablas) frente a PR-AUC (1, en el mismo párrafo). Recomiendo AUC-PR, por coherencia con AUC-ROC y por ser la mayoritaria.
+KNN (24 ocurrencias: 13 en el cuerpo, 10 en tablas, 1 en pies) frente a k-NN (2, ambas en el marco teórico: la enumeración de algoritmos supervisados y el encabezado «K vecinos más cercanos (k-NN)»). Recomiendo KNN: es la mayoritaria y la que aparece en todas las tablas de resultados como nombre del estimador; k-NN es la forma más habitual en la literatura, así que la alternativa es válida pero obliga a tocar 24 sitios.
+
+
+
+OneClassSVM (21 ocurrencias: 13 en el cuerpo, 7 en tablas, 1 en pies) frente a One-Class SVM (6: 4 en el cuerpo y 2 en el índice) frente a OCSVM (1, en el cuerpo). Recomiendo OneClassSVM en tablas y resultados (es el nombre exacto de la clase de scikit-learn, y es la mayoritaria) reservando «SVM de una clase» para la explicación teórica; OCSVM aparece una sola vez y conviene eliminarla o declararla.
+DoS (7 ocurrencias, todas en el cuerpo) frente a DOS (2, ambas en tablas) frente a la etiqueta en minúscula «dos» del dataset. Recomiendo DoS en prosa (forma estándar en la literatura de seguridad) y reservar «dos» en minúscula y monoespaciado solo cuando se cite literalmente la etiqueta de clase del NSL-KDD; DOS en versalitas se confunde con el sistema operativo.
+
+
+
+HIDS (1 ocurrencia, en el cuerpo) frente a H-IDS (1, en el cuerpo, en 6.2). Colisión de significado, no solo de forma: HIDS es host-based IDS y H-IDS se usa allí con el sentido de IDS híbrido. Recomiendo sustituir H-IDS por H-NIDS o por «IDS híbrido» en prosa, y dejar HIDS únicamente para host-based.
+f1_macro (44 ocurrencias: 29 en el cuerpo, 11 en tablas, 4 en el índice) frente a F1_macro (3, todas en tablas), más la forma «F1 macro» separada por espacio (6: 3 en el cuerpo y 3 en pies). Recomiendo f1_macro en monoespaciado cuando se nombre el parámetro de scikit-learn y «F1 macro» en prosa; F1_macro con mayúscula y guion bajo no corresponde a ninguna de las dos.
+
+
+AUC a secas (4 ocurrencias, todas en el cuerpo del capítulo de evaluación) frente a AUC-ROC. Recomiendo explicitar siempre AUC-ROC o AUC-PR, porque el trabajo maneja las dos y «AUC» solo es ambiguo.
+Probe (5 ocurrencias: 3 en el cuerpo, 2 en tablas) frente a PROBE (2, ambas en tablas). Recomiendo el mismo criterio que en DoS: «Probe» en prosa y «probe» en monoespaciado como etiqueta de clase; evitar la versalita PROBE.
+
+PRESENCIA DE LAS SIGLAS EN EL DOCUMENTO (verificado el 2026-08-28 contra Resultados/docx/REPASO_20260828-0555/):
+De las 68 siglas de la lista, 67 aparecen en la PROSA del documento y ninguna falta.
+Única excepción: IEEE, que aparece 12 veces pero SOLO en la bibliografía (nombre de editorial y de las revistas), nunca en el cuerpo. Decide si se mantiene en la lista de acrónimos por ese uso o se retira.
+No hay siglas nuevas: ningún acrónimo ausente de la extracción anterior (REPASO_20260827-1854) ha entrado en la prosa.
+Notación que aparece en prosa y NO es acrónimo de esta lista (no procede darla de alta, se anota para que no se confunda al revisar): D1, D2, D3 (los splits), F1 (la métrica), C1-C7 (los criterios), UMBRAL_CONF (constante del código) y TESSERACT (el protocolo, ya cubierto por la entrada AUT).
+
+NOTA DE MÉTODO sobre los recuentos: se cuentan sobre los párrafos del documento repartidos en zonas disjuntas (cuerpo, tablas, pies, portada/índice/lista de acrónimos, bibliografía), de modo que ninguna ocurrencia se cuenta dos veces. Los recuentos anteriores sumaban el volcado de tablas al del documento completo e inflaban los totales (p. ej. f1_macro figuraba con 66 cuando el documento tiene 44).
