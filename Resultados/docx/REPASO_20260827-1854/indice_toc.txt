@@ -1,0 +1,109 @@
+TOTAL parrafos TOC/TDC = 107
+
+p0088	TDC1	Capítulo 1. Introducción	2
+p0089	TDC2		1.1. Motivación	2
+p0090	TDC2		1.2. Preliminares	3
+p0091	TDC2		1.3. Objetivo	5
+p0092	TDC2		1.4. Estructura	6
+p0093	TDC1	Capítulo 2. Marco Teórico	8
+p0094	TDC2		2.1. Machine Learning	8
+p0095	TDC3		2.1.1. Introducción al Machine Learning	8
+p0096	TDC3		2.1.2. Tipos de ML	12
+p0097	TDC3		2.1.3. Etapas del Ciclo de vida de un proyecto de ML	14
+p0098	TDC3		2.1.4. Algoritmos de ML	15
+p0099	TDC3		2.1.5. Métricas de evaluación de modelos	19
+p0100	TDC2		2.2. Ciberseguridad	23
+p0101	TDC3		2.2.1. Introducción a la ciberseguridad	23
+p0102	TDC3		2.2.2. Sistemas de detección de intrusiones	25
+p0103	TDC3		2.2.3. Taxonomía de los IDS	27
+p0104	TDC3		2.2.4. Detección por firmas frente a detección por anomalías	29
+p0105	TDC3		2.2.5. Taxonomía de ataques y panorama de amenazas	31
+p0106	TDC2		2.3. Inteligencia Artificial	34
+p0107	TDC3		2.3.1. IA, ML y DL	35
+p0108	TDC3		2.3.2. La IA en Ciberseguridad	35
+p0109	TDC3		2.3.3. Límites y consideraciones éticas	36
+p0110	TDC1	Capítulo 3. Diseño del sistema	40
+p0111	TDC2		3.1. Requisitos del sistema	40
+p0112	TDC3		3.1.1. Requisitos funcionales	40
+p0113	TDC3		3.1.2. Requisitos de datos	41
+p0114	TDC3		3.1.3. Requisitos no funcionales	41
+p0115	TDC3		3.1.4. Requisito de alcance	41
+p0116	TDC3		3.1.5. Modelo de amenaza	42
+p0117	TDC2		3.2. Arquitectura del sistema	43
+p0118	TDC3		3.2.1. Las dos etapas	43
+p0119	TDC2		3.3. Metodología de funcionamiento del sistema	46
+p0120	TDC3		3.3.1. Diseño de los subconjuntos	46
+p0121	TDC3		3.3.2. Protocolo de evaluación común	47
+p0122	TDC2		3.4. Modelo de detección de anomalías	48
+p0123	TDC3		3.4.1. Planteamiento	48
+p0124	TDC3		3.4.2. Algoritmos candidatos	48
+p0125	TDC3		3.4.3. Diseño del umbral de decisión	49
+p0126	TDC3		3.4.4. Papel en la cascada	50
+p0127	TDC2		3.5. Modelo de detección basado en firmas	50
+p0128	TDC3		3.5.1. Planteamiento	50
+p0129	TDC3		3.5.2. Algoritmos candidatos	51
+p0130	TDC3		3.5.3. Firmas interpretables	52
+p0131	TDC3		3.5.4. Tratamiento del desbalance como decisión de diseño	52
+p0132	TDC3		3.5.5. Papel en la cascada y salida “desconocido”	52
+p0133	TDC2		3.6. Conclusiones del capítulo	53
+p0134	TDC1	Capítulo 4. Implementación del sistema	55
+p0135	TDC2		4.1. Tecnologías utilizadas	55
+p0136	TDC3		4.1.1. Entorno y aplicaciones	55
+p0137	TDC3		4.1.2. Lenguaje de programación	56
+p0138	TDC3		4.1.3. Librerías de Python	56
+p0139	TDC2		4.2. Base de datos utilizada	59
+p0140	TDC3		4.2.1. Análisis previo de la base de datos	62
+p0141	TDC2		4.3. Preprocesamiento de los datasets	69
+p0142	TDC3		4.3.1. Adición y eliminación de etiquetas	69
+p0143	TDC3		4.3.2. Normalización de variables numéricas	71
+p0144	TDC3		4.3.3. Codificación de variables categóricas	72
+p0145	TDC3		4.3.4. Equilibrio y balanceo de muestras	73
+p0146	TDC3		4.3.5. Selección de características	76
+p0147	TDC3		4.3.6. División del conjunto de datos	79
+p0148	TDC3		4.3.7. Preprocesado sin fuga de datos	81
+p0149	TDC2		4.4. Entrenamiento del modelo de detección de anomalías	83
+p0150	TDC3		4.4.1. Protocolo de entrenamiento y validación	83
+p0151	TDC3		4.4.2. Algoritmos y espacios de búsqueda	84
+p0152	TDC3		4.4.3. Configuraciones ganadoras	86
+p0153	TDC2		4.5. Entrenamiento del modelo de detección basado en firmas	87
+p0154	TDC3		4.5.1. Protocolo de entrenamiento	87
+p0155	TDC3		4.5.2. Algoritmos y espacios de búsqueda	88
+p0156	TDC3		4.5.3. Configuraciones ganadoras	89
+p0157	TDC3		4.5.4. Extracción de firmas legibles	90
+p0158	TDC2		4.6. Conclusiones del capítulo	92
+p0159	TDC3		4.6.1. Un pipeline reproducible de principio a fin	92
+p0160	TDC3		4.6.2. Decisiones de preprocesado justificadas con datos, no por defecto	92
+p0161	TDC3		4.6.3. La ausencia de fuga de información como principio transversal	93
+p0162	TDC3		4.6.4. Comparación amplia bajo protocolo común	93
+p0163	TDC1	Capítulo 5. Evaluación	94
+p0164	TDC2		5.1. Resultados del modelo de detección de anomalías	97
+p0165	TDC3		5.1.1. Matrices de confusión	98
+p0166	TDC3		5.1.2. Métricas de desempeño	102
+p0167	TDC3		5.1.3. Resultados finales	106
+p0168	TDC2		5.2. Resultados del modelo de detección basado en firmas	107
+p0169	TDC3		5.2.1. Matrices de confusión	107
+p0170	TDC3		5.2.2. Métricas de desempeño	112
+p0171	TDC3		5.2.3. Comparación de los resultados de cada algoritmo	114
+p0172	TDC3		5.2.4. Robustez frente a la semilla	116
+p0173	TDC2		5.3. Resultados del sistema híbrido	119
+p0174	TDC2		5.4. Conclusiones del capítulo	131
+p0175	TDC1	Capítulo 6. Conclusiones	143
+p0176	TDC2		6.1. Conclusiones	143
+p0177	TDC3		6.1.1. Grado de cumplimiento de los objetivos	143
+p0178	TDC3		6.1.2. Validación de la tesis del híbrido	146
+p0179	TDC3		6.1.3. Limitaciones	146
+p0180	TDC3		6.1.4. Límites de lo medible con NSL-KDD	148
+p0181	TDC2		6.2. Líneas futuras	159
+p0182	TDC3		6.2.1. Conjunto (ensemble) de detectores de anomalías en la etapa 1	160
+p0183	TDC3		6.2.2. Reconocimiento de conjunto abierto (open-set recognition)	162
+p0184	TDC3		6.2.3. Vector de error de reconstrucción por característica como entrada de la etapa 2	162
+p0185	TDC3		6.2.4. Conjuntos de características distintos por etapa (opción B)	163
+p0186	TDC3		6.2.5. Cerrar el bucle: generación automática de firmas a partir de los unknown	165
+p0187	TDC3		6.2.6. Del flujo aislado a la secuencia con reloj: tres peldaños encadenados	166
+p0188	TDC1	Capítulo 7. Columnas del dataset NSL-KDD	172
+p0189	TDC3		.1.1. Características básicas (1–9)	172
+p0190	TDC3		.1.2. Características de contenido (10–22)	173
+p0191	TDC3		.1.3. Características de tráfico basadas en tiempo (23–31)	175
+p0192	TDC3		.1.4. Características de tráfico basadas en host (32–41)	176
+p0193	TDC3		.1.5. Etiquetas: tipos de ataque y categorías	178
+p0194	TDC1	Bibliografía	181

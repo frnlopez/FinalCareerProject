@@ -1,0 +1,71 @@
+TOTAL pies "Tabla x.y" (numerico) = 34
+TOTAL pies "Tabla A.y" (apendice, letra) = 3
+TOTAL pies Tabla (ambas formas) = 37
+TOTAL pies "Figura x.y" (numerico) = 23
+TOTAL pies "Figura A.y" (apendice, letra) = 0
+TOTAL pies Figura (ambas formas) = 23
+NUMEROS FIGURA (num): 2.1, 2.2, 2.3, 2.4, 2.5, 3.1, 4.1, 4.2, 4.3, 4.4, 4.5, 5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7, 5.8, 5.9, 5.10, 5.11, 5.12
+NUMEROS FIGURA (apendice): (ninguno)
+NUMEROS TABLA (num): 3.1, 3.2, 3.3, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 4.10, 4.11, 4.12, 4.13, 5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7, 5.8, 5.9, 5.10, 5.11, 5.12, 5.13, 6.1, 6.2, 6.3, 6.4, 6.5
+NUMEROS TABLA (apendice): A.1, A.2, A.3
+
+p0308	FIGURA	2.1	Figura 2.1. Relación entre Inteligencia Artificial, Machine Learning y Deep Learning.
+p0316	FIGURA	2.2	Figura 2.2. Metodología en programación tradicional.
+p0321	FIGURA	2.3	Figura 2.3. Metodología en ML.
+p0325	FIGURA	2.4	Figura 2.4. Metodología en ML con aprendizaje continuo.
+p0518	FIGURA	2.5	Figura 2.5. Cadena de bloques funcionales de un NIDS.
+p0708	FIGURA	3.1	Figura 3.1. Flujo del proyecto.
+p0744	TABLA	3.1	Tabla 3.1. Subconjuntos especializados derivados del NSL-KDD: contenido de cada uno y etapa del sistema a la que sirve.
+p0781	TABLA	3.2	Tabla 3.2. Detectores de anomalías candidatos para la etapa 1, con la noción de anomalía que implementa cada uno y el motivo de su inclusión en la comparación.
+p0819	TABLA	3.3	Tabla 3.3. Clasificadores supervisados candidatos para la etapa 2, con su principio de funcionamiento y el motivo de su inclusión.
+p0915	TABLA	4.1	Tabla 4.1. Librerías de Python empleadas, con la versión fijada en requirements.txt y su función concreta dentro del pipeline.
+p0981	TABLA	4.2	Tabla 4.2. Dimensiones de los tres subconjuntos tras el preprocesamiento completo, verificadas por el informe de validación.
+p0987	FIGURA	4.1	Figura 4.1. Panel de nueve gráficos del análisis exploratorio: reparto de clases de D1, D2 y D3, comparación de tamaños de los tres subconjuntos, ataques predominantes y cobertura de tipos de ataque entre entrenamiento y test.
+p0997	FIGURA	4.2	Figura 4.2. Reparto de clases en cada subconjunto, generado por validacion.py: pureza de D1 (una sola barra, normal) y de D3 (solo ataques), y desbalance entre categorías de ataque dentro de D3.
+p1003	FIGURA	4.3	Figura 4.3. Histogramas superpuestos de las doce características más discriminantes entre D1 (tráfico normal, en verde) y D3 (ataques conocidos, en rojo). Cuanto menor es el solape entre ambas distribuciones, mayor es el poder discriminante de la característica.
+p1018	FIGURA	4.4	Figura 4.4. Desplazamiento de distribución entre D1 y D2 medido con el test de Kolmogorov-Smirnov, en la variante de 54 características. Panel izquierdo: ranking de las 20 características con mayor estadístico KS, en rojo las que superan el criterio de significación. Panel derecho: distribución de los p-valores de las 54 características, con la línea de corte en p = 0,01.
+p1029	FIGURA	4.5	Figura 4.5. Proporción de valores atípicos según el criterio del rango intercuartílico (IQR), para las 15 características con mayor proporción de atípicos en D1, con las tres barras de cada característica correspondientes a D1, D2 y D3. No es un barrido de las 54: el gráfico se restringe a ese top 15.
+p1071	TABLA	4.3	Tabla 4.3. Agrupación de los 39 tipos de ataque específicos del NSL-KDD en las cuatro categorías canónicas, más la clase normal.
+p1097	TABLA	4.4	Tabla 4.4. Características de D2 que superan el intervalo [0, 1] tras aplicar el escalador ajustado solo sobre el entrenamiento: consecuencia esperada de la disciplina anti-fuga, no un fallo.
+p1173	TABLA	4.5	Tabla 4.5. Mini-experimento de balanceo sobre el conjunto de 54 características: F1 macro en validación cruzada de 5 particiones sobre D3, por algoritmo y estrategia.
+p1227	TABLA	4.6	Tabla 4.6. Experimento H1: comparación del sistema híbrido completo sobre D2 con los conjuntos de 54 y 122 características.
+p1255	TABLA	4.7	Tabla 4.7. División especializada del NSL-KDD en D1, D2 y D3, con su tamaño y su función experimental.
+p1281	TABLA	4.8	Tabla 4.8. Distribución de D3 por categoría de ataque: el desbalance de ≈ 883:1 entre la clase mayoritaria y la minoritaria que condiciona toda la estrategia de evaluación.
+p1310	TABLA	4.9	Tabla 4.9. Auditoría anti-fuga: las cuatro transformaciones del pipeline que aprenden de los datos, con el conjunto sobre el que se ajusta cada una. Ninguna ve D2.
+p1345	TABLA	4.10	Tabla 4.10. Espacios de búsqueda de hiperparámetros de los cuatro detectores de anomalías, con el número de configuraciones evaluadas.
+p1379	TABLA	4.11	Tabla 4.11. Configuraciones ganadoras de la etapa 1 sobre el conjunto de 54 características, con su AUC-ROC de validación, el umbral fijado por percentil 95 y el coste de ajuste.
+p1417	TABLA	4.12	Tabla 4.12. Espacios de búsqueda de hiperparámetros de los cuatro clasificadores de firmas, con el número de combinaciones evaluadas por GridSearchCV.
+p1443	TABLA	4.13	Tabla 4.13. Configuraciones ganadoras de la etapa 2 sobre el conjunto de 54 características, con el esquema de balanceo aplicado y su F1 macro en validación cruzada sobre D3.
+p1552	FIGURA	5.1	Figura 5.1. Matriz de confusión binaria (normal frente a ataque) de IsolationForest sobre D2, con 54 características y umbral percentil 95 sobre D1_val.
+p1555	FIGURA	5.2	Figura 5.2. Matriz de confusión binaria de OneClassSVM sobre D2, en las mismas condiciones.
+p1557	FIGURA	5.3	Figura 5.3. Matriz de confusión binaria de LocalOutlierFactor sobre D2, en las mismas condiciones.
+p1559	FIGURA	5.4	Figura 5.4. Matriz de confusión binaria del Autoencoder (MLPRegressor) sobre D2, en las mismas condiciones.
+p1588	TABLA	5.1	Tabla 5.1. Recuentos de la matriz de confusión binaria de los cuatro detectores de anomalías sobre D2, con 54 características y umbral por percentil 95.
+p1645	TABLA	5.2	Tabla 5.2. Métricas de los cuatro detectores de anomalías sobre D2 (positivo = ataque), con el coste separado en tiempo de ajuste y bloque completo.
+p1657	FIGURA	5.5	Figura 5.5. Curvas ROC de los cuatro detectores de anomalías sobre D2, con 54 características.
+p1663	FIGURA	5.6	Figura 5.6. Curvas precisión-recall de los cuatro detectores de anomalías sobre D2, con 54 características.
+p1687	FIGURA	5.7	Figura 5.7. Matriz de confusión multiclase (dos, probe, r2l, u2r) de DecisionTree sobre los flujos de D2 de tipo conocido, con 54 características.
+p1692	FIGURA	5.8	Figura 5.8. Matriz de confusión multiclase de RandomForest sobre la misma población.
+p1697	FIGURA	5.9	Figura 5.9. Matriz de confusión multiclase de KNN sobre la misma población.
+p1702	FIGURA	5.10	Figura 5.10. Matriz de confusión multiclase de HistGradientBoosting sobre la misma población.
+p1736	TABLA	5.3	Tabla 5.3. Clasificadores de firmas en validación cruzada sobre D3 frente a su rendimiento sobre los ataques de tipo conocido de D2. La brecha refleja el desplazamiento distribucional D3→D2.
+p1795	TABLA	5.4	Tabla 5.4. F1 por categoría de ataque sobre D2 de los cuatro clasificadores de firmas, con el soporte de cada clase.
+p1828	TABLA	5.5	Tabla 5.5. Efecto del conjunto de características sobre la generalización D3→D2 de cada clasificador de firmas.
+p1860	TABLA	5.6	Tabla 5.6. Dispersión del F1 macro sobre D2 de los dos mejores clasificadores a lo largo de diez semillas, frente al valor publicado con la semilla 42.
+p1945	TABLA	5.7	Tabla 5.7. Celdas cuyo valor con la semilla 42 cae fuera del intervalo [min, max] de las diez semillas del barrido.
+p1969	FIGURA	5.11	Figura 5.11. Matriz de confusión del sistema híbrido sobre D2 completo: 5 clases reales × 6 predichas, con la columna unknown para lo detectado como anómalo, pero no atribuido a una firma conocida.
+p1987	TABLA	5.8	Tabla 5.8. Rendimiento del sistema híbrido sobre D2 según el alcance de la evaluación, con el tamaño de la población en cada caso.
+p2024	TABLA	5.9	Tabla 5.9. Calibración del umbral de confianza sobre probabilidades out-of-fold de D3. Las columnas de D2 son informativas y no intervinieron en la elección.
+p2167	TABLA	5.10	Tabla 5.10. Recall de detección por tipo de ataque 0-day sobre los 17 tipos ausentes del entrenamiento, para los cuatro detectores. Cada uno se reporta junto a su FPR binario, porque los recalls no son comparables a distinto punto de operación.
+p2207	TABLA	5.11	Tabla 5.11. Sistema híbrido frente al baseline de control (RandomForest monolítico de 5 clases) sobre D2, con 54 características.
+p2211	FIGURA	5.12	Figura 5.12. Matriz de confusión del baseline de control (RandomForest monolítico de 5 clases) sobre D2, con 54 características.
+p2293	TABLA	5.12	Tabla 5.12. Baselines canónicos del artículo que creó el NSL-KDD, medidos sobre KDDTest+ completo, frente a la accuracy binaria de este sistema. Cifra de comparabilidad externa, no titular del trabajo.
+p2357	TABLA	5.13	Tabla 5.13. Precisión del sistema proyectada a distintas prevalencias de ataque, a partir del recall y el FPR medidos sobre D2.
+p2615	TABLA	6.1	Tabla 6.1. Balance del trabajo frente al catálogo de errores metodológicos en aprendizaje automático aplicado a seguridad, con la medida concreta adoptada en cada caso.
+p2632	TABLA	6.2	Tabla 6.2. Agrupación de las líneas futuras en refinamientos ejecutables sobre NSL-KDD y ampliaciones que exigen salir del dataset.
+p2659	TABLA	6.3	Tabla 6.3. Complementariedad de los detectores por tipo de ataque: los dos tipos que el detector seleccionado falla por completo y que otros detectan. Motiva la línea del conjunto de detectores.
+p2702	TABLA	6.4	Tabla 6.4. Reparto del beneficio entre las dos etapas según el conjunto de características, que sostiene la opción B como línea futura.
+p2736	TABLA	6.5	Tabla 6.5. Los tres peldaños encadenados para pasar del flujo aislado a la secuencia con reloj, con lo que habilita cada uno.
+p2993	TABLA	A.1	Tabla A.1. Características del dataset completo NSL-KDD.
+p3016	TABLA	A.2	Tabla A.2. Codificación numérica de las cinco categorías por el LabelEncoder del pipeline.
+p3035	TABLA	A.3	Tabla A.3. Los 40 tipos de etiqueta agrupados por categoría. Se marcan con ★ los 17 tipos presentes solo en el conjunto de test, que constituyen el escenario 0-day.

@@ -1,0 +1,1322 @@
+TOTAL <w:tbl> = 49
+
+TABLA 1	filas=1	celdas_fila1=2	inicio=p0425
+  PRIMERA:  | (1)
+  ULTIMA :  | (1)
+  CELDAS:
+    [f1,c1] 
+    [f1,c2] (1)
+
+TABLA 2	filas=1	celdas_fila1=2	inicio=p0429
+  PRIMERA:  | (2)
+  ULTIMA :  | (2)
+  CELDAS:
+    [f1,c1] 
+    [f1,c2] (2)
+
+TABLA 3	filas=1	celdas_fila1=2	inicio=p0434
+  PRIMERA:  | (3)
+  ULTIMA :  | (3)
+  CELDAS:
+    [f1,c1] 
+    [f1,c2] (3)
+
+TABLA 4	filas=1	celdas_fila1=2	inicio=p0438
+  PRIMERA:  | (4)
+  ULTIMA :  | (4)
+  CELDAS:
+    [f1,c1] 
+    [f1,c2] (4)
+
+TABLA 5	filas=1	celdas_fila1=2	inicio=p0442
+  PRIMERA:  | (5)
+  ULTIMA :  | (5)
+  CELDAS:
+    [f1,c1] 
+    [f1,c2] (5)
+
+TABLA 6	filas=1	celdas_fila1=2	inicio=p0450
+  PRIMERA:  | (6)
+  ULTIMA :  | (6)
+  CELDAS:
+    [f1,c1] 
+    [f1,c2] (6)
+
+TABLA 7	filas=1	celdas_fila1=2	inicio=p0456
+  PRIMERA:  | (7)
+  ULTIMA :  | (7)
+  CELDAS:
+    [f1,c1] 
+    [f1,c2] (7)
+
+TABLA 8	filas=4	celdas_fila1=3	inicio=p0726
+  PRIMERA: SUBCONJUNTO | CONTENIDO | PROPÓSITO
+  ULTIMA : D2 | Conjunto de test completo (que incluye tráfico normal y ataques, conocidos y desconocidos). | Evaluar
+  CELDAS:
+    [f1,c1] SUBCONJUNTO
+    [f1,c2] CONTENIDO
+    [f1,c3] PROPÓSITO
+    [f2,c1] D1
+    [f2,c2] Solo tráfico normal del entrenamiento.
+    [f2,c3] Entrenar etapa 1.
+    [f3,c1] D3
+    [f3,c2] Solo ataques conocidos del entrenamiento.
+    [f3,c3] Entrenar etapa 2.
+    [f4,c1] D2
+    [f4,c2] Conjunto de test completo (que incluye tráfico normal y ataques, conocidos y desconocidos).
+    [f4,c3] Evaluar
+
+TABLA 9	filas=5	celdas_fila1=3	inicio=p0766
+  PRIMERA: ALGORITMO | NOCIÓN DE ANOMALÍA | Motivo de su inclusión
+  ULTIMA : Autoencoder (MLPRegressor) | Error de reconstrucción: reconstruye mal lo que no se parece a lo normal | Enfoque neuronal ligero, sin dependencias de DL pesadas
+  CELDAS:
+    [f1,c1] ALGORITMO
+    [f1,c2] NOCIÓN DE ANOMALÍA
+    [f1,c3] Motivo de su inclusión
+    [f2,c1] Isolation Forest [29]
+    [f2,c2] Aísla las anomalías por particiones aleatorias 
+    [f2,c3] Referencia rápida y robusta, sin problemas de escala
+    [f3,c1] OneClassSVM [30]
+    [f3,c2] Aprende una frontera que encierra el comportamiento normal
+    [f3,c3] Enfoque clásico de frontera; sensible al escalado
+    [f4,c1] LocalOutlierFactor [31]
+    [f4,c2] Compara la densidad local de cada punto con la de sus vecinos
+    [f4,c3] Perspectiva basada en densidad, complementaria a las anteriores
+    [f5,c1] Autoencoder (MLPRegressor)
+    [f5,c2] Error de reconstrucción: reconstruye mal lo que no se parece a lo normal
+    [f5,c3] Enfoque neuronal ligero, sin dependencias de DL pesadas
+
+TABLA 10	filas=5	celdas_fila1=3	inicio=p0803
+  PRIMERA: ALGORITMO | IDEA | MOTIVO DE SU INCLUSIÓN
+  ULTIMA : HistGradientBoosting [53] | Conjunto por boosting (rendimiento tipo XGBoost) | Alto rendimiento sin dependencias externas nuevas
+  CELDAS:
+    [f1,c1] ALGORITMO
+    [f1,c2] IDEA
+    [f1,c3] MOTIVO DE SU INCLUSIÓN
+    [f2,c1] DecisionTree
+    [f2,c2] Reglas jerárquicas sobre umbrales de características
+    [f2,c3] Máxima interpretabilidad: base para extraer firmas legibles
+    [f3,c1] RandomForest [24]
+    [f3,c2] Conjunto (ensemble) de árboles por bagging
+    [f3,c3] Robusto y preciso en problemas tabulares multiclase
+    [f4,c1] KNN
+    [f4,c2] Clasificación por cercanía a los vecinos
+    [f4,c3] Enfoque basado en distancia, sin modelo explícito
+    [f5,c1] HistGradientBoosting [53]
+    [f5,c2] Conjunto por boosting (rendimiento tipo XGBoost)
+    [f5,c3] Alto rendimiento sin dependencias externas nuevas
+
+TABLA 11	filas=10	celdas_fila1=3	inicio=p0884
+  PRIMERA: Librería | Versión | Función en el proyecto
+  ULTIMA : pillow | 11.3.0 | Soporte de imágenes para el guardado de figuras
+  CELDAS:
+    [f1,c1] Librería
+    [f1,c2] Versión
+    [f1,c3] Función en el proyecto
+    [f2,c1] Numpy
+    [f2,c2] 2.3.2
+    [f2,c3] Calculo numérico y operaciones vectorizadas; percentiles para el umbral p95 del detector de anomalías
+    [f3,c1] Pandas
+    [f3,c2] 2.3.1
+    [f3,c3] Carga del dataset NSL-KDD y manipulación de los conjuntos D1/D2/D3 como DataFrames
+    [f4,c1] Scikit-learn
+    [f4,c2] 1.7.1
+    [f4,c3] Núcleo de ML: preprocesamiento (MinMaxScaler, LabelEncoder), los cuatro algoritmos de anomalías y los cuatro de firmas, GridSearchCV, StratifiedKFold, cross_val_predict y las métricas de evaluación. [59]
+    [f5,c1] Imbalanced-learn
+    [f5,c2] 0.14.2
+    [f5,c3] Tratamiento del desbalance de clases: SMOTE dentro de un Pipeline que lo aplica en cada fold del Cross-Validation (CV) [60]
+    [f6,c1] Scipy
+    [f6,c2] 1.16.0
+    [f6,c3] Estadísticas de la validación: test de Kolmogórov-Smirnov para el análisis de drift D1  D2 [61]
+    [f7,c1] Matplotlib
+    [f7,c2] 3.10.3
+    [f7,c3] Generación de todas las figuras (EDA, matrices de confusión, curvas ROC/PR)
+    [f8,c1] Seaborn
+    [f8,c2] 0.13.2
+    [f8,c3] Visualizaciones estadísticas sobre matplotlib (distribuciones, mapas de calor)
+    [f9,c1] Joblib
+    [f9,c2] 1.5.1
+    [f9,c3] Persistencia de los modelos entrenados y de los transformadores ajustados, para inferencia consistente
+    [f10,c1] pillow
+    [f10,c2] 11.3.0
+    [f10,c3] Soporte de imágenes para el guardado de figuras
+
+TABLA 12	filas=4	celdas_fila1=4	inicio=p0959
+  PRIMERA: Subconjunto | Contenido | Instancias | Características
+  ULTIMA : D3 | Solo ataques conocidos (train) | 58.630 | 54
+  CELDAS:
+    [f1,c1] Subconjunto
+    [f1,c2] Contenido
+    [f1,c3] Instancias
+    [f1,c4] Características
+    [f2,c1] D1
+    [f2,c2] Solo tráfico normal (train)
+    [f2,c3] 67.343
+    [f2,c4] 54
+    [f3,c1] D2
+    [f3,c2] Test completo (normal + ataques)
+    [f3,c3] 22.544
+    [f3,c4] 54
+    [f4,c1] D3
+    [f4,c2] Solo ataques conocidos (train)
+    [f4,c3] 58.630
+    [f4,c4] 54
+
+TABLA 13	filas=6	celdas_fila1=3	inicio=p1042
+  PRIMERA: Categoría | Descripción | Tipos agrupados
+  ULTIMA : U2r | Escalada de privilegios (user-to-root) | 8 (buffer_overflow, rootkit, loadmodule, perl, httptunnel, ps, sqlattack, xterm)
+  CELDAS:
+    [f1,c1] Categoría
+    [f1,c2] Descripción
+    [f1,c3] Tipos agrupados
+    [f2,c1] Normal
+    [f2,c2] Tráfico legítimo
+    [f2,c3] 1 (normal)
+    [f3,c1] Dos
+    [f3,c2] Denegación de servicio
+    [f3,c3] 10 (neptune, smurf, back, teardrop, pod, land, mailbomb, apache2, processtable, udpstorm)
+    [f4,c1] Probe
+    [f4,c2] Escaneo y reconocimiento
+    [f4,c3] 6 (ipsweep, nmap, portsweep, satan, mscan, saint)
+    [f5,c1] R2l
+    [f5,c2] Acceso remoto no autorizado (remote-to-local)
+    [f5,c3] 15 (guess_passwd, warezclient, warezmaster, imap, ftp_write, multihop, phf, spy, sendmail, named, snmpgetattack, snmpguess, xlock, xsnoop, worm)
+    [f6,c1] U2r
+    [f6,c2] Escalada de privilegios (user-to-root)
+    [f6,c3] 8 (buffer_overflow, rootkit, loadmodule, perl, httptunnel, ps, sqlattack, xterm)
+
+TABLA 14	filas=5	celdas_fila1=2	inicio=p1086
+  PRIMERA: Característica | Máximo en D2 (escalado)
+  ULTIMA : hot | 1,31
+  CELDAS:
+    [f1,c1] Característica
+    [f1,c2] Máximo en D2 (escalado)
+    [f2,c1] num_shells
+    [f2,c2] 2,50
+    [f3,c1] num_file_creations
+    [f3,c2] 2,33
+    [f4,c1] duration
+    [f4,c2] 1,35
+    [f5,c1] hot
+    [f5,c2] 1,31
+
+TABLA 15	filas=9	celdas_fila1=4	inicio=p1121
+  PRIMERA: Algoritmo | Balanceo | F1_macro(CV) | Desv. Típica
+  ULTIMA : HistGradientBoosting | Sin balanceo | 0,8327 | 0,0657
+  CELDAS:
+    [f1,c1] Algoritmo
+    [f1,c2] Balanceo
+    [f1,c3] F1_macro(CV)
+    [f1,c4] Desv. Típica
+    [f2,c1] DecisionTree
+    [f2,c2] SMOTE
+    [f2,c3] 0,9350
+    [f2,c4] 0,0165
+    [f3,c1] DecisionTree
+    [f3,c2] Class_weight
+    [f3,c3] 0,9530
+    [f3,c4] 0,0087
+    [f4,c1] RandomForest
+    [f4,c2] SMOTE
+    [f4,c3] 0,9736
+    [f4,c4] 0,0079
+    [f5,c1] RandomForest
+    [f5,c2] Class_weight
+    [f5,c3] 0,9715
+    [f5,c4] 0,0147
+    [f6,c1] KNN
+    [f6,c2] SMOTE
+    [f6,c3] 0,9453
+    [f6,c4] 0,0058
+    [f7,c1] KNN
+    [f7,c2] Sin balanceo
+    [f7,c3] 0,9187
+    [f7,c4] 0,0252
+    [f8,c1] HistGradientBoosting
+    [f8,c2] SMOTE
+    [f8,c3] 0,9694
+    [f8,c4] 0,0153
+    [f9,c1] HistGradientBoosting
+    [f9,c2] Sin balanceo
+    [f9,c3] 0,8327
+    [f9,c4] 0,0657
+
+TABLA 16	filas=6	celdas_fila1=3	inicio=p1192
+  PRIMERA: Métrica (cascada AE→RF sobre D2) | 54 features | 122 features
+  ULTIMA : f1_macro a 5 clases (criterio conservador) | 0,641 | 0,583
+  CELDAS:
+    [f1,c1] Métrica (cascada AE→RF sobre D2)
+    [f1,c2] 54 features
+    [f1,c3] 122 features
+    [f2,c1] Recall 0-day global (detector)
+    [f2,c2] 0,771
+    [f2,c3] 0,785
+    [f3,c1] FPR binaria
+    [f3,c2] 0,102
+    [f3,c3] 0,085
+    [f4,c1] AUC-ROC del detector
+    [f4,c2] 0,929
+    [f4,c3] 0,947
+    [f5,c1] f1_macro sobre ataques conocidos, end-to-end (n = 9.083)
+    [f5,c2] 0,748
+    [f5,c3] 0,655
+    [f6,c1] f1_macro a 5 clases (criterio conservador)
+    [f6,c2] 0,641
+    [f6,c3] 0,583
+
+TABLA 17	filas=4	celdas_fila1=4	inicio=p1239
+  PRIMERA: Split   | Contenido                                     | Tamaño | Función                                                                                                      
+  ULTIMA : D3 | Solo ataques del train                        | 58.630 | Entrenamiento del clasificador de firmas y extracción de reglas de ataques conocidos
+  CELDAS:
+    [f1,c1] Split  
+    [f1,c2] Contenido                                    
+    [f1,c3] Tamaño
+    [f1,c4] Función                                                                                                      
+    [f2,c1] D1
+    [f2,c2] Solo tráfico normal del train              
+    [f2,c3] 67.343
+    [f2,c4] Entrenamiento del detector de anomalías: el modelo aprende exclusivamente cómo es el comportamiento legítimo
+    [f3,c1] D2
+    [f3,c2] Conjunto de test completo (normal + ataques)
+    [f3,c3] 22.544
+    [f3,c4] Evaluación realista de ambas etapas y del sistema híbrido; intocable durante el entrenamiento
+    [f4,c1] D3
+    [f4,c2] Solo ataques del train                       
+    [f4,c3] 58.630
+    [f4,c4] Entrenamiento del clasificador de firmas y extracción de reglas de ataques conocidos
+
+TABLA 18	filas=5	celdas_fila1=3	inicio=p1265
+  PRIMERA: Categoría | Instancias | % de D3
+  ULTIMA : U2r | 52 | 0,09 %
+  CELDAS:
+    [f1,c1] Categoría
+    [f1,c2] Instancias
+    [f1,c3] % de D3
+    [f2,c1] Dos
+    [f2,c2] 45.927
+    [f2,c3] 78,3 %
+    [f3,c1] Probe
+    [f3,c2] 11.656
+    [f3,c3] 19,9 %
+    [f4,c1] R2l
+    [f4,c2] 995
+    [f4,c3] 1,7 %
+    [f5,c1] U2r
+    [f5,c2] 52
+    [f5,c3] 0,09 %
+
+TABLA 19	filas=5	celdas_fila1=3	inicio=p1292
+  PRIMERA: Transformación | Dónde se ajusta | Dónde solo se aplica
+  ULTIMA : Selección de características | Varianza, correlación y ranking del RandomForest, todo sobre D1+D3 | Las 54 columnas resultantes se proyectan sobre los tres splits
+  CELDAS:
+    [f1,c1] Transformación
+    [f1,c2] Dónde se ajusta
+    [f1,c3] Dónde solo se aplica
+    [f2,c1] Vocabulario one-hot
+    [f2,c2] Unión de categorías de D1 ∪ D3; las exclusivas de D2 se descartan
+    [f2,c3] D2 se reindexa contra ese vocabulario (columnas ausentes a 0)
+    [f3,c1] MinMaxScaler
+    [f3,c2] Concatenación D1+D3 (125.973 registros de train)
+    [f3,c3] D2 se transforma con transform, nunca con fit_transform
+    [f4,c1] LabelEncoder / category_encoder
+    [f4,c2] Diccionario estático attack_mapping (40 tipos, 5 categorías), no los valores observados en un split
+    [f4,c3] Codifica las etiquetas de los tres splits
+    [f5,c1] Selección de características
+    [f5,c2] Varianza, correlación y ranking del RandomForest, todo sobre D1+D3
+    [f5,c3] Las 54 columnas resultantes se proyectan sobre los tres splits
+
+TABLA 20	filas=5	celdas_fila1=3	inicio=p1329
+  PRIMERA: Algoritmo | Espacio explorado | Configuraciones
+  ULTIMA : Autoencoder (MLP) | hidden_layer_sizes ∈ {(64, 32, 64), (32, 16, 32)} | 2
+  CELDAS:
+    [f1,c1] Algoritmo
+    [f1,c2] Espacio explorado
+    [f1,c3] Configuraciones
+    [f2,c1] IsolationForest
+    [f2,c2] n_estimators ∈ {100, 200, 300} × max_samples ∈ {0.5, 1.0}
+    [f2,c3] 6
+    [f3,c1] OneClassSVM (RBF)
+    [f3,c2] nu ∈ {0.01, 0.05, 0.1} × gamma ∈ {'scale', 0.01, 0.1}
+    [f3,c3] 9
+    [f4,c1] LocalOutlierFactor
+    [f4,c2] n_neighbors ∈ {10, 20, 35, 50}
+    [f4,c3] 4
+    [f5,c1] Autoencoder (MLP)
+    [f5,c2] hidden_layer_sizes ∈ {(64, 32, 64), (32, 16, 32)}
+    [f5,c3] 2
+
+TABLA 21	filas=5	celdas_fila1=5	inicio=p1353
+  PRIMERA: Algoritmo | Configuración ganadora | AUC-ROC (validación) | Umbral (p95 sobre D1_val) | Tiempo (s)
+  ULTIMA : Autoencoder | hidden_layer_sizes=(64, 32, 64) | 0,9864 | 3,3·10⁻⁵ | 40,6
+  CELDAS:
+    [f1,c1] Algoritmo
+    [f1,c2] Configuración ganadora
+    [f1,c3] AUC-ROC (validación)
+    [f1,c4] Umbral (p95 sobre D1_val)
+    [f1,c5] Tiempo (s)
+    [f2,c1] IsolationForest
+    [f2,c2] n_estimators=100, max_samples=1.0
+    [f2,c3] 0,9918
+    [f2,c4] 0,4406
+    [f2,c5] 5,0
+    [f3,c1] OneClassSVM
+    [f3,c2] nu=0.1, gamma='scale'
+    [f3,c3] 0,9708
+    [f3,c4] 19,1866
+    [f3,c5] 28,3
+    [f4,c1] LocalOutlierFactor
+    [f4,c2] n_neighbors=20
+    [f4,c3] 0,9389
+    [f4,c4] 2,1863
+    [f4,c5] 16,4
+    [f5,c1] Autoencoder
+    [f5,c2] hidden_layer_sizes=(64, 32, 64)
+    [f5,c3] 0,9864
+    [f5,c4] 3,3·10⁻⁵
+    [f5,c5] 40,6
+
+TABLA 22	filas=5	celdas_fila1=3	inicio=p1401
+  PRIMERA: Algoritmo | Espacio explorado | Combinaciones
+  ULTIMA : HistGradientBoosting | learning_rate ∈ {0.05, 0.1} × max_iter ∈ {100, 300} | 4
+  CELDAS:
+    [f1,c1] Algoritmo
+    [f1,c2] Espacio explorado
+    [f1,c3] Combinaciones
+    [f2,c1] DecisionTree
+    [f2,c2] max_depth ∈ {5, 10, 20, None} × min_samples_leaf ∈ {1, 5, 20}
+    [f2,c3] 12
+    [f3,c1] RandomForest
+    [f3,c2] n_estimators ∈ {100, 300} × max_depth ∈ {10, None}
+    [f3,c3] 4
+    [f4,c1] KNN
+    [f4,c2] n_neighbors ∈ {3, 5, 11} × weights ∈ {'uniform', 'distance'}
+    [f4,c3] 6
+    [f5,c1] HistGradientBoosting
+    [f5,c2] learning_rate ∈ {0.05, 0.1} × max_iter ∈ {100, 300}
+    [f5,c3] 4
+
+TABLA 23	filas=5	celdas_fila1=4	inicio=p1422
+  PRIMERA: Algoritmo | Balanceo (4.3.4) | Configuración ganadora | f1_macro (CV)
+  ULTIMA : HistGradientBoosting | SMOTE | learning_rate=0.1, max_iter=300 | 0,9694
+  CELDAS:
+    [f1,c1] Algoritmo
+    [f1,c2] Balanceo (4.3.4)
+    [f1,c3] Configuración ganadora
+    [f1,c4] f1_macro (CV)
+    [f2,c1] DecisionTree
+    [f2,c2] class_weight='balanced'
+    [f2,c3] max_depth=10, min_samples_leaf=1
+    [f2,c4] 0,9533
+    [f3,c1] RandomForest
+    [f3,c2] SMOTE
+    [f3,c3] n_estimators=300, max_depth=10
+    [f3,c4] 0,9798
+    [f4,c1] KNN
+    [f4,c2] SMOTE
+    [f4,c3] n_neighbors=5, weights='uniform'
+    [f4,c4] 0,9453
+    [f5,c1] HistGradientBoosting
+    [f5,c2] SMOTE
+    [f5,c3] learning_rate=0.1, max_iter=300
+    [f5,c4] 0,9694
+
+TABLA 24	filas=5	celdas_fila1=5	inicio=p1562
+  PRIMERA: Detector | VN (tn) | FP | FN | VP (tp)
+  ULTIMA : Autoencoder | 8.723 | 988 | 2.158 | 10.675
+  CELDAS:
+    [f1,c1] Detector
+    [f1,c2] VN (tn)
+    [f1,c3] FP
+    [f1,c4] FN
+    [f1,c5] VP (tp)
+    [f2,c1] IsolationForest
+    [f2,c2] 8.738
+    [f2,c3] 973
+    [f2,c4] 2.957
+    [f2,c5] 9.876
+    [f3,c1] OneClassSVM
+    [f3,c2] 8.887
+    [f3,c3] 824
+    [f3,c4] 4.021
+    [f3,c5] 8.812
+    [f4,c1] LocalOutlierFactor
+    [f4,c2] 8.153
+    [f4,c3] 1.558
+    [f4,c4] 7.071
+    [f4,c5] 5.762
+    [f5,c1] Autoencoder
+    [f5,c2] 8.723
+    [f5,c3] 988
+    [f5,c4] 2.158
+    [f5,c5] 10.675
+
+TABLA 25	filas=5	celdas_fila1=9	inicio=p1599
+  PRIMERA: Detector | AUC-ROC | AUC-PR | Precision | Recall | F1 | FPR | Entrenamiento (s) | Bloque completo (s)
+  ULTIMA : Autoencoder | 0.929 | 0.909 | 0.915 | 0.832 | 0.872 | 0.102 | 48,93 | 49,20
+  CELDAS:
+    [f1,c1] Detector
+    [f1,c2] AUC-ROC
+    [f1,c3] AUC-PR
+    [f1,c4] Precision
+    [f1,c5] Recall
+    [f1,c6] F1
+    [f1,c7] FPR
+    [f1,c8] Entrenamiento (s)
+    [f1,c9] Bloque completo (s)
+    [f2,c1] IsolationForest
+    [f2,c2] 0.923
+    [f2,c3] 0.918
+    [f2,c4] 0.910
+    [f2,c5] 0.770
+    [f2,c6] 0.834
+    [f2,c7] 0.100
+    [f2,c8] 3,51
+    [f2,c9] 5,27
+    [f3,c1] OneClassSVM
+    [f3,c2] 0.836
+    [f3,c3] 0.889
+    [f3,c4] 0.914
+    [f3,c5] 0.687
+    [f3,c6] 0.784
+    [f3,c7] 0.085
+    [f3,c8] 10,69
+    [f3,c9] 25,58
+    [f4,c1] LocalOutlierFactor
+    [f4,c2] 0.807
+    [f4,c3] 0.740
+    [f4,c4] 0.787
+    [f4,c5] 0.449
+    [f4,c6] 0.572
+    [f4,c7] 0.160
+    [f4,c8] 13,29
+    [f4,c9] 20,16
+    [f5,c1] Autoencoder
+    [f5,c2] 0.929
+    [f5,c3] 0.909
+    [f5,c4] 0.915
+    [f5,c5] 0.832
+    [f5,c6] 0.872
+    [f5,c7] 0.102
+    [f5,c8] 48,93
+    [f5,c9] 49,20
+
+TABLA 26	filas=5	celdas_fila1=5	inicio=p1710
+  PRIMERA: Algoritmo | Balanceo | f1_macro (CV, D3) | f1_macro (D2) | Accuracy (D2)
+  ULTIMA : HistGradientBoosting | SMOTE | 0.969 | 0.804 | 0.958
+  CELDAS:
+    [f1,c1] Algoritmo
+    [f1,c2] Balanceo
+    [f1,c3] f1_macro (CV, D3)
+    [f1,c4] f1_macro (D2)
+    [f1,c5] Accuracy (D2)
+    [f2,c1] DecisionTree
+    [f2,c2] class_weight
+    [f2,c3] 0.953
+    [f2,c4] 0.746
+    [f2,c5] 0.913
+    [f3,c1] RandomForest
+    [f3,c2] SMOTE
+    [f3,c3] 0.980
+    [f3,c4] 0.822
+    [f3,c5] 0.968
+    [f4,c1] KNN
+    [f4,c2] SMOTE
+    [f4,c3] 0.945
+    [f4,c4] 0.769
+    [f4,c5] 0.956
+    [f5,c1] HistGradientBoosting
+    [f5,c2] SMOTE
+    [f5,c3] 0.969
+    [f5,c4] 0.804
+    [f5,c5] 0.958
+
+TABLA 27	filas=5	celdas_fila1=5	inicio=p1745
+  PRIMERA: Algoritmo | F1 dos (n=5.741) | F1 probe (n=1.106) | F1 r2l (n=2.199) | F1 u2r (n=37)
+  ULTIMA : HistGradientBoosting | 0.995 | 0.869 | 0.921 | 0.432
+  CELDAS:
+    [f1,c1] Algoritmo
+    [f1,c2] F1 dos (n=5.741)
+    [f1,c3] F1 probe (n=1.106)
+    [f1,c4] F1 r2l (n=2.199)
+    [f1,c5] F1 u2r (n=37)
+    [f2,c1] DecisionTree
+    [f2,c2] 0.961
+    [f2,c3] 0.749
+    [f2,c4] 0.912
+    [f2,c5] 0.361
+    [f3,c1] RandomForest
+    [f3,c2] 0.998
+    [f3,c3] 0.902
+    [f3,c4] 0.937
+    [f3,c5] 0.452
+    [f4,c1] KNN
+    [f4,c2] 0.993
+    [f4,c3] 0.927
+    [f4,c4] 0.911
+    [f4,c5] 0.245
+    [f5,c1] HistGradientBoosting
+    [f5,c2] 0.995
+    [f5,c3] 0.869
+    [f5,c4] 0.921
+    [f5,c5] 0.432
+
+TABLA 28	filas=5	celdas_fila1=4	inicio=p1807
+  PRIMERA: Algoritmo | F1_macro D2 (54) | F1_macro D2 (122) | Δ
+  ULTIMA : HistGradientBoosting | 0.804 | 0.713 | −0.091
+  CELDAS:
+    [f1,c1] Algoritmo
+    [f1,c2] F1_macro D2 (54)
+    [f1,c3] F1_macro D2 (122)
+    [f1,c4] Δ
+    [f2,c1] DecisionTree
+    [f2,c2] 0.746
+    [f2,c3] 0.731
+    [f2,c4] −0.015
+    [f3,c1] RandomForest
+    [f3,c2] 0.822
+    [f3,c3] 0.696
+    [f3,c4] −0.126
+    [f4,c1] KNN
+    [f4,c2] 0.769
+    [f4,c3] 0.753
+    [f4,c4] −0.016
+    [f5,c1] HistGradientBoosting
+    [f5,c2] 0.804
+    [f5,c3] 0.713
+    [f5,c4] −0.091
+
+TABLA 29	filas=3	celdas_fila1=6	inicio=p1841
+  PRIMERA: Algoritmo | Media (n=10) | sd | Min | Max | Semilla 42
+  ULTIMA : HistGradientBoosting | 0,7929 | 0,0184 | 0,7680 | 0,8327 | 0,8041
+  CELDAS:
+    [f1,c1] Algoritmo
+    [f1,c2] Media (n=10)
+    [f1,c3] sd
+    [f1,c4] Min
+    [f1,c5] Max
+    [f1,c6] Semilla 42
+    [f2,c1] RandomForest         
+    [f2,c2] 0,8035
+    [f2,c3] 0,0146
+    [f2,c4] 0,7779
+    [f2,c5] 0,8205
+    [f2,c6] 0,8223
+    [f3,c1] HistGradientBoosting
+    [f3,c2] 0,7929
+    [f3,c3] 0,0184
+    [f3,c4] 0,7680
+    [f3,c5] 0,8327
+    [f3,c6] 0,8041
+
+TABLA 30	filas=6	celdas_fila1=7	inicio=p1881
+  PRIMERA: Variante           | Algoritmo             | Métrica       | Semilla 42 | Min (10) | Max (10) | Distancia
+  ULTIMA : 54 | RandomForest          | f1_macro | 0,8223 | 0,7779 | 0,8205 | 0,001792
+  CELDAS:
+    [f1,c1] Variante          
+    [f1,c2] Algoritmo            
+    [f1,c3] Métrica      
+    [f1,c4] Semilla 42
+    [f1,c5] Min (10)
+    [f1,c6] Max (10)
+    [f1,c7] Distancia
+    [f2,c1] 122_sin_seleccion
+    [f2,c2] RandomForest         
+    [f2,c3] f1_macro
+    [f2,c4] 0,6956
+    [f2,c5] 0,7155
+    [f2,c6] 0,8435
+    [f2,c7] 0,019937
+    [f3,c1] 54
+    [f3,c2] RandomForest         
+    [f3,c3] recall_macro
+    [f3,c4] 0,8496
+    [f3,c5] 0,7839
+    [f3,c6] 0,8370
+    [f3,c7] 0,012574
+    [f4,c1] 54
+    [f4,c2] HistGradientBoosting
+    [f4,c3] accuracy_D2
+    [f4,c4] 0,9577
+    [f4,c5] 0,9180
+    [f4,c6] 0,9538
+    [f4,c7] 0,003963
+    [f5,c1] 122_sin_seleccion
+    [f5,c2] RandomForest         
+    [f5,c3] recall_macro
+    [f5,c4] 0,7458
+    [f5,c5] 0,7480
+    [f5,c6] 0,8852
+    [f5,c7] 0,002158
+    [f6,c1] 54
+    [f6,c2] RandomForest         
+    [f6,c3] f1_macro
+    [f6,c4] 0,8223
+    [f6,c5] 0,7779
+    [f6,c6] 0,8205
+    [f6,c7] 0,001792
+
+TABLA 31	filas=4	celdas_fila1=3	inicio=p1974
+  PRIMERA: Alcance | Métrica | Valor
+  ULTIMA : 5 clases, criterio conservador (n = 22.544) | f1_macro (unknown = error) | 0.641
+  CELDAS:
+    [f1,c1] Alcance
+    [f1,c2] Métrica
+    [f1,c3] Valor
+    [f2,c1] Binario (D2 completo, n = 22.544)
+    [f2,c2] F1 / FPR
+    [f2,c3] 0.872 / 0.102
+    [f3,c1] Categorías conocidas end-to-end (n = 9.083)
+    [f3,c2] precision_macro / recall_macro / f1_macro
+    [f3,c3] 0.915 / 0.671 / 0.748
+    [f4,c1] 5 clases, criterio conservador (n = 22.544)
+    [f4,c2] f1_macro (unknown = error)
+    [f4,c3] 0.641
+
+TABLA 32	filas=4	celdas_fila1=6	inicio=p2000
+  PRIMERA: UMBRAL_CONF | Recall macro OOF (conocidas) | Falsos unknown OOF | f1_macro-5 conservador (D2) | Recall 0-day global (D2) | % 0-day detectados → unknown (D2)
+  ULTIMA : 0.6 | 0.944 | 0,089 % | 0.592 | 0.771 | 34,0 %
+  CELDAS:
+    [f1,c1] UMBRAL_CONF
+    [f1,c2] Recall macro OOF (conocidas)
+    [f1,c3] Falsos unknown OOF
+    [f1,c4] f1_macro-5 conservador (D2)
+    [f1,c5] Recall 0-day global (D2)
+    [f1,c6] % 0-day detectados → unknown (D2)
+    [f2,c1] 0.4
+    [f2,c2] 0.975
+    [f2,c3] 0,003 %
+    [f2,c4] 0.643
+    [f2,c5] 0.771
+    [f2,c6] 1,8 %
+    [f3,c1] 0.5 (elegido)
+    [f3,c2] 0.965
+    [f3,c3] 0,031 %
+    [f3,c4] 0.641
+    [f3,c5] 0.771
+    [f3,c6] 13,4 %
+    [f4,c1] 0.6
+    [f4,c2] 0.944
+    [f4,c3] 0,089 %
+    [f4,c4] 0.592
+    [f4,c5] 0.771
+    [f4,c6] 34,0 %
+
+TABLA 33	filas=19	celdas_fila1=6	inicio=p2041
+  PRIMERA: Tipo 0-day | n | Autoencoder (FPR 10,2 %) | IsolationForest (FPR 10,0 %) | OneClassSVM (FPR 8,5 %) | LOF (FPR 16,0 %)
+  ULTIMA : Global | 3750 | 0.771 | 0.737 | 0.551 | 0.401
+  CELDAS:
+    [f1,c1] Tipo 0-day
+    [f1,c2] n
+    [f1,c3] Autoencoder (FPR 10,2 %)
+    [f1,c4] IsolationForest (FPR 10,0 %)
+    [f1,c5] OneClassSVM (FPR 8,5 %)
+    [f1,c6] LOF (FPR 16,0 %)
+    [f2,c1] apache2
+    [f2,c2] 737
+    [f2,c3] 0.997
+    [f2,c4] 0.995
+    [f2,c5] 0.969
+    [f2,c6] 0.716
+    [f3,c1] mscan
+    [f3,c2] 996
+    [f3,c3] 0.980
+    [f3,c4] 0.955
+    [f3,c5] 0.843
+    [f3,c6] 0.260
+    [f4,c1] saint
+    [f4,c2] 319
+    [f4,c3] 0.972
+    [f4,c4] 0.991
+    [f4,c5] 0.975
+    [f4,c6] 0.398
+    [f5,c1] processtable
+    [f5,c2] 685
+    [f5,c3] 1.000
+    [f5,c4] 0.511
+    [f5,c5] 0.073
+    [f5,c6] 0.362
+    [f6,c1] httptunnel
+    [f6,c2] 133
+    [f6,c3] 0.977
+    [f6,c4] 0.842
+    [f6,c5] 0.842
+    [f6,c6] 0.248
+    [f7,c1] snmpguess
+    [f7,c2] 331
+    [f7,c3] 0.018
+    [f7,c4] 0.740
+    [f7,c5] 0.012
+    [f7,c6] 0.027
+    [f8,c1] mailbomb
+    [f8,c2] 293
+    [f8,c3] 0.000
+    [f8,c4] 0.010
+    [f8,c5] 0.017
+    [f8,c6] 0.823
+    [f9,c1] snmpgetattack
+    [f9,c2] 178
+    [f9,c3] 0.000
+    [f9,c4] 0.152
+    [f9,c5] 0.062
+    [f9,c6] 0.084
+    [f10,c1] named
+    [f10,c2] 17
+    [f10,c3] 0.529
+    [f10,c4] 0.353
+    [f10,c5] 0.176
+    [f10,c6] 0.412
+    [f11,c1] ps
+    [f11,c2] 15
+    [f11,c3] 0.667
+    [f11,c4] 0.133
+    [f11,c5] 0.067
+    [f11,c6] 0.667
+    [f12,c1] sendmail
+    [f12,c2] 14
+    [f12,c3] 0.714
+    [f12,c4] 0.286
+    [f12,c5] 0.286
+    [f12,c6] 0.714
+    [f13,c1] xterm
+    [f13,c2] 13
+    [f13,c3] 0.846
+    [f13,c4] 0.615
+    [f13,c5] 0.692
+    [f13,c6] 0.692
+    [f14,c1] Xlock
+    [f14,c2] 9
+    [f14,c3] 0.333
+    [f14,c4] 0.111
+    [f14,c5] 0.000
+    [f14,c6] 0.333
+    [f15,c1] xsnoop
+    [f15,c2] 4
+    [f15,c3] 0.750
+    [f15,c4] 0.250
+    [f15,c5] 0.500
+    [f15,c6] 0.500
+    [f16,c1] Sqlattack
+    [f16,c2] 2
+    [f16,c3] 1.000
+    [f16,c4] 1.000
+    [f16,c5] 1.000
+    [f16,c6] 1.000
+    [f17,c1] Udpstorm
+    [f17,c2] 2
+    [f17,c3] 0.000
+    [f17,c4] 1.000
+    [f17,c5] 0.000
+    [f17,c6] 0.000
+    [f18,c1] worm
+    [f18,c2] 2
+    [f18,c3] 0.000
+    [f18,c4] 0.000
+    [f18,c5] 0.000
+    [f18,c6] 0.000
+    [f19,c1] Global
+    [f19,c2] 3750
+    [f19,c3] 0.771
+    [f19,c4] 0.737
+    [f19,c5] 0.551
+    [f19,c6] 0.401
+
+TABLA 34	filas=8	celdas_fila1=3	inicio=p2183
+  PRIMERA: Métrica | Híbrido (AE → RF, 54) | Baseline RF monolítico (54)
+  ULTIMA : Recall u2r (D2) | — (véase nota) | 0.010
+  CELDAS:
+    [f1,c1] Métrica
+    [f1,c2] Híbrido (AE → RF, 54)
+    [f1,c3] Baseline RF monolítico (54)
+    [f2,c1] Recall 0-day global
+    [f2,c2] 0.771 (2.890/3.750)
+    [f2,c3] 0.150 (561/3.750)
+    [f3,c1] FPR binario
+    [f3,c2] 0.102
+    [f3,c3] 0.027
+    [f4,c1] Recall binario (ataques)
+    [f4,c2] 0.832
+    [f4,c3] 0.575
+    [f5,c1] f1_macro (CV sobre train)
+    [f5,c2] —
+    [f5,c3] 0.909
+    [f6,c1] f1_macro 5 clases sobre D2
+    [f6,c2] 0.641 (conservador, unknown = error)
+    [f6,c3] 0.472
+    [f7,c1] Recall r2l (D2)
+    [f7,c2] — (véase nota)
+    [f7,c3] 0.004
+    [f8,c1] Recall u2r (D2)
+    [f8,c2] — (véase nota)
+    [f8,c3] 0.010
+
+TABLA 35	filas=9	celdas_fila1=2	inicio=p2266
+  PRIMERA: Clasificador [44] | Accuracy sobre KDDTest+
+  ULTIMA : Híbrido Autoencoder→RandomForest (este trabajo) | 86,05 %
+  CELDAS:
+    [f1,c1] Clasificador [44]
+    [f1,c2] Accuracy sobre KDDTest+
+    [f2,c1] NBTree
+    [f2,c2] 82,02 %
+    [f3,c1] Random Tree
+    [f3,c2] 81,59 %
+    [f4,c1] J48
+    [f4,c2] 81,05 %
+    [f5,c1] Random Forest
+    [f5,c2] 80,67 %
+    [f6,c1] MLP
+    [f6,c2] 77,41 %
+    [f7,c1] Naïve Bayes
+    [f7,c2] 76,56 %
+    [f8,c1] SVM
+    [f8,c2] 69,53 %
+    [f9,c1] Híbrido Autoencoder→RandomForest (este trabajo)
+    [f9,c2] 86,05 %
+
+TABLA 36	filas=1	celdas_fila1=2	inicio=p2335
+  PRIMERA:  | (8)
+  ULTIMA :  | (8)
+  CELDAS:
+    [f1,c1] 
+    [f1,c2] (8)
+
+TABLA 37	filas=6	celdas_fila1=3	inicio=p2338
+  PRIMERA: Prevalencia de ataque | Precisión proyectada | Lectura
+  ULTIMA : 0,1 % | 0,8 % | El sistema sería inservible como alerta directa
+  CELDAS:
+    [f1,c1] Prevalencia de ataque
+    [f1,c2] Precisión proyectada
+    [f1,c3] Lectura
+    [f2,c1] 56,9 % (la de D2)
+    [f2,c2] 91,5 %
+    [f2,c3] Coincide con el bin_precision = 0,9153 medido, lo que valida la aritmética contra el dato real
+    [f3,c1] 10 %
+    [f3,c2] 47,6 %
+    [f3,c3] Una de cada dos alarmas ya es falsa
+    [f4,c1] 5 %
+    [f4,c2] 30,1 %
+    [f4,c3] Dos de cada tres alarmas son falsas
+    [f5,c1] 1 % (escenario de referencia)
+    [f5,c2] 7,6 %
+    [f5,c3] Más de 9 de cada 10 alarmas son falsas
+    [f6,c1] 0,1 %
+    [f6,c2] 0,8 %
+    [f6,c3] El sistema sería inservible como alerta directa
+
+TABLA 38	filas=9	celdas_fila1=6	inicio=p2373
+  PRIMERA: Algoritmo | Set | Entrenamiento (s) | Inferencia (s) | Ms/flujo | Flujos/s
+  ULTIMA : HistGradientBoosting | 122 |  |  |  | 
+  CELDAS:
+    [f1,c1] Algoritmo
+    [f1,c2] Set
+    [f1,c3] Entrenamiento (s)
+    [f1,c4] Inferencia (s)
+    [f1,c5] Ms/flujo
+    [f1,c6] Flujos/s
+    [f2,c1] DecisionTree
+    [f2,c2] 54
+    [f2,c3] 1,815
+    [f2,c4] 
+    [f2,c5] 
+    [f2,c6] 
+    [f3,c1] RandomForest
+    [f3,c2] 54
+    [f3,c3] 
+    [f3,c4] 
+    [f3,c5] 
+    [f3,c6] 
+    [f4,c1] KNN
+    [f4,c2] 54
+    [f4,c3] 
+    [f4,c4] 
+    [f4,c5] 
+    [f4,c6] 
+    [f5,c1] HistGradientBoosting
+    [f5,c2] 54
+    [f5,c3] 
+    [f5,c4] 
+    [f5,c5] 
+    [f5,c6] 
+    [f6,c1] DecisionTree
+    [f6,c2] 122
+    [f6,c3] 
+    [f6,c4] 
+    [f6,c5] 
+    [f6,c6] 
+    [f7,c1] RandomForest
+    [f7,c2] 122
+    [f7,c3] 
+    [f7,c4] 
+    [f7,c5] 
+    [f7,c6] 
+    [f8,c1] KNN
+    [f8,c2] 122
+    [f8,c3] 
+    [f8,c4] 
+    [f8,c5] 
+    [f8,c6] 
+    [f9,c1] HistGradientBoosting
+    [f9,c2] 122
+    [f9,c3] 
+    [f9,c4] 
+    [f9,c5] 
+    [f9,c6] 
+
+TABLA 39	filas=11	celdas_fila1=4	inicio=p2536
+  PRIMERA:  | Error metodológico | Estado en este trabajo | Medida concreta
+  ULTIMA : P10 | Inappropriate Threat Model | Cubierto hasta donde el dataset permite | Sin adversario adaptativo. El modelo de amenaza se escribe —marco conceptual en 2.3.3, enunciado concreto en el límite 3 de este apartado— y se argumenta, con su fuente, por qué un experimento adversario sobre características agregadas sería irrealizable en el espacio del problema
+  CELDAS:
+    [f1,c1] 
+    [f1,c2] Error metodológico
+    [f1,c3] Estado en este trabajo
+    [f1,c4] Medida concreta
+    [f2,c1] P1
+    [f2,c2] Sampling Bias
+    [f2,c3] Cubierto
+    [f2,c4] Se usa la partición oficial de entrenamiento y test sin remuestrear, y el sesgo de construcción del corpus se declara con su fuente (4.2)
+    [f3,c1] P2
+    [f3,c2] Label Inaccuracy
+    [f3,c3] Cubierto
+    [f3,c4] Las etiquetas son las del corpus; la agrupación de los 39 tipos en 4 categorías más normal se hace con un diccionario estático, no inferido de los datos (4.3)
+    [f4,c1] P3
+    [f4,c2] Data Snooping
+    [f4,c3] Cubierto, con una excepción declarada
+    [f4,c4] Codificación one-hot, escalado y selección de características se ajustan solo con datos de entrenamiento; el conjunto de evaluación no interviene en el preprocesado. La excepción son las tres decisiones de selección de modelo tomadas mirando D2, ya declaradas en 6.1.3
+    [f5,c1] P4
+    [f5,c2] Spurious Correlations
+    [f5,c3] Cubierto
+    [f5,c4] Extracción de reglas legibles del modelo de firmas, que permite inspeccionar por qué decide (4.5); corrección del fallo de codificación one-hot detectado en el pipeline
+    [f6,c1] P5
+    [f6,c2] Biased Parameter Selection
+    [f6,c3] Cubierto
+    [f6,c4] El umbral de anomalía se fija sobre el 20 % reservado de D1; el umbral de confianza se calibra con probabilidades out-of-fold sobre D3. Ninguno se elige sobre el conjunto de evaluación
+    [f7,c1] P6
+    [f7,c2] Inappropriate Baseline
+    [f7,c3] Cubierto
+    [f7,c4] Baseline no trivial: RandomForest monolítico de cinco clases, que además es el patrón dominante en la literatura sobre este dataset (5.3)
+    [f8,c1] P7
+    [f8,c2] Inappropriate Performance Measures
+    [f8,c3] Cubierto
+    [f8,c4] Prohibición explícita del número único: promedio macro, curvas PR además de ROC y desglose por clase en todas las tablas
+    [f9,c1] P8
+    [f9,c2] Base Rate Fallacy
+    [f9,c3] Cubierto donde el FPR está definido
+    [f9,c4] Toda cifra de recall binario se publica junto a su FPR: fpr en metricas_anomalias.csv y bin_fpr en metricas_hibrido.csv y metricas_baseline.csv (el híbrido añade fpr_cascada). metricas_firmas.csv no lleva columna de FPR, y no por omisión: su alcance son los ataques de tipo conocido de D2, una tarea multiclase sin clase normal en la que no hay tasa de falsas alarmas que calcular — allí lo que se publica es precisión, recall y F1 por clase con su soporte. Las clases minoritarias se reportan aparte en lugar de ocultarse en el promedio
+    [f10,c1] P9
+    [f10,c2] Lab-Only Evaluation
+    [f10,c3] Cubierto hasta donde el dataset permite
+    [f10,c4] Sin despliegue real. Se mide el coste de inferencia del modelo (latencia por flujo y caudal), que no es el coste de despliegue: excluye captura, ensamblado del flujo y extracción de características, y lleva además la salvedad de máquina. Y se declara —enunciado de marco 2.3.3, instancia una sola vez en el límite 2 de este apartado— que ninguna precisión publicada como resultado está proyectada a una prevalencia operativa; la proyección ilustrativa a prevalencias hipotéticas, con su alcance declarado, está en 5.4
+    [f11,c1] P10
+    [f11,c2] Inappropriate Threat Model
+    [f11,c3] Cubierto hasta donde el dataset permite
+    [f11,c4] Sin adversario adaptativo. El modelo de amenaza se escribe —marco conceptual en 2.3.3, enunciado concreto en el límite 3 de este apartado— y se argumenta, con su fuente, por qué un experimento adversario sobre características agregadas sería irrealizable en el espacio del problema
+
+TABLA 40	filas=3	celdas_fila1=3	inicio=p2621
+  PRIMERA: Bloque | Naturaleza | Líneas
+  ULTIMA : B. Ampliación del alcance experimental | Exigen salir de NSL-KDD; encadenadas entre sí | 6.2.6
+  CELDAS:
+    [f1,c1] Bloque
+    [f1,c2] Naturaleza
+    [f1,c3] Líneas
+    [f2,c1] A. Refinamientos sobre el sistema actual
+    [f2,c2] Ejecutables sobre NSL-KDD, sin cambiar dataset ni protocolo de evaluación
+    [f2,c3] 6.2.1 – 6.2.5
+    [f3,c1] B. Ampliación del alcance experimental
+    [f3,c2] Exigen salir de NSL-KDD; encadenadas entre sí
+    [f3,c3] 6.2.6
+
+TABLA 41	filas=3	celdas_fila1=5	inicio=p2642
+  PRIMERA: Tipo 0-day (n) | Autoencoder | IsolationForest | OneClassSVM | LocalOutlierFactor
+  ULTIMA : snmpguess (331) | 0,018 | 0,740 | 0,012 | 0,027
+  CELDAS:
+    [f1,c1] Tipo 0-day (n)
+    [f1,c2] Autoencoder
+    [f1,c3] IsolationForest
+    [f1,c4] OneClassSVM
+    [f1,c5] LocalOutlierFactor
+    [f2,c1] mailbomb (293)
+    [f2,c2] 0,000
+    [f2,c3] 0,010
+    [f2,c4] 0,017
+    [f2,c5] 0,823
+    [f3,c1] snmpguess (331)
+    [f3,c2] 0,018
+    [f3,c3] 0,740
+    [f3,c4] 0,012
+    [f3,c5] 0,027
+
+TABLA 42	filas=5	celdas_fila1=4	inicio=p2680
+  PRIMERA: Métrica | 54 características | 122 características | A quién favorece
+  ULTIMA : conocida_f1_macro (etapa 2) | 0,7481 | 0,6554 | Etapa 2
+  CELDAS:
+    [f1,c1] Métrica
+    [f1,c2] 54 características
+    [f1,c3] 122 características
+    [f1,c4] A quién favorece
+    [f2,c1] bin_roc_auc (etapa 1)
+    [f2,c2] 0,9288
+    [f2,c3] 0,9472
+    [f2,c4] Etapa 1
+    [f3,c1] recall_0day_global
+    [f3,c2] 0,7707
+    [f3,c3] 0,7853
+    [f3,c4] Etapa 1
+    [f4,c1] bin_fpr
+    [f4,c2] 0,1017
+    [f4,c3] 0,0849
+    [f4,c4] Etapa 1
+    [f5,c1] conocida_f1_macro (etapa 2)
+    [f5,c2] 0,7481
+    [f5,c3] 0,6554
+    [f5,c4] Etapa 2
+
+TABLA 43	filas=4	celdas_fila1=3	inicio=p2722
+  PRIMERA: Peldaño | Qué es | Qué desbloquea
+  ULTIMA : Representación de secuencia | Modelar la sesión o el host como secuencia de flujos | Es lo único que haría literalmente aplicables los modelos de memoria multifrecuencia
+  CELDAS:
+    [f1,c1] Peldaño
+    [f1,c2] Qué es
+    [f1,c3] Qué desbloquea
+    [f2,c1] Dataset con reloj
+    [f2,c2] Migrar a un conjunto de datos con marca de tiempo por flujo
+    [f2,c3] Todo lo demás
+    [f3,c1] Análisis de deriva temporal
+    [f3,c2] División cronológica y protocolo TESSERACT
+    [f3,c3] Permite hablar por primera vez de adaptación en el tiempo
+    [f4,c1] Representación de secuencia
+    [f4,c2] Modelar la sesión o el host como secuencia de flujos
+    [f4,c3] Es lo único que haría literalmente aplicables los modelos de memoria multifrecuencia
+
+TABLA 44	filas=10	celdas_fila1=4	inicio=p2800
+  PRIMERA: # | Nombre | Tipo | Descripción
+  ULTIMA : 9 | urgent | Discreta | Número de paquetes con el bit urgent activado.
+  CELDAS:
+    [f1,c1] #
+    [f1,c2] Nombre
+    [f1,c3] Tipo
+    [f1,c4] Descripción
+    [f2,c1] 1
+    [f2,c2] duration
+    [f2,c3] Continua
+    [f2,c4] Duración de la conexión en segundos.
+    [f3,c1] 2
+    [f3,c2] protocol_type
+    [f3,c3] Categórica
+    [f3,c4] Protocolo de transporte: tcp, udp o icmp.
+    [f4,c1] 3
+    [f4,c2] service
+    [f4,c3] Categórica
+    [f4,c4] Servicio de red del destino (http, ftp, smtp, private, domain_u…). ~70 valores.
+    [f5,c1] 4
+    [f5,c2] flag
+    [f5,c3] Categórica
+    [f5,c4] Estado de la conexión al terminar (SF, S0, REJ, RSTR…). 11 valores.
+    [f6,c1] 5
+    [f6,c2] src_bytes
+    [f6,c3] Continua
+    [f6,c4] Bytes enviados del origen al destino.
+    [f7,c1] 6
+    [f7,c2] dst_bytes
+    [f7,c3] Continua
+    [f7,c4] Bytes enviados del destino al origen.
+    [f8,c1] 7
+    [f8,c2] land
+    [f8,c3] Binaria
+    [f8,c4] 1 si origen y destino tienen la misma IP y puerto (indicio del ataque land).
+    [f9,c1] 8
+    [f9,c2] wrong_fragment
+    [f9,c3] Discreta
+    [f9,c4] Número de fragmentos erróneos en la conexión.
+    [f10,c1] 9
+    [f10,c2] urgent
+    [f10,c3] Discreta
+    [f10,c4] Número de paquetes con el bit urgent activado.
+
+TABLA 45	filas=14	celdas_fila1=4	inicio=p2841
+  PRIMERA: # | Nombre | Tipo | Descripción
+  ULTIMA : 22 | is_guest_login | Binaria | 1 si el inicio de sesión es de invitado (guest).
+  CELDAS:
+    [f1,c1] #
+    [f1,c2] Nombre
+    [f1,c3] Tipo
+    [f1,c4] Descripción
+    [f2,c1] 10
+    [f2,c2] hot
+    [f2,c3] Discreta
+    [f2,c4] Número de indicadores sensibles (accesos a directorios de sistema, ejecución de programas…).
+    [f3,c1] 11
+    [f3,c2] num_failed_logins
+    [f3,c3] Discreta
+    [f3,c4] Intentos de inicio de sesión fallidos.
+    [f4,c1] 12
+    [f4,c2] logged_in
+    [f4,c3] Binaria
+    [f4,c4] 1 si el inicio de sesión tuvo éxito.
+    [f5,c1] 13
+    [f5,c2] num_compromised
+    [f5,c3] Discreta
+    [f5,c4] Número de condiciones comprometidas observadas.
+    [f6,c1] 14
+    [f6,c2] root_shell
+    [f6,c3] Binaria
+    [f6,c4] 1 si se obtuvo una shell de root.
+    [f7,c1] 15
+    [f7,c2] su_attempted
+    [f7,c3] Binaria
+    [f7,c4] 1 si se intentó el comando su root.
+    [f8,c1] 16
+    [f8,c2] num_root
+    [f8,c3] Discreta
+    [f8,c4] Número de accesos u operaciones como root.
+    [f9,c1] 17
+    [f9,c2] num_file_creations
+    [f9,c3] Discreta
+    [f9,c4] Operaciones de creación de ficheros.
+    [f10,c1] 18
+    [f10,c2] num_shells
+    [f10,c3] Discreta
+    [f10,c4] Número de shells abiertas.
+    [f11,c1] 19
+    [f11,c2] num_access_files
+    [f11,c3] Discreta
+    [f11,c4] Operaciones sobre ficheros de control de acceso.
+    [f12,c1] 20
+    [f12,c2] num_outbound_cmds
+    [f12,c3] Discreta
+    [f12,c4] Comandos salientes en una sesión FTP. Constante a 0 en todo el NSL-KDD (por eso el filtro de varianza la elimina, véase 4.3 Preprocesamiento de los datasets §4.3.5).
+    [f13,c1] 21
+    [f13,c2] is_host_login
+    [f13,c3] Binaria
+    [f13,c4] 1 si el login pertenece a la lista de hosts de acceso.
+    [f14,c1] 22
+    [f14,c2] is_guest_login
+    [f14,c3] Binaria
+    [f14,c4] 1 si el inicio de sesión es de invitado (guest).
+
+TABLA 46	filas=10	celdas_fila1=4	inicio=p2903
+  PRIMERA: # | Nombre | Tipo | Descripción
+  ULTIMA : 31 | srv_diff_host_rate | Continua | % de conexiones (mismo servicio) a hosts distintos.
+  CELDAS:
+    [f1,c1] #
+    [f1,c2] Nombre
+    [f1,c3] Tipo
+    [f1,c4] Descripción
+    [f2,c1] 23
+    [f2,c2] count
+    [f2,c3] Discreta
+    [f2,c4] Conexiones al mismo host destino en la ventana.
+    [f3,c1] 24
+    [f3,c2] srv_count
+    [f3,c3] Discreta
+    [f3,c4] Conexiones al mismo servicio en la ventana.
+    [f4,c1] 25
+    [f4,c2] serror_rate
+    [f4,c3] Continua
+    [f4,c4] % de conexiones (mismo host) con error de tipo SYN (S0/S1/S2/S3).
+    [f5,c1] 26
+    [f5,c2] srv_serror_rate
+    [f5,c3] Continua
+    [f5,c4] Ídem, referido al mismo servicio.
+    [f6,c1] 27
+    [f6,c2] rerror_rate
+    [f6,c3] Continua
+    [f6,c4] % de conexiones (mismo host) con error REJ.
+    [f7,c1] 28
+    [f7,c2] srv_rerror_rate
+    [f7,c3] Continua
+    [f7,c4] Ídem, referido al mismo servicio.
+    [f8,c1] 29
+    [f8,c2] same_srv_rate
+    [f8,c3] Continua
+    [f8,c4] % de conexiones al mismo servicio.
+    [f9,c1] 30
+    [f9,c2] diff_srv_rate
+    [f9,c3] Continua
+    [f9,c4] % de conexiones a servicios distintos.
+    [f10,c1] 31
+    [f10,c2] srv_diff_host_rate
+    [f10,c3] Continua
+    [f10,c4] % de conexiones (mismo servicio) a hosts distintos.
+
+TABLA 47	filas=11	celdas_fila1=4	inicio=p2947
+  PRIMERA: # | Nombre | Tipo | Descripción
+  ULTIMA : 41 | dst_host_srv_rerror_rate | Continua | Ídem, por servicio.
+  CELDAS:
+    [f1,c1] #
+    [f1,c2] Nombre
+    [f1,c3] Tipo
+    [f1,c4] Descripción
+    [f2,c1] 32
+    [f2,c2] dst_host_count
+    [f2,c3] Discreta
+    [f2,c4] Conexiones al mismo host destino.
+    [f3,c1] 33
+    [f3,c2] dst_host_srv_count
+    [f3,c3] Discreta
+    [f3,c4] Conexiones al mismo servicio en el host destino.
+    [f4,c1] 34
+    [f4,c2] dst_host_same_srv_rate
+    [f4,c3] Continua
+    [f4,c4] % de esas conexiones al mismo servicio.
+    [f5,c1] 35
+    [f5,c2] dst_host_diff_srv_rate
+    [f5,c3] Continua
+    [f5,c4] % a servicios distintos.
+    [f6,c1] 36
+    [f6,c2] dst_host_same_src_port_rate
+    [f6,c3] Continua
+    [f6,c4] % desde el mismo puerto origen.
+    [f7,c1] 37
+    [f7,c2] dst_host_srv_diff_host_rate
+    [f7,c3] Continua
+    [f7,c4] % (mismo servicio) hacia hosts distintos.
+    [f8,c1] 38
+    [f8,c2] dst_host_serror_rate
+    [f8,c3] Continua
+    [f8,c4] % con error SYN en el host destino.
+    [f9,c1] 39
+    [f9,c2] dst_host_srv_serror_rate
+    [f9,c3] Continua
+    [f9,c4] Ídem, por servicio.
+    [f10,c1] 40
+    [f10,c2] dst_host_rerror_rate
+    [f10,c3] Continua
+    [f10,c4] % con error REJ en el host destino.
+    [f11,c1] 41
+    [f11,c2] dst_host_srv_rerror_rate
+    [f11,c3] Continua
+    [f11,c4] Ídem, por servicio.
+
+TABLA 48	filas=6	celdas_fila1=2	inicio=p3002
+  PRIMERA: Código | Categoría
+  ULTIMA : 4 | U2R
+  CELDAS:
+    [f1,c1] Código
+    [f1,c2] Categoría
+    [f2,c1] 0
+    [f2,c2] DOS
+    [f3,c1] 1
+    [f3,c2] NORMAL
+    [f4,c1] 2
+    [f4,c2] PROBE
+    [f5,c1] 3
+    [f5,c2] R2L
+    [f6,c1] 4
+    [f6,c2] U2R
+
+TABLA 49	filas=6	celdas_fila1=2	inicio=p3021
+  PRIMERA: Categoría | Tipos de ataque
+  ULTIMA : U2R (User to Root) | buffer_overflow, loadmodule, perl, rootkit, httptunnel ★, ps ★, sqlattack ★, xterm ★
+  CELDAS:
+    [f1,c1] Categoría
+    [f1,c2] Tipos de ataque
+    [f2,c1] NORMAL
+    [f2,c2] normal
+    [f3,c1] DOS (Denial of Service)
+    [f3,c2] back, land, neptune, pod, smurf, teardrop, mailbomb ★, apache2 ★, processtable ★, udpstorm ★
+    [f4,c1] PROBE (sondeo/reconocimiento)
+    [f4,c2] ipsweep, nmap, portsweep, satan, mscan ★, saint ★
+    [f5,c1] R2L (Remote to Local)
+    [f5,c2] ftp_write, guess_passwd, imap, multihop, phf, spy, warezclient, warezmaster, sendmail ★, named ★, snmpgetattack ★, snmpguess ★, xlock ★, xsnoop ★, worm ★
+    [f6,c1] U2R (User to Root)
+    [f6,c2] buffer_overflow, loadmodule, perl, rootkit, httptunnel ★, ps ★, sqlattack ★, xterm ★
+
