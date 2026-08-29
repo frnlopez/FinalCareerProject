@@ -84,9 +84,8 @@ Obsidian_TFG_Vault/.obsidian/themes/
 Obsidian_TFG_Vault/.trash/
 
 # --- Claude Code ------------------------------------------------------------
-# settings.json (arquitectura de agentes) SÍ se versiona.
-# settings.local.json son permisos concedidos en esta máquina: no.
-.claude/settings.local.json
+# Todo el andamiaje de agentes queda fuera del repositorio publicado; la
+# exclusión está en el bloque «Trabajo interno no publicable», al final.
 
 # --- MCP de Playwright ------------------------------------------------------
 # Volcados de consola y snapshots de página que deja el MCP cuando lo usa el
@@ -97,3 +96,18 @@ Obsidian_TFG_Vault/.trash/
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# --- Trabajo interno no publicable ------------------------------------------
+# Ficheros de trabajo interno del desarrollo: el registro de decisiones de
+# diseño, las salidas de graphify y todo el andamiaje de agentes de Claude Code.
+# No forman parte del entregable y no se publican.
+resumen-de-decisiones.md
+graphify-out/
+.claude/
+features.md
+next-steps.md
+how-to-work.md
+mis-apuntes-del-informe.md
+EL_FUTURO.md
+sesion-2026-07-*.md
+andamiaje-interno.md

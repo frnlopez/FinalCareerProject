@@ -12,12 +12,6 @@ Trabajo Fin de Grado sobre un **Sistema Híbrido de Detección de Intrusiones en
 Working_Directory/            ← raíz del repositorio git (rama de trabajo: develop)
 ├── CLAUDE.md                 ← este archivo
 ├── README.md                 ← presentación del repo y de cada script
-├── features.md               ← tareas abiertas y cerradas. LO PRIMERO que se lee
-├── next-steps.md             ← CONGELADO en casillas. §1-§5 historial · §6 specs
-├── resumen-de-decisiones.md  ← decisiones de diseño cerradas
-├── EL_FUTURO.md              ← líneas futuras respaldadas con datos
-├── .mcp.json                 ← MCP de Playwright (solo lo usa el researcher)
-├── .claude/                  ← arquitectura de agentes (ver sección propia)
 ├── Proyecto_Fin_de_Grado-FJLM-2026.docx  ← memoria en Word (no versionada). El
 │                             `TFG - Fran.docx` que había aquí es un NOMBRE MUERTO
 ├── Archivos dataset/         ← NSL-KDD crudo (no versionado)
@@ -33,9 +27,9 @@ Working_Directory/            ← raíz del repositorio git (rama de trabajo: de
 │   ├── requirements.txt
 │   └── readme.md
 └── Obsidian_TFG_Vault/       ← la memoria en Markdown (Obsidian)
-    ├── 99 Investigación/     ← informes del researcher. NO es memoria
+    ├── 99 Investigación/     ← informes de apoyo documental. NO es memoria
     ├── assets/               ← las imágenes embebidas por las notas (ver abajo)
-    ├── Bibliografía.md       ← lo escribe SOLO el researcher
+    ├── Bibliografía.md       ← referencias del TFG
     └── .obsidian/            ← config de Obsidian (no tocar)
 ```
 
@@ -141,7 +135,7 @@ Dataset descargable de: https://github.com/Jehuty4949/NSL_KDD
 
 > **Estado a 2026-07-16:** el track de CÓDIGO estaba COMPLETO (todos los scripts implementados, auditados y ejecutados en 54 y 122 features) y el trabajo restante era la redacción (track INFORME).
 >
-> **Reabierto el 2026-08-06** de forma declarada y acotada (decisión marco (a)): esquema de métricas (T1), dispersión entre semillas (T4) y dos mediciones baratas (T2, T3). Todo pasa por `auditor-ml`. El alcance abierto vive en `features.md`, no aquí.
+> **Reabierto el 2026-08-06** de forma declarada y acotada (decisión marco (a)): esquema de métricas (T1), dispersión entre semillas (T4) y dos mediciones baratas (T2, T3). Todo pasa por una revisión adversaria separada. El alcance abierto vive en `features.md`, no aquí.
 
 **Reparto de roles entre ficheros de seguimiento (desde el 2026-08-01):** el registro operativo vivo (tareas abiertas y cerradas) es `features.md`; `next-steps.md` está congelado en cuanto a casillas (§1-§5 historial y bitácora, §6 vigente como especificación técnica de cada script, salvo §6.5 (`hibrido.py`), superada por el grill H-1…H-7 de `resumen-de-decisiones.md`) y las decisiones de diseño están en `resumen-de-decisiones.md`.
 
@@ -182,122 +176,6 @@ No se edita desde aquí; se referencia para contexto cuando el usuario necesita 
 
 ---
 
-## Arquitectura de agentes
-
-Cada mensaje del usuario pasa por el hook `UserPromptSubmit` (`.claude/hooks/leader-gate.sh`),
-que inyecta la regla de enrutado y el `git status` del repo. **El hilo principal no responde: delega
-en el agente `leader`**, que clasifica en un **carril** y un **track** y despacha.
-
-| Carril | Qué es | Interroga | Ficha | Cierre |
-|---|---|---|---|---|
-| **Consulta** | Pregunta sobre estado, resultados o una decisión | No | No | No |
-| **Intervención** | Cambio pequeño y entendido | No | No | Sí |
-| **Tarea** | Alcance nuevo que hay que definir | Sí (`grill-me`) | Sí | Sí |
-| **Investigación** | El usuario pide investigar algo que no está en disco | Sí, salvo encargo ya cerrado | No | No |
-
-| Track | Agente |
-|---|---|
-| **Código** | `ml-implementador` → `auditor-ml` (obligatorio); `ejecutor-experimentos` para correr |
-| **Informe** | `redactor-tfg` |
-| **Ninguno** | `researcher` (investigar y verificar fuentes) · `cronista` (mantener `features.md`) |
-
-Excepción única al enrutado: **configurar el propio andamiaje** (`settings.json`, hooks,
-`.claude/agents/`, skills, `.mcp.json`) lo atiende el hilo principal directamente.
-
-**Reglas duras del andamiaje:**
-
-- **Ningún subagente habla con el usuario.** No tienen canal: devuelven `done -> <ficheros>` o
-  `blocked -> <descripción>`. Lo que requiera preguntar vuelve al hilo principal.
-- **Ningún agente ejecuta `git` de escritura.** El `add`/`commit`/`push` lo hace el skill
-  `cierre`, en hilo principal y **preguntando siempre**. El `git status` de lectura lo ejecuta
-  el hook, no un agente.
-- **El `researcher` solo se despacha si el usuario lo pide explícitamente**, y con el encargo
-  cerrado: pregunta concreta, qué entra y qué queda fuera.
-- **Track Código no se cierra sin `auditor-ml`.** Y **el que escribe no puede ser el que audita**:
-  la revisión es un pase separado, con instrucción adversaria explícita.
-- **Despacho en paralelo (desde el 2026-08-13).** El track Informe es el grueso de lo que queda y
-  se acelera despachando varias notas a la vez. **La unidad es el FICHERO, no el tema**: dos
-  agentes trabajan a la vez solo si escriben ficheros distintos. Las 8 notas en guion del capítulo
-  2 son el caso claro (tandas de 3-4). **Nunca en paralelo:** dos agentes sobre la misma nota,
-  `Bibliografía.md`, `features.md`, `00 Índice TFG.md`, la asignación de números `[n]`, ni el pase
-  de `auditor-ml` (va después, no a la vez). **Varios `auditor-ml` sí pueden ir en paralelo**: son
-  de solo lectura. Un cierre por **tanda**, no por nota: una sola pasada de `cronista`.
-- **Protocolo de citas — vale para CUALQUIER agente que escriba en el vault.** Los marcadores `[n]`
-  son un **contador global** que apunta a `Bibliografía.md`. **Contado en disco el 2026-08-24, tras las 32 altas
-  del mapeo de la bibliografía del `.docx`: se han emitido 110 números, de los que 102 son ENTRADAS VIVAS
-  y OCHO están QUEMADAS —`[9]`,
-  `[27]`, `[28]`, `[37]`, `[40]`, `[44]`, `[45]` y `[76]`—.** Quemada significa **retirada SIN RENUMERAR**
-  (`[9]` lo fue en `396e283`; las otras siete, al retirarse las entradas que ya no citaba ningún
-  marcador vivo — `[40]` Krizhevsky, la última, en R1 el 2026-08-20): el número **no vuelve al contador jamás**. **El primer número disponible es el
-  `[111]`.** Ojo con `[76]`: está quemada, pero **`[78]` Storkey sí está viva** — nació al desdoblarla. **Este rango se cuenta, no se recuerda**
-  (`grep -oE '^\| *\[[0-9]+\]' Bibliografía.md`): estuvo desfasado en `leader.md` diciendo `[11]`
-  cuando ya iba por el `[57]`, y ese es justo el fichero que despacha.
-  Importa porque `[2]` (Anderson 1980) y `[3]` (Denning 1987) son las que más se citan al redactar
-  el capítulo 2: **se MAPEAN, no se dan de alta**.
-  **Nadie inventa un `[n]` nuevo**: se escribe `[CITA: autor o tema]`, convención
-  que el proyecto ya usa. Si dos agentes en paralelo asignaran números, los dos
-  empezarían en el mismo y el solape no lo ve nadie al leer. La conversión de `[CITA: …]` a `[n]` y
-  el alta en `Bibliografía.md` es un pase **posterior y en serie**, del `researcher`. Un `[n]` que
-  ya estaba en la nota **se respeta**: no se renumera ni se borra.
-- **Localizador de página — DEROGADO PARA EL `.docx` el 2026-08-24. No lo reintroduzcas.**
-  La decisión del 2026-08-15 admitía localizador en el marcador (`[8, p. 45]`, `[5, cap. 1]`) y lo
-  hacía **obligatorio** en los 9 libros largos. **Francisco la derogó el 2026-08-24**, con estas
-  palabras: «Quita los capítulos, deja las referencias a pelo `[12]`, `[13]`, `[14]`». Registrada en
-  `resumen-de-decisiones.md`.
-  - **El marcador que va al `.docx` se escribe A PELO: `[39]`, nunca `[39, cap. 1]`.** Ningún agente
-    vuelve a añadir localizador a un marcador, ni en el vault ni en los ficheros de trabajo. Los 28
-    que había se retiraron ese mismo día.
-  - **Lo que NO se derogó: el registro de la obra.** `Bibliografía.md` conserva su columna
-    «Localizador por uso», que sigue escribiendo **solo el `researcher`**. Saber de qué libro o
-    página salió una afirmación sigue siendo obligatorio; lo que ya no se hace es **estamparlo en
-    el marcador**.
-  - **Y sigue en pie que la página no se inventa:** donde no se pueda establecer con honestidad, se
-    MARCA. Misma disciplina que con las 47 citas reconstruidas.
-  - Ojo con el falso amigo, que no es un localizador y **sí se conserva**: los `pp. 222-232` que
-    aparecen en algunas entradas son **el rango del artículo en su revista**, metadato de la
-    referencia.
-  - Los 9 libros largos siguen siendo los mismos como **obras**, para el registro:
-    `[4]` Chio, `[5]` Géron, `[6]` Goodfellow, `[7]` Murphy, `[8]` Stallings (**5.ª ed. 2023**,
-    fijada el 2026-08-18), `[12]` Hastie, `[39]` Russell y Norvig, `[54]` Molnar y `[78]` Storkey.
-    Lo que cambia es que **ya no arrastran localizador al marcador**.
-  - **Sobre `[54]` Molnar:** la edición **ya está fijada** — la declaración de «edición sin fijar» que
-    había aquí es FALSA desde el 2026-08-18 y se retira; no la reintroduzcas. Lo que se decía de que
-    «bloqueaba localizadores del capítulo 2» dejó de aplicar en dos pasos: primero al reasignar el
-    Isolation Forest a `[73]` Liu, Ting y Zhou (2008) el 2026-08-16, y después **por la derogación
-    del 2026-08-24, que retiró los localizadores del marcador**. Sigue pendiente su uso en `2.3.3`.
-  - ~~`[6]` Goodfellow está huérfana~~ **— RESUELTO el 2026-08-16 (`296de24`). T24 la ancló:
-    la cita `2.1.4.3`.** (Nació como `[6, cap. 6]`; tras la derogación del 2026-08-24 el marcador va
-    a pelo, `[6]`.) El dato se contaba como vivo desde
-    el 2026-08-15; **verificar antes de repetirlo** — `Bibliografía.md` la seguía marcando huérfana
-    en tres sitios cuando ya no lo era. **Esas tres declaraciones falsas se retiraron del propio
-    `Bibliografía.md` en la Tanda 13** (`:63`, `:75`, `:199`), con sus 7 ocurrencias verificadas.
-  - **`Bibliografía.md` gana una columna «Localizador por uso»**, que escribe **solo el `researcher`**.
-  - **Donde la página no se pueda establecer con honestidad, se MARCA — no se inventa.** Misma
-    disciplina que con las 47 citas reconstruidas.
-- **Auditar una tanda paralela es auditar la COHERENCIA ENTRE sus notas**, no cada nota por
-  separado: dos notas que no chocan en disco sí pueden definir el mismo concepto dos veces o citar
-  una cifra de dos maneras. Ese fallo solo se ve mirándolas juntas.
-- **No hay máquina de estados**: lo abierto es lo que está en `features.md`; lo hecho es lo que
-  tiene commit.
-- **Autoría de la redacción** (decisión marco (b) del lote 2026-08-06, aplicada en T0 el
-  2026-08-09; sustituye a la regla anterior «la teoría en prosa la escribe Francisco»).
-  **Aviso del 2026-08-13:** `leader.md` seguía llevando la prohibición derogada, y como es el
-  agente que despacha, ganaba la regla vieja — **esa fue la razón estructural de que las 8 notas
-  del capítulo 2 llevaran semanas en guion sin que nadie tuviera permiso de escribirlas**.
-  Corregido. No reintroducir la prohibición en ningún fichero:
-  - **Capítulos 2.x — sin restricción.** El `redactor-tfg` redacta la prosa a partir de los
-    guiones que ya están en las notas. Aplica a **todo** el capítulo 2, `2.1.4` incluida: no hay
-    ninguna sección exceptuada.
-  - **`6.2 Líneas futuras` — borrador de agente con revisión final de Francisco.** Es el sitio
-    natural del material de líneas futuras; bloqueada dejaba a medias un entregable del encargo.
-    Material de respaldo en `EL_FUTURO.md`.
-  - **`4.2` (prosa teórica del dataset) — ya cedida antes**, por la decisión del 2026-07-21
-    (`resumen-de-decisiones.md:430-438`): «Origen» y «Las 41 características» las redacta el
-    agente —el borrador **ya existe** en la nota—; solo el «por qué NSL-KDD» queda a revisión de
-    Francisco. El contenido lo cierra **T10**.
-  - **La bibliografía final en Zotero/IEEE sigue siendo de Francisco.** Es trabajo mecánico en
-    su máquina. `Bibliografía.md` dentro del vault es del `researcher`, que es otra cosa.
-
 ## Git
 
 - Repositorio: `https://github.com/frnlopez/FinalCareerProject.git` — raíz en `Working_Directory/`.
@@ -309,6 +187,13 @@ Excepción única al enrutado: **configurar el propio andamiaje** (`settings.jso
   2026-08-17, aunque ya estaba versionado: la enumeración se contradecía con sus cuatro hermanos.)
   Quedan fuera (ver `.gitignore`) el venv, los `.joblib`, **los CSV de los splits**, el dataset
   crudo y los `.doc/.docx` — todo reproducible o descargable, y suman 1,1 GB.
+  **Y, desde el 2026-08-29, todo el material de trabajo interno**: `.claude/`,
+  `resumen-de-decisiones.md`, `features.md`, `next-steps.md`, `how-to-work.md`,
+  `mis-apuntes-del-informe.md`, `EL_FUTURO.md`, `andamiaje-interno.md` y los `sesion-2026-07-*.md`.
+  Siguen **vivos en disco** y siguen siendo la referencia de trabajo: lo unico que cambia es que
+  no se publican, porque el enlace al repositorio va en la memoria. **El historico NO se reescribio**:
+  quien mire `git log` los seguira viendo en los commits anteriores. Fue una decision consciente
+  de Francisco para no alterar los SHA con la entrega encima.
   **«Los CSV no se versionan» es FALSO y lo decía este fichero hasta el 2026-08-16.** La regla real
   del `.gitignore` es por patrón, no por extensión: solo excluye `Resultados/*_processed_*.csv` y
   `Resultados/*_original_*.csv`, que son los splits —regenerables y pesados—. **Todo lo demás en

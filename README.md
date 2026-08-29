@@ -24,11 +24,8 @@ Working_Directory/
 ├── Resultados/                Métricas, figuras y reglas extraídas
 ├── Guia_ML/                   Notas de referencia de ML usadas durante el desarrollo
 ├── features.md                Registro vivo: tareas abiertas y cerradas
-├── next-steps.md              Congelado. §1-§5 historial · §6 = especificación de cada
-│                              script, salvo §6.5 (ver grill H-1…H-7 en decisiones)
-├── resumen-de-decisiones.md   Registro de decisiones de diseño
-├── EL_FUTURO.md               Líneas futuras respaldadas con datos
-└── .claude/                   Arquitectura de agentes (ver más abajo)
+├── next-steps.md              Congelado. §1-§5 historial · §6 = especificación de cada script
+└── EL_FUTURO.md               Líneas futuras respaldadas con datos
 ```
 
 ---
@@ -139,50 +136,6 @@ exclusiones el repositorio pesaría 1,1 GB y GitHub rechazaría el envío.
 
 Sí están versionados los `metricas_*.csv`, las figuras y las reglas extraídas: son los
 **resultados citados en la memoria** y deben quedar congelados junto al código que los produjo.
-
----
-
-## Arquitectura de agentes
-
-El repositorio incluye un andamiaje de agentes para Claude Code en `.claude/`. Cada mensaje del
-usuario pasa por el hook `UserPromptSubmit` (`.claude/hooks/leader-gate.sh`), que inyecta la regla
-de enrutado y el `git status` del repo. **El hilo principal no responde: delega en el agente
-`leader`**, que clasifica el mensaje en un **carril** y un **track** y despacha.
-
-| Carril | Qué es | Interroga | Ficha | Cierre |
-|---|---|---|---|---|
-| Consulta | Pregunta sobre estado, resultados o una decisión | No | No | No |
-| Intervención | Cambio pequeño y entendido | No | No | Sí |
-| Tarea | Alcance nuevo que hay que definir | Sí (`grill-me`) | Sí | Sí |
-| Investigación | El usuario pide investigar algo que no está en disco | Sí, salvo encargo ya cerrado | No | No |
-
-| Track | Agente |
-|---|---|
-| **Código** | `ml-implementador` → `auditor-ml` (obligatorio); `ejecutor-experimentos` para correr |
-| **Informe** | `redactor-tfg` |
-| **Ninguno** | `researcher` (investigar y verificar fuentes) · `cronista` (mantener `features.md`) |
-
-| Agente | Rol |
-|---|---|
-| `leader` | Orquestador. Clasifica y despacha. No escribe nada |
-| `ml-implementador` | Escribe el código Python |
-| `ejecutor-experimentos` | Ejecuta los scripts y reporta las métricas |
-| `auditor-ml` | Revisión adversaria, solo lectura. Obligatoria antes de cerrar cualquier cambio de código; quien escribe no puede auditar |
-| `redactor-tfg` | Redacta las notas de la memoria en el vault |
-| `researcher` | Investiga fuera del repositorio y verifica la fiabilidad de las fuentes citadas. Se despacha solo bajo petición explícita del usuario, con encargo cerrado. Único que edita `Bibliografía.md` |
-| `cronista` | Mantiene `features.md` |
-
-Excepción única al enrutado: configurar el propio andamiaje (`settings.json`, hooks,
-`.claude/agents/`, skills, `.mcp.json`) lo atiende el hilo principal directamente.
-
-**Despacho en paralelo (desde el 2026-08-13):** el track Informe se acelera despachando varias
-notas a la vez. La unidad es el **fichero**, no el tema: dos agentes trabajan a la vez solo si
-escriben ficheros distintos. Nunca en paralelo: dos agentes sobre la misma nota, `Bibliografía.md`,
-`features.md`, `00 Índice TFG.md`, la asignación de números `[n]`, ni el pase de `auditor-ml` (va
-después, no a la vez). Varios `auditor-ml` sí pueden ir en paralelo: son de solo lectura.
-
-Ningún agente ejecuta `git` de escritura: el commit lo hace el skill `cierre`, en hilo
-principal y preguntando siempre.
 
 ---
 
